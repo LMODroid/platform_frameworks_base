@@ -35,6 +35,9 @@ import com.android.systemui.statusbar.policy.DevicePostureController;
 import com.android.systemui.user.domain.interactor.SelectedUserInteractor;
 import com.android.systemui.util.wrapper.LockPatternCheckerWrapper;
 
+import android.provider.Settings;
+import com.libremobileos.providers.LMOSettings;
+
 public class KeyguardPinViewController
         extends KeyguardPinBasedInputViewController<KeyguardPINView> {
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
@@ -101,6 +104,10 @@ public class KeyguardPinViewController
         mPostureController.addCallback(mPostureCallback);
         mPasswordEntry.setUsePinShapes(true);
         updateAutoConfirmationState();
+        mView.updatePinScrambling(
+                Settings.System.getIntForUser(getContext().getContentResolver(),
+                        LMOSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0,
+                        mSelectedUserInteractor.getSelectedUserId()) == 1);
     }
 
     protected void onUserInput() {
@@ -124,6 +131,10 @@ public class KeyguardPinViewController
     @Override
     public void startAppearAnimation() {
         super.startAppearAnimation();
+        mView.updatePinScrambling(
+                Settings.System.getIntForUser(getContext().getContentResolver(),
+                        LMOSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0,
+                        mSelectedUserInteractor.getSelectedUserId()) == 1);
     }
 
     @Override
