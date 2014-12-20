@@ -37,6 +37,8 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.ViewConfiguration;
 
+import com.libremobileos.providers.LMOSettings;
+
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -122,7 +124,10 @@ class InputSettingsObserver extends ContentObserver {
                         (reason) -> updatePointerScaleFromSettings()),
                 Map.entry(Settings.System.getUriFor(
                                 Settings.System.TOUCHPAD_THREE_FINGER_TAP_CUSTOMIZATION),
-                        (reason) -> updateTouchpadThreeFingerTapShortcutEnabled()));
+                        (reason) -> updateTouchpadThreeFingerTapShortcutEnabled()),
+                Map.entry(Settings.System.getUriFor(
+                                LMOSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION),
+                        (reason) -> updateVolumeKeysRotation()));
     }
 
     /**
@@ -234,6 +239,13 @@ class InputSettingsObserver extends ContentObserver {
 
     private void updateShowRotaryInput() {
         mService.updateShowRotaryInput(getBoolean(Settings.System.SHOW_ROTARY_INPUT, false));
+    }
+
+    private void updateVolumeKeysRotation() {
+        mNative.setVolumeKeysRotation(
+                Settings.System.getIntForUser(mContext.getContentResolver(),
+                        LMOSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION, 0,
+                        UserHandle.USER_CURRENT));
     }
 
     private void updateAccessibilityLargePointer() {
