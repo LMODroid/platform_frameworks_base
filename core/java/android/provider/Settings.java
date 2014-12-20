@@ -6104,6 +6104,12 @@ public final class Settings {
                 "status_bar_battery_percent";
 
         /**
+         * Swap volume buttons on rotation
+         * @hide
+         */
+        public static final String SWAP_VOLUME_KEYS_ON_ROTATION = "swap_volume_keys_on_rotation";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
