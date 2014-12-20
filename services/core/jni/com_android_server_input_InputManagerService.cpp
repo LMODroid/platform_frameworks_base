@@ -358,6 +358,7 @@ public:
     void setTouchpadsEnabled(bool enabled);
     void setInputDeviceEnabled(uint32_t deviceId, bool enabled);
     void setShowTouches(bool enabled);
+    void setVolumeKeysRotation(int mode);
     void setNonInteractiveDisplays(const std::set<ui::LogicalDisplayId>& displayIds);
     void reloadCalibration();
     void reloadPointerIcons();
@@ -484,6 +485,9 @@ private:
 
         // The latest request to enable or disable Pointer Capture.
         PointerCaptureRequest pointerCaptureRequest{};
+
+        // Volume keys rotation mode (0 - off, 1 - phone, 2 - tablet)
+        int32_t volumeKeysRotationMode{0};
 
         // Sprite controller singleton, created on first use.
         std::shared_ptr<SpriteController> spriteController{};
@@ -801,6 +805,8 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
                 ? 1
                 : exp2f(mLocked.mouseScrollingSpeed * POINTER_SPEED_EXPONENT);
         outConfig->pointerGesturesEnabled = mLocked.pointerGesturesEnabled;
+
+        outConfig->volumeKeysRotationMode = mLocked.volumeKeysRotationMode;
 
         outConfig->pointerCaptureRequest = mLocked.pointerCaptureRequest;
 
@@ -1704,6 +1710,22 @@ void NativeInputManager::setShowTouches(bool enabled) {
 void NativeInputManager::requestPointerCapture(const sp<IBinder>& windowToken,
                                                PointerCaptureMode mode) {
     mInputManager->getDispatcher().requestPointerCapture(windowToken, mode);
+}
+
+void NativeInputManager::setVolumeKeysRotation(int mode) {
+    { // acquire lock
+        std::scoped_lock _l(mLock);
+
+        if (mLocked.volumeKeysRotationMode == mode) {
+            return;
+        }
+
+        ALOGI("Volume keys: rotation mode set to %d.", mode);
+        mLocked.volumeKeysRotationMode = mode;
+    } // release lock
+
+    mInputManager->getReader().requestRefreshConfiguration(
+            InputReaderConfiguration::Change::VOLUME_KEYS_ROTATION);
 }
 
 void NativeInputManager::setNonInteractiveDisplays(
@@ -2672,6 +2694,12 @@ static void nativeSetShowTouches(JNIEnv* env, jobject nativeImplObj, jboolean en
     im->setShowTouches(enabled);
 }
 
+static void nativeSetVolumeKeysRotation(JNIEnv* env, jobject nativeImplObj, int mode) {
+    NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
+
+    im->setVolumeKeysRotation(mode);
+}
+
 static void nativeSetNonInteractiveDisplays(JNIEnv* env, jobject nativeImplObj,
                                             jintArray displayIds) {
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
@@ -3413,6 +3441,7 @@ static const JNINativeMethod gInputManagerMethods[] = {
         {"setTouchpadAccelerationEnabled", "(Z)V", (void*)nativeSetTouchpadAccelerationEnabled},
         {"setTouchpadsEnabled", "(Z)V", (void*)nativeSetTouchpadsEnabled},
         {"setShowTouches", "(Z)V", (void*)nativeSetShowTouches},
+        {"setVolumeKeysRotation", "(I)V", (void*)nativeSetVolumeKeysRotation},
         {"setNonInteractiveDisplays", "([I)V", (void*)nativeSetNonInteractiveDisplays},
         {"reloadCalibration", "()V", (void*)nativeReloadCalibration},
         {"vibrate", "(I[J[III)V", (void*)nativeVibrate},
