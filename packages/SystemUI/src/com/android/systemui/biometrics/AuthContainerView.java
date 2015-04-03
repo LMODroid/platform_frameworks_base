@@ -65,6 +65,7 @@ import com.android.app.animation.Interpolators;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.jank.InteractionJankMonitor;
 import com.android.internal.widget.LockPatternUtils;
+import com.android.internal.widget.LockPatternView;
 import com.android.systemui.biometrics.AuthController.ScaleFactorProvider;
 import com.android.systemui.biometrics.domain.interactor.PromptSelectorInteractor;
 import com.android.systemui.biometrics.plugins.AuthContextPlugins;
@@ -486,6 +487,11 @@ public class AuthContainerView extends LinearLayout
             final CredentialViewModel vm = mCredentialViewModelProvider.get();
             ((CredentialView) mCredentialView).init(vm, this, mPanelController, false,
                     mBiometricCallback, mAuthContextPlugins);
+            if (credentialType instanceof PromptKind.Pattern) {
+                LockPatternView lockPatternView = mCredentialView.findViewById(R.id.lockPattern);
+                lockPatternView.setLockPatternSize(
+                        mLockPatternUtils.getLockPatternSize(mConfig.mUserId));
+            }
             credentialView.addView(mCredentialView);
         } else {
             mCredentialView = factory.inflate(layoutResourceId, mLayout, false);
