@@ -8221,6 +8221,11 @@ public final class ViewRootImpl implements ViewParent,
                 mLastClickToolType = event.getToolType(event.getActionIndex());
             }
 
+            if (event.getPointerCount() == 3 && isSwipeToScreenshotGestureActive()) {
+                event.setAction(MotionEvent.ACTION_CANCEL);
+                Log.d(mTag, "canceling motionEvent because of threeGesture detecting");
+            }
+
             mAttachInfo.mUnbufferedDispatchRequested = false;
             mAttachInfo.mHandlingPointerEvent = true;
             // If the event was fully handled by the handwriting initiator, then don't dispatch it
@@ -13710,5 +13715,14 @@ public final class ViewRootImpl implements ViewParent,
      */
     public Choreographer getChoreographer() {
         return mChoreographer;
+    }
+
+    private boolean isSwipeToScreenshotGestureActive() {
+        try {
+            return ActivityManager.getService().isSwipeToScreenshotGestureActive();
+        } catch (RemoteException e) {
+            Log.e(mTag, "isSwipeToScreenshotGestureActive exception", e);
+            return false;
+        }
     }
 }
