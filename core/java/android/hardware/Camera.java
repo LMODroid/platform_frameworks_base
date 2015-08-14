@@ -588,8 +588,17 @@ public class Camera {
             mEventHandler = null;
         }
 
-        return native_setup(new WeakReference<Camera>(this), cameraId, halVersion,
-                ActivityThread.currentOpPackageName());
+        String packageName = ActivityThread.currentOpPackageName();
+
+        // Force HAL1 if the package name is in our 'blacklist'
+        String packageList = SystemProperties.get("vendor.camera.hal1.packagelist", "");
+        if (!packageList.isEmpty()) {
+            if (Arrays.asList(packageList.split(",")).contains(packageName)) {
+                halVersion = CAMERA_HAL_API_VERSION_1_0;
+            }
+        }
+
+        return native_setup(new WeakReference<Camera>(this), cameraId, halVersion, packageName);
     }
 
     private int cameraInitNormal(int cameraId) {
