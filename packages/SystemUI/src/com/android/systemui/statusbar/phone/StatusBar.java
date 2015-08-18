@@ -211,6 +211,7 @@ import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.SuperStatusBarViewFactory;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
 import com.android.systemui.statusbar.VibratorHelper;
+import com.android.systemui.statusbar.VisualizerView;
 import com.android.systemui.statusbar.charging.WiredChargingRippleController;
 import com.android.systemui.statusbar.events.SystemStatusAnimationScheduler;
 import com.android.systemui.statusbar.notification.DynamicPrivacyController;
@@ -391,6 +392,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected NotificationShadeWindowView mNotificationShadeWindowView;
     protected StatusBarWindowView mPhoneStatusBarWindow;
     protected PhoneStatusBarView mStatusBarView;
+    private VisualizerView mVisualizerView;
     private AuthRippleController mAuthRippleController;
     private int mStatusBarWindowState = WINDOW_STATE_SHOWING;
     protected NotificationShadeWindowController mNotificationShadeWindowController;
@@ -1295,6 +1297,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             backdrop.setScaleY(scale);
         });
 
+        mVisualizerView = mNotificationShadeWindowView.findViewById(R.id.visualizerview);
+
         mNotificationPanelViewController.setUserSetupComplete(mUserSetup);
 
         // Set up the quick settings tile panel
@@ -1676,6 +1680,10 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public int getStatusBarHeight() {
         return mStatusBarWindowController.getStatusBarHeight();
+    }
+
+    public VisualizerView getVisualizerView() {
+        return mVisualizerView;
     }
 
     public boolean toggleSplitScreenMode(int metricsDockAction, int metricsUndockAction) {
@@ -3748,6 +3756,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 && visibleNotOccludedOrWillBe);
 
         mNotificationPanelViewController.setDozing(mDozing, animate, mWakeUpTouchLocation);
+        mVisualizerView.setDozing(mDozing);
         updateQsExpansionEnabled();
         Trace.endSection();
     }
@@ -3918,6 +3927,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         checkBarModes();
         updateScrimController();
         mPresenter.updateMediaMetaData(false, mState != StatusBarState.KEYGUARD);
+        mVisualizerView.setStatusBarState(newState);
         updateKeyguardState();
         Trace.endSection();
     }
@@ -4199,12 +4209,14 @@ public class StatusBar extends SystemUI implements DemoMode,
         @Override
         public void onScreenTurnedOn() {
             mScrimController.onScreenTurnedOn();
+            mVisualizerView.setVisible(true);
         }
 
         @Override
         public void onScreenTurnedOff() {
             mFalsingCollector.onScreenOff();
             mScrimController.onScreenTurnedOff();
+            mVisualizerView.setVisible(false);
             updateIsKeyguard();
         }
     };
