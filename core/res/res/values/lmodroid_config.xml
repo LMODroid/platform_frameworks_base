@@ -221,4 +221,7 @@
     <bool name="config_dt2sGestureAvailable">true</bool>
     <bool name="config_dt2sGestureEnabledByDefault">true</bool>
 
+    <!-- The list of package IDs that are allowed to skip camera high frame rate checks. -->
+    <string-array name="config_cameraHFRPrivAppList" translatable="false" />
+
 </resources>
