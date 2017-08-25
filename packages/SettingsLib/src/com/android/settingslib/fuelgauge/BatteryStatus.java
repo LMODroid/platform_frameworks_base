@@ -26,6 +26,7 @@ import static android.os.BatteryManager.EXTRA_MAX_CHARGING_CURRENT;
 import static android.os.BatteryManager.EXTRA_MAX_CHARGING_VOLTAGE;
 import static android.os.BatteryManager.EXTRA_PLUGGED;
 import static android.os.BatteryManager.EXTRA_PRESENT;
+import static android.os.BatteryManager.EXTRA_OEM_FAST_CHARGING;
 import static android.os.BatteryManager.EXTRA_STATUS;
 
 import android.content.Context;
@@ -52,15 +53,17 @@ public class BatteryStatus {
     public final int health;
     public final int maxChargingWattage;
     public final boolean present;
+    public final boolean oemFastCharging;
 
     public BatteryStatus(int status, int level, int plugged, int health,
-            int maxChargingWattage, boolean present) {
+            int maxChargingWattage, boolean present, boolean oemFastCharging) {
         this.status = status;
         this.level = level;
         this.plugged = plugged;
         this.health = health;
         this.maxChargingWattage = maxChargingWattage;
         this.present = present;
+        this.oemFastCharging = oemFastCharging;
     }
 
     public BatteryStatus(Intent batteryChangedIntent) {
@@ -69,6 +72,7 @@ public class BatteryStatus {
         level = batteryChangedIntent.getIntExtra(EXTRA_LEVEL, 0);
         health = batteryChangedIntent.getIntExtra(EXTRA_HEALTH, BATTERY_HEALTH_UNKNOWN);
         present = batteryChangedIntent.getBooleanExtra(EXTRA_PRESENT, true);
+        oemFastCharging = batteryChangedIntent.getBooleanExtra(EXTRA_OEM_FAST_CHARGING, false);
 
         final int maxChargingMicroAmp = batteryChangedIntent.getIntExtra(EXTRA_MAX_CHARGING_CURRENT,
                 -1);
@@ -162,6 +166,7 @@ public class BatteryStatus {
      * @return the charing speed
      */
     public final int getChargingSpeed(Context context) {
+        if (oemFastCharging) return CHARGING_FAST;
         final int slowThreshold = context.getResources().getInteger(
                 R.integer.config_chargingSlowlyThreshold);
         final int fastThreshold = context.getResources().getInteger(
@@ -175,7 +180,8 @@ public class BatteryStatus {
     @Override
     public String toString() {
         return "BatteryStatus{status=" + status + ",level=" + level + ",plugged=" + plugged
-                + ",health=" + health + ",maxChargingWattage=" + maxChargingWattage + "}";
+                + ",health=" + health + ",maxChargingWattage=" + maxChargingWattage
+                + ", oemFastCharging=" + oemFastCharging + "}";
     }
 
     /**
