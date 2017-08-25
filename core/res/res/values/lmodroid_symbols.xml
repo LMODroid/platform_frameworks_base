@@ -152,4 +152,7 @@
     <java-symbol type="string" name="charging_control_notification_content_target" />
     <java-symbol type="string" name="charging_control_notification_content_target_reached" />
 
+    <!-- Configuration for detecting whether an oem fast charger is active -->
+    <java-symbol type="array" name="config_oemFastChargerStatusPaths" />
+
 </resources>
