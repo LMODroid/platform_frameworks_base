@@ -219,6 +219,12 @@ public class BatteryManager {
      */
     public static final String EXTRA_PLUGGED_RAW = "plugged_raw";
 
+    /**
+     * boolean value to indicate OEM fast charging
+     * {@hide}
+     */
+    public static final String EXTRA_OEM_FAST_CHARGING = "oem_fast_charging";
+
     /** @hide */
     public static final int BATTERY_PROPERTY_MOD_CHARGE_FULL = 100;
     /** @hide */
