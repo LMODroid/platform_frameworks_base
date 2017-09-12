@@ -18,6 +18,7 @@ package com.android.server.policy;
 
 import static android.Manifest.permission.INTERNAL_SYSTEM_WINDOW;
 import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
+import static android.Manifest.permission.ACCESS_SURFACE_FLINGER;
 import static android.app.AppOpsManager.OP_SYSTEM_ALERT_WINDOW;
 import static android.app.AppOpsManager.OP_TOAST_WINDOW;
 import static android.app.WindowConfiguration.WINDOWING_MODE_SPLIT_SCREEN_PRIMARY;
@@ -194,6 +195,7 @@ import com.android.internal.inputmethod.SoftInputShowHideReason;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.os.RoSystemProperties;
+import com.android.internal.util.libremobileos.LMODroidUtils;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.os.DeviceKeyHandler;
 import com.android.internal.policy.PhoneWindow;
@@ -5395,6 +5397,27 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public boolean hasNavigationBar() {
         return mDefaultDisplayPolicy.hasNavigationBar();
     }
+
+    @Override
+    public void sendCustomAction(Intent intent) {
+        String action = intent.getAction();
+        if (action != null) {
+            if (LMODroidUtils.INTENT_SCREENSHOT.equals(action)) {
+                mContext.enforceCallingOrSelfPermission(ACCESS_SURFACE_FLINGER,
+                        TAG + "sendCustomAction permission denied");
+                mHandler.removeCallbacks(mScreenshotRunnable);
+                mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
+                mHandler.post(mScreenshotRunnable);
+            } else if (LMODroidUtils.INTENT_REGION_SCREENSHOT.equals(action)) {
+                mContext.enforceCallingOrSelfPermission(ACCESS_SURFACE_FLINGER,
+                        TAG + "sendCustomAction permission denied");
+                mHandler.removeCallbacks(mScreenshotRunnable);
+                mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_SELECTED_REGION);
+                mHandler.post(mScreenshotRunnable);
+            }
+        }
+    }
+
 
     @Override
     public void setDismissImeOnBackKeyPressed(boolean newValue) {
