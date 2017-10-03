@@ -41,10 +41,12 @@ import static org.mockito.Mockito.when;
 
 import android.animation.Animator;
 import android.annotation.IdRes;
+import android.content.ContentResolver;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -283,6 +285,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
     @Mock protected SysUIStateDisplaysInteractor mSysUIStateDisplaysInteractor;
     @Mock private WindowManagerProvider mWindowManagerProvider;
     @Mock protected SelectedUserInteractor mSelectedUserInteractor;
+    @Mock protected ContentResolver mContentResolver;
+    @Mock protected PowerManager mPowerManager;
 
     protected final int mMaxUdfpsBurnInOffsetY = 5;
     protected FakeFeatureFlagsClassic mFeatureFlags = new FakeFeatureFlagsClassic();
@@ -521,13 +525,14 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
 
         mNotificationPanelViewController = new NotificationPanelViewController(
                 mView,
+                mMainHandler,
                 coordinator, expansionHandler, mDynamicPrivacyController, mKeyguardBypassController,
                 mFalsingManager, new FalsingCollectorFake(),
                 mKeyguardStateController,
                 mStatusBarStateController,
                 mNotificationShadeWindowController,
                 mDozeLog, mDozeParameters, mCommandQueue, mVibratorHelper,
-                mLatencyTracker, mAccessibilityManager, 0, mUpdateMonitor,
+                mLatencyTracker, mPowerManager, mAccessibilityManager, 0, mUpdateMonitor,
                 mMetricsLogger,
                 mShadeLog,
                 mConfigurationController,
@@ -550,6 +555,7 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
                 mQsController,
                 mFragmentService,
                 mStatusBarService,
+                mContentResolver,
                 mShadeHeaderController,
                 mScreenOffAnimationController,
                 mLockscreenGestureLogger,
@@ -583,7 +589,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
                 mMSDLPlayer,
                 mBrightnessMirrorShowingRepository,
                 new BlurConfig(0f, 0f),
-                () -> mKosmos.getFakeShadeDisplaysRepository());
+                () -> mKosmos.getFakeShadeDisplaysRepository(),
+                mContext);
         mNotificationPanelViewController.initDependencies(
                 mCentralSurfaces,
                 null,
