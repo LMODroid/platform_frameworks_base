@@ -10695,6 +10695,13 @@ public final class Settings {
         public static final String MEDIA_CONTROLS_RECOMMENDATION = "qs_media_recommend";
 
         /**
+         * Show lockscreen shortcuts on secure lock screens
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_SHOW_SHORTCUTS = "lockscreen_show_shortcuts";
+
+        /**
          * Controls magnification mode when magnification is enabled via a system-wide triple tap
          * gesture or the accessibility shortcut.
          *

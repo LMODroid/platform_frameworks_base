@@ -53,6 +53,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.service.media.CameraPrewarmService;
 import android.service.quickaccesswallet.GetWalletCardsError;
 import android.service.quickaccesswallet.GetWalletCardsResponse;
@@ -454,7 +455,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
     private void updateRightAffordanceIcon() {
         IconState state = mRightButton.getIcon();
-        mRightAffordanceView.setVisibility(!mDozing && state.isVisible ? View.VISIBLE : View.GONE);
+        mRightAffordanceView.setVisibility(showShortcuts() && !mDozing && state.isVisible ? View.VISIBLE : View.GONE);
         if (state.isVisible && state.drawable != null) {
             mRightAffordanceView.setImageDrawable(state.drawable, state.tint, state.isDefaultButton ? false : true);
             mRightAffordanceView.setContentDescription(state.contentDescription);
@@ -518,7 +519,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     }
 
     private void updateLeftAffordanceIcon() {
-        if (!mShowLeftAffordance || mDozing) {
+        if (!mShowLeftAffordance || mDozing || !showShortcuts()) {
             mLeftAffordanceView.setVisibility(GONE);
             return;
         }
@@ -1011,7 +1012,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         public IconState getIcon() {
             mLeftIsVoiceAssist = canLaunchVoiceAssist();
             if (mLeftIsVoiceAssist) {
-                mIconState.isVisible = mUserSetupComplete && mShowLeftAffordance;
+                mIconState.isVisible = mUserSetupComplete && mShowLeftAffordance && showShortcuts();
                 if (mLeftAssistIcon == null) {
                     mIconState.drawable = mContext.getDrawable(R.drawable.ic_mic_26dp);
                 } else {
@@ -1021,7 +1022,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
                         R.string.accessibility_voice_assist_button);
             } else {
                 mIconState.isVisible = mUserSetupComplete && mShowLeftAffordance
-                        && isPhoneVisible();
+                        && isPhoneVisible() && showShortcuts();
                 mIconState.drawable = mContext.getDrawable(
                         com.android.internal.R.drawable.ic_phone);
                 mIconState.contentDescription = mContext.getString(
@@ -1046,7 +1047,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
             mIconState.isVisible = !isCameraDisabled
                     && mShowCameraAffordance
                     && mUserSetupComplete
-                    && resolveCameraIntent(0) != null;
+                    && resolveCameraIntent(0) != null
+                    && showShortcuts();
             mIconState.drawable = mContext.getDrawable(R.drawable.ic_camera_alt_24dp);
             mIconState.contentDescription =
                     mContext.getString(R.string.accessibility_camera_button);
@@ -1103,6 +1105,13 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
                 com.android.internal.R.attr.colorSurface);
         mWalletButton.setBackgroundTintList(bgColor);
         mControlsButton.setBackgroundTintList(bgColor);
+    }
+
+     private boolean showShortcuts() {
+        boolean secure = mKeyguardStateController.isMethodSecure();
+        return secure && Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.LOCKSCREEN_SHOW_SHORTCUTS, 0,
+                KeyguardUpdateMonitor.getCurrentUser()) != 0;
     }
 
     /**
