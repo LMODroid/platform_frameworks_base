@@ -29,6 +29,7 @@ import android.os.PowerManager;
 import android.os.UserHandle;
 import android.service.notification.StatusBarNotification;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.RemoteAnimationAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -550,4 +551,8 @@ public interface CentralSurfaces extends Dumpable, ActivityStarter, LifecycleOwn
             mDeviceId = deviceId;
         }
     }
+
+    void brightnessControl(MotionEvent event);
+
+    void onBrightnessChanged(boolean upOrCancel);
 }
