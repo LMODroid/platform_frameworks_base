@@ -5648,6 +5648,13 @@ public final class Settings {
         public static final String FORCE_SHOW_NAVBAR = "force_show_navbar";
 
         /**
+         * Whether to control brightness from status bar
+         * 0 = 0ff, 1 = on
+         * @hide
+         */
+        public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
+
+        /**
          * Whether to take partial screenshot with volume down + power click.
          * @hide
          */
