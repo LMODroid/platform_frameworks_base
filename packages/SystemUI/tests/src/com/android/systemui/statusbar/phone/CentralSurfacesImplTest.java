@@ -599,7 +599,8 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
                 mActivityStarter,
                 mBrightnessMirrorShowingInteractor,
                 mGlanceableHubContainerController,
-                mEmergencyGestureIntentFactory
+                mEmergencyGestureIntentFactory,
+                mNotificationPanelViewController
         );
         mScreenLifecycle.addObserver(mCentralSurfaces.mScreenObserver);
         mCentralSurfaces.initShadeVisibilityListener();
