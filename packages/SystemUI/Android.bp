@@ -203,6 +203,7 @@ android_library {
         "framework-lmodroid.static",
     ],
     manifest: "AndroidManifest.xml",
+    additional_manifests: ["LMODroidManifest.xml"],
 
     javacflags: ["-Adagger.fastInit=enabled"],
     kotlincflags: ["-Xjvm-default=enable"],
