@@ -618,6 +618,7 @@ android_library {
         "dagger.useBindingGraphFix=ENABLED",
     ],
     manifest: "AndroidManifest.xml",
+    additional_manifests: ["LMODroidManifest.xml"],
 }
 
 java_library {
