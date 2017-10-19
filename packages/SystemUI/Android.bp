@@ -592,6 +592,7 @@ android_library {
         "keepanno-annotations",
     ],
     manifest: "AndroidManifest.xml",
+    additional_manifests: ["LMODroidManifest.xml"],
 
     javacflags: [
         "-Adagger.fastInit=enabled",
