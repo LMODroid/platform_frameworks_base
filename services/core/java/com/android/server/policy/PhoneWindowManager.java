@@ -254,6 +254,8 @@ import com.android.server.wm.DisplayRotation;
 import com.android.server.wm.WindowManagerInternal;
 import com.android.server.wm.WindowManagerInternal.AppTransitionListener;
 
+import com.libremobileos.util.VolumeKeyHandler;
+
 import dalvik.system.PathClassLoader;
 
 import java.io.File;
@@ -748,6 +750,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             ));
 
     private final List<DeviceKeyHandler> mDeviceKeyHandlers = new ArrayList<>();
+
+    private VolumeKeyHandler mVolumeKeyHandler;
 
     private static final int MSG_DISPATCH_MEDIA_KEY_WITH_WAKE_LOCK = 3;
     private static final int MSG_DISPATCH_MEDIA_KEY_REPEAT_WITH_WAKE_LOCK = 4;
@@ -5203,6 +5207,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // {@link interceptKeyBeforeDispatching()}.
                     result |= ACTION_PASS_TO_USER;
                 } else if ((result & ACTION_PASS_TO_USER) == 0) {
+                    if (mVolumeKeyHandler.handleVolumeKey(event, interactive)) {
+                        break;
+                    }
+
                     // If we aren't passing to the user and no one else
                     // handled it send it to the session manager to
                     // figure out.
@@ -6446,6 +6454,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mKeyguardDelegate.onBootCompleted();
             }
         }
+        mVolumeKeyHandler = new VolumeKeyHandler(mContext);
         mSideFpsEventHandler.onFingerprintSensorReady();
         startedWakingUp(Display.DEFAULT_DISPLAY_GROUP, PowerManager.WAKE_REASON_UNKNOWN);
         finishedWakingUp(Display.DEFAULT_DISPLAY_GROUP, PowerManager.WAKE_REASON_UNKNOWN);
