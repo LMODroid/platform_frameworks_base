@@ -63,4 +63,10 @@
     <!-- Parallel space badge -->
     <string name="parallel_space_badge_label">%1$s</string>
 
+    <!-- Status bar network traffic monitor strings -->
+    <string name="kilobitspersecond_short">kb/s</string>
+    <string name="megabitspersecond_short">Mb/s</string>
+    <string name="kilobytespersecond_short">kB/s</string>
+    <string name="megabytespersecond_short">MB/s</string>
+
 </resources>
