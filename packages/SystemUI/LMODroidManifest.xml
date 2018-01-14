@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * Copyright (c) 2017 The LineageOS Project
+ * Copyright (c) 2017-2020 The LineageOS Project
  * Copyright (c) 2020 The LibreMobileOS Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         package="com.android.systemui">
+
+    <!-- Network traffic monitor -->
+    <uses-permission android:name="android.permission.MAINLINE_NETWORK_STACK" />
 
     <!-- QS Tiles -->
     <uses-permission android:name="android.permission.MAINLINE_NETWORK_STACK" />
