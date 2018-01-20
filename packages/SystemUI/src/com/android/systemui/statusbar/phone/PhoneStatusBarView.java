@@ -261,9 +261,9 @@ public class PhoneStatusBarView extends FrameLayout {
         LayoutParams centeredAreaParams =
                 (LayoutParams) findViewById(R.id.centered_area).getLayoutParams();
         centeredAreaParams.leftMargin =
-                winRotation == Surface.ROTATION_0 ? -contentRect.left : 0;
+                winRotation == Surface.ROTATION_0 ? -insets.first : 0;
         centeredAreaParams.rightMargin =
-                winRotation == Surface.ROTATION_0 ? -(size.x - contentRect.right) : 0;
+                winRotation == Surface.ROTATION_0 ? -insets.second : 0;
     }
 
     /**
