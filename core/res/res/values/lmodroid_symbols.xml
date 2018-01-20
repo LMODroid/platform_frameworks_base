@@ -57,4 +57,7 @@
     <java-symbol type="dimen" name="config_buttonBrightnessSettingDefaultFloat" />
     <java-symbol type="dimen" name="config_keyboardBrightnessSettingDefaultFloat" />
 
+    <!-- Power menu -->
+    <java-symbol type="array" name="config_restartActionsList" />
+
 </resources>

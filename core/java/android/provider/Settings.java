@@ -10546,6 +10546,12 @@ public final class Settings {
         public static final String KEYBOARD_BRIGHTNESS = "keyboard_brightness";
 
         /**
+         * Whether to include options in power menu for rebooting into recovery or bootloader
+         * @hide
+         */
+        public static final String ADVANCED_REBOOT = "advanced_reboot";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
