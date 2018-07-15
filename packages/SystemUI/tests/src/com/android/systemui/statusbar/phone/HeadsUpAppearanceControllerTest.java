@@ -87,6 +87,9 @@ public class HeadsUpAppearanceControllerTest extends SysuiTestCase {
     private CommandQueue mCommandQueue;
     private NotificationRoundnessManager mNotificationRoundnessManager;
     private final FakeFeatureFlagsClassic mFeatureFlags = new FakeFeatureFlagsClassic();
+    private PhoneStatusBarView mPhoneStatusBarView = mock(PhoneStatusBarView.class);
+    private PhoneStatusBarViewController mStatusBarViewController =
+            mock(PhoneStatusBarViewController.class);
 
     @Before
     public void setUp() throws Exception {
@@ -125,7 +128,9 @@ public class HeadsUpAppearanceControllerTest extends SysuiTestCase {
                 new Clock(mContext, null),
                 mFeatureFlags,
                 mock(HeadsUpNotificationIconInteractor.class),
-                Optional.of(mOperatorNameView));
+                Optional.of(mOperatorNameView),
+                mPhoneStatusBarView,
+                mStatusBarViewController);
         mHeadsUpAppearanceController.setAppearFraction(0.0f, 0.0f);
     }
 
@@ -210,7 +215,9 @@ public class HeadsUpAppearanceControllerTest extends SysuiTestCase {
                 mHeadsUpStatusBarView,
                 new Clock(mContext, null),
                 mFeatureFlags, mock(HeadsUpNotificationIconInteractor.class),
-                Optional.empty());
+                Optional.empty(),
+                mPhoneStatusBarView,
+                mStatusBarViewController);
 
         assertEquals(expandedHeight, newController.mExpandedHeight, 0.0f);
         assertEquals(appearFraction, newController.mAppearFraction, 0.0f);
