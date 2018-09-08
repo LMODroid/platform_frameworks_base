@@ -25,6 +25,8 @@ import android.view.MotionEvent
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.plugins.FalsingManager
 import com.android.systemui.plugins.statusbar.StatusBarStateController
+import com.android.systemui.statusbar.StatusBarState
+import com.android.systemui.statusbar.phone.CentralSurfaces
 import com.libremobileos.providers.LMOSettings
 import javax.inject.Inject
 
@@ -34,6 +36,7 @@ class QQSGestureListener @Inject constructor(
         private val falsingManager: FalsingManager,
         private val powerManager: PowerManager,
         private val statusBarStateController: StatusBarStateController,
+        private val centralSurfaces: CentralSurfaces,
 ) : GestureDetector.SimpleOnGestureListener() {
 
     private var doubleTapToSleepEnabled = false
@@ -58,11 +61,15 @@ class QQSGestureListener @Inject constructor(
     }
 
     override fun onDoubleTapEvent(e: MotionEvent): Boolean {
-        // Go to sleep on double tap the QQS status bar
-        if (e.actionMasked == MotionEvent.ACTION_UP &&
+        // Go to sleep when double tapping the QQS status bar
+        // or lockscreen (keyguard showing, but not bouncer)
+        if (
+            e.actionMasked == MotionEvent.ACTION_UP &&
                 !statusBarStateController.isDozing &&
                 doubleTapToSleepEnabled &&
-                e.getY() < quickQsOffsetHeight &&
+                (e.getY() < quickQsOffsetHeight ||
+                    statusBarStateController.getState() == StatusBarState.KEYGUARD &&
+                        !centralSurfaces.isBouncerShowing()) &&
                 !falsingManager.isFalseDoubleTap
         ) {
             powerManager.goToSleep(e.getEventTime())
