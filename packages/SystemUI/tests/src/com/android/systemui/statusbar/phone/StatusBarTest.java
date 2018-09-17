@@ -147,6 +147,7 @@ import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.window.StatusBarWindowController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.WallpaperController;
+import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.concurrency.FakeExecutor;
 import com.android.systemui.util.concurrency.MessageRouterImpl;
 import com.android.systemui.util.time.FakeSystemClock;
@@ -278,6 +279,7 @@ public class StatusBarTest extends SysuiTestCase {
     @Mock private OperatorNameViewController mOperatorNameViewController;
     @Mock private OperatorNameViewController.Factory mOperatorNameViewControllerFactory;
     @Mock private ActivityLaunchAnimator mActivityLaunchAnimator;
+    @Mock private TunerService mTunerService;
     private ShadeController mShadeController;
     private final FakeSystemClock mFakeSystemClock = new FakeSystemClock();
     private FakeExecutor mMainExecutor = new FakeExecutor(mFakeSystemClock);
