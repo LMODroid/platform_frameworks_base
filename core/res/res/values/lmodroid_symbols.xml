@@ -15,8 +15,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Device keyhandler -->
-    <java-symbol type="string" name="config_deviceKeyHandlerLib" />
-    <java-symbol type="string" name="config_deviceKeyHandlerClass" />
+    <!-- Device keyhandlers -->
+    <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
+    <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
 
 </resources>
