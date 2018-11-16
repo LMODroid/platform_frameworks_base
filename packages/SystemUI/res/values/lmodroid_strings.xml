@@ -133,4 +133,7 @@
     <string name="status_bar_firewall">Firewall</string>
     <string name="status_bar_firewall_slot" translatable="false">firewall</string>
 
+    <!-- Navbar -->
+    <string name="systemui_tuner_navbar_title">Layout</string>
+
 </resources>
