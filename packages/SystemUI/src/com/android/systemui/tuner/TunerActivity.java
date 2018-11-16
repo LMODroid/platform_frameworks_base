@@ -67,6 +67,8 @@ public class TunerActivity extends CollapsingToolbarBaseActivity implements
                 fragment = new DemoModeFragment(mDemoModeController, mGlobalSettings);
             } else if ("com.android.settings.action.STATUS_BAR_TUNER".equals(action)) {
                 fragment = new StatusBarTuner();
+            } else if ("com.android.settings.action.NAV_BAR_TUNER".equals(action)) {
+                fragment = new NavBarTuner();
             } else {
                 fragment = new TunerFragment(mTunerService);
             }
