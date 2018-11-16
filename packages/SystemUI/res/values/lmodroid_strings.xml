@@ -87,6 +87,9 @@
     <!-- Name of the VoWiFi status bar icon. -->
     <string name="status_bar_vowifi">Wi-Fi calling (VoWiFi)</string>
 
+    <!-- Navbar -->
+    <string name="systemui_tuner_navbar_title">Layout</string>
+
     <!-- WiFi standard numbering on statusbar -->
     <string name="status_bar_wifi_standard">Wi-Fi standard number</string>
 

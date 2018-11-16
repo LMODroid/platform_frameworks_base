@@ -42,6 +42,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity-alias>
+        <activity-alias
+            android:name=".tuner.NavbarActivity"
+            android:targetActivity=".tuner.TunerActivity"
+            android:enabled="true"
+            android:icon="@drawable/tuner"
+            android:theme="@style/Theme.SubSettingsBase"
+            android:label="@string/systemui_tuner_navbar_title"
+            android:process=":tuner"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.settings.action.NAV_BAR_TUNER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
     </application>
 
 </manifest>
