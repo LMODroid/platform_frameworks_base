@@ -162,6 +162,7 @@ interface ConnectivityModule {
         const val HOTSPOT_TILE_SPEC = "hotspot"
         const val CAST_TILE_SPEC = "cast"
         const val BLUETOOTH_TILE_SPEC = "bt"
+        const val NFC_TILE_SPEC = "nfc"
 
         @Provides
         @IntoMap
@@ -371,6 +372,21 @@ interface ConnectivityModule {
                     QSTileUIConfig.Resource(
                         iconRes = R.drawable.qs_bluetooth_icon_off,
                         labelRes = R.string.quick_settings_bluetooth_label,
+                    ),
+                instanceId = uiEventLogger.getNewInstanceId(),
+                category = TileCategory.CONNECTIVITY,
+            )
+
+        @Provides
+        @IntoMap
+        @StringKey(NFC_TILE_SPEC)
+        fun provideNfcTileConfig(uiEventLogger: QsEventLogger): QSTileConfig =
+            QSTileConfig(
+                tileSpec = TileSpec.create(NFC_TILE_SPEC),
+                uiConfig =
+                    QSTileUIConfig.Resource(
+                        iconRes = R.drawable.ic_qs_nfc,
+                        labelRes = R.string.quick_settings_nfc_label,
                     ),
                 instanceId = uiEventLogger.getNewInstanceId(),
                 category = TileCategory.CONNECTIVITY,
