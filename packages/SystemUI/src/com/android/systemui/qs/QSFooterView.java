@@ -59,14 +59,14 @@ public class QSFooterView extends FrameLayout {
     @Nullable
     private OnClickListener mExpandClickListener;
 
-    private final ContentObserver mDeveloperSettingsObserver = new ContentObserver(
+    /*private final ContentObserver mDeveloperSettingsObserver = new ContentObserver(
             new Handler(mContext.getMainLooper())) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
             setBuildText();
         }
-    };
+    };*/
 
     public QSFooterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -81,11 +81,11 @@ public class QSFooterView extends FrameLayout {
 
         updateResources();
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
-        setBuildText();
+        //setBuildText();
     }
 
     private void setBuildText() {
-        if (mBuildText == null) return;
+        /*if (mBuildText == null) return;
         if (DevelopmentSettingsEnabler.isDevelopmentSettingsEnabled(mContext)) {
             mBuildText.setText(mContext.getString(
                     com.android.internal.R.string.bugreport_status,
@@ -99,7 +99,7 @@ public class QSFooterView extends FrameLayout {
             mBuildText.setText(null);
             mShouldShowBuildText = false;
             mBuildText.setSelected(false);
-        }
+        }*/
     }
 
     @Override
@@ -175,15 +175,15 @@ public class QSFooterView extends FrameLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mContext.getContentResolver().registerContentObserver(
+        /*mContext.getContentResolver().registerContentObserver(
                 Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
-                mDeveloperSettingsObserver, UserHandle.USER_ALL);
+                mDeveloperSettingsObserver, UserHandle.USER_ALL);*/
     }
 
     @Override
     @VisibleForTesting
     public void onDetachedFromWindow() {
-        mContext.getContentResolver().unregisterContentObserver(mDeveloperSettingsObserver);
+        //mContext.getContentResolver().unregisterContentObserver(mDeveloperSettingsObserver);
         super.onDetachedFromWindow();
     }
 
