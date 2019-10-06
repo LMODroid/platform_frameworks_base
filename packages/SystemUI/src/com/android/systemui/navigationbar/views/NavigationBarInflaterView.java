@@ -140,6 +140,8 @@ public class NavigationBarInflaterView extends FrameLayout {
 
     private final ContentObserver mContentObserver;
 
+    private boolean mUsingCustomLayout;
+
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
         createInflaters();
@@ -162,6 +164,11 @@ public class NavigationBarInflaterView extends FrameLayout {
                     updateHint();
                     mContext.getMainExecutor().execute(() -> {
                         onLikelyDefaultLayoutChange();
+                    });
+                } else if (Settings.Secure.getUriFor(NAV_BAR_VIEWS).equals(uri)) {
+                    mContext.getMainExecutor().execute(() -> {
+                        setNavigationBarLayout(Settings.Secure.getString(mContext.getContentResolver(),
+                                NAV_BAR_VIEWS));
                     });
                 }
             }
@@ -219,12 +226,16 @@ public class NavigationBarInflaterView extends FrameLayout {
         Uri navBarInverse = Settings.Secure.getUriFor(NAV_BAR_INVERSE);
         Uri navigationBarHint = Settings.System.getUriFor(
                 LMOSettings.System.NAVIGATION_BAR_HINT);
+        Uri navigationBarView = Settings.Secure.getUriFor(NAV_BAR_VIEWS);
         mContext.getContentResolver().registerContentObserver(navBarInverse, false,
                 mContentObserver);
         mContext.getContentResolver().registerContentObserver(navigationBarHint, false,
                 mContentObserver);
+        mContext.getContentResolver().registerContentObserver(navigationBarView, false,
+                mContentObserver);
         mContentObserver.onChange(true, navBarInverse);
         mContentObserver.onChange(true, navigationBarHint);
+        mContentObserver.onChange(true, navigationBarView);
     }
 
     @Override
@@ -240,7 +251,17 @@ public class NavigationBarInflaterView extends FrameLayout {
         updateLayoutInversion();
     }
 
+    public void setNavigationBarLayout(String layoutValue) {
+        if (!Objects.equals(mCurrentLayout, layoutValue)) {
+            mUsingCustomLayout = layoutValue != null;
+            clearViews();
+            inflateLayout(layoutValue);
+        }
+    }
+
     public void onLikelyDefaultLayoutChange() {
+        // Don't override custom layouts
+        if (mUsingCustomLayout) return;
         // Reevaluate new layout
         final String newValue = getDefaultLayout();
         if (!Objects.equals(mCurrentLayout, newValue)) {
