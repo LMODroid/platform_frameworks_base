@@ -120,6 +120,7 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private boolean mInverseLayout;
     private boolean mIsHintEnabled;
+    private boolean mUsingCustomLayout;
 
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -179,6 +180,7 @@ public class NavigationBarInflaterView extends FrameLayout
         super.onAttachedToWindow();
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_INVERSE);
         Dependency.get(TunerService.class).addTunable(this, KEY_NAVIGATION_HINT);
+        Dependency.get(TunerService.class).addTunable(this, NAV_BAR_VIEWS);
     }
 
     @Override
@@ -190,6 +192,9 @@ public class NavigationBarInflaterView extends FrameLayout
 
     @Override
     public void onTuningChanged(String key, String newValue) {
+        if (NAV_BAR_VIEWS.equals(key)) {
+            setNavigationBarLayout(newValue);
+        }
         if (NAV_BAR_INVERSE.equals(key)) {
             mInverseLayout = TunerService.parseIntegerSwitch(newValue, false);
             updateLayoutInversion();
@@ -206,7 +211,17 @@ public class NavigationBarInflaterView extends FrameLayout
         updateLayoutInversion();
     }
 
+    public void setNavigationBarLayout(String layoutValue) {
+        if (!Objects.equals(mCurrentLayout, layoutValue)) {
+            mUsingCustomLayout = layoutValue != null;
+            clearViews();
+            inflateLayout(layoutValue);
+        }
+    }
+
     public void onLikelyDefaultLayoutChange() {
+        // Don't override custom layouts
+        if (mUsingCustomLayout) return;
         // Reevaluate new layout
         final String newValue = getDefaultLayout();
         if (!Objects.equals(mCurrentLayout, newValue)) {
