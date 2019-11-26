@@ -165,4 +165,7 @@
         <item quantity="other">%d devices connected</item>
     </plurals>
 
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Switch data card</string>
+
 </resources>
