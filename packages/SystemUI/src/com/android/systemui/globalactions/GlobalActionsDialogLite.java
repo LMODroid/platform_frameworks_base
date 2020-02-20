@@ -30,6 +30,9 @@ import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STR
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN;
 import static com.android.systemui.shared.system.BlurUtils.isVolumeAndPowerBlurEnabled;
 import static com.android.systemui.util.kotlin.JavaAdapterKt.collectFlow;
+import static com.libremobileos.util.PowerMenuConstants.PANIC_ACTIVITY;
+import static com.libremobileos.util.PowerMenuConstants.PANIC_PACKAGE;
+import static com.libremobileos.util.PowerMenuConstants.PANIC_SETTINGS;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -885,6 +888,11 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                 case DEVICECONTROLS:
                     addIfShouldShowAction(tempActions, new DeviceControlsAction());
                     break;
+                case PANIC:
+                    if (PowerMenuUtils.isPanicAvailable(mContext)) {
+                        addIfShouldShowAction(tempActions, new PanicAction());
+                    }
+                    break;
                 case EMERGENCY:
                     // Only add the standard EmergencyDialerAction if the
                     // EmergencyAffordanceAction was NOT already handled.
@@ -1545,6 +1553,48 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         @Override
         public boolean showBeforeProvisioning() {
             return true;
+        }
+    }
+
+    private final class PanicAction extends SinglePressAction implements LongPressAction  {
+        private PanicAction() {
+            super(com.android.systemui.res.R.drawable.ic_panic,
+                    com.android.systemui.res.R.string.global_action_panic);
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return false;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return false;
+        }
+
+        @Override
+        public void onPress() {
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(PANIC_PACKAGE, PANIC_ACTIVITY));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            if (mContext.getPackageManager().resolveActivity(intent,
+                    PackageManager.MATCH_SYSTEM_ONLY) != null) {
+                mContext.startActivity(intent);
+            }
+        }
+
+        @Override
+        public boolean onLongPress() {
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(PANIC_PACKAGE, PANIC_SETTINGS));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            if (mContext.getPackageManager().resolveActivity(intent,
+                    PackageManager.MATCH_SYSTEM_ONLY) != null) {
+                mContext.startActivity(intent);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
