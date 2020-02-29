@@ -7440,5 +7440,8 @@ message MetricsEvent {
 
     // LMODroid
     LMODROID = 450;
+
+    // Panel for Bluetooth
+    PANEL_BLUETOOTH = 4000;
   }
 }
