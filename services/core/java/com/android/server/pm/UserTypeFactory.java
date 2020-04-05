@@ -662,11 +662,7 @@ public final class UserTypeFactory {
     /** Returns the number of managed profiles allowed, virtually always 1. */
     private static int getMaxManagedProfiles() {
         final int normalValue = 1;
-        if (!Build.IS_DEBUGGABLE) {
-            return normalValue;
-        } else {
-            return SystemProperties.getInt("persist.sys.max_profiles", normalValue);
-        }
+        return SystemProperties.getInt("persist.sys.max_profiles", normalValue);
     }
 
     /**
