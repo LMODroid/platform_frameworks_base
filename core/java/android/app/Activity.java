@@ -1049,6 +1049,10 @@ public class Activity extends ContextThemeWrapper
             return ActivityClient.getInstance().moveActivityTaskToBack(mToken, nonRoot);
         }
 
+        @Override
+        public void onBackPressed() {
+            Activity.this.onBackPressed();
+        }
     };
 
     private static native String getDlWarning();
