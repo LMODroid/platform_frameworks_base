@@ -975,4 +975,5 @@
     <dimen name="secondary_rounded_corner_radius_adjustment">0px</dimen>
     <dimen name="secondary_rounded_corner_radius_top_adjustment">0px</dimen>
     <dimen name="secondary_rounded_corner_radius_bottom_adjustment">0px</dimen>
+    <dimen name="decor_corner_radius">8dp</dimen>
 </resources>
