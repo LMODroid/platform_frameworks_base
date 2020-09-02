@@ -283,6 +283,13 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
     private boolean mDrawLegacyNavigationBarBackground;
     private boolean mDrawLegacyNavigationBarBackgroundHandled;
 
+    private float mWindowCornerRadius = 8;
+    private ViewOutlineProvider mWindowOutline = new ViewOutlineProvider() {
+        @Override
+        public void getOutline(View view, Outline outline) {
+            outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), mWindowCornerRadius);
+        }
+    };
     private PendingInsetsController mPendingInsetsController = new PendingInsetsController();
 
     private int mOriginalBackgroundBlurRadius = 0;
@@ -321,6 +328,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         initResizingPaints();
 
         mLegacyNavigationBarBackgroundPaint.setColor(Color.BLACK);
+        mWindowCornerRadius = context.getResources().getDimension(R.dimen.decor_corner_radius);
     }
 
     void setBackgroundFallback(@Nullable Drawable fallbackDrawable) {
@@ -2178,6 +2186,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
             // Configuration now requires a caption.
             final LayoutInflater inflater = mWindow.getLayoutInflater();
             mDecorCaptionView = createDecorCaptionView(inflater);
+            updateWindowCorner();
             if (mDecorCaptionView != null) {
                 if (mDecorCaptionView.getParent() == null) {
                     addView(mDecorCaptionView, 0,
@@ -2204,6 +2213,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         }
 
         mDecorCaptionView = createDecorCaptionView(inflater);
+        updateWindowCorner();
         final View root = inflater.inflate(layoutResource, null);
         if (mDecorCaptionView != null) {
             if (mDecorCaptionView.getParent() == null) {
@@ -2302,6 +2312,16 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
                 }
                 break;
             }
+        }
+    }
+
+    private void updateWindowCorner() {
+        if (mDecorCaptionView == null) {
+            setClipToOutline(false);
+            setOutlineProvider(null);
+        } else {
+            setOutlineProvider(mWindowOutline);
+            setClipToOutline(true);
         }
     }
 
