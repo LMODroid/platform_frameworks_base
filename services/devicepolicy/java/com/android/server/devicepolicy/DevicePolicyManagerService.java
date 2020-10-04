@@ -12514,7 +12514,15 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub
         Preconditions.checkCallAuthorization(canManageUsers(getCallerIdentity())
                 || hasCallingOrSelfPermission(permission.INTERACT_ACROSS_USERS));
 
-        return getLogoutUserIdUnchecked();
+        final int logoutUserId = getLogoutUserIdUnchecked();
+        if (logoutUserId == UserHandle.USER_NULL && isLogoutEnabled()
+                && !mInjector.userManagerIsHeadlessSystemUserMode()
+                && getCurrentForegroundUserId() != UserHandle.USER_SYSTEM) {
+            // Secondary users that weren't started through switchUser() log out to the system
+            // user, see logoutUserInternal().
+            return UserHandle.USER_SYSTEM;
+        }
+        return logoutUserId;
     }
 
     private @UserIdInt int getLogoutUserIdUnchecked() {
@@ -19406,10 +19414,10 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub
     @Override
     public boolean isLogoutEnabled() {
         if (!mHasFeature) {
-            return false;
+            return true;
         }
         ActiveAdmin deviceOwner = mDeviceAdmins.getDeviceOwnerAdmin();
-        return (deviceOwner != null) && deviceOwner.isLogoutEnabled;
+        return (deviceOwner == null) || deviceOwner.isLogoutEnabled;
     }
 
     @Override
