@@ -583,7 +583,8 @@ public final class PowerManager {
             BRIGHTNESS_CONSTRAINT_TYPE_MAXIMUM,
             BRIGHTNESS_CONSTRAINT_TYPE_DEFAULT,
             BRIGHTNESS_CONSTRAINT_TYPE_DIM,
-            BRIGHTNESS_CONSTRAINT_TYPE_DEFAULT_BUTTON
+            BRIGHTNESS_CONSTRAINT_TYPE_DEFAULT_BUTTON,
+            BRIGHTNESS_CONSTRAINT_TYPE_DEFAULT_KEYBOARD
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface BrightnessConstraint{}
@@ -616,6 +617,12 @@ public final class PowerManager {
      * @hide
      */
     public static final int BRIGHTNESS_CONSTRAINT_TYPE_DEFAULT_BUTTON = 8;
+
+    /**
+     * Brightness constraint type: minimum allowed value.
+     * @hide
+     */
+    public static final int BRIGHTNESS_CONSTRAINT_TYPE_DEFAULT_KEYBOARD = 9;
 
     /**
      * @hide
@@ -3081,6 +3088,18 @@ public final class PowerManager {
             }
         }
         return ret;
+    }
+
+    /**
+     * @hide
+     */
+    public void setKeyboardVisibility(boolean visible) {
+        try {
+            if (mService != null) {
+                mService.setKeyboardVisibility(visible);
+            }
+        } catch (RemoteException e) {
+        }
     }
 
     /**
