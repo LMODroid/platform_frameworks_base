@@ -74,6 +74,10 @@ class ScreenRecordPermissionDialogDelegate(
     private lateinit var audioSwitchContainer: ViewGroup
     private lateinit var keepScreenAwakeSwitch: Switch
     private lateinit var keepScreenAwakeSwitchContainer: ViewGroup
+    private lateinit var stopDotSwitch: Switch
+    private lateinit var stopDotSwitchContainer: ViewGroup
+    private lateinit var lowQualitySwitch: Switch
+    private lateinit var lowQualitySwitchContainer: ViewGroup
     private lateinit var options: Spinner
 
     override fun createDialog(): SystemUIDialog {
@@ -121,20 +125,29 @@ class ScreenRecordPermissionDialogDelegate(
         audioSwitch = dialog.requireViewById(R.id.screenrecord_audio_switch)
         tapsSwitch = dialog.requireViewById(R.id.screenrecord_taps_switch)
         keepScreenAwakeSwitch = dialog.requireViewById(R.id.screenrecord_keep_screen_awake_switch)
+        stopDotSwitch = dialog.requireViewById(R.id.screenrecord_stopdot_switch)
+        lowQualitySwitch = dialog.requireViewById(R.id.screenrecord_lowquality_switch)
         audioSwitchContainer = dialog.requireViewById(R.id.screenrecord_audio_switch_container)
         tapsSwitchContainer = dialog.requireViewById(R.id.screenrecord_taps_switch_container)
         keepScreenAwakeSwitchContainer =
             dialog.requireViewById(R.id.screenrecord_keep_screen_awake_switch_container)
+        stopDotSwitchContainer = dialog.requireViewById(R.id.screenrecord_stopdot_switch_container)
+        lowQualitySwitchContainer =
+            dialog.requireViewById(R.id.screenrecord_lowquality_switch_container)
 
         // Add these listeners so that the switch only responds to movement
         // within its target region, to meet accessibility requirements
         audioSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
         tapsSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
         keepScreenAwakeSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
+        stopDotSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
+        lowQualitySwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
 
         audioSwitchContainer.setOnClickListener { audioSwitch.toggle() }
         tapsSwitchContainer.setOnClickListener { tapsSwitch.toggle() }
         keepScreenAwakeSwitchContainer.setOnClickListener { keepScreenAwakeSwitch.toggle() }
+        stopDotSwitchContainer.setOnClickListener { stopDotSwitch.toggle() }
+        lowQualitySwitchContainer.setOnClickListener { lowQualitySwitch.toggle() }
 
         tapsView = dialog.requireViewById(R.id.show_taps)
         updateTapsViewVisibility()
@@ -188,6 +201,8 @@ class ScreenRecordPermissionDialogDelegate(
             if (audioSwitch.isChecked) options.selectedItem as ScreenRecordingAudioSource
             else ScreenRecordingAudioSource.NONE
         val keepScreenAwake = keepScreenAwakeSwitch.isChecked
+        val showStopDot = stopDotSwitch.isChecked
+        val lowQuality = lowQualitySwitch.isChecked
         val startIntent =
             PendingIntent.getForegroundService(
                 userContext,
@@ -198,7 +213,9 @@ class ScreenRecordPermissionDialogDelegate(
                     audioMode.ordinal,
                     showTaps,
                     captureTarget,
-                    keepScreenAwake
+                    keepScreenAwake,
+                    showStopDot,
+                    lowQuality
                 ),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )

@@ -36,4 +36,7 @@
 
     <!-- Size to enlarge Enrollment GHBM Dot Size by in DP. -->
     <dimen name="udfps_enroll_dot_additional_size">0dp</dimen>
+
+    <!-- Screen Record -->
+    <dimen name="screenrecord_dot_size">48dp</dimen>
 </resources>
