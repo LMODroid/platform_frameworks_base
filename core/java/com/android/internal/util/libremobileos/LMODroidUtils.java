@@ -226,8 +226,12 @@ public class LMODroidUtils {
         return isPackageInstalled(context, pkg, true);
     }
 
-	    // Check if device has a notch
+    // Check if device has a notch
     public static boolean hasNotch(Context context) {
+        boolean notchDisplayCutout = context.getResources().getBoolean(R.bool.config_haveNotch);
+        if (notchDisplayCutout)
+            return notchDisplayCutout;
+
         String displayCutout = context.getResources().getString(R.string.config_mainBuiltInDisplayCutout);
         boolean maskDisplayCutout = context.getResources().getBoolean(R.bool.config_maskMainBuiltInDisplayCutout);
         boolean displayCutoutExists = (!TextUtils.isEmpty(displayCutout) && !maskDisplayCutout);

@@ -31,4 +31,7 @@
     <!-- Whether device supports an alt. ambient display -->
     <java-symbol type="bool" name="config_alt_ambient_display"/>
 
+    <!-- Notch -->
+    <java-symbol type="bool" name="config_haveNotch" />
+
 </resources>
