@@ -72,4 +72,6 @@
     <!-- Doze: should pulse on pick up? -->
     <bool name="doze_pulse_on_pick_up">false</bool>
 
+    <!-- If not zero, limits the internal screen recorder's framerate to the set value. -->
+    <integer name="config_screenRecorderMaxFramerate">0</integer>
 </resources>
