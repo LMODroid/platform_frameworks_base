@@ -60,6 +60,12 @@ public class AODTile extends QSTileImpl<BooleanState> implements
     }
 
     @Override
+    protected void handleDestroy() {
+        super.handleDestroy();
+        mSetting.setListening(false);
+    }
+
+    @Override
     public boolean isAvailable() {
         return mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_dozeAlwaysOnDisplayAvailable);
@@ -70,6 +76,18 @@ public class AODTile extends QSTileImpl<BooleanState> implements
         BooleanState state = new BooleanState();
         state.handlesLongClick = false;
         return state;
+    }
+
+    @Override
+    public void handleSetListening(boolean listening) {
+        super.handleSetListening(listening);
+        mSetting.setListening(listening);
+    }
+
+    @Override
+    protected void handleUserSwitch(int newUserId) {
+        mSetting.setUserId(newUserId);
+        handleRefreshState(mSetting.getValue());
     }
 
     @Override
@@ -111,9 +129,5 @@ public class AODTile extends QSTileImpl<BooleanState> implements
     @Override
     public int getMetricsCategory() {
         return MetricsEvent.LMODROID;
-    }
-
-    @Override
-    public void handleSetListening(boolean listening) {
     }
 }
