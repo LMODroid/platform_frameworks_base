@@ -3006,10 +3006,10 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
 
             // It's possible that the device was unlocked (via BOUNCER or Fingerprint) while
             // dreaming. It's time to wake up.
-            if ((mDreamOverlayShowing || mUpdateMonitor.isDreaming()) && !mOrderUnlockAndWake) {
-                mPM.wakeUp(mSystemClock.uptimeMillis(), PowerManager.WAKE_REASON_GESTURE,
-                        "com.android.systemui:UNLOCK_DREAMING");
-            }
+            // if ((mDreamOverlayShowing || mUpdateMonitor.isDreaming()) && !mOrderUnlockAndWake) {
+            //     mPM.wakeUp(mSystemClock.uptimeMillis(), PowerManager.WAKE_REASON_GESTURE,
+            //             "com.android.systemui:UNLOCK_DREAMING");
+            // }
         }
         Trace.endSection();
     }
