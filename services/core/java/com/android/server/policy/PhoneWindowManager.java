@@ -689,6 +689,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     Intent mVrHeadsetHomeIntent;
 
     // Tracks user-customisable behavior for certain key events
+    private Action mBackLongPressAction;
     private Action mHomeLongPressAction;
     private Action mHomeDoubleTapAction;
     private Action mMenuPressAction;
@@ -1014,6 +1015,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     LMOSettings.System.TORCH_LONG_PRESS_POWER_TIMEOUT), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    LMOSettings.System.KEY_BACK_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     LMOSettings.System.KEY_HOME_LONG_PRESS_ACTION), false, this,
@@ -1715,14 +1719,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void backLongPress() {
-        mBackKeyHandled = true;
+        if (hasLongPressOnBackBehavior()) {
+            mBackKeyHandled = true;
 
-        switch (mLongPressOnBackBehavior) {
-            case LONG_PRESS_BACK_NOTHING:
-                break;
-            case LONG_PRESS_BACK_GO_TO_VOICE_ASSIST:
-                launchVoiceAssist(false /* allowDuringSetup */);
-                break;
+            long now = SystemClock.uptimeMillis();
+            KeyEvent event = new KeyEvent(now, now, KeyEvent.ACTION_DOWN,
+                    KEYCODE_BACK, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+                    KeyEvent.FLAG_FROM_SYSTEM, InputDevice.SOURCE_KEYBOARD);
+
+            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, "Back - Long Press");
+            performKeyAction(mBackLongPressAction, event);
         }
     }
 
@@ -1999,7 +2005,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private boolean hasLongPressOnBackBehavior() {
-        return mLongPressOnBackBehavior != LONG_PRESS_BACK_NOTHING;
+        return mBackLongPressAction != Action.NOTHING;
     }
 
     private boolean hasLongPressOnStemPrimaryBehavior() {
@@ -3189,12 +3195,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void initSingleKeyGestureRules(Looper looper) {
         mSingleKeyGestureDetector = SingleKeyGestureDetector.get(mContext, looper);
         mSingleKeyGestureDetector.addRule(new PowerKeyRule());
-        if (hasLongPressOnBackBehavior()) {
-            mSingleKeyGestureDetector.addRule(new BackKeyRule());
-        }
-        if (hasStemPrimaryBehavior()) {
-            mSingleKeyGestureDetector.addRule(new StemPrimaryKeyRule());
-        }
+        mSingleKeyGestureDetector.addRule(new BackKeyRule());
         mSingleKeyGestureDetector.addRule(new StylusTailButtonRule());
         mSingleKeyGestureDetector.addRule(new AppSwitchKeyRule());
     }
@@ -3210,6 +3211,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final Resources res = mContext.getResources();
 
         // Initialize all assignments to sane defaults.
+        mBackLongPressAction = Action.fromIntSafe(res.getInteger(
+                com.android.internal.R.integer.config_longPressOnBackBehavior));
         mHomeLongPressAction = Action.fromIntSafe(res.getInteger(
                 com.android.internal.R.integer.config_longPressOnHomeBehavior));
         mHomeDoubleTapAction = Action.fromIntSafe(res.getInteger(
@@ -3226,6 +3229,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mAppSwitchLongPressAction = Action.fromIntSafe(res.getInteger(
                 com.android.internal.R.integer.config_longPressOnAppSwitchBehavior));
         mEdgeLongSwipeAction = Action.NOTHING;
+
+        mBackLongPressAction = Action.fromSettings(resolver,
+                LMOSettings.System.KEY_BACK_LONG_PRESS_ACTION,
+                mBackLongPressAction);
 
         mHomeLongPressAction = Action.fromSettings(resolver,
                 LMOSettings.System.KEY_HOME_LONG_PRESS_ACTION,
