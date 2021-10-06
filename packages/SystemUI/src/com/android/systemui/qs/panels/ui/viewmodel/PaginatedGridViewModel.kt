@@ -21,6 +21,7 @@ import com.android.systemui.classifier.Classifier.QS_SWIPE_SIDE
 import com.android.systemui.classifier.domain.interactor.FalsingInteractor
 import com.android.systemui.development.ui.viewmodel.BuildNumberViewModel
 import com.android.systemui.inputdevice.domain.interactor.PointerDeviceInteractor
+import com.android.systemui.libremobileos.qs.footer.ui.viewmodel.QSFooterDataUsageViewModel
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.EditModeButtonViewModel
@@ -36,6 +37,7 @@ constructor(
     iconTilesViewModel: IconTilesViewModel,
     inFirstPageViewModel: InFirstPageViewModel,
     val buildNumberViewModelFactory: BuildNumberViewModel.Factory,
+    val dataUsageViewModelFactory: QSFooterDataUsageViewModel.Factory,
     val editModeButtonViewModelFactory: EditModeButtonViewModel.Factory,
     private val falsingInteractor: FalsingInteractor,
     pointerDeviceInteractor: PointerDeviceInteractor,
