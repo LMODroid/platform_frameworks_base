@@ -21,11 +21,21 @@ import static android.app.StatusBarManager.DISABLE2_QUICK_SETTINGS;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.text.BidiFormatter;
+import android.text.format.Formatter;
+import android.text.format.Formatter.BytesResult;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -35,8 +45,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.settingslib.development.DevelopmentSettingsEnabler;
+import com.android.settingslib.net.DataUsageController;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.res.R;
+
+import com.libremobileos.providers.LMOSettings;
+
+import java.util.List;
 
 /**
  * Footer of expanded Quick Settings, tiles page indicator, (optionally) build number and
@@ -44,8 +59,9 @@ import com.android.systemui.res.R;
  */
 public class QSFooterView extends FrameLayout {
     private PageIndicator mPageIndicator;
-    private TextView mBuildText;
+    private TextView mUsageText;
     private View mEditButton;
+    private View mSpace;
 
     @Nullable
     protected TouchAnimator mFooterAnimator;
@@ -53,8 +69,6 @@ public class QSFooterView extends FrameLayout {
     private boolean mQsDisabled;
     private boolean mExpanded;
     private float mExpansionAmount;
-
-    private boolean mShouldShowBuildText;
 
     @Nullable
     private OnClickListener mExpandClickListener;
@@ -68,20 +82,31 @@ public class QSFooterView extends FrameLayout {
         }
     };*/
 
+    private DataUsageController mDataController;
+    private ConnectivityManager mConnectivityManager;
+    private WifiManager mWifiManager;
+    private SubscriptionManager mSubManager;
+    private boolean mShouldShowDataUsage;
+
     public QSFooterView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mDataController = new DataUsageController(context);
+        mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        mSubManager = (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         mPageIndicator = findViewById(R.id.footer_page_indicator);
-        mBuildText = findViewById(R.id.build);
+        mUsageText = findViewById(R.id.build);
         mEditButton = findViewById(android.R.id.edit);
+        mSpace = findViewById(R.id.spacer);
 
         updateResources();
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
-        //setBuildText();
+        setUsageText();
     }
 
     private void setBuildText() {
@@ -102,6 +127,67 @@ public class QSFooterView extends FrameLayout {
         }*/
     }
 
+    private void setUsageText() {
+        if (mUsageText == null) return;
+        DataUsageController.DataUsageInfo info;
+        String suffix;
+        if (isWifiConnected()) {
+            info = mDataController.getWifiDailyDataUsageInfo();
+            suffix = getWifiSsid();
+        } else {
+            mDataController.setSubscriptionId(
+                    SubscriptionManager.getDefaultDataSubscriptionId());
+            info = mDataController.getDailyDataUsageInfo();
+            suffix = getSlotCarrierName();
+        }
+        mUsageText.setText(formatDataUsage(info.usageLevel) + " " +
+                mContext.getResources().getString(R.string.usage_data) +
+                " (" + suffix + ")");
+    }
+
+    private CharSequence formatDataUsage(long byteValue) {
+        final BytesResult res = Formatter.formatBytes(mContext.getResources(), byteValue,
+                Formatter.FLAG_IEC_UNITS);
+        return BidiFormatter.getInstance().unicodeWrap(mContext.getString(
+                com.android.internal.R.string.fileSizeSuffix, res.value, res.units));
+    }
+
+    private boolean isWifiConnected() {
+        final Network network = mConnectivityManager.getActiveNetwork();
+        if (network != null) {
+            NetworkCapabilities capabilities = mConnectivityManager.getNetworkCapabilities(network);
+            return capabilities != null &&
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
+        } else {
+            return false;
+        }
+    }
+
+    private String getSlotCarrierName() {
+        CharSequence result = mContext.getResources().getString(R.string.usage_data_default_suffix);
+        int subId = mSubManager.getDefaultDataSubscriptionId();
+        final List<SubscriptionInfo> subInfoList =
+                mSubManager.getActiveSubscriptionInfoList(true);
+        if (subInfoList != null) {
+            for (SubscriptionInfo subInfo : subInfoList) {
+                if (subId == subInfo.getSubscriptionId()) {
+                    result = subInfo.getDisplayName();
+                    break;
+                }
+            }
+        }
+        return result.toString();
+    }
+
+    private String getWifiSsid() {
+        final WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+        if (wifiInfo.getHiddenSSID() || wifiInfo.getSSID() == WifiManager.UNKNOWN_SSID) {
+            return mContext.getResources().getString(R.string.usage_wifi_default_suffix);
+        } else {
+            return wifiInfo.getSSID().replace("\"", "");
+        }
+    }
+
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -111,7 +197,7 @@ public class QSFooterView extends FrameLayout {
     private void updateResources() {
         updateFooterAnimator();
         updateEditButtonResources();
-        updateBuildTextResources();
+        updateUsageTextResources();
         MarginLayoutParams lp = (MarginLayoutParams) getLayoutParams();
         lp.height = getResources().getDimensionPixelSize(R.dimen.qs_footer_height);
         int sideMargin = getResources().getDimensionPixelSize(R.dimen.qs_footer_margin);
@@ -131,8 +217,8 @@ public class QSFooterView extends FrameLayout {
         mEditButton.setPadding(padding, padding, padding, padding);
     }
 
-    private void updateBuildTextResources() {
-        FontSizeUtils.updateFontSizeFromStyle(mBuildText, R.style.TextAppearance_QS_Status_Build);
+    private void updateUsageTextResources() {
+        FontSizeUtils.updateFontSizeFromStyle(mUsageText, R.style.TextAppearance_QS_Status_Build);
     }
 
     private void updateFooterAnimator() {
@@ -143,7 +229,7 @@ public class QSFooterView extends FrameLayout {
     private TouchAnimator createFooterAnimator() {
         TouchAnimator.Builder builder = new TouchAnimator.Builder()
                 .addFloat(mPageIndicator, "alpha", 0, 1)
-                .addFloat(mBuildText, "alpha", 0, 1)
+                .addFloat(mUsageText, "alpha", 0, 1)
                 .addFloat(mEditButton, "alpha", 0, 1)
                 .setStartDelay(0.9f);
         return builder.build();
@@ -170,21 +256,18 @@ public class QSFooterView extends FrameLayout {
         if (mFooterAnimator != null) {
             mFooterAnimator.setPosition(headerExpansionFraction);
         }
-    }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        /*mContext.getContentResolver().registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
-                mDeveloperSettingsObserver, UserHandle.USER_ALL);*/
-    }
-
-    @Override
-    @VisibleForTesting
-    public void onDetachedFromWindow() {
-        //mContext.getContentResolver().unregisterContentObserver(mDeveloperSettingsObserver);
-        super.onDetachedFromWindow();
+        if (mUsageText == null) return;
+        if (mShouldShowDataUsage && headerExpansionFraction == 1.0f) {
+            mUsageText.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mUsageText.setSelected(true);
+                }
+            }, 1000);
+        } else {
+            mUsageText.setSelected(false);
+        }
     }
 
     void disable(int state2) {
@@ -197,16 +280,24 @@ public class QSFooterView extends FrameLayout {
     void updateEverything() {
         post(() -> {
             updateVisibilities();
-            updateClickabilities();
             setClickable(false);
         });
     }
 
-    private void updateClickabilities() {
-        mBuildText.setLongClickable(mBuildText.getVisibility() == View.VISIBLE);
-    }
-
     private void updateVisibilities() {
-        mBuildText.setVisibility(mExpanded && mShouldShowBuildText ? View.VISIBLE : View.INVISIBLE);
+        mShouldShowDataUsage = Settings.System.getIntForUser(mContext.getContentResolver(),
+                LMOSettings.System.QS_FOOTER_DATA_USAGE, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        mSpace.setVisibility(mShouldShowDataUsage && mExpanded ? View.GONE : View.VISIBLE);
+
+        if (mExpanded && mShouldShowDataUsage) {
+            mUsageText.setVisibility(View.VISIBLE);
+            mSpace.setVisibility(View.GONE);
+            setUsageText();
+        } else {
+            mUsageText.setVisibility(View.GONE);
+            mSpace.setVisibility(View.VISIBLE);
+        }
     }
 }
