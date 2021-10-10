@@ -21475,7 +21475,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 }
             }
 
-            onCreateAndProvisionManagedProfileCompleted(provisioningParams);
+            onCreateAndProvisionManagedProfileCompleted(userInfo.id, provisioningParams);
 
             sendProvisioningCompletedBroadcast(
                     userInfo.id,
@@ -21615,7 +21615,8 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             @NonNull ManagedProfileProvisioningParams provisioningParams,
             @NonNull UserHandle managedProfileUser
     ) {
-        onCreateAndProvisionManagedProfileCompleted(provisioningParams);
+        onCreateAndProvisionManagedProfileCompleted(managedProfileUser.getIdentifier(),
+                provisioningParams);
         sendProvisioningCompletedBroadcast(
                 managedProfileUser.getIdentifier(),
                 ACTION_PROVISION_MANAGED_PROFILE,
@@ -21671,8 +21672,17 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
      *
      * <p>This method is meant to be overridden by OEMs.
      */
-    private void onCreateAndProvisionManagedProfileCompleted(
-            ManagedProfileProvisioningParams provisioningParams) {}
+    private void onCreateAndProvisionManagedProfileCompleted(int userId,
+            ManagedProfileProvisioningParams provisioningParams) {
+        try {
+            Set<Integer> uids = ConnectivitySettingsManager.getUidsAllowedOnRestrictedNetworks(
+                    mContext);
+            uids.add(mContext.getPackageManager().getPackageUidAsUser(
+                    provisioningParams.getOwnerName(), userId));
+            ConnectivitySettingsManager.setUidsAllowedOnRestrictedNetworks(mContext, uids);
+        } catch (NameNotFoundException ignored) {
+        }
+    }
 
     private void maybeInstallDevicePolicyManagementRoleHolderInUser(int targetUserId) {
         String devicePolicyManagerRoleHolderPackageName =
