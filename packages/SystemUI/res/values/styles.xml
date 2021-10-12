@@ -511,7 +511,7 @@
         <item name="isQsTheme">true</item>
         <item name="lightIconTheme">@style/QSIconTheme</item>
         <item name="darkIconTheme">@style/QSIconTheme</item>
-        <item name="android:colorError">@*android:color/error_color_material_dark</item>
+        <item name="android:colorError">@*android:color/error_color_material_light</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
 
@@ -524,14 +524,14 @@
         <item name="onSurfaceVariant">@androidprv:color/materialColorOnSurfaceVariant</item>
         <item name="outline">@androidprv:color/materialColorOutline</item>
 
-        <item name="shadeActive">@androidprv:color/customColorShadeActive</item>
-        <item name="onShadeActive">@androidprv:color/customColorOnShadeActive</item>
-        <item name="onShadeActiveVariant">@androidprv:color/customColorOnShadeActiveVariant</item>
-        <item name="shadeInactive">@androidprv:color/customColorShadeInactive</item>
-        <item name="onShadeInactive">@androidprv:color/customColorOnShadeInactive</item>
-        <item name="onShadeInactiveVariant">@androidprv:color/customColorOnShadeInactiveVariant</item>
-        <item name="shadeDisabled">@androidprv:color/customColorShadeDisabled</item>
-        <item name="underSurface">@androidprv:color/customColorUnderSurface</item>
+        <item name="shadeActive">?android:attr/colorAccent</item>
+        <item name="onShadeActive">?android:attr/textColorPrimaryInverse</item>
+        <item name="onShadeActiveVariant">?android:attr/textColorSecondaryInverse</item>
+        <item name="shadeInactive">@*android:color/surface_light</item>
+        <item name="onShadeInactive">?android:attr/textColorPrimary</item>
+        <item name="onShadeInactiveVariant">?android:attr/textColorSecondary</item>
+        <item name="shadeDisabled">@*android:color/surface_light</item>
+        <item name="underSurface">@android:color/system_neutral1_100</item>
         <item name="android:itemTextAppearance">@style/Control.MenuItem</item>
     </style>
 
@@ -868,7 +868,7 @@
 
     <style name="QSCustomizeToolbar" parent="@*android:style/Widget.DeviceDefault.Toolbar">
         <item name="android:textColor">?attr/onSurface</item>
-        <item name="android:elevation">10dp</item>
+        <item name="android:elevation">0dp</item>
     </style>
 
     <!-- Media controls always have dark background -->
