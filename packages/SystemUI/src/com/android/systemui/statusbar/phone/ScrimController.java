@@ -52,6 +52,7 @@ import com.android.internal.util.function.TriConsumer;
 import com.android.keyguard.BouncerPanelExpansionCalculator;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
+import com.android.settingslib.Utils;
 import com.android.systemui.Dumpable;
 import com.android.systemui.Flags;
 import com.android.systemui.animation.ShadeInterpolation;
@@ -247,6 +248,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     private final KeyguardInteractor mKeyguardInteractor;
 
     private GradientColors mColors;
+    private GradientColors mBehindColors;
     private boolean mNeedsDrawableColorUpdate;
 
     private float mAdditionalScrimBehindAlphaKeyguard = 0f;
@@ -415,6 +417,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         mKeyguardTransitionInteractor = keyguardTransitionInteractor;
         mKeyguardInteractor = keyguardInteractor;
         mMainDispatcher = mainDispatcher;
+        mBehindColors = new GradientColors();
     }
 
     /**
@@ -1265,7 +1268,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                     && !mBlankScreen;
 
             mScrimInFront.setColors(mColors, animateScrimInFront);
-            mScrimBehind.setColors(mColors, animateBehindScrim);
+            mScrimBehind.setColors(mBehindColors, animateBehindScrim);
             mNotificationsScrim.setColors(mColors, animateScrimNotifications);
 
             dispatchBackScrimState(mScrimBehind.getViewAlpha());
@@ -1623,6 +1626,8 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                 com.android.internal.R.color.materialColorSurfaceDim);
         int accent = mContext.getColor(
                 com.android.internal.R.color.materialColorPrimary);
+        int surfaceBackground = Utils.getColorAttr(mScrimBehind.getContext(),
+                com.android.internal.R.attr.colorSurfaceHeader).getDefaultColor();
         mColors.setMainColor(background);
         mColors.setSecondaryColor(accent);
         final boolean isBackgroundLight = !ContrastColorUtil.isColorDark(background);
@@ -1633,6 +1638,11 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         for (ScrimState state : ScrimState.values()) {
             state.setSurfaceColor(surface);
         }
+
+        mBehindColors.setMainColor(surfaceBackground);
+        mBehindColors.setSecondaryColor(accent);
+        mBehindColors.setSupportsDarkText(
+                ColorUtils.calculateContrast(mBehindColors.getMainColor(), Color.WHITE) > 4.5);
 
         mNeedsDrawableColorUpdate = true;
     }
