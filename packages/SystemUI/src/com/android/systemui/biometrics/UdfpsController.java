@@ -681,7 +681,18 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                     // We need to persist its ID to track it during ACTION_MOVE that could include
                     // data for many other pointers because of multi-touch support.
                     mActivePointerId = event.getPointerId(0);
+                    final int idx = mActivePointerId == -1
+                            ? event.getPointerId(0)
+                            : event.findPointerIndex(mActivePointerId);
+                    // Map the touch to portrait mode if the device is in landscape mode.
+                    final Point scaledTouch = mUdfpsUtils
+                            .getTouchInNativeCoordinates(idx, event, mOverlayParams);
                     mVelocityTracker.addMovement(event);
+                    // Scale the coordinates to native resolution.
+                    final float scale = mOverlayParams.getScaleFactor();
+                    float scaledMinor = event.getTouchMinor(idx) / scale;
+                    float scaledMajor = event.getTouchMajor(idx) / scale;
+                    onFingerDown(requestId, scaledTouch.x, scaledTouch.y, scaledMinor, scaledMajor);
                     handled = true;
                     mAcquiredReceived = false;
                 }
