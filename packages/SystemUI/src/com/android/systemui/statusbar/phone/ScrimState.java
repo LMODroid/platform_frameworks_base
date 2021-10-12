@@ -79,9 +79,10 @@ public enum ScrimState {
             } else {
                 mAnimationDuration = ScrimController.ANIMATION_DURATION;
             }
-            mFrontTint = mBackgroundColor;
-            mBehindTint = mBackgroundColor;
-            mNotifTint = mClipQsScrim ? mBackgroundColor : Color.TRANSPARENT;
+            // make sure we only darken the wallpaper
+            mFrontTint = Color.BLACK;
+            mBehindTint = Color.BLACK;
+            mNotifTint = mClipQsScrim ? Color.BLACK : Color.TRANSPARENT;
 
             mFrontAlpha = 0;
             mBehindAlpha = mClipQsScrim ? 1 : mScrimBehindAlphaKeyguard;
@@ -127,7 +128,7 @@ public enum ScrimState {
         @Override
         public void prepare(ScrimState previousState) {
             mBehindAlpha = mClipQsScrim ? 1 : mDefaultScrimAlpha;
-            mBehindTint = mClipQsScrim ? mBackgroundColor : mSurfaceColor;
+            mBehindTint = mSurfaceColor;
             mNotifAlpha = mClipQsScrim ? mDefaultScrimAlpha : 0;
             mNotifTint = Color.TRANSPARENT;
             mFrontAlpha = 0f;
@@ -189,7 +190,7 @@ public enum ScrimState {
             final boolean isDocked = mDockManager.isDocked();
             mBlankScreen = mDisplayRequiresBlanking;
 
-            mFrontTint = mBackgroundColor;
+            mFrontTint = Color.BLACK;
             mFrontAlpha = (alwaysOnEnabled || isDocked || quickPickupEnabled)
                     ? mAodFrontScrimAlpha : 1f;
 
