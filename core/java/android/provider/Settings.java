@@ -5843,13 +5843,6 @@ public final class Settings {
         public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
 
         /**
-         * IMPORTANT: If you add a new public settings you also have to add it to
-         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
-         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
-         * the setting value. See an example above.
-         */
-
-        /**
          * Whether allowing pocket service to register sensors and dispatch informations.
          *   0 = disabled
          *   1 = enabled
@@ -5857,6 +5850,19 @@ public final class Settings {
          * @hide
          */
         public static final String POCKET_JUDGE = "pocket_judge";
+
+        /**
+         * Whether to use the custom quick unlock screen control
+         * @hide
+         */
+        public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
+
+        /**
+         * IMPORTANT: If you add a new public settings you also have to add it to
+         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
+         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
+         * the setting value. See an example above.
+         */
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
