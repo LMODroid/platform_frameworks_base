@@ -2364,7 +2364,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             initializeWalletView();
             if (mBackgroundDrawable == null) {
                 mBackgroundDrawable = new ScrimDrawable();
-                mScrimAlpha = 0.30f;
+                mScrimAlpha = 0.70f;
             }
             getWindow().setBackgroundDrawable(mBackgroundDrawable);
         }
