@@ -189,6 +189,8 @@ public class StatusBarNotificationActivityStarterTest extends SysuiTestCase {
     private FrameworkStatsLogWrapper mFrameworkStatsLogWrapper;
 
     private final FakeExecutor mMainExecutor = new FakeExecutor(new FakeSystemClock());
+    @Mock
+    private CentralSurfaces mCentralSurfaces;
     private final FakeExecutor mUiBgExecutor = new FakeExecutor(new FakeSystemClock());
     private NotificationEntry mNotificationEntry;
     private ExpandableNotificationRow mNotificationRow;
@@ -291,7 +293,8 @@ public class StatusBarNotificationActivityStarterTest extends SysuiTestCase {
                         mock(LaunchFullScreenIntentProvider.class),
                         mPowerInteractor,
                         mUserTracker,
-                        mFrameworkStatsLogWrapper
+                        mFrameworkStatsLogWrapper,
+                        mCentralSurfaces
                 );
 
         // set up dismissKeyguardThenExecute to synchronously invoke the OnDismissAction arg

@@ -92,5 +92,6 @@ val Kosmos.statusBarNotificationActivityStarter by
             powerInteractor,
             userTracker,
             frameworkStatsLogWrapper,
+            centralSurfaces,
         )
     }
