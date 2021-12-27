@@ -5669,6 +5669,20 @@ public final class Settings {
         public static final String TOUCHPAD_RIGHT_CLICK_ZONE = "touchpad_right_click_zone";
 
         /**
+         * GameSpace: List of added games by user
+         * @hide
+         */
+        @Readable
+        public static final String GAMESPACE_GAME_LIST = "gamespace_game_list";
+
+        /**
+         * GameSpace: Whether fullscreen intent will be suppressed while in game session
+         * @hide
+         */
+        @Readable
+        public static final String GAMESPACE_SUPPRESS_FULLSCREEN_INTENT = "gamespace_suppress_fullscreen_intent";
+
+        /**
          * Whether lock-to-app will be triggered by long-press on recents.
          * @hide
          */
@@ -12130,6 +12144,15 @@ public final class Settings {
          */
         public static final int RING_HOME_BUTTON_BEHAVIOR_DEFAULT =
                 RING_HOME_BUTTON_BEHAVIOR_DO_NOTHING;
+
+        /**
+         * Our GameSpace can't write to device_config directly [GTS]
+         * Use this as intermediate to pass device_config property
+         * from our GameSpace to com.android.server.app.GameManagerService
+         * so we can set the device_config property from there.
+         * @hide
+         */
+        public static final String GAME_OVERLAY = "game_overlay";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
