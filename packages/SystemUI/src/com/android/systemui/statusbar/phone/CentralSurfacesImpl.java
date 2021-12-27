@@ -223,6 +223,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController.Configurati
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceProvisionedListener;
 import com.android.systemui.statusbar.policy.ExtensionController;
+import com.android.systemui.statusbar.policy.GameSpaceManager;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.window.StatusBarWindowControllerStore;
@@ -439,6 +440,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     /** Controller for the Shade. */
     private final ShadeSurface mShadeSurface;
     private final ShadeLogger mShadeLogger;
+
+    protected GameSpaceManager mGameSpaceManager;
 
     // settings
     private QSPanelController mQSPanelController;
@@ -842,6 +845,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
         mActivityIntentHelper = new ActivityIntentHelper(mContext);
         mActivityTransitionAnimator = activityTransitionAnimator;
+        mGameSpaceManager = new GameSpaceManager(mContext, mKeyguardStateController);
 
         // TODO(b/190746471): Find a better home for this.
         DateTimeView.setReceiverHandler(timeTickHandler);
@@ -1478,6 +1482,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(com.libremobileos.content.Intent.ACTION_SCREEN_CAMERA_GESTURE);
         mBroadcastDispatcher.registerReceiver(mBroadcastReceiver, filter, null, UserHandle.ALL);
+        mGameSpaceManager.observe();
     }
 
     protected QS createDefaultQSFragment() {
@@ -2994,6 +2999,11 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     }
 
     // End Extra BaseStatusBarMethods.
+
+    @Override
+    public GameSpaceManager getGameSpaceManager() {
+        return mGameSpaceManager;
+    }
 
     boolean isTransientShown() {
         return mStatusBarModeRepository.getDefaultDisplay().isTransientShown().getValue();

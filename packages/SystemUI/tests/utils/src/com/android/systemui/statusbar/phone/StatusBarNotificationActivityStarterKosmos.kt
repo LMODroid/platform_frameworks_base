@@ -87,5 +87,6 @@ val Kosmos.statusBarNotificationActivityStarter by
             launchFullScreenIntentProvider,
             powerInteractor,
             userTracker,
+            centralSurfaces,
         )
     }
