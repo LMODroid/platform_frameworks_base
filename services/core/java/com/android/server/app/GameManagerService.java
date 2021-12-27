@@ -49,6 +49,7 @@ import android.app.IGameStateListener;
 import android.app.StatsManager;
 import android.app.UidObserver;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -61,6 +62,7 @@ import android.content.res.CompatibilityInfo.CompatScale;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
+import android.database.ContentObserver;
 import android.hardware.power.Mode;
 import android.net.Uri;
 import android.os.Binder;
@@ -82,6 +84,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.DeviceConfig;
 import android.provider.DeviceConfig.Properties;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.AtomicFile;
@@ -102,6 +105,8 @@ import com.android.server.SystemService;
 import com.android.server.SystemService.TargetUser;
 import com.android.server.wm.ActivityTaskManagerInternal;
 import com.android.server.wm.CompatScaleProvider;
+
+import com.libremobileos.providers.LMOSettings;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -1573,6 +1578,9 @@ public final class GameManagerService extends IGameManagerService.Stub {
                 }
             }
         }, new IntentFilter(Intent.ACTION_SHUTDOWN));
+        // Start to observe our LMOSettings.Secure.GAME_OVERLAY
+        // after boot completed.
+        new SettingsObserver(mHandler);
         Slog.v(TAG, "Game loading power mode OFF (game manager service start/restart)");
         mPowerManagerInternal.setPowerMode(Mode.GAME_LOADING, false);
         Slog.v(TAG, "Game power mode OFF (game manager service start/restart)");
@@ -2353,4 +2361,42 @@ public final class GameManagerService extends IGameManagerService.Stub {
             }
         }
     }
+
+    class SettingsObserver extends ContentObserver {
+
+        private final ContentResolver mContentResolver;
+
+        SettingsObserver(Handler handler) {
+            super(handler);
+            mContentResolver = mContext.getContentResolver();
+            mContentResolver.registerContentObserver(Settings.Secure.getUriFor(
+                    LMOSettings.Secure.GAME_OVERLAY), false, this,
+                    UserHandle.USER_ALL);
+            }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            String newValue = Settings.Secure.getStringForUser(mContentResolver,
+                    LMOSettings.Secure.GAME_OVERLAY, UserHandle.USER_CURRENT);
+            if (newValue == null) return;
+            // We write key and value of the device_config property as a single string
+            // from our GameSpace.
+            // ';;' is the separator betweeen key and value.
+            // Example: com.libremobileos.game;;mode=2,downscaleFactor=0.7:mode=3,downscaleFactor=0.8
+            // So split the key and value from the string
+            // and set the device_config propery.
+            String[] parsedValues = newValue.split(";;");
+            // Value should contain both package name and config.
+            // Otherwise don't do anything.
+            if (parsedValues.length < 2) return;
+            // We don't need to care about any format and all.
+            // It will be handled by the GamePackageConfiguration while
+            // parsing the device_config property.
+            String packageName = parsedValues[0];
+            String configValue = parsedValues[1];
+            DeviceConfig.setProperty(DeviceConfig.NAMESPACE_GAME_OVERLAY,
+                    packageName, configValue, false);
+        }
+    }
+
 }
