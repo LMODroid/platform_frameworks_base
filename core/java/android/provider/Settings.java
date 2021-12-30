@@ -17682,6 +17682,12 @@ public final class Settings {
         public static final String CLEARTEXT_NETWORK_POLICY = "cleartext_network_policy";
 
         /**
+         * The amount of time in milliseconds before the device automatically reboots
+         * @hide
+         */
+        public static final String DEVICE_REBOOT_TIMEOUT = "device_reboot_timeout";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
