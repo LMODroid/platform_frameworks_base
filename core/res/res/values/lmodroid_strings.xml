@@ -14,7 +14,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Long-press back kill application -->
     <string name="app_killed_message">Application killed</string>
 
@@ -46,5 +46,8 @@
     <!-- LiveDisplay manager permission -->
     <string name="permlab_manageLiveDisplay">manage LiveDisplay settings</string>
     <string name="permdesc_manageLiveDisplay">Allows an app to configure advanced display settings.</string>
+
+    <!-- App lock -->
+    <string name="unlock_application">Unlock <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
 
 </resources>
