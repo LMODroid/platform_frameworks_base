@@ -144,8 +144,9 @@ constructor(
             isMinimized = isEntryMinimized(entry),
             redactionType =
                 if (
-                    screenshareNotificationHiding() &&
-                        sensitiveNotifProtectionController.shouldProtectNotification(entry)
+                    (screenshareNotificationHiding() &&
+                        sensitiveNotifProtectionController.shouldProtectNotification(entry))
+                        || entry.sbn.isContentSecure
                 ) {
                     REDACTION_TYPE_PUBLIC
                 } else {

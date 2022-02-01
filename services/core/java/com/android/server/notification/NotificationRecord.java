@@ -246,6 +246,8 @@ public final class NotificationRecord {
     // assigned bundle.
     private int mOriginalChannelVisibility = NotificationManager.VISIBILITY_NO_OVERRIDE;
 
+    private boolean mIsBubbleUpSuppressedByAppLock = false;
+
     public NotificationRecord(Context context, StatusBarNotification sbn,
             NotificationChannel channel) {
         this.sbn = sbn;
@@ -1870,6 +1872,14 @@ public final class NotificationRecord {
             mKeyguardManager = mContext.getSystemService(KeyguardManager.class);
         }
         return mKeyguardManager;
+    }
+
+    public void setBubbleUpSuppressedByAppLock(boolean suppressed) {
+        mIsBubbleUpSuppressedByAppLock = suppressed;
+    }
+
+    public boolean isBubbleUpSuppressedByAppLock() {
+        return mIsBubbleUpSuppressedByAppLock;
     }
 
     @VisibleForTesting

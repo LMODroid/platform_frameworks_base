@@ -251,7 +251,7 @@ public class NotificationRowBinderImpl implements NotificationRowBinder {
         int redactionType = inflaterParams.getRedactionType();
 
         params.setRedactionType(redactionType);
-        if (redactionType != REDACTION_TYPE_NONE) {
+        if (redactionType != REDACTION_TYPE_NONE || entry.getSbn().getIsContentSecure()) {
             params.requireContentViews(FLAG_CONTENT_VIEW_PUBLIC);
         } else {
             params.markContentViewsFreeable(FLAG_CONTENT_VIEW_PUBLIC);
@@ -262,7 +262,8 @@ public class NotificationRowBinderImpl implements NotificationRowBinder {
         } else {
             params.markContentViewsFreeable(FLAG_CONTENT_VIEW_SINGLE_LINE);
         }
-        if (inflaterParams.isChildInGroup() && redactionType != REDACTION_TYPE_NONE) {
+        if (inflaterParams.isChildInGroup() && (redactionType != REDACTION_TYPE_NONE ||
+                entry.getSbn().getIsContentSecure())) {
             params.requireContentViews(FLAG_CONTENT_VIEW_PUBLIC_SINGLE_LINE);
         } else {
             params.markContentViewsFreeable(FLAG_CONTENT_VIEW_PUBLIC_SINGLE_LINE);

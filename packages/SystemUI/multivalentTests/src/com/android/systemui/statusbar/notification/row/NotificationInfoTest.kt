@@ -192,6 +192,7 @@ class NotificationInfoTest : SysuiTestCase() {
                 UserHandle.getUserHandleForUid(TEST_UID),
                 null,
                 0,
+                false /* isContentSecure */,
             )
         entry =
             NotificationEntryBuilder()
@@ -256,6 +257,7 @@ class NotificationInfoTest : SysuiTestCase() {
                 UserHandle.CURRENT,
                 null,
                 0,
+                false /* isContentSecure */,
             )
         val applicationInfo = ApplicationInfo()
         applicationInfo.uid = 7 // non-zero
@@ -418,6 +420,7 @@ class NotificationInfoTest : SysuiTestCase() {
                 UserHandle.getUserHandleForUid(TEST_UID),
                 null,
                 0,
+                false /* isContentSecure */,
             )
         entry.sbn = sbn
         bindNotification()
@@ -454,6 +457,7 @@ class NotificationInfoTest : SysuiTestCase() {
                 UserHandle.getUserHandleForUid(TEST_UID),
                 null,
                 0,
+                false /* isContentSecure */,
             )
         entry.sbn = sbn
         bindNotification()

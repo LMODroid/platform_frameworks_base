@@ -127,6 +127,7 @@ import com.android.internal.util.Preconditions;
 import com.android.internal.util.SizedInputStream;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
+import com.android.server.libremobileos.AppLockManagerServiceInternal;
 import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.pm.pkg.ArchiveState;
 import com.android.server.pm.pkg.PackageStateInternal;
@@ -256,6 +257,8 @@ public class LauncherAppsService extends SystemService {
         @NonNull
         private final RemoteCallbackList<IDumpCallback> mDumpCallbacks =
                 new RemoteCallbackList<>();
+
+        private AppLockManagerServiceInternal mAppLockManagerInternal;
 
         public LauncherAppsImpl(Context context) {
             mContext = context;
@@ -995,8 +998,16 @@ public class LauncherAppsService extends SystemService {
             return List.of(applicationInfo);
         }
 
+        private AppLockManagerServiceInternal getAppLockManagerService() {
+            if (mAppLockManagerInternal == null) {
+                mAppLockManagerInternal = LocalServices.getService(AppLockManagerServiceInternal.class);
+            }
+            return mAppLockManagerInternal;
+        }
+
         private List<LauncherActivityInfoInternal> queryIntentLauncherActivities(
                 Intent intent, int callingUid, UserHandle user) {
+            final Set<String> hiddenApps = getAppLockManagerService().getHiddenPackages(user.getIdentifier());
             final List<ResolveInfo> apps = mPackageManagerInternal.queryIntentActivities(intent,
                     intent.resolveTypeIfNeeded(mContext.getContentResolver()),
                     PackageManager.MATCH_DIRECT_BOOT_AWARE
@@ -1009,6 +1020,10 @@ public class LauncherAppsService extends SystemService {
                 final String packageName = ri.activityInfo.packageName;
                 if (packageName == null) {
                     // should not happen
+                    continue;
+                }
+                if (hiddenApps.contains(packageName)) {
+                    if (DEBUG) Slog.d(TAG, "Skipping package " + packageName);
                     continue;
                 }
                 final IncrementalStatesInfo incrementalStatesInfo =
