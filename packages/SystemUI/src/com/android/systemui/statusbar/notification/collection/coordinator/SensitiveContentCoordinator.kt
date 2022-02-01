@@ -209,10 +209,12 @@ constructor(
                 screenshareNotificationHiding() &&
                     sensitiveNotificationProtectionController.shouldProtectNotification(entry)
 
-            val needsRedaction =
+            val isSecure = entry.sbn.isContentSecure
+            val needsRedaction = isSecure ||
                 lockscreenUserManager.getRedactionType(entry) != REDACTION_TYPE_NONE
             val isSensitive = userPublic && needsRedaction
-            entry.setSensitive(isSensitive || shouldProtectNotification, deviceSensitive)
+            entry.setSensitive(isSensitive || shouldProtectNotification, isSecure || deviceSensitive)
+            entry.row.setForceHideContents(isSecure)
             if (screenshareNotificationHiding()) {
                 entry.row?.setPublicExpanderVisible(!shouldProtectNotification)
             }

@@ -232,6 +232,8 @@ public final class NotificationRecord {
 
     private String mSummarization = null;
 
+    private boolean mIsBubbleUpSuppressedByAppLock = false;
+
     public NotificationRecord(Context context, StatusBarNotification sbn,
             NotificationChannel channel) {
         this.sbn = sbn;
@@ -1791,6 +1793,14 @@ public final class NotificationRecord {
             mKeyguardManager = mContext.getSystemService(KeyguardManager.class);
         }
         return mKeyguardManager;
+    }
+
+    public void setBubbleUpSuppressedByAppLock(boolean suppressed) {
+        mIsBubbleUpSuppressedByAppLock = suppressed;
+    }
+
+    public boolean isBubbleUpSuppressedByAppLock() {
+        return mIsBubbleUpSuppressedByAppLock;
     }
 
     @VisibleForTesting

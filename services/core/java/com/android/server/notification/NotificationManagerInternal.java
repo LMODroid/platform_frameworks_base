@@ -89,4 +89,7 @@ public interface NotificationManagerInternal {
      * @param displayId display ID
      */
     void onDisplayRemoveSystemDecorations(int displayId);
+
+    void updateSecureNotifications(String pkg, boolean isContentSecure,
+        boolean isBubbleUpSuppressed, int userId);
 }

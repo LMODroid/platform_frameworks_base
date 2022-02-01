@@ -145,7 +145,7 @@ public class PartialConversationInfoTest extends SysuiTestCase {
                 .setContentTitle(new SpannableString("title"))
                 .build();
         mSbn = new StatusBarNotification(TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, 0, null, TEST_UID, 0,
-                n, UserHandle.CURRENT, null, 0);
+                n, UserHandle.CURRENT, null, 0, false /* isContentSecure */);
         mEntry = new NotificationEntryBuilder().setSbn(mSbn).updateRanking(rankingBuilder -> {
             rankingBuilder.setChannel(mNotificationChannel);
         }).build();
@@ -205,7 +205,7 @@ public class PartialConversationInfoTest extends SysuiTestCase {
     @Test
     public void testBindNotification_delegate() throws Exception {
         mSbn = new StatusBarNotification(TEST_PACKAGE_NAME, "other", 0, null, TEST_UID, 0,
-                new Notification(), UserHandle.CURRENT, null, 0);
+                new Notification(), UserHandle.CURRENT, null, 0, false /* isContentSecure */);
         final ApplicationInfo applicationInfo = new ApplicationInfo();
         applicationInfo.uid = 7;  // non-zero
         when(mMockPackageManager.getApplicationInfo(eq("other"), anyInt())).thenReturn(
