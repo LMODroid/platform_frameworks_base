@@ -117,7 +117,7 @@ public class FeedbackInfoTest extends SysuiTestCase {
                 applicationInfo);
 
         mSbn = new StatusBarNotification(TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, 0, null, TEST_UID, 0,
-                new Notification(), UserHandle.CURRENT, null, 0);
+                new Notification(), UserHandle.CURRENT, null, 0, false /* isContentSecure */);
         mConfig = new Configuration(mContext.getResources().getConfiguration());
         Configuration c2 = new Configuration(mConfig);
         c2.setLocale(Locale.US);
