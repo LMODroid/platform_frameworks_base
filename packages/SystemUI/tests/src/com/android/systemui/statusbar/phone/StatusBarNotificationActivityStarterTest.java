@@ -473,7 +473,7 @@ public class StatusBarNotificationActivityStarterTest extends SysuiTestCase {
                 .setFullScreenIntent(fullScreenIntent, true);
         StatusBarNotification sbn = new StatusBarNotification("pkg", "pkg", 0,
                 "tag" + System.currentTimeMillis(), 0, 0,
-                nb.build(), new UserHandle(0), null, 0);
+                nb.build(), new UserHandle(0), null, 0, false /* isContentSecure */);
         NotificationEntry entry = mock(NotificationEntry.class);
         when(entry.getImportance()).thenReturn(NotificationManager.IMPORTANCE_HIGH);
         when(entry.getSbn()).thenReturn(sbn);
@@ -506,7 +506,7 @@ public class StatusBarNotificationActivityStarterTest extends SysuiTestCase {
                 .setFullScreenIntent(mockFullScreenIntent, true);
         StatusBarNotification sbn = new StatusBarNotification("pkg", "pkg", 0,
                 "tag" + System.currentTimeMillis(), 0, 0,
-                nb.build(), new UserHandle(0), null, 0);
+                nb.build(), new UserHandle(0), null, 0, false /* isContentSecure */);
         NotificationEntry entry = mock(NotificationEntry.class);
         when(entry.getImportance()).thenReturn(NotificationManager.IMPORTANCE_HIGH);
         when(entry.getSbn()).thenReturn(sbn);

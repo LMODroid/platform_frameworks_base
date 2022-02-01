@@ -209,7 +209,7 @@ public class NotificationConversationInfoTest extends SysuiTestCase {
                 .build();
         notification.extras.putParcelable(EXTRA_BUILDER_APPLICATION_INFO, applicationInfo);
         mSbn = new StatusBarNotification(TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, 0, null, TEST_UID, 0,
-                notification, UserHandle.CURRENT, null, 0);
+                notification, UserHandle.CURRENT, null, 0, false /* isContentSecure */);
         mEntry = new NotificationEntryBuilder().setSbn(mSbn).setShortcutInfo(mShortcutInfo).build();
 
         PendingIntent bubbleIntent = PendingIntent.getActivity(mContext, 0,
@@ -393,7 +393,7 @@ public class NotificationConversationInfoTest extends SysuiTestCase {
     @Test
     public void testBindNotification_delegate() throws Exception {
         mSbn = new StatusBarNotification(TEST_PACKAGE_NAME, "other", 0, null, TEST_UID, 0,
-                mSbn.getNotification(), UserHandle.CURRENT, null, 0);
+                mSbn.getNotification(), UserHandle.CURRENT, null, 0, false /* isContentSecure */);
         final ApplicationInfo applicationInfo = new ApplicationInfo();
         applicationInfo.uid = 7;  // non-zero
         when(mMockPackageManager.getApplicationInfo(eq("other"), anyInt())).thenReturn(

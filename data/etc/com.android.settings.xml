@@ -69,5 +69,6 @@
         <permission name="android.permission.LIST_ENABLED_CREDENTIAL_PROVIDERS" />
         <permission name="android.permission.SATELLITE_COMMUNICATION" />
         <permission name="android.permission.READ_SYSTEM_GRAMMATICAL_GENDER" />
+        <permission name="com.android.permission.MANAGE_APP_LOCK" />
     </privapp-permissions>
 </permissions>
