@@ -841,6 +841,10 @@
     <!-- Used to launch a common app (FlipFlap) for devices with flip cover. -->
     <protected-broadcast android:name="android.intent.action.LID_STATE_CHANGED" />
 
+    <!-- App lock -->
+    <protected-broadcast android:name="com.android.server.app.AppLockManagerService.APP_LOCK_TIMEOUT" />
+    <protected-broadcast android:name="android.app.action.UNLOCK_APP" />
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
@@ -7675,6 +7679,11 @@
     -->
     <permission android:name="android.permission.GET_ANY_PROVIDER_TYPE"
                 android:protectionLevel="signature" />
+
+    <!-- Allows an application to manage app lock
+         @hide -->
+    <permission android:name="com.android.permission.MANAGE_APP_LOCK"
+                android:protectionLevel="signature|privileged" />
 
     <!-- Attribution for Geofencing service. -->
     <attribution android:tag="GeofencingService" android:label="@string/geofencing_service"/>

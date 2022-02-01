@@ -215,6 +215,8 @@ public final class NotificationRecord {
     private int mProposedImportance = IMPORTANCE_UNSPECIFIED;
     private boolean mSensitiveContent = false;
 
+    private boolean mIsBubbleUpSuppressedByAppLock = false;
+
     public NotificationRecord(Context context, StatusBarNotification sbn,
             NotificationChannel channel) {
         this.sbn = sbn;
@@ -1617,6 +1619,14 @@ public final class NotificationRecord {
 
     public ArraySet<String> getPhoneNumbers() {
         return mPhoneNumbers;
+    }
+
+    public void setBubbleUpSuppressedByAppLock(boolean suppressed) {
+        mIsBubbleUpSuppressedByAppLock = suppressed;
+    }
+
+    public boolean isBubbleUpSuppressedByAppLock() {
+        return mIsBubbleUpSuppressedByAppLock;
     }
 
     @VisibleForTesting

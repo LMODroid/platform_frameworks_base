@@ -86,6 +86,7 @@ import com.android.internal.widget.LockPatternUtils;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.companion.virtual.VirtualDeviceManagerInternal;
+import com.android.server.libremobileos.AppLockManagerServiceInternal;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -257,6 +258,8 @@ public class TrustManagerService extends SystemService {
             return mLooper;
         }
     }
+
+    private AppLockManagerServiceInternal mAppLockManagerService = null;
 
     public TrustManagerService(Context context) {
         this(context, new Injector(new LockPatternUtils(context), Looper.myLooper()));
@@ -1003,7 +1006,15 @@ public class TrustManagerService extends SystemService {
             }
 
             setDeviceLockedForUser(id, deviceLocked);
+            getAppLockManagerService().notifyDeviceLocked(deviceLocked, id);
         }
+    }
+
+    private AppLockManagerServiceInternal getAppLockManagerService() {
+        if (mAppLockManagerService == null) {
+            mAppLockManagerService = LocalServices.getService(AppLockManagerServiceInternal.class);
+        }
+        return mAppLockManagerService;
     }
 
     private void setDeviceLockedForUser(@UserIdInt int userId, boolean locked) {
