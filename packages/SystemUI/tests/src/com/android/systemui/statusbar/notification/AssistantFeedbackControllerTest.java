@@ -79,7 +79,7 @@ public class AssistantFeedbackControllerTest extends SysuiTestCase {
                 mContext, mProxyFake);
         mSbn = new StatusBarNotification(TEST_PACKAGE_NAME, TEST_PACKAGE_NAME,
                 0, null, TEST_UID, 0, new Notification(),
-                UserHandle.CURRENT, null, 0);
+                UserHandle.CURRENT, null, 0, false /* isContentSecure */);
     }
 
     @Test

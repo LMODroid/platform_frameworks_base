@@ -280,6 +280,7 @@ import com.android.server.am.PendingIntentRecord;
 import com.android.server.am.UserState;
 import com.android.server.firewall.IntentFirewall;
 import com.android.server.grammaticalinflection.GrammaticalInflectionManagerInternal;
+import com.android.server.libremobileos.AppLockManagerServiceInternal;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.pm.UserManagerService;
 import com.android.server.policy.PermissionPolicyInternal;
@@ -863,6 +864,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             mAmInternal.updateOomAdj(ActivityManagerInternal.OOM_ADJ_REASON_ACTIVITY);
         }
     };
+
+    private AppLockManagerServiceInternal mAppLockManagerService = null;
 
     @VisibleForTesting(visibility = VisibleForTesting.Visibility.PACKAGE)
     public ActivityTaskManagerService(Context context) {
@@ -1815,6 +1818,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
         final int callingPid = Binder.getCallingPid();
         final int callingUid = Binder.getCallingUid();
+
         final SafeActivityOptions safeOptions = SafeActivityOptions.fromBundle(bOptions);
         final long origId = Binder.clearCallingIdentity();
         try {
@@ -3978,6 +3982,17 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                     Slog.w(TAG, "takeTaskSnapshot: taskId=" + taskId + " not found or not visible");
                     return null;
                 }
+
+                final Task rootTask = task.getRootTask();
+                final String packageName =
+                    rootTask != null && rootTask.realActivity != null
+                        ? rootTask.realActivity.getPackageName()
+                        : null;
+                if (packageName != null && getAppLockManagerService().requireUnlock(
+                        packageName, task.mUserId)) {
+                    return null;
+                }
+
                 // Note that if updateCache is true, ActivityRecord#shouldUseAppThemeSnapshot will
                 // be used to decide whether the task is allowed to be captured because that may
                 // be retrieved by recents. While if updateCache is false, the real snapshot will
@@ -5504,6 +5519,13 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             mUserManagerInternal = LocalServices.getService(UserManagerInternal.class);
         }
         return mUserManagerInternal;
+    }
+
+    AppLockManagerServiceInternal getAppLockManagerService() {
+        if (mAppLockManagerService == null) {
+            mAppLockManagerService = LocalServices.getService(AppLockManagerServiceInternal.class);
+        }
+        return mAppLockManagerService;
     }
 
     AppWarnings getAppWarningsLocked() {
@@ -7478,6 +7500,14 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         @Override
         public boolean isAssistDataAllowed() {
             return ActivityTaskManagerService.this.isAssistDataAllowed();
+        }
+
+        @Override
+        public boolean isVisibleActivity(IBinder activityToken) {
+            synchronized (mGlobalLock) {
+                final ActivityRecord r = ActivityRecord.isInRootTaskLocked(activityToken);
+                return r != null && r.isInterestingToUserLocked();
+            }
         }
     }
 

@@ -140,7 +140,7 @@ constructor(
             isConversation = entry.ranking.isConversation,
             isSnoozeEnabled = isSnoozeSettingsEnabled && !entry.isCanceled,
             isMinimized = isEntryMinimized(entry),
-            needsRedaction =
+            needsRedaction = entry.sbn.isContentSecure ||
                 lockscreenUserManager.needsRedaction(entry) ||
                     (screenshareNotificationHiding() &&
                         sensitiveNotifProtectionController.shouldProtectNotification(entry)),
