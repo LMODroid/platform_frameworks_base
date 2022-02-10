@@ -101,16 +101,14 @@ import java.util.function.Consumer;
 public class NavigationBarView extends FrameLayout implements
         NavigationModeController.ModeChangedListener {
     final static boolean DEBUG = false;
-    final static String TAG = "StatusBar/NavBarView";
-
-    // slippery nav bar when everything is disabled, e.g. during setup
-    final static boolean SLIPPERY_WHEN_DISABLED = true;
+    final static String TAG = "NavBarView";
 
     final static boolean ALTERNATE_CAR_MODE_UI = false;
     private final RegionSamplingHelper mRegionSamplingHelper;
     private final int mNavColorSampleMargin;
     private final SysUiState mSysUiFlagContainer;
 
+    // The current view is one of mHorizontal or mVertical depending on the current configuration
     View mCurrentView = null;
     private View mVertical;
     private View mHorizontal;
@@ -274,7 +272,7 @@ public class NavigationBarView extends FrameLayout implements
     };
 
     private final Consumer<Boolean> mRotationButtonListener = (visible) -> {
-        if (visible) {
+        if (visible && mAutoHideController != null) {
             // If the button will actually become visible and the navbar is about to hide,
             // tell the statusbar to keep it around for longer
             mAutoHideController.touchAutoHide();
@@ -373,6 +371,12 @@ public class NavigationBarView extends FrameLayout implements
         }
     }
 
+    @Override
+    protected boolean onSetAlpha(int alpha) {
+        Log.e(TAG, "onSetAlpha", new Throwable());
+        return super.onSetAlpha(alpha);
+    }
+
     public void setAutoHideController(AutoHideController autoHideController) {
         mAutoHideController = autoHideController;
     }
@@ -469,6 +473,18 @@ public class NavigationBarView extends FrameLayout implements
 
     public View getCurrentView() {
         return mCurrentView;
+    }
+
+    /**
+     * Applies {@param consumer} to each of the nav bar views.
+     */
+    public void forEachView(Consumer<View> consumer) {
+        if (mVertical != null) {
+            consumer.accept(mVertical);
+        }
+        if (mHorizontal != null) {
+            consumer.accept(mHorizontal);
+        }
     }
 
     public RotationButtonController getRotationButtonController() {
@@ -1313,6 +1329,7 @@ public class NavigationBarView extends FrameLayout implements
 
         dumpButton(pw, "back", getBackButton());
         dumpButton(pw, "home", getHomeButton());
+        dumpButton(pw, "handle", getHomeHandle());
         dumpButton(pw, "rcnt", getRecentsButton());
         dumpButton(pw, "rota", getRotateSuggestionButton());
         dumpButton(pw, "a11y", getAccessibilityButton());
