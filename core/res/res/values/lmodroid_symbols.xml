@@ -60,4 +60,7 @@
     <!-- Power menu -->
     <java-symbol type="array" name="config_restartActionsList" />
 
+    <!-- Notch -->
+    <java-symbol type="bool" name="config_haveNotch" />
+
 </resources>

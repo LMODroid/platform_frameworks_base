@@ -117,6 +117,9 @@
         <item>restart</item>
         <item>restart_recovery</item>
         <item>restart_bootloader</item>
-     </string-array>
+    </string-array>
+
+    <!-- Whether device has a notch -->
+    <bool name="config_haveNotch">false</bool>
 
 </resources>
