@@ -40,9 +40,6 @@ public class TunerFragment extends PreferenceFragment {
 
     private static final String WARNING_TAG = "tuner_warning";
     private static final String[] DEBUG_ONLY = new String[] {
-            "nav_bar",
-            "lockscreen",
-            "picture_in_picture",
     };
 
     // We are the only ones who ever call this constructor, so don't worry about the warning
