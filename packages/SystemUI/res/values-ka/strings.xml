@@ -1351,4 +1351,5 @@
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"დონე: %1$d %2$d-დან"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"სახლის კონტროლი"</string>
     <string name="home_controls_dream_description" msgid="4644150952104035789">"სწრაფი წვდომა სახლის კონტროლზე ეკრანმზოგის სახით"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"მართვის საშუალებების დამატება თქვენს დაკავშირებულ მოწყობილობებზე"</string>
 </resources>

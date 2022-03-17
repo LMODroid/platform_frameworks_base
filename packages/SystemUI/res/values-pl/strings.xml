@@ -1351,4 +1351,5 @@
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Poziom %1$d z %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"Sterowanie domem"</string>
     <string name="home_controls_dream_description" msgid="4644150952104035789">"Szybki dostęp do sterowania domem na wygaszaczu ekranu"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Dodaj elementy sterujące do połączonych urządzeń"</string>
 </resources>

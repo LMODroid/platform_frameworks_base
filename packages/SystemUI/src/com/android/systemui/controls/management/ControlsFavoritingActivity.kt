@@ -44,7 +44,9 @@ import com.android.systemui.controls.TooltipManager
 import com.android.systemui.controls.controller.ControlsControllerImpl
 import com.android.systemui.controls.controller.StructureInfo
 import com.android.systemui.controls.ui.ControlsActivity
+import com.android.systemui.controls.ui.ControlsUiController
 import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.globalactions.GlobalActionsComponent
 import com.android.systemui.settings.UserTracker
 import java.text.Collator
 import java.util.concurrent.Executor
@@ -54,6 +56,8 @@ open class ControlsFavoritingActivity @Inject constructor(
     @Main private val executor: Executor,
     private val controller: ControlsControllerImpl,
     private val userTracker: UserTracker,
+    private val globalActionsComponent: GlobalActionsComponent,
+    private val uiController: ControlsUiController,
 ) : ComponentActivity() {
 
     companion object {
@@ -92,6 +96,7 @@ open class ControlsFavoritingActivity @Inject constructor(
     private lateinit var comparator: Comparator<StructureContainer>
     private var cancelLoadRunnable: Runnable? = null
     private var isPagerLoaded = false
+    private var backToGlobalActions = true
 
     private val fromProviderSelector: Boolean
         get() = openSource == EXTRA_SOURCE_VALUE_FROM_PROVIDER_SELECTOR
@@ -134,6 +139,11 @@ open class ControlsFavoritingActivity @Inject constructor(
         structureExtra = intent.getCharSequenceExtra(EXTRA_STRUCTURE)
         component = intent.getParcelableExtra<ComponentName>(Intent.EXTRA_COMPONENT_NAME)
         openSource = intent.getByteExtra(EXTRA_SOURCE, EXTRA_SOURCE_UNDEFINED)
+
+        backToGlobalActions = intent.getBooleanExtra(
+            ControlsUiController.BACK_TO_GLOBAL_ACTIONS,
+            false
+        )
 
         bindViews()
     }
@@ -321,19 +331,16 @@ open class ControlsFavoritingActivity @Inject constructor(
             isEnabled = false
             visibility = View.VISIBLE
             setOnClickListener {
+                val i = Intent().apply {
+                    component = ComponentName(context, ControlsProviderSelectorActivity::class.java)
+		    putExtra(
+                        ControlsUiController.BACK_TO_GLOBAL_ACTIONS,
+                        backToGlobalActions
+                    )
+                }
                 if (component == null) return@setOnClickListener
                 saveFavorites()
-                startActivity(
-                    Intent(context, ControlsEditingActivity::class.java).also {
-                        it.putExtra(Intent.EXTRA_COMPONENT_NAME, component)
-                        it.putExtra(ControlsEditingActivity.EXTRA_APP, appName)
-                        it.putExtra(ControlsEditingActivity.EXTRA_FROM_FAVORITING, true)
-                        it.putExtra(
-                            ControlsEditingActivity.EXTRA_STRUCTURE,
-                            listOfStructures[structurePager.currentItem].structureName,
-                        )
-                    },
-                    ActivityOptions
+                startActivity(i, ActivityOptions
                         .makeSceneTransitionAnimation(this@ControlsFavoritingActivity).toBundle()
                 )
             }
@@ -360,10 +367,15 @@ open class ControlsFavoritingActivity @Inject constructor(
     }
 
     private fun openControlsOrigin() {
-        startActivity(
-            Intent(applicationContext, ControlsActivity::class.java),
-            ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-        )
+        if (backToGlobalActions) {
+            globalActionsComponent.handleShowGlobalActionsMenu()
+        } else {
+            val i = Intent().apply {
+                component = ComponentName(applicationContext, ControlsActivity::class.java)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(i)
+        }
     }
 
     override fun onPause() {
