@@ -1233,4 +1233,5 @@
     <string name="privacy_dialog_recent_app_usage_2" msgid="2874689735085367167">"<xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>) က လတ်တလောသုံးထားသည်"</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"ကီးဘုတ်နောက်မီး"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"အဆင့် %2$d အနက် %1$d"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"သင့်ချိတ်ဆက်ထားသော စက်များအတွက် ထိန်းချုပ်မှုများ ထည့်ပါ"</string>
 </resources>

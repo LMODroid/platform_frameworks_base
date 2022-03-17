@@ -1233,4 +1233,5 @@
     <string name="privacy_dialog_recent_app_usage_2" msgid="2874689735085367167">"Ilitumiwa hivi majuzi na <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>)"</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Mwanga chini ya kibodi"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Kiwango cha %1$d kati ya %2$d"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Weka vidhibiti vya vifaa vyako vilivyounganishwa"</string>
 </resources>

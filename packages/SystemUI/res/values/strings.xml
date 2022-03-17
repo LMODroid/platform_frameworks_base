@@ -3322,4 +3322,5 @@
     <string name="keyboard_backlight_dialog_title">Keyboard backlight</string>
     <!-- Content description for keyboard backlight brightness value [CHAR LIMIT=NONE] -->
     <string name="keyboard_backlight_value">Level %1$d of %2$d</string>
+    <string name="quick_controls_subtitle">Add controls for your connected devices</string>
 </resources>

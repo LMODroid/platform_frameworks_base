@@ -1233,4 +1233,5 @@
     <string name="privacy_dialog_recent_app_usage_2" msgid="2874689735085367167">"Utilitzat recentment per <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>)"</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Retroil·luminació del teclat"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Nivell %1$d de %2$d"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Afegeix controls per als teus dispositius connectats"</string>
 </resources>

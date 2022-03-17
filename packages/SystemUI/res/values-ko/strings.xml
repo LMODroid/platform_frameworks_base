@@ -1233,4 +1233,5 @@
     <string name="privacy_dialog_recent_app_usage_2" msgid="2874689735085367167">"최근 <xliff:g id="APP_NAME">%1$s</xliff:g>에서 사용됨(<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>)"</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"키보드 백라이트"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"%2$d단계 중 %1$d단계"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"연결된 기기의 컨트롤을 추가합니다."</string>
 </resources>

@@ -57,7 +57,7 @@ class PanelTaskViewControllerTest : SysuiTestCase() {
         val FAKE_BOUNDS = Rect(10, 20, 30, 40)
     }
 
-    @Mock private lateinit var activityContext: Context
+    @Mock private var activityContext: Context? = null
     @Mock private lateinit var taskView: TaskView
     @Mock private lateinit var pendingIntent: PendingIntent
     @Mock private lateinit var hideRunnable: () -> Unit
