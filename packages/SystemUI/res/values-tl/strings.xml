@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Hindi Alam"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"I-reset ang lahat ng tile?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Magre-reset sa mga orihinal na setting ng device ang lahat ng tile ng Mga Mabilisang Setting"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Magdagdag ng mga kontrol para sa iyong mga nakakonektang device"</string>
 </resources>

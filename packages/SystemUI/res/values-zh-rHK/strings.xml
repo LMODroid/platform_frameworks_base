@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"不明"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"要重設所有圖塊嗎？"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"所有「快速設定」圖塊將重設為裝置的原始設定"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"為已連接的裝置新增控制項"</string>
 </resources>

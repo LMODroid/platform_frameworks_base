@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Unbekannt"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"Alle Kacheln zurücksetzen?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Alle Schnelleinstellungen-Kacheln werden auf die Standardeinstellungen des Geräts zurückgesetzt"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Karten für deine verbundenen Geräte hinzufügen"</string>
 </resources>

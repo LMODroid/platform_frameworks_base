@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"ಅಪರಿಚಿತ"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"ಎಲ್ಲಾ ಟೈಲ್‌ಗಳನ್ನು ರೀಸೆಟ್ ಮಾಡಬೇಕೆ?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"ಎಲ್ಲಾ ತ್ವರಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಟೈಲ್‌ಗಳನ್ನು ಸಾಧನದ ಮೂಲ ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಗೆ ರೀಸೆಟ್ ಮಾಡಲಾಗುತ್ತದೆ"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"ನಿಮ್ಮ ಸಂಪರ್ಕಿತ ಸಾಧನಗಳಿಗೆ ನಿಯಂತ್ರಣಗಳನ್ನು ಸೇರಿಸಿ"</string>
 </resources>

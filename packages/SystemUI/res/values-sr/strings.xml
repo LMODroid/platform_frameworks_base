@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Непознато"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"Желите да ресетујете све плочице?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Све плочице Брзих подешавања ће се ресетовати на првобитна подешавања уређаја"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Додајте контроле за повезане уређаје"</string>
 </resources>

@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"తెలియదు"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"టైల్స్ అన్ని రీసెట్ చేయాలా?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"అన్ని క్విక్ సెట్టింగ్‌ల టైల్స్, పరికరం తాలూకు ఒరిజినల్ సెట్టింగ్‌లకు రీసెట్ చేయబడతాయి"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"మీ కనెక్ట్ అయిన పరికరాలకు నియంత్రణలను జోడించండి"</string>
 </resources>

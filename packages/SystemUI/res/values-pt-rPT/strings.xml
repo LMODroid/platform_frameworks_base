@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Desconhecido"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"Repor todos os mosaicos?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Todos os mosaicos de Definições rápidas vão ser repostos para as definições originais do dispositivo"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Adicione controlos para os seus dispositivos associados."</string>
 </resources>

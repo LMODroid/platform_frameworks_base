@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"അജ്ഞാതം"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"എല്ലാ ടൈലുകളും റീസെറ്റ് ചെയ്യണോ?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"എല്ലാ ദ്രുത ക്രമീകരണ ടൈലുകളും ഉപകരണത്തിന്റെ ഒറിജിനൽ ക്രമീകരണത്തിലേക്ക് റീസെറ്റ് ചെയ്യും"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"നിങ്ങളുടെ കണക്റ്റ് ചെയ്ത ഉപകരണങ്ങൾക്ക് നിയന്ത്രണങ്ങൾ ചേർക്കുക"</string>
 </resources>

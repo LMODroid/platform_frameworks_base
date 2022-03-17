@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"නොදනී"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"සියලු ටයිල් නැවත සකසන්න ද?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"සියලු ඉක්මන් සැකසීම් ටයිල් උපාංගයේ මුල් සැකසීම් වෙත නැවත සකසනු ඇත"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"ඔබේ සම්බන්ධිත උපාංග සඳහා පාලන එක් කරන්න"</string>
 </resources>

@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Visivyojulikana"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"Ungependa kubadilisha vigae vyote?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Vigae vyote vya Mipangilio ya Haraka vitabadilishwa kuwa katika mipangilio halisi ya kifaa"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Weka vidhibiti vya vifaa vyako vilivyounganishwa"</string>
 </resources>

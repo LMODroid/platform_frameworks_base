@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Không xác định"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"Đặt lại mọi ô?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Mọi ô Cài đặt nhanh sẽ được đặt lại về chế độ cài đặt ban đầu của thiết bị"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Thêm các tùy chọn điều khiển cho các thiết bị đã kết nối của bạn"</string>
 </resources>

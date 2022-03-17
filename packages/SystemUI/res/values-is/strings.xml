@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Óþekkt"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"Endurstilla alla reiti?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Allir flýtistillingareitir munu endurstillast á upprunalegar stillingar tækisins"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Bæta við stýringum fyrir tengd tæki"</string>
 </resources>

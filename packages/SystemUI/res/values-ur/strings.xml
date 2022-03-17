@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"نامعلوم"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"سبھی ٹائلز ری سیٹ کریں؟"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"سبھی فوری ترتیبات کی ٹائلز آلہ کی اصل ترتیبات پر ری سیٹ ہو جائیں گی"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"اپنے منسلک آلات کے لیے کنٹرولز شامل کریں"</string>
 </resources>

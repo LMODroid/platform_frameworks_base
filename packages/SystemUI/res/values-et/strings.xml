@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Teadmata"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"Kas lähtestada kõik paanid?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Kõik kiirseadete paanid lähtestatakse seadme algseadetele"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Lisage juhtelemendid ühendatud seadmete jaoks"</string>
 </resources>

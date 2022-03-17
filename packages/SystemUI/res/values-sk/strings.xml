@@ -1513,4 +1513,5 @@
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Neznáme"</string>
     <string name="qs_edit_mode_reset_dialog_title" msgid="5344853290033761627">"Chcete resetovať všetky karty?"</string>
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Všetky karty rýchlych nastavení sa resetujú na pôvodné nastavenia zariadenia"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Pridajte ovládacie prvky pre svoje pripojené zariadenia"</string>
 </resources>

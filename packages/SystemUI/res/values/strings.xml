@@ -4054,4 +4054,5 @@
     <string name="qs_edit_mode_reset_dialog_content">
         All Quick Settings tiles will reset to the device’s original settings
     </string>
+    <string name="quick_controls_subtitle">Add controls for your connected devices</string>
 </resources>
