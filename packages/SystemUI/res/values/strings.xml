@@ -4234,4 +4234,5 @@
 
     <!-- Template that joins disabled message with the label for the voice over. [CHAR LIMIT=NONE] -->
     <string name="volume_slider_disabled_message_template"><xliff:g example="Notification" id="stream_name">%1$s</xliff:g>, <xliff:g example="Disabled because ring is muted" id="disabled_message">%2$s</xliff:g></string>
+    <string name="quick_controls_subtitle">Add controls for your connected devices</string>
 </resources>

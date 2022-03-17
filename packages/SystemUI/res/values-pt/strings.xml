@@ -1587,4 +1587,5 @@
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"Todos os blocos \"Configurações rápidas\" serão redefinidos para as configurações originais do dispositivo"</string>
     <string name="demote_explain_text" msgid="3942301497888762295">"O app <xliff:g id="APPLICATION">%1$s</xliff:g> não vai mais mostrar atualizações em tempo real. É possível mudar isso a qualquer momento nas Configurações."</string>
     <string name="volume_slider_disabled_message_template" msgid="1305088816797803460">"<xliff:g id="STREAM_NAME">%1$s</xliff:g>, <xliff:g id="DISABLED_MESSAGE">%2$s</xliff:g>"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Adiciona controles para os dispositivos conectados"</string>
 </resources>

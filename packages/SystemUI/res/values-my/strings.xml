@@ -1587,4 +1587,5 @@
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"အမြန်ဆက်တင်များ အကွက်ငယ်အားလုံးကို စက်ပစ္စည်း၏ မူရင်းဆက်တင်များသို့ ပြင်ဆင်သတ်မှတ်ပါမည်"</string>
     <string name="demote_explain_text" msgid="3942301497888762295">"<xliff:g id="APPLICATION">%1$s</xliff:g> သည် ‘တိုက်ရိုက်အပ်ဒိတ်များ’ ကို ပြတော့မည်မဟုတ်ပါ။ ၎င်းကို ဆက်တင်များတွင် အချိန်မရွေး ပြောင်းနိုင်သည်။"</string>
     <string name="volume_slider_disabled_message_template" msgid="1305088816797803460">"<xliff:g id="STREAM_NAME">%1$s</xliff:g>၊ <xliff:g id="DISABLED_MESSAGE">%2$s</xliff:g>"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"သင့်ချိတ်ဆက်ထားသော စက်များအတွက် ထိန်းချုပ်မှုများ ထည့်ပါ"</string>
 </resources>

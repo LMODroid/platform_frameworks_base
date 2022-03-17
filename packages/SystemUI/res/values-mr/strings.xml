@@ -1587,4 +1587,5 @@
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"सर्व क्विक सेटिंग्ज टाइल डिव्हाइसच्या मूळ सेटिंग्जवर रीसेट केल्या जातील"</string>
     <string name="demote_explain_text" msgid="3942301497888762295">"<xliff:g id="APPLICATION">%1$s</xliff:g> आता लाइव्ह अपडेट दाखवणार नाही. तुम्ही सेटिंग्ज मध्ये हे कधीही बदलू शकता."</string>
     <string name="volume_slider_disabled_message_template" msgid="1305088816797803460">"<xliff:g id="STREAM_NAME">%1$s</xliff:g>, <xliff:g id="DISABLED_MESSAGE">%2$s</xliff:g>"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"तुमच्या कनेक्ट केलेल्या डिव्हाइससाठी नियंत्रणे जोडा"</string>
 </resources>

@@ -1587,4 +1587,5 @@
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"সব কুইক সেটিংস টাইল, ডিভাইসের আসল সেটিংসে রিসেট হয়ে যাবে"</string>
     <string name="demote_explain_text" msgid="3942301497888762295">"<xliff:g id="APPLICATION">%1$s</xliff:g> আর লাইভ আপডেট দেখাবে না। যেকোনও সময় \'সেটিংস\' থেকে এটি পরিবর্তন করা যাবে।"</string>
     <string name="volume_slider_disabled_message_template" msgid="1305088816797803460">"<xliff:g id="STREAM_NAME">%1$s</xliff:g>, <xliff:g id="DISABLED_MESSAGE">%2$s</xliff:g>"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"আপনার কানেক্ট করা ডিভাইসের জন্য কন্ট্রোল যোগ করুন"</string>
 </resources>

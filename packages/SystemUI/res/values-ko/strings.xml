@@ -1587,4 +1587,5 @@
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"모든 빠른 설정 타일이 기기의 원래 설정으로 재설정됩니다."</string>
     <string name="demote_explain_text" msgid="3942301497888762295">"<xliff:g id="APPLICATION">%1$s</xliff:g>에서 더 이상 실시간 소식을 표시하지 않습니다. 설정에서 언제든지 변경할 수 있습니다."</string>
     <string name="volume_slider_disabled_message_template" msgid="1305088816797803460">"<xliff:g id="STREAM_NAME">%1$s</xliff:g>, <xliff:g id="DISABLED_MESSAGE">%2$s</xliff:g>"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"연결된 기기의 컨트롤을 추가합니다."</string>
 </resources>

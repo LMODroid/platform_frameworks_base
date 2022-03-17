@@ -1587,4 +1587,5 @@
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"سبھی فوری ترتیبات کی ٹائلز آلہ کی اصل ترتیبات پر ری سیٹ ہو جائیں گی"</string>
     <string name="demote_explain_text" msgid="3942301497888762295">"اب <xliff:g id="APPLICATION">%1$s</xliff:g> لائیو اپ ڈیٹس نہیں دکھائے گی۔ آپ اسے ترتیبات میں کسی بھی وقت تبدیل کر سکتے ہیں۔"</string>
     <string name="volume_slider_disabled_message_template" msgid="1305088816797803460">"<xliff:g id="STREAM_NAME">%1$s</xliff:g>، <xliff:g id="DISABLED_MESSAGE">%2$s</xliff:g>"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"اپنے منسلک آلات کے لیے کنٹرولز شامل کریں"</string>
 </resources>

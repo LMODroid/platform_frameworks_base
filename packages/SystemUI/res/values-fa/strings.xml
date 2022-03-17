@@ -1587,4 +1587,5 @@
     <string name="qs_edit_mode_reset_dialog_content" msgid="7474773130622653653">"همه کاشی‌های «تنظیمات فوری» به تنظیمات اصلی دستگاه بازنشانی خواهد شد"</string>
     <string name="demote_explain_text" msgid="3942301497888762295">"‫<xliff:g id="APPLICATION">%1$s</xliff:g> دیگر «به‌روزرسانی‌های زنده» را نشان نخواهد داد. هروقت خواستید می‌توانید آن را در «تنظیمات» تغییر دهید."</string>
     <string name="volume_slider_disabled_message_template" msgid="1305088816797803460">"<xliff:g id="STREAM_NAME">%1$s</xliff:g>، <xliff:g id="DISABLED_MESSAGE">%2$s</xliff:g>"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"افزودن کنترل‌ها برای دستگاه‌های متصل"</string>
 </resources>
