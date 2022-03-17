@@ -1453,4 +1453,5 @@
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"အက်ပ်များက ပံ့ပိုးထားသည်"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"ဖန်သားပြင်"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"အမျိုးအမည်မသိ"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"သင့်ချိတ်ဆက်ထားသော စက်များအတွက် ထိန်းချုပ်မှုများ ထည့်ပါ"</string>
 </resources>

@@ -1453,4 +1453,5 @@
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"由應用程式提供"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"螢幕"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"不明"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"新增已連結裝置的控制項"</string>
 </resources>

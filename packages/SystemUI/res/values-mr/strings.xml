@@ -1453,4 +1453,5 @@
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"अ‍ॅप्सद्वारे पुरवलेले"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"डिस्प्ले"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"अज्ञात"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"तुमच्या कनेक्ट केलेल्या डिव्हाइससाठी नियंत्रणे जोडा"</string>
 </resources>

@@ -1453,4 +1453,5 @@
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"Fournis par des applis"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"Écran"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Inconnu"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Ajouter des commandes pour vos appareils connectés"</string>
 </resources>

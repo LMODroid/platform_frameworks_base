@@ -1453,4 +1453,5 @@
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"ஆப்ஸ் வழங்குபவை"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"டிஸ்ப்ளே"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"தெரியவில்லை"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"இணைக்கப்பட்ட சாதனங்களில் கட்டுப்பாடுகளைச் சேர்க்கலாம்"</string>
 </resources>

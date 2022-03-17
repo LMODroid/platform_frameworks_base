@@ -3868,4 +3868,5 @@ Action + ESC for this.</string>
     <string name="qs_edit_mode_category_unknown">
         Unknown
     </string>
+    <string name="quick_controls_subtitle">Add controls for your connected devices</string>
 </resources>

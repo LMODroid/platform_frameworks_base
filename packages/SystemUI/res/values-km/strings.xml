@@ -1453,4 +1453,5 @@
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"ផ្ដល់ជូនដោយកម្មវិធី"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"ផ្ទាំងបង្ហាញ"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"មិនស្គាល់"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"បញ្ចូល​ការគ្រប់គ្រង​សម្រាប់​ឧបករណ៍​ដែលបានភ្ជាប់​របស់អ្នក"</string>
 </resources>

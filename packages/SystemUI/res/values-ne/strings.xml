@@ -1453,4 +1453,5 @@
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"एपले उपलब्ध गराएका"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"डिस्प्ले"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"अज्ञात"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"आफ्ना जोडिएका यन्त्रहरूका लागि नियन्त्रण सुविधाहरू थप्नुहोस्"</string>
 </resources>

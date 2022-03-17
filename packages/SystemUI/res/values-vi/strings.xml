@@ -1453,4 +1453,5 @@
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"Do các ứng dụng cung cấp"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"Hiển thị"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Không xác định"</string>
+    <string name="quick_controls_subtitle" msgid="1667408093326318053">"Thêm các tùy chọn điều khiển cho các thiết bị đã kết nối của bạn"</string>
 </resources>
