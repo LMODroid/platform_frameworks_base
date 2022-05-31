@@ -88,6 +88,7 @@ class TaskPositioningController {
                     .setContainerLayer()
                     .setName("Drag and Drop Input Consumer")
                     .setCallsite("TaskPositioningController.showInputSurface")
+                    .setParent(dc.getOverlayLayer())
                     .build();
         }
 
