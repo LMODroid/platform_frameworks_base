@@ -203,6 +203,7 @@ import com.android.server.webkit.WebViewUpdateService;
 import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
+import com.android.server.wm.LineageGlobalActionsService;
 
 import dalvik.system.VMRuntime;
 
@@ -1570,6 +1571,10 @@ public final class SystemServer implements Dumpable {
 
             t.traceBegin("AppIntegrityService");
             mSystemServiceManager.startService(AppIntegrityManagerService.class);
+            t.traceEnd();
+
+            t.traceBegin("LineageGlobalActionsService");
+            mSystemServiceManager.startService(LineageGlobalActionsService.class);
             t.traceEnd();
 
         } catch (Throwable e) {
