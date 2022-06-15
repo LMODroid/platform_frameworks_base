@@ -892,33 +892,47 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             mNeedsNavigationBar = true;
         }
 
+        Uri forceShowNavbar = Settings.System.getUriFor(LMOSettings.System.FORCE_SHOW_NAVBAR);
+        Uri qsTransparency = Settings.System.getUriFor(LMOSettings.System.QS_TRANSPARENCY);
         ContentObserver contentObserver = new ContentObserver(null) {
             @Override
-            public void onChange(boolean selfChange) {
-                if (mDisplayId == Display.DEFAULT_DISPLAY
-                        && mWindowManagerService != null) {
-                    boolean forcedVisibility = mNeedsNavigationBar || Settings.System.getInt(
-                            mContext.getContentResolver(),
-                            LMOSettings.System.FORCE_SHOW_NAVBAR, 0) != 0;
-                    boolean hasNavbar = getNavigationBarView() != null;
+            public void onChange(boolean selfChange, Uri uri) {
+                if (uri.equals(forceShowNavbar)) {
+                    if (mDisplayId == Display.DEFAULT_DISPLAY
+                            && mWindowManagerService != null) {
+                        boolean forcedVisibility = mNeedsNavigationBar || Settings.System.getInt(
+                                mContext.getContentResolver(),
+                                LMOSettings.System.FORCE_SHOW_NAVBAR, 0) != 0;
+                        boolean hasNavbar = getNavigationBarView() != null;
+                        mContext.getMainExecutor().execute(() -> {
+                            if (forcedVisibility) {
+                                if (!hasNavbar) {
+                                    mNavigationBarController.onDisplayReady(mDisplayId);
+                                }
+                            } else {
+                                if (hasNavbar) {
+                                    mNavigationBarController.onDisplayRemoved(mDisplayId);
+                                }
+                            }
+                        });
+                    }
+                } else if (uri.equals(qsTransparency)) {
+                    int newValue = Settings.System.getIntForUser(mContext.getContentResolver(),
+                            LMOSettings.System.QS_TRANSPARENCY, 100,
+                            UserHandle.USER_CURRENT);
                     mContext.getMainExecutor().execute(() -> {
-                        if (forcedVisibility) {
-                            if (!hasNavbar) {
-                                mNavigationBarController.onDisplayReady(mDisplayId);
-                            }
-                        } else {
-                            if (hasNavbar) {
-                                mNavigationBarController.onDisplayRemoved(mDisplayId);
-                            }
-                        }
+                        mScrimController.setCustomScrimAlpha(newValue);
                     });
                 }
             }
         };
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(LMOSettings.System.FORCE_SHOW_NAVBAR), false,
-                contentObserver);
-        contentObserver.onChange(true);
+                forceShowNavbar, false, contentObserver);
+        mContext.getContentResolver().registerContentObserver(
+                qsTransparency, false, contentObserver);
+        contentObserver.onChange(true, forceShowNavbar);
+        contentObserver.onChange(true, qsTransparency);
+
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
