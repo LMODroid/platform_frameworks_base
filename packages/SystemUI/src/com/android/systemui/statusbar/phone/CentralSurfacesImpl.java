@@ -50,6 +50,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Point;
 import android.hardware.devicestate.DeviceStateManager;
 import android.hardware.fingerprint.FingerprintManager;
@@ -237,6 +238,8 @@ import com.android.systemui.volume.VolumeComponent;
 import com.android.wm.shell.bubbles.Bubbles;
 import com.android.wm.shell.startingsurface.SplashscreenContentDrawer;
 import com.android.wm.shell.startingsurface.StartingSurface;
+
+import com.libremobileos.providers.LMOSettings;
 
 import dalvik.annotation.optimization.NeverCompile;
 
@@ -882,6 +885,24 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mKeyguardIndicationController.init();
 
         mColorExtractor.addOnColorsChangedListener(mOnColorsChangedListener);
+
+        Uri qsTransparency = Settings.System.getUriFor(LMOSettings.System.QS_TRANSPARENCY);
+        ContentObserver contentObserver = new ContentObserver(null) {
+            @Override
+            public void onChange(boolean selfChange, Uri uri) {
+                if (uri.equals(qsTransparency)) {
+                    int newValue = Settings.System.getIntForUser(mContext.getContentResolver(),
+                            LMOSettings.System.QS_TRANSPARENCY, 100,
+                            UserHandle.USER_CURRENT);
+                    mContext.getMainExecutor().execute(() -> {
+                        mScrimController.setCustomScrimAlpha(newValue);
+                    });
+                }
+            }
+        };
+        mContext.getContentResolver().registerContentObserver(
+                qsTransparency, false, contentObserver);
+        contentObserver.onChange(true, qsTransparency);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
