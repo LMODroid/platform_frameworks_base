@@ -971,6 +971,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         }
 
         Uri forceShowNavbar = Settings.System.getUriFor(LMOSettings.System.FORCE_SHOW_NAVBAR);
+        Uri qsTransparency = Settings.System.getUriFor(LMOSettings.System.QS_TRANSPARENCY);
         ContentObserver contentObserver = new ContentObserver(null) {
             @Override
             public void onChange(boolean selfChange, Uri uri) {
@@ -993,12 +994,22 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
                             }
                         });
                     }
+                } else if (uri.equals(qsTransparency)) {
+                    int newValue = Settings.System.getIntForUser(mContext.getContentResolver(),
+                            LMOSettings.System.QS_TRANSPARENCY, 100,
+                            UserHandle.USER_CURRENT);
+                    mContext.getMainExecutor().execute(() -> {
+                        mScrimController.setCustomScrimAlpha(newValue);
+                    });
                 }
             }
         };
         mContext.getContentResolver().registerContentObserver(
                 forceShowNavbar, false, contentObserver);
+        mContext.getContentResolver().registerContentObserver(
+                qsTransparency, false, contentObserver);
         contentObserver.onChange(true, forceShowNavbar);
+        contentObserver.onChange(true, qsTransparency);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
