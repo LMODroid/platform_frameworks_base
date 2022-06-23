@@ -456,6 +456,7 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
     private boolean mHideAnimationRun = false;
     private boolean mHideAnimationRunning = false;
 
+    private long mLastTimeSoundWasPlayed = 0;
     private SoundPool mLockSounds;
     private int mLockSoundId;
     private int mUnlockSoundId;
@@ -2642,6 +2643,8 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
                 Settings.System.LOCKSCREEN_SOUNDS_ENABLED, 1,
                 KeyguardUpdateMonitor.getCurrentUser());
         if (lockscreenSoundsEnabled == 1) {
+            if (SystemClock.elapsedRealtime() - mLastTimeSoundWasPlayed < 300) return;
+            mLastTimeSoundWasPlayed = SystemClock.elapsedRealtime();
 
             mLockSounds.stop(mLockSoundStreamId);
             // Init mAudioManager
