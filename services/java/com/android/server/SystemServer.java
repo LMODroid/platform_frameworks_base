@@ -203,7 +203,7 @@ import com.android.server.webkit.WebViewUpdateService;
 import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
-import com.android.server.wm.LineageGlobalActionsService;
+import com.android.server.libremobileos.LineageGlobalActionsService;
 
 import dalvik.system.VMRuntime;
 
