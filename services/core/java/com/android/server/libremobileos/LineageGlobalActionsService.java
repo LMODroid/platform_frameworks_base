@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.wm;
+package com.android.server.libremobileos;
 
 import static com.android.internal.util.libremobileos.PowerMenuConstants.GLOBAL_ACTION_KEY_BUGREPORT;
 import static com.android.internal.util.libremobileos.PowerMenuConstants.GLOBAL_ACTION_KEY_LOCKDOWN;
