@@ -258,6 +258,8 @@ import com.android.internal.util.Preconditions;
 import com.android.internal.libremobileos.app.LineageContextConstants;
 import com.android.internal.libremobileos.app.LineageGlobalActions;
 import com.android.internal.libremobileos.app.ILineageGlobalActions;
+import com.android.internal.libremobileos.hardware.LiveDisplayManager;
+import com.android.internal.libremobileos.hardware.ILiveDisplayService;
 
 import java.util.Map;
 import java.util.Objects;
@@ -970,6 +972,19 @@ public final class SystemServiceRegistry {
                         final ILineageGlobalActions service =
                                 ILineageGlobalActions.Stub.asInterface(binder);
                         return new LineageGlobalActions(service);
+                    }
+                });
+
+        registerService(LineageContextConstants.LINEAGE_LIVEDISPLAY_SERVICE, LiveDisplayManager.class,
+                new CachedServiceFetcher<LiveDisplayManager>() {
+                    @Override
+                    public LiveDisplayManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        final IBinder binder =
+                                ServiceManager.getServiceOrThrow(LineageContextConstants.LINEAGE_LIVEDISPLAY_SERVICE);
+                        final ILiveDisplayService service =
+                                ILiveDisplayService.Stub.asInterface(binder);
+                        return new LiveDisplayManager(service);
                     }
                 });
 
