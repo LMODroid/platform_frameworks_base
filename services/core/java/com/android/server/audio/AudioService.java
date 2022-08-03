@@ -54,7 +54,6 @@ import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static android.media.AudioManager.RINGER_MODE_VIBRATE;
 import static android.media.AudioManager.STREAM_SYSTEM;
 import static android.media.audio.Flags.assistantVolumeControl;
-import static android.media.audio.Flags.audioFocusDesktop;
 import static android.media.audio.Flags.autoPublicVolumeApiHardening;
 import static android.media.audio.Flags.bleHearingAidDevice;
 import static android.media.audio.Flags.blePeripheralDevices;
@@ -312,6 +311,7 @@ import com.android.server.pm.pkg.PackageState;
 import com.android.server.utils.EventLogger;
 import com.android.server.wm.ActivityTaskManagerInternal;
 
+import com.libremobileos.providers.LMOSettings;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
@@ -1846,12 +1846,10 @@ public class AudioService extends IAudioService.Stub
     }
 
     private boolean isMultiFocus() {
+        // Multi audio focus follows the per-app volume setting, so apps keep playing together
         ContentResolver cr = mContext.getContentResolver();
-        boolean multiAudioFocusEnabledDefault =
-                audioFocusDesktop() && mContext.getResources().getBoolean(
-                        com.android.internal.R.bool.config_multi_audio_focus_enabled_default);
-        return Settings.System.getIntForUser(cr, Settings.System.MULTI_AUDIO_FOCUS_ENABLED,
-                multiAudioFocusEnabledDefault ? 1 : 0, cr.getUserId()) != 0;
+        return Settings.System.getIntForUser(cr, LMOSettings.System.SHOW_APP_VOLUME, 1,
+                cr.getUserId()) != 0;
     }
 
     private void initVolumeStreamStates() {
@@ -12171,6 +12169,9 @@ public class AudioService extends IAudioService.Stub
 
             mContentResolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.VOICE_INTERACTION_SERVICE), false, this);
+
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    LMOSettings.System.SHOW_APP_VOLUME), false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -12200,6 +12201,13 @@ public class AudioService extends IAudioService.Stub
 
             synchronized (mAssistantUidLock) {
                 updateAssistantUIdLocked(/* forceUpdate= */ false);
+            }
+
+            if (mMediaFocusControl != null) {
+                final boolean multiFocus = isMultiFocus();
+                if (mMediaFocusControl.getMultiAudioFocusEnabled() != multiFocus) {
+                    mMediaFocusControl.updateMultiAudioFocus(multiFocus);
+                }
             }
         }
 
