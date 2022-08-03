@@ -1410,14 +1410,11 @@ class UserController implements Handler.Callback {
             }
         }
         final int profilesToStartSize = profilesToStart.size();
-        int i = 0;
-        for (; i < profilesToStartSize && i < (getMaxRunningUsers() - 1); ++i) {
-            // NOTE: this method is setting the profiles of the current user - which is always
-            // assigned to the default display
-            startUser(profilesToStart.get(i).id, USER_START_MODE_BACKGROUND_VISIBLE);
+        if (profilesToStartSize > getMaxRunningUsers()) {
+            Slogf.w(TAG, "More profiles than MAX_RUNNING_USERS; starting all anyway");
         }
-        if (i < profilesToStartSize) {
-            Slogf.w(TAG, "More profiles than MAX_RUNNING_USERS");
+        for (int i = 0; i < profilesToStartSize; ++i) {
+            startUser(profilesToStart.get(i).id, USER_START_MODE_BACKGROUND_VISIBLE);
         }
     }
 
