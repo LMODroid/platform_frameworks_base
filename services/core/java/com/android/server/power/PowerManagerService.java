@@ -1288,7 +1288,7 @@ public final class PowerManagerService extends SystemService
                 Settings.Global.DEVICE_DEMO_MODE),
                 false, mSettingsObserver, UserHandle.USER_SYSTEM);
         resolver.registerContentObserver(Settings.Secure.getUriFor(
-                Settings.Secure.PROXIMITY_ON_WAKE),
+                Settings.System.PROXIMITY_ON_WAKE),
                 false, mSettingsObserver, UserHandle.USER_ALL);
         resolver.registerContentObserver(Settings.System.getUriFor(
                 Settings.System.WAKE_WHEN_PLUGGED_OR_UNPLUGGED),
@@ -1447,7 +1447,7 @@ public final class PowerManagerService extends SystemService
                 Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL, UserHandle.USER_CURRENT);
 
         mProximityWakeEnabled = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.PROXIMITY_ON_WAKE,
+                Settings.System.PROXIMITY_ON_WAKE,
                 mProximityWakeEnabledByDefaultConfig ? 1 : 0,
                 UserHandle.USER_CURRENT) == 1;
         mForceNavbar = Settings.System.getIntForUser(resolver,
