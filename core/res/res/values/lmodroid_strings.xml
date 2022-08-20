@@ -59,4 +59,7 @@
     <string name="pocket_view_top_tag_number1" translatable="false">1.\u0020</string>
     <string name="pocket_view_top_tag_number2" translatable="false">2.\u0020</string>
 
+    <!-- Parallel space badge -->
+    <string name="parallel_space_badge_label">%1$s</string>
+
 </resources>

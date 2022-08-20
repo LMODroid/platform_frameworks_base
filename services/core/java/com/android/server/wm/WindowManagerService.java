@@ -307,6 +307,7 @@ import com.android.server.policy.WindowManagerPolicy.ScreenOffListener;
 import com.android.server.power.ShutdownThread;
 import com.android.server.utils.DeviceConfigInterface;
 import com.android.server.utils.PriorityDump;
+import com.android.server.libremobileos.ParallelSpaceManagerService;
 
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -3565,7 +3566,7 @@ public class WindowManagerService extends IWindowManager.Stub
         for (int i = 0; i < mCurrentProfileIds.length; i++) {
             if (mCurrentProfileIds[i] == userId) return true;
         }
-        return false;
+        return ParallelSpaceManagerService.isCurrentParallelUser(userId);
     }
 
     public void enableScreenAfterBoot() {
@@ -7629,7 +7630,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 WindowsForAccessibilityCallback callback) {
             synchronized (mGlobalLock) {
                 return mAccessibilityController
-                        .setWindowsForAccessibilityCallback(displayId, callback);  
+                        .setWindowsForAccessibilityCallback(displayId, callback);
             }
         }
 
