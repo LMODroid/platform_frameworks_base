@@ -38,6 +38,7 @@ import com.android.systemui.dump.DumpManager
 import com.android.systemui.flags.FeatureFlagsClassic
 import com.android.systemui.flags.Flags
 import com.android.systemui.util.Assert
+import com.libremobileos.app.ParallelSpaceManager
 import java.io.PrintWriter
 import java.lang.ref.WeakReference
 import java.util.concurrent.CountDownLatch
@@ -155,8 +156,10 @@ internal constructor(
                 addAction(Intent.ACTION_MANAGED_PROFILE_ADDED)
                 addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED)
                 addAction(Intent.ACTION_MANAGED_PROFILE_UNLOCKED)
+                addAction(com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED)
             }
-        context.registerReceiverForAllUsers(this, filter, null, backgroundHandler)
+        context.registerReceiverForAllUsers(this, filter, null, backgroundHandler,
+                Context.RECEIVER_EXPORTED)
 
         dumpManager.registerNormalDumpable(TAG, this)
     }
@@ -173,7 +176,8 @@ internal constructor(
             Intent.ACTION_PROFILE_ADDED,
             Intent.ACTION_PROFILE_REMOVED,
             Intent.ACTION_PROFILE_AVAILABLE,
-            Intent.ACTION_PROFILE_UNAVAILABLE -> {
+            Intent.ACTION_PROFILE_UNAVAILABLE,
+            com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED -> {
                 handleProfilesChanged()
             }
         }
@@ -187,6 +191,7 @@ internal constructor(
 
     private fun setUserIdInternal(user: Int): Pair<Context, List<UserInfo>> {
         val profiles = userManager.getProfiles(user)
+        profiles.addAll(ParallelSpaceManager.getInstance().getParallelUsers())
         val handle = UserHandle(user)
         val ctx = context.createContextAsUser(handle, 0)
 

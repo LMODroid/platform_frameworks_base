@@ -189,6 +189,7 @@ import com.android.server.companion.virtual.VirtualDeviceManagerInternal;
 import com.android.server.input.InputManagerInternal;
 import com.android.server.inputmethod.InputMethodManagerInternal.InputMethodListListener;
 import com.android.server.inputmethod.InputMethodSubtypeSwitchingController.ImeSubtypeListItem;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.statusbar.StatusBarManagerInternal;
 import com.android.server.utils.PriorityDump;
@@ -3934,7 +3935,12 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
                 cs.mClient.onStartInputResult(res, startInputSeq);
                 // For first-time client bind, MSG_BIND should arrive after MSG_START_INPUT_RESULT.
                 if (res.result == InputBindResult.ResultCode.SUCCESS_WAITING_IME_SESSION) {
-                    requestClientSessionLocked(cs, userId);
+                    final ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                            LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+                    final int mainUserId = parallelSpaceManager != null
+                            ? parallelSpaceManager.convertToParallelOwnerIfPossible(userId)
+                            : userId;
+                    requestClientSessionLocked(cs, mainUserId);
                     requestClientSessionForAccessibilityLocked(cs);
                 }
             } else {
@@ -3973,6 +3979,13 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
                         + "specified for cross-user startInputOrWindowGainedFocus()");
             }
         }
+
+        ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+        int mainUserId = parallelSpaceManager != null ?
+                parallelSpaceManager.convertToParallelOwnerIfPossible(userId)
+                : userId;
+
         if (windowToken == null) {
             Slog.e(TAG, "windowToken cannot be null.");
             return InputBindResult.NULL;
@@ -3986,7 +3999,7 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
             Slog.w(TAG, "User #" + userId + " is not running.");
             return InputBindResult.INVALID_USER;
         }
-        final var userData = getUserData(userId);
+        final var userData = getUserData(mainUserId);
         try {
             Trace.traceBegin(TRACE_TAG_WINDOW_MANAGER,
                     "IMMS.startInputOrWindowGainedFocus");
@@ -4056,7 +4069,7 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
                         //  * it is a profile of the target user.
                         // If there is a pending user switch to a different full user, and this user
                         // is a profile of the current full user, then deny it.
-                        final boolean isAllowed = userId == targetUserId
+                        final boolean isAllowed = mainUserId == targetUserId
                                 || ArrayUtils.contains(getProfileIds(targetUserId), userId);
                         if (!isAllowed) {
                             Slog.w(TAG, "A background user " + userId + " is requesting window."
@@ -4074,7 +4087,7 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
                         }
                         // Schedule a pending user switch, and cancel any ongoing one. If we do
                         // schedule a new one, it must be a profile switch.
-                        if (scheduleSwitchUserTaskLocked(userId, true /* profileSwitch */,
+                        if (scheduleSwitchUserTaskLocked(mainUserId, true /* profileSwitch */,
                                 cs.mClient)) {
                             // Pending user switch scheduled, signal the client to wait.
                             return InputBindResult.USER_SWITCHING;

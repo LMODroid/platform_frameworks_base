@@ -129,6 +129,7 @@ import android.content.pm.PermissionInfo;
 import android.content.pm.SharedLibraryInfo;
 import android.content.pm.Signature;
 import android.content.pm.SigningDetails;
+import android.content.pm.UserInfo;
 import android.content.pm.VerifierInfo;
 import android.content.pm.parsing.result.ParseResult;
 import android.content.pm.parsing.result.ParseTypeImpl;
@@ -2808,6 +2809,14 @@ final class InstallPackageHelper {
                         // that to determine if the package is installed for the first time.
                         // Only when the package is not installed for the first time,
                         // then the result of ps.queryUsersInstalled() is reliable.
+                        UserInfo userInfo =
+                                UserManagerService.getInstance().getUserInfo(currentUserId);
+                        if (userInfo != null && userInfo.isParallel()) {
+                            if (DEBUG_INSTALL) {
+                                Slog.d(TAG, "User " + currentUserId + " is parallel space, skip install");
+                            }
+                            break;
+                        }
                         final boolean installedForCurrentUser = isPackageExisted
                                 && ArrayUtils.contains(installedForUsers, currentUserId);
                         final boolean restrictedByPolicy =

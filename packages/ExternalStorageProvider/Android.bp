@@ -21,6 +21,8 @@ android_app {
         "src/**/*.java",
     ],
 
+    static_libs: ["framework-lmodroid.static"],
+
     platform_apis: true,
 
     certificate: "platform",

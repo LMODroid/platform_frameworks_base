@@ -57,6 +57,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
 
+import com.libremobileos.app.ParallelSpaceManager;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.Dumpable;
@@ -235,7 +236,8 @@ public class NotificationLockscreenUserManagerImpl implements
                 mBackgroundExecutor.execute(() -> {
                     initValuesForUser(userId);
                 });
-            } else if (profileAvailabilityActions(action)) {
+            } else if (profileAvailabilityActions(action) || Objects.equals(action, 
+                    com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED)) {
                 updateCurrentProfilesCache();
             } else if (Objects.equals(action, NOTIFICATION_UNLOCKED_BY_WORK_CHALLENGE_ACTION)) {
                 final IntentSender intentSender = intent.getParcelableExtra(
@@ -493,6 +495,7 @@ public class NotificationLockscreenUserManagerImpl implements
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
         filter.addAction(Intent.ACTION_PROFILE_AVAILABLE);
         filter.addAction(Intent.ACTION_PROFILE_UNAVAILABLE);
+        filter.addAction(com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED);
         mBroadcastDispatcher.registerReceiver(mBaseBroadcastReceiver, filter,
                 null /* executor */, UserHandle.ALL);
 
@@ -846,6 +849,7 @@ public class NotificationLockscreenUserManagerImpl implements
                 List<UserInfo> profiles = android.multiuser.Flags.supportCommunalProfile()
                         ? mUserManager.getProfilesIncludingCommunal(mCurrentUserId)
                         : mUserManager.getProfiles(mCurrentUserId);
+                profiles.addAll(ParallelSpaceManager.getInstance().getParallelUsers());
                 for (UserInfo user : profiles) {
                     mCurrentProfiles.put(user.id, user);
                     if (UserManager.USER_TYPE_PROFILE_MANAGED.equals(user.userType)) {
