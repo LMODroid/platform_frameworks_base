@@ -41,6 +41,7 @@ import android.util.SparseBooleanArray;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import com.android.internal.libremobileos.app.ParallelSpaceManager;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.Dumpable;
@@ -143,6 +144,7 @@ public class NotificationLockscreenUserManagerImpl implements
                 case Intent.ACTION_USER_ADDED:
                 case Intent.ACTION_MANAGED_PROFILE_AVAILABLE:
                 case Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE:
+                case Intent.ACTION_PARALLEL_SPACE_CHANGED:
                     updateCurrentProfilesCache();
                     break;
                 case Intent.ACTION_USER_UNLOCKED:
@@ -318,6 +320,7 @@ public class NotificationLockscreenUserManagerImpl implements
         filter.addAction(Intent.ACTION_USER_UNLOCKED);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
+        filter.addAction(Intent.ACTION_PARALLEL_SPACE_CHANGED);
         mBroadcastDispatcher.registerReceiver(mBaseBroadcastReceiver, filter,
                 null /* executor */, UserHandle.ALL);
 
@@ -500,7 +503,7 @@ public class NotificationLockscreenUserManagerImpl implements
         }
         NotificationEntry entry = mCommonNotifCollectionLazy.get().getEntry(key);
         return entry != null
-                && entry.getRanking().getLockscreenVisibilityOverride() 
+                && entry.getRanking().getLockscreenVisibilityOverride()
                 == Notification.VISIBILITY_PRIVATE;
     }
 
@@ -509,7 +512,9 @@ public class NotificationLockscreenUserManagerImpl implements
             mCurrentProfiles.clear();
             mCurrentManagedProfiles.clear();
             if (mUserManager != null) {
-                for (UserInfo user : mUserManager.getProfiles(mCurrentUserId)) {
+                List<UserInfo> users = mUserManager.getProfiles(mCurrentUserId);
+                users.addAll(ParallelSpaceManager.getInstance().getParallelUsers());
+                for (UserInfo user : users) {
                     mCurrentProfiles.put(user.id, user);
                     if (UserManager.USER_TYPE_PROFILE_MANAGED.equals(user.userType)) {
                         mCurrentManagedProfiles.put(user.id, user);

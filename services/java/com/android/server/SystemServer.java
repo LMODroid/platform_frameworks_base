@@ -225,6 +225,7 @@ import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
 import com.android.server.libremobileos.LineageGlobalActionsService;
+import com.android.server.libremobileos.ParallelSpaceManagerService;
 import com.android.server.libremobileos.display.LiveDisplayService;
 import com.android.server.libremobileos.health.HealthInterfaceService;
 
@@ -418,6 +419,9 @@ public final class SystemServer implements Dumpable {
             "com.android.server.compat.overrides.AppCompatOverridesService$Lifecycle";
     private static final String HEALTHCONNECT_MANAGER_SERVICE_CLASS =
             "com.android.server.healthconnect.HealthConnectManagerService";
+    private static final String PARALLEL_SPACE_SERVICE_CLASS =
+            "com.android.server.libremobileos.ParallelSpaceManagerService";
+
     private static final String ROLE_SERVICE_CLASS = "com.android.role.RoleService";
     private static final String GAME_MANAGER_SERVICE_CLASS =
             "com.android.server.app.GameManagerService$Lifecycle";
@@ -2883,6 +2887,10 @@ public final class SystemServer implements Dumpable {
 
         t.traceBegin("HealthConnectManagerService");
         mSystemServiceManager.startService(HEALTHCONNECT_MANAGER_SERVICE_CLASS);
+        t.traceEnd();
+
+        t.traceBegin("StartParallelSpaceManagerService");
+        mSystemServiceManager.startService(PARALLEL_SPACE_SERVICE_CLASS);
         t.traceEnd();
 
         // These are needed to propagate to the runnable below.
