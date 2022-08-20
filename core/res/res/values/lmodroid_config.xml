@@ -245,4 +245,7 @@
         <item>com.google.android.youtube</item>
     </string-array>
 
+    <!-- Parallel space max count. Should overlay according to device performance. -->
+    <integer name="config_parallelSpaceMaxCount">9</integer>
+
 </resources>
