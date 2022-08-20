@@ -409,6 +409,9 @@
     <protected-broadcast android:name="com.android.systemui.action.LAUNCH_SYSTEM_MEDIA_OUTPUT_DIALOG" />
     <protected-broadcast android:name="com.android.systemui.STARTED" />
 
+    <!-- Parallel spaces -->
+    <uses-permission android:name="com.android.permission.MANAGE_PARALLEL_SPACES" />
+
     <application
         android:name=".application.impl.SystemUIApplicationImpl"
         android:persistent="true"

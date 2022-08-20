@@ -222,6 +222,7 @@ public class UserManagerServiceShellCommand extends ShellCommand {
             for (int i = 0; i < size; i++) {
                 final UserInfo user = users.get(i);
                 final boolean running = am.isUserRunning(user.id, 0);
+                final boolean isParallel = user.isParallel();
                 if (verbose) {
                     final DevicePolicyManagerInternal dpm = LocalServices
                             .getService(DevicePolicyManagerInternal.class);
@@ -254,7 +255,7 @@ public class UserManagerServiceShellCommand extends ShellCommand {
                     // verbose is the normal standard human-readable version;
                     // therefore, avoid clutter unless veryVerbose
                     pw.printf("%d: id=%d, name=%s%s, type=%s, "
-                            + "flags=%s%s%s%s%s%s%s%s%s%s%s\n",
+                            + "flags=%s%s%s%s%s%s%s%s%s%s%s%s\n",
                             i,
                             user.id,
                             name,
@@ -262,6 +263,7 @@ public class UserManagerServiceShellCommand extends ShellCommand {
                             user.userType.replace("android.os.usertype.", ""),
                             UserInfo.flagsToString(user.flags),
                             hasParent ? " (parentId=" + user.profileGroupId + ")" : "",
+                            isParallel ? " (parallelParentId=" + user.parallelParentId + ")" : "",
                             running ? " (running)" : "",
                             user.partial ? " (partial)" : "",
                             user.guestToRemove ? " (guestToRemove)" : "",

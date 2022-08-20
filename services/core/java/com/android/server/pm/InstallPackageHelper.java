@@ -2666,6 +2666,14 @@ final class InstallPackageHelper {
                         // that is restricted by device policy if the package is first time
                         // installed. In the case, the originUsers will be null since there is
                         // no package setting when scanning package.
+                        UserInfo userInfo =
+                                UserManagerService.getInstance().getUserInfo(currentUserId);
+                        if (userInfo != null && userInfo.isParallel()) {
+                            if (DEBUG_INSTALL) {
+                                Slog.d(TAG, "User " + currentUserId + " is parallel space, skip install");
+                            }
+                            break;
+                        }
                         final boolean installedForCurrentUser = isPackageExisted
                                 && ArrayUtils.contains(installedForUsers, currentUserId);
                         final boolean restrictedByPolicy =
