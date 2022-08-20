@@ -126,6 +126,7 @@ import com.android.internal.util.SizedInputStream;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.libremobileos.AppLockManagerServiceInternal;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.pm.pkg.ArchiveState;
 import com.android.server.pm.pkg.PackageStateInternal;
@@ -2221,8 +2222,11 @@ public class LauncherAppsService extends SystemService {
                     && !canAccessHiddenProfile(cookie.callingUid, cookie.callingPid)) {
                 return false;
             }
+            ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                    LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
             return mUserManagerInternal.isProfileAccessible(
-                    cookie.user.getIdentifier(), user.getIdentifier(), debugMsg, false);
+                    cookie.user.getIdentifier(), user.getIdentifier(), debugMsg, false) ||
+                    parallelSpaceManager.isCurrentParallelUser(user.getIdentifier());
         }
 
         /**

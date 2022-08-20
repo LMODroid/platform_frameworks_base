@@ -35,6 +35,8 @@ import com.android.internal.util.Preconditions;
 import com.android.server.LocalServices;
 import com.android.server.pm.UserManagerInternal;
 
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
+
 import java.io.FileDescriptor;
 import java.util.Arrays;
 import java.util.Objects;
@@ -123,7 +125,10 @@ public class SystemUserInfoHelper extends UserInfoHelper {
         if (activityManagerInternal != null) {
             final long identity = Binder.clearCallingIdentity();
             try {
-                return activityManagerInternal.isCurrentProfile(userId);
+                ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                        LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+                return activityManagerInternal.isCurrentProfile(userId) ||
+                        parallelSpaceManager.isCurrentParallelUser(userId);
             } finally {
                 Binder.restoreCallingIdentity(identity);
             }
@@ -174,7 +179,16 @@ public class SystemUserInfoHelper extends UserInfoHelper {
 
         final long identity = Binder.clearCallingIdentity();
         try {
-            return userManager.getEnabledProfileIds(userId);
+            int[] profileIds = userManager.getEnabledProfileIds(userId);
+            ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                    LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+            int[] parallelUserIds = parallelSpaceManager.getCurrentParallelUserIds()
+                    .stream().mapToInt(i -> i).toArray();
+            int[] combinedIds = new int[profileIds.length + parallelUserIds.length];
+            System.arraycopy(profileIds, 0, combinedIds, 0, profileIds.length);
+            System.arraycopy(parallelUserIds, 0, combinedIds, profileIds.length,
+                    parallelUserIds.length);
+            return combinedIds;
         } finally {
             Binder.restoreCallingIdentity(identity);
         }

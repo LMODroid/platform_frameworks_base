@@ -1020,8 +1020,8 @@ public class TrustManagerService extends SystemService {
             boolean secure = mLockPatternUtils.isSecure(id);
 
             if (!info.supportsSwitchToByUser()) {
-                if (info.isProfile() && !secure
-                        && !mLockPatternUtils.isProfileWithUnifiedChallenge(id)) {
+                if (info.isParallel() || (info.isProfile() && !secure
+                        && !mLockPatternUtils.isProfileWithUnifiedChallenge(id))) {
                     // Unsecured profiles need to be explicitly set to false.
                     // However, Unified challenge profiles officially shouldn't have a presence in
                     // mDeviceLockedForUser at all, since that's not how they're tracked.

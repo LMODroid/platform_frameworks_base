@@ -93,6 +93,7 @@ import com.android.internal.util.FrameworkStatsLog;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
 import com.android.server.SystemService;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.wm.WindowManagerInternal;
 
 import java.io.FileDescriptor;
@@ -589,6 +590,7 @@ public class CameraServiceProxy extends SystemService
                 case Intent.ACTION_USER_INFO_CHANGED:
                 case Intent.ACTION_MANAGED_PROFILE_ADDED:
                 case Intent.ACTION_MANAGED_PROFILE_REMOVED:
+                case com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED:
                     synchronized(mLock) {
                         // Return immediately if we haven't seen any users start yet
                         if (mEnabledCameraUsers == null) return;
@@ -1047,7 +1049,8 @@ public class CameraServiceProxy extends SystemService
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-        mContext.registerReceiver(mIntentReceiver, filter);
+        filter.addAction(com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED);
+        mContext.registerReceiver(mIntentReceiver, filter, Context.RECEIVER_EXPORTED);
 
         publishBinderService(CAMERA_SERVICE_PROXY_BINDER_NAME, mCameraServiceProxy);
         publishLocalService(CameraServiceProxy.class, this);
@@ -1202,6 +1205,9 @@ public class CameraServiceProxy extends SystemService
         for (int id : userProfiles) {
             handles.add(id);
         }
+        ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                    LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+        handles.addAll(parallelSpaceManager.getCurrentParallelUserIds());
 
         if (Flags.cameraHsumPermission()) {
             // If the device is running in headless system user mode then allow
