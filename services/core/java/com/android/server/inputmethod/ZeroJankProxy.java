@@ -71,6 +71,9 @@ import com.android.internal.inputmethod.StartInputReason;
 import com.android.internal.util.FunctionalUtils.ThrowingRunnable;
 import com.android.internal.view.IInputMethodManager;
 
+import com.android.server.LocalServices;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.List;
@@ -250,7 +253,12 @@ final class ZeroJankProxy implements IInputMethodManagerImpl.Callback {
                 synchronized (ImfLock.class) {
                     ClientState cs = imms.getClientStateLocked(client);
                     if (cs != null) {
-                        imms.requestClientSessionLocked(cs, userId);
+                        ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                                LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+                        int mainUserId = parallelSpaceManager != null ?
+                                parallelSpaceManager.convertToParallelOwnerIfPossible(userId)
+                                : userId;
+                        imms.requestClientSessionLocked(cs, mainUserId);
                         imms.requestClientSessionForAccessibilityLocked(cs);
                     }
                 }
