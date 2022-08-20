@@ -96,6 +96,7 @@ import com.android.server.SystemService;
 import com.android.server.UiThread;
 import com.android.server.companion.virtual.VirtualDeviceManagerInternal;
 import com.android.server.contentcapture.ContentCaptureManagerInternal;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.uri.UriGrantsManagerInternal;
 import com.android.server.wm.WindowManagerInternal;
 
@@ -905,6 +906,11 @@ public class ClipboardService extends SystemService {
     }
 
     List<UserInfo> getRelatedProfiles(@UserIdInt int userId) {
+        ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+        if (parallelSpaceManager.isInteractive(userId))
+            return parallelSpaceManager.getInteractiveUsers();
+
         final List<UserInfo> related;
         final long origId = Binder.clearCallingIdentity();
         try {
