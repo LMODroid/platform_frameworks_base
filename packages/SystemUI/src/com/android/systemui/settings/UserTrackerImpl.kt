@@ -31,6 +31,7 @@ import android.os.UserManager
 import android.util.Log
 import androidx.annotation.GuardedBy
 import androidx.annotation.WorkerThread
+import com.libremobileos.app.ParallelSpaceManager;
 import com.android.systemui.Dumpable
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.util.Assert
@@ -118,8 +119,10 @@ open class UserTrackerImpl internal constructor(
             addAction(Intent.ACTION_MANAGED_PROFILE_ADDED)
             addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED)
             addAction(Intent.ACTION_MANAGED_PROFILE_UNLOCKED)
+            addAction(com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED)
         }
-        context.registerReceiverForAllUsers(this, filter, null /* permission */, backgroundHandler)
+        context.registerReceiverForAllUsers(this, filter, null /* permission */,
+                backgroundHandler, Context.RECEIVER_EXPORTED)
 
         registerUserSwitchObserver()
 
@@ -133,7 +136,8 @@ open class UserTrackerImpl internal constructor(
             Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE,
             Intent.ACTION_MANAGED_PROFILE_ADDED,
             Intent.ACTION_MANAGED_PROFILE_REMOVED,
-            Intent.ACTION_MANAGED_PROFILE_UNLOCKED -> {
+            Intent.ACTION_MANAGED_PROFILE_UNLOCKED,
+            com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED -> {
                 handleProfilesChanged()
             }
         }
@@ -147,6 +151,7 @@ open class UserTrackerImpl internal constructor(
 
     private fun setUserIdInternal(user: Int): Pair<Context, List<UserInfo>> {
         val profiles = userManager.getProfiles(user)
+        profiles.addAll(ParallelSpaceManager.getInstance().getParallelUsers())
         val handle = UserHandle(user)
         val ctx = context.createContextAsUser(handle, 0)
 
@@ -220,6 +225,7 @@ open class UserTrackerImpl internal constructor(
         Assert.isNotMainThread()
 
         val profiles = userManager.getProfiles(userId)
+        profiles.addAll(ParallelSpaceManager.getInstance().getParallelUsers())
         synchronized(mutex) {
             userProfiles = profiles.map { UserInfo(it) } // save a "deep" copy
         }

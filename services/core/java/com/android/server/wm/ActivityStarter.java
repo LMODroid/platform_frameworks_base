@@ -138,8 +138,10 @@ import com.android.internal.app.HeavyWeightSwitcherActivity;
 import com.android.internal.app.IVoiceInteractor;
 import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.util.FrameworkStatsLog;
+import com.android.server.LocalServices;
 import com.android.server.UiThread;
 import com.android.server.am.PendingIntentRecord;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.pm.InstantAppResolver;
 import com.android.server.power.ShutdownCheckPoints;
 import com.android.server.statusbar.StatusBarManagerInternal;
@@ -684,6 +686,14 @@ class ActivityStarter {
     int execute() {
         try {
             onExecutionStarted();
+
+            ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                    LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+            if (parallelSpaceManager.isCurrentParallelUser(mRequest.userId) &&
+                    Intent.ACTION_MAIN.equals(mRequest.intent.getAction()) &&
+                    mRequest.intent.hasCategory(Intent.CATEGORY_HOME)) {
+                mRequest.userId = parallelSpaceManager.getCurrentParallelOwnerId();
+            }
 
             // Refuse possible leaked file descriptors
             if (mRequest.intent != null && mRequest.intent.hasFileDescriptors()) {

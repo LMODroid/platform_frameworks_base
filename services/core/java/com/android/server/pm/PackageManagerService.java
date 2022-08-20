@@ -204,6 +204,7 @@ import com.android.server.art.DexUseManagerLocal;
 import com.android.server.art.model.DeleteResult;
 import com.android.server.compat.CompatChange;
 import com.android.server.compat.PlatformCompat;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.pm.Installer.InstallerException;
 import com.android.server.pm.Installer.LegacyDexoptDisabledException;
 import com.android.server.pm.Settings.VersionInfo;
@@ -3382,6 +3383,24 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
             final IPackageDeleteObserver2 observer, final int userId, final int deleteFlags) {
         mDeletePackageHelper.deletePackageVersionedInternal(
                 versionedPackage, observer, userId, deleteFlags, false);
+
+        // Delete for parallel users if the package is deleted in their owner.
+        ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+        if (!parallelSpaceManager.isCurrentParallelOwner(userId))
+            return;
+        final long token = Binder.clearCallingIdentity();
+        try {
+            for (int parallelUserId : parallelSpaceManager.getCurrentParallelUserIds()) {
+                mDeletePackageHelper.deletePackageVersionedInternal(versionedPackage,
+                    new PackageInstallerService.PackageDeleteObserverAdapter(
+                            mContext, null, versionedPackage.getPackageName(),
+                            false, parallelUserId)
+                    .getBinder(), parallelUserId, 0, true);
+            }
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
     }
 
     boolean isCallerVerifier(@NonNull Computer snapshot, int callingUid) {

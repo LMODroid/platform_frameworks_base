@@ -150,6 +150,8 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.Preconditions;
 import com.android.modules.utils.TypedXmlPullParser;
 import com.android.modules.utils.TypedXmlSerializer;
+import com.android.server.LocalServices;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.pm.Installer;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.storage.AppFuseBridge;
@@ -4397,6 +4399,15 @@ class StorageManagerService extends IStorageManager.Stub
                 // Determine if caller requires pass_through mount; note that we do this for
                 // all processes that share a UID with MediaProvider; but this is fine, since
                 // those processes anyway share the same rights as MediaProvider.
+                return StorageManager.MOUNT_MODE_EXTERNAL_PASS_THROUGH;
+            }
+
+            ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                    LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+            List<Integer> parallelUserIds = parallelSpaceManager.getCurrentParallelUserIds();
+            boolean isParallelUserAvailable = !parallelUserIds.isEmpty();
+            if (Arrays.asList(packagesForUid).contains("com.android.externalstorage")
+                    && isParallelUserAvailable) {
                 return StorageManager.MOUNT_MODE_EXTERNAL_PASS_THROUGH;
             }
 

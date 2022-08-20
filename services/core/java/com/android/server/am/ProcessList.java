@@ -139,6 +139,7 @@ import com.android.server.SystemConfig;
 import com.android.server.Watchdog;
 import com.android.server.am.ActivityManagerService.ProcessChangeItem;
 import com.android.server.compat.PlatformCompat;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.pm.pkg.PackageStateInternal;
 import com.android.server.wm.ActivityServiceConnectionsHolder;
@@ -1704,6 +1705,24 @@ public final class ProcessList {
             // EmulatedVolumes: /data/media and /mnt/expand/<volume>/data/media
             // PublicVolumes: /mnt/media_rw/<volume>
             gidList.add(Process.MEDIA_RW_GID);
+
+            // HACK: For legacy devices running fuse above sdcardfs. We have to grant it
+            // gids of other users to make the cross-user file management possible.
+            // This is dirty. But I can't come up with a better idea which doesn't need
+            // to hack the kernel.
+            ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                    LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
+            for (int userId : parallelSpaceManager.getCurrentParallelUserIds()) {
+                gidList.add(UserHandle.getUserGid(userId));
+                // Not needed in theory. Add it just in case. This could happened when
+                // dropping sdcardfs without wiping data and things get broken.
+                gidList.add(UserHandle.getUid(userId, Process.MEDIA_RW_GID));
+            }
+            // Make sure parallel spaces are ready to visit the owner too.
+            if (parallelSpaceManager.isCurrentParallelUser(UserHandle.getUserId(uid))) {
+                int ownerId = parallelSpaceManager.getCurrentParallelOwnerId();
+                gidList.add(UserHandle.getUserGid(ownerId));
+            }
         }
         if (externalStorageAccess) {
             // Apps with MANAGE_EXTERNAL_STORAGE PERMISSION need the external_storage gid to access

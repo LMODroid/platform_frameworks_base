@@ -110,6 +110,7 @@ import com.android.internal.util.Preconditions;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.libremobileos.AppLockManagerServiceInternal;
+import com.android.server.libremobileos.ParallelSpaceManagerServiceInternal;
 import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.wm.ActivityTaskManagerInternal;
 
@@ -1627,8 +1628,11 @@ public class LauncherAppsService extends SystemService {
          * and the user is enabled. */
         private boolean isEnabledProfileOf(UserHandle listeningUser, UserHandle user,
                 String debugMsg) {
+            ParallelSpaceManagerServiceInternal parallelSpaceManager =
+                    LocalServices.getService(ParallelSpaceManagerServiceInternal.class);
             return mUserManagerInternal.isProfileAccessible(listeningUser.getIdentifier(),
-                    user.getIdentifier(), debugMsg, false);
+                    user.getIdentifier(), debugMsg, false) ||
+                    parallelSpaceManager.isCurrentParallelUser(user.getIdentifier());
         }
 
         /**
