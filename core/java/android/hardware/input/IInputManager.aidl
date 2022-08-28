@@ -40,6 +40,7 @@ import android.hardware.input.VirtualGamepadConfig;
 import android.hardware.input.VirtualKeyboardConfig;
 import android.hardware.input.VirtualMouseConfig;
 import android.os.CombinedVibration;
+import android.hardware.input.ICursorCallback;
 import android.hardware.input.IInputSensorEventListener;
 import android.hardware.input.IKeyEventActivityListener;
 import android.hardware.input.InputSensorInfo;
@@ -390,4 +391,7 @@ interface IInputManager {
     PointF getCursorPositionInPhysicalDisplay(int displayId);
 
     PointF getCursorPositionInLogicalDisplay(int displayId);
+
+    void registerCursorCallback(ICursorCallback callbacks);
+    void unregisterCursorCallback(ICursorCallback callbacks);
 }
