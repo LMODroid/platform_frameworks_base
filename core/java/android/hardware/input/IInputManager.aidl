@@ -32,6 +32,7 @@ import android.hardware.input.ITabletModeChangedListener;
 import android.hardware.input.KeyboardLayoutSelectionResult;
 import android.hardware.input.TouchCalibration;
 import android.os.CombinedVibration;
+import android.hardware.input.ICursorCallback;
 import android.hardware.input.IInputSensorEventListener;
 import android.hardware.input.InputSensorInfo;
 import android.hardware.input.KeyGlyphMap;
@@ -261,4 +262,7 @@ interface IInputManager {
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(value = "
             + "android.Manifest.permission.MANAGE_KEY_GESTURES)")
     void unregisterKeyGestureHandler(IKeyGestureHandler handler);
+
+    void registerCursorCallback(ICursorCallback callbacks);
+    void unregisterCursorCallback(ICursorCallback callbacks);
 }
