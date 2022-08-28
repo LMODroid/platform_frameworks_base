@@ -33,6 +33,7 @@ import android.hardware.input.ITabletModeChangedListener;
 import android.hardware.input.KeyboardLayoutSelectionResult;
 import android.hardware.input.TouchCalibration;
 import android.os.CombinedVibration;
+import android.hardware.input.ICursorCallback;
 import android.hardware.input.IInputSensorEventListener;
 import android.hardware.input.IKeyEventActivityListener;
 import android.hardware.input.InputSensorInfo;
@@ -305,4 +306,7 @@ interface IInputManager {
     AidlInputGestureData[] getAppLaunchBookmarks();
 
     void resetLockedModifierState();
+
+    void registerCursorCallback(ICursorCallback callbacks);
+    void unregisterCursorCallback(ICursorCallback callbacks);
 }
