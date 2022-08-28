@@ -1158,6 +1158,15 @@ public final class InputManager {
             throw ex.rethrowFromSystemServer();
         }
     }
+    
+    /** @hide */
+    public void setForceNullCursor(boolean forceNullCursor) {
+        try {
+            mIm.setForceNullCursor(forceNullCursor);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+    }
 
     /**
      * Request or release pointer capture.
