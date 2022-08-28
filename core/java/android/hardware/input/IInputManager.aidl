@@ -309,4 +309,5 @@ interface IInputManager {
 
     void registerCursorCallback(ICursorCallback callbacks);
     void unregisterCursorCallback(ICursorCallback callbacks);
+    void setForceNullCursor(boolean forceNullCursor);
 }
