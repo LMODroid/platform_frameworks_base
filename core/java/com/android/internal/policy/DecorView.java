@@ -159,7 +159,6 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         @Override
         public void getOutline(View view, Outline outline) {
             outline.setRect(0, 0, view.getWidth(), view.getHeight());
-            outline.setAlpha(1f);
         }
     };
 
@@ -2549,7 +2548,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
     private void updateElevation() {
         final int windowingMode =
                 getResources().getConfiguration().windowConfiguration.getWindowingMode();
-        final boolean renderShadowsInCompositor = mWindow.mRenderShadowsInCompositor;
+        final boolean renderShadowsInCompositor = false;
         // If rendering shadows in the compositor, don't set an elevation on the view
         if (renderShadowsInCompositor) {
             return;
