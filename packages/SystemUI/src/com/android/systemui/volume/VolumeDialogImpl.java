@@ -69,6 +69,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.RotateDrawable;
+import android.media.AppVolume;
 import android.media.AudioManager;
 import android.media.AudioSystem;
 import android.media.session.MediaController;
@@ -80,6 +81,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Trace;
+import android.os.UserHandle;
 import android.os.VibrationEffect;
 import android.provider.Settings;
 import android.provider.Settings.Global;
@@ -124,6 +126,7 @@ import com.android.internal.graphics.drawable.BackgroundBlurDrawable;
 import com.android.internal.jank.InteractionJankMonitor;
 import com.android.internal.view.RotationPolicy;
 import com.android.settingslib.Utils;
+import com.android.systemui.Dependency;
 import com.android.systemui.Dumpable;
 import com.android.systemui.Prefs;
 import com.android.systemui.dump.DumpManager;
@@ -275,6 +278,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private ImageButton mSettingsIcon;
     private View mExpandRowsView;
     private ExpandableIndicator mExpandRows;
+    private View mAppVolumeView;
+    private ImageButton mAppVolumeIcon;
     private final List<VolumeRow> mRows = new ArrayList<>();
     private ConfigurableTexts mConfigurableTexts;
     private final SparseBooleanArray mDynamic = new SparseBooleanArray();
@@ -792,6 +797,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 
         mExpandRowsView = mDialog.findViewById(R.id.expandable_indicator_container);
         mExpandRows = mDialog.findViewById(R.id.expandable_indicator);
+        mAppVolumeView = mDialog.findViewById(R.id.app_volume_container);
+        mAppVolumeIcon = mDialog.findViewById(R.id.app_volume);
 
         if (isWindowGravityLeft()) {
             ViewGroup container = mDialog.findViewById(R.id.volume_dialog_container);
@@ -846,6 +853,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         updateRowsH(getActiveRow());
         initRingerH();
         initSettingsH(lockTaskModeState);
+        initAppVolumeH();
         initODICaptionsH();
         mAccessibility.init();
     }
@@ -1466,6 +1474,39 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         }
     }
 
+    private boolean shouldShowAppVolume() {
+        ContentResolver cr = mContext.getContentResolver();
+        int showAppVolume = Settings.System.getIntForUser(cr, LMOSettings.System.SHOW_APP_VOLUME,
+                0, UserHandle.USER_CURRENT);
+        boolean ret = showAppVolume == 1;
+        if (ret) {
+            ret = false;
+            AudioManager audioManager = mController.getAudioManager();
+            for (AppVolume av : audioManager.listAppVolumes()) {
+                if (av.isActive()) {
+                    ret = true;
+            break;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public void initAppVolumeH() {
+        if (mAppVolumeView != null) {
+            mAppVolumeView.setVisibility(shouldShowAppVolume() ? VISIBLE : GONE);
+        }
+        if (mAppVolumeIcon != null) {
+            mAppVolumeIcon.setOnClickListener(v -> {
+                Events.writeEvent(Events.EVENT_SETTINGS_CLICK);
+                dismissH(DISMISS_REASON_SETTINGS_CLICKED);
+                mMediaOutputDialogManager.dismiss();
+                mVolumeNavigator.openVolumePanel(
+                        mVolumePanelNavigationInteractor.getAppVolumePanelRoute());
+            });
+        }
+    }
+
     public void initRingerH() {
         if (mRingerIcon != null) {
             mRingerIcon.setAccessibilityLiveRegion(ACCESSIBILITY_LIVE_REGION_POLITE);
@@ -1747,6 +1788,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         }
 
         initSettingsH(lockTaskModeState);
+        initAppVolumeH();
         mShowing = true;
         mIsAnimatingDismiss = false;
         mDialog.show();
