@@ -768,7 +768,10 @@ public class AuthContainerView extends LinearLayout
             return;
         }
         mContainerState = STATE_GONE;
-        mWindowManager.removeView(this);
+
+        if (isAttachedToWindow()) {
+            mWindowManager.removeView(this);
+        }
     }
 
     @VisibleForTesting
