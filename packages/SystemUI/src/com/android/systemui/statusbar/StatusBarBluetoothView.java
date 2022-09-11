@@ -37,6 +37,8 @@ import android.widget.LinearLayout;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.PhoneStatusBarPolicy.BluetoothIconState;
 
+import com.android.settingslib.Utils;
+
 public class StatusBarBluetoothView extends FrameLayout implements StatusIconDisplayable {
     private static final String TAG = "StatusBarBluetoothView";
 
@@ -50,6 +52,8 @@ public class StatusBarBluetoothView extends FrameLayout implements StatusIconDis
     private BluetoothIconState mState;
     private String mSlot;
     private int mVisibleState = -1;
+    private int mBatteryLevel = -1;
+    private ColorStateList mBatteryColor;
 
     public static StatusBarBluetoothView fromContext(Context context, String slot) {
         StatusBarBluetoothView v = (StatusBarBluetoothView)
@@ -84,8 +88,9 @@ public class StatusBarBluetoothView extends FrameLayout implements StatusIconDis
     @Override
     public void setStaticDrawableColor(int color) {
         ColorStateList list = ColorStateList.valueOf(color);
+        mBatteryColor = list;
+        updateBatteryColor();
         mBluetoothIcon.setImageTintList(list);
-        mBatteryIcon.setImageTintList(list);
         mDotView.setDecorColor(color);
     }
 
@@ -201,14 +206,21 @@ public class StatusBarBluetoothView extends FrameLayout implements StatusIconDis
     }
 
     private void updateBatteryIcon(int batteryLevel) {
+        mBatteryLevel = batteryLevel;
         if (batteryLevel >= 0 && batteryLevel <= 100) {
             mBatteryIcon.setVisibility(View.VISIBLE);
             mBatteryIcon.setImageDrawable(mContext.getDrawable(
                 mContext.getResources().getIdentifier("ic_bluetooth_battery_"
                 + batteryLevel/10, "drawable", mContext.getPackageName())));
+            updateBatteryColor();
         } else {
             mBatteryIcon.setVisibility(View.GONE);
         }
+    }
+
+    private void updateBatteryColor() {
+        mBatteryIcon.setImageTintList(mBatteryLevel > 20 ? mBatteryColor :
+                Utils.getColorError(mContext));
     }
 
     private void initViewState() {
@@ -221,8 +233,9 @@ public class StatusBarBluetoothView extends FrameLayout implements StatusIconDis
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         int areaTint = getTint(area, this, tint);
         ColorStateList color = ColorStateList.valueOf(areaTint);
+        mBatteryColor = color;
+        updateBatteryColor();
         mBluetoothIcon.setImageTintList(color);
-        mBatteryIcon.setImageTintList(color);
         mDotView.setDecorColor(areaTint);
         mDotView.setIconColor(areaTint, false);
     }
