@@ -35,9 +35,9 @@ public class ClockController implements TunerService.Tunable {
     private static final String CLOCK_POSITION =
             "customsystem:" + Settings.System.STATUS_BAR_CLOCK;
 
-    private static final int CLOCK_POSITION_LEFT = 0;
+    private static final int CLOCK_POSITION_RIGHT = 0;
     private static final int CLOCK_POSITION_CENTER = 1;
-    private static final int CLOCK_POSITION_RIGHT = 2;
+    private static final int CLOCK_POSITION_LEFT = 2;
 
     private Context mContext;
     private Clock mActiveClock, mCenterClock, mLeftClock, mRightClock;
