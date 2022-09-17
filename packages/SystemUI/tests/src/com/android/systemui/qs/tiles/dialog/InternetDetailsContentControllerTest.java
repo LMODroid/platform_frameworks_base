@@ -77,6 +77,7 @@ import com.android.systemui.kosmos.KosmosJavaAdapter;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.connectivity.AccessPointController;
+import com.android.systemui.statusbar.policy.HotspotController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.LocationController;
 import com.android.systemui.toast.SystemUIToast;
@@ -192,6 +193,8 @@ public class InternetDetailsContentControllerTest extends SysuiTestCase {
     private SignalStrength mSignalStrength;
     @Mock
     private WifiConfiguration mWifiConfiguration;
+    @Mock
+    private HotspotController mHotspotController;
 
     // Let's create a second one, mainly to mock getSystemService call
     private final TestableContext mShadeContext = spy(mContext.createDefaultDisplayContext());
@@ -250,7 +253,7 @@ public class InternetDetailsContentControllerTest extends SysuiTestCase {
                 mock(KeyguardUpdateMonitor.class), mGlobalSettings, mKeyguardStateController,
                 mWindowManager, mToastFactory, mWorkerHandler, mCarrierConfigTracker,
             mLocationController, mDialogTransitionAnimator, mWifiStateWorker, mFlags,
-            mKosmos.getShadeDialogContextInteractor());
+            mKosmos.getShadeDialogContextInteractor(), mHotspotController);
         mSubscriptionManager.addOnSubscriptionsChangedListener(mExecutor,
                 mInternetDetailsContentController.mOnSubscriptionsChangedListener);
         mInternetDetailsContentController.onStart(mInternetDialogCallback, true);

@@ -1068,6 +1068,10 @@ constructor(
             override fun onSatelliteModemStateChanged(state: Int) {
                 updateContent(shouldUpdateMobileNetwork = true)
             }
+
+            override fun onHotspotChanged() {
+                // Nothing for now
+            }
         }
 
     enum class InternetDetailsEvent(private val id: Int) : UiEventLogger.UiEventEnum {
