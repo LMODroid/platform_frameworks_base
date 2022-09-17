@@ -928,6 +928,10 @@ constructor(
             override fun onWifiScan(isScan: Boolean) {
                 setProgressBarVisible(isScan)
             }
+
+            override fun onHotspotChanged() {
+                // Nothing for now
+            }
         }
 
     enum class InternetDetailsEvent(private val id: Int) : UiEventLogger.UiEventEnum {
