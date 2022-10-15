@@ -147,4 +147,8 @@
     <!-- Parallel space max count. -->
     <java-symbol type="integer" name="config_parallelSpaceMaxCount" />
 
+    <!-- ATV remote custom keys handling -->
+    <java-symbol type="array" name="keyhandler_keycodes" />
+    <java-symbol type="array" name="keyhandler_packages" />
+
 </resources>
