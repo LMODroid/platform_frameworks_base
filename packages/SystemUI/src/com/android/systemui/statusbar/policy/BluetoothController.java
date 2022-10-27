@@ -22,6 +22,7 @@ import com.android.settingslib.bluetooth.CachedBluetoothDevice;
 import com.android.systemui.Dumpable;
 import com.android.systemui.statusbar.policy.BluetoothController.Callback;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -53,4 +54,6 @@ public interface BluetoothController extends CallbackController<Callback>, Dumpa
         void onBluetoothStateChange(boolean enabled);
         void onBluetoothDevicesChanged();
     }
+
+    Collection<CachedBluetoothDevice> getDevices();
 }

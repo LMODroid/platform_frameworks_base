@@ -50,6 +50,7 @@ import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.QsEventLogger;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
+import com.android.systemui.qs.tiles.dialog.BluetoothDialogFactory;
 import com.android.systemui.statusbar.policy.BluetoothController;
 
 import java.util.List;
@@ -66,7 +67,9 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
 
     private static final String TAG = BluetoothTile.class.getSimpleName();
 
+    private final Handler mHandler;
     private final BluetoothController mController;
+    private final BluetoothDialogFactory mBluetoothDialogFactory;
 
     private CachedBluetoothDevice mMetadataRegisteredDevice = null;
 
@@ -83,11 +86,15 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
             StatusBarStateController statusBarStateController,
             ActivityStarter activityStarter,
             QSLogger qsLogger,
-            BluetoothController bluetoothController
+            BluetoothController bluetoothController,
+            BluetoothDialogFactory bluetoothDialogFactory
+
     ) {
         super(host, uiEventLogger, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
+	mHandler = mainHandler;
         mController = bluetoothController;
+        mBluetoothDialogFactory = bluetoothDialogFactory;
         mController.observe(getLifecycle(), mCallback);
         mExecutor = new HandlerExecutor(mainHandler);
     }
@@ -107,8 +114,13 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
+    protected void handleLongClick(@Nullable View view) {
+        mHandler.post(() -> mBluetoothDialogFactory.create(true, view));
+    }
+
+    @Override
     public Intent getLongClickIntent() {
-        return BLUETOOTH_SETTINGS;
+        return null;
     }
 
     @Override
