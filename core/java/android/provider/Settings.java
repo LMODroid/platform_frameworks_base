@@ -10565,6 +10565,7 @@ public final class Settings {
 
         /**
          * Whether tethering is allowed to use VPN upstreams
+         * @hide
          */
         @SuppressLint("NoSettingsProvider")
         public static final String TETHERING_ALLOW_VPN_UPSTREAMS = "tethering_allow_vpn_upstreams";
