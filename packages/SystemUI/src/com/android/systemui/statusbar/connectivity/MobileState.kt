@@ -89,9 +89,9 @@ internal class MobileState(
         roaming = o.roaming
         dataState = o.dataState
         defaultDataOff = o.defaultDataOff
-        imsRegistered = o.imsRegistered;
-        voiceCapable = o.voiceCapable;
-        videoCapable = o.videoCapable;
+        imsRegistered = o.imsRegistered
+        voiceCapable = o.voiceCapable
+        videoCapable = o.videoCapable
 
         telephonyDisplayInfo = o.telephonyDisplayInfo
         serviceState = o.serviceState
@@ -264,6 +264,9 @@ internal class MobileState(
         result = 31 * result + roaming.hashCode()
         result = 31 * result + dataState
         result = 31 * result + defaultDataOff.hashCode()
+        result = 31 * result + imsRegistered.hashCode()
+        result = 31 * result + voiceCapable.hashCode()
+        result = 31 * result + videoCapable.hashCode()
         result = 31 * result + telephonyDisplayInfo.hashCode()
         result = 31 * result + (serviceState?.hashCode() ?: 0)
         result = 31 * result + (signalStrength?.hashCode() ?: 0)

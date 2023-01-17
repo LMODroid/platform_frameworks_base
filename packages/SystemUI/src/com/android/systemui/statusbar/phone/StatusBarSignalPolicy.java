@@ -29,7 +29,6 @@ import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.flags.Flags;
 import com.android.systemui.statusbar.connectivity.IconState;
-import com.android.systemui.statusbar.connectivity.ImsIconState;
 import com.android.systemui.statusbar.connectivity.MobileDataIndicators;
 import com.android.systemui.statusbar.connectivity.NetworkController;
 import com.android.systemui.statusbar.connectivity.SignalCallback;
@@ -61,7 +60,6 @@ public class StatusBarSignalPolicy implements SignalCallback,
     private final String mSlotVpn;
     private final String mSlotNoCalling;
     private final String mSlotCallStrength;
-    private final String mSlotIms;
 
     private final Context mContext;
     private final StatusBarIconController mIconController;
@@ -115,8 +113,6 @@ public class StatusBarSignalPolicy implements SignalCallback,
         mSlotCallStrength =
                 mContext.getString(com.android.internal.R.string.status_bar_call_strength);
         mActivityEnabled = mContext.getResources().getBoolean(R.bool.config_showActivity);
-
-        mSlotIms      = mContext.getString(com.android.internal.R.string.status_bar_ims);
     }
 
     /** Call to initilaize and register this classw with the system. */
@@ -519,11 +515,6 @@ public class StatusBarSignalPolicy implements SignalCallback,
             }
             return outStates;
         }
-    }
-
-    @Override
-    public void setImsIcon(ImsIconState icon) {
-        mIconController.setImsIcon(mSlotIms, icon);
     }
 
     private static abstract class SignalIconState {
