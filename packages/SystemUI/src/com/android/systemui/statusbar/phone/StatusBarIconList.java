@@ -35,6 +35,9 @@ public class StatusBarIconList {
     private final List<Slot> mViewOnlySlots = Collections.unmodifiableList(mSlots);
 
     public StatusBarIconList(String[] slots) {
+        // Network traffic slot
+        mSlots.add(0, new Slot(StatusBarNetworkTraffic.SLOT,
+                    StatusBarIconHolder.fromNetworkTraffic()));
         final int N = slots.length;
         for (int i = 0; i < N; i++) {
             mSlots.add(new Slot(slots[i], null));
@@ -121,9 +124,9 @@ public class StatusBarIconList {
                 return i;
             }
         }
-        // Auto insert new items at the beginning.
-        mSlots.add(0, new Slot(slot, null));
-        return 0;
+        // Auto insert new items behind network traffic.
+        mSlots.add(1, new Slot(slot, null));
+        return 1;
     }
 
 
