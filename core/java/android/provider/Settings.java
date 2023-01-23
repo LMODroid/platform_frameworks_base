@@ -12457,6 +12457,15 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_MODE = "network_traffic_mode";
 
         /**
+         * Network traffic indicator position
+         * 0 = Start side
+         * 1 = Center
+         * 2 = End side
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_POSITION = "network_traffic_position";
+
+        /**
          * Whether or not to hide the network traffic indicator when there is no activity
          * @hide
          */
