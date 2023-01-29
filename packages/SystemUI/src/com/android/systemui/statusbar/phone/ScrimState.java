@@ -101,7 +101,7 @@ public enum ScrimState {
                 mBehindTint = Color.BLACK;
                 mNotifTint = mClipQsScrim ? Color.BLACK : Color.TRANSPARENT;
                 mFrontAlpha = 0;
-                mBehindAlpha = mClipQsScrim ? 1 : mScrimBehindAlphaKeyguard;
+                mBehindAlpha = mClipQsScrim ? mCustomScrimAlpha : mScrimBehindAlphaKeyguard;
                 mNotifAlpha = mClipQsScrim ? mScrimBehindAlphaKeyguard : 0;
                 if (mClipQsScrim) {
                     updateScrimColor(mScrimBehind, 1f /* alpha */, mBackgroundColor);
@@ -124,7 +124,7 @@ public enum ScrimState {
                 mFrontAlpha = 0f;
                 return;
             }
-            mBehindAlpha = mClipQsScrim ? 1 : mDefaultScrimAlpha;
+            mBehindAlpha = mClipQsScrim ? mCustomScrimAlpha : mDefaultScrimAlpha;
             mBehindTint = mSurfaceColor;
             mNotifAlpha = mClipQsScrim ? mDefaultScrimAlpha : 0;
             mNotifTint = Color.TRANSPARENT;
@@ -207,7 +207,7 @@ public enum ScrimState {
                     mBehindTint = mBackgroundColor;
                     return;
                 }
-                mBehindAlpha = mClipQsScrim ? 1 : mDefaultScrimAlpha;
+                mBehindAlpha = mClipQsScrim ? mCustomScrimAlpha : mDefaultScrimAlpha;
                 mNotifAlpha = 1f;
                 mFrontAlpha = 0f;
                 mBehindTint = mClipQsScrim ? Color.TRANSPARENT : mBackgroundColor;
@@ -293,7 +293,7 @@ public enum ScrimState {
         @Override
         public void prepare(ScrimState previousState) {
             // State that UI will sync to.
-            mBehindAlpha = mClipQsScrim ? 1 : 0;
+            mBehindAlpha = mClipQsScrim ? mCustomScrimAlpha : 0;
             mNotifAlpha = 0;
             mFrontAlpha = 0;
             mAnimationDuration = mKeyguardFadingAway
@@ -346,7 +346,7 @@ public enum ScrimState {
             mNotifTint = mClipQsScrim ? mBackgroundColor : Color.TRANSPARENT;
 
             mFrontAlpha = 0;
-            mBehindAlpha = mClipQsScrim ? 1 : 0;
+            mBehindAlpha = mClipQsScrim ? mCustomScrimAlpha : 0;
             mNotifAlpha = 0;
 
             mBlankScreen = false;
@@ -410,6 +410,7 @@ public enum ScrimState {
     float mFrontAlpha;
     float mBehindAlpha;
     float mNotifAlpha;
+    float mCustomScrimAlpha;
 
     float mScrimBehindAlphaKeyguard;
     float mDefaultScrimAlpha;
@@ -555,5 +556,9 @@ public enum ScrimState {
 
     public void setNotifBlurRadius(float value) {
         mNotifBlurRadius = value;
+    }
+
+    public void setCustomScrimAlpha(float customScrimAlpha) {
+        mCustomScrimAlpha = customScrimAlpha;
     }
 }
