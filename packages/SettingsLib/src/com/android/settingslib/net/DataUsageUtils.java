@@ -64,14 +64,14 @@ public class DataUsageUtils {
     private static NetworkTemplate getNormalizedMobileTemplate(
             TelephonyManager telephonyManager, int subId) {
         final NetworkTemplate mobileTemplate = getMobileTemplateForSubId(telephonyManager, subId);
-        final String[] mergedSubscriberIds = telephonyManager
-                .createForSubscriptionId(subId).getMergedImsisFromGroup();
+        final Set<String> mergedSubscriberIds = Set.of(telephonyManager
+                .createForSubscriptionId(subId).getMergedImsisFromGroup());
         if (ArrayUtils.isEmpty(mergedSubscriberIds)) {
             Log.i(TAG, "mergedSubscriberIds is null.");
             return mobileTemplate;
         }
 
-        return normalizeMobileTemplate(mobileTemplate, Set.of(mergedSubscriberIds));
+        return normalizeMobileTemplate(mobileTemplate, mergedSubscriberIds);
     }
 
     private static NetworkTemplate normalizeMobileTemplate(
