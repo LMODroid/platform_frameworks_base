@@ -16,8 +16,6 @@
 
 package com.android.systemui.qs;
 
-import static android.provider.Settings.Secure.QS_TILES;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ClipData;
@@ -39,20 +37,17 @@ import com.android.systemui.qs.dagger.QSScope;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.statusbar.connectivity.NetworkController;
 import com.android.systemui.statusbar.connectivity.SignalCallback;
-import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.ViewController;
 
 import com.android.settingslib.wifi.WifiStatusTracker;
 
-import java.util.Arrays;
 import javax.inject.Inject;
 
 /**
  * Controller for {@link QSFooterView}.
  */
 @QSScope
-public class QSFooterViewController extends ViewController<QSFooterView>
-        implements QSFooter, TunerService.Tunable {
+public class QSFooterViewController extends ViewController<QSFooterView> implements QSFooter {
 
     private final UserTracker mUserTracker;
     private final QSPanelController mQsPanelController;
@@ -63,9 +58,6 @@ public class QSFooterViewController extends ViewController<QSFooterView>
     private final WifiStatusTracker mWifiTracker;
     private final NetworkController mNetworkController;
     private final Context mContext;
-    private final TunerService mTunerService;
-
-    private static final String INTERNET_TILE = "internet";
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -89,8 +81,7 @@ public class QSFooterViewController extends ViewController<QSFooterView>
             ActivityStarter activityStarter,
             QSPanelController qsPanelController,
             NetworkController networkController,
-            Context context,
-            TunerService tunerService) {
+            Context context) {
         super(view);
         mUserTracker = userTracker;
         mQsPanelController = qsPanelController;
@@ -98,7 +89,6 @@ public class QSFooterViewController extends ViewController<QSFooterView>
         mActivityStarter = activityStarter;
         mNetworkController = networkController;
         mContext = context;
-        mTunerService = tunerService;
         mPageIndicator = mView.findViewById(R.id.footer_page_indicator);
         mEditButton = mView.findViewById(android.R.id.edit);
         mWifiTracker = new WifiStatusTracker(context, context.getSystemService(WifiManager.class),
@@ -126,29 +116,12 @@ public class QSFooterViewController extends ViewController<QSFooterView>
         mWifiTracker.setListening(true);
         onWifiStatusUpdated();
         mNetworkController.addCallback(mSignalCallback);
-        mTunerService.addTunable(this, QS_TILES);
     }
 
     @Override
     protected void onViewDetached() {
         mContext.unregisterReceiver(mReceiver);
         mNetworkController.removeCallback(mSignalCallback);
-        mTunerService.removeTunable(this);
-    }
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        if (key.equals(QS_TILES)) {
-            if (TextUtils.isEmpty(newValue)) {
-                newValue = mContext.getString(R.string.quick_settings_tiles_default);
-            }
-            int rows = mContext.getResources().getInteger(R.integer.quick_settings_max_rows);
-            int cols = mContext.getResources().getInteger(R.integer.quick_settings_num_columns);
-            // Don't show the suffix if we have internet tile in the first page.
-            mView.setShowSuffix(!Arrays.stream(newValue.split(","))
-                                       .limit(rows * cols)
-                                       .anyMatch(INTERNET_TILE::equals));
-         }
     }
 
     @Override
