@@ -1257,7 +1257,7 @@ class ActivityStarter {
             throw e;
         }
         abort |= !mService.mIntentFirewall.checkStartActivity(intent, callingUid,
-                callingPid, resolvedType, aInfo.applicationInfo);
+                callingPid, resolvedType, aInfo.applicationInfo, userId);
         abort |= !mService.getPermissionPolicyInternal().checkStartActivity(intent, callingUid,
                 callingPackage);
 
@@ -1279,7 +1279,7 @@ class ActivityStarter {
                         e);
             }
             if (!mService.mIntentFirewall.checkStartActivity(intent, intentCreatorUid,
-                    0, resolvedType, aInfo.applicationInfo)) {
+                    0, resolvedType, aInfo.applicationInfo, userId)) {
                 abort = logAndAbortForIntentRedirect(mService.mContext,
                         "Creator IntentFirewall.checkStartActivity Caused abortion.",
                         intent, intentCreatorUid, intentCreatorPackage, callingUid, callingPackage);

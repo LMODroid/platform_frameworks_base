@@ -40,8 +40,18 @@ public class SenderPackageFilter implements Filter {
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
+        return matchesPackage(ifw, resolvedComponent.getPackageName(), callerUid, receivingUid,
+                userId);
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
         IPackageManager pm = AppGlobals.getPackageManager();
+        if (pm == null) {
+            return false;
+        }
 
         int packageUid = -1;
         try {

@@ -116,7 +116,7 @@ public class BroadcastSkipPolicy {
                     + broadcastDescription(r, component);
         }
         if (!mService.mIntentFirewall.checkBroadcast(r.intent, r.callingUid,
-                r.callingPid, r.resolvedType, info.activityInfo.applicationInfo.uid)) {
+                r.callingPid, r.resolvedType, info.activityInfo.applicationInfo.uid, r.userId)) {
             return "Firewall blocked: broadcasting "
                     + broadcastDescription(r, component);
         }
@@ -353,7 +353,7 @@ public class BroadcastSkipPolicy {
                     + filter;
         }
         if (!mService.mIntentFirewall.checkBroadcast(r.intent, r.callingUid,
-                r.callingPid, r.resolvedType, filter.receiverList.uid)) {
+                r.callingPid, r.resolvedType, filter.receiverList.uid, r.userId)) {
             return "Firewall blocked: broadcasting "
                     + r.intent.toString()
                     + " from " + r.callerPackage + " (pid=" + r.callingPid

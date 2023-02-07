@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2024 LibreMobileOS
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,48 +18,36 @@ package com.android.server.firewall;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import com.android.internal.util.XmlUtils;
+import android.provider.Settings;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 
-class NotFilter implements Filter {
-    private final Filter mChild;
-
-    private NotFilter(Filter child) {
-        mChild = child;
-    }
-
+public class ProvisionedFilter implements Filter {
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
             int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
-        return !mChild.matches(ifw, resolvedComponent, intent, callerUid, callerPid, resolvedType,
-                receivingUid, userId);
+        return matchesPackage(ifw, resolvedComponent.getPackageName(), callerUid, receivingUid,
+                userId);
     }
 
     @Override
     public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
             int receivingUid, int userId) {
-        return !mChild.matchesPackage(ifw, resolvedPackage, callerUid, receivingUid, userId);
+        try {
+            return Settings.Global.getInt(ifw.getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0) == 1;
+        } catch (Exception ex) {
+            // It is probably too early to access settings
+            return false;
+        }
     }
 
-    public static final FilterFactory FACTORY = new FilterFactory("not") {
+    public static final FilterFactory FACTORY = new FilterFactory("is-provisioned") {
         @Override
         public Filter newFilter(XmlPullParser parser)
                 throws IOException, XmlPullParserException {
-            Filter child = null;
-            int outerDepth = parser.getDepth();
-            while (XmlUtils.nextElementWithin(parser, outerDepth)) {
-                Filter filter = IntentFirewall.parseFilter(parser);
-                if (child == null) {
-                    child = filter;
-                } else {
-                    throw new XmlPullParserException(
-                            "<not> tag can only contain a single child filter.", parser, null);
-                }
-            }
-            return new NotFilter(child);
+            return new ProvisionedFilter();
         }
     };
 }
+
