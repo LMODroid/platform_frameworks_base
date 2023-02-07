@@ -19,6 +19,7 @@ package com.android.server.firewall;
 import android.annotation.NonNull;
 import android.app.AppGlobals;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
@@ -52,6 +53,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,6 +62,14 @@ public class IntentFirewall {
 
     // e.g. /data/system/ifw or /data/secure/system/ifw
     private static final File RULES_DIR = new File(Environment.getDataSystemDirectory(), "ifw");
+    // not observed for changes, not created if missing, but can load rules from there on boot
+    private static final String[] SECONDARY_RULE_DIRS = new String[] {
+        "/system/etc/ifw.d/",
+        "/system_ext/etc/ifw.d/",
+        "/product/etc/ifw.d/",
+        "/odm/etc/ifw.d/",
+        "/vendor/etc/ifw.d/",
+    };
 
     private static final int LOG_PACKAGES_MAX_LENGTH = 150;
     private static final int LOG_PACKAGES_SUFFICIENT_LENGTH = 125;
@@ -68,10 +78,14 @@ public class IntentFirewall {
     private static final String TAG_ACTIVITY = "activity";
     private static final String TAG_SERVICE = "service";
     private static final String TAG_BROADCAST = "broadcast";
+    private static final String TAG_PROVIDER = "provider";
+    private static final String TAG_PACKAGE = "package";
 
     private static final int TYPE_ACTIVITY = 0;
     private static final int TYPE_BROADCAST = 1;
     private static final int TYPE_SERVICE = 2;
+    private static final int TYPE_PROVIDER = 3;
+    private static final int TYPE_PACKAGE = 4;
 
     private static final HashMap<String, FilterFactory> factoryMap;
 
@@ -85,6 +99,8 @@ public class IntentFirewall {
     private FirewallIntentResolver mActivityResolver = new FirewallIntentResolver();
     private FirewallIntentResolver mBroadcastResolver = new FirewallIntentResolver();
     private FirewallIntentResolver mServiceResolver = new FirewallIntentResolver();
+    private FirewallIntentResolver mProviderResolver = new FirewallIntentResolver();
+    private List<Rule> mPackageResolver = new ArrayList<>();
 
     static {
         FilterFactory[] factories = new FilterFactory[] {
@@ -107,7 +123,13 @@ public class IntentFirewall {
                 SenderFilter.FACTORY,
                 SenderPackageFilter.FACTORY,
                 SenderPermissionFilter.FACTORY,
-                PortFilter.FACTORY
+                TargetFilter.FACTORY,
+                TargetPackageFilter.FACTORY,
+                TargetPermissionFilter.FACTORY,
+                PortFilter.FACTORY,
+                IntentFilterFilter.FACTORY,
+                ComponentFilter.FACTORY,
+                ProvisionedFilter.FACTORY
         };
 
         // load factor ~= .75
@@ -142,47 +164,126 @@ public class IntentFirewall {
      * It is assumed the caller is already holding the global ActivityManagerService lock.
      */
     public boolean checkStartActivity(Intent intent, int callerUid, int callerPid,
-            String resolvedType, ApplicationInfo resolvedApp) {
+            String resolvedType, ApplicationInfo resolvedApp, int userId) {
         return checkIntent(mActivityResolver, intent.getComponent(), TYPE_ACTIVITY, intent,
-                callerUid, callerPid, resolvedType, resolvedApp.uid);
+                callerUid, callerPid, resolvedType, resolvedApp.uid, false, userId);
     }
 
     public boolean checkService(ComponentName resolvedService, Intent intent, int callerUid,
-            int callerPid, String resolvedType, ApplicationInfo resolvedApp) {
+            int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
         return checkIntent(mServiceResolver, resolvedService, TYPE_SERVICE, intent, callerUid,
-                callerPid, resolvedType, resolvedApp.uid);
+                callerPid, resolvedType, resolvedApp.uid, false, userId);
     }
 
     public boolean checkBroadcast(Intent intent, int callerUid, int callerPid,
-            String resolvedType, int receivingUid) {
+            String resolvedType, int receivingUid, int userId) {
         return checkIntent(mBroadcastResolver, intent.getComponent(), TYPE_BROADCAST, intent,
-                callerUid, callerPid, resolvedType, receivingUid);
+                callerUid, callerPid, resolvedType, receivingUid, false, userId);
     }
 
-    public boolean checkIntent(FirewallIntentResolver resolver, ComponentName resolvedComponent,
-            int intentType, Intent intent, int callerUid, int callerPid, String resolvedType,
-            int receivingUid) {
-        boolean log = false;
-        boolean block = false;
+    public boolean checkProvider(ComponentName resolvedProvider, Intent intent, int callerUid,
+                                     int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
+        return checkIntent(mProviderResolver, resolvedProvider, TYPE_PROVIDER, intent, callerUid,
+                callerPid, resolvedType, resolvedApp.uid, false, userId);
+    }
 
+    public boolean checkQueryActivity(ComponentName resolvedActivity, Intent intent, int callerUid, int callerPid,
+            String resolvedType, ApplicationInfo resolvedApp, int userId) {
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            return checkIntent(mActivityResolver, resolvedActivity, TYPE_ACTIVITY, intent,
+                    callerUid, callerPid, resolvedType, resolvedApp.uid, true, userId);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    public boolean checkQueryService(ComponentName resolvedService, Intent intent, int callerUid,
+            int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            return checkIntent(mServiceResolver, resolvedService, TYPE_SERVICE, intent, callerUid,
+                    callerPid, resolvedType, resolvedApp.uid, true, userId);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    public boolean checkQueryReceiver(ComponentName resolvedReceiver, Intent intent, int callerUid,
+            int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            return checkIntent(mBroadcastResolver, resolvedReceiver, TYPE_BROADCAST, intent, callerUid,
+                    callerPid, resolvedType, resolvedApp.uid, true, userId);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    public boolean checkQueryProvider(ComponentName resolvedService, Intent intent, int callerUid,
+            int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            return checkIntent(mProviderResolver, resolvedService, TYPE_PROVIDER, intent, callerUid,
+                    callerPid, resolvedType, resolvedApp.uid, true, userId);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    public boolean checkQueryPackage(int targetUid, String targetPackageName, int callerUid, int userId) {
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            boolean log = false;
+            boolean block = false;
+            for (Rule rule : mPackageResolver) {
+                if (rule.matchesPackage(this, targetPackageName, callerUid, targetUid, userId)) {
+                    block |= rule.getUnqueryable();
+                    log |= rule.getLogQuery();
+
+                    // if we've already determined that we should both block and log, there's no need
+                    // to continue trying rules
+                    if (block && log) {
+                        break;
+                    }
+                }
+            }
+
+            if (log) {
+                logPackageQuery(targetUid, targetPackageName, callerUid, userId);
+            }
+            return !block;
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    private boolean checkIntent(FirewallIntentResolver resolver, ComponentName resolvedComponent,
+            int intentType, Intent intent, int callerUid, int callerPid, String resolvedType,
+            int receivingUid, boolean forQuery, int userId) {
         // For the first pass, find all the rules that have at least one intent-filter or
         // component-filter that matches this intent
-        List<Rule> candidateRules;
-        candidateRules = resolver.queryIntent(getPackageManager().snapshot(), intent, resolvedType,
-                false /*defaultOnly*/, 0);
+        List<Rule> candidateRules = null;
+        if (intent != null) {
+            candidateRules = resolver.queryIntent(getPackageManager().snapshot(), intent, resolvedType,
+                    false /*defaultOnly*/, 0);
+        }
         if (candidateRules == null) {
-            candidateRules = new ArrayList<Rule>();
+            candidateRules = new ArrayList<>();
         }
         resolver.queryByComponent(resolvedComponent, candidateRules);
+        resolver.addAllMatching(candidateRules);
 
         // For the second pass, try to match the potentially more specific conditions in each
         // rule against the intent
+        boolean log = false;
+        boolean block = false;
         for (int i=0; i<candidateRules.size(); i++) {
             Rule rule = candidateRules.get(i);
             if (rule.matches(this, resolvedComponent, intent, callerUid, callerPid, resolvedType,
-                    receivingUid)) {
-                block |= rule.getBlock();
-                log |= rule.getLog();
+                    receivingUid, userId)) {
+                block |= (forQuery ? rule.getUnqueryable() : rule.getBlock());
+                log |= (forQuery ? rule.getLogQuery() : rule.getLog());
 
                 // if we've already determined that we should both block and log, there's no need
                 // to continue trying rules
@@ -193,16 +294,22 @@ public class IntentFirewall {
         }
 
         if (log) {
-            logIntent(intentType, intent, callerUid, resolvedType);
+            logIntent(intentType, intent, resolvedComponent, callerUid, resolvedType);
         }
 
         return !block;
     }
 
-    private static void logIntent(int intentType, Intent intent, int callerUid,
+    private static void logIntent(int intentType, Intent intent, ComponentName bcn, int callerUid,
             String resolvedType) {
         // The component shouldn't be null, but let's double check just to be safe
-        ComponentName cn = intent.getComponent();
+        ComponentName cn;
+        // We want to log caller's information provided to system, not what is resolved
+        if (intent != null) {
+            cn = intent.getComponent();
+        } else {
+            cn = bcn;
+        }
         String shortComponent = null;
         if (cn != null) {
             shortComponent = cn.flattenToShortString();
@@ -223,9 +330,16 @@ public class IntentFirewall {
             }
         }
 
+        String action = intent != null ? intent.getAction() : null;
+        String dataString = intent != null ? intent.getDataString() : null;
+        int flags = intent != null ? intent.getFlags() : 0;
         EventLogTags.writeIfwIntentMatched(intentType, shortComponent, callerUid,
-                callerPackageCount, callerPackages, intent.getAction(), resolvedType,
-                intent.getDataString(), intent.getFlags());
+                callerPackageCount, callerPackages, action, resolvedType, dataString, flags);
+    }
+
+    private static void logPackageQuery(int targetUid, String targetPackageName, int callerUid, int userId) {
+        Slog.d(TAG, "IFW package query log action triggered: targetUid=" + targetUid + " pkgName=" +
+                targetPackageName + " callerUid=" + callerUid + " userId=" + userId);
     }
 
     /**
@@ -246,9 +360,7 @@ public class IntentFirewall {
         for (int i=0; i<packages.length; i++) {
             String pkg = packages[i];
 
-            // + 1 length for the comma. This logic technically isn't correct for the first entry,
-            // but it's not critical.
-            if (sb.length() + pkg.length() + 1 < LOG_PACKAGES_MAX_LENGTH) {
+            if (sb.length() + pkg.length() + (first ? 0 : 1) < LOG_PACKAGES_MAX_LENGTH) {
                 if (!first) {
                     sb.append(',');
                 } else {
@@ -272,6 +384,10 @@ public class IntentFirewall {
         return RULES_DIR;
     }
 
+    ContentResolver getContentResolver() {
+        return mAms.getContentResolver();
+    }
+
     /**
      * Reads rules from all xml files (*.xml) in the given directory, and replaces our set of rules
      * with the newly read rules.
@@ -283,42 +399,55 @@ public class IntentFirewall {
      * serialized
      */
     private void readRulesDir(File rulesDir) {
-        FirewallIntentResolver[] resolvers = new FirewallIntentResolver[3];
+        FirewallIntentResolver[] resolvers = new FirewallIntentResolver[4];
         for (int i=0; i<resolvers.length; i++) {
             resolvers[i] = new FirewallIntentResolver();
         }
+        List<Rule> pkgResolver = new ArrayList<>();
 
-        File[] files = rulesDir.listFiles();
-        if (files != null) {
-            for (int i=0; i<files.length; i++) {
-                File file = files[i];
-
-                if (file.getName().endsWith(".xml")) {
-                    readRules(file, resolvers);
-                }
+        final ArrayList<File> allFiles = new ArrayList<>();
+        if (rulesDir != null) {
+            File[] files = rulesDir.listFiles();
+            if (files != null) {
+                Collections.addAll(allFiles, files);
+            }
+        }
+        for (String path : SECONDARY_RULE_DIRS) {
+            File[] files = new File(path).listFiles();
+            if (files != null) {
+                Collections.addAll(allFiles, files);
+            }
+        }
+        for (File file : allFiles) {
+            if (file.getName().endsWith(".xml")) {
+                readRules(file, resolvers, pkgResolver);
             }
         }
 
-        Slog.i(TAG, "Read new rules (A:" + resolvers[TYPE_ACTIVITY].filterSet().size() +
-                " B:" + resolvers[TYPE_BROADCAST].filterSet().size() +
-                " S:" + resolvers[TYPE_SERVICE].filterSet().size() + ")");
+        Slog.i(TAG, "Read new rules (A:" + resolvers[TYPE_ACTIVITY].size() +
+                " B:" + resolvers[TYPE_BROADCAST].size() +
+                " S:" + resolvers[TYPE_SERVICE].size() +
+                " C:" + resolvers[TYPE_PROVIDER].size() +
+                " P:" + pkgResolver.size() + ")");
 
         synchronized (mAms.getAMSLock()) {
             mActivityResolver = resolvers[TYPE_ACTIVITY];
             mBroadcastResolver = resolvers[TYPE_BROADCAST];
             mServiceResolver = resolvers[TYPE_SERVICE];
+            mProviderResolver = resolvers[TYPE_PROVIDER];
+            mPackageResolver = pkgResolver;
         }
     }
 
     /**
      * Reads rules from the given file and add them to the given resolvers
      */
-    private void readRules(File rulesFile, FirewallIntentResolver[] resolvers) {
+    private void readRules(File rulesFile, FirewallIntentResolver[] resolvers, List<Rule> pkgResolver) {
         // some temporary lists to hold the rules while we parse the xml file, so that we can
         // add the rules all at once, after we know there weren't any major structural problems
         // with the xml file
-        List<List<Rule>> rulesByType = new ArrayList<List<Rule>>(3);
-        for (int i=0; i<3; i++) {
+        List<List<Rule>> rulesByType = new ArrayList<List<Rule>>(5);
+        for (int i=0; i<5; i++) {
             rulesByType.add(new ArrayList<Rule>());
         }
 
@@ -348,22 +477,24 @@ public class IntentFirewall {
                     ruleType = TYPE_BROADCAST;
                 } else if (tagName.equals(TAG_SERVICE)) {
                     ruleType = TYPE_SERVICE;
+                } else if (tagName.equals(TAG_PROVIDER)) {
+                    ruleType = TYPE_PROVIDER;
+                } else if (tagName.equals(TAG_PACKAGE)) {
+                    ruleType = TYPE_PACKAGE;
+                }
+
+                Rule rule = new Rule();
+                // if we get an error while parsing a particular rule, we'll just ignore
+                // that rule and continue on with the next rule
+                try {
+                    rule.readFromXml(parser);
+                } catch (XmlPullParserException ex) {
+                    Slog.e(TAG, "Error reading an intent firewall rule from " + rulesFile, ex);
+                    continue;
                 }
 
                 if (ruleType != -1) {
-                    Rule rule = new Rule();
-
                     List<Rule> rules = rulesByType.get(ruleType);
-
-                    // if we get an error while parsing a particular rule, we'll just ignore
-                    // that rule and continue on with the next rule
-                    try {
-                        rule.readFromXml(parser);
-                    } catch (XmlPullParserException ex) {
-                        Slog.e(TAG, "Error reading an intent firewall rule from " + rulesFile, ex);
-                        continue;
-                    }
-
                     rules.add(rule);
                 }
             }
@@ -383,12 +514,16 @@ public class IntentFirewall {
             }
         }
 
-        for (int ruleType=0; ruleType<rulesByType.size(); ruleType++) {
+        for (int ruleType=0; ruleType<4; ruleType++) {
             List<Rule> rules = rulesByType.get(ruleType);
             FirewallIntentResolver resolver = resolvers[ruleType];
 
             for (int ruleIndex=0; ruleIndex<rules.size(); ruleIndex++) {
                 Rule rule = rules.get(ruleIndex);
+                if (rule.matchesAll()) {
+                    resolver.addMatchesAll(rule);
+                    continue;
+                }
                 for (int i=0; i<rule.getIntentFilterCount(); i++) {
                     resolver.addFilter(null, rule.getIntentFilter(i));
                 }
@@ -397,6 +532,7 @@ public class IntentFirewall {
                 }
             }
         }
+        pkgResolver.addAll(rulesByType.get(TYPE_PACKAGE));
     }
 
     static Filter parseFilter(XmlPullParser parser) throws IOException, XmlPullParserException {
@@ -433,19 +569,31 @@ public class IntentFirewall {
         private static final String TAG_COMPONENT_FILTER = "component-filter";
         private static final String ATTR_NAME = "name";
 
+        private static final String ATTR_PACKAGE_NAME = "pkgName";
         private static final String ATTR_BLOCK = "block";
         private static final String ATTR_LOG = "log";
+        private static final String ATTR_LOGQUERY = "logquery";
+        private static final String ATTR_MATCH_ALL = "matchall";
+        private static final String ATTR_UNQUERYABLE = "blockquery";
 
         private final ArrayList<FirewallIntentFilter> mIntentFilters =
                 new ArrayList<FirewallIntentFilter>(1);
         private final ArrayList<ComponentName> mComponentFilters = new ArrayList<ComponentName>(0);
+        private String packageName;
         private boolean block;
         private boolean log;
+        private boolean matchall;
+        private boolean logquery;
+        private boolean unqueryable;
 
         @Override
         public Rule readFromXml(XmlPullParser parser) throws IOException, XmlPullParserException {
+            packageName = parser.getAttributeValue(null, ATTR_PACKAGE_NAME);
             block = Boolean.parseBoolean(parser.getAttributeValue(null, ATTR_BLOCK));
             log = Boolean.parseBoolean(parser.getAttributeValue(null, ATTR_LOG));
+            matchall = Boolean.parseBoolean(parser.getAttributeValue(null, ATTR_MATCH_ALL));
+            logquery = Boolean.parseBoolean(parser.getAttributeValue(null, ATTR_LOGQUERY));
+            unqueryable = Boolean.parseBoolean(parser.getAttributeValue(null, ATTR_UNQUERYABLE));
 
             super.readFromXml(parser);
             return this;
@@ -455,11 +603,11 @@ public class IntentFirewall {
         protected void readChild(XmlPullParser parser) throws IOException, XmlPullParserException {
             String currentTag = parser.getName();
 
-            if (currentTag.equals(TAG_INTENT_FILTER)) {
+            if (!matchall && currentTag.equals(TAG_INTENT_FILTER)) {
                 FirewallIntentFilter intentFilter = new FirewallIntentFilter(this);
                 intentFilter.readFromXml(parser);
                 mIntentFilters.add(intentFilter);
-            } else if (currentTag.equals(TAG_COMPONENT_FILTER)) {
+            } else if (!matchall && currentTag.equals(TAG_COMPONENT_FILTER)) {
                 String componentStr = parser.getAttributeValue(null, ATTR_NAME);
                 if (componentStr == null) {
                     throw new XmlPullParserException("Component name must be specified.",
@@ -477,6 +625,26 @@ public class IntentFirewall {
             }
         }
 
+        @Override
+        public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
+            if (packageName != null && (resolvedComponent == null
+                    || !packageName.equals(resolvedComponent.getPackageName()))) {
+                return false;
+            }
+            return super.matches(ifw, resolvedComponent, intent, callerUid, callerPid, resolvedType,
+                    receivingUid, userId);
+        }
+
+        @Override
+        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+            if (packageName != null && !packageName.equals(resolvedPackage)) {
+                return false;
+            }
+            return super.matchesPackage(ifw, resolvedPackage, callerUid, receivingUid, userId);
+        }
+
         public int getIntentFilterCount() {
             return mIntentFilters.size();
         }
@@ -492,12 +660,25 @@ public class IntentFirewall {
         public ComponentName getComponentFilter(int index) {
             return mComponentFilters.get(index);
         }
+
+        public boolean matchesAll() {
+            return matchall;
+        }
+
         public boolean getBlock() {
             return block;
         }
 
+        public boolean getUnqueryable() {
+            return unqueryable;
+        }
+
         public boolean getLog() {
             return log;
+        }
+
+        public boolean getLogQuery() {
+            return logquery;
         }
     }
 
@@ -550,14 +731,29 @@ public class IntentFirewall {
             }
         }
 
+        public void addAllMatching(List<Rule> candidateRules) {
+            candidateRules.addAll(mMatchesAll);
+        }
+
         public void addComponentFilter(ComponentName componentName, Rule rule) {
             Rule[] rules = mRulesByComponent.get(componentName);
             rules = ArrayUtils.appendElement(Rule.class, rules, rule);
             mRulesByComponent.put(componentName, rules);
         }
 
+        public void addMatchesAll(Rule rule) {
+            mMatchesAll.add(rule);
+        }
+
+        public int size() {
+            return filterSet().size() + mRulesByComponent.size() + mMatchesAll.size();
+        }
+
         private final ArrayMap<ComponentName, Rule[]> mRulesByComponent =
                 new ArrayMap<ComponentName, Rule[]>(0);
+
+        private final ArrayList<Rule> mMatchesAll =
+                new ArrayList<>();
     }
 
     final FirewallHandler mHandler;
@@ -605,6 +801,7 @@ public class IntentFirewall {
         int checkComponentPermission(String permission, int pid, int uid,
                 int owningUid, boolean exported);
         Object getAMSLock();
+        ContentResolver getContentResolver();
     }
 
     /**

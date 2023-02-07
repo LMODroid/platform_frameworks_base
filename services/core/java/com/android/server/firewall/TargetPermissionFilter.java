@@ -16,50 +16,49 @@
 
 package com.android.server.firewall;
 
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
-import com.android.internal.util.XmlUtils;
+import android.content.pm.PackageManager;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-class NotFilter implements Filter {
-    private final Filter mChild;
+class TargetPermissionFilter implements Filter {
+    private static final String ATTR_NAME = "name";
 
-    private NotFilter(Filter child) {
-        mChild = child;
+    private final String mPermission;
+
+    private TargetPermissionFilter(String permission) {
+        mPermission = permission;
     }
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
             int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
-        return !mChild.matches(ifw, resolvedComponent, intent, callerUid, callerPid, resolvedType,
-                receivingUid, userId);
+        return matchesPackage(ifw, resolvedComponent.getPackageName(), callerUid, receivingUid,
+                userId);
     }
 
     @Override
     public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
             int receivingUid, int userId) {
-        return !mChild.matchesPackage(ifw, resolvedPackage, callerUid, receivingUid, userId);
+        return ActivityManager.checkComponentPermission(mPermission, receivingUid, callerUid, true)
+                == PackageManager.PERMISSION_GRANTED;
     }
 
-    public static final FilterFactory FACTORY = new FilterFactory("not") {
+    public static final FilterFactory FACTORY = new FilterFactory("target-permission") {
         @Override
         public Filter newFilter(XmlPullParser parser)
                 throws IOException, XmlPullParserException {
-            Filter child = null;
-            int outerDepth = parser.getDepth();
-            while (XmlUtils.nextElementWithin(parser, outerDepth)) {
-                Filter filter = IntentFirewall.parseFilter(parser);
-                if (child == null) {
-                    child = filter;
-                } else {
-                    throw new XmlPullParserException(
-                            "<not> tag can only contain a single child filter.", parser, null);
-                }
+            String permission = parser.getAttributeValue(null, ATTR_NAME);
+            if (permission == null) {
+                throw new XmlPullParserException("Permission name must be specified.",
+                        parser, null);
             }
-            return new NotFilter(child);
+            return new TargetPermissionFilter(permission);
         }
     };
 }

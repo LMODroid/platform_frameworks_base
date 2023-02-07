@@ -30,7 +30,20 @@ interface Filter {
      * @param callerPid The pid of the caller
      * @param resolvedType The resolved mime type of the intent
      * @param receivingUid The uid of the component receiving the intent
+     * @param userId the UserHandle id
      */
     boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid);
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId);
+
+    /**
+     * Does the given package + context info match this filter?
+     *
+     * @param ifw The IntentFirewall instance
+     * @param resolvedPackage The actual package that the intent was resolved to
+     * @param callerUid The uid of the caller
+     * @param receivingUid The uid of the component receiving the intent
+     * @param userId the UserHandle id
+     */
+    boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId);
 }

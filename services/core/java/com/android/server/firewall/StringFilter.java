@@ -119,9 +119,18 @@ abstract class StringFilter implements Filter {
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
+        if (intent == null) {
+            return false;
+        }
         String value = mValueProvider.getValue(resolvedComponent, intent, resolvedType);
         return matchesValue(value);
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+        return false;
     }
 
     private static abstract class ValueProvider extends FilterFactory {
