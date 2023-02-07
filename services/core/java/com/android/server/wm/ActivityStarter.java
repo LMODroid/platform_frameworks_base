@@ -1254,7 +1254,7 @@ class ActivityStarter {
             throw e;
         }
         abort |= !mService.mIntentFirewall.checkStartActivity(intent, callingUid,
-                callingPid, resolvedType, aInfo.applicationInfo);
+                callingPid, resolvedType, aInfo.applicationInfo, userId);
         abort |= !mService.getPermissionPolicyInternal().checkStartActivity(intent, callingUid,
                 callingPackage);
         abort |= sourceRecord != null && sourceRecord.getTaskFragment() != null
@@ -1279,7 +1279,7 @@ class ActivityStarter {
                         e);
             }
             if (!mService.mIntentFirewall.checkStartActivity(intent, intentCreatorUid,
-                    0, resolvedType, aInfo.applicationInfo)) {
+                    0, resolvedType, aInfo.applicationInfo, userId)) {
                 abort = logAndAbortForIntentRedirect(mService.mContext,
                         ActivityStarter.INTENT_REDIRECT_ABORT_INTENT_FIREWALL_START_ACTIVITY,
                         intent, intentCreatorUid, intentCreatorPackage, callingUid, callingPackage);

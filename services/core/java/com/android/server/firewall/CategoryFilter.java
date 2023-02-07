@@ -35,12 +35,21 @@ class CategoryFilter implements Filter {
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
+        if (intent == null) {
+            return false;
+        }
         Set<String> categories = intent.getCategories();
         if (categories == null) {
             return false;
         }
         return categories.contains(mCategoryName);
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+        return false;
     }
 
     public static final FilterFactory FACTORY = new FilterFactory("category") {
