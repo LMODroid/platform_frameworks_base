@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2014 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,48 +18,48 @@ package com.android.server.firewall;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import com.android.internal.util.XmlUtils;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-class NotFilter implements Filter {
-    private final Filter mChild;
+public class ComponentFilter implements Filter {
+    public final ComponentName mComponentName;
 
-    private NotFilter(Filter child) {
-        mChild = child;
+    public ComponentFilter(ComponentName componentName) {
+        mComponentName = componentName;
     }
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
             int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
-        return !mChild.matches(ifw, resolvedComponent, intent, callerUid, callerPid, resolvedType,
-                receivingUid, userId);
+        return mComponentName.equals(resolvedComponent);
     }
 
     @Override
     public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
             int receivingUid, int userId) {
-        return !mChild.matchesPackage(ifw, resolvedPackage, callerUid, receivingUid, userId);
+        return false;
     }
 
-    public static final FilterFactory FACTORY = new FilterFactory("not") {
+    public static final FilterFactory FACTORY = new FilterFactory("component-filter") {
+        private static final String ATTR_NAME = "name";
+
         @Override
         public Filter newFilter(XmlPullParser parser)
                 throws IOException, XmlPullParserException {
-            Filter child = null;
-            int outerDepth = parser.getDepth();
-            while (XmlUtils.nextElementWithin(parser, outerDepth)) {
-                Filter filter = IntentFirewall.parseFilter(parser);
-                if (child == null) {
-                    child = filter;
-                } else {
-                    throw new XmlPullParserException(
-                            "<not> tag can only contain a single child filter.", parser, null);
-                }
+            String componentStr = parser.getAttributeValue(null, ATTR_NAME);
+            if (componentStr == null) {
+                throw new XmlPullParserException("Component name must be specified.",
+                        parser, null);
             }
-            return new NotFilter(child);
+
+            ComponentName componentName = ComponentName.unflattenFromString(componentStr);
+            if (componentName == null) {
+                throw new XmlPullParserException("Invalid component name: " + componentStr);
+            }
+            return new ComponentFilter(componentName);
         }
     };
 }

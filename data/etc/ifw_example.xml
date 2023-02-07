@@ -1,0 +1,268 @@
+<!--
+    Intent firewall example XML
+
+    This Android distribution contains a modified version (henceforth reffered to as LMO IFW) of
+    the Android Open Source Project Intent firewall (henceforth reffered to as AOSP IFW), but
+    remains compatible with rulesets created for AOSP IFW.
+
+    The LMO IFW provides major enhancements over AOSP IFW, including:
+    - Log/Block querying of activites, broadcast receivers, packages, content providers and services
+        - Enabled with logquery="true" and blockquery="true"
+    - Log/Block access to content providers
+    - Remove restriction of requiring either intent filter or component name in a rule
+        - To remain compatible with AOSP IFW, this needs to be enabled with matchall="true"
+        - Enabling this will match your rules against every(!) object on the system, be careful
+        - This is useful with, for example, <target-package> filter which allows app-wide rules
+    - Support using <intent-filter> and <component-name> as filter
+        - Top level if matchall="true" is set, otherwise only nested, ie in <and>, <or>, <not>
+    - Additional filters: <target-package>, <target>, <target-permission>, <is-provisioned>
+    - Additional object types: <provider>, <package>
+    - pkgName="" attribute on object to filter per package explicitly
+    - Fix two AOSP bugs related to logging
+    - Load rules from extra directories (in addition to AOSP IFW directory /data/system/ifw/)
+        - /system/etc/ifw.d/
+        - /system_ext/etc/ifw.d/
+        - /product/etc/ifw.d/
+        - /odm/etc/ifw.d/
+        - /vendor/etc/ifw.d/
+
+    This example will explain most LMO IFW features, but everything specific to LMO IFW will be
+    marked as such, so this document can be used as example for AOSP IFW as well.
+    To illustrate AOSP IFW rules, some examples are based on:
+    https://carteryagemann.com/pages/android-intent-firewall.html
+
+    There can be an arbritary number of files in /data/system/ifw/, and once a file is created,
+    IFW will instantly detect it and reload all rules. A rule file's name must end with '.xml'.
+    All other files will silently be ignored. Invalid rule files will be ignored with a message.
+    (LMO IFW only: rules can also be in extra dirs, but those won't be reloaded on demand)
+    An rule file must be valid XML and contain a root element named <rules>. Inside, arbritary
+    amount of rules can be defined. It does not make a difference if two rules are split into two
+    files or put into one. A rule can not relax another rule by system, thus there cannot be any
+    conflicts. If there is an invalid rule element inside the <rules> tag, that element is ignored
+    with a message in logcat.
+-->
+<rules>
+    <!--
+        Rule elements must have one of the following tags, reffering to the object type it
+        restricts: <activity>, <service>, <broadcast>; LMO IFW only: <provider>, <package>.
+        Not every filter works with every object type, and as the context is usually quite
+        different, using multiple object types in one rule is not possible. In the rare case it is
+        needed, one has to copy-paste the rule and change the object type.
+
+        If there is an invalid element inside an object tag, the whole object tag will be ignored.
+
+        Possible attributes:
+        - (LMO IFW only) matchall="[true/]false" - apply rule filter to all objects of this type
+            - In AOSP IFW, a rule is only applied if either <intent-filter> or <component-filter>
+              matches and is on top level. This restriction can be removed with matchall="true"
+        - block="[true/]false" (LMO IFW only: does not apply to <package>) prevents interaction with
+          this object, but it will stay visible to sender app
+        - log="[true/]false" (LMO IFW only: does not apply to <package>) will write message to
+          logcat when object is interacted with by sender app
+        - (LMO IFW only) blockquery="[true/]false" will block attempts to find this object, be it
+          implicitly (querying all browsers) or explicitly (querying this exact object). Please do
+          note that it may NOT block interaction attempts, but those are not guranteed to succeed
+          either. It is HIGHLY recommened to enable block="true" when blockquery="true" is set.
+        - (LMO IFW only) logquery="[true/]false" will log attempts to find this object, be it
+          implicitly (querying all browsers) or explicitly (querying this exact object). Please do
+          note that it may NOT log interaction attempts of a <package> when a sub-object (like
+          <activity> or <service>) is being queried, which is why it is recommened to consider
+          enabling log="true" on subobjects when a <package> has logquery="true" enabled.
+        - (LMO IFW only) pkgName="[some string]" will only apply a rule to this package (this is
+          a shorthand for <target-package> which is more performant as it is checked first)
+    -->
+
+    <!--
+        (LMO IFW only: uses pkgName="", matchall="")
+        The most basic form of a rule can block or log interactions or queries of a object combining
+        pkgName="[app package]" and matchall="true" with one or more of block="", log="",
+        logquery="" and blockquery="".
+        Note: <package> does not support matchall="false", it is always true implicitly
+        Some examples for this:
+    -->
+
+    <!-- (LMO IFW only) Prevent Contacts app from launching -->
+    <activity pkgName="com.android.contacts" matchall="true" block="true" />
+
+    <!-- (LMO IFW only) Log when someone queries Settings -->
+    <activity pkgName="com.android.settings" matchall="true" logquery="true" />
+
+    <!-- (LMO IFW only) Log when Dialer is starting service (ie while calling) -->
+    <service pkgName="com.android.dialer" matchall="true" log="true" />
+
+    <!-- (LMO IFW only) Log when SystemUI services are queried -->
+    <service pkgName="com.android.systemui" matchall="true" logquery="true" />
+
+    <!-- (LMO IFW only) Log when someone queries receivers of SMS/MMS -->
+    <broadcast pkgName="com.android.messaging" matchall="true" logquery="true" />
+
+    <!-- (LMO IFW only) Log when storage is accessed -->
+    <provider pkgName="com.android.externalstorage" matchall="true" log="true" />
+
+    <!-- (LMO IFW only) One can also combine multiple action elements in one rule:
+         Hide shell's bug report provider and log attempts to query it -->
+    <provider pkgName="com.android.shell" matchall="true" blockquery="true" logquery="true" />
+
+    <!-- (LMO IFW only) Prevent queries of com.android.gallery3d
+         (<package> doesn't require to specify matchall="true", it is forcibly enabled) -->
+    <package pkgName="com.android.gallery3d" blockquery="true" />
+
+    <!--
+        This basic type of rules quickly hits its limits. To expand on this concept, IFW
+        supports filters. The list of supported filters and their attributes is:
+        - Logic filters: <and>, <or>, <not>
+            - These can contain one (<not>) or more (<and>, <or>) filters and evalutate them
+        - Object filters: <category name="">, <port [min="1" max="2" equals="3"]>; LMO IFW only: supported outside top-level: <component-filter name="">, <intent-filter>
+          - These match against the object or intent metadata (empty port filer -> checks for port)
+          - Intent filter syntax:
+              <intent-filter>
+                <path literal="[literal]" prefix="[prefix]" sglob="[sglob]" />
+                <auth host="[host]" port="[port]" />
+                <ssp literal="[literal]" prefix="[prefix]" sglob="[sglob]" />
+                <scheme name="[name]" />
+                <type name="[name]" />
+                <cat name="[category]" />
+                <action name="[action]" />
+              </intent-filter>
+        - String filters: <component>, <component-name>, <component-package>, <action>, <data>, <mime-type>, <scheme>, <scheme-specific-part>, <host>, <path>
+            - These take apart the intent filter (ie component refers to intent component, not resolved)
+            - can apply following attributes (but only one) (default isNull="false") equals="" startsWith="" contains="" pattern="" regex="" isNull="true/false"
+            - (pattern matches as per https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_SIMPLE_GLOB)
+            - <component> is flattened component like "com.android.launcher3/com.android.launcher3.Launcher", <component-name> is class name "com.android.launcher3.Launcher" and <component-package> is "com.android.launcher3"
+        - Sender app filters: <sender type="system|signature/system/signature/userId"> <sender-package name=""> <sender-permission name="">
+        - Target app filters (LMO IFW only): <target type="system|signature/system/signature"> <target-package name=""> <target-permission name="">
+        - Misc filters (LMO IFW only): <is-provisioned>
+        One rule element can contain multiple filters, and they are treated as AND-condition.
+        However, there is a pitfall: if matchall="true" is NOT set, and multiple <intent-filter> / <component-name> are present, only one of these needs to match (treated as OR-condition) BUT all of the other rules need to match in addition.
+        This can be avoided by setting matchall="true" or wrapping extra <intent-filter> / <component-name> into explicit <and>.
+    -->
+
+    <!-- (LMO IFW only: matchall="") Log whenever Launcher3 starts an activity -->
+    <activity matchall="true" log="true">
+      <!-- Matches against the Intent's sender package -->
+      <sender-package name="com.android.launcher3" />
+    </activity>
+
+    <!-- (LMO IFW only: matchall="" <is-provisioned> <target-package>) If device is not provisioned, log & block starting browser/web links -->
+    <activity matchall="true" block="true" log="true">
+      <!-- The <or> filter will succeed if one of these conditions is true -->
+      <or>
+        <!-- String filters take a part of the intent, for example the URI scheme, and match it against argument: -->
+        <scheme startsWith="http"/> <!-- match http, https -->
+        <scheme equals="intent"/>
+        <!-- (LMO IFW only) This matches against the target activity's owning package name -->
+        <target-package name="org.eu.droid_ng.jellyfish"/>
+        <target-package name="com.android.chrome"/>
+      </or>
+      <!-- The <not> will invert match/mismatch, so it will match if device is not provisioned -->
+      <not>
+        <!-- (LMO IFW only) This checks if the device has global setting "device_provisioned" set to 1 -->
+        <is-provisioned/>
+      </not>
+    </activity>
+
+    <!-- (LMO IFW only: matchall="") Log whenever android TV app is started -->
+    <activity matchall="true" log="true">
+      <!-- Matches against the Intent categories -->
+      <category name="android.intent.category.LEANBACK_LAUNCHER" />
+    </activity>
+
+    <!-- (LMO IFW only: matchall="") Log whenever Intent containing any port is started -->
+    <activity matchall="true" log="true">
+      <port />
+    </activity>
+
+    <!-- (LMO IFW only: matchall="") Block Intent if port is 1337, or smaller than 20, or between 1000 and 1005, or higher than 65500 -->
+    <activity matchall="true" block="true">
+      <or>
+        <port equals="1337"/>
+        <port max="20"/>
+        <port min="1000" max="1005"/>
+        <port min="65500" />
+      </or>
+    </activity>
+
+    <!-- Log when Launcher is started -->
+    <activity log="true">
+      <component-filter name="com.android.launcher3/.Launcher"/>
+    </activity>
+
+    <!-- prevent third party website ad from invoking app com.taobao.taobao -->
+    <activity block="true" log="true">
+      <intent-filter>
+        <action name="android.intent.action.VIEW" />
+        <cat name="android.intent.category.DEFAULT" />
+        <scheme name="taobao" />
+      </intent-filter>
+      <!-- only prevent intent from other (including system) app. intent from the same app will not be blocked  -->
+      <not>
+        <sender type="userId" />
+      </not>
+    </activity>
+
+    <!-- only allow system (or system-signed) apps to open settings homepage -->
+    <activity block="true" log="true">
+      <component-filter name="com.android.settings/.Settings"/>
+      <not>
+        <sender type="system|signature" />
+      </not>
+    </activity>
+
+    <!-- (LMO IFW only: matchall="" pkgName="") log when app by google opens chrome -->
+    <activity matchall="true" pkgName="com.android.chrome" log="true">
+      <sender type="signature" />
+    </activity>
+
+    <!-- (LMO IFW only: matchall="" <target>) log whenever a non-system app opens a system app -->
+    <activity matchall="true" log="true">
+      <target type="system" />
+      <not>
+        <sender type="system" />
+      </not>
+    </activity>
+
+    <!-- (LMO IFW only: matchall="" <target>) log whenever a system app other than launcher opens app that's not system nor same signature -->
+    <activity matchall="true" log="true">
+      <sender type="system" />
+      <not>
+        <sender-package name="com.android.launcher3" />
+      </not>
+      <not>
+        <target type="system|signature" />
+      </not>
+    </activity>
+
+    <!-- (LMO IFW only: matchall="" <target>) log whenever chrome opens an app by google -->
+    <activity matchall="true" log="true">
+      <sender-package name="com.android.chrome" />
+      <target type="signature" />
+    </activity>
+
+    <!-- (LMO IFW only: matchall="" <target-package>) only allow user apps with INTERNET permission to launch Chrome -->
+    <activity matchall="true" log="true">
+      <target-package name="com.android.chrome" />
+      <sender-permission name="android.permission.INTERNET" />
+      <not>
+        <sender type="system" />
+      </not>
+      <!-- only prevent intent from other app. intent from the same app will not be blocked  -->
+      <not>
+        <sender type="userId" />
+      </not>
+    </activity>
+
+    <!-- (LMO IFW only: matchall="" <target-permission>) only allow Chrome to launch user apps if they have INTERNET permission -->
+    <activity matchall="true" log="true">
+      <sender-package name="com.android.chrome" />
+      <target-permission name="android.permission.INTERNET" />
+      <not>
+        <target type="system" />
+      </not>
+      <!-- only prevent intent from other app. intent from the same app will not be blocked  -->
+      <not>
+        <!-- Note: there is no <target type="userId" /> because it would be equalivent to this anyway: -->
+        <sender type="userId" />
+      </not>
+    </activity>
+
+</rules>
