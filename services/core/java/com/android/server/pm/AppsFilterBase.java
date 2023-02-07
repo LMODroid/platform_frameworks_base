@@ -24,6 +24,7 @@ import static com.android.server.pm.AppsFilterUtils.requestsQueryAllPackages;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.ActivityManagerInternal;
 import android.content.pm.Flags;
 import android.content.pm.SigningDetails;
 import android.os.Binder;
@@ -39,6 +40,7 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.function.QuadFunction;
+import com.android.server.LocalServices;
 import com.android.server.om.OverlayReferenceMapper;
 import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.pm.pkg.PackageStateInternal;
@@ -341,7 +343,18 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
                     || targetPkgSetting.getAppId() < Process.FIRST_APPLICATION_UID
                     || callingAppId == targetPkgSetting.getAppId()) {
                 return false;
-            } else if (Process.isSdkSandboxUid(callingAppId)) {
+            }
+            final boolean shouldRemove = !LocalServices.getService(ActivityManagerInternal.class)
+                .queryPackageAllowed(targetPkgSetting.getAppId(),
+                    targetPkgSetting.getPkg() != null ? targetPkgSetting.getPkg().getPackageName()
+                    : null, callingUid, userId);
+            if (shouldRemove) {
+                if (DEBUG_LOGGING) {
+                    Slog.d(TAG, "forcibly filtered by ifw");
+                }
+                return true;
+            }
+            if (Process.isSdkSandboxUid(callingAppId)) {
                 final int targetAppId = targetPkgSetting.getAppId();
                 final int targetUid = UserHandle.getUid(userId, targetAppId);
                 // we only allow sdk sandbox processes access to forcequeryable packages or

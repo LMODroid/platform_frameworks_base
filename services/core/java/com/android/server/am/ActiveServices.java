@@ -5059,7 +5059,7 @@ public final class ActiveServices {
                 return new ServiceLookupResult(msg);
             }
             if (!mAm.mIntentFirewall.checkService(r.name, service, callingUid, callingPid,
-                    resolvedType, r.appInfo)) {
+                    resolvedType, r.appInfo, userId)) {
                 return new ServiceLookupResult("blocked by firewall");
             }
             if (mAm.checkComponentPermission(r.permission,

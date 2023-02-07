@@ -711,6 +711,12 @@ public class ContentProviderHelper {
 
     private void checkAssociationAndPermissionLocked(ProcessRecord callingApp, ProviderInfo cpi,
             int callingUid, int userId, boolean checkUser, String cprName, long startTime) {
+        if (!(mService.mIntentFirewall != null && mService.mIntentFirewall.checkProvider(
+                new ComponentName(cpi.applicationInfo.packageName, cprName), null, callingUid,
+                callingApp != null ? callingApp.mPid : -1, null,
+                cpi.applicationInfo, userId))) {
+            throw new SecurityException();
+        }
         String msg;
         if ((msg = checkContentProviderAssociation(callingApp, callingUid, cpi)) != null) {
             throw new SecurityException("Content provider lookup " + cprName

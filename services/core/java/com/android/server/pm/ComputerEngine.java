@@ -68,6 +68,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
+import android.app.ActivityManagerInternal;
 import android.app.admin.DevicePolicyManagerInternal;
 import android.companion.virtual.VirtualDeviceManager;
 import android.content.ComponentName;
@@ -585,13 +586,17 @@ public class ComputerEngine implements Computer {
                 final boolean resolveForStartNonExported = resolveForStart
                                 && !ai.exported
                                 && !isCallerSameApp(pkgName, filterCallingUid);
+                final boolean shouldRemove = !mInjector.getLocalService(ActivityManagerInternal.class)
+                        .queryActivityAllowed(new ComponentName(ai.packageName, ai.name), intent,
+                        Binder.getCallingUid(), Binder.getCallingPid(), resolvedType,
+                        ai.applicationInfo, userId);
                 final boolean blockNormalResolution =
                         (!resolveForStart || resolveForStartNonExported)
                                 && !isTargetInstantApp
                                 && !isCallerInstantApp
-                                && shouldFilterApplication(
+                                && (shouldRemove || shouldFilterApplication(
                                 getPackageStateInternal(ai.applicationInfo.packageName,
-                                        Process.SYSTEM_UID), filterCallingUid, userId);
+                                        Process.SYSTEM_UID), filterCallingUid, userId));
                 if (!blockInstantResolution && !blockNormalResolution) {
                     final ResolveInfo ri = new ResolveInfo();
                     ri.activityInfo = ai;
@@ -621,6 +626,18 @@ public class ComputerEngine implements Computer {
                     lockedResult.result.sort(RESOLVE_PRIORITY_SORTER);
                 }
                 list = lockedResult.result;
+            }
+            for (int i = list.size() - 1; i >= 0; i--) {
+                boolean shouldRemove = false;
+                ResolveInfo ri = list.get(i);
+                ActivityInfo info = ri.activityInfo;
+
+                shouldRemove = !mInjector.getLocalService(ActivityManagerInternal.class)
+                    .queryActivityAllowed(new ComponentName(info.packageName, info.name), intent, Binder.getCallingUid(),
+                    Binder.getCallingPid(), resolvedType, info.applicationInfo, userId);
+
+                if (shouldRemove)
+                    list.remove(i);
             }
             SaferIntentUtils.blockNullAction(args, list);
         }
@@ -708,11 +725,14 @@ public class ComputerEngine implements Computer {
                                 && ((!matchInstantApp && !isCallerInstantApp && isTargetInstantApp)
                                 || (matchVisibleToInstantAppOnly && isCallerInstantApp
                                 && isTargetHiddenFromInstantApp));
+                final boolean shouldRemove = !mInjector.getLocalService(ActivityManagerInternal.class)
+                        .queryServiceAllowed(new ComponentName(si.packageName, si.name), intent, Binder.getCallingUid(),
+                        Binder.getCallingPid(), resolvedType, si.applicationInfo, userId);
 
                 final boolean blockNormalResolution = !isTargetInstantApp && !isCallerInstantApp
-                        && shouldFilterApplication(
+                        && (shouldRemove || shouldFilterApplication(
                         getPackageStateInternal(si.applicationInfo.packageName,
-                                Process.SYSTEM_UID), callingUid, userId);
+                                Process.SYSTEM_UID), callingUid, userId));
                 if (!blockInstantResolution && !blockNormalResolution) {
                     final ResolveInfo ri = new ResolveInfo();
                     ri.serviceInfo = si;
@@ -724,6 +744,17 @@ public class ComputerEngine implements Computer {
         } else {
             list = queryIntentServicesInternalBody(intent, resolvedType, flags,
                     userId, callingUid, instantAppPkgName);
+            for (int i = list.size() - 1; i >= 0; i--) {
+                ResolveInfo ri = list.get(i);
+                ServiceInfo info = ri.serviceInfo;
+
+                final boolean shouldRemove = !mInjector.getLocalService(ActivityManagerInternal.class)
+                        .queryServiceAllowed(new ComponentName(info.packageName, info.name), intent, Binder.getCallingUid(),
+                        Binder.getCallingPid(), resolvedType, info.applicationInfo, userId);
+
+                if (shouldRemove)
+                    list.remove(i);
+            }
             SaferIntentUtils.blockNullAction(args, list);
         }
 
@@ -4878,7 +4909,10 @@ public class ComputerEngine implements Computer {
             final PackageStateInternal ps = mSettings.getPackage(providerInfo.packageName);
             final ComponentName component =
                     new ComponentName(providerInfo.packageName, providerInfo.name);
-            if (!shouldFilterApplication(ps, Binder.getCallingUid(), component,
+            boolean shouldRemove = !mInjector.getLocalService(ActivityManagerInternal.class)
+                .queryProviderAllowed(new ComponentName(providerInfo.packageName, providerInfo.name), null, Binder.getCallingUid(),
+                Binder.getCallingPid(), null, providerInfo.applicationInfo, callingUserId);
+            if (!shouldRemove && !shouldFilterApplication(ps, Binder.getCallingUid(), component,
                     TYPE_PROVIDER, callingUserId)) {
                 continue;
             }
@@ -4919,7 +4953,10 @@ public class ComputerEngine implements Computer {
             final PackageStateInternal ps = mSettings.getPackage(providerInfo.packageName);
             final ComponentName component =
                     new ComponentName(providerInfo.packageName, providerInfo.name);
-            if (shouldFilterApplication(
+            boolean shouldRemove = !mInjector.getLocalService(ActivityManagerInternal.class)
+                .queryProviderAllowed(new ComponentName(providerInfo.packageName, providerInfo.name), null, Binder.getCallingUid(),
+                Binder.getCallingPid(), null, providerInfo.applicationInfo, userId);
+            if (shouldRemove || shouldFilterApplication(
                     ps, callingUid, component, TYPE_PROVIDER, userId)) {
                 continue;
             }
