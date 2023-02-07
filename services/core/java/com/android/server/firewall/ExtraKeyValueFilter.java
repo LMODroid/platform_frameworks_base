@@ -40,13 +40,22 @@ class ExtraKeyValueFilter implements Filter {
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
         if (!enableIntentFirewallExtraKeyValueFilter()) {
+            return false;
+        }
+        if (intent == null) {
             return false;
         }
         Bundle extras = intent.getExtras();
         if (extras == null) return false;
         return mValueFilter.matchesValue(extras.getString(mKeyFilter));
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+        return false;
     }
 
     public static final FilterFactory FACTORY = new FilterFactory("extra") {

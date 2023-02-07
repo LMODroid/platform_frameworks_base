@@ -1476,4 +1476,14 @@ public abstract class ActivityManagerInternal {
      * @param clientUid the UID that has a bound client
      */
     public abstract boolean hasServiceBindingOrProviderUse(int uid, int clientUid);
+
+    public abstract boolean queryActivityAllowed(ComponentName resolvedActivity, Intent intent, int callerUid,
+        int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId);
+    public abstract boolean queryServiceAllowed(ComponentName resolvedService, Intent intent, int callerUid,
+        int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId);
+    public abstract boolean queryReceiverAllowed(ComponentName resolvedReceiver, Intent intent, int callerUid,
+        int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId);
+    public abstract boolean queryProviderAllowed(ComponentName resolvedProvider, Intent intent, int callerUid,
+        int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId);
+    public abstract boolean queryPackageAllowed(int targetUid, String targetPackageName, int callerUid, int userId);
 }

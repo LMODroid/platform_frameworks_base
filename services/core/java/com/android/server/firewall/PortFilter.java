@@ -42,7 +42,10 @@ class PortFilter implements Filter {
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
+        if (intent == null) {
+            return false;
+        }
         int port = -1;
         Uri uri = intent.getData();
         if (uri != null) {
@@ -51,6 +54,12 @@ class PortFilter implements Filter {
         return port != -1 &&
                 (mLowerBound == NO_BOUND || mLowerBound <= port) &&
                 (mUpperBound == NO_BOUND || mUpperBound >= port);
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+        return false;
     }
 
     public static final FilterFactory FACTORY = new FilterFactory("port") {
