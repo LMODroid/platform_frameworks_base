@@ -1234,4 +1234,14 @@ public abstract class ActivityManagerInternal {
      */
     public abstract boolean clearApplicationUserData(String packageName, boolean keepState,
             boolean isRestore, IPackageDataObserver observer, int userId);
+
+    public abstract boolean queryActivityAllowed(ComponentName resolvedActivity, Intent intent, int callerUid,
+        int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId);
+    public abstract boolean queryServiceAllowed(ComponentName resolvedService, Intent intent, int callerUid,
+        int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId);
+    public abstract boolean queryReceiverAllowed(ComponentName resolvedReceiver, Intent intent, int callerUid,
+        int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId);
+    public abstract boolean queryProviderAllowed(ComponentName resolvedProvider, Intent intent, int callerUid,
+        int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId);
+    public abstract boolean queryPackageAllowed(int targetUid, String targetPackageName, int callerUid, int userId);
 }

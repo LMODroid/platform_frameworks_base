@@ -1107,7 +1107,7 @@ class ActivityStarter {
             throw e;
         }
         abort |= !mService.mIntentFirewall.checkStartActivity(intent, callingUid,
-                callingPid, resolvedType, aInfo.applicationInfo);
+                callingPid, resolvedType, aInfo.applicationInfo, userId);
         abort |= !mService.getPermissionPolicyInternal().checkStartActivity(intent, callingUid,
                 callingPackage);
 

@@ -488,6 +488,19 @@ final class ResolveIntentHelper {
                     list, true, originalIntent, resolvedType, filterCallingUid);
         }
 
+        for (int i = list.size() - 1; i >= 0; i--) {
+            boolean shouldRemove = false;
+            ResolveInfo ri = list.get(i);
+            ActivityInfo info = ri.activityInfo;
+
+            shouldRemove = !LocalServices.getService(ActivityManagerInternal.class)
+                .queryReceiverAllowed(new ComponentName(info.packageName, info.name), intent, Binder.getCallingUid(),
+                Binder.getCallingPid(), resolvedType, info.applicationInfo, userId);
+
+            if (shouldRemove)
+                list.remove(i);
+        }
+
         return computer.applyPostResolutionFilter(list, instantAppPkgName, false, queryingUid,
                 false, userId, intent);
     }
@@ -567,26 +580,32 @@ final class ResolveIntentHelper {
 
         final ComponentResolverApi componentResolver = computer.getComponentResolver();
         String pkgName = intent.getPackage();
+        final List<ResolveInfo> resolveInfos;
         if (pkgName == null) {
-            final List<ResolveInfo> resolveInfos = componentResolver.queryProviders(computer,
+            resolveInfos = componentResolver.queryProviders(computer,
                     intent, resolvedType, flags, userId);
-            if (resolveInfos == null) {
+        } else {
+            final AndroidPackage pkg = computer.getPackage(pkgName);
+            if (pkg != null) {
+                resolveInfos = componentResolver.queryProviders(computer,
+                        intent, resolvedType, flags, pkg.getProviders(), userId);
+            } else {
                 return Collections.emptyList();
             }
-            return applyPostContentProviderResolutionFilter(computer, resolveInfos,
-                    instantAppPkgName, userId, callingUid);
         }
-        final AndroidPackage pkg = computer.getPackage(pkgName);
-        if (pkg != null) {
-            final List<ResolveInfo> resolveInfos = componentResolver.queryProviders(computer,
-                    intent, resolvedType, flags, pkg.getProviders(), userId);
-            if (resolveInfos == null) {
-                return Collections.emptyList();
-            }
-            return applyPostContentProviderResolutionFilter(computer, resolveInfos,
-                    instantAppPkgName, userId, callingUid);
+        if (resolveInfos == null) {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
+        for (int i = resolveInfos.size() - 1; i >= 0; i--) {
+            ProviderInfo info = resolveInfos.get(i).providerInfo;
+            boolean shouldRemove = !LocalServices.getService(ActivityManagerInternal.class)
+                .queryProviderAllowed(new ComponentName(info.packageName, info.name), intent, Binder.getCallingUid(),
+                Binder.getCallingPid(), resolvedType, info.applicationInfo, userId);
+            if (shouldRemove)
+                resolveInfos.remove(i);
+        }
+        return applyPostContentProviderResolutionFilter(computer, resolveInfos,
+                instantAppPkgName, userId, callingUid);
     }
 
     private List<ResolveInfo> applyPostContentProviderResolutionFilter(@NonNull Computer computer,

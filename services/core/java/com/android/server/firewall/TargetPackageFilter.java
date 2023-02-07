@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2014 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,50 +18,59 @@ package com.android.server.firewall;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManagerInternal;
+import android.os.UserHandle;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.util.Set;
 
-class CategoryFilter implements Filter {
+public class TargetPackageFilter implements Filter {
     private static final String ATTR_NAME = "name";
 
-    private final String mCategoryName;
+    public final String mPackageName;
 
-    private CategoryFilter(String categoryName) {
-        mCategoryName = categoryName;
+    public TargetPackageFilter(String packageName) {
+        mPackageName = packageName;
     }
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
             int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
-        if (intent == null) {
-            return false;
-        }
-        Set<String> categories = intent.getCategories();
-        if (categories == null) {
-            return false;
-        }
-        return categories.contains(mCategoryName);
+        return matchesPackage(ifw, resolvedComponent.getPackageName(), callerUid, receivingUid,
+                userId);
     }
 
     @Override
     public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
             int receivingUid, int userId) {
-        return false;
+        PackageManagerInternal pm = ifw.getPackageManager();
+        // USER_SYSTEM here is not important. Only app id is used and getPackageUid() will
+        // return a uid whether the app is installed for a user or not.
+        int packageUid = pm.getPackageUid(mPackageName, PackageManager.MATCH_ANY_USER,
+                UserHandle.USER_SYSTEM);
+
+        if (packageUid == -1)  {
+            return false;
+        }
+
+        return UserHandle.isSameApp(packageUid, receivingUid);
     }
 
-    public static final FilterFactory FACTORY = new FilterFactory("category") {
+    public static final FilterFactory FACTORY = new FilterFactory("target-package") {
         @Override
         public Filter newFilter(XmlPullParser parser)
                 throws IOException, XmlPullParserException {
-            String categoryName = parser.getAttributeValue(null, ATTR_NAME);
-            if (categoryName == null) {
-                throw new XmlPullParserException("Category name must be specified.",
-                        parser, null);
+            String packageName = parser.getAttributeValue(null, ATTR_NAME);
+
+            if (packageName == null) {
+                throw new XmlPullParserException(
+                    "A package name must be specified.", parser, null);
             }
-            return new CategoryFilter(categoryName);
+
+            return new TargetPackageFilter(packageName);
         }
     };
 }

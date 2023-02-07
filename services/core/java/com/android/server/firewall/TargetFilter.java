@@ -16,40 +16,37 @@
 
 package com.android.server.firewall;
 
-import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
 import android.os.Process;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-abstract class SenderFilter implements Filter {
+abstract class TargetFilter implements Filter {
     private static final String ATTR_TYPE = "type";
 
     private static final String VAL_SIGNATURE = "signature";
     private static final String VAL_SYSTEM = "system";
     private static final String VAL_SYSTEM_OR_SIGNATURE = "system|signature";
-    private static final String VAL_USER_ID = "userId";
 
     static boolean isPrivilegedApp(PackageManagerInternal pmi, int callerUid, int callerPid) {
-        if (callerUid == Process.SYSTEM_UID || callerUid == 0 ||
-                callerPid == Process.myPid() || callerPid == 0) {
+        if (callerPid >= 0 && (callerUid == Process.SYSTEM_UID || callerUid == 0 ||
+                callerPid == Process.myPid() || callerPid == 0)) {
             return true;
         }
+
         return pmi.isUidPrivileged(callerUid);
     }
 
-    public static final FilterFactory FACTORY = new FilterFactory("sender") {
+    public static final FilterFactory FACTORY = new FilterFactory("target") {
         @Override
         public Filter newFilter(XmlPullParser parser) throws IOException, XmlPullParserException {
             String typeString = parser.getAttributeValue(null, ATTR_TYPE);
             if (typeString == null) {
-                throw new XmlPullParserException("type attribute must be specified for <sender>",
+                throw new XmlPullParserException("type attribute must be specified for <target>",
                         parser, null);
             }
             if (typeString.equals(VAL_SYSTEM)) {
@@ -58,11 +55,9 @@ abstract class SenderFilter implements Filter {
                 return SIGNATURE;
             } else if (typeString.equals(VAL_SYSTEM_OR_SIGNATURE)) {
                 return SYSTEM_OR_SIGNATURE;
-            } else if (typeString.equals(VAL_USER_ID)) {
-                return USER_ID;
             }
             throw new XmlPullParserException(
-                    "Invalid type attribute for <sender>: " + typeString, parser, null);
+                    "Invalid type attribute for <target>: " + typeString, parser, null);
         }
     };
 
@@ -73,7 +68,7 @@ abstract class SenderFilter implements Filter {
                 userId);
     }
 
-    private static final Filter SIGNATURE = new SenderFilter() {
+    private static final Filter SIGNATURE = new TargetFilter() {
         @Override
         public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
                 int receivingUid, int userId) {
@@ -81,52 +76,20 @@ abstract class SenderFilter implements Filter {
         }
     };
 
-    private static final Filter SYSTEM = new SenderFilter() {
-        @Override
-        public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
-            return isPrivilegedApp(ifw.getPackageManager(), callerUid, callerPid);
-        }
-
+    private static final Filter SYSTEM = new TargetFilter() {
         @Override
         public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
                 int receivingUid, int userId) {
-            return isPrivilegedApp(ifw.getPackageManager(), callerUid, -1);
+            return isPrivilegedApp(ifw.getPackageManager(), receivingUid, -1);
         }
     };
 
-    private static final Filter SYSTEM_OR_SIGNATURE = new SenderFilter() {
-        @Override
-        public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
-            return isPrivilegedApp(ifw.getPackageManager(), callerUid, callerPid)
-                    || ifw.signaturesMatch(callerUid, receivingUid);
-        }
-
+    private static final Filter SYSTEM_OR_SIGNATURE = new TargetFilter() {
         @Override
         public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
                 int receivingUid, int userId) {
-            return isPrivilegedApp(ifw.getPackageManager(), callerUid, -1) ||
+            return isPrivilegedApp(ifw.getPackageManager(), receivingUid, -1) ||
                     ifw.signaturesMatch(callerUid, receivingUid);
-        }
-    };
-
-    private static final Filter USER_ID = new SenderFilter() {
-        @Override
-        public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
-            // This checks whether the caller is either the system process, or has the same user id
-            // I.e. the same app, or an app that uses the same shared user id.
-            // This is the same set of applications that would be able to access the component if
-            // it wasn't exported.
-            return ifw.checkComponentPermission(null, callerPid, callerUid, receivingUid, false);
-        }
-
-        @Override
-        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
-                int receivingUid, int userId) {
-            return ActivityManager.checkComponentPermission(null, callerUid, receivingUid, false)
-                    == PackageManager.PERMISSION_GRANTED;
         }
     };
 }

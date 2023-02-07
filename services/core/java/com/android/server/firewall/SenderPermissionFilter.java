@@ -16,8 +16,11 @@
 
 package com.android.server.firewall;
 
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -34,12 +37,19 @@ class SenderPermissionFilter implements Filter {
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
         // We assume the component is exported here. If the component is not exported, then
         // ActivityManager would only resolve to this component for callers from the same uid.
         // In this case, it doesn't matter whether the component is exported or not.
         return ifw.checkComponentPermission(mPermission, callerPid, callerUid, receivingUid,
                 true);
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+        return ActivityManager.checkComponentPermission(mPermission, callerUid, receivingUid, true)
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     public static final FilterFactory FACTORY = new FilterFactory("sender-permission") {

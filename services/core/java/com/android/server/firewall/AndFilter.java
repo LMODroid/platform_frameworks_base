@@ -26,10 +26,21 @@ import java.io.IOException;
 class AndFilter extends FilterList {
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
         for (int i=0; i<children.size(); i++) {
             if (!children.get(i).matches(ifw, resolvedComponent, intent, callerUid, callerPid,
-                    resolvedType, receivingUid)) {
+                    resolvedType, receivingUid, userId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+        for (int i=0; i<children.size(); i++) {
+            if (!children.get(i).matchesPackage(ifw, resolvedPackage, callerUid, receivingUid, userId)) {
                 return false;
             }
         }
