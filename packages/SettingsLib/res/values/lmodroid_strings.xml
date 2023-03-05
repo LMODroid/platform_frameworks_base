@@ -22,4 +22,16 @@
     <string name="screen_zoom_summary_smaller">Smaller</string>
     <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
     <string name="screen_zoom_summary_smallest">Smallest</string>
+
+    <!-- ZenMode -->
+    <string name="interruption_level_none_with_warning">Total silence.  This will also silence screen readers.</string>
+    <string name="interruption_level_priority">Priority only</string>
+    <string name="interruption_level_alarms">Alarms only</string>
+    <string name="interruption_level_none_twoline">Total
+silence</string>
+    <string name="interruption_level_priority_twoline">Priority
+only</string>
+    <string name="interruption_level_alarms_twoline">Alarms
+only</string>
+
 </resources>
