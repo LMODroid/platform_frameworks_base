@@ -44,6 +44,7 @@ import android.widget.TextView;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.policy.PhoneWindow;
 import com.android.settingslib.R;
+import com.android.settingslib.notification.SegmentedButtons;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -149,7 +150,7 @@ public class EnableDndDialogFactory {
                                 }
                                 // always triggers priority-only dnd with chosen condition
                                 mNotificationManager.setZenMode(
-                                        Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS,
+                                        mPrefferedZenMode,
                                         getRealConditionId(tag.condition), TAG,
                                         /* fromUser= */ true);
                             }
@@ -183,6 +184,7 @@ public class EnableDndDialogFactory {
         View contentView = mLayoutInflater.inflate(R.layout.zen_mode_turn_on_dialog_container,
                 null);
         ScrollView container = (ScrollView) contentView.findViewById(R.id.container);
+        createZenButtons(container);
 
         mZenRadioGroup = container.findViewById(R.id.zen_radio_buttons);
         mZenRadioGroupContent = container.findViewById(R.id.zen_radio_buttons_content);
@@ -203,6 +205,33 @@ public class EnableDndDialogFactory {
         hideAllConditions();
         return contentView;
     }
+
+    protected SegmentedButtons mZenButtons;
+    private int mPrefferedZenMode = Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS;
+    protected void createZenButtons(View container) {
+        mZenButtons = container.findViewById(R.id.zen_buttons);
+        mZenButtons.addButton(R.string.interruption_level_none_twoline,
+                R.string.interruption_level_none_with_warning,
+                Settings.Global.ZEN_MODE_NO_INTERRUPTIONS);
+        mZenButtons.addButton(R.string.interruption_level_alarms_twoline,
+                R.string.interruption_level_alarms,
+                Settings.Global.ZEN_MODE_ALARMS);
+        mZenButtons.addButton(R.string.interruption_level_priority_twoline,
+                R.string.interruption_level_priority,
+                Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS);
+        mZenButtons.setCallback(mZenButtonsCallback);
+        mZenButtons.setSelectedValue((Integer) mPrefferedZenMode, false);
+    }
+    protected final SegmentedButtons.Callback mZenButtonsCallback = new SegmentedButtons.Callback() {
+        @Override
+        public void onSelected(final Object value, boolean fromClick) {
+            if (value != null && mZenButtons.isShown() && fromClick) {
+                mPrefferedZenMode = (Integer) value;
+                int checkedId = mZenRadioGroup.getCheckedRadioButtonId();
+                updateAlarmWarningText(getConditionTagAt(checkedId).condition);
+            }
+        }
+    };
 
     @VisibleForTesting
     protected void bind(final Condition condition, final View row, final int rowId) {
@@ -492,7 +521,8 @@ public class EnableDndDialogFactory {
                 & NotificationManager.Policy.PRIORITY_CATEGORY_ALARMS) != 0;
 
         // don't show alarm warning if alarms are allowed to bypass dnd
-        if (allowAlarms) {
+        if (mPrefferedZenMode == Settings.Global.ZEN_MODE_ALARMS || (allowAlarms
+                && mPrefferedZenMode == Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS)) {
             return null;
         }
 
