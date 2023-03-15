@@ -6055,13 +6055,6 @@ public final class Settings {
         public static final String KEY_EDGE_LONG_SWIPE_ACTION = "key_edge_long_swipe_action";
 
         /**
-         * Whether to control brightness from status bar
-         * 0 = 0ff, 1 = on
-         * @hide
-         */
-        public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
-
-        /**
          * Force show navigation bar setting.
          * @hide
          */
