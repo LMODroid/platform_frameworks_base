@@ -22,7 +22,6 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.systemui.statusbar.policy.StatusBarNetworkTraffic;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -35,9 +34,6 @@ public class StatusBarIconList {
     private final List<Slot> mViewOnlySlots = Collections.unmodifiableList(mSlots);
 
     public StatusBarIconList(String[] slots) {
-        // Network traffic slot
-        mSlots.add(0, new Slot(StatusBarNetworkTraffic.SLOT,
-                    StatusBarIconHolder.fromNetworkTraffic()));
         final int N = slots.length;
         for (int i = 0; i < N; i++) {
             mSlots.add(new Slot(slots[i], null));
