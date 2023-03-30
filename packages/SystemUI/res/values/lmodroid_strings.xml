@@ -116,9 +116,6 @@
     <string name="usage_data_default_suffix">Data</string>
     <string name="usage_wifi_default_suffix">Wi-Fi</string>
 
-    <!-- Statusbar Icons -->
-    <string name="status_bar_ims">VoLTE/VoWiFi</string>
-
     <!-- Bluetooth dialog -->
     <string name="turn_on_bluetooth">Use Bluetooth</string>
     <string name="bluetooth_is_off">Bluetooth is off</string>
