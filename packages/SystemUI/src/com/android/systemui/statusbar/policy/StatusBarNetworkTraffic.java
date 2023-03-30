@@ -100,7 +100,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
 
     @Override
     public void setVisibleState(int state, boolean animate) {
-        if (state == mVisibleState || !mEnabled || !mAttached) {
+        if (state == mVisibleState || !mEnabled || !mScreenOn) {
             return;
         }
         mVisibleState = state;
