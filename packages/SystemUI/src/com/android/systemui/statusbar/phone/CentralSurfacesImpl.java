@@ -287,8 +287,6 @@ public class CentralSurfacesImpl extends CoreStartable implements
             "system:" + Settings.System.SCREEN_BRIGHTNESS_MODE;
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL =
             "customsystem:" + Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL;
-    private static final String QS_TRANSPARENCY =
-            "customsystem:" + Settings.System.QS_TRANSPARENCY;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -952,7 +950,6 @@ public class CentralSurfacesImpl extends CoreStartable implements
         mTunerService.addTunable(this, FORCE_SHOW_NAVBAR);
         mTunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
         mTunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
-        mTunerService.addTunable(this, QS_TRANSPARENCY);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
@@ -4440,10 +4437,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
                             Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
             mBrightnessControl = TunerService.parseIntegerSwitch(newValue, false);
-        } else if (QS_TRANSPARENCY.equals(key)) {
-            mScrimController.setCustomScrimAlpha(
-                    TunerService.parseInteger(newValue, 100));
-	}
+        }
     }
 
     // End Extra BaseStatusBarMethods.
