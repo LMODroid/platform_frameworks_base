@@ -125,7 +125,6 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
 
     protected boolean mEnabled = false;
     protected boolean mConnectionAvailable = true;
-    private boolean mChipVisible;
 
     public NetworkTraffic(Context context) {
         this(context, null);
@@ -332,20 +331,12 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
         }
     };
 
-    public void setChipVisibility(boolean enable) {
-        if (mEnabled && mChipVisible != enable) {
-            mChipVisible = enable;
-            updateVisibility();
-        }
-    }
-
     protected void setEnabled() {
         mEnabled = mLocation == LOCATION_QUICK_STATUSBAR;
     }
 
     protected void updateVisibility() {
-        boolean visible = mEnabled && mIsActive && getText() != ""
-            && !mChipVisible;
+        boolean visible = mEnabled && mIsActive && getText() != "";
         if (visible != mVisible) {
             mVisible = visible;
             setVisibility(mVisible ? VISIBLE : GONE);
