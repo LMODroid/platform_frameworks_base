@@ -40,6 +40,7 @@ import com.android.systemui.controls.dagger.ControlsComponent
 import com.android.systemui.controls.management.ControlsListingController
 import com.android.systemui.controls.ui.ControlsActivity
 import com.android.systemui.controls.ui.ControlsUiController
+import com.android.systemui.controls.ui.SelectedItem
 import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.plugins.statusbar.StatusBarStateController
 import com.android.systemui.qs.QSHost
@@ -119,8 +120,9 @@ class DeviceControlsTileTest : SysuiTestCase() {
         `when`(qsHost.uiEventLogger).thenReturn(uiEventLogger)
         `when`(controlsController.available).thenReturn(true)
         `when`(controlsComponent.isEnabled()).thenReturn(true)
-        `when`(controlsController.getPreferredStructure())
-                .thenReturn(StructureInfo(ComponentName("pkg", "cls"), "structure", listOf()))
+        `when`(controlsController.getPreferredSelection())
+                .thenReturn(SelectedItem.StructureItem(
+                        StructureInfo(ComponentName("pkg", "cls"), "structure", listOf())))
         secureSettings.putInt(Settings.Secure.LOCKSCREEN_SHOW_CONTROLS, 1)
 
         setupControlsComponent()
@@ -235,12 +237,12 @@ class DeviceControlsTileTest : SysuiTestCase() {
                 capture(listingCallbackCaptor)
         )
         `when`(controlsComponent.getVisibility()).thenReturn(ControlsComponent.Visibility.AVAILABLE)
-        `when`(controlsController.getPreferredStructure()).thenReturn(
-            StructureInfo(
+        `when`(controlsController.getPreferredSelection()).thenReturn(
+            SelectedItem.StructureItem(StructureInfo(
                 ComponentName("pkg", "cls"),
                 "structure",
                 listOf(ControlInfo("id", "title", "subtitle", 1))
-            )
+            ))
         )
 
         listingCallbackCaptor.value.onServicesUpdated(listOf(serviceInfo))
@@ -256,13 +258,30 @@ class DeviceControlsTileTest : SysuiTestCase() {
                 capture(listingCallbackCaptor)
         )
         `when`(controlsComponent.getVisibility()).thenReturn(ControlsComponent.Visibility.AVAILABLE)
-        `when`(controlsController.getPreferredStructure())
-                .thenReturn(StructureInfo(ComponentName("pkg", "cls"), "structure", listOf()))
+        `when`(controlsController.getPreferredSelection())
+                .thenReturn(SelectedItem.StructureItem(
+                        StructureInfo(ComponentName("pkg", "cls"), "structure", listOf())))
 
         listingCallbackCaptor.value.onServicesUpdated(listOf(serviceInfo))
         testableLooper.processAllMessages()
 
         assertThat(tile.state.state).isEqualTo(Tile.STATE_INACTIVE)
+    }
+
+    @Test
+    fun testStateActiveIfPreferredIsPanel() {
+        verify(controlsListingController).observe(
+                any(LifecycleOwner::class.java),
+                capture(listingCallbackCaptor)
+        )
+        `when`(controlsComponent.getVisibility()).thenReturn(ControlsComponent.Visibility.AVAILABLE)
+        `when`(controlsController.getPreferredSelection())
+                .thenReturn(SelectedItem.PanelItem("appName", ComponentName("pkg", "cls")))
+
+        listingCallbackCaptor.value.onServicesUpdated(listOf(serviceInfo))
+        testableLooper.processAllMessages()
+
+        assertThat(tile.state.state).isEqualTo(Tile.STATE_ACTIVE)
     }
 
     @Test
@@ -312,12 +331,12 @@ class DeviceControlsTileTest : SysuiTestCase() {
         )
         `when`(controlsComponent.getVisibility()).thenReturn(ControlsComponent.Visibility.AVAILABLE)
         `when`(controlsUiController.resolveActivity()).thenReturn(ControlsActivity::class.java)
-        `when`(controlsController.getPreferredStructure()).thenReturn(
-            StructureInfo(
-                ComponentName("pkg", "cls"),
-                "structure",
-                listOf(ControlInfo("id", "title", "subtitle", 1))
-            )
+        `when`(controlsController.getPreferredSelection()).thenReturn(
+            SelectedItem.StructureItem(StructureInfo(
+                    ComponentName("pkg", "cls"),
+                    "structure",
+                    listOf(ControlInfo("id", "title", "subtitle", 1))
+            ))
         )
 
         listingCallbackCaptor.value.onServicesUpdated(listOf(serviceInfo))
@@ -343,12 +362,12 @@ class DeviceControlsTileTest : SysuiTestCase() {
         `when`(controlsComponent.getVisibility())
             .thenReturn(ControlsComponent.Visibility.AVAILABLE_AFTER_UNLOCK)
         `when`(controlsUiController.resolveActivity()).thenReturn(ControlsActivity::class.java)
-        `when`(controlsController.getPreferredStructure()).thenReturn(
-            StructureInfo(
+        `when`(controlsController.getPreferredSelection()).thenReturn(
+            SelectedItem.StructureItem(StructureInfo(
                 ComponentName("pkg", "cls"),
                 "structure",
                 listOf(ControlInfo("id", "title", "subtitle", 1))
-            )
+            ))
         )
 
         listingCallbackCaptor.value.onServicesUpdated(listOf(serviceInfo))

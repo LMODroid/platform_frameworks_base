@@ -17,7 +17,6 @@
 package com.android.systemui.controls.controller
 
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.ContextWrapper
@@ -32,7 +31,6 @@ import android.testing.AndroidTestingRunner
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.backup.BackupHelper
-import com.android.systemui.broadcast.BroadcastDispatcher
 import com.android.systemui.controls.ControlStatus
 import com.android.systemui.controls.ControlsServiceInfo
 import com.android.systemui.controls.management.ControlsListingController
@@ -86,10 +84,8 @@ class ControlsControllerImplTest : SysuiTestCase() {
     @Mock
     private lateinit var auxiliaryPersistenceWrapper: AuxiliaryPersistenceWrapper
     @Mock
-    private lateinit var broadcastDispatcher: BroadcastDispatcher
-    @Mock
     private lateinit var listingController: ControlsListingController
-    @Mock(stubOnly = true)
+    @Mock
     private lateinit var userTracker: UserTracker
     @Mock
     private lateinit var userFileManager: UserFileManager
@@ -105,7 +101,7 @@ class ControlsControllerImplTest : SysuiTestCase() {
             ArgumentCaptor<ControlsBindingController.LoadCallback>
 
     @Captor
-    private lateinit var broadcastReceiverCaptor: ArgumentCaptor<BroadcastReceiver>
+    private lateinit var userTrackerCallbackCaptor: ArgumentCaptor<UserTracker.Callback>
     @Captor
     private lateinit var listingCallbackCaptor:
             ArgumentCaptor<ControlsListingController.ControlsListingCallback>
@@ -176,17 +172,16 @@ class ControlsControllerImplTest : SysuiTestCase() {
                 uiController,
                 bindingController,
                 listingController,
-                broadcastDispatcher,
                 userFileManager,
+                userTracker,
                 Optional.of(persistenceWrapper),
-                mock(DumpManager::class.java),
-                userTracker
+                mock(DumpManager::class.java)
         )
         controller.auxiliaryPersistenceWrapper = auxiliaryPersistenceWrapper
 
         assertTrue(controller.available)
-        verify(broadcastDispatcher).registerReceiver(
-            capture(broadcastReceiverCaptor), any(), any(), eq(UserHandle.ALL), anyInt(), any()
+        verify(userTracker).addCallback(
+            capture(userTrackerCallbackCaptor), any()
         )
 
         verify(listingController).addCallback(capture(listingCallbackCaptor))
@@ -234,11 +229,10 @@ class ControlsControllerImplTest : SysuiTestCase() {
                 uiController,
                 bindingController,
                 listingController,
-                broadcastDispatcher,
                 userFileManager,
+                userTracker,
                 Optional.of(persistenceWrapper),
-                mock(DumpManager::class.java),
-                userTracker
+                mock(DumpManager::class.java)
         )
         assertEquals(listOf(TEST_STRUCTURE_INFO), controller_other.getFavorites())
     }
@@ -525,14 +519,8 @@ class ControlsControllerImplTest : SysuiTestCase() {
         delayableExecutor.runAllReady()
 
         reset(persistenceWrapper)
-        val intent = Intent(Intent.ACTION_USER_SWITCHED).apply {
-            putExtra(Intent.EXTRA_USER_HANDLE, otherUser)
-        }
-        val pendingResult = mock(BroadcastReceiver.PendingResult::class.java)
-        `when`(pendingResult.sendingUserId).thenReturn(otherUser)
-        broadcastReceiverCaptor.value.pendingResult = pendingResult
 
-        broadcastReceiverCaptor.value.onReceive(mContext, intent)
+        userTrackerCallbackCaptor.value.onUserChanged(otherUser, mContext)
 
         verify(persistenceWrapper).changeFileAndBackupManager(any(), any())
         verify(persistenceWrapper).readFavorites()

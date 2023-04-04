@@ -566,7 +566,12 @@ public class TrustManagerService extends SystemService {
             changed = mUserIsTrusted.get(userId) != trusted;
             mUserIsTrusted.put(userId, trusted);
         }
-        dispatchOnTrustChanged(trusted, userId, flags, getTrustGrantedMessages(userId));
+        dispatchOnTrustChanged(
+                trusted,
+                false /* newlyUnlocked */,
+                userId,
+                flags,
+                getTrustGrantedMessages(userId));
         if (changed) {
             refreshDeviceLockedForUser(userId);
             if (!trusted) {
@@ -631,7 +636,9 @@ public class TrustManagerService extends SystemService {
         if (DEBUG) Slog.d(TAG, "pendingTrustState: " + pendingTrustState);
 
         boolean isNowTrusted = pendingTrustState == TrustState.TRUSTED;
-        dispatchOnTrustChanged(isNowTrusted, userId, flags, getTrustGrantedMessages(userId));
+        boolean newlyUnlocked = !alreadyUnlocked && isNowTrusted;
+        dispatchOnTrustChanged(
+                isNowTrusted, newlyUnlocked, userId, flags, getTrustGrantedMessages(userId));
         if (isNowTrusted != wasTrusted) {
             refreshDeviceLockedForUser(userId);
             if (!isNowTrusted) {
@@ -646,8 +653,7 @@ public class TrustManagerService extends SystemService {
             }
         }
 
-        boolean wasLocked = !alreadyUnlocked;
-        boolean shouldSendCallback = wasLocked && pendingTrustState == TrustState.TRUSTED;
+        boolean shouldSendCallback = newlyUnlocked;
         if (shouldSendCallback) {
             if (resultCallback != null) {
                 if (DEBUG) Slog.d(TAG, "calling back with UNLOCKED_BY_GRANT");
@@ -1398,16 +1404,17 @@ public class TrustManagerService extends SystemService {
         }
     }
 
-    private void dispatchOnTrustChanged(boolean enabled, int userId, int flags,
-            @NonNull List<String> trustGrantedMessages) {
+    private void dispatchOnTrustChanged(boolean enabled, boolean newlyUnlocked, int userId,
+            int flags, @NonNull List<String> trustGrantedMessages) {
         if (DEBUG) {
-            Log.i(TAG, "onTrustChanged(" + enabled + ", " + userId + ", 0x"
+            Log.i(TAG, "onTrustChanged(" + enabled + ", " + newlyUnlocked + ", " + userId + ", 0x"
                     + Integer.toHexString(flags) + ")");
         }
         if (!enabled) flags = 0;
         for (int i = 0; i < mTrustListeners.size(); i++) {
             try {
-                mTrustListeners.get(i).onTrustChanged(enabled, userId, flags, trustGrantedMessages);
+                mTrustListeners.get(i).onTrustChanged(
+                        enabled, newlyUnlocked, userId, flags, trustGrantedMessages);
             } catch (DeadObjectException e) {
                 Slog.d(TAG, "Removing dead TrustListener.");
                 mTrustListeners.remove(i);

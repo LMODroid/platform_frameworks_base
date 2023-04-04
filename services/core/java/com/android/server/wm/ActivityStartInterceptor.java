@@ -428,7 +428,7 @@ class ActivityStartInterceptor {
         try {
             harmfulAppWarning = mService.getPackageManager()
                     .getHarmfulAppWarning(mAInfo.packageName, mUserId);
-        } catch (RemoteException ex) {
+        } catch (RemoteException | IllegalArgumentException ex) {
             return false;
         }
 
