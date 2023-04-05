@@ -44,6 +44,7 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.user.data.repository.UserSwitcherRepository
 import com.android.systemui.user.domain.interactor.UserSwitcherInteractor
+import com.libremobileos.providers.LMOSettings
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -155,11 +156,15 @@ constructor(
         expandable: Expandable,
     ) {
         uiEventLogger.log(GlobalActionsDialogLite.GlobalActionsEvent.GA_OPEN_QS)
-        globalActionsDialogLite.showOrHideDialog(
-            keyguardStateController.isShowing(),
-            /* isDeviceProvisioned= */ true,
-            expandable,
-        )
+        if (Settings.Secure.getInt(globalActionsDialogLite.context.getContentResolver(),
+                LMOSettings.Secure.POWER_MENU_TYPE, 0) == 0)
+            globalActionsDialogLite.showOrHideDialog(
+                keyguardStateController.isShowing(),
+                /* isDeviceProvisioned= */ true,
+                expandable,
+            )
+        else
+            globalActionsDialogLite.context.sendBroadcast(Intent("android.intent.action.POWER_MENU"))
     }
 
     override fun showSettings(expandable: Expandable) {
