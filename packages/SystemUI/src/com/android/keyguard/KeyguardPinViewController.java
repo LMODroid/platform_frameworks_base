@@ -72,6 +72,10 @@ public class KeyguardPinViewController
             });
         }
 
+        mPostureController.addCallback(mPostureCallback);
+    }
+
+    private void updateQuickUnlock() {
         boolean quickUnlock = (Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 0, UserHandle.USER_CURRENT) == 1);
 
@@ -84,14 +88,17 @@ public class KeyguardPinViewController
         } else {
             mPasswordEntry.setQuickUnlockListener(null);
         }
-
-        mPostureController.addCallback(mPostureCallback);
     }
 
     @Override
     protected void onViewDetached() {
         super.onViewDetached();
         mPostureController.removeCallback(mPostureCallback);
+    }
+
+    @Override
+    public void startAppearAnimation() {
+        updateQuickUnlock();
     }
 
     @Override
