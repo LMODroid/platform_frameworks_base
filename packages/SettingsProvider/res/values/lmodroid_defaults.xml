@@ -34,7 +34,4 @@
     -->
     <integer name="def_clock_position">2</integer>
 
-    <!-- Default for Settings.System.QS_TRANSPARENCY -->
-    <integer name="def_qs_transparency">85</integer>
-
 </resources>

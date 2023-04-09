@@ -4135,7 +4135,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
         }
         if (QS_TRANSPARENCY.equals(key)) {
             mScrimController.setCustomScrimAlpha(
-                    TunerService.parseInteger(newValue, 100));
+                    TunerService.parseInteger(newValue, 85));
         }
     }
 
