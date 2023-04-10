@@ -2116,6 +2116,11 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 .collect(Collectors.toSet());
         mFaceWakeUpTriggersConfig = faceWakeUpTriggersConfig;
 
+        mPocketManager = (PocketManager) context.getSystemService(Context.POCKET_SERVICE);
+        if (mPocketManager != null) {
+            mPocketManager.addCallback(mPocketCallback);
+        }
+
         mHandler = new Handler(mainLooper) {
             @Override
             public void handleMessage(Message msg) {
@@ -2280,11 +2285,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         mTrustManager.registerTrustListener(this);
 
         setStrongAuthTracker(mStrongAuthTracker);
-
-        mPocketManager = (PocketManager) context.getSystemService(Context.POCKET_SERVICE);
-        if (mPocketManager != null) {
-            mPocketManager.addCallback(mPocketCallback);
-        }
 
         if (mFpm != null) {
             mFingerprintSensorProperties = mFpm.getSensorPropertiesInternal();
@@ -2717,7 +2717,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         BiometricAuthenticated face = mUserFaceAuthenticated.get(getCurrentUser());
         return mAssistantVisible && mKeyguardOccluded
                 && !(face != null && face.mAuthenticated)
-                && !mUserHasTrust.get(getCurrentUser(), false) && !mIsDeviceInPocket;
+                && !mUserHasTrust.get(getCurrentUser(), false);
     }
 
     private boolean shouldTriggerActiveUnlockForAssistant() {
@@ -2855,7 +2855,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 && faceAuthAllowedOrDetectionIsNeeded && mIsPrimaryUser
                 && (!mSecureCameraLaunched || mOccludingAppRequestingFace)
                 && faceAndFpNotAuthenticated
-                && !mGoingToSleep;
+                && !mGoingToSleep
+                && !mIsDeviceInPocket;
 
         // Aggregate relevant fields for debug logging.
         logListenerModelData(

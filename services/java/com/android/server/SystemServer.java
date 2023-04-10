@@ -2538,6 +2538,13 @@ public final class SystemServer implements Dumpable {
             mSystemServiceManager.startService(PocketService.class);
             t.traceEnd();
 
+            if (!context.getResources().getString(
+                    com.android.internal.R.string.config_pocketBridgeSysfsInpocket).isEmpty()) {
+                t.traceBegin("StartPocketBridgeService");
+                mSystemServiceManager.startService(PocketBridgeService.class);
+                t.traceEnd();
+            }
+
             t.traceBegin("StartPeopleService");
             mSystemServiceManager.startService(PeopleService.class);
             t.traceEnd();
@@ -2553,13 +2560,6 @@ public final class SystemServer implements Dumpable {
                 t.traceEnd();
                 t.traceBegin("StartLiveDisplayService");
                 mSystemServiceManager.startService(LiveDisplayService.class);
-                t.traceEnd();
-            }
-            // PocketBridge
-            if (!context.getResources().getString(
-                    com.android.internal.R.string.config_pocketBridgeSysfsInpocket).isEmpty()) {
-                t.traceBegin("StartPocketBridgeService");
-                mSystemServiceManager.startService(PocketBridgeService.class);
                 t.traceEnd();
             }
         }
