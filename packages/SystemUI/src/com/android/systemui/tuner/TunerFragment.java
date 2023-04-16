@@ -71,6 +71,7 @@ public class TunerFragment extends PreferenceFragment {
         if (!alwaysOnAvailable()) {
             getPreferenceScreen().removePreference(findPreference(KEY_DOZE));
         }
+        getPreferenceScreen().removePreference(findPreference("lockscreen"));
         if (!Build.IS_DEBUGGABLE) {
             for (int i = 0; i < DEBUG_ONLY.length; i++) {
                 Preference preference = findPreference(DEBUG_ONLY[i]);
