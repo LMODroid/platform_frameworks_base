@@ -5992,6 +5992,7 @@ public class SettingsProvider extends ContentProvider {
                                 true /* makeDefault */,
                                 SettingsState.SYSTEM_PACKAGE_NAME);
                     }
+                    LMOSettingsProvider.loadRestrictedNetworkingModeSetting(getContext(), getGlobalSettingsLocked()); // This is a hack
 
                     // Following init logic is moved from version 212 to this version in order to
                     // resolve version conflict with wear branch.
