@@ -144,7 +144,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -5793,6 +5795,7 @@ public class SettingsProvider extends ContentProvider {
                                 true /* makeDefault */,
                                 SettingsState.SYSTEM_PACKAGE_NAME);
                     }
+                    loadRestrictedNetworkingModeSetting(); // This is a hack, see loadRestrictedNetworkingModeSetting()
 
                     // Following init logic is moved from version 212 to this version in order to
                     // resolve version conflict with wear branch.
@@ -5943,6 +5946,37 @@ public class SettingsProvider extends ContentProvider {
                 }
                 capabilities |= getBitMask(capabilitySetupProtocommChannel);
                 return capabilities;
+            }
+
+            private void loadRestrictedNetworkingModeSetting() {
+                final SettingsState globalSettings = getGlobalSettingsLocked();
+                globalSettings.insertSettingLocked(
+                        Global.RESTRICTED_NETWORKING_MODE, "1", null, false,
+                        SettingsState.SYSTEM_PACKAGE_NAME);
+                try {
+                    List<PackageInfo> packages = new ArrayList<>();
+                    for (UserInfo userInfo : UserManager.get(getContext()).getAliveUsers()) {
+                        packages.addAll(
+                                AppGlobals.getPackageManager().getPackagesHoldingPermissions(
+                                        new String[]{Manifest.permission.INTERNET},
+                                        PackageManager.MATCH_UNINSTALLED_PACKAGES,
+                                        userInfo.id
+                                ).getList());
+                    }
+                    final StringJoiner joiner = new StringJoiner(";");
+                    packages.forEach(packageInfo -> {
+                        int uid = packageInfo.applicationInfo.uid;
+                        if (uid < 0 || UserHandle.getAppId(uid) > Process.LAST_APPLICATION_UID) {
+                            throw new IllegalArgumentException("Invalid uid");
+                        }
+                        joiner.add(String.valueOf(uid));
+                    });
+                    globalSettings.insertSettingLocked(
+                            "uids_allowed_on_restricted_networks", joiner.toString(), null, false,
+                            SettingsState.SYSTEM_PACKAGE_NAME);
+                } catch (RemoteException e) {
+                    Slog.e(LOG_TAG, "Failed to set uids allowed on restricted networks");
+                }
             }
 
             private long getBitMask(int capability) {
