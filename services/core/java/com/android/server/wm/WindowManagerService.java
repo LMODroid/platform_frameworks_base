@@ -932,13 +932,13 @@ public class WindowManagerService extends IWindowManager.Stub
         }
 
         void updateForceDesktopModeOnExternalDisplays() {
-            ContentResolver resolver = mContext.getContentResolver();
+            /*ContentResolver resolver = mContext.getContentResolver();
             final boolean enableForceDesktopMode = Settings.Global.getInt(resolver,
                     DEVELOPMENT_FORCE_DESKTOP_MODE_ON_EXTERNAL_DISPLAYS, 0) != 0;
             if (mForceDesktopModeOnExternalDisplays == enableForceDesktopMode) {
                 return;
             }
-            setForceDesktopModeOnExternalDisplays(enableForceDesktopMode);
+            setForceDesktopModeOnExternalDisplays(enableForceDesktopMode);*/
         }
 
         void updateFreeformWindowManagement() {
@@ -1322,8 +1322,9 @@ public class WindowManagerService extends IWindowManager.Stub
 
         setAnimatorDurationScale(getAnimatorDurationScaleSetting());
 
-        mForceDesktopModeOnExternalDisplays = Settings.Global.getInt(resolver,
-                DEVELOPMENT_FORCE_DESKTOP_MODE_ON_EXTERNAL_DISPLAYS, 0) != 0;
+        /*mForceDesktopModeOnExternalDisplays = Settings.Global.getInt(resolver,
+                DEVELOPMENT_FORCE_DESKTOP_MODE_ON_EXTERNAL_DISPLAYS, 0) != 0;*/
+        mForceDesktopModeOnExternalDisplays = true;
 
         final String displaySettingsPath = Settings.Global.getString(resolver,
                 DEVELOPMENT_WM_DISPLAY_SETTINGS_PATH);
