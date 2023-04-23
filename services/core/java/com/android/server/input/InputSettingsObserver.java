@@ -92,7 +92,10 @@ class InputSettingsObserver extends ContentObserver {
                         (reason) -> updateAccessibilityBounceKeys()),
                 Map.entry(Settings.System.getUriFor(
                         LMOSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION),
-                        (reason) -> updateVolumeKeysRotation()));
+                        (reason) -> updateVolumeKeysRotation()),
+                Map.entry(Settings.System.getUriFor(
+                        LMOSettings.System.PREVENT_POINTER_ACCELERATION),
+                        (reason) -> updatePreventPointerAcceleration()));
     }
 
     /**
@@ -234,5 +237,14 @@ class InputSettingsObserver extends ContentObserver {
     private void updateAccessibilityBounceKeys() {
         mService.setAccessibilityBounceKeysThreshold(
                 InputSettings.getAccessibilityBounceKeysThreshold(mContext));
+    }
+
+    private void updatePreventPointerAcceleration() {
+        int preventPointerAcceleration = Settings.System.getIntForUser(
+                mContext.getContentResolver(),
+                LMOSettings.System.PREVENT_POINTER_ACCELERATION, 0,
+                UserHandle.USER_CURRENT);
+        preventPointerAcceleration = Math.min(Math.max(preventPointerAcceleration, 0), 3);
+        mNative.setPreventPointerAcceleration(preventPointerAcceleration);
     }
 }
