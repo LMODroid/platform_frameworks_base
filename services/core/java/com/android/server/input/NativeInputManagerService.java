@@ -136,6 +136,8 @@ interface NativeInputManagerService {
 
     void setMouseSwapPrimaryButtonEnabled(boolean enabled);
 
+    void setPreventPointerAcceleration(int preventPointerAcceleration);
+
     void setTouchpadPointerSpeed(int speed);
 
     void setTouchpadNaturalScrollingEnabled(boolean enabled);
@@ -424,6 +426,9 @@ interface NativeInputManagerService {
 
         @Override
         public native void setMouseSwapPrimaryButtonEnabled(boolean enabled);
+
+        @Override
+        public native void setPreventPointerAcceleration(int preventPointerAcceleration);
 
         @Override
         public native void setTouchpadPointerSpeed(int speed);
