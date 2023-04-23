@@ -335,6 +335,7 @@ public:
     int32_t getMousePointerSpeed();
     void setPointerSpeed(int32_t speed);
     void setMousePointerAccelerationEnabled(ui::LogicalDisplayId displayId, bool enabled);
+    void setPreventPointerAcceleration(int32_t preventPointerAcceleration);
     void setTouchpadPointerSpeed(int32_t speed);
     void setTouchpadNaturalScrollingEnabled(bool enabled);
     void setTouchpadTapToClickEnabled(bool enabled);
@@ -460,6 +461,9 @@ private:
         // Displays on which its associated mice will have pointer acceleration disabled.
         std::set<ui::LogicalDisplayId> displaysWithMousePointerAccelerationDisabled{};
 
+        // Pointer acceleration allowlist bitmask.
+        int32_t preventPointerAcceleration;
+
         // True if pointer gestures are enabled.
         bool pointerGesturesEnabled{true};
 
@@ -561,6 +565,7 @@ void NativeInputManager::dump(std::string& dump) {
                              dumpSet(mLocked.displaysWithMousePointerAccelerationDisabled,
                                      streamableToString)
                                      .c_str());
+        dump += StringPrintf(INDENT "Pointer Acceleration Allowlist Bitmask: %" PRId32 "\n", mLocked.preventPointerAcceleration);
         dump += StringPrintf(INDENT "Pointer Gestures Enabled: %s\n",
                              toString(mLocked.pointerGesturesEnabled));
         dump += StringPrintf(INDENT "Pointer Capture: %s, seq=%" PRIu32 "\n",
@@ -744,11 +749,29 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
                 mLocked.displaysWithMousePointerAccelerationDisabled;
         outConfig->pointerVelocityControlParameters.scale =
                 exp2f(mLocked.pointerSpeed * POINTER_SPEED_EXPONENT);
-        outConfig->pointerVelocityControlParameters.acceleration =
+        // constants from frameworks/native/services/inputflinger/include/InputReaderBase.h, should be kept in sync
+        if (mLocked.preventPointerAcceleration & 1) {
+            outConfig->pointerVelocityControlParameters.highThreshold = 0.0f;
+            outConfig->pointerVelocityControlParameters.lowThreshold = 0.0f;
+            outConfig->pointerVelocityControlParameters.acceleration = 1.0f;
+        } else {
+            outConfig->pointerVelocityControlParameters.highThreshold = 500.0f;
+            outConfig->pointerVelocityControlParameters.lowThreshold = 3000.0f;
+            outConfig->pointerVelocityControlParameters.acceleration =
                 mLocked.displaysWithMousePointerAccelerationDisabled.count(
                         mLocked.pointerDisplayId) == 0
                 ? android::os::IInputConstants::DEFAULT_POINTER_ACCELERATION
                 : 1;
+        }
+        if (mLocked.preventPointerAcceleration & 2) {
+            outConfig->wheelVelocityControlParameters.highThreshold = 0.0f;
+            outConfig->wheelVelocityControlParameters.lowThreshold = 0.0f;
+            outConfig->wheelVelocityControlParameters.acceleration = 1.0f;
+        } else {
+            outConfig->wheelVelocityControlParameters.highThreshold = 15.0f;
+            outConfig->wheelVelocityControlParameters.lowThreshold = 50.0f;
+            outConfig->wheelVelocityControlParameters.acceleration = 4.0f;
+        }
         outConfig->pointerGesturesEnabled = mLocked.pointerGesturesEnabled;
 
         outConfig->volumeKeysRotationMode = mLocked.volumeKeysRotationMode;
@@ -1350,6 +1373,23 @@ void NativeInputManager::setMousePointerAccelerationEnabled(ui::LogicalDisplayId
         }
     } // release lock
 
+    mInputManager->getReader().requestRefreshConfiguration(
+            InputReaderConfiguration::Change::POINTER_SPEED);
+}
+
+void NativeInputManager::setPreventPointerAcceleration(int32_t preventPointerAcceleration) {
+    { // acquire lock
+        std::scoped_lock _l(mLock);
+
+        if (mLocked.preventPointerAcceleration == preventPointerAcceleration) {
+            return;
+        }
+
+        ALOGI("Setting pointer acceleration setting bitmask to %d.", preventPointerAcceleration);
+        mLocked.preventPointerAcceleration = preventPointerAcceleration;
+    } // release lock
+
+    // CHANGE_POINTER_SPEED reloads velocity objects
     mInputManager->getReader().requestRefreshConfiguration(
             InputReaderConfiguration::Change::POINTER_SPEED);
 }
@@ -2347,6 +2387,12 @@ static void nativeSetMousePointerAccelerationEnabled(JNIEnv* env, jobject native
     im->setMousePointerAccelerationEnabled(ui::LogicalDisplayId{displayId}, enabled);
 }
 
+static void nativeSetPreventPointerAcceleration(JNIEnv* env, jobject nativeImplObj, jint preventPointerAcceleration) {
+    NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
+
+    im->setPreventPointerAcceleration(preventPointerAcceleration);
+}
+
 static void nativeSetTouchpadPointerSpeed(JNIEnv* env, jobject nativeImplObj, jint speed) {
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
 
@@ -3040,6 +3086,7 @@ static const JNINativeMethod gInputManagerMethods[] = {
         {"setPointerSpeed", "(I)V", (void*)nativeSetPointerSpeed},
         {"setMousePointerAccelerationEnabled", "(IZ)V",
          (void*)nativeSetMousePointerAccelerationEnabled},
+        {"setPreventPointerAcceleration", "(I)V", (void*)nativeSetPreventPointerAcceleration},
         {"setTouchpadPointerSpeed", "(I)V", (void*)nativeSetTouchpadPointerSpeed},
         {"setTouchpadNaturalScrollingEnabled", "(Z)V",
          (void*)nativeSetTouchpadNaturalScrollingEnabled},
