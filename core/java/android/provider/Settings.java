@@ -6223,6 +6223,11 @@ public final class Settings {
         public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
 
         /**
+         * @hide
+         */
+        public static final String TRANSISTENT_TASK_MODE = "transistent_task_mode";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6347,6 +6352,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE_VENDOR_HINT);
             PRIVATE_SETTINGS.add(DESKTOP_MODE);
             PRIVATE_SETTINGS.add(POCKET_JUDGE);
+            PRIVATE_SETTINGS.add(TRANSISTENT_TASK_MODE);
         }
 
         /**
@@ -6361,6 +6367,7 @@ public final class Settings {
             CLONE_TO_MANAGED_PROFILE.add(SOUND_EFFECTS_ENABLED);
             CLONE_TO_MANAGED_PROFILE.add(TEXT_SHOW_PASSWORD);
             CLONE_TO_MANAGED_PROFILE.add(TIME_12_24);
+            CLONE_TO_MANAGED_PROFILE.add(TRANSISTENT_TASK_MODE);
         }
 
         /** @hide */
