@@ -119,6 +119,8 @@ interface NativeInputManagerService {
 
     void setPointerSpeed(int speed);
 
+    void setPreventPointerAcceleration(int preventPointerAcceleration);
+
     void setPointerAcceleration(float acceleration);
 
     void setTouchpadPointerSpeed(int speed);
@@ -346,6 +348,9 @@ interface NativeInputManagerService {
 
         @Override
         public native void setPointerSpeed(int speed);
+
+        @Override
+        public native void setPreventPointerAcceleration(int preventPointerAcceleration);
 
         @Override
         public native void setPointerAcceleration(float acceleration);
