@@ -3619,7 +3619,7 @@ public class ActivityRecordTests extends WindowTestsBase {
         mAtm.mActivityClientController.onBackPressed(ar.token, callback);
 
         verify(task).moveTaskToBack(any());
-        verify(callback, never()).requestFinish();
+        verify(callback, never()).requestFinish(anyBoolean());
     }
 
     /**
