@@ -5807,7 +5807,8 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
      * also check {@link #isSystemDecorationsSupported()} to avoid breaking any security policy.
      */
     boolean isPublicSecondaryDisplayWithDesktopModeForceEnabled() {
-        if (!mWmService.mForceDesktopModeOnExternalDisplays || isDefaultDisplay || isPrivate()) {
+        if (!(("VNC".equals(mDisplay.getName()) || mWmService.mForceDesktopModeOnExternalDisplays))
+                || isDefaultDisplay || isPrivate()) {
             return false;
         }
         // Desktop mode is not supported on virtual devices.
