@@ -6132,11 +6132,21 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
      * If we need a per-display config to enable desktop mode for production, that config should
      * also check {@link #isSystemDecorationsSupported()} to avoid breaking any security policy.
      */
+    /**
+     * Whether this is the display of our desktop mode (VncFlinger). It is always a desktop, also
+     * when AOSP manages the content mode of other displays.
+     */
+    boolean isVncDesktopDisplay() {
+        return "VNC".equals(mDisplay.getName()) && !isDefaultDisplay && !isPrivate();
+    }
+
     boolean isPublicSecondaryDisplayWithDesktopModeForceEnabled() {
-        if (DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
+        final boolean isVncDisplay = isVncDesktopDisplay();
+        if (!isVncDisplay && DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
             return false;
         }
-        if (!mWmService.mForceDesktopModeOnExternalDisplays || isDefaultDisplay || isFreeformDisplay || isPrivate()) {
+        if (!(isVncDisplay || mWmService.mForceDesktopModeOnExternalDisplays)
+                || isDefaultDisplay || isFreeformDisplay || isPrivate()) {
             return false;
         }
         if (!isWindowingModeSupported(WINDOWING_MODE_FREEFORM)) {
@@ -6158,7 +6168,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         if (!isWindowingModeSupported(WINDOWING_MODE_FREEFORM)) {
             return false;
         }
-        return isDefaultDisplay || allowContentModeSwitch();
+        return isDefaultDisplay || allowContentModeSwitch() || isVncDesktopDisplay();
     }
 
     /**

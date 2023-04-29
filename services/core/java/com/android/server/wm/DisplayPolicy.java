@@ -2021,7 +2021,8 @@ public class DisplayPolicy {
                     mDisplayContent.isWindowingModeSupported(WINDOWING_MODE_FREEFORM);
             final boolean eligibleForDesktopMode = isFreeformSupported
                     && isSystemDecorationsSupported && (mDisplayContent.isDefaultDisplay
-                            || mDisplayContent.allowContentModeSwitch());
+                            || mDisplayContent.allowContentModeSwitch()
+                            || mDisplayContent.isVncDesktopDisplay());
             if (eligibleForDesktopMode) {
                 mService.mDisplayNotificationController.dispatchDesktopModeEligibleChanged(
                         displayId);
