@@ -85,6 +85,7 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
     int screenWidth;
     private int mDownPointers;
     private boolean mSwipeFireable;
+    private boolean mScrollFireable;
     private boolean mDebugFireable;
     private boolean mMouseHoveringAtLeft;
     private boolean mMouseHoveringAtTop;
@@ -183,6 +184,7 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
             case MotionEvent.ACTION_DOWN:
                 mSwipeFireable = true;
                 mDebugFireable = true;
+                mScrollFireable = true;
                 mDownPointers = 0;
                 captureDown(event, 0);
                 if (mMouseHoveringAtLeft) {
@@ -289,6 +291,7 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
             case MotionEvent.ACTION_CANCEL:
                 mSwipeFireable = false;
                 mDebugFireable = false;
+                mScrollFireable = false;
                 mCallbacks.onUpOrCancel();
                 break;
             default:
@@ -430,6 +433,21 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
             }
             return true;
         }
+
+        @Override
+        public boolean onScroll(MotionEvent down, MotionEvent up,
+                                   float velocityX, float velocityY) {
+            int duration = mOverscroller.getDuration();
+            if (duration > MAX_FLING_TIME_MILLIS) {
+                duration = MAX_FLING_TIME_MILLIS;
+            }
+            if (mScrollFireable) {
+                mCallbacks.onFling(duration + 160);
+                mScrollFireable = false;
+            }
+            return true;
+        }
+
         @Override
         public boolean onFling(MotionEvent down, MotionEvent up,
                 float velocityX, float velocityY) {
@@ -446,7 +464,7 @@ class SystemGesturesPointerEventListener implements PointerEventListener {
                 duration = MAX_FLING_TIME_MILLIS;
             }
             mLastFlingTime = now;
-            mCallbacks.onFling(duration);
+            mCallbacks.onFling(duration + 160);
             return true;
         }
     }
