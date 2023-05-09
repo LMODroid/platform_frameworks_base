@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,8 +189,10 @@ public class BluetoothViewAdapter extends
                 }
             });
 
-            // device icon
-            mBluetoothIcon.setImageDrawable(device.getDrawableWithDescription().first);
+            // device icon & content description
+            Pair<Drawable, String> pair = device.getDrawableWithDescription();
+            mBluetoothIcon.setImageDrawable(pair.first);
+            mBluetoothListLayout.setContentDescription(pair.second);
 
             // title
             mBluetoothTitleText.setText(device.getName());
@@ -213,7 +216,8 @@ public class BluetoothViewAdapter extends
             lp.setMargins(0, 0, 0, isActive ? mContext.getResources().getDimensionPixelSize(
                 R.dimen.bluetooth_dialog_active_device_bottom_margin) : 0);
             lp.height = mContext.getResources().getDimensionPixelSize(
-                R.dimen.internet_dialog_wifi_network_height);
+                showSummary ? R.dimen.internet_dialog_wifi_network_height
+                : R.dimen.bluetooth_dialog_toggle_height);
             mBluetoothListLayout.setLayoutParams(lp);
 
             mDisconnectIconLayout.setVisibility(device.isConnected() ? View.VISIBLE : View.GONE);

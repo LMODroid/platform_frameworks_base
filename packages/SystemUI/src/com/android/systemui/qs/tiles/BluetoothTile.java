@@ -74,10 +74,11 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
             QSLogger qsLogger,
             BluetoothController bluetoothController,
             BluetoothDialogFactory bluetoothDialogFactory
+
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
-        mHandler = mainHandler;
+	mHandler = mainHandler;
         mController = bluetoothController;
         mBluetoothDialogFactory = bluetoothDialogFactory;
         mController.observe(getLifecycle(), mCallback);
@@ -85,9 +86,7 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
 
     @Override
     public BooleanState newTileState() {
-        BooleanState s = new BooleanState();
-        s.forceExpandIcon = true;
-        return s;
+        return new BooleanState();
     }
 
     @Override

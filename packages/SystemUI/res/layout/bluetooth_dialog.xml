@@ -96,7 +96,7 @@
             android:clickable="false">
             <TextView
                 android:id="@+id/bluetooth_toggle_title"
-                android:text="@string/turn_on_bluetooth"
+                android:text="@string/quick_settings_bluetooth_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
@@ -111,7 +111,7 @@
             android:layout_marginBottom="10dp">
             <Switch
                 android:id="@+id/bluetooth_toggle"
-                android:contentDescription="@string/turn_on_bluetooth"
+                android:contentDescription="@string/accessibility_quick_settings_bluetooth"
                 android:switchMinWidth="@dimen/settingslib_switch_track_width"
                 android:layout_gravity="center"
                 android:layout_width="@dimen/settingslib_switch_track_width"
