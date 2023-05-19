@@ -583,8 +583,6 @@ public class MediaOutputAdapterTest extends SysuiTestCase {
 
         assertThat(mViewHolder.mSeekBar.isEnabled()).isTrue();
     }
-<<<<<<< HEAD
-=======
 
     @Test
     public void updateColorScheme_triggerController() {
@@ -595,5 +593,4 @@ public class MediaOutputAdapterTest extends SysuiTestCase {
 
         verify(mMediaOutputController).setCurrentColorScheme(wallpaperColors, true);
     }
->>>>>>> b1b19184adb329931c6473cd78b6b5d502a3126b
 }
