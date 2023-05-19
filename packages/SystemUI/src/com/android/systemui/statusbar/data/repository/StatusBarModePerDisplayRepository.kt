@@ -147,6 +147,7 @@ constructor(
                 @WindowInsets.Type.InsetsType requestedVisibleTypes: Int,
                 packageName: String,
                 letterboxDetails: Array<LetterboxDetails>,
+                needsMenu: Boolean,
             ) {
                 if (displayId != thisDisplayId) return
                 _originalStatusBarAttributes.value =
@@ -156,6 +157,7 @@ constructor(
                         navbarColorManagedByIme,
                         requestedVisibleTypes,
                         letterboxDetails.toList(),
+                        needsMenu,
                     )
             }
         }
@@ -320,6 +322,7 @@ constructor(
         val navbarColorManagedByIme: Boolean,
         @WindowInsets.Type.InsetsType val requestedVisibleTypes: Int,
         val letterboxDetails: List<LetterboxDetails>,
+        val needsMenu: Boolean,
     )
 
     /**

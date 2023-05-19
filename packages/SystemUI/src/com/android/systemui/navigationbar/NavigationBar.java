@@ -186,6 +186,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
     private static final String EXTRA_APPEARANCE = "appearance";
     private static final String EXTRA_BEHAVIOR = "behavior";
     private static final String EXTRA_TRANSIENT_STATE = "transient_state";
+    private static final String EXTRA_NEEDS_MENU = "needs_menu";
 
     /** Allow some time inbetween the long press for back and recents. */
     private static final int LOCK_TO_APP_GESTURE_TOLERANCE = 200;
@@ -236,6 +237,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
     private int mDisabledFlags1;
     private int mDisabledFlags2;
     private long mLastLockToAppLongPress;
+    private boolean mNeedsMenu = false;
 
     private Locale mLocale;
     private int mLayoutDirection;
@@ -730,6 +732,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
             mAppearance = mSavedState.getInt(EXTRA_APPEARANCE, 0);
             mBehavior = mSavedState.getInt(EXTRA_BEHAVIOR, 0);
             mTransientShown = mSavedState.getBoolean(EXTRA_TRANSIENT_STATE, false);
+            mNeedsMenu = mSavedState.getBoolean(EXTRA_NEEDS_MENU, false);
         }
 
         // Respect the latest disabled-flags.
@@ -840,6 +843,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
                 ? mMainAutoHideController : mAutoHideControllerFactory.create(mContext);
         setAutoHideController(autoHideController);
         restoreAppearanceAndTransientState();
+        mView.setMenuVisibility(mNeedsMenu);
     }
 
     @Override
@@ -879,6 +883,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         outState.putInt(EXTRA_APPEARANCE, mAppearance);
         outState.putInt(EXTRA_BEHAVIOR, mBehavior);
         outState.putBoolean(EXTRA_TRANSIENT_STATE, mTransientShown);
+        outState.putBoolean(EXTRA_NEEDS_MENU, mNeedsMenu);
         getBarTransitions().getLightTransitionsController().saveState(outState);
     }
 
@@ -1165,7 +1170,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
     public void onSystemBarAttributesChanged(int displayId, @Appearance int appearance,
             AppearanceRegion[] appearanceRegions, boolean navbarColorManagedByIme,
             @Behavior int behavior, @InsetsType int requestedVisibleTypes, String packageName,
-            LetterboxDetails[] letterboxDetails) {
+            LetterboxDetails[] letterboxDetails, boolean needsMenu) {
         if (displayId != mDisplayId) {
             return;
         }
@@ -1182,6 +1187,10 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
             mBehavior = behavior;
             mView.setBehavior(behavior);
             updateSystemUiStateFlags();
+        }
+        if (mNeedsMenu != needsMenu) {
+            mNeedsMenu = needsMenu;
+            mView.setMenuVisibility(needsMenu);
         }
     }
 

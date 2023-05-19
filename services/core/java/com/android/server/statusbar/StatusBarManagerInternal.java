@@ -176,7 +176,7 @@ public interface StatusBarManagerInternal {
     void onSystemBarAttributesChanged(int displayId, @Appearance int appearance,
             AppearanceRegion[] appearanceRegions, boolean navbarColorManagedByIme,
             @Behavior int behavior, @InsetsType int requestedVisibleTypes, String packageName,
-            LetterboxDetails[] letterboxDetails);
+            LetterboxDetails[] letterboxDetails, boolean needsMenu);
 
     /** @see com.android.internal.statusbar.IStatusBar#showTransient */
     void showTransient(int displayId, @InsetsType int types, boolean isGestureOnSystemBar);

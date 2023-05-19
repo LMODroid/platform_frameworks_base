@@ -219,11 +219,12 @@ oneway interface IStatusBar
      * @param requestedVisibleTypes the collection of insets types requested visible.
      * @param packageName the package name of the focused app.
      * @param letterboxDetails a set of letterbox details of apps visible on the screen.
+     * @param needsMenu {@code true} if we want a menu navbar key
      */
     void onSystemBarAttributesChanged(int displayId, int appearance,
             in AppearanceRegion[] appearanceRegions, boolean navbarColorManagedByIme,
             int behavior, int requestedVisibleTypes, String packageName,
-            in LetterboxDetails[] letterboxDetails);
+            in LetterboxDetails[] letterboxDetails, boolean needsMenu);
 
     /**
      * Notifies System UI to show transient bars. The transient bars are system bars, e.g., status

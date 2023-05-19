@@ -69,6 +69,8 @@ import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 import static android.view.WindowManager.LayoutParams.INVALID_WINDOW_TYPE;
 import static android.view.WindowManager.LayoutParams.LAST_APPLICATION_WINDOW;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_UNRESTRICTED_GESTURE_EXCLUSION;
+import static android.view.WindowManager.LayoutParams.NEEDS_MENU_SET_TRUE;
+import static android.view.WindowManager.LayoutParams.NEEDS_MENU_UNSET;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_STARTING;
 import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 import static android.view.WindowManager.LayoutParams.TYPE_BOOT_PROGRESS;
@@ -4849,6 +4851,38 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         // Otherwise, we just attach it to where the display area policy put it.
         return mImeWindowsContainer.getParent() != null
                 ? mImeWindowsContainer.getParent().getSurfaceControl() : null;
+    }
+
+    boolean getNeedsMenu(WindowState top, WindowManagerPolicy.WindowState bottom) {
+        if (top.mAttrs.needsMenuKey != NEEDS_MENU_UNSET) {
+            return top.mAttrs.needsMenuKey == NEEDS_MENU_SET_TRUE;
+        }
+
+        // Used to indicate we have reached the first window in the range we are interested in.
+        mTmpWindow = null;
+
+        // TODO: Figure-out a more efficient way to do this.
+        final WindowState candidate = getWindow(w -> {
+            if (w == top) {
+                // Reached the first window in the range we are interested in.
+                mTmpWindow = w;
+            }
+            if (mTmpWindow == null) {
+                return false;
+            }
+
+            if (w.mAttrs.needsMenuKey != NEEDS_MENU_UNSET) {
+                return true;
+            }
+            // If we reached the bottom of the range of windows we are considering,
+            // assume no menu is needed.
+            if (w == bottom) {
+                return true;
+            }
+            return false;
+        });
+
+        return candidate != null && candidate.mAttrs.needsMenuKey == NEEDS_MENU_SET_TRUE;
     }
 
     void setLayoutNeeded() {
