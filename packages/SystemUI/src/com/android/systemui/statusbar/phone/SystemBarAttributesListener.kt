@@ -68,7 +68,8 @@ internal constructor(
                 params.behavior,
                 params.requestedVisibilities,
                 params.packageName,
-                params.letterboxesArray)
+                params.letterboxesArray,
+                params.needsMenu)
         }
     }
 
@@ -80,7 +81,8 @@ internal constructor(
         @Behavior behavior: Int,
         requestedVisibilities: InsetsVisibilities,
         packageName: String,
-        letterboxDetails: Array<LetterboxDetails>
+        letterboxDetails: Array<LetterboxDetails>,
+        needsMenu: Boolean,
     ) {
         lastSystemBarAttributesParams =
             SystemBarAttributesParams(
@@ -91,7 +93,8 @@ internal constructor(
                 behavior,
                 requestedVisibilities,
                 packageName,
-                letterboxDetails.toList())
+                letterboxDetails.toList(),
+                needsMenu)
 
         val (appearance, appearanceRegions) =
             modifyAppearanceIfNeeded(
@@ -105,6 +108,7 @@ internal constructor(
         centralSurfaces.updateBubblesVisibility()
         statusBarStateController.setSystemBarAttributes(
             appearance, behavior, requestedVisibilities, packageName)
+        // needsMenu is not needed here
     }
 
     private fun modifyAppearanceIfNeeded(
@@ -145,6 +149,7 @@ private data class SystemBarAttributesParams(
     val requestedVisibilities: InsetsVisibilities,
     val packageName: String,
     val letterboxes: List<LetterboxDetails>,
+    val needsMenu: Boolean,
 ) {
     val letterboxesArray = letterboxes.toTypedArray()
     val appearanceRegionsArray = appearanceRegions.toTypedArray()

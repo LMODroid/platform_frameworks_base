@@ -470,7 +470,7 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
     public void onSystemBarAttributesChanged(int displayId, @Appearance int appearance,
             AppearanceRegion[] appearanceRegions, boolean navbarColorManagedByIme,
             @Behavior int behavior, InsetsVisibilities requestedVisibilities, String packageName,
-            LetterboxDetails[] letterboxDetails) {
+            LetterboxDetails[] letterboxDetails, boolean needsMenu) {
         if (displayId != mDisplayId) {
             return;
         }
@@ -484,7 +484,8 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
                 behavior,
                 requestedVisibilities,
                 packageName,
-                letterboxDetails
+                letterboxDetails,
+                needsMenu
         );
     }
 

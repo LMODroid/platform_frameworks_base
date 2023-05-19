@@ -366,7 +366,7 @@ public class CommandQueue extends IStatusBar.Stub implements
         default void onSystemBarAttributesChanged(int displayId, @Appearance int appearance,
                 AppearanceRegion[] appearanceRegions, boolean navbarColorManagedByIme,
                 @Behavior int behavior, InsetsVisibilities requestedVisibilities,
-                String packageName, LetterboxDetails[] letterboxDetails) { }
+                String packageName, LetterboxDetails[] letterboxDetails, boolean needsMenu) { }
 
         /**
          * @see IStatusBar#showTransient(int, int[], boolean).
@@ -1112,7 +1112,7 @@ public class CommandQueue extends IStatusBar.Stub implements
     public void onSystemBarAttributesChanged(int displayId, @Appearance int appearance,
             AppearanceRegion[] appearanceRegions, boolean navbarColorManagedByIme,
             @Behavior int behavior, InsetsVisibilities requestedVisibilities, String packageName,
-            LetterboxDetails[] letterboxDetails) {
+            LetterboxDetails[] letterboxDetails, boolean needsMenu) {
         synchronized (mLock) {
             SomeArgs args = SomeArgs.obtain();
             args.argi1 = displayId;
@@ -1123,6 +1123,7 @@ public class CommandQueue extends IStatusBar.Stub implements
             args.arg2 = requestedVisibilities;
             args.arg3 = packageName;
             args.arg4 = letterboxDetails;
+            args.argi5 = needsMenu ? 1 : 0;
             mHandler.obtainMessage(MSG_SYSTEM_BAR_CHANGED, args).sendToTarget();
         }
     }
@@ -1624,7 +1625,7 @@ public class CommandQueue extends IStatusBar.Stub implements
                         mCallbacks.get(i).onSystemBarAttributesChanged(args.argi1, args.argi2,
                                 (AppearanceRegion[]) args.arg1, args.argi3 == 1, args.argi4,
                                 (InsetsVisibilities) args.arg2, (String) args.arg3,
-                                (LetterboxDetails[]) args.arg4);
+                                (LetterboxDetails[]) args.arg4, args.argi5 == 1);
                     }
                     args.recycle();
                     break;
