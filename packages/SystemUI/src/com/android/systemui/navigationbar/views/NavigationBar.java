@@ -125,6 +125,7 @@ import com.android.systemui.navigationbar.gestural.EdgeBackGestureHandler;
 import com.android.systemui.navigationbar.gestural.QuickswitchOrientedNavHandle;
 import com.android.systemui.navigationbar.views.buttons.ButtonDispatcher;
 import com.android.systemui.navigationbar.views.buttons.DeadZone;
+import com.android.systemui.navigationbar.views.buttons.DragDropSurfaceCallback;
 import com.android.systemui.navigationbar.views.buttons.KeyButtonView;
 import com.android.systemui.navigationbar.views.buttons.NavBarButtonClickLogger;
 import com.android.systemui.navigationbar.views.buttons.NavbarOrientationTrackingLogger;
@@ -178,7 +179,7 @@ import javax.inject.Inject;
  * Contains logic for a navigation bar view.
  */
 @NavigationBarScope
-public class NavigationBar extends ViewController<NavigationBarView> implements Callbacks {
+public class NavigationBar extends ViewController<NavigationBarView> implements Callbacks, DragDropSurfaceCallback {
 
     public static final String TAG = "NavigationBar";
     private static final boolean DEBUG = false;
@@ -296,6 +297,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
     private final Binder mInsetsSourceOwner = new Binder();
     private final NavBarButtonClickLogger mNavBarButtonClickLogger;
     private final NavbarOrientationTrackingLogger mNavbarOrientationTrackingLogger;
+    private boolean mForceDisableOverview = false;
 
     /**
      * When quickswitching between apps of different orientations, we draw a secondary home handle
@@ -709,6 +711,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
     public void onInit() {
         // TODO: A great deal of this code should probably live in onViewAttached.
         // It should also has corresponding cleanup in onViewDetached.
+        mView.setForceDisableOverviewCallback(this);
         mView.setBarTransitions(mNavigationBarTransitions);
         mView.setTouchHandler(mTouchHandler);
         setNavBarMode(mNavBarMode);
@@ -1159,6 +1162,14 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
     @Override
     public void onRecentsAnimationStateChanged(boolean running) {
         mView.getRotationButtonController().setRecentsAnimationRunning(running);
+    }
+
+    @Override
+    public void setForceDisableOverview(boolean forceDisableOverview) {
+        if (mForceDisableOverview != forceDisableOverview) {
+            mForceDisableOverview = forceDisableOverview;
+            mView.updateDisabledSystemUiStateFlags(mSysUiFlagsContainer);
+        }
     }
 
     /** Restores the appearance and the transient saved state to {@link NavigationBar}. */
@@ -1639,6 +1650,8 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
                         (mNavigationIconHints & NAVIGATION_HINT_IME_SWITCHER_SHOWN) != 0)
                 .setFlag(SYSUI_STATE_ALLOW_GESTURE_IGNORING_BAR_VISIBILITY,
                         allowSystemGestureIgnoringBarVisibility())
+                .setFlag(SYSUI_STATE_SCREEN_PINNING,
+                        mForceDisableOverview || mScreenPinningActive)
                 .commitUpdate(mDisplayId);
     }
 
