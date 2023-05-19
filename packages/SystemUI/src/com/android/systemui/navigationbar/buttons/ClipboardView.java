@@ -12,13 +12,15 @@
  * permissions and limitations under the License.
  */
 
-package com.android.systemui.tuner;
+package com.android.systemui.navigationbar.buttons;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ClipboardManager.OnPrimaryClipChangedListener;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,14 +28,17 @@ import android.widget.ImageView;
 
 import com.android.systemui.R;
 
-public class ClipboardView extends ImageView implements OnPrimaryClipChangedListener {
+public class ClipboardView extends KeyButtonView implements OnPrimaryClipChangedListener {
 
     private static final int TARGET_COLOR = 0x4dffffff;
     private final ClipboardManager mClipboardManager;
     private ClipData mCurrentClip;
+    private Drawable mClipboardEmpty;
+    private Drawable mClipboardFull;
 
     public ClipboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setClickable(true);
         mClipboardManager = context.getSystemService(ClipboardManager.class);
     }
 
@@ -53,6 +58,7 @@ public class ClipboardView extends ImageView implements OnPrimaryClipChangedList
     public boolean onTouchEvent(MotionEvent ev) {
         if (ev.getActionMasked() == MotionEvent.ACTION_DOWN && mCurrentClip != null) {
             startPocketDrag();
+            return true;
         }
         return super.onTouchEvent(ev);
     }
@@ -68,6 +74,7 @@ public class ClipboardView extends ImageView implements OnPrimaryClipChangedList
             case DragEvent.ACTION_DRAG_EXITED:
             case DragEvent.ACTION_DRAG_ENDED:
                 setBackgroundDragTarget(false);
+                setForceDisableOverview(false);
                 break;
         }
         return true;
@@ -77,24 +84,30 @@ public class ClipboardView extends ImageView implements OnPrimaryClipChangedList
         setBackgroundColor(isTarget ? TARGET_COLOR : 0);
     }
 
-    public void startPocketDrag() {
+    private void startPocketDrag() {
+        setForceDisableOverview(true);
         startDragAndDrop(mCurrentClip, new View.DragShadowBuilder(this), null,
                 View.DRAG_FLAG_GLOBAL);
     }
 
-    public void startListening() {
+    private void startListening() {
         mClipboardManager.addPrimaryClipChangedListener(this);
         onPrimaryClipChanged();
     }
 
-    public void stopListening() {
+    private void stopListening() {
         mClipboardManager.removePrimaryClipChangedListener(this);
+    }
+
+    public void setImageDrawables(Drawable imageDrawable1, Drawable imageDrawable2) {
+        mClipboardEmpty = imageDrawable1;
+        mClipboardFull = imageDrawable2;
+        onPrimaryClipChanged(); // update drawable
     }
 
     @Override
     public void onPrimaryClipChanged() {
         mCurrentClip = mClipboardManager.getPrimaryClip();
-        setImageResource(mCurrentClip != null
-                ? R.drawable.clipboard_full : R.drawable.clipboard_empty);
+        setImageDrawable(mCurrentClip != null ? mClipboardFull : mClipboardEmpty);
     }
 }
