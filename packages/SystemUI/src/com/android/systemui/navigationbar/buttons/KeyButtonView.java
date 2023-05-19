@@ -63,7 +63,7 @@ import com.android.systemui.recents.OverviewProxyService;
 import com.android.systemui.res.R;
 import com.android.systemui.shared.system.QuickStepContract;
 
-public class KeyButtonView extends ImageView implements ButtonInterface {
+public class KeyButtonView extends ImageView implements ButtonInterface, DragDropSurfaceCallback {
     private static final String TAG = KeyButtonView.class.getSimpleName();
     private static final int CURSOR_REPEAT_FLAGS = KeyEvent.FLAG_SOFT_KEYBOARD
             | KeyEvent.FLAG_KEEP_TOUCH_MODE;
@@ -87,6 +87,7 @@ public class KeyButtonView extends ImageView implements ButtonInterface {
     private final Paint mOvalBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private float mDarkIntensity;
     private boolean mHasOvalBg = false;
+    private DragDropSurfaceCallback mCallback;
 
     @VisibleForTesting
     public enum NavBarButtonEvent implements UiEventLogger.UiEventEnum {
@@ -505,5 +506,19 @@ public class KeyButtonView extends ImageView implements ButtonInterface {
     @Override
     public void setVertical(boolean vertical) {
         mIsVertical = vertical;
+    }
+
+    @Override
+    public void setForceDisableOverview(boolean forceDisableOverview) {
+        if (mCallback == null) {
+            Log.e("KeyButtonView", "mCallback == null");
+            return;
+        }
+        mCallback.setForceDisableOverview(forceDisableOverview);
+    }
+
+    @Override
+    public void setForceDisableOverviewCallback(DragDropSurfaceCallback forceDisableOverviewCallback) {
+        mCallback = forceDisableOverviewCallback;
     }
 }
