@@ -317,6 +317,8 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
 
         // Set up the context group of buttons
         mContextualButtonGroup = new ContextualButtonGroup(R.id.menu_container);
+        final ContextualButton menuButton = new ContextualButton(R.id.menu,
+                mLightContext, R.drawable.ic_sysbar_menu);
         final int switcherResId = Flags.imeSwitcherRevamp()
                 ? com.android.internal.R.drawable.ic_ime_switcher_new
                 : R.drawable.ic_ime_switcher_default;
@@ -329,6 +331,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
                 mLightContext, R.drawable.ic_chevron_left);
         final ContextualButton cursorRightButton = new ContextualButton(R.id.dpad_right,
                 mLightContext, R.drawable.ic_chevron_right);
+        mContextualButtonGroup.addButton(menuButton);
         mContextualButtonGroup.addButton(imeSwitcherButton);
         mContextualButtonGroup.addButton(accessibilityButton);
         mFloatingRotationButton = new FloatingRotationButton(mContext,
@@ -359,6 +362,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         mButtonDispatchers.put(R.id.home, new ButtonDispatcher(R.id.home));
         mButtonDispatchers.put(R.id.home_handle, new ButtonDispatcher(R.id.home_handle));
         mButtonDispatchers.put(R.id.recent_apps, new ButtonDispatcher(R.id.recent_apps));
+        mButtonDispatchers.put(R.id.menu, menuButton);
         mButtonDispatchers.put(R.id.ime_switcher, imeSwitcherButton);
         mButtonDispatchers.put(R.id.accessibility_button, accessibilityButton);
         mButtonDispatchers.put(R.id.menu_container, mContextualButtonGroup);
@@ -491,6 +495,10 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
 
     public ButtonDispatcher getRecentsButton() {
         return mButtonDispatchers.get(R.id.recent_apps);
+    }
+
+    public ButtonDispatcher getMenuButton() {
+        return mButtonDispatchers.get(R.id.menu);
     }
 
     public ButtonDispatcher getBackButton() {
@@ -1306,9 +1314,10 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
                         visibilityToString(getCurrentView().getVisibility()),
                         getCurrentView().getAlpha()));
 
-        pw.println(String.format("      disabled=0x%08x vertical=%s darkIntensity=%.2f",
+        pw.println(String.format("      disabled=0x%08x vertical=%s menu=%s darkIntensity=%.2f",
                         mDisabledFlags,
                         mIsVertical ? "true" : "false",
+                        getMenuButton().isVisible() ? "true" : "false",
                         getLightTransitionsController().getCurrentDarkIntensity()));
 
         pw.println("    mScreenOn: " + mScreenOn);
@@ -1318,6 +1327,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         dumpButton(pw, "home", getHomeButton());
         dumpButton(pw, "handle", getHomeHandle());
         dumpButton(pw, "rcnt", getRecentsButton());
+        dumpButton(pw, "menu", getMenuButton());
         dumpButton(pw, "a11y", getAccessibilityButton());
         dumpButton(pw, "ime", getImeSwitchButton());
         dumpButton(pw, "curl", getCursorLeftButton());

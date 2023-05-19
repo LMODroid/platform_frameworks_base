@@ -113,7 +113,8 @@ public class LegacyLightsOutNotifControllerTest extends SysuiTestCase {
                 BEHAVIOR_DEFAULT,
                 WindowInsets.Type.defaultVisible(),
                 null /* packageName */,
-                null /* letterboxDetails */);
+                null /* letterboxDetails */,
+                false /* needsMenu */);
         assertTrue(mLightsOutNotifController.areLightsOut());
     }
 
@@ -127,7 +128,8 @@ public class LegacyLightsOutNotifControllerTest extends SysuiTestCase {
                 BEHAVIOR_DEFAULT,
                 WindowInsets.Type.defaultVisible(),
                 null /* packageName */,
-                null /* letterboxDetails */);
+                null /* letterboxDetails */,
+                false /* needsMenu */);
         assertFalse(mLightsOutNotifController.areLightsOut());
     }
 
@@ -159,7 +161,8 @@ public class LegacyLightsOutNotifControllerTest extends SysuiTestCase {
                 BEHAVIOR_DEFAULT,
                 WindowInsets.Type.defaultVisible(),
                 null /* packageName */,
-                null /* letterboxDetails */);
+                null /* letterboxDetails */,
+                false /* needsMenu */);
 
         // THEN we should show dot
         assertTrue(mLightsOutNotifController.shouldShowDot());
@@ -180,7 +183,8 @@ public class LegacyLightsOutNotifControllerTest extends SysuiTestCase {
                 BEHAVIOR_DEFAULT,
                 WindowInsets.Type.defaultVisible(),
                 null /* packageName */,
-                null /* letterboxDetails */);
+                null /* letterboxDetails */,
+                false /* needsMenu */);
 
         // THEN we shouldn't show the dot
         assertFalse(mLightsOutNotifController.shouldShowDot());
@@ -201,7 +205,8 @@ public class LegacyLightsOutNotifControllerTest extends SysuiTestCase {
                 BEHAVIOR_DEFAULT,
                 WindowInsets.Type.defaultVisible(),
                 null /* packageName */,
-                null /* letterboxDetails */);
+                null /* letterboxDetails */,
+                false /* needsMenu */);
 
         // THEN we shouldn't show the dot
         assertFalse(mLightsOutNotifController.shouldShowDot());

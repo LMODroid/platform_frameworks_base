@@ -480,7 +480,7 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
     public void onSystemBarAttributesChanged(int displayId, int appearance,
             AppearanceRegion[] appearanceRegions, boolean navbarColorManagedByIme, int behavior,
             @InsetsType int requestedVisibleTypes, String packageName,
-            LetterboxDetails[] letterboxDetails) {
+            LetterboxDetails[] letterboxDetails, boolean needsMenu) {
         mOverviewProxyService.onSystemBarAttributesChanged(displayId, behavior);
         boolean nbModeChanged = false;
         if (mAppearance != appearance) {
@@ -496,6 +496,7 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
             mBehavior = behavior;
             updateSysuiFlags();
         }
+        // Taskbar does not support menu key as of now
     }
 
     @Override
