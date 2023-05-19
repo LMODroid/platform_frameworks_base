@@ -35,7 +35,7 @@ public class ButtonDispatcher implements DragDropSurfaceCallback {
     private static final int FADE_DURATION_IN = 150;
     private static final int FADE_DURATION_OUT = 250;
 
-    private final ArrayList<View> mViews = new ArrayList<>();
+    protected final ArrayList<View> mViews = new ArrayList<>();
 
     private final int mId;
 
@@ -49,7 +49,7 @@ public class ButtonDispatcher implements DragDropSurfaceCallback {
     private Integer mVisibility = View.VISIBLE;
     private Boolean mDelayTouchFeedback;
     private KeyButtonDrawable mImageDrawable;
-    private View mCurrentView;
+    protected View mCurrentView;
     private boolean mVertical;
     private ValueAnimator mFadeAnimator;
     private AccessibilityDelegate mAccessibilityDelegate;

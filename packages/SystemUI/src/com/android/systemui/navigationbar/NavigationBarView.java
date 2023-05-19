@@ -65,6 +65,7 @@ import com.android.settingslib.Utils;
 import com.android.systemui.Gefingerpoken;
 import com.android.systemui.model.SysUiState;
 import com.android.systemui.navigationbar.buttons.ButtonDispatcher;
+import com.android.systemui.navigationbar.buttons.ClipboardButtonDispatcher;
 import com.android.systemui.navigationbar.buttons.ContextualButton;
 import com.android.systemui.navigationbar.buttons.ContextualButtonGroup;
 import com.android.systemui.navigationbar.buttons.DeadZone;
@@ -132,6 +133,8 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
     private KeyButtonDrawable mPowerButton;
     private KeyButtonDrawable mVolumePlusButton;
     private KeyButtonDrawable mVolumeMinusButton;
+    private KeyButtonDrawable mClipboardEmptyButton;
+    private KeyButtonDrawable mClipboardFullButton;
 
     private EdgeBackGestureHandler mEdgeBackGestureHandler;
     private DisplayTracker mDisplayTracker;
@@ -348,6 +351,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         mButtonDispatchers.put(R.id.power, new ButtonDispatcher(R.id.power));
         mButtonDispatchers.put(R.id.volume_minus, new ButtonDispatcher(R.id.volume_minus));
         mButtonDispatchers.put(R.id.volume_plus, new ButtonDispatcher(R.id.volume_plus));
+        mButtonDispatchers.put(R.id.clipboard, new ClipboardButtonDispatcher());
         for (int i = 0; i < mButtonDispatchers.size(); i++) {
             mButtonDispatchers.valueAt(i).setForceDisableOverviewCallback(this);
         }
@@ -507,6 +511,10 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         return mButtonDispatchers.get(R.id.volume_minus);
     }
 
+    public ClipboardButtonDispatcher getClipboardButton() {
+        return (ClipboardButtonDispatcher) mButtonDispatchers.get(R.id.clipboard);
+    }
+
     public SparseArray<ButtonDispatcher> getButtonDispatchers() {
         return mButtonDispatchers;
     }
@@ -548,6 +556,8 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         mPowerButton = getDrawable(R.drawable.ic_sysbar_power);
         mVolumePlusButton = getDrawable(R.drawable.ic_sysbar_volume_plus);
         mVolumeMinusButton = getDrawable(R.drawable.ic_sysbar_volume_minus);
+        mClipboardEmptyButton = getDrawable(R.drawable.clipboard_empty);
+        mClipboardFullButton = getDrawable(R.drawable.clipboard_full);
     }
 
     /**
@@ -709,6 +719,9 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         if (getVolumePlusButton() != null) {
             getVolumePlusButton().setImageDrawable(mVolumePlusButton);
         }
+        if (getClipboardButton() != null) {
+            getClipboardButton().setImageDrawables(mClipboardEmptyButton, mClipboardFullButton);
+        }
 
         mBarTransitions.reapplyDarkIntensity();
 
@@ -764,6 +777,9 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         }
         if (getVolumePlusButton() != null) {
             getVolumePlusButton().setVisibility(View.VISIBLE);
+        }
+        if (getClipboardButton() != null) {
+            getClipboardButton().setVisibility(View.VISIBLE);
         }
 
         notifyActiveTouchRegions();

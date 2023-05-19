@@ -196,8 +196,8 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
             return context.getString(R.string.navbar_editor_voldown);
         /*} else if (button.equals(MENU_IME_ROTATE)) {
             return context.getString(R.string.menu_ime);*/
-        /*} else if (button.startsWith(CLIPBOARD)) {
-            return context.getString(R.string.clipboard);*/
+        } else if (button.startsWith(CLIPBOARD)) {
+            return context.getString(R.string.clipboard);
         /*} else if (button.startsWith(KEY)) {
             return context.getString(R.string.keycode);*/
         }
@@ -418,7 +418,7 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
 
         private void showAddDialog(final Context context) {
             final String[] options = new String[] {
-                    BACK, HOME, RECENT, NAVSPACE, LEFT, RIGHT, VOLUME_UP, VOLUME_DOWN, POWER
+                    BACK, HOME, RECENT, NAVSPACE, LEFT, RIGHT, VOLUME_UP, VOLUME_DOWN, POWER, CLIPBOARD
             };
             final CharSequence[] labels = new CharSequence[options.length];
             for (int i = 0; i < options.length; i++) {
@@ -433,7 +433,7 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
                                 showKeyDialogs(context);
                             } else {*/
                                 int index = mButtons.size() - 1;
-                                //showAddedMessage(context, options[which]);
+                                showAddedMessage(context, options[which]);
                                 mButtons.add(index, options[which]);
                                 mLabels.add(index, labels[which]);
 
@@ -475,7 +475,7 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
                     }).show();
         }*/
 
-        /*private void showAddedMessage(Context context, String button) {
+        private void showAddedMessage(Context context, String button) {
             if (CLIPBOARD.equals(button)) {
                 new AlertDialog.Builder(context)
                         .setTitle(R.string.clipboard)
@@ -483,7 +483,7 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
                         .setPositiveButton(android.R.string.ok, null)
                         .show();
             }
-        }*/
+        }
 
         private void bindClick(View view, Holder holder) {
             view.setOnClickListener(this);
