@@ -640,8 +640,8 @@ public class AppTransition implements Dump {
     }
 
     @Nullable
-    Animation loadAnimationAttr(LayoutParams lp, int animAttr, int transit) {
-        return mTransitionAnimation.loadAnimationAttr(lp, animAttr, transit);
+    Animation loadAnimationAttr(LayoutParams lp, int animAttr, int transit, boolean freeform) {
+        return mTransitionAnimation.loadAnimationAttr(lp, animAttr, transit, freeform);
     }
 
     private void getDefaultNextAppTransitionStartRect(Rect rect) {
@@ -894,9 +894,9 @@ public class AppTransition implements Dump {
                     a = loadCustomActivityAnimation(customAppTransition, enter, container);
                 } else {
                     if (canCustomizeAppTransition) {
-                        a = loadAnimationAttr(lp, animAttr, transit);
+                        a = loadAnimationAttr(lp, animAttr, transit, freeform);
                     } else {
-                        a = mTransitionAnimation.loadDefaultAnimationAttr(animAttr, transit);
+                        a = mTransitionAnimation.loadDefaultAnimationAttr(animAttr, transit, freeform);
                     }
                 }
             } else {

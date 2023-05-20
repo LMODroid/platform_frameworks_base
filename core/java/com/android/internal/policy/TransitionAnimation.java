@@ -250,7 +250,7 @@ public class TransitionAnimation {
 
     /** Load animation by attribute Id from specific LayoutParams */
     @Nullable
-    public Animation loadAnimationAttr(LayoutParams lp, int animAttr, int transit) {
+    public Animation loadAnimationAttr(LayoutParams lp, int animAttr, int transit, boolean freeform) {
         int resId = Resources.ID_NULL;
         Context context = mContext;
         if (animAttr >= 0) {
@@ -261,6 +261,9 @@ public class TransitionAnimation {
             }
         }
         resId = updateToTranslucentAnimIfNeeded(resId, transit);
+        if (freeform) {
+            resId = updateToFreeform(resId);
+        }
         if (ResourceId.isValid(resId)) {
             return loadAnimationSafely(context, resId, mTag);
         }
@@ -304,7 +307,7 @@ public class TransitionAnimation {
      */
     @Nullable
     private Animation loadAnimationAttr(String packageName, int animStyleResId, int animAttr,
-            boolean translucent, @TransitionOldType int transit) {
+            boolean translucent, @TransitionOldType int transit, boolean freeform) {
         if (animStyleResId == 0) {
             return null;
         }
@@ -323,6 +326,9 @@ public class TransitionAnimation {
         } else if (transit != TRANSIT_OLD_UNSET) {
             resId = updateToTranslucentAnimIfNeeded(resId, transit);
         }
+        if (freeform) {
+            resId = updateToFreeform(resId);
+        }
         if (ResourceId.isValid(resId)) {
             return loadAnimationSafely(context, resId, mTag);
         }
@@ -333,23 +339,23 @@ public class TransitionAnimation {
     /** Load animation by attribute Id from a specific AnimationStyle resource. */
     @Nullable
     public Animation loadAnimationAttr(String packageName, int animStyleResId, int animAttr,
-            boolean translucent) {
+            boolean translucent, boolean freeform) {
         return loadAnimationAttr(packageName, animStyleResId, animAttr, translucent,
-                TRANSIT_OLD_UNSET);
+                TRANSIT_OLD_UNSET, freeform);
     }
 
     /** Load animation by attribute Id from android package. */
     @Nullable
-    public Animation loadDefaultAnimationAttr(int animAttr, boolean translucent) {
+    public Animation loadDefaultAnimationAttr(int animAttr, boolean translucent, boolean freeform) {
         return loadAnimationAttr(DEFAULT_PACKAGE, mDefaultWindowAnimationStyleResId, animAttr,
-                translucent);
+                translucent, freeform);
     }
 
     /** Load animation by attribute Id from android package. */
     @Nullable
-    public Animation loadDefaultAnimationAttr(int animAttr, @TransitionOldType int transit) {
+    public Animation loadDefaultAnimationAttr(int animAttr, @TransitionOldType int transit, boolean freeform) {
         return loadAnimationAttr(DEFAULT_PACKAGE, mDefaultWindowAnimationStyleResId, animAttr,
-                false /* translucent */, transit);
+                false /* translucent */, transit, freeform);
     }
 
     @Nullable
@@ -1103,6 +1109,10 @@ public class TransitionAnimation {
         if (anim == R.anim.activity_close_exit) {
             return R.anim.activity_translucent_close_exit;
         }
+        return anim;
+    }
+
+    private static int updateToFreeform(int anim) {
         return anim;
     }
 

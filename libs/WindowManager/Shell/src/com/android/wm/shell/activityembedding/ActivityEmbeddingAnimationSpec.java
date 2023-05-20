@@ -255,7 +255,9 @@ class ActivityEmbeddingAnimationSpec {
     private boolean shouldShowBackdrop(@NonNull TransitionInfo info,
             @NonNull TransitionInfo.Change change) {
         final Animation a = loadAttributeAnimation(info, change, WALLPAPER_TRANSITION_NONE,
-                mTransitionAnimation, false);
+                mTransitionAnimation, false, false);
+                //change.getTaskInfo().configuration.windowConfiguration
+                //        .getWindowingMode() == WINDOWING_MODE_FREEFORM);
         return a != null && a.getShowBackdrop();
     }
 }

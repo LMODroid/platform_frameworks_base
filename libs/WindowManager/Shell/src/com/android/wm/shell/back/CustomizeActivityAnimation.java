@@ -396,7 +396,7 @@ class CustomizeActivityAnimation {
                         animationInfo.getWindowAnimations(), enterAnimation
                                 ? R.styleable.WindowAnimation_activityCloseEnterAnimation
                                 : R.styleable.WindowAnimation_activityCloseExitAnimation,
-                        false /* translucent */);
+                        false /* translucent */, false);
             }
             // Only allow to load default animation for opening target.
             if (a == null && enterAnimation) {
@@ -413,7 +413,7 @@ class CustomizeActivityAnimation {
         private Animation loadDefaultOpenAnimation() {
             return mTransitionAnimation.loadDefaultAnimationAttr(
                     R.styleable.WindowAnimation_activityCloseEnterAnimation,
-                    false /* translucent */);
+                    false /* translucent */, false);
         }
     }
 }

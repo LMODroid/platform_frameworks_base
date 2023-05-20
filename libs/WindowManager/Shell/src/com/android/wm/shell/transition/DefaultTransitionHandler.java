@@ -25,6 +25,7 @@ import static android.app.ActivityOptions.ANIM_SCENE_TRANSITION;
 import static android.app.ActivityOptions.ANIM_THUMBNAIL_SCALE_DOWN;
 import static android.app.ActivityOptions.ANIM_THUMBNAIL_SCALE_UP;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_DREAM;
+import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
 import static android.app.admin.DevicePolicyManager.ACTION_DEVICE_POLICY_RESOURCE_UPDATED;
 import static android.app.admin.DevicePolicyManager.EXTRA_RESOURCE_TYPE;
@@ -430,7 +431,9 @@ public class DefaultTransitionHandler implements Transitions.TransitionHandler {
             // Don't animate anything that isn't independent.
             if (!TransitionInfo.isIndependent(change, info)) continue;
 
-            Animation a = loadAnimation(info, change, wallpaperTransit, isDreamTransition);
+            Animation a = loadAnimation(info, change, wallpaperTransit, isDreamTransition,
+                    isTask && change.getTaskInfo().configuration.windowConfiguration
+                    .getWindowingMode() == WINDOWING_MODE_FREEFORM);
             if (a != null) {
                 if (isTask) {
                     final boolean isTranslucent = (change.getFlags() & FLAG_TRANSLUCENT) != 0;
@@ -658,7 +661,7 @@ public class DefaultTransitionHandler implements Transitions.TransitionHandler {
     @Nullable
     private Animation loadAnimation(@NonNull TransitionInfo info,
             @NonNull TransitionInfo.Change change, int wallpaperTransit,
-            boolean isDreamTransition) {
+            boolean isDreamTransition, boolean freeform) {
         Animation a;
 
         final int type = info.getType();
@@ -717,7 +720,7 @@ public class DefaultTransitionHandler implements Transitions.TransitionHandler {
             return null;
         } else {
             a = loadAttributeAnimation(
-                    info, change, wallpaperTransit, mTransitionAnimation, isDreamTransition);
+                    info, change, wallpaperTransit, mTransitionAnimation, isDreamTransition, freeform);
         }
 
         if (a != null) {

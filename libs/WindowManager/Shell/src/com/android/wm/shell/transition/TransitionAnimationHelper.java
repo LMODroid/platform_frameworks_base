@@ -63,7 +63,8 @@ public class TransitionAnimationHelper {
     @Nullable
     public static Animation loadAttributeAnimation(@NonNull TransitionInfo info,
             @NonNull TransitionInfo.Change change, int wallpaperTransit,
-            @NonNull TransitionAnimation transitionAnimation, boolean isDreamTransition) {
+            @NonNull TransitionAnimation transitionAnimation, boolean isDreamTransition,
+            boolean freeform) {
         final int type = info.getType();
         final int changeMode = change.getMode();
         final int changeFlags = change.getFlags();
@@ -150,14 +151,14 @@ public class TransitionAnimationHelper {
                 } else {
                     a = transitionAnimation
                             .loadAnimationAttr(options.getPackageName(), options.getAnimations(),
-                                    animAttr, translucent);
+                                    animAttr, translucent, freeform);
                 }
             } else if (translucent && !isTask && ((changeFlags & FLAGS_IS_NON_APP_WINDOW) == 0)) {
                 // Un-styled translucent activities technically have undefined animations; however,
                 // as is always the case, some apps now rely on this being no-animation, so skip
                 // loading animations here.
             } else {
-                a = transitionAnimation.loadDefaultAnimationAttr(animAttr, translucent);
+                a = transitionAnimation.loadDefaultAnimationAttr(animAttr, translucent, freeform);
             }
         }
 
