@@ -251,4 +251,8 @@
 
     <!-- Whether to use old mobile type icons as default -->
     <bool name="config_useOldMobileIcons">false</bool>
+
+    <!-- Whether to use VPN Tethering -->
+    <bool name="config_enable_vpntethering">true</bool>
+
 </resources>
