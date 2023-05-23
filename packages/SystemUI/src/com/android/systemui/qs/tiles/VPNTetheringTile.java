@@ -97,6 +97,12 @@ public class VPNTetheringTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
+    public boolean isAvailable() {
+        return mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_enable_vpntethering);
+    }
+
+    @Override
     public BooleanState newTileState() {
         return new BooleanState();
     }

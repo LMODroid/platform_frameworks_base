@@ -224,4 +224,7 @@
     <!-- The list of package IDs that are allowed to skip camera high frame rate checks. -->
     <string-array name="config_cameraHFRPrivAppList" translatable="false" />
 
+    <!-- Whether to use VPN Tethering -->
+    <bool name="config_enable_vpntethering">true</bool>
+
 </resources>

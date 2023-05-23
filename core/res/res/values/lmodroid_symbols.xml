@@ -123,4 +123,7 @@
     <java-symbol type="bool" name="config_dt2sGestureAvailable" />
     <java-symbol type="bool" name="config_dt2sGestureEnabledByDefault" />
 
+    <!-- Whether to use VPN Tethering -->
+   <java-symbol type="bool" name="config_enable_vpntethering" />
+
 </resources>
