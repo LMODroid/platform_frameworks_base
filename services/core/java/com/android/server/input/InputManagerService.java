@@ -729,6 +729,12 @@ public class InputManagerService extends IInputManager.Stub
         }
     }
 
+    private void deliverCaptureChanged(boolean enabled) {
+        for (CursorCallbackRecord callback : getCursorCallbacksToNotify()) {
+            callback.notifyCaptureChanged(enabled);
+        }
+    }
+
     public void start() {
         Slog.i(TAG, "Starting input manager");
         mNative.start();
@@ -1527,6 +1533,7 @@ public class InputManagerService extends IInputManager.Stub
             throw new IllegalArgumentException("Invalid pointer capture mode " + mode);
         }
 
+        deliverCaptureChanged(mode != View.POINTER_CAPTURE_MODE_UNCAPTURED);
         mNative.requestPointerCapture(inputChannelToken, mode);
     }
 
@@ -4060,6 +4067,16 @@ public class InputManagerService extends IInputManager.Stub
             } catch (RemoteException ex) {
                 Slog.w(TAG, "Failed to notify process " + mPid +
                         " that cursor changed, assuming it died.", ex);
+                binderDied();
+            }
+        }
+
+        public void notifyCaptureChanged(boolean enabled) {
+            try {
+                mListener.onCaptureChanged(enabled);
+            } catch (RemoteException ex) {
+                Slog.w(TAG, "Failed to notify process " + mPid +
+                        " that capture changed, assuming it died.", ex);
                 binderDied();
             }
         }
