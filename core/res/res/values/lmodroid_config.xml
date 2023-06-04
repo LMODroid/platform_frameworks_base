@@ -227,4 +227,8 @@
     <!-- Whether to use VPN Tethering -->
     <bool name="config_enable_vpntethering">true</bool>
 
+    <!-- If true, then we do not warn the user about old apps with deprecated target SDK.
+         Do not set this to true for production devices. Doing so will cause you to fail CTS. -->
+    <bool name="config_disableDeprecatedTargetDialog">true</bool>
+
 </resources>
