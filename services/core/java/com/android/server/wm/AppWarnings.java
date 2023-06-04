@@ -39,6 +39,7 @@ import android.util.DisplayMetrics;
 import android.util.Slog;
 import android.util.Xml;
 
+import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.ArrayUtils;
 import com.android.modules.utils.TypedXmlPullParser;
@@ -74,6 +75,8 @@ class AppWarnings {
     private final UiHandler mUiHandler;
     private final AtomicFile mConfigFile;
 
+    private final boolean mDisableDeprecatedTargetDialog;
+
     private UnsupportedDisplaySizeDialog mUnsupportedDisplaySizeDialog;
     private UnsupportedCompileSdkDialog mUnsupportedCompileSdkDialog;
     private DeprecatedTargetSdkVersionDialog mDeprecatedTargetSdkVersionDialog;
@@ -96,6 +99,9 @@ class AppWarnings {
         mWriteConfigTask = new WriteConfigTask();
         mUiHandler = new UiHandler(uiHandler.getLooper());
         mConfigFile = new AtomicFile(new File(systemDir, CONFIG_FILE_NAME), "warnings-config");
+
+        mDisableDeprecatedTargetDialog = uiContext.getResources().getBoolean(
+                R.bool.config_disableDeprecatedTargetDialog);
 
         readConfigFromFileAmsThread();
     }
@@ -160,7 +166,8 @@ class AppWarnings {
      * @param r activity record for which the warning may be displayed
      */
     public void showDeprecatedTargetDialogIfNeeded(ActivityRecord r) {
-        if (r.info.applicationInfo.targetSdkVersion < Build.VERSION.MIN_SUPPORTED_TARGET_SDK_INT) {
+        if (r.info.applicationInfo.targetSdkVersion < Build.VERSION.MIN_SUPPORTED_TARGET_SDK_INT
+                && !mDisableDeprecatedTargetDialog) {
             mUiHandler.showDeprecatedTargetDialog(r);
         }
     }
@@ -206,6 +213,7 @@ class AppWarnings {
     public void onStartActivity(ActivityRecord r) {
         showUnsupportedCompileSdkDialogIfNeeded(r);
         showUnsupportedDisplaySizeDialogIfNeeded(r);
+        showDeprecatedTargetDialogIfNeeded(r);
         showDeprecatedAbiDialogIfNeeded(r);
     }
 
