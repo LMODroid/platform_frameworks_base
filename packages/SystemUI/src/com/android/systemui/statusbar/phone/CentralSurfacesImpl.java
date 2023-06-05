@@ -60,6 +60,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.graphics.Point;
@@ -995,8 +996,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
                         });
                     }
                 } else if (uri.equals(qsTransparency)) {
+                    final Resources res = mContext.getResources();
                     int newValue = Settings.System.getIntForUser(mContext.getContentResolver(),
-                            LMOSettings.System.QS_TRANSPARENCY, 100,
+                            LMOSettings.System.QS_TRANSPARENCY, res.getInteger(com.android.internal.R.integer.config_qs_transparency),
                             UserHandle.USER_CURRENT);
                     mContext.getMainExecutor().execute(() -> {
                         mScrimController.setCustomScrimAlpha(newValue);
