@@ -918,7 +918,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
                     }
                 } else if (uri.equals(qsTransparency)) {
                     int newValue = Settings.System.getIntForUser(mContext.getContentResolver(),
-                            LMOSettings.System.QS_TRANSPARENCY, 100,
+                            LMOSettings.System.QS_TRANSPARENCY,
+                            mContext.getResources().getInteger(com.android.internal.R.integer.config_qs_transparency),
                             UserHandle.USER_CURRENT);
                     mContext.getMainExecutor().execute(() -> {
                         mScrimController.setCustomScrimAlpha(newValue);
