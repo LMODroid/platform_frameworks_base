@@ -67,6 +67,7 @@ import android.content.IntentFilter;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.hardware.devicestate.DeviceStateManager;
@@ -4134,8 +4135,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
             }
         }
         if (QS_TRANSPARENCY.equals(key)) {
+	    final Resources res = mContext.getResources();
             mScrimController.setCustomScrimAlpha(
-                    TunerService.parseInteger(newValue, 85));
+                    TunerService.parseInteger(newValue, res.getInteger(com.android.internal.R.integer.config_qs_transparency)));
         }
     }
 
