@@ -91,6 +91,7 @@ import com.android.server.biometrics.sensors.LockoutTracker;
 import com.android.server.biometrics.sensors.fingerprint.aidl.FingerprintProvider;
 import com.android.server.biometrics.sensors.fingerprint.hidl.Fingerprint21;
 import com.android.server.biometrics.sensors.fingerprint.hidl.Fingerprint21UdfpsMock;
+import com.android.server.libremobileos.FaceUnlockService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -935,6 +936,7 @@ public class FingerprintService extends SystemService {
                         mSensorProps.addAll(provider.getSensorProperties());
                     }
                 }
+                FaceUnlockService.onInitComplete();
 
                 broadcastCurrentEnrollmentState(null); // broadcasts to all listeners
                 broadcastAllAuthenticatorsRegistered();
