@@ -352,9 +352,9 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         final int showBatteryPercent = Settings.System.getIntForUser(
                 getContext().getContentResolver(), STATUS_BAR_SHOW_BATTERY_PERCENT, 0,
                 UserHandle.USER_CURRENT);
-        final boolean drawPercentInside = mShowPercentMode == MODE_DEFAULT &&
-                showBatteryPercent == 1;
         final boolean drawPercentOnly = mShowPercentMode == MODE_ESTIMATE ||
+                showBatteryPercent == 1;
+        final boolean drawPercentInside = mShowPercentMode == MODE_DEFAULT &&
                 showBatteryPercent == 2;
         boolean shouldShow =
                 (drawPercentOnly && (!drawPercentInside || mCharging) ||
