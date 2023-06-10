@@ -122,7 +122,8 @@ public class KeyButtonDrawable extends Drawable {
         final int color = (int) ArgbEvaluator.getInstance()
                 .evaluate(intensity, mState.mLightColor, mState.mDarkColor);
         updateShadowAlpha();
-        setColorFilter(new PorterDuffColorFilter(color, Mode.SRC_ATOP));
+        //setColorFilter(new PorterDuffColorFilter(color, Mode.SRC_ATOP));
+        setColorFilter(new PorterDuffColorFilter(color, Mode.SRC_IN));
     }
 
     public void setRotation(float degrees) {
@@ -479,6 +480,39 @@ public class KeyButtonDrawable extends Drawable {
         Drawable d = context.getDrawable(iconResId);
         final KeyButtonDrawable drawable = new KeyButtonDrawable(d, lightColor, darkColor,
                 isRtl && d.isAutoMirrored(), ovalBackgroundColor);
+        if (hasShadow) {
+            int offsetX = res.getDimensionPixelSize(R.dimen.nav_key_button_shadow_offset_x);
+            int offsetY = res.getDimensionPixelSize(R.dimen.nav_key_button_shadow_offset_y);
+            int radius = res.getDimensionPixelSize(R.dimen.nav_key_button_shadow_radius);
+            int color = context.getColor(R.color.nav_key_button_shadow_color);
+            drawable.setShadowProperties(offsetX, offsetY, radius, color);
+        }
+        return drawable;
+    }
+
+    /**
+     * Creates a KeyButtonDrawable with a shadow given its icon. For more information, see
+     * {@link #create(Context, int, boolean, boolean)}.
+     */
+    public static KeyButtonDrawable create(Context lightContext, Context darkContext,
+            Drawable icon, boolean hasShadow, Color ovalBackgroundColor) {
+        return create(lightContext,
+            Utils.getColorAttrDefaultColor(lightContext, R.attr.singleToneColor),
+            Utils.getColorAttrDefaultColor(darkContext, R.attr.singleToneColor),
+            icon, hasShadow, ovalBackgroundColor);
+    }
+
+    /**
+     * Creates a KeyButtonDrawable with a shadow given its icon. For more information, see
+     * {@link #create(Context, int, boolean, boolean)}.
+     */
+    public static KeyButtonDrawable create(Context context, @ColorInt int lightColor,
+            @ColorInt int darkColor, Drawable icon, boolean hasShadow,
+            Color ovalBackgroundColor) {
+        final Resources res = context.getResources();
+        boolean isRtl = res.getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+        final KeyButtonDrawable drawable = new KeyButtonDrawable(icon, lightColor, darkColor,
+                isRtl && icon.isAutoMirrored(), ovalBackgroundColor);
         if (hasShadow) {
             int offsetX = res.getDimensionPixelSize(R.dimen.nav_key_button_shadow_offset_x);
             int offsetY = res.getDimensionPixelSize(R.dimen.nav_key_button_shadow_offset_y);
