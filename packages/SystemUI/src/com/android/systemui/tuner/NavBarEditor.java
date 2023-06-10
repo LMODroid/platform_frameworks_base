@@ -25,13 +25,16 @@ import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +43,7 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -54,12 +58,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.systemui.Dependency;
+import com.android.systemui.navigationbar.NavigationModeController;
+import com.android.systemui.shared.system.QuickStepContract;
 
+import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_3BUTTON;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.BACK;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.BUTTON_SEPARATOR;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.CLIPBOARD;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.CONTEXTUAL;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.GRAVITY_SEPARATOR;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.HOME;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.HOME_HANDLE;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.VOLUME_DOWN;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.VOLUME_UP;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.POWER;
@@ -68,6 +77,7 @@ import static com.android.systemui.navigationbar.NavigationBarInflaterView.KEY_C
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.KEY_CODE_START;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.KEY_IMAGE_DELIM;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.MENU_IME_ROTATE;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.IME_SWITCHER;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.NAVSPACE;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.NAV_BAR_VIEWS;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.RECENT;
@@ -80,14 +90,34 @@ import static com.android.systemui.navigationbar.NavigationBarInflaterView.RIGHT
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.extractButton;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.extractSize;
 
-public class NavBarEditor extends PreferenceFragment implements TunerService.Tunable {
+public class NavBarEditor extends PreferenceFragment implements TunerService.Tunable,
+            NavigationModeController.ModeChangedListener {
     private static final String TAG = "NavBarEditor";
     private static final int READ_REQUEST = 42;
+    private static final Integer[] sIcons = new Integer[] {
+            R.drawable.ic_qs_circle,
+            R.drawable.ic_add,
+            R.drawable.ic_remove,
+            R.drawable.ic_left,
+            R.drawable.ic_right,
+            R.drawable.ic_menu,
+            null /* Other */
+    };
+    private static final int[] sIconStrings = new int[] {
+            R.string.tuner_circle,
+            R.string.tuner_plus,
+            R.string.tuner_minus,
+            R.string.tuner_left,
+            R.string.tuner_right,
+            R.string.tuner_menu,
+            R.string.tuner_other
+    };
 
     private static final float PREVIEW_SCALE = .95f;
     private static final float PREVIEW_SCALE_LANDSCAPE = .75f;
 
     private NavBarAdapter mNavBarAdapter;
+    private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -119,7 +149,22 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
         mNavBarAdapter.setTouchHelper(itemTouchHelper);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         setHasOptionsMenu(true);
+        mNavBarMode = Dependency.get(NavigationModeController.class).addListener(this);
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_VIEWS);
+    }
+
+    protected String getDefaultLayout() {
+        final int defaultResource = QuickStepContract.isGesturalMode(mNavBarMode)
+                ? R.string.config_navBarLayoutHandle
+                : QuickStepContract.isSwipeUpMode(mNavBarMode)
+                        ? R.string.config_navBarLayoutQuickstep
+                        : R.string.config_navBarLayout;
+        return getContext().getString(defaultResource);
+    }
+
+    @Override
+    public void onNavigationModeChanged(int mode) {
+        mNavBarMode = mode;
     }
 
     @Override
@@ -131,9 +176,8 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
     @Override
     public void onTuningChanged(String key, String navLayout) {
         if (!NAV_BAR_VIEWS.equals(key)) return;
-        Context context = getContext();
         if (navLayout == null) {
-            navLayout = context.getString(R.string.config_navBarLayout);
+            navLayout = getDefaultLayout();
         }
         String[] views = navLayout.split(GRAVITY_SEPARATOR);
         String[] groups = new String[] { NavBarAdapter.START, NavBarAdapter.CENTER,
@@ -144,7 +188,7 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
         for (int i = 0; i < 3; i++) {
             mNavBarAdapter.addButton(groups[i], groupLabels[i]);
             for (String button : views[i].split(BUTTON_SEPARATOR)) {
-                mNavBarAdapter.addButton(button, getLabel(button, context));
+                mNavBarAdapter.addButton(button, getLabel(button, getContext()));
             }
         }
         mNavBarAdapter.addButton(NavBarAdapter.ADD, getString(R.string.add_button));
@@ -194,12 +238,16 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
             return context.getString(R.string.navbar_editor_volup);
         } else if (button.startsWith(VOLUME_DOWN)) {
             return context.getString(R.string.navbar_editor_voldown);
-        /*} else if (button.equals(MENU_IME_ROTATE)) {
-            return context.getString(R.string.menu_ime);*/
+        } else if (button.startsWith(MENU_IME_ROTATE)) {
+            return context.getString(R.string.menu_ime);
+        } else if (button.startsWith(IME_SWITCHER)) {
+            return context.getString(R.string.ime_switcher);
+        } else if (button.startsWith(CONTEXTUAL)) {
+            return context.getString(R.string.contextual);
         } else if (button.startsWith(CLIPBOARD)) {
             return context.getString(R.string.clipboard);
-        /*} else if (button.startsWith(KEY)) {
-            return context.getString(R.string.keycode);*/
+        } else if (button.startsWith(KEY)) {
+            return context.getString(R.string.keycode);
         }
         return button;
     }
@@ -241,21 +289,64 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
         }
     }
 
-    /*private void selectImage() {
-        startActivityForResult(KeycodeSelectionHelper.getSelectImageIntent(), READ_REQUEST);
-    }*/
+    private void selectImage() {
+        CharSequence[] s = new CharSequence[sIconStrings.length];
+        for (int i = 0; i < s.length; i++) {
+            s[i] = getContext().getResources().getText(sIconStrings[i]);
+        }
+        new AlertDialog.Builder(getContext())
+            .setTitle(R.string.select_icon)
+            .setAdapter(new ArrayAdapter<CharSequence>(
+                        getContext(),
+                        android.R.layout.select_dialog_item,
+                        android.R.id.text1,
+                        s) {
+                            public View getView(int position, View convertView, ViewGroup parent) {
+                                View v = super.getView(position, convertView, parent);
+                                float d = getResources().getDisplayMetrics().density;
+                                TextView tv = (TextView)v.findViewById(android.R.id.text1);
+                                Integer icon = sIcons[position];
+                                if (icon != null) {
+                                    final LayerDrawable drawable = new LayerDrawable(new Drawable[] { getResources().getDrawable(icon) });
+                                    drawable.setLayerSize(0, (int) (24 * d + 0.5f), (int) (24 * d + 0.5f));
+                                    drawable.setLayerGravity(0, Gravity.CENTER);
+                                    TypedValue typedValue = new TypedValue();
+                                    getContext().getTheme().resolveAttribute(android.R.attr.colorControlNormal, typedValue, true);
+                                    drawable.setColorFilter(
+                                            getResources().getColor(typedValue.resourceId, getContext().getTheme()),
+                                            PorterDuff.Mode.SRC_IN);
+                                    tv.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null);
+                                }
+                                tv.setCompoundDrawablePadding((int) (5 * d + 0.5f));
+                                return v;
+                            }
+                        },
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Integer icon = sIcons[which];
+                                if (icon != null) {
+                                    mNavBarAdapter.onImageSelected(getContext().getPackageName() + "/" + icon);
+                                } else {
+                                    // selected "other"
+                                    startActivityForResult(KeycodeSelectionHelper.getSelectImageIntent(), READ_REQUEST);
+                                }
+                            }
+                        }
+            ).show();
+    }
 
-    /*@Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == READ_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             final Uri uri = data.getData();
             final int takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION);
             getContext().getContentResolver().takePersistableUriPermission(uri, takeFlags);
-            mNavBarAdapter.onImageSelected(uri);
+            mNavBarAdapter.onImageSelected(uri.toString());
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }*/
+    }
 
     private class NavBarAdapter extends RecyclerView.Adapter<Holder>
             implements View.OnClickListener {
@@ -418,7 +509,8 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
 
         private void showAddDialog(final Context context) {
             final String[] options = new String[] {
-                    BACK, HOME, RECENT, NAVSPACE, LEFT, RIGHT, VOLUME_UP, VOLUME_DOWN, POWER, CLIPBOARD
+                    BACK, HOME, RECENT, NAVSPACE, LEFT, RIGHT, VOLUME_UP, VOLUME_DOWN,
+                    POWER, CLIPBOARD, MENU_IME_ROTATE, CONTEXTUAL, KEY, IME_SWITCHER
             };
             final CharSequence[] labels = new CharSequence[options.length];
             for (int i = 0; i < options.length; i++) {
@@ -429,9 +521,9 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
                     .setItems(labels, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            /*if (KEY.equals(options[which])) {
+                            if (KEY.equals(options[which])) {
                                 showKeyDialogs(context);
-                            } else {*/
+                            } else {
                                 int index = mButtons.size() - 1;
                                 showAddedMessage(context, options[which]);
                                 mButtons.add(index, options[which]);
@@ -439,23 +531,23 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
 
                                 notifyItemInserted(index);
                                 notifyChanged();
-                            //}
+                            }
                         }
                     }).setNegativeButton(android.R.string.cancel, null)
                     .show();
         }
 
-        /*private void onImageSelected(Uri uri) {
+        private void onImageSelected(String uri) {
             int index = mButtons.size() - 1;
-            mButtons.add(index, KEY + KEY_CODE_START + mKeycode + KEY_IMAGE_DELIM + uri.toString()
+            mButtons.add(index, KEY + KEY_CODE_START + mKeycode + KEY_IMAGE_DELIM + uri
                     + KEY_CODE_END);
             mLabels.add(index, getLabel(KEY, getContext()));
 
             notifyItemInserted(index);
             notifyChanged();
-        }*/
+        }
 
-        /*private void showKeyDialogs(final Context context) {
+        private void showKeyDialogs(final Context context) {
             final KeycodeSelectionHelper.OnSelectionComplete listener =
                     new KeycodeSelectionHelper.OnSelectionComplete() {
                         @Override
@@ -473,7 +565,7 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
                             KeycodeSelectionHelper.showKeycodeSelect(context, listener);
                         }
                     }).show();
-        }*/
+        }
 
         private void showAddedMessage(Context context, String button) {
             if (CLIPBOARD.equals(button)) {

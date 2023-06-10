@@ -23,6 +23,14 @@ import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_H
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_OVERVIEW_DISABLED;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_SEARCH_DISABLED;
 import static com.android.systemui.shared.system.QuickStepContract.isGesturalMode;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.CLIPBOARD;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.CONTEXTUAL;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.VOLUME_DOWN;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.VOLUME_UP;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.POWER;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.KEY;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.MENU_IME_ROTATE;
+import static com.android.systemui.navigationbar.NavigationBarInflaterView.RIGHT;
 
 import android.animation.LayoutTransition;
 import android.animation.LayoutTransition.TransitionListener;
@@ -114,6 +122,9 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
     /** Indicates that navigation bar is vertical. */
     private boolean mIsVertical;
     private int mCurrentRotation = -1;
+    private int mNavMultiplier = -1;
+    private int mSlimMultiplier = 1;
+    private int mFullMultiplier = 1;
 
     boolean mLongClickableAccessibilityButton;
     int mDisabledFlags = 0;
@@ -147,6 +158,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
     private final NavTransitionListener mTransitionListener = new NavTransitionListener();
 
     private OnVerticalChangedListener mOnVerticalChangedListener;
+    private UpdateBoundsCallback mBoundsChangeListener;
     private boolean mLayoutTransitionsEnabled = true;
     private boolean mWakeAndUnlocking;
     private boolean mUseCarModeUi = false;
@@ -356,6 +368,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         mButtonDispatchers.put(R.id.volume_minus, new ButtonDispatcher(R.id.volume_minus));
         mButtonDispatchers.put(R.id.volume_plus, new ButtonDispatcher(R.id.volume_plus));
         mButtonDispatchers.put(R.id.clipboard, new ClipboardButtonDispatcher());
+        mButtonDispatchers.put(R.id.custom_key, new ButtonDispatcher(R.id.custom_key));
         for (int i = 0; i < mButtonDispatchers.size(); i++) {
             mButtonDispatchers.valueAt(i).setForceDisableOverviewCallback(this);
         }
@@ -374,6 +387,14 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
 
     public void setEdgeBackGestureHandler(EdgeBackGestureHandler edgeBackGestureHandler) {
         mEdgeBackGestureHandler = edgeBackGestureHandler;
+    }
+
+    public void setBoundsChangeListener(UpdateBoundsCallback callback) {
+        mBoundsChangeListener = callback;
+    }
+
+    private void triggerBoundsChange() {
+        mBoundsChangeListener.onBoundsChange();
     }
 
     void setBarTransitions(NavigationBarTransitions navigationBarTransitions) {
@@ -521,6 +542,10 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
 
     public ClipboardButtonDispatcher getClipboardButton() {
         return (ClipboardButtonDispatcher) mButtonDispatchers.get(R.id.clipboard);
+    }
+
+    public ButtonDispatcher getCustomButton() {
+        return mButtonDispatchers.get(R.id.custom_key);
     }
 
     public SparseArray<ButtonDispatcher> getButtonDispatchers() {
@@ -708,13 +733,13 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         updateRecentsIcon();
 
         boolean disableCursorKeys = !mShowCursorKeys || !useAltBack ||
-                (QuickStepContract.isGesturalMode(mNavBarMode) && mImeVisible);
+                (QuickStepContract.isGesturalMode(mNavBarMode) && canImeRenderGesturalNavButtons() && mImeVisible);
 
         // Update IME button visibility, a11y and rotate button always overrides the appearance
         boolean disableImeSwitcher =
                 (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SWITCHER_SHOWN) == 0
                 || isImeRenderingNavButtons()
-                || (!QuickStepContract.isSwipeUpMode(mNavBarMode) && !disableCursorKeys);
+                || (!QuickStepContract.isLegacyMode(mNavBarMode) && !disableCursorKeys);
         mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher, !disableImeSwitcher);
 
 
@@ -739,7 +764,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         // Always disable recents when alternate car mode UI is active and for secondary displays.
         boolean disableRecent = isRecentsButtonDisabled();
 
-        // Disable the home handle if both hone and recents are disabled
+        // Disable the home handle if both home and recents are disabled
         boolean disableHomeHandle = disableRecent
                 && ((mDisabledFlags & View.STATUS_BAR_DISABLE_HOME) != 0);
 
@@ -776,19 +801,6 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         getHomeHandle().setVisibility(disableHomeHandle ? View.INVISIBLE : View.VISIBLE);
         getCursorLeftButton().setVisibility(disableCursorKeys  ? View.INVISIBLE : View.VISIBLE);
         getCursorRightButton().setVisibility(disableCursorKeys ? View.INVISIBLE : View.VISIBLE);
-
-        if (getPowerButton() != null) {
-            getPowerButton().setVisibility(View.VISIBLE);
-        }
-        if (getVolumeMinusButton() != null) {
-            getVolumeMinusButton().setVisibility(View.VISIBLE);
-        }
-        if (getVolumePlusButton() != null) {
-            getVolumePlusButton().setVisibility(View.VISIBLE);
-        }
-        if (getClipboardButton() != null) {
-            getClipboardButton().setVisibility(View.VISIBLE);
-        }
 
         notifyActiveTouchRegions();
     }
@@ -965,10 +977,14 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         mEdgeBackGestureHandler.onNavigationModeChanged(mNavBarMode);
         mRotationButtonController.onNavigationModeChanged(mNavBarMode);
         updateRotationButton();
+        mSlimMultiplier = 1;
+        mFullMultiplier = mode == NAV_BAR_MODE_GESTURAL ? 2 : 1;
+        updateBoundsConfig();
     }
 
     public void setMenuVisibility(final boolean show) {
         mContextualButtonGroup.setButtonVisibility(R.id.menu, show);
+        updateBoundsConfig();
     }
 
     public void setAccessibilityButtonState(final boolean visible, final boolean longClickable) {
@@ -981,6 +997,8 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
     public void onFinishInflate() {
         super.onFinishInflate();
         mNavigationInflaterView = findViewById(R.id.navigation_inflater);
+        mNavigationInflaterView.setIconColors(mLightIconColor, mDarkIconColor);
+        mNavigationInflaterView.setBoundsChangeListener(this::updateBoundsConfig);
         mNavigationInflaterView.setButtonDispatchers(mButtonDispatchers);
 
         updateOrientationViews();
@@ -1122,14 +1140,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
 
         if (isGesturalMode(mNavBarMode)) {
             // Update the nav bar background to match the height of the visible nav bar
-            int height = mIsVertical
-                    ? getResources().getDimensionPixelSize(
-                            com.android.internal.R.dimen.navigation_bar_height_landscape)
-                    : getResources().getDimensionPixelSize(
-                            com.android.internal.R.dimen.navigation_bar_height);
-            int frameHeight = getResources().getDimensionPixelSize(
-                    com.android.internal.R.dimen.navigation_bar_frame_height);
-            mBarTransitions.setBackgroundFrame(new Rect(0, frameHeight - height, w, h));
+            mBarTransitions.setBackgroundFrame(new Rect(0, getNavBarFrameHeight() - getNavBarHeight(), w, h));
         } else {
             mBarTransitions.setBackgroundFrame(null);
         }
@@ -1137,12 +1148,52 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
+    void updateBoundsConfig() {
+        if (mNavMultiplier == -1) return;
+        boolean willBeSlim = true;
+        if (mNavBarMode != NAV_BAR_MODE_GESTURAL) {
+            // Only gestural nav supports slim bar
+            willBeSlim = false;
+        }
+        if (mNavigationInflaterView.hasKey(CLIPBOARD)
+                    || mNavigationInflaterView.hasKey(KEY)
+                    || mNavigationInflaterView.hasKey(POWER)
+                    || mNavigationInflaterView.hasKey(VOLUME_UP)
+                    || mNavigationInflaterView.hasKey(VOLUME_DOWN)) {
+            // If full-size buttons are present, don't cut them off
+            willBeSlim = false;
+        }
+        if (willBeSlim && getMenuButton().isVisible()) {
+            // If menu button is visible (and exists on navbar!), don't cut it off
+            willBeSlim = !(mNavigationInflaterView.hasKey(MENU_IME_ROTATE)
+                    || mNavigationInflaterView.hasKey(CONTEXTUAL)
+                    || mNavigationInflaterView.hasKey(RIGHT));
+        }
+        final int newMultiplier = willBeSlim ? mSlimMultiplier : mFullMultiplier;
+        if (mNavMultiplier != newMultiplier) {
+            mNavMultiplier = newMultiplier;
+            triggerBoundsChange();
+        }
+    }
+
     int getNavBarHeight() {
-        return mIsVertical
+        return (mIsVertical
                 ? getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.navigation_bar_height_landscape)
                 : getResources().getDimensionPixelSize(
-                        com.android.internal.R.dimen.navigation_bar_height);
+                        com.android.internal.R.dimen.navigation_bar_height))
+                        * (mNavMultiplier == -1 ? 1 : mNavMultiplier);
+    }
+
+    int getNavBarWidth() {
+        return getResources().getDimensionPixelSize(
+                        com.android.internal.R.dimen.navigation_bar_width)
+                        * (mNavMultiplier == -1 ? 1 : mNavMultiplier);
+    }
+
+    int getNavBarFrameHeight() {
+        return getResources().getDimensionPixelSize(
+                        com.android.internal.R.dimen.navigation_bar_frame_height);
     }
 
     private void notifyVerticalChangedListener(boolean newVertical) {
@@ -1232,6 +1283,8 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         }
 
         updateNavButtonIcons();
+        mNavMultiplier = 0;
+        updateBoundsConfig();
     }
 
     @Override
@@ -1357,5 +1410,9 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
 
     interface UpdateActiveTouchRegionsCallback {
         void update();
+    }
+
+    interface UpdateBoundsCallback {
+        void onBoundsChange();
     }
 }

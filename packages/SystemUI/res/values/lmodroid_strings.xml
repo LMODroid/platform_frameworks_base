@@ -100,10 +100,14 @@
     <string name="center">Center</string>
     <string name="end">End</string>
     <string name="space">Spacer</string>
+    <string name="contextual">Contextual</string>
     <string name="menu_ime">Menu / Keyboard Switcher</string>
+    <string name="ime_switcher">Keyboard Switcher</string>
     <string name="select_button">Select button to add</string>
     <string name="add_button">Add button</string>
     <string name="select_keycode">Select Keyboard Button</string>
+    <string name="select_icon">Select Icon</string>
+    <string name="tuner_other">Other</string>
     <string name="left">Left</string>
     <string name="right">Right</string>
     <string name="navbar_editor_power">Power</string>

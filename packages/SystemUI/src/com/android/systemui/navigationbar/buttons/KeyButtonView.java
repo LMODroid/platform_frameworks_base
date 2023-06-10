@@ -28,12 +28,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.hardware.input.InputManager;
 import android.hardware.input.InputManagerGlobal;
 import android.media.AudioManager;
 import android.metrics.LogMaker;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.AttributeSet;
@@ -205,20 +203,6 @@ public class KeyButtonView extends ImageView implements ButtonInterface, DragDro
         mOnClickListener = onClickListener;
     }
 
-    public void loadAsync(Icon icon) {
-        new AsyncTask<Icon, Void, Drawable>() {
-            @Override
-            protected Drawable doInBackground(Icon... params) {
-                return params[0].loadDrawable(mContext);
-            }
-
-            @Override
-            protected void onPostExecute(Drawable drawable) {
-                setImageDrawable(drawable);
-            }
-        }.execute(icon);
-    }
-
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -369,8 +353,7 @@ public class KeyButtonView extends ImageView implements ButtonInterface, DragDro
         if (mHasOvalBg) {
             mOvalBgPaint.setColor(keyButtonDrawable.getDrawableBackgroundColor());
         }
-        mRipple.setType(keyButtonDrawable.hasOvalBg() ? KeyButtonRipple.Type.OVAL
-                : KeyButtonRipple.Type.ROUNDED_RECT);
+        mRipple.setType(mHasOvalBg ? KeyButtonRipple.Type.OVAL : KeyButtonRipple.Type.ROUNDED_RECT);
     }
 
     public void playSoundEffect(int soundConstant) {

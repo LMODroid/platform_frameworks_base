@@ -678,6 +678,7 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         mView.setBackgroundExecutor(bgExecutor);
         mView.setEdgeBackGestureHandler(mEdgeBackGestureHandler);
         mView.setDisplayTracker(mDisplayTracker);
+        mView.setBoundsChangeListener(this::onBoundsChange);
         mNavBarMode = mNavigationModeController.addListener(mModeChangedListener);
     }
 
@@ -1698,29 +1699,23 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
                     com.android.internal.R.bool.config_navBarCanMove);
         }
         if (!navBarCanMove) {
-            height = userContext.getResources().getDimensionPixelSize(
-                    com.android.internal.R.dimen.navigation_bar_frame_height);
-            insetsHeight = userContext.getResources().getDimensionPixelSize(
-                    com.android.internal.R.dimen.navigation_bar_height);
+            height = mView.getNavBarFrameHeight();
+            insetsHeight = mView.getNavBarHeight();
         } else {
             switch (rotation) {
                 case ROTATION_UNDEFINED:
                 case Surface.ROTATION_0:
                 case Surface.ROTATION_180:
-                    height = userContext.getResources().getDimensionPixelSize(
-                            com.android.internal.R.dimen.navigation_bar_frame_height);
-                    insetsHeight = userContext.getResources().getDimensionPixelSize(
-                            com.android.internal.R.dimen.navigation_bar_height);
+                    height = mView.getNavBarFrameHeight();
+                    insetsHeight = mView.getNavBarHeight();
                     break;
                 case Surface.ROTATION_90:
                     gravity = Gravity.RIGHT;
-                    width = userContext.getResources().getDimensionPixelSize(
-                            com.android.internal.R.dimen.navigation_bar_width);
+                    width = mView.getNavBarWidth();
                     break;
                 case Surface.ROTATION_270:
                     gravity = Gravity.LEFT;
-                    width = userContext.getResources().getDimensionPixelSize(
-                            com.android.internal.R.dimen.navigation_bar_width);
+                    width = mView.getNavBarWidth();
                     break;
             }
         }
@@ -1880,6 +1875,9 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
             updateButtonLocation(region, touchRegionCache, mView.getRotateSuggestionButton(),
                     inScreenSpace, useNearestRegion);
         }
+        if (mView.getMenuButton() != null) {
+            updateButtonLocation(region, touchRegionCache, mView.getMenuButton(), inScreenSpace, useNearestRegion);
+        }
         if (mView.getPowerButton() != null) {
             updateButtonLocation(region, touchRegionCache, mView.getPowerButton(), inScreenSpace, useNearestRegion);
         }
@@ -1891,6 +1889,9 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         }
         if (mView.getClipboardButton() != null) {
             updateButtonLocation(region, touchRegionCache, mView.getClipboardButton(), inScreenSpace, useNearestRegion);
+        }
+        if (mView.getCustomButton() != null) {
+            updateButtonLocation(region, touchRegionCache, mView.getCustomButton(), inScreenSpace, useNearestRegion);
         }
         return region;
     }
@@ -1962,6 +1963,15 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         } else {
             mRegionSamplingHelper.stop();
         }
+    }
+
+    private void onBoundsChange() {
+        // give wm some time to change fg app
+        mHandler.postDelayed(() -> {
+            mWindowManager.updateViewLayout(mFrame, getBarLayoutParams(mContext.getResources()
+                    .getConfiguration().windowConfiguration.getRotation()));
+            mRegionSamplingHelper.updateSamplingRect();
+        }, 250);
     }
 
     private void setNavBarMode(int mode) {
