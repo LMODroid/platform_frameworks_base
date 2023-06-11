@@ -110,6 +110,7 @@
     <string name="tuner_other">Other</string>
     <string name="left">Left</string>
     <string name="right">Right</string>
+    <string name="restore">Restore active layout</string>
     <string name="navbar_editor_power">Power</string>
     <string name="navbar_editor_volup">Volume up</string>
     <string name="navbar_editor_voldown">Volume down</string>
