@@ -114,9 +114,11 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
     };
 
     private static final float PREVIEW_SCALE = .95f;
-    private static final float PREVIEW_SCALE_LANDSCAPE = .75f;
+    private static final float PREVIEW_SCALE_LANDSCAPE = .65f;
 
     private NavBarAdapter mNavBarAdapter;
+    private PreviewNavInflater mPreview;
+    private String mCurrentLayout;
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
 
     @Override
@@ -126,14 +128,59 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.nav_bar_tuner, container, false);
+        mNavBarMode = Dependency.get(NavigationModeController.class).addListener(this);
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        boolean isRotated = display.getRotation() == Surface.ROTATION_90
+                || display.getRotation() == Surface.ROTATION_270;
+        Configuration config = new Configuration(getContext().getResources().getConfiguration());
+        boolean isPhoneLandscape = !QuickStepContract.isGesturalMode(mNavBarMode)
+                && isRotated && (config.smallestScreenWidthDp < 600);
+
+        final View view = inflater.inflate(isPhoneLandscape ? R.layout.nav_bar_tuner_vertical
+                : R.layout.nav_bar_tuner, container, false);
+        inflatePreview((ViewGroup) view.findViewById(R.id.nav_preview_frame));
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
         return view;
     }
 
+    private void inflatePreview(ViewGroup view) {
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        boolean isRotated = display.getRotation() == Surface.ROTATION_90
+                || display.getRotation() == Surface.ROTATION_270;
+
+        Configuration config = new Configuration(getContext().getResources().getConfiguration());
+        boolean isPhoneLandscape = !QuickStepContract.isGesturalMode(mNavBarMode)
+                && isRotated && (config.smallestScreenWidthDp < 600);
+        final float scale = isPhoneLandscape ? PREVIEW_SCALE_LANDSCAPE : PREVIEW_SCALE;
+        config.densityDpi = (int) (config.densityDpi * scale);
+
+        mPreview = (PreviewNavInflater) LayoutInflater.from(getContext().createConfigurationContext(
+                config)).inflate(R.layout.nav_bar_tuner_inflater, view, false);
+        final ViewGroup.LayoutParams layoutParams = mPreview.getLayoutParams();
+        layoutParams.width = (int) ((isPhoneLandscape ? display.getHeight() : display.getWidth())
+                * scale);
+        // Not sure why, but the height dimen is not being scaled with the dp, set it manually
+        // for now.
+        layoutParams.height = (int) (layoutParams.height * scale);
+        if (isPhoneLandscape) {
+            int width = layoutParams.width;
+            layoutParams.width = layoutParams.height;
+            layoutParams.height = width;
+        } else if (QuickStepContract.isGesturalMode(mNavBarMode)) {
+            // Always use full-size preview for gestural mode too
+            layoutParams.height *= 2;
+        }
+        view.addView(mPreview);
+
+        if (isPhoneLandscape) {
+            mPreview.findViewById(R.id.horizontal).setVisibility(View.GONE);
+        } else {
+            mPreview.findViewById(R.id.vertical).setVisibility(View.GONE);
+        }
+    }
+
     private void notifyChanged() {
-        Settings.Secure.putString(getContext().getContentResolver(),
-                        NAV_BAR_VIEWS, mNavBarAdapter.getNavString());
+        mPreview.onNavLayoutChange(mNavBarAdapter.getNavString());
     }
 
     @Override
@@ -149,7 +196,6 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
         mNavBarAdapter.setTouchHelper(itemTouchHelper);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         setHasOptionsMenu(true);
-        mNavBarMode = Dependency.get(NavigationModeController.class).addListener(this);
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_VIEWS);
     }
 
@@ -170,12 +216,14 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Dependency.get(NavigationModeController.class).removeListener(this);
         Dependency.get(TunerService.class).removeTunable(this);
     }
 
     @Override
     public void onTuningChanged(String key, String navLayout) {
         if (!NAV_BAR_VIEWS.equals(key)) return;
+        mCurrentLayout = navLayout;
         if (navLayout == null) {
             navLayout = getDefaultLayout();
         }
@@ -192,6 +240,7 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
             }
         }
         mNavBarAdapter.addButton(NavBarAdapter.ADD, getString(R.string.add_button));
+        notifyChanged();
     }
 
     @Override
@@ -205,6 +254,21 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
         if (item.getItemId() == R.id.nav_bar_reset) {
             Settings.Secure.putString(getContext().getContentResolver(),
                     NAV_BAR_VIEWS, null);
+            return true;
+        } else if (item.getItemId() == R.id.nav_bar_restore) {
+            onTuningChanged(NAV_BAR_VIEWS, mCurrentLayout);
+            return true;
+        } else if (item.getItemId() == R.id.nav_bar_save) {
+            if (!mNavBarAdapter.hasHomeButton()) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.no_home_title)
+                        .setMessage(R.string.no_home_message)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            } else {
+                Settings.Secure.putString(getContext().getContentResolver(),
+                        NAV_BAR_VIEWS, mNavBarAdapter.getNavString());
+            }
             return true;
         } else if (item.getItemId() == android.R.id.home) {
             getActivity().onBackPressed();
