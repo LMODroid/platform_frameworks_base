@@ -52,7 +52,6 @@ import com.android.systemui.navigationbar.buttons.KeyButtonDrawable;
 import com.android.systemui.navigationbar.buttons.KeyButtonView;
 import com.android.systemui.navigationbar.buttons.ReverseLinearLayout;
 import com.android.systemui.navigationbar.buttons.ReverseLinearLayout.ReverseRelativeLayout;
-import com.android.systemui.recents.OverviewProxyService;
 import com.android.systemui.shared.system.QuickStepContract;
 import com.android.systemui.tuner.TunerService;
 
@@ -116,17 +115,16 @@ public class NavigationBarInflaterView extends FrameLayout
     private UpdateBoundsCallback mBoundsChangeListener;
     private String mCurrentLayout;
     private String mCurrentLayoutReal;
-    private int mLightIconColor;
-    private int mDarkIconColor;
+    protected int mLightIconColor;
+    protected int mDarkIconColor;
 
     private View mLastPortrait;
     private View mLastLandscape;
 
-    private boolean mIsVertical;
+    protected boolean mIsVertical;
     private boolean mAlternativeOrder;
 
-    private OverviewProxyService mOverviewProxyService;
-    private int mNavBarMode = -1;
+    protected int mNavBarMode = -1;
     private String mNavBarLayout;
 
     private boolean mInverseLayout;
@@ -135,8 +133,6 @@ public class NavigationBarInflaterView extends FrameLayout
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
         createInflaters();
-        mOverviewProxyService = Dependency.get(OverviewProxyService.class);
-        mNavBarMode = Dependency.get(NavigationModeController.class).addListener(this);
     }
 
     @VisibleForTesting
@@ -174,7 +170,7 @@ public class NavigationBarInflaterView extends FrameLayout
     protected String getDefaultLayout() {
         final int defaultResource = QuickStepContract.isGesturalMode(mNavBarMode)
                 ? R.string.config_navBarLayoutHandle
-                : mOverviewProxyService.shouldShowSwipeUpUI()
+                : QuickStepContract.isSwipeUpMode(mNavBarMode)
                         ? R.string.config_navBarLayoutQuickstep
                         : R.string.config_navBarLayout;
         return getContext().getString(defaultResource);
@@ -198,6 +194,7 @@ public class NavigationBarInflaterView extends FrameLayout
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        mNavBarMode = Dependency.get(NavigationModeController.class).addListener(this);
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_INVERSE);
         Dependency.get(TunerService.class).addTunable(this, KEY_NAVIGATION_HINT);
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_VIEWS);
@@ -238,6 +235,12 @@ public class NavigationBarInflaterView extends FrameLayout
         }
     }
 
+    public void forceReinflate() {
+        if (mHorizontal != null && mVertical != null) {
+            setNavigationBarLayout(mCurrentLayout, true);
+        }
+    }
+
     public void onLikelyDefaultLayoutChange() {
         setNavigationBarLayout(mNavBarLayout, false);
     }
@@ -265,13 +268,13 @@ public class NavigationBarInflaterView extends FrameLayout
         }
     }
 
-    void setVertical(boolean vertical) {
+    public void setVertical(boolean vertical) {
         if (vertical != mIsVertical) {
             mIsVertical = vertical;
         }
     }
 
-    void setAlternativeOrder(boolean alternativeOrder) {
+    public void setAlternativeOrder(boolean alternativeOrder) {
         if (alternativeOrder != mAlternativeOrder) {
             mAlternativeOrder = alternativeOrder;
             updateAlternativeOrder();
@@ -279,10 +282,12 @@ public class NavigationBarInflaterView extends FrameLayout
     }
 
     private void updateAlternativeOrder() {
-        updateAlternativeOrder(mHorizontal.findViewById(R.id.ends_group));
-        updateAlternativeOrder(mHorizontal.findViewById(R.id.center_group));
-        updateAlternativeOrder(mVertical.findViewById(R.id.ends_group));
-        updateAlternativeOrder(mVertical.findViewById(R.id.center_group));
+        if (mHorizontal != null && mVertical != null) {
+            updateAlternativeOrder(mHorizontal.findViewById(R.id.ends_group));
+            updateAlternativeOrder(mHorizontal.findViewById(R.id.center_group));
+            updateAlternativeOrder(mVertical.findViewById(R.id.ends_group));
+            updateAlternativeOrder(mVertical.findViewById(R.id.center_group));
+        }
     }
 
     private void updateAlternativeOrder(View v) {
@@ -497,7 +502,7 @@ public class NavigationBarInflaterView extends FrameLayout
         return v;
     }
 
-    View createView(String buttonSpec, ViewGroup parent, LayoutInflater inflater) {
+    public View createView(String buttonSpec, ViewGroup parent, LayoutInflater inflater) {
         View v = null;
         String button = extractButton(buttonSpec);
         if (LEFT.equals(button)) {
