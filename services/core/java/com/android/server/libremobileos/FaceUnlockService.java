@@ -89,7 +89,7 @@ public class FaceUnlockService extends SystemService {
 						ServiceManager.getService(Context.BIOMETRIC_SERVICE));
 					IFaceService faceService = IFaceService.Stub.asInterface(
 						ServiceManager.getService(Context.FACE_SERVICE));
-					if ((biometricService.getSupportedModalities(0) & TYPE_FACE) == 0) {
+					if ((biometricService.getSupportedModalities(Authenticators.BIOMETRIC_WEAK) & TYPE_FACE) == 0) {
 						int newId = 0;
 						// IDs may come from HALs and be non-linear, ensure we really have unique ID
 						// if ID is duplicated, we crash system server
