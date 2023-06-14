@@ -62,6 +62,7 @@ import com.android.systemui.statusbar.policy.AospPolicyModule;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedControllerImpl;
+import com.android.systemui.statusbar.policy.FlashlightModule;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 import com.android.systemui.statusbar.policy.HeadsUpManagerLogger;
 import com.android.systemui.statusbar.policy.IndividualSensorPrivacyController;
@@ -95,6 +96,7 @@ import javax.inject.Named;
 @Module(includes = {
         AospPolicyModule.class,
         BatterySaverModule.class,
+        FlashlightModule.class,
         GestureModule.class,
         MediaModule.class,
         MultiUserUtilsModule.class,
