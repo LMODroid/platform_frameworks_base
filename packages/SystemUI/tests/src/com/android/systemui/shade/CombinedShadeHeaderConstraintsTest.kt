@@ -109,12 +109,11 @@ class CombinedShadeHeaderConstraintsTest : SysuiTestCase() {
     @Test
     fun testEdgeElementsAlignedWithEdge_largeScreen() {
         with(largeScreenConstraint) {
-            assertThat(getConstraint(R.id.clock).layout.startToEnd).isEqualTo(R.id.begin_guide)
-            assertThat(getConstraint(R.id.clock).layout.horizontalBias).isEqualTo(0.5f)
+            assertThat(getConstraint(R.id.clock).layout.startToStart).isEqualTo(PARENT_ID)
+            assertThat(getConstraint(R.id.clock).layout.horizontalBias).isEqualTo(0f)
 
-            assertThat(getConstraint(R.id.privacy_container).layout.endToStart)
-                .isEqualTo(R.id.end_guide)
-            assertThat(getConstraint(R.id.privacy_container).layout.horizontalBias).isEqualTo(0.5f)
+            assertThat(getConstraint(R.id.privacy_container).layout.endToEnd).isEqualTo(PARENT_ID)
+            assertThat(getConstraint(R.id.privacy_container).layout.horizontalBias).isEqualTo(1f)
         }
     }
 
@@ -220,12 +219,7 @@ class CombinedShadeHeaderConstraintsTest : SysuiTestCase() {
                 .isEqualTo(cutoutEnd - padding)
         }
 
-        with(largeScreenConstraint) {
-            assertThat(getConstraint(R.id.begin_guide).layout.guideBegin)
-                .isEqualTo(cutoutStart - padding)
-            assertThat(getConstraint(R.id.end_guide).layout.guideEnd)
-                .isEqualTo(cutoutEnd - padding)
-        }
+        assertThat(changes.largeScreenConstraintsChanges).isNull()
     }
 
     @Test
@@ -252,10 +246,7 @@ class CombinedShadeHeaderConstraintsTest : SysuiTestCase() {
             assertThat(getConstraint(R.id.end_guide).layout.guideEnd).isEqualTo(0)
         }
 
-        with(largeScreenConstraint) {
-            assertThat(getConstraint(R.id.begin_guide).layout.guideBegin).isEqualTo(0)
-            assertThat(getConstraint(R.id.end_guide).layout.guideEnd).isEqualTo(0)
-        }
+        assertThat(changes.largeScreenConstraintsChanges).isNull()
     }
 
     @Test
