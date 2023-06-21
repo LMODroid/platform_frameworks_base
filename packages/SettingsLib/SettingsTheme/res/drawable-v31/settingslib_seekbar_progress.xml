@@ -20,14 +20,12 @@
     <item android:height="20dp">
         <selector>
             <item android:state_enabled="false">
-                <shape android:tint="?android:attr/colorAccent" android:shape="rectangle">
-                    <solid android:color="#80ffffff" />
+                <shape android:tint="@color/settingslib_seekbar_progress_color" android:shape="rectangle" >
                     <corners android:radius="10dp" />
                 </shape>
             </item>
             <item android:state_enabled="true">
-                <shape android:tint="?android:attr/colorAccent" android:shape="rectangle">
-                    <solid android:color="#ffffffff" />
+                <shape android:tint="@color/settingslib_seekbar_progress_color" android:shape="rectangle">
                     <corners android:radius="10dp" />
                 </shape>
             </item>
