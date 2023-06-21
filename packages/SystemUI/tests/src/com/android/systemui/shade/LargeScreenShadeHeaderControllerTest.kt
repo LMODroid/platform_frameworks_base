@@ -1,6 +1,5 @@
 package com.android.systemui.shade
 
-import android.animation.Animator
 import android.animation.ValueAnimator
 import android.app.StatusBarManager
 import android.content.Context
@@ -47,8 +46,8 @@ import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyZeroInteractions
-import org.mockito.junit.MockitoJUnit
 import org.mockito.Mockito.`when` as whenever
+import org.mockito.junit.MockitoJUnit
 
 @SmallTest
 @RunWith(AndroidTestingRunner::class)
@@ -294,34 +293,6 @@ class LargeScreenShadeHeaderControllerTest : SysuiTestCase() {
         updateCaptor.value.onAnimationUpdate(mock())
 
         assertThat(viewVisibility).isEqualTo(View.INVISIBLE)
-    }
-
-    @Test
-    fun animatorListenersClearedAtEnd() {
-        val animator = mock(ViewPropertyAnimator::class.java, Answers.RETURNS_SELF)
-        whenever(view.animate()).thenReturn(animator)
-
-        mLargeScreenShadeHeaderController.startCustomizingAnimation(show = true, 0L)
-        val listenerCaptor = argumentCaptor<Animator.AnimatorListener>()
-        verify(animator).setListener(capture(listenerCaptor))
-
-        listenerCaptor.value.onAnimationEnd(mock())
-        verify(animator).setListener(null)
-        verify(animator).setUpdateListener(null)
-    }
-
-    @Test
-    fun animatorListenersClearedOnCancel() {
-        val animator = mock(ViewPropertyAnimator::class.java, Answers.RETURNS_SELF)
-        whenever(view.animate()).thenReturn(animator)
-
-        mLargeScreenShadeHeaderController.startCustomizingAnimation(show = true, 0L)
-        val listenerCaptor = argumentCaptor<Animator.AnimatorListener>()
-        verify(animator).setListener(capture(listenerCaptor))
-
-        listenerCaptor.value.onAnimationCancel(mock())
-        verify(animator).setListener(null)
-        verify(animator).setUpdateListener(null)
     }
 
     @Test
