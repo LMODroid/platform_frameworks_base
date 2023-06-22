@@ -39,6 +39,12 @@
          user switches -->
     <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
 
+    <!-- Should we listen for fingerprints when the screen is off?  Devices
+         with a rear-mounted sensor want this, but certain devices have
+         the sensor embedded in the power key and listening all the time
+         causes a poor experience. -->
+    <java-symbol type="bool" name="config_fingerprintWakeAndUnlock" />
+
     <!-- Notification light mappings -->
     <java-symbol type="array" name="notification_light_package_mapping" />
     <!-- On-device lights (LED) capabilities -->
