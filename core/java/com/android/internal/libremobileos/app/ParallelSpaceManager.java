@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Simple wrapper for ParallelSpaceManagerService.
- * It requires android.permission.MANAGE_PARALLEL_SPACES.
+ * It requires com.android.permission.MANAGE_PARALLEL_SPACES.
  * @hide
  */
 public final class ParallelSpaceManager {

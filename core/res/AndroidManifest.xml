@@ -3053,7 +3053,7 @@
         android:protectionLevel="signature|privileged" />
 
     <!-- @hide Allow managing parallel spaces or receiving related broadcasts. -->
-    <permission android:name="android.permission.MANAGE_PARALLEL_SPACES"
+    <permission android:name="com.android.permission.MANAGE_PARALLEL_SPACES"
         android:protectionLevel="signature|privileged" />
 
     <!-- @SystemApi @hide Allows an application to create, remove users and get the list of
