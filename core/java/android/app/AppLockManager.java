@@ -76,7 +76,7 @@ public final class AppLockManager {
      * Add an application to be protected. Package should be an user
      * installed application or a system app whitelisted in
      * {@link config_appLockAllowedSystemApps}.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param packageName the package name of the app to add.
      * @hide
@@ -93,7 +93,7 @@ public final class AppLockManager {
 
     /**
      * Remove an application from the protected packages list.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param packageName the package name of the app to remove.
      * @hide
@@ -127,7 +127,7 @@ public final class AppLockManager {
 
     /**
      * Set auto lock timeout.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param timeout the timeout in milliseconds. Must be >= 5.
      * @param userId the user id given by the caller.
@@ -145,7 +145,7 @@ public final class AppLockManager {
 
     /**
      * Get all the packages protected with app lock.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @return a unique list of {@link AppLockData} of the protected apps.
      * @hide
@@ -163,7 +163,7 @@ public final class AppLockManager {
 
     /**
      * Set whether notification content should be redacted for a package
-     * in locked state. Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * in locked state. Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param packageName the package name.
      * @param shouldRedactNotification true to hide notification content.
@@ -181,7 +181,7 @@ public final class AppLockManager {
 
     /**
      * Set whether to allow unlocking with biometrics.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param biometricsAllowed whether to use biometrics.
      * @hide
@@ -213,7 +213,7 @@ public final class AppLockManager {
 
     /**
      * Unlock a package following authentication with credentials.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param packageName the name of the package to unlock.
      * @hide
@@ -230,7 +230,7 @@ public final class AppLockManager {
 
     /**
      * Hide or unhide an application from launcher.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param packageName the name of the package to hide or unhide.
      * @param hide whether to hide or not.
@@ -248,7 +248,7 @@ public final class AppLockManager {
 
     /**
      * Get the list of applications hidden from launcher.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @return list of package names of the hidden apps.
      * @hide

@@ -702,7 +702,7 @@ class AppLockManagerService(
 
     /**
      * Unlock a package following authentication with credentials.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param packageName the name of the package to unlock.
      * @param userId the user id of the caller.
@@ -740,7 +740,7 @@ class AppLockManagerService(
 
     /**
      * Hide or unhide an application from launcher.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param packageName the name of the package to hide or unhide.
      * @param hide whether to hide or not.
@@ -777,7 +777,7 @@ class AppLockManagerService(
 
     /**
      * Get the list of applications hidden from launcher.
-     * Caller must hold {@link android.permission.MANAGE_APP_LOCK}.
+     * Caller must hold {@link com.android.permission.MANAGE_APP_LOCK}.
      *
      * @param userId the user id of the caller.
      * @return list of package names of the hidden apps.
