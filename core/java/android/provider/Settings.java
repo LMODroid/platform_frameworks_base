@@ -6217,12 +6217,6 @@ public final class Settings {
         public static final String QS_FOOTER_DATA_USAGE = "qs_footer_data_usage";
 
         /**
-         * Bring back old style mobile data indicators.
-         * @hide
-         */
-        public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
-
-        /**
          * @hide
          */
         public static final String TRANSISTENT_TASK_MODE = "transistent_task_mode";

@@ -34,7 +34,4 @@
     -->
     <integer name="def_clock_position">2</integer>
 
-    <!-- Whether to use old mobile type icons as default -->
-    <bool name="config_useOldMobileIcons">false</bool>
-
 </resources>

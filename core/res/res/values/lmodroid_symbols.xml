@@ -154,9 +154,6 @@
     <!-- Parallel space max count. -->
     <java-symbol type="integer" name="config_parallelSpaceMaxCount" />
 
-    <!-- Whether to use old mobile type icons as default -->
-    <java-symbol type="bool" name="config_useOldMobileIcons" />
-
     <!-- Whether to use VPN Tethering -->
     <java-symbol type="bool" name="config_enable_vpntethering" />
 

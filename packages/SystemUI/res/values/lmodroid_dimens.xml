@@ -26,10 +26,4 @@
     <dimen name="bluetooth_dialog_active_device_bottom_margin">4dp</dimen>
     <dimen name="bluetooth_dialog_toggle_height">56dp</dimen>
 
-    <!-- Old style mobile data indicators -->
-    <dimen name="status_bar_mobile_signal_with_type_height">18dp</dimen>
-    <dimen name="status_bar_mobile_signal_with_type_width">18dp</dimen>
-    <dimen name="status_bar_mobile_signal_width">16dp</dimen>
-    <dimen name="status_bar_mobile_type_height">9dp</dimen>
-    <dimen name="status_bar_mobile_type_width">12dp</dimen>
 </resources>

@@ -2284,9 +2284,6 @@ class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.System.STATUS_BAR_CLOCK,
                     R.integer.def_clock_position);
 
-            loadIntegerSetting(stmt, Settings.System.USE_OLD_MOBILETYPE,
-                    R.bool.config_useOldMobileIcons);
-
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
              * secure, and system settings are no longer stored in a database
