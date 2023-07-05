@@ -17,10 +17,15 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         package="com.android.systemui">
 
     <!-- Network traffic monitor -->
     <uses-permission android:name="android.permission.MAINLINE_NETWORK_STACK" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:node="remove" />
 
     <!-- SystemUI Tuner -->
     <application>
