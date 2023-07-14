@@ -6455,6 +6455,13 @@ public final class Settings {
         public static final String SHOW_APP_VOLUME = "show_app_volume";
 
         /**
+         * Action to perform when the screen edge is long-swiped. (Default is 0)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_EDGE_LONG_SWIPE_ACTION = "key_edge_long_swipe_action";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
