@@ -45,6 +45,8 @@ import com.android.server.biometrics.sensors.face.aidl.AidlSession;
 import com.android.server.biometrics.sensors.face.aidl.FaceProvider;
 import com.android.server.biometrics.sensors.face.aidl.Sensor;
 
+import com.libremobileos.faceunlock.client.FaceUnlockHalManager;
+
 /**
  * Convert HIDL sensor configurations to an AIDL Sensor.
  */
@@ -210,6 +212,11 @@ public class HidlToAidlSensorAdapter extends Sensor implements IHwBinder.DeathRe
             Slog.w(TAG, "NoSuchElementException", e);
         } catch (RemoteException e) {
             Slog.e(TAG, "Failed to get face HAL", e);
+        }
+
+        if (mDaemon == null) {
+            Slog.i(TAG, "Loading software Face HAL");
+            mDaemon = FaceUnlockHalManager.getIBiometricsFace();
         }
 
         if (mDaemon == null) {
