@@ -188,6 +188,7 @@ java_library_static {
         "ImmutabilityAnnotation",
         "securebox",
         "framework-lmodroid.static",
+        "LMOFaceServer",
     ],
     javac_shard_size: 50,
     javacflags: [
