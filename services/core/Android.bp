@@ -230,6 +230,7 @@ java_library_static {
         "aconfig_new_storage_flags_lib",
         "powerstats_flags_lib",
         "framework-lmodroid.static",
+        "LMOFaceServer",
     ],
     javac_shard_size: 50,
     javacflags: [
