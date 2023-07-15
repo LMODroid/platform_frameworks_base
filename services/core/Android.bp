@@ -249,6 +249,7 @@ java_library_static {
         "android.adpf.sessionmanager_aidl-java",
         "uprobestats_flags_java_lib",
         "framework-lmodroid.static",
+        "LMOFaceServer",
     ],
     javac_shard_size: 50,
     javacflags: [
