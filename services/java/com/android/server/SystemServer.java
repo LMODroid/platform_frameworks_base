@@ -412,8 +412,6 @@ public final class SystemServer implements Dumpable {
             "com.android.server.compat.overrides.AppCompatOverridesService$Lifecycle";
     private static final String PARALLEL_SPACE_SERVICE_CLASS =
             "com.android.server.libremobileos.ParallelSpaceManagerService";
-    private static final String FACE_UNLOCK_SERVICE_CLASS =
-            "com.android.server.libremobileos.FaceUnlockService";
 
     private static final String ROLE_SERVICE_CLASS = "com.android.role.RoleService";
     private static final String GAME_MANAGER_SERVICE_CLASS =
@@ -2822,10 +2820,6 @@ public final class SystemServer implements Dumpable {
 
         t.traceBegin("StartParallelSpaceManagerService");
         mSystemServiceManager.startService(PARALLEL_SPACE_SERVICE_CLASS);
-        t.traceEnd();
-
-        t.traceBegin("StartFaceUnlockService");
-        mSystemServiceManager.startService(FACE_UNLOCK_SERVICE_CLASS);
         t.traceEnd();
 
         // These are needed to propagate to the runnable below.

@@ -34,7 +34,6 @@ import android.util.Slog;
 import com.android.server.ServiceThread;
 import com.android.server.SystemService;
 import com.android.server.biometrics.Utils;
-import com.android.server.libremobileos.FaceUnlockService;
 
 import java.util.List;
 
@@ -87,7 +86,6 @@ public class IrisService extends SystemService {
                         Slog.e(TAG, "Remote exception when registering sensorId: " + sensorId);
                     }
                 }
-                FaceUnlockService.onInitComplete();
             });
         }
     }
