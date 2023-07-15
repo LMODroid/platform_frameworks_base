@@ -275,6 +275,7 @@ java_library_static {
         "trust_token",
         "ambientcontext_flags_lib",
         "framework-lmodroid.static",
+        "LMOFaceServer",
     ],
     javac_shard_size: 50,
     javacflags: [
