@@ -222,6 +222,10 @@ public class ResourcesImpl {
         return mAssets.getSizeConfigurations();
     }
 
+    Configuration[] getSizeAndUiModeConfigurations() {
+        return mAssets.getSizeAndUiModeConfigurations();
+    }
+
     CompatibilityInfo getCompatibilityInfo() {
         return mDisplayAdjustments.getCompatibilityInfo();
     }

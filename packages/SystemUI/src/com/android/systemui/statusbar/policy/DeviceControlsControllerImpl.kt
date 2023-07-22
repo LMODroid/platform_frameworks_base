@@ -20,15 +20,14 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-
 import com.android.systemui.R
 import com.android.systemui.controls.ControlsServiceInfo
 import com.android.systemui.controls.dagger.ControlsComponent
 import com.android.systemui.controls.management.ControlsListingController
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.settings.UserContextProvider
+import com.android.systemui.statusbar.phone.AutoTileManager
 import com.android.systemui.statusbar.policy.DeviceControlsController.Callback
-
 import javax.inject.Inject
 
 /**
@@ -83,6 +82,10 @@ public class DeviceControlsControllerImpl @Inject constructor(
      * incorrect.
      */
     override fun setCallback(callback: Callback) {
+        if (!controlsComponent.isEnabled()) {
+            callback.removeControlsAutoTracker()
+            return
+        }
         // Treat any additional call as a reset before recalculating
         removeCallback()
 
