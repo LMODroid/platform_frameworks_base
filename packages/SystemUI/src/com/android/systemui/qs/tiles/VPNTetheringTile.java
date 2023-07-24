@@ -55,6 +55,8 @@ import javax.inject.Inject;
 /** Quick settings tile: VPN Tethering **/
 public class VPNTetheringTile extends QSTileImpl<BooleanState> {
 
+    public static final String TILE_SPEC = "vpn_tethering";
+
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_vpn_tethering);
     private static final Intent TETHER_SETTINGS = new Intent().setComponent(new ComponentName(
             "com.android.settings", "com.android.settings.TetherSettings"));
