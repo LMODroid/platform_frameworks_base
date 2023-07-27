@@ -6219,7 +6219,7 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String TRANSISTENT_TASK_MODE = "transistent_task_mode";
+        public static final String TRANSIENT_TASK_MODE = "transient_task_mode";
 
         /**
          * @hide
@@ -6356,7 +6356,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE_VENDOR_HINT);
             PRIVATE_SETTINGS.add(DESKTOP_MODE);
             PRIVATE_SETTINGS.add(POCKET_JUDGE);
-            PRIVATE_SETTINGS.add(TRANSISTENT_TASK_MODE);
+            PRIVATE_SETTINGS.add(TRANSIENT_TASK_MODE);
             PRIVATE_SETTINGS.add(PREVENT_POINTER_ACCELERATION);
             PRIVATE_SETTINGS.add(FORCE_MOUSE_AS_TOUCH);
         }
@@ -6373,7 +6373,7 @@ public final class Settings {
             CLONE_TO_MANAGED_PROFILE.add(SOUND_EFFECTS_ENABLED);
             CLONE_TO_MANAGED_PROFILE.add(TEXT_SHOW_PASSWORD);
             CLONE_TO_MANAGED_PROFILE.add(TIME_12_24);
-            CLONE_TO_MANAGED_PROFILE.add(TRANSISTENT_TASK_MODE);
+            CLONE_TO_MANAGED_PROFILE.add(TRANSIENT_TASK_MODE);
             CLONE_TO_MANAGED_PROFILE.add(FORCE_MOUSE_AS_TOUCH);
         }
 

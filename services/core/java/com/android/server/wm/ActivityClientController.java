@@ -1458,7 +1458,7 @@ class ActivityClientController extends IActivityClientController.Stub {
     private int shouldFinishTaskOnBackPressed() {
         if (mShouldFinishTaskSettingCache == null) {
             mShouldFinishTaskSettingCache = Settings.System.getInt(mContext.getContentResolver(),
-                                                Settings.System.TRANSISTENT_TASK_MODE, 0);
+                                                Settings.System.TRANSIENT_TASK_MODE, 0);
         }
         return mShouldFinishTaskSettingCache;
     }

@@ -3722,7 +3722,7 @@ public class SettingsProvider extends ContentProvider {
             }
 
             private void onPreUpgradeLocked(int userId) {
-                final int latestVersion = 0;
+                final int latestVersion = 1;
                 final SettingsState systemSettings = getSystemSettingsLocked(userId);
                 final SettingsState secureSettings = getSecureSettingsLocked(userId);
                 final SettingsState globalSettings = getGlobalSettingsLocked();
@@ -3734,6 +3734,19 @@ public class SettingsProvider extends ContentProvider {
                     try {
                         currentVersion = Integer.valueOf(versionSetting.getValue());
                     } catch (NumberFormatException unused) {}
+                }
+
+                if (currentVersion == 0) {
+                    Setting currentSetting = systemSettings.getSettingLocked(
+                            "transistent_task_mode");
+                    if (!currentSetting.isNull()) {
+                        systemSettings.insertSettingOverrideableByRestoreLocked(
+                                Settings.System.TRANSIENT_TASK_MODE,
+                                currentSetting.getValue(),
+                                null, true, SettingsState.SYSTEM_PACKAGE_NAME);
+                        systemSettings.deleteSettingLocked("transistent_task_mode");
+                    }
+                    currentVersion = 1;
                 }
 
                 if (currentVersion != latestVersion) {
