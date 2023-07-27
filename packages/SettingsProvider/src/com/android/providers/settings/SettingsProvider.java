@@ -3722,7 +3722,7 @@ public class SettingsProvider extends ContentProvider {
             }
 
             private void onPreUpgradeLocked(int userId) {
-                final int latestVersion = 1;
+                final int latestVersion = 2;
                 final SettingsState systemSettings = getSystemSettingsLocked(userId);
                 final SettingsState secureSettings = getSecureSettingsLocked(userId);
                 final SettingsState globalSettings = getGlobalSettingsLocked();
@@ -3747,6 +3747,25 @@ public class SettingsProvider extends ContentProvider {
                         systemSettings.deleteSettingLocked("transistent_task_mode");
                     }
                     currentVersion = 1;
+                }
+
+                if (currentVersion == 1) {
+                    if (willUpgradeGlobal) {
+                        Setting currentSetting = globalSettings.getSettingLocked(
+                                Settings.Global.PRIVATE_DNS_MODE);
+                        if (!currentSetting.isNull()
+                                    && "cloudflare".equals(currentSetting.getValue())) {
+                            globalSettings.insertSettingOverrideableByRestoreLocked(
+                                    Settings.Global.PRIVATE_DNS_SPECIFIER,
+                                    "one.one.one.one",
+                                    null, true, SettingsState.SYSTEM_PACKAGE_NAME);
+                            globalSettings.insertSettingOverrideableByRestoreLocked(
+                                    Settings.Global.PRIVATE_DNS_MODE,
+                                    "hostname",
+                                    null, true, SettingsState.SYSTEM_PACKAGE_NAME);
+                        }
+                    }
+                    currentVersion = 2;
                 }
 
                 if (currentVersion != latestVersion) {
