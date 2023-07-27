@@ -3807,6 +3807,8 @@ public class SettingsProvider extends ContentProvider {
                 final int oldVersion = secureSettings.getVersionLocked();
                 final int newVersion = SETTINGS_VERSION;
 
+                onPreUpgradeLocked(mUserId);
+
                 // If up do date - done.
                 if (oldVersion == newVersion) {
                     return;
@@ -3869,6 +3871,30 @@ public class SettingsProvider extends ContentProvider {
 
             private SettingsState getSystemSettingsLocked(int userId) {
                 return getSettingsLocked(SETTINGS_TYPE_SYSTEM, userId);
+            }
+
+            private void onPreUpgradeLocked(int userId) {
+                final int latestVersion = 0;
+                final SettingsState systemSettings = getSystemSettingsLocked(userId);
+                final SettingsState secureSettings = getSecureSettingsLocked(userId);
+                final SettingsState globalSettings = getGlobalSettingsLocked();
+                Setting versionSetting = secureSettings.getSettingLocked(
+                        "lmo_db_ver");
+                boolean willUpgradeGlobal = userId == UserHandle.USER_SYSTEM;
+                int currentVersion = 0;
+                if (!versionSetting.isNull()) {
+                    try {
+                        currentVersion = Integer.valueOf(versionSetting.getValue());
+                    } catch (NumberFormatException unused) {}
+                }
+
+                if (currentVersion != latestVersion) {
+                    Slog.wtf("onPreUpgradeLocked", currentVersion + " found, expected " + latestVersion);
+                } else {
+                    secureSettings.insertSettingLocked(
+                            "lmo_db_ver", String.valueOf(currentVersion),
+                            null, true, SettingsState.SYSTEM_PACKAGE_NAME);
+                }
             }
 
             /**
