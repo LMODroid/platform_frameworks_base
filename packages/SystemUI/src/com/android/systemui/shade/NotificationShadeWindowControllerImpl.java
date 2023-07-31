@@ -363,7 +363,7 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
         }
 
         if (mAODMaxRefreshRate > 0) {
-            if (state.mDozing) {
+            if (state.dozing) {
                 // limit on AOD & ambient if we have that set
                 // overrides set max keyguard rate
                 mLpChanged.preferredMaxDisplayRefreshRate = mAODMaxRefreshRate;
