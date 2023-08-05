@@ -151,6 +151,7 @@ import com.android.internal.util.HexDump;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.Preconditions;
 import com.android.internal.widget.LockPatternUtils;
+import com.android.server.libremobileos.ParallelSpaceManagerService;
 import com.android.server.pm.Installer;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.storage.AppFuseBridge;
@@ -4520,7 +4521,10 @@ class StorageManagerService extends IStorageManager.Stub
                 return StorageManager.MOUNT_MODE_EXTERNAL_PASS_THROUGH;
             }
 
-            if (Arrays.asList(packagesForUid).contains("com.android.externalstorage")) {
+            List<Integer> parallelUserIds = ParallelSpaceManagerService.getCurrentParallelUserIds();
+            boolean isParallelUserAvailable = !parallelUserIds.isEmpty();
+            if (Arrays.asList(packagesForUid).contains("com.android.externalstorage")
+                    && isParallelUserAvailable) {
                 return StorageManager.MOUNT_MODE_EXTERNAL_PASS_THROUGH;
             }
 
