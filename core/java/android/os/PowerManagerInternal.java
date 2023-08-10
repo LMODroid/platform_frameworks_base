@@ -237,6 +237,31 @@ public abstract class PowerManagerInternal {
     public static final int BOOST_DISPLAY_UPDATE_IMMINENT = 1;
 
     /**
+     * SetPowerExtMode() is called to enable/disable specific hint mode, which
+     * may result in adjustment of power/performance parameters of the
+     * cpufreq governor and other controls on device side.
+     *
+     * @param string mode_name which is to be enable/disable.
+     * @param enabled true to enable, false to disable the mode.
+     */
+    public abstract void setPowerExtMode(String mode_name, boolean enabled);
+
+    /**
+     * SetPowerExtBoost() indicates the device may need to boost some resources, as
+     * the load is likely to increase before the kernel governors can react.
+     * Depending on the boost, it may be appropriate to raise the frequencies of
+     * CPU, GPU, memory subsystem, or stop CPU from going into deep sleep state.
+     *
+     * @param boost_name, which is the boost name from PowerExtBoosts enum to be set
+     * @param durationMs The expected duration of the user's interaction, if
+     *        known, or 0 if the expected duration is unknown.
+     *        a negative value indicates canceling previous boost.
+     *        A given platform can choose to boost some time based on durationMs,
+     *        and may also pick an appropriate timeout for 0 case.
+     */
+    public abstract void setPowerExtBoost(String boost_name, int durationMs);
+
+    /**
      * SetPowerBoost() indicates the device may need to boost some resources, as
      * the load is likely to increase before the kernel governors can react.
      * Depending on the boost, it may be appropriate to raise the frequencies of
@@ -357,4 +382,26 @@ public abstract class PowerManagerInternal {
      * return false if ambient display is not available.
      */
     public abstract boolean isAmbientDisplaySuppressed();
+
+    /**
+     * This parcelable enum contains the platform supported custom boosts along with defined fallback
+     * standard boosts for when the Extension HAL isn't available.
+     */
+    public enum PowerExtBoosts {
+        // Custom boosts list
+        FLING_BOOST(BOOST_INTERACTION);
+        // End boosts list
+
+        // Fallback boost for given value
+        private final int mFallback;
+
+        PowerExtBoosts(int fallback) {
+            mFallback = fallback;
+        }
+
+        public int getFallback() {
+            return mFallback;
+        }
+        // End fallback boost
+    }
 }

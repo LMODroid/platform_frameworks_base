@@ -34,6 +34,8 @@ interface IPowerManager
     @UnsupportedAppUsage
     void releaseWakeLock(IBinder lock, int flags);
     void updateWakeLockUids(IBinder lock, in int[] uids);
+    oneway void setPowerExtMode(String mode_name, boolean enabled);
+    oneway void setPowerExtBoost(String boost_name, int durationMs);
     oneway void setPowerBoost(int boost, int durationMs);
     oneway void setPowerMode(int mode, boolean enabled);
 
