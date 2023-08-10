@@ -44,6 +44,7 @@
 #include <hardware/power.h>
 #include <hardware_legacy/power.h>
 #include <hidl/ServiceManagement.h>
+#include <unordered_map>
 #include <utils/Log.h>
 #include <utils/String8.h>
 #include <utils/Timers.h>
@@ -79,6 +80,9 @@ static nsecs_t gLastEventTime[USER_ACTIVITY_EVENT_LAST + 1];
 // Throttling interval for user activity calls.
 static const nsecs_t MIN_TIME_BETWEEN_USERACTIVITIES = 100 * 1000000L; // 100ms
 
+// Cache for both Mode and Boost ext boosts support
+static std::unordered_map<std::string, bool> boostCache;
+
 // ----------------------------------------------------------------------------
 
 static bool checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodName) {
@@ -89,6 +93,34 @@ static bool checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodNa
         return true;
     }
     return false;
+}
+
+static bool isPowerExtAvailable() {
+    return gPowerHalController.isPowerExtAvailable().isOk();
+}
+
+static bool isPowerExtModeSupported(const ::std::string& mode) {
+    auto result = gPowerHalController.isExtModeSupported(mode);
+    if (result.isOk()) {
+        return result.value();
+    }
+    return false;
+}
+
+static bool isPowerExtBoostSupported(const ::std::string& boost) {
+    auto result = gPowerHalController.isExtBoostSupported(boost);
+    if (result.isOk()) {
+        return result.value();
+    }
+    return false;
+}
+
+static void setPowerExtMode(const ::std::string& mode, bool enabled) {
+    gPowerHalController.setExtMode(mode, enabled);
+}
+
+static void setPowerExtBoost(const ::std::string& boost, int32_t durationMs) {
+    gPowerHalController.setExtBoost(boost, durationMs);
 }
 
 static void setPowerBoost(Boost boost, int32_t durationMs) {
@@ -242,6 +274,56 @@ static void nativeSetAutoSuspend(JNIEnv* /* env */, jclass /* clazz */, jboolean
     }
 }
 
+static void nativeSetPowerExtMode(JNIEnv* env, jclass /* clazz */, jstring mode,
+                                   jint fallback, jboolean enabled) {
+    bool isSupported = isPowerExtAvailable();
+    const char* modeStr = nullptr;
+    if (isSupported) {
+        if ((modeStr = env->GetStringUTFChars(mode, nullptr))) {
+            if (boostCache.find(modeStr) != boostCache.end()) {
+                isSupported = boostCache[modeStr];
+            } else {
+                isSupported = boostCache[modeStr] = isPowerExtModeSupported(modeStr);
+            }
+        } else {
+            isSupported = false;
+        }
+    }
+    if (isSupported) {
+        setPowerExtMode(modeStr, enabled);
+    } else {
+        setPowerMode(static_cast<Mode>(fallback), enabled);
+    }
+    if (modeStr) {
+        env->ReleaseStringUTFChars(mode, modeStr);
+    }
+}
+
+static void nativeSetPowerExtBoost(JNIEnv* env, jclass /* clazz */, jstring boost,
+                                   jint fallback, jint durationMs) {
+    bool isSupported = isPowerExtAvailable();
+    const char* boostStr = nullptr;
+    if (isSupported) {
+        if ((boostStr = env->GetStringUTFChars(boost, nullptr))) {
+            if (boostCache.find(boostStr) != boostCache.end()) {
+                isSupported = boostCache[boostStr];
+            } else {
+                isSupported = boostCache[boostStr] = isPowerExtBoostSupported(boostStr);
+            }
+        } else {
+            isSupported = false;
+        }
+    }
+    if (isSupported) {
+        setPowerExtBoost(boostStr, durationMs);
+    } else {
+        setPowerBoost(static_cast<Boost>(fallback), durationMs);
+    }
+    if (boostStr) {
+        env->ReleaseStringUTFChars(boost, boostStr);
+    }
+}
+
 static void nativeSetPowerBoost(JNIEnv* /* env */, jclass /* clazz */, jint boost,
                                 jint durationMs) {
     setPowerBoost(static_cast<Boost>(boost), durationMs);
@@ -269,6 +351,8 @@ static const JNINativeMethod gPowerManagerServiceMethods[] = {
         {"nativeReleaseSuspendBlocker", "(Ljava/lang/String;)V",
          (void*)nativeReleaseSuspendBlocker},
         {"nativeSetAutoSuspend", "(Z)V", (void*)nativeSetAutoSuspend},
+        {"nativeSetPowerExtMode", "(Ljava/lang/String;IZ)V", (void*)nativeSetPowerExtMode},
+        {"nativeSetPowerExtBoost", "(Ljava/lang/String;II)V", (void*)nativeSetPowerExtBoost},
         {"nativeSetPowerBoost", "(II)V", (void*)nativeSetPowerBoost},
         {"nativeSetPowerMode", "(IZ)Z", (void*)nativeSetPowerMode},
 };
