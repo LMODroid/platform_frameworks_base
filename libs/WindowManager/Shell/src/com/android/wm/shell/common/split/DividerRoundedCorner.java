@@ -118,8 +118,10 @@ public class DividerRoundedCorner extends View {
         InvertedRoundedCornerDrawInfo(@RoundedCorner.Position int cornerPosition) {
             mCornerPosition = cornerPosition;
 
-            final RoundedCorner roundedCorner = getDisplay().getRoundedCorner(cornerPosition);
-            mRadius = roundedCorner == null ? 0 : roundedCorner.getRadius();
+            // final RoundedCorner roundedCorner = getDisplay().getRoundedCorner(cornerPosition);
+            // mRadius = roundedCorner == null ? 0 : roundedCorner.getRadius();
+            // Remove rounded corners in the split screen
+            mRadius = 0;
 
             // Starts with a filled square, and then subtracting out a circle from the appropriate
             // corner.
