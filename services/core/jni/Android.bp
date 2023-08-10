@@ -207,6 +207,7 @@ cc_defaults {
     static_libs: [
         "android.hardware.broadcastradio@common-utils-1x-lib",
         "libaidlcommonsupport",
+        "//hardware/google/interfaces:pixel-power-ext-V1-cpp",
     ],
 
     product_variables: {
