@@ -211,6 +211,7 @@ cc_defaults {
         "libaidlcommonsupport",
         "libvirtualdevicebuildflags",
         "libPlatformProperties",
+        "//hardware/google/interfaces:pixel-power-ext-V1-cpp",
     ],
 
     product_variables: {
