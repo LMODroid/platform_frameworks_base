@@ -701,11 +701,6 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                         maxDisplayMode == null ? mInfo.width : maxDisplayMode.getPhysicalWidth();
                 final int maxHeight =
                         maxDisplayMode == null ? mInfo.height : maxDisplayMode.getPhysicalHeight();
-                mInfo.displayCutout = DisplayCutout.fromResourcesRectApproximation(res,
-                        mInfo.uniqueId, maxWidth, maxHeight, mInfo.width, mInfo.height);
-
-                mInfo.roundedCorners = RoundedCorners.fromResources(
-                        res, mInfo.uniqueId, maxWidth, maxHeight, mInfo.width, mInfo.height);
                 mInfo.installOrientation = mStaticDisplayInfo.installOrientation;
 
                 mInfo.displayShape = DisplayShape.fromResources(
@@ -720,6 +715,10 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                     if (mInfo.name == null) {
                         mInfo.name = res.getString(R.string.display_manager_built_in_display_name);
                     }
+                    mInfo.displayCutout = DisplayCutout.fromResourcesRectApproximation(res,
+                            mInfo.uniqueId, maxWidth, maxHeight, mInfo.width, mInfo.height);
+                    mInfo.roundedCorners = RoundedCorners.fromResources(
+                            res, mInfo.uniqueId, maxWidth, maxHeight, mInfo.width, mInfo.height);
                 } else {
                     mInfo.type = Display.TYPE_EXTERNAL;
                     mInfo.touch = DisplayDeviceInfo.TOUCH_EXTERNAL;
