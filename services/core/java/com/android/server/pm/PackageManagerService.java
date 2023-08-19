@@ -149,6 +149,7 @@ import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.ParcelableException;
 import android.os.PersistableBundle;
+import android.os.PowerManagerInternal;
 import android.os.Process;
 import android.os.ReconcileSdkDataArgs;
 import android.os.RemoteException;
@@ -221,6 +222,7 @@ import com.android.server.StorageManagerInternal;
 import com.android.server.SystemConfig;
 import com.android.server.ThreadPriorityBooster;
 import com.android.server.Watchdog;
+import com.android.server.am.ActivityManagerService.LocalService;
 import com.android.server.apphibernation.AppHibernationManagerInternal;
 import com.android.server.appwindowlayout.AppWindowLayoutSettingsService;
 import com.android.server.art.DexUseManagerLocal;
@@ -1010,6 +1012,8 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
 
     private static Set<String> sRestrictedPermissions;
 
+    final PowerManagerInternal mPowerManagerInternal;
+
     private static final boolean ENABLE_BOOST = false;
 
     private static ThreadPriorityBooster sThreadPriorityBooster = new ThreadPriorityBooster(
@@ -1034,6 +1038,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
             sThreadPriorityBooster.reset();
         }
     }
+
 
     /**
      * Emits a trace event indicating the start of an attempt to acquire the main PMS lock.
@@ -2007,6 +2012,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         mStorageEventHelper = testParams.storageEventHelper;
         mPackageMonitorCallbackHelper = testParams.packageMonitorCallbackHelper;
 
+        mPowerManagerInternal = null;
         registerObservers(false);
         invalidatePackageInfoCache(
                 PackageMetrics.INVALIDATION_REASON_PACKAGE_MANAGER_SERVICE_INIT);
@@ -2193,6 +2199,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 mSuspendPackageHelper);
         mStorageEventHelper = new StorageEventHelper(this, mDeletePackageHelper,
                 mRemovePackageHelper);
+        mPowerManagerInternal = LocalServices.getService(PowerManagerInternal.class);
 
         synchronized (mLock) {
             // Create the computer as soon as the state objects have been installed.  The

@@ -137,6 +137,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.OomKillRecord;
 import android.os.PowerManager;
+import android.os.PowerManagerInternal;
+import android.os.PowerManagerInternal.PowerExtBoosts;
 import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
@@ -1875,6 +1877,11 @@ public final class ProcessList extends ProcessListInternal
         checkSlow(startUptime, "startProcess: starting to update cpu stats");
         mService.updateCpuStats();
         checkSlow(startUptime, "startProcess: done updating cpu stats");
+
+        final PowerManagerInternal pmi = LocalServices.getService(PowerManagerInternal.class);
+        if (pmi != null && hostingRecord.getType().contains("activity")) {
+            pmi.setPowerExtBoost(PowerExtBoosts.PROCESS_CREATE.name(), 4000);
+        }
 
         try {
             final int userId = UserHandle.getUserId(app.uid);
