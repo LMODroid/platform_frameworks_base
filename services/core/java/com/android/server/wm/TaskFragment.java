@@ -87,6 +87,7 @@ import android.graphics.Insets;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.IBinder;
+import android.os.PowerManagerInternal.PowerExtBoosts;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.util.ArraySet;
@@ -1497,12 +1498,23 @@ class TaskFragment extends WindowContainer<WindowContainer> {
             lastResumed = lastFocusedRootTask.getTopResumedActivity();
         }
 
+        ActivityRecord lastActivity = lastResumed == null ? mResumedActivity : lastResumed;
+
         boolean pausing = !skipPause && taskDisplayArea.pauseBackTasks(next);
         if (mResumedActivity != null) {
             ProtoLog.d(WM_DEBUG_STATES, "resumeTopActivity: Pausing %s", mResumedActivity);
             pausing |= startPausing(mTaskSupervisor.mUserLeaving, false /* uiSleeping */,
                     next, "resumeTopActivity");
         }
+
+        if (mAtmService.mWindowManager.mPowerManagerInternal != null &&
+            !getDisplayContent().getDisplayPolicy().isKeyguardShowing()) {
+            if (lastActivity != null && next != null && lastActivity.packageName != next.packageName) {
+                mAtmService.mWindowManager.mPowerManagerInternal.setPowerExtBoost(
+                    PowerExtBoosts.PACKAGE_SWITCH.name(), 4000);
+            }
+        }
+
         if (pausing) {
             ProtoLog.v(WM_DEBUG_STATES, "resumeTopActivity: Skip resume: need to"
                     + " start pausing");

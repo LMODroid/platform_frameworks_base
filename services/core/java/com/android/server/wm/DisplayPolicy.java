@@ -96,6 +96,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.PowerManagerInternal.PowerExtBoosts;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
@@ -383,6 +384,8 @@ public class DisplayPolicy {
     private final ForceShowNavBarSettingsObserver mForceShowNavBarSettingsObserver;
     private boolean mForceShowNavigationBarEnabled;
 
+    // Fling boost tracker
+    private boolean mFlingBoosting = false;
     private class PolicyHandler extends Handler {
 
         PolicyHandler(Looper looper) {
@@ -528,9 +531,10 @@ public class DisplayPolicy {
 
                 @Override
                 public void onFling(int duration) {
-                    if (mService.mPowerManagerInternal != null) {
-                        mService.mPowerManagerInternal.setPowerBoost(
-                                Boost.INTERACTION, duration);
+                    if (mService.mPowerManagerInternal != null && !mFlingBoosting) {
+                        mService.mPowerManagerInternal.setPowerExtBoost(
+                                PowerExtBoosts.FLING_BOOST.name(), duration);
+                        mFlingBoosting = true;
                     }
                 }
 
@@ -549,6 +553,9 @@ public class DisplayPolicy {
                     final WindowOrientationListener listener = getOrientationListener();
                     if (listener != null) {
                         listener.onTouchStart();
+                    }
+                    if (mFlingBoosting) {
+                        mFlingBoosting = false;
                     }
                 }
 
