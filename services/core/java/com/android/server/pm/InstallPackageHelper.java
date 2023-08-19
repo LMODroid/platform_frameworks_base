@@ -134,6 +134,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Message;
+import android.os.PowerManagerInternal.PowerExtBoosts;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SELinux;
@@ -2791,6 +2792,11 @@ final class InstallPackageHelper {
         final boolean removedBeforeUpdate = (pkgSetting == null)
                 || (pkgSetting.isSystem() && !pkgSetting.getPath().getPath().equals(
                 request.getPkg().getPath()));
+        // Disable boost early to prevent stuck boost.
+        if (mPm.mPowerManagerInternal != null) {
+            mPm.mPowerManagerInternal.setPowerExtMode(
+                PowerExtBoosts.PACKAGE_INSTALL.name(), false);
+        }
         if (succeeded && removedBeforeUpdate) {
             Slog.e(TAG, packageName + " was removed before handlePackagePostInstall "
                     + "could be executed");
