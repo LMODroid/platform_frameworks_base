@@ -389,7 +389,28 @@ public abstract class PowerManagerInternal {
      */
     public enum PowerExtBoosts {
         // Custom boosts list
-        FLING_BOOST(BOOST_INTERACTION);
+        // There already is INTERACTION boost when user touches the screen but if an OEM would like
+        // to add additional actions for FLING only they can use this boost.
+        FLING_BOOST(BOOST_INTERACTION),
+        // Although there is already a LAUNCH mode boost when an app is launched, OEMs may wish to
+        // boost resources for a period after to ensure the app is responsive while it is loading.
+        // This has a duration of 2000ms.
+        // There is no fallback.
+        ACTIVITY_SWITCH,
+        // Like before, this hint allows OEMs to boost resources for when a new package is launched
+        // This is triggered for a duration of 4000ms.
+        // There is no fallback.
+        PACKAGE_SWITCH,
+        // This hint allows OEMs to boost resources for when a new process thread is created,
+        // a package Cold Launch with a duration of 4000ms.
+        // There is no fallback.
+        PROCESS_CREATE,
+        // This hint allows OEMs to boost resources in case of package installation.
+        // There is no fallback.
+        PACKAGE_INSTALL,
+        // This hint allows OEMs to boost resources when app rotation animation occurs.
+        // There is no fallback.
+        APP_ROTATE;
         // End boosts list
 
         // Fallback boost for given value
@@ -403,5 +424,9 @@ public abstract class PowerManagerInternal {
             return mFallback;
         }
         // End fallback boost
+
+        PowerExtBoosts() {
+            mFallback = -1;
+        }
     }
 }

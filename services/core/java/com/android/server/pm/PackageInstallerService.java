@@ -65,6 +65,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.os.PowerManagerInternal.PowerExtBoosts;
 import android.os.Process;
 import android.os.RemoteCallback;
 import android.os.RemoteCallbackList;
@@ -1020,6 +1021,10 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
     @Override
     public IPackageInstallerSession openSession(int sessionId) {
         try {
+            if (mPm.mPowerManagerInternal != null) {
+                mPm.mPowerManagerInternal.setPowerExtMode(
+                    PowerExtBoosts.PACKAGE_INSTALL.name(), true);
+            }
             return openSessionInternal(sessionId);
         } catch (IOException e) {
             throw ExceptionUtils.wrap(e);

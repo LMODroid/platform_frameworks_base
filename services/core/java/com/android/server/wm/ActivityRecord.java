@@ -310,6 +310,8 @@ import android.os.Debug;
 import android.os.IBinder;
 import android.os.IRemoteCallback;
 import android.os.PersistableBundle;
+import android.os.PowerManagerInternal;
+import android.os.PowerManagerInternal.PowerExtBoosts;
 import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
@@ -983,6 +985,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
     // Records whether client has overridden the WindowAnimation_(Open/Close)(Enter/Exit)Animation.
     private CustomAppTransition mCustomOpenTransition;
     private CustomAppTransition mCustomCloseTransition;
+
+    private PowerManagerInternal mPowerManagerInternal = null;
 
     private final Runnable mPauseTimeoutRunnable = new Runnable() {
         @Override
@@ -5787,6 +5791,17 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         updateVisibleForServiceConnection();
         if (app != null) {
             mTaskSupervisor.onProcessActivityStateChanged(app, false /* forceBatch */);
+        }
+
+        if (state == RESUMED || state == STARTED) {
+            if (mPowerManagerInternal == null) {
+               mPowerManagerInternal = LocalServices.getService(PowerManagerInternal.class);
+            }
+            if (mPowerManagerInternal != null) {
+                mPowerManagerInternal.setPowerExtBoost(PowerExtBoosts.ACTIVITY_SWITCH.name(), 2000);
+            } else {
+                Slog.v(TAG, "Failed to sendPowerHint for ACTIVITY_SWITCH");
+            }
         }
 
         switch (state) {
