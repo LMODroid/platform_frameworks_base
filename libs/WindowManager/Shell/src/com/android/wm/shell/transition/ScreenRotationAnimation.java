@@ -31,6 +31,10 @@ import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.hardware.HardwareBuffer;
+import android.os.IPowerManager;
+import android.os.PowerManagerInternal.PowerExtBoosts;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.util.Slog;
 import android.view.Surface;
 import android.view.SurfaceControl;
@@ -121,6 +125,8 @@ class ScreenRotationAnimation {
     /** Intensity of light/whiteness of the layout after rotation occurs. */
     private float mEndLuma;
 
+    private final IPowerManager mPowerManager;
+
     ScreenRotationAnimation(Context context, TransactionPool pool, Transaction t,
             TransitionInfo.Change change, SurfaceControl rootLeash, int animHint, int flags) {
         mContext = context;
@@ -142,6 +148,11 @@ class ScreenRotationAnimation {
                 .setCallsite("ShellRotationAnimation")
                 .setName("Animation leash of screenshot rotation")
                 .build();
+
+        // Shell runs in the SystemUI process, so PowerManagerInternal isn't available here.
+        mPowerManager = IPowerManager.Stub.asInterface(
+                ServiceManager.getService(Context.POWER_SERVICE));
+        setRotateBoost(true);
 
         try {
             if (change.getSnapshot() != null) {
@@ -415,6 +426,16 @@ class ScreenRotationAnimation {
         }
         t.apply();
         mTransactionPool.release(t);
+        setRotateBoost(false);
+    }
+
+    private void setRotateBoost(boolean enabled) {
+        if (mPowerManager == null) return;
+        try {
+            mPowerManager.setPowerExtMode(PowerExtBoosts.APP_ROTATE.name(), enabled);
+        } catch (RemoteException e) {
+            Slog.w(TAG, "Unable to set rotation boost", e);
+        }
     }
 
     private void postProcessRotationAnimation(@NonNull AnimationSet enterAnim,
