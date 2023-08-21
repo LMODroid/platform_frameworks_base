@@ -3295,8 +3295,14 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     private final ActivityTransitionAnimator.Listener mActivityTransitionAnimatorListener =
             new ActivityTransitionAnimator.Listener() {
                 @Override
-                public void onTransitionAnimationStart() {
-                    mKeyguardViewMediator.setBlursDisabledForAppLaunch(true);
+                public void onTransitionAnimationProgress(float progress) {
+                    // as per ActivityLaunchAnimator.kt TIMINGS object,
+                    // contentBeforeFadeOutDuration of 150ms and total duration of
+                    // totalDuration of 500ms means that fade out starts at 150 / 500 = 0.3f
+                    // don't call in if progress is 0.4f+ as microoptimization, it's already set
+                    if (progress >= 0.3f && progress < 0.4f) {
+                        mKeyguardViewMediator.setBlursDisabledForAppLaunch(true);
+                    }
                 }
 
                 @Override
