@@ -1,9 +1,9 @@
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="14dp"
-    android:height="14dp"
+    android:width="@*android:dimen/status_bar_system_icon_size"
+    android:height="@*android:dimen/status_bar_system_icon_size"
     android:viewportWidth="14"
-    android:viewportHeight="14">
+    android:viewportHeight="13.5">
     <path
         android:pathData="M 12.833 2.888 C 12.711 2.788 11.474 1.75 9.625 1.75 C 7.77 1.75 6.539 2.788 6.417 2.888 L 9.625 7 L 12.833 2.888 Z"
         android:fillColor="#000000"/>
