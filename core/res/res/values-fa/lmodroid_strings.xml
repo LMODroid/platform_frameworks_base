@@ -47,16 +47,6 @@
     <string name="permlab_manageLiveDisplay">مدیریت تنظیمات نمایش زنده</string>
     <string name="permdesc_manageLiveDisplay">مجوزاجرای نتظیمات پیشرفته نمایش به یک برنامه</string>
 
-
-    <!-- Pocket Lock -->
-    <string name="pocket_lock_message_long_press">برای باز کردن، دکمه روشن/خاموش را فشار داده و نگه دارید</string>
-    <string name="pocket_view_title">حالت جیب فعال است.</string>
-    <string name="pocket_view_title_cancel">برای استفاده از گوشی خود:</string>
-    <string name="pocket_view_top_tag_cancel">شفافیت و عدم وجود هر نوع گرفتگی را در قسمت آبی گوشی خودبرسی کنید، و هرگونه آلودگی و یا گرد و غبار را پاک کنید.</string>
-    <string name="pocket_view_top_tag_cancel2">برای قطع حالت جیب، دکمه روشن/خاموش را برای مدت طولانی فشار دهید.</string>
-    <string name="pocket_view_top_tag_number1" translatable="false">1.\u0020</string>
-    <string name="pocket_view_top_tag_number2" translatable="false">2.\u0020</string>
-
     <!-- App lock -->
     <string name="unlock_application">باز کردن<xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
 

@@ -6184,15 +6184,6 @@ public final class Settings {
         public static final String SHOW_APP_VOLUME = "show_app_volume";
 
         /**
-         * Whether allowing pocket service to register sensors and dispatch informations.
-         *   0 = disabled
-         *   1 = enabled
-         * @author Carlo Savignano
-         * @hide
-         */
-        public static final String POCKET_JUDGE = "pocket_judge";
-
-        /**
          * Whether to use the custom quick unlock screen control
          * @hide
          */
@@ -6355,7 +6346,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE_VENDOR_HINT);
             PRIVATE_SETTINGS.add(DESKTOP_MODE);
-            PRIVATE_SETTINGS.add(POCKET_JUDGE);
             PRIVATE_SETTINGS.add(TRANSIENT_TASK_MODE);
             PRIVATE_SETTINGS.add(PREVENT_POINTER_ACCELERATION);
             PRIVATE_SETTINGS.add(FORCE_MOUSE_AS_TOUCH);
