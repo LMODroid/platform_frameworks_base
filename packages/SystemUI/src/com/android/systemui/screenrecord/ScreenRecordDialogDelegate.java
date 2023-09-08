@@ -72,6 +72,7 @@ public class ScreenRecordDialogDelegate implements SystemUIDialog.Delegate {
     private Switch mTapsSwitch;
     private Switch mAudioSwitch;
     private Spinner mOptions;
+    private Switch mKeepScreenAwakeSwitch;
 
     @AssistedFactory
     public interface Factory {
@@ -126,6 +127,7 @@ public class ScreenRecordDialogDelegate implements SystemUIDialog.Delegate {
 
         mAudioSwitch = dialog.findViewById(R.id.screenrecord_audio_switch);
         mTapsSwitch = dialog.findViewById(R.id.screenrecord_taps_switch);
+        mKeepScreenAwakeSwitch = dialog.findViewById(R.id.screenrecord_keep_screen_awake_switch);
         mOptions = dialog.findViewById(R.id.screen_recording_options);
         ArrayAdapter a = new ScreenRecordingAdapter(dialog.getContext().getApplicationContext(),
                 android.R.layout.simple_spinner_dropdown_item,
@@ -156,6 +158,7 @@ public class ScreenRecordDialogDelegate implements SystemUIDialog.Delegate {
     private void requestScreenCapture(@Nullable MediaProjectionCaptureTarget captureTarget) {
         Context userContext = mUserContextProvider.getUserContext();
         boolean showTaps = mTapsSwitch.isChecked();
+        boolean keepScreenAwake = mKeepScreenAwakeSwitch.isChecked();
         ScreenRecordingAudioSource audioMode = mAudioSwitch.isChecked()
                 ? (ScreenRecordingAudioSource) mOptions.getSelectedItem()
                 : NONE;
@@ -163,7 +166,7 @@ public class ScreenRecordDialogDelegate implements SystemUIDialog.Delegate {
                 RecordingService.REQUEST_CODE,
                 RecordingService.getStartIntent(
                         userContext, Activity.RESULT_OK,
-                        audioMode.ordinal(), showTaps, captureTarget),
+                        audioMode.ordinal(), showTaps, captureTarget, keepScreenAwake),
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         PendingIntent stopIntent = PendingIntent.getService(userContext,
                 RecordingService.REQUEST_CODE,
