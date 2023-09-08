@@ -90,4 +90,8 @@
     <!-- WiFi standard numbering on statusbar -->
     <string name="status_bar_wifi_standard">Wi-Fi standard number</string>
 
+    <!-- Screen record dialog -->
+    <!-- Label for the switch to enable/disable keeping screen awake in screen recording -->
+    <string name="screenrecord_keep_screen_awake_label">Keep the screen awake</string>
+
 </resources>
