@@ -77,6 +77,7 @@ public class ScreenRecordDialog extends SystemUIDialog {
     private Switch mTapsSwitch;
     private Switch mAudioSwitch;
     private Spinner mOptions;
+    private Switch mKeepScreenAwakeSwitch;
 
     public ScreenRecordDialog(Context context, RecordingController controller,
             ActivityStarter activityStarter, UserContextProvider userContextProvider,
@@ -147,6 +148,7 @@ public class ScreenRecordDialog extends SystemUIDialog {
 
         mAudioSwitch = findViewById(R.id.screenrecord_audio_switch);
         mTapsSwitch = findViewById(R.id.screenrecord_taps_switch);
+        mKeepScreenAwakeSwitch = findViewById(R.id.screenrecord_keep_screen_awake_switch);
         mOptions = findViewById(R.id.screen_recording_options);
         ArrayAdapter a = new ScreenRecordingAdapter(getContext().getApplicationContext(),
                 android.R.layout.simple_spinner_dropdown_item,
@@ -166,6 +168,7 @@ public class ScreenRecordDialog extends SystemUIDialog {
     private void requestScreenCapture(@Nullable MediaProjectionCaptureTarget captureTarget) {
         Context userContext = mUserContextProvider.getUserContext();
         boolean showTaps = mTapsSwitch.isChecked();
+        boolean keepScreenAwake = mKeepScreenAwakeSwitch.isChecked();
         ScreenRecordingAudioSource audioMode = mAudioSwitch.isChecked()
                 ? (ScreenRecordingAudioSource) mOptions.getSelectedItem()
                 : NONE;
@@ -173,7 +176,7 @@ public class ScreenRecordDialog extends SystemUIDialog {
                 RecordingService.REQUEST_CODE,
                 RecordingService.getStartIntent(
                         userContext, Activity.RESULT_OK,
-                        audioMode.ordinal(), showTaps, captureTarget),
+                        audioMode.ordinal(), showTaps, keepScreenAwake, captureTarget),
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         PendingIntent stopIntent = PendingIntent.getService(userContext,
                 RecordingService.REQUEST_CODE,

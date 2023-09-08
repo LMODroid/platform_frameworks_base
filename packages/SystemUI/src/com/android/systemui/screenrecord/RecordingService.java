@@ -72,6 +72,7 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
     private static final String EXTRA_PATH = "extra_path";
     private static final String EXTRA_AUDIO_SOURCE = "extra_useAudio";
     private static final String EXTRA_SHOW_TAPS = "extra_showTaps";
+    private static final String EXTRA_KEEP_SCREEN_AWAKE = "extra_keepScreenAwake";
     private static final String EXTRA_CAPTURE_TARGET = "extra_captureTarget";
 
     private static final String ACTION_START = "com.android.systemui.screenrecord.START";
@@ -89,6 +90,7 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
     private ScreenRecordingAudioSource mAudioSource;
     private boolean mShowTaps;
     private boolean mOriginalShowTaps;
+    private boolean mKeepScreenAwake;
     private ScreenMediaRecorder mRecorder;
     private final Executor mLongExecutor;
     private final UiEventLogger mUiEventLogger;
@@ -135,6 +137,31 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
                 .putExtra(EXTRA_CAPTURE_TARGET, captureTarget);
     }
 
+    /**
+     * Get an intent to start the recording service.
+     *
+     * @param context    Context from the requesting activity
+     * @param resultCode The result code from {@link android.app.Activity#onActivityResult(int, int,
+     *                   android.content.Intent)}
+     * @param audioSource   The ordinal value of the audio source
+     *                      {@link com.android.systemui.screenrecord.ScreenRecordingAudioSource}
+     * @param showTaps   True to make touches visible while recording
+     * @param keepScreenAwake True to make the screen keep awake while recording
+     * @param captureTarget   pass this parameter to capture a specific part instead
+     *                        of the full screen
+     */
+    public static Intent getStartIntent(Context context, int resultCode,
+            int audioSource, boolean showTaps, boolean keepScreenAwake,
+            @Nullable MediaProjectionCaptureTarget captureTarget) {
+        return new Intent(context, RecordingService.class)
+                .setAction(ACTION_START)
+                .putExtra(EXTRA_RESULT_CODE, resultCode)
+                .putExtra(EXTRA_AUDIO_SOURCE, audioSource)
+                .putExtra(EXTRA_SHOW_TAPS, showTaps)
+                .putExtra(EXTRA_KEEP_SCREEN_AWAKE, keepScreenAwake)
+                .putExtra(EXTRA_CAPTURE_TARGET, captureTarget);
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null) {
@@ -151,6 +178,7 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
                         .values()[intent.getIntExtra(EXTRA_AUDIO_SOURCE, 0)];
                 Log.d(TAG, "recording with audio source" + mAudioSource);
                 mShowTaps = intent.getBooleanExtra(EXTRA_SHOW_TAPS, false);
+                mKeepScreenAwake = intent.getBooleanExtra(EXTRA_KEEP_SCREEN_AWAKE, false);
                 MediaProjectionCaptureTarget captureTarget =
                         intent.getParcelableExtra(EXTRA_CAPTURE_TARGET,
                                 MediaProjectionCaptureTarget.class);
@@ -265,12 +293,14 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
         }
         // We want to keep screen awake while recording.
         // So acquire wakelock while record is running.
-        // and relase it on record stopped.
-        if (state && !mWakeLock.isHeld()) {
-            mWakeLock.acquire();
-        } else {
-            if (mWakeLock.isHeld()) {
-                mWakeLock.release();
+        // and relase it on record stopped
+        if (mKeepScreenAwake) {
+            if (state && !mWakeLock.isHeld()) {
+                mWakeLock.acquire();
+            } else {
+                if (mWakeLock.isHeld()) {
+                    mWakeLock.release();
+                }
             }
         }
     }

@@ -168,4 +168,8 @@
     <!-- Name of the VoWiFi status bar icon. -->
     <string name="status_bar_vowifi">Wi-Fi calling (VoWiFi)</string>
 
+    <!-- Screen record dialog -->
+    <!-- Label for the switch to enable/disable keeping screen awake in screen recording -->
+    <string name="screenrecord_keep_screen_awake_label">Keep the screen awake</string>
+
 </resources>
