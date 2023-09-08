@@ -19,9 +19,12 @@ package com.android.systemui.screenrecord.domain
 import com.android.systemui.mediaprojection.MediaProjectionCaptureTarget
 import com.android.systemui.screenrecord.ScreenRecordingAudioSource
 
-data class ScreenRecordingParameters(
+data class ScreenRecordingParameters
+@JvmOverloads
+constructor(
     val captureTarget: MediaProjectionCaptureTarget?,
     val audioSource: ScreenRecordingAudioSource,
     val displayId: Int,
     val shouldShowTaps: Boolean,
+    val keepScreenAwake: Boolean = false,
 )
