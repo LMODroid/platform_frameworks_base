@@ -33,6 +33,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -93,6 +94,8 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
     private final UiEventLogger mUiEventLogger;
     private final NotificationManager mNotificationManager;
     private final UserContextProvider mUserContextTracker;
+
+    private PowerManager.WakeLock mWakeLock;
 
     @Inject
     public RecordingService(RecordingController controller, @LongRunning Executor executor,
@@ -230,11 +233,17 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
     public void onCreate() {
         super.onCreate();
         mController.addCallback((RecordingController.RecordingStateChangeCallback) mBinder);
+        mWakeLock = getSystemService(PowerManager.class).newWakeLock(
+                            PowerManager.FULL_WAKE_LOCK, "ScreenRecord");
     }
 
     @Override
     public void onDestroy() {
         mController.removeCallback((RecordingController.RecordingStateChangeCallback) mBinder);
+        // Try to release wakelock once on service destroy.
+        if (mWakeLock.isHeld()) {
+            mWakeLock.release();
+        }
         super.onDestroy();
     }
 
@@ -253,6 +262,16 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
             intent.putExtra(RecordingController.EXTRA_STATE, state);
             intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
             sendBroadcast(intent, PERMISSION_SELF);
+        }
+        // We want to keep screen awake while recording.
+        // So acquire wakelock while record is running.
+        // and relase it on record stopped.
+        if (state && !mWakeLock.isHeld()) {
+            mWakeLock.acquire();
+        } else {
+            if (mWakeLock.isHeld()) {
+                mWakeLock.release();
+            }
         }
     }
 
