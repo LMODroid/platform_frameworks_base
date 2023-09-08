@@ -24,6 +24,7 @@ import android.net.Uri
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.PowerManager
 import android.os.Process
 import android.util.Log
 import android.widget.Toast
@@ -93,6 +94,20 @@ open class ScreenRecordingService : ComponentService() {
     private var recordingContext: RecordingContext? = null
     private var callback: IScreenRecordingServiceCallback? = null
 
+    // Keeps the screen awake while recording, if requested
+    private val wakeLock: PowerManager.WakeLock by lazy {
+        getSystemService(PowerManager::class.java)!!
+            .newWakeLock(PowerManager.FULL_WAKE_LOCK, "ScreenRecord")
+    }
+
+    private fun setKeepScreenAwake(enabled: Boolean) {
+        if (enabled && !wakeLock.isHeld) {
+            wakeLock.acquire()
+        } else if (!enabled && wakeLock.isHeld) {
+            wakeLock.release()
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         notificationInteractor = createNotificationInteractor()
@@ -114,6 +129,11 @@ open class ScreenRecordingService : ComponentService() {
     }
 
     override fun onBind(intent: Intent): IBinder = binder
+
+    override fun onDestroy() {
+        setKeepScreenAwake(false)
+        super.onDestroy()
+    }
 
     override fun onUnbind(intent: Intent?): Boolean {
         // System UI has likely crashed because we don't expect it to willingly unbind from this
@@ -138,7 +158,11 @@ open class ScreenRecordingService : ComponentService() {
                 val notificationManager = getSystemService(NotificationManager::class.java)
                 notificationManager?.notify(null, notificationId, notification)
             }
+            if (keepScreenAwake) {
+                setKeepScreenAwake(true)
+            }
         } catch (e: Exception) {
+            setKeepScreenAwake(false)
             screenRecordingPreferenceRepository.maybeRestoreSetting()
             Log.e(tag, "Error starting screen recording", e)
             notificationInteractor.notifyErrorStarting(notificationId)
@@ -181,6 +205,7 @@ open class ScreenRecordingService : ComponentService() {
     }
 
     private fun RecordingContext.stopRecording(@StopReason reason: Int) {
+        setKeepScreenAwake(false)
         var recordingUri: Uri? = null
         try {
             recordingUri = recorder.createRecordingUri()
@@ -240,6 +265,7 @@ open class ScreenRecordingService : ComponentService() {
                     displayId = parameters.displayId,
                     shouldShowTaps = parameters.shouldShowTaps,
                     shouldShowSeconds = parameters.shouldShowSeconds,
+                    keepScreenAwake = parameters.keepScreenAwake,
                     recorder =
                         ScreenMediaRecorder(
                             this@ScreenRecordingService,
@@ -264,6 +290,7 @@ open class ScreenRecordingService : ComponentService() {
         val shouldShowTaps: Boolean,
         val shouldShowSeconds: Boolean,
         val notificationId: Int,
+        val keepScreenAwake: Boolean = false,
     )
 
     companion object {
