@@ -213,16 +213,15 @@ public class EnableZenModeDialog {
                 R.string.interruption_level_priority,
                 Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS);
         mZenButtons.setCallback(mZenButtonsCallback);
+        mZenButtons.setSelectedValue((Integer) mPrefferedZenMode, false);
     }
     protected final SegmentedButtons.Callback mZenButtonsCallback = new SegmentedButtons.Callback() {
         @Override
         public void onSelected(final Object value, boolean fromClick) {
-            if (value != null && mZenButtons.isShown()) {
+            if (value != null && mZenButtons.isShown() && fromClick) {
                 mPrefferedZenMode = (Integer) value;
-                /*if (fromClick) {
-                    MetricsLogger.action(mContext, MetricsEvent.QS_DND_ZEN_SELECT, mPrefferedZenMode);
-                }
-                if (DEBUG) Log.d(mTag, "mZenButtonsCallback selected=" + mPrefferedZenMode);*/
+                int checkedId = mZenRadioGroup.getCheckedRadioButtonId();
+                updateAlarmWarningText(getConditionTagAt(checkedId).condition);
             }
         }
     };
@@ -513,7 +512,8 @@ public class EnableZenModeDialog {
                 & NotificationManager.Policy.PRIORITY_CATEGORY_ALARMS) != 0;
 
         // don't show alarm warning if alarms are allowed to bypass dnd
-        if (allowAlarms) {
+        if (mPrefferedZenMode == Settings.Global.ZEN_MODE_ALARMS || (allowAlarms
+                && mPrefferedZenMode == Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS)) {
             return null;
         }
 
