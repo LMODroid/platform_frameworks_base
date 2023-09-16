@@ -1010,7 +1010,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         return brightness;
     }
 
-    private void updateViewDimAmount(boolean pressed) {
+    private void updateViewDimAmount(UdfpsControllerOverlay overlay, boolean pressed) {
         if (mFrameworkDimming) {
             if (pressed) {
                 int curBrightness = getBrightness();
@@ -1028,10 +1028,10 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                             mBrightnessAlphaArray[i][1], mBrightnessAlphaArray[i-1][1]);
                 }
                 // Call the function in UdfpsOverlayController with dimAmount
-                mOverlay.updateDimAmount(dimAmount / 255.0f);
+                overlay.updateDimAmount(dimAmount / 255.0f);
             } else {
                 // Call the function in UdfpsOverlayController with dimAmount
-                mOverlay.updateDimAmount(0.0f);
+                overlay.updateDimAmount(0.0f);
             }
         }
     }
@@ -1091,7 +1091,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
             return;
         }
 
-        updateViewDimAmount(true);
+        updateViewDimAmount(mOverlay, true);
 
         if (!mOverlay.matchesRequestId(requestId)) {
             Log.w(TAG, "Mismatched fingerDown: " + requestId
@@ -1217,15 +1217,12 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         final int delay = mContext.getResources().getInteger(
                 R.integer.config_udfpsDimmingDisableDelay);
         if (delay > 0) {
+            UdfpsControllerOverlay overlay = mOverlay;
             mFgExecutor.executeDelayed(() -> {
-                // A race condition exists where the overlay is destroyed before the the dim amount is updated.
-                // This check ensures that the overlay is still valid.
-                if (mOverlay != null && mOverlay.matchesRequestId(requestId)) {
-                    updateViewDimAmount(false);
-                }
+                updateViewDimAmount(overlay, false);
             }, delay);
         } else {
-            updateViewDimAmount(false);
+            updateViewDimAmount(mOverlay, false);
         }
     }
 

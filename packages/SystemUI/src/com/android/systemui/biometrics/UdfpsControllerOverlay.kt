@@ -101,6 +101,9 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
         private val alternateBouncerInteractor: AlternateBouncerInteractor,
         private val isDebuggable: Boolean = Build.IS_DEBUGGABLE,
 ) {
+    private var frame: View? = null
+    private var isDimmed = false
+    private var hideOnUndim = false
     /** The view, when [isShowing], or null. */
     var overlayView: UdfpsView? = null
         private set
@@ -119,10 +122,9 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
         fitInsetsTypes = 0
         gravity = android.view.Gravity.TOP or android.view.Gravity.LEFT
         layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-        flags = (Utils.FINGERPRINT_OVERLAY_LAYOUT_PARAM_FLAGS or WindowManager.LayoutParams.FLAG_DIM_BEHIND
-            or WindowManager.LayoutParams.FLAG_SPLIT_TOUCH)
+        flags = (Utils.FINGERPRINT_OVERLAY_LAYOUT_PARAM_FLAGS or
+                WindowManager.LayoutParams.FLAG_SPLIT_TOUCH)
         privateFlags = WindowManager.LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY
-        dimAmount = 0.0f
         // Avoid announcing window title.
         accessibilityTitle = " "
 
@@ -131,9 +133,27 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
         }
     }
 
+    private val frameLayoutParams = WindowManager.LayoutParams(
+        WindowManager.LayoutParams.TYPE_DISPLAY_OVERLAY,
+        Utils.FINGERPRINT_OVERLAY_LAYOUT_PARAM_FLAGS
+            or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            or WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        PixelFormat.TRANSLUCENT
+    ).apply {
+        fitInsetsTypes = 0
+        gravity = android.view.Gravity.TOP or android.view.Gravity.LEFT
+        layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+        privateFlags = WindowManager.LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY
+        // Avoid announcing window title.
+        accessibilityTitle = " "
+    }
+
     fun updateDimAmount(newDimAmount: Float): Float {
-        coreLayoutParams.dimAmount = newDimAmount
-        windowManager.updateViewLayout(overlayView, coreLayoutParams)
+        frame?.setBackgroundColor((newDimAmount * 255).toInt() shl 24)
+        isDimmed = newDimAmount > 0
+        if (hideOnUndim) {
+            hideFrame()
+        }
         return newDimAmount
     }
 
@@ -177,6 +197,8 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
             overlayParams = params
             sensorBounds = Rect(params.sensorBounds)
             try {
+                frame = View(context)
+                updateDimAmount(0f)
                 overlayView = (inflater.inflate(
                     R.layout.udfps_view, null, false
                 ) as UdfpsView).apply {
@@ -193,6 +215,7 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
                         importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
                     }
 
+                    windowManager.addView(frame, frameLayoutParams)
                     windowManager.addView(this, coreLayoutParams.updateDimensions(animation))
                     sensorRect = sensorBounds
                     touchExplorationEnabled = accessibilityManager.isTouchExplorationEnabled
@@ -304,6 +327,7 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
     /** Hide the overlay or return false and do nothing if it is already hidden. */
     fun hide(): Boolean {
         val wasShowing = isShowing
+        hideOnUndim = isDimmed
 
         overlayView?.apply {
             if (isDisplayConfigured) {
@@ -320,7 +344,15 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
         overlayView = null
         overlayTouchListener = null
 
+        if (!hideOnUndim) hideFrame()
         return wasShowing
+    }
+
+    private fun hideFrame() {
+        frame?.apply {
+            windowManager.removeView(this)
+        }
+        frame = null
     }
 
     fun onEnrollmentProgress(remaining: Int) {
