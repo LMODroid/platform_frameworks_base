@@ -30,6 +30,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.animation.CycleInterpolator
 import androidx.core.animation.ObjectAnimator
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Lifecycle
@@ -308,26 +309,40 @@ object KeyguardBottomAreaViewBinder {
         }
 
         view.isActivated = viewModel.isActivated
-        view.drawable.setTint(
-            Utils.getColorAttrDefaultColor(
-                view.context,
-                if (viewModel.isActivated) {
-                    com.android.internal.R.attr.textColorPrimaryInverse
-                } else {
-                    com.android.internal.R.attr.textColorPrimary
-                },
-            )
-        )
+        // view.drawable.setTint(
+        //     Utils.getColorAttrDefaultColor(
+        //         view.context,
+        //         if (viewModel.isActivated) {
+        //             //com.android.internal.R.attr.textColorPrimaryInverse
+        //             // R.attr.colorOnPrimary
+        //             // com.android.internal.R.attr.textColorOnAccent
+        //             R.color.keyguard_quick_affordance_icon_activated_color
+        //         } else {
+        //             //com.android.internal.R.attr.textColorPrimary
+        //             //R.attr.wallpaperTextColor
+        //             R.color.keyguard_quick_affordance_icon_color
+        //         },
+        //     )
+        // )
 
         view.backgroundTintList =
             if (!viewModel.isSelected) {
-                Utils.getColorAttr(
-                    view.context,
-                    if (viewModel.isActivated) {
-                        com.android.internal.R.attr.colorAccent
-                    } else {
-                        com.android.internal.R.attr.colorSurface
-                    }
+                // Utils.getColorAttr(
+                //     view.context,
+                //     if (viewModel.isActivated) {
+                //         //R.attr.colorPrimary
+                //         //com.android.internal.R.attr.colorAccent
+                //         R.color.keyguard_quick_affordance_bg_activated_color
+                //     } else {
+                //         //com.android.internal.R.attr.colorSurface
+                //         //com.android.internal.R.attr.colorAccent
+                //         // R.attr.wallpaperTextColor
+                //         R.color.keyguard_quick_affordance_bg_color
+                //     }
+                // )
+                ContextCompat.getColorStateList(
+                        view.context,
+                        R.color.keyguard_quick_affordance_icon_bg_color
                 )
             } else {
                 null
