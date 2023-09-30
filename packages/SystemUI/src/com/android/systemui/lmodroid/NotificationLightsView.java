@@ -19,11 +19,8 @@ package com.android.systemui.lmodroid;
 
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.app.WallpaperColors;
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -37,6 +34,7 @@ import androidx.palette.graphics.Palette;
 
 import com.android.settingslib.Utils;
 import com.android.systemui.R;
+import com.android.systemui.people.PeopleSpaceUtils;
 
 public class NotificationLightsView extends RelativeLayout {
 
@@ -45,7 +43,6 @@ public class NotificationLightsView extends RelativeLayout {
 
     private View mNotificationAnimView;
     private ValueAnimator mLightAnimator;
-    private WallpaperManager mWallManager;
     private int color;
 
     public NotificationLightsView(Context context) {
@@ -65,7 +62,7 @@ public class NotificationLightsView extends RelativeLayout {
         if (DEBUG) Log.d(TAG, "new");
     }
 
-    public void animateNotification() {
+    public void animateNotification(String notifPackageName) {
         int customColor = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.PULSE_AMBIENT_LIGHT_COLOR, 0xFF3980FF,
                 UserHandle.USER_CURRENT);
@@ -83,14 +80,14 @@ public class NotificationLightsView extends RelativeLayout {
                 UserHandle.USER_CURRENT);
         if (colorMode == 0) {
             try {
-                WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
-                Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-                Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
+                Drawable iconDrawable = mContext.getPackageManager()
+                        .getApplicationIcon(notifPackageName);
+                Bitmap bitmap = PeopleSpaceUtils.convertDrawableToBitmap(iconDrawable);
                 if (bitmap != null) {
                     Palette p = Palette.from(bitmap).generate();
-                    int wallColor = p.getDominantColor(color);
-                    if (color != wallColor)
-                        color = wallColor;
+                    int iconColor = p.getDominantColor(color);
+                    if (color != iconColor)
+                        color = iconColor;
                 }
             } catch (Exception e) {
                 // Nothing to do

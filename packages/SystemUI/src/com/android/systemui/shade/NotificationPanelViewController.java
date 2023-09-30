@@ -191,6 +191,7 @@ import com.android.systemui.statusbar.notification.NotificationWakeUpCoordinator
 import com.android.systemui.statusbar.notification.PropertyAnimator;
 import com.android.systemui.statusbar.notification.ViewGroupFadeHelper;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
+import com.android.systemui.statusbar.notification.collection.NotifPipeline;
 import com.android.systemui.statusbar.notification.row.ActivatableNotificationView;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow;
 import com.android.systemui.statusbar.notification.row.ExpandableView;
@@ -683,6 +684,7 @@ public final class NotificationPanelViewController implements Dumpable {
     private final FaceIconViewController mFaceIconViewController;
 
     private NotificationLightsView mPulseLightsView;
+    private NotifPipeline mNotifPipeline;
 
     @Inject
     public NotificationPanelViewController(NotificationPanelView view,
@@ -763,7 +765,8 @@ public final class NotificationPanelViewController implements Dumpable {
             KeyguardInteractor keyguardInteractor,
             TunerService tunerService,
             Context context,
-            FaceIconViewController faceIconViewController) {
+            FaceIconViewController faceIconViewController,
+            NotifPipeline notifPipeline) {
         mInteractionJankMonitor = interactionJankMonitor;
         keyguardStateController.addCallback(new KeyguardStateController.Callback() {
             @Override
@@ -972,6 +975,7 @@ public final class NotificationPanelViewController implements Dumpable {
                 });
         mAlternateBouncerInteractor = alternateBouncerInteractor;
         dumpManager.registerDumpable(this);
+        mNotifPipeline = notifPipeline;
     }
 
     private void unlockAnimationFinished() {
@@ -3059,7 +3063,18 @@ public final class NotificationPanelViewController implements Dumpable {
         if ((mPulseLightsView != null) && pulseLights) {
             mPulseLightsView.setVisibility(mPulsing ? View.VISIBLE : View.GONE);
             if (mPulsing) {
-                mPulseLightsView.animateNotification();
+                // Get the notification that's pulsing
+                String notifPackageName = "";
+                List<NotificationEntry> notificationEntries =
+                        new ArrayList(mNotifPipeline.getAllNotifs());
+                for (int i = 0; i < notificationEntries.size(); i++) {
+                    NotificationEntry entry = notificationEntries.get(i);
+                    if (entry.showingPulsing()) {
+                        notifPackageName = entry.getSbn().getPackageName();
+                        break;
+                    }
+                }
+                mPulseLightsView.animateNotification(notifPackageName);
             }
         }
         mNotificationStackScrollLayoutController.setPulsing(pulsing, animatePulse);
