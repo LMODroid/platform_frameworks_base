@@ -294,4 +294,8 @@
     <!-- Package that contains udfps animation customization or empty to disable -->
     <string name="config_udfps_animation_customization_package">com.libremobileos.overlay.customization.udfps.animations</string>
 
+    <!-- Default values for status bar DT2S gesture -->
+    <bool name="config_dt2sGestureAvailable">true</bool>
+    <bool name="config_dt2sGestureEnabledByDefault">true</bool>
+
 </resources>

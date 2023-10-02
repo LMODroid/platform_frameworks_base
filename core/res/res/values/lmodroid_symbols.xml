@@ -191,4 +191,8 @@
     <!-- Udfps animation package -->
     <java-symbol type="string" name="config_udfps_animation_customization_package" />
 
+    <!-- Status bar DT2S gesture -->
+    <java-symbol type="bool" name="config_dt2sGestureAvailable" />
+    <java-symbol type="bool" name="config_dt2sGestureEnabledByDefault" />
+
 </resources>
