@@ -291,7 +291,7 @@ static void nativeSetPowerExtMode(JNIEnv* env, jclass /* clazz */, jstring mode,
     }
     if (isSupported) {
         setPowerExtMode(modeStr, enabled);
-    } else {
+    } else if (fallback >= 0) {
         setPowerMode(static_cast<Mode>(fallback), enabled);
     }
     if (modeStr) {
@@ -316,7 +316,7 @@ static void nativeSetPowerExtBoost(JNIEnv* env, jclass /* clazz */, jstring boos
     }
     if (isSupported) {
         setPowerExtBoost(boostStr, durationMs);
-    } else {
+    } else if (fallback >= 0) {
         setPowerBoost(static_cast<Boost>(fallback), durationMs);
     }
     if (boostStr) {
