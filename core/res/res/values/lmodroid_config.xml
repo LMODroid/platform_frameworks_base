@@ -217,4 +217,8 @@
     <!-- The list of package IDs that are not allowed to use aux cameras. -->
     <string-array name="config_cameraAuxPackageExcludeList" translatable="false" />
 
+    <!-- Default values for status bar DT2S gesture -->
+    <bool name="config_dt2sGestureAvailable">true</bool>
+    <bool name="config_dt2sGestureEnabledByDefault">true</bool>
+
 </resources>
