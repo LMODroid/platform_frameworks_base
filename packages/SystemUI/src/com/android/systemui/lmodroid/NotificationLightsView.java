@@ -23,19 +23,14 @@ import android.app.WallpaperColors;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.palette.graphics.Palette;
@@ -50,7 +45,6 @@ public class NotificationLightsView extends RelativeLayout {
 
     private View mNotificationAnimView;
     private ValueAnimator mLightAnimator;
-    private boolean mPulsing;
     private WallpaperManager mWallManager;
     private int color;
 
@@ -69,27 +63,6 @@ public class NotificationLightsView extends RelativeLayout {
     public NotificationLightsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         if (DEBUG) Log.d(TAG, "new");
-    }
-
-    private Runnable mLightUpdate = new Runnable() {
-        @Override
-        public void run() {
-            if (DEBUG) Log.d(TAG, "run");
-            animateNotification();
-        }
-    };
-
-    public void setPulsing(boolean pulsing) {
-        if (mPulsing == pulsing) {
-            return;
-        }
-        mPulsing = pulsing;
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        if (DEBUG) Log.d(TAG, "draw");
     }
 
     public void animateNotification() {

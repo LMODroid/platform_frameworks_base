@@ -3060,7 +3060,6 @@ public final class NotificationPanelViewController implements Dumpable {
             mPulseLightsView.setVisibility(mPulsing ? View.VISIBLE : View.GONE);
             if (mPulsing) {
                 mPulseLightsView.animateNotification();
-                mPulseLightsView.setPulsing(pulsing);
             }
         }
         mNotificationStackScrollLayoutController.setPulsing(pulsing, animatePulse);
