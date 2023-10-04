@@ -37,6 +37,26 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 
+    <LinearLayout
+        android:id="@+id/face_icon_container"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:layout_gravity="top|center_horizontal"
+        android:gravity="center_horizontal"
+        android:visibility="visible">
+        <com.android.keyguard.FaceIconView
+            android:id="@+id/face_icon_view"
+            android:layout_width="@dimen/keyguard_lock_width"
+            android:layout_height="@dimen/keyguard_lock_height"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/accessibility_unlock_button"
+            android:src="@drawable/ic_face"
+            android:scaleType="center"
+            android:tint="?attr/wallpaperTextColorAccent" />
+    </LinearLayout>
+
     <include layout="@layout/status_bar_expanded_plugin_frame"/>
 
     <com.android.systemui.shade.NotificationsQuickSettingsContainer

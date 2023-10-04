@@ -20,6 +20,7 @@ import static com.android.systemui.statusbar.phone.dagger.StatusBarViewModule.ST
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import com.android.keyguard.FaceIconViewController;
 import com.android.keyguard.LockIconViewController;
 import com.android.systemui.biometrics.AuthRippleController;
 import com.android.systemui.shade.NotificationPanelViewController;
@@ -121,6 +122,11 @@ public interface CentralSurfacesComponent {
      * Creates a LockIconViewController. Must be init after creation.
      */
     LockIconViewController getLockIconViewController();
+
+    /**
+     * Creates a FaceIconViewController. Must be init after creation.
+     */
+    FaceIconViewController getFaceIconViewController();
 
     /**
      * Creates an AuthRippleViewController. Must be init after creation.

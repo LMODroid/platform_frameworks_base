@@ -24,6 +24,7 @@ import android.view.ViewStub;
 
 import androidx.constraintlayout.motion.widget.MotionLayout;
 
+import com.android.keyguard.FaceIconView;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.LockIconView;
 import com.android.systemui.R;
@@ -157,6 +158,15 @@ public abstract class StatusBarViewModule {
     public static LockIconView getLockIconView(
             NotificationShadeWindowView notificationShadeWindowView) {
         return notificationShadeWindowView.findViewById(R.id.lock_icon_view);
+    }
+
+    /** */
+    @Provides
+    @CentralSurfacesComponent.CentralSurfacesScope
+    @Nullable
+    public static FaceIconView getFaceIconView(
+            NotificationShadeWindowView notificationShadeWindowView) {
+        return notificationShadeWindowView.findViewById(R.id.face_icon_view);
     }
 
     /** */

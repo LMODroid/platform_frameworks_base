@@ -1628,6 +1628,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
         mShadeController.setNotificationShadeWindowViewController(
                 mNotificationShadeWindowViewController);
         mCentralSurfacesComponent.getLockIconViewController().init();
+        mCentralSurfacesComponent.getFaceIconViewController().init();
         mStackScrollerController =
                 mCentralSurfacesComponent.getNotificationStackScrollLayoutController();
         mQsController = mCentralSurfacesComponent.getQuickSettingsController();
