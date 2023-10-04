@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.keyguard.AuthKeyguardMessageArea;
 import com.android.keyguard.KeyguardMessageAreaController;
+import com.android.keyguard.FaceIconViewController;
 import com.android.keyguard.LockIconViewController;
 import com.android.keyguard.dagger.KeyguardBouncerComponent;
 import com.android.systemui.R;
@@ -141,6 +142,8 @@ public class NotificationShadeWindowViewController {
     private GestureDetector mQQSGestureHandler;
     private final QQSGestureListener mQQSGestureListener;
 
+    private final FaceIconViewController mFaceIconViewController;
+
     @Inject
     public NotificationShadeWindowViewController(
             LockscreenShadeTransitionController transitionController,
@@ -177,7 +180,8 @@ public class NotificationShadeWindowViewController {
             BouncerMessageInteractor bouncerMessageInteractor,
             BouncerLogger bouncerLogger,
             KeyEventInteractor keyEventInteractor,
-            QQSGestureListener qqsGestureListener) {
+            QQSGestureListener qqsGestureListener,
+            FaceIconViewController faceIconViewController) {
         mLockscreenShadeTransitionController = transitionController;
         mFalsingCollector = falsingCollector;
         mStatusBarStateController = statusBarStateController;
@@ -205,6 +209,8 @@ public class NotificationShadeWindowViewController {
         mFeatureFlags = featureFlags;
         mKeyEventInteractor = keyEventInteractor;
         mQQSGestureListener = qqsGestureListener;
+        mFaceIconViewController = faceIconViewController;
+        mFaceIconViewController.init();
 
         // This view is not part of the newly inflated expanded status bar.
         mBrightnessMirror = mView.findViewById(R.id.brightness_mirror_container);

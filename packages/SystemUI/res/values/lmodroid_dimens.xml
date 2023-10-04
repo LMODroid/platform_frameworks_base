@@ -25,4 +25,9 @@
     <!-- Udfps fingerprint animation -->
     <dimen name="udfps_animation_size">280dp</dimen>
     <dimen name="udfps_animation_offset">0dp</dimen>
+
+    <!-- Face icon in the lockscreen -->
+    <dimen name="keyguard_face_icon_height">42dp</dimen>
+    <dimen name="keyguard_face_icon_width">42dp</dimen>
+    <dimen name="keyguard_face_icon_padding">5dp</dimen>
 </resources>

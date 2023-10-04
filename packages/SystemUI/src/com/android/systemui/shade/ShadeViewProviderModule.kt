@@ -22,6 +22,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewStub
 import androidx.constraintlayout.motion.widget.MotionLayout
+import com.android.keyguard.FaceIconView
 import com.android.keyguard.LockIconView
 import com.android.systemui.R
 import com.android.systemui.battery.BatteryMeterView
@@ -216,6 +217,14 @@ abstract class ShadeViewProviderModule {
             } else {
                 return notificationPanelView.requireViewById(R.id.lock_icon_view)
             }
+        }
+
+        @Provides
+        @SysUISingleton
+        fun providesFaceIconView(
+            notificationPanelView: NotificationPanelView
+        ): FaceIconView {
+            return notificationPanelView.requireViewById(R.id.face_icon_view)
         }
 
         // TODO(b/277762009): Only allow this view's controller to inject the view. See above.
