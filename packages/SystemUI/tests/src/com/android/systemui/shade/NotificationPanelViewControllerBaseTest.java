@@ -74,6 +74,7 @@ import com.android.keyguard.KeyguardSliceViewController;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.keyguard.KeyguardStatusViewController;
 import com.android.keyguard.KeyguardUpdateMonitor;
+import com.android.keyguard.FaceIconViewController;
 import com.android.keyguard.LegacyLockIconViewController;
 import com.android.keyguard.dagger.KeyguardQsUserSwitchComponent;
 import com.android.keyguard.dagger.KeyguardStatusBarViewComponent;
@@ -353,6 +354,7 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
     @Mock private NaturalScrollingSettingObserver mNaturalScrollingSettingObserver;
     @Mock private LargeScreenHeaderHelper mLargeScreenHeaderHelper;
     @Mock private NotifPipeline mNotifPipeline;
+    @Mock private FaceIconViewController mFaceIconViewController;
 
     protected final int mMaxUdfpsBurnInOffsetY = 5;
     protected FakeFeatureFlagsClassic mFeatureFlags = new FakeFeatureFlagsClassic();
@@ -766,7 +768,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
                 mKeyguardClockPositionAlgorithm,
                 mNaturalScrollingSettingObserver,
                 mContext,
-                mNotifPipeline);
+                mNotifPipeline,
+                mFaceIconViewController);
         mNotificationPanelViewController.initDependencies(
                 mCentralSurfaces,
                 null,
