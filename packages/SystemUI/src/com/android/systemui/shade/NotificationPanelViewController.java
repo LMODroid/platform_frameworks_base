@@ -96,6 +96,7 @@ import com.android.internal.policy.SystemBarUtils;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.LatencyTracker;
 import com.android.keyguard.ActiveUnlockConfig;
+import com.android.keyguard.FaceIconViewController;
 import com.android.keyguard.KeyguardUnfoldTransition;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.dagger.KeyguardStatusBarViewComponent;
@@ -587,6 +588,8 @@ public final class NotificationPanelViewController implements
     private PulseLightView mPulseLightView;
     private NotifPipeline mNotifPipeline;
 
+    private final FaceIconViewController mFaceIconViewController;
+
     @Inject
     public NotificationPanelViewController(NotificationPanelView view,
             @Main Handler handler,
@@ -668,7 +671,8 @@ public final class NotificationPanelViewController implements
             BlurConfig blurConfig,
             Lazy<ShadeDisplaysRepository> shadeDisplaysRepository,
             Context context,
-            NotifPipeline notifPipeline) {
+            NotifPipeline notifPipeline,
+            FaceIconViewController faceIconViewController) {
         mBlurConfig = blurConfig;
         SceneContainerFlag.assertInLegacyMode();
         keyguardStateController.addCallback(new KeyguardStateController.Callback() {
@@ -813,6 +817,7 @@ public final class NotificationPanelViewController implements
         mUnlockedScreenOffAnimationController = unlockedScreenOffAnimationController;
         mLastDownEvents = new NPVCDownEventState.Buffer(MAX_DOWN_EVENT_BUFFER_SIZE);
         mDeviceEntryFaceAuthInteractor = deviceEntryFaceAuthInteractor;
+        mFaceIconViewController = faceIconViewController;
 
         int currentMode = navigationModeController.addListener(
                 mode -> mIsGestureNavigation = QuickStepContract.isGesturalMode(mode));
@@ -3831,6 +3836,10 @@ public final class NotificationPanelViewController implements
             // Also animate the status bar's alpha during transitions between the lockscreen and
             // dreams.
             mKeyguardStatusBarViewController.setAlpha(alpha);
+
+            if (mFaceIconViewController != null) {
+                mFaceIconViewController.setAlpha(alpha);
+            }
         };
     }
 
