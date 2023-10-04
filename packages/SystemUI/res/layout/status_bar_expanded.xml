@@ -37,6 +37,16 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 
+    <com.android.keyguard.FaceIconView
+        android:id="@+id/face_icon_view"
+        android:layout_width="@dimen/keyguard_face_icon_width"
+        android:layout_height="@dimen/keyguard_face_icon_height"
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:padding="@dimen/keyguard_face_icon_padding"
+        android:layout_gravity="top|center_horizontal"
+        android:gravity="center_horizontal"
+        android:scaleType="center" />
+
     <include layout="@layout/status_bar_expanded_plugin_frame"/>
 
     <com.android.systemui.shade.NotificationsQuickSettingsContainer

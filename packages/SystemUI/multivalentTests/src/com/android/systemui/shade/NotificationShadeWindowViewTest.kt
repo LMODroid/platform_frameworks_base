@@ -24,6 +24,7 @@ import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.keyguard.FaceIconViewController
 import com.android.keyguard.KeyguardSecurityContainerController
 import com.android.keyguard.dagger.KeyguardBouncerComponent
 import com.android.systemui.Flags as AConfigFlags
@@ -132,6 +133,7 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
     @Mock lateinit var alternateBouncerInteractor: AlternateBouncerInteractor
     @Mock lateinit var configurationForwarder: ConfigurationForwarder
     @Mock private lateinit var qqsGestureListener: QQSGestureListener
+    @Mock private lateinit var faceIconViewController: FaceIconViewController
     @Captor
     private lateinit var interactionEventHandlerCaptor: ArgumentCaptor<InteractionEventHandler>
 
@@ -207,6 +209,7 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
                 { configurationForwarder },
                 brightnessMirrorShowingInteractor,
                 qqsGestureListener,
+                faceIconViewController,
             )
 
         controller.setupExpandedStatusBar()
