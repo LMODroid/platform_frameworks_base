@@ -205,12 +205,7 @@ public class StatusBarWifiView extends BaseStatusBarFrameLayout implements DarkR
 
     private boolean updateState(WifiIconState state) {
         setContentDescription(state.contentDescription);
-        if (mShowWifiStandard && isWifiConnected()) {
-            mWifiStandard.setVisibility(View.VISIBLE);
-            setWifiStandard();
-        } else {
-            mWifiStandard.setVisibility(View.GONE);
-        }
+        setWifiStandard(mShowWifiStandard && isWifiConnected());
         if (mState.resId != state.resId && state.resId >= 0) {
             mWifiIcon.setImageDrawable(mContext.getDrawable(state.resId));
         }
@@ -236,12 +231,7 @@ public class StatusBarWifiView extends BaseStatusBarFrameLayout implements DarkR
 
     private void initViewState() {
         setContentDescription(mState.contentDescription);
-        if (mShowWifiStandard && isWifiConnected()) {
-            mWifiStandard.setVisibility(View.VISIBLE);
-            setWifiStandard();
-        } else {
-            mWifiStandard.setVisibility(View.GONE);
-        }
+        setWifiStandard(mShowWifiStandard && isWifiConnected());
         if (mState.resId >= 0) {
             mWifiIcon.setImageDrawable(mContext.getDrawable(mState.resId));
         }
@@ -255,14 +245,18 @@ public class StatusBarWifiView extends BaseStatusBarFrameLayout implements DarkR
         setVisibility(mState.visible ? View.VISIBLE : View.GONE);
     }
 
-    private void setWifiStandard() {
+    private void setWifiStandard(boolean show) {
         int wifiStandard = getWifiStandard(mState);
-        if (wifiStandard >= 4) {
-            int identifier = getResources().getIdentifier("ic_wifi_standard_" + wifiStandard,
+        int identifier = 0;
+        if (show && wifiStandard >= 4) {
+            identifier = getResources().getIdentifier("ic_wifi_standard_" + wifiStandard,
                     "drawable", getContext().getPackageName());
-            if (identifier > 0) {
-                mWifiStandard.setImageDrawable(mContext.getDrawable(identifier));
-            }
+        }
+        if (identifier > 0) {
+            mWifiStandard.setImageDrawable(mContext.getDrawable(identifier));
+            mWifiStandard.setVisibility(View.VISIBLE);
+        } else {
+            mWifiStandard.setVisibility(View.GONE);
         }
     }
 
@@ -291,12 +285,7 @@ public class StatusBarWifiView extends BaseStatusBarFrameLayout implements DarkR
     public void updateWifiState(boolean showWifiStandard) {
         boolean needsLayout = false;
         if (mShowWifiStandard != showWifiStandard) {
-            if (showWifiStandard && isWifiConnected()) {
-                mWifiStandard.setVisibility(View.VISIBLE);
-                setWifiStandard();
-            } else {
-                mWifiStandard.setVisibility(View.GONE);
-            }
+            setWifiStandard(showWifiStandard && isWifiConnected());
         }
 
         mIn.setVisibility(mState.activityIn ? View.VISIBLE : View.GONE);
