@@ -562,11 +562,6 @@ public final class SystemUiDeviceConfigFlags {
             "task_manager_show_user_visible_jobs";
 
     /**
-     * (boolean) Whether to show notification volume control slider separate from ring.
-     */
-    public static final String VOLUME_SEPARATE_NOTIFICATION = "volume_separate_notification";
-
-    /**
      * (boolean) Whether widget provider info would be saved to / loaded from system persistence
      * layer as opposed to individual manifests in respective apps.
      */
