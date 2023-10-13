@@ -200,6 +200,7 @@ android_library {
         "lottie",
         "LowLightDreamLib",
         "motion_tool_lib",
+        "framework-lmodroid.static",
     ],
     manifest: "AndroidManifest.xml",
 

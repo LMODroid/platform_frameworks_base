@@ -120,6 +120,7 @@ filegroup {
         ":services.voiceinteraction-sources",
         ":services.wallpapereffectsgeneration-sources",
         ":services.wifi-sources",
+        ":services.lmodroid-sources",
     ],
     visibility: ["//visibility:private"],
 }
@@ -180,6 +181,7 @@ java_library {
         "services.wifi",
         "service-blobstore",
         "service-jobscheduler",
+        "services.lmodroid",
         "android.hidl.base-V1.0-java",
     ],
 
