@@ -146,6 +146,7 @@ filegroup {
         ":services.wallpapereffectsgeneration-sources",
         ":services.wifi-sources",
         ":framework-pm-common-shared-srcs",
+        ":services.lmodroid-sources",
     ],
     visibility: ["//visibility:private"],
 }
@@ -312,6 +313,7 @@ system_java_library {
         "service-blobstore",
         "service-jobscheduler",
         "service-connectivity-b-pre-jarjar", // Move it to mainline module
+        "services.lmodroid",
         "android.hidl.base-V1.0-java",
     ],
 
