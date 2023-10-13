@@ -540,6 +540,7 @@ android_library {
         "kairos",
         "displaylib",
         "aconfig_settings_flags_lib",
+        "framework-lmodroid.static",
     ],
     libs: [
         "keepanno-annotations",
@@ -734,6 +735,7 @@ android_library {
         "aconfig_settings_flags_lib",
         "kairos",
         "displaylib",
+        "framework-lmodroid.static",
     ],
 }
 
