@@ -249,6 +249,8 @@ import java.util.concurrent.Future;
 // LineageHardware
 import com.android.server.libremobileos.LineageHardwareService;
 
+import com.libremobileos.server.LMODroidSystemServer;
+
 /**
  * Entry point to {@code system_server}.
  */
@@ -2737,6 +2739,10 @@ public final class SystemServer implements Dumpable {
         // Perfetto TracingServiceProxy
         t.traceBegin("startTracingServiceProxy");
         mSystemServiceManager.startService(TracingServiceProxy.class);
+        t.traceEnd();
+
+        t.traceBegin("startLMODroidServices");
+        LMODroidSystemServer.startServices(context, mSystemServiceManager);
         t.traceEnd();
 
         // It is now time to start up the app processes...
