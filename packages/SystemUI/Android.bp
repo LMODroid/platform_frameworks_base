@@ -572,6 +572,7 @@ android_library {
         "SurfaceEffectsComposeLib",
         "uilatencystats_flags_core_java_lib",
         "personalcontext_ace_visualizer",
+        "framework-lmodroid.static",
     ],
     enable_ksp: true,
     annotation_processor_flags: [
@@ -781,6 +782,7 @@ android_library {
         "displaylib",
         "dynamiccolors",
         "SurfaceEffectsComposeLib",
+        "framework-lmodroid.static",
     ],
 }
 

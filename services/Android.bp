@@ -161,6 +161,7 @@ filegroup {
         ":services.wifi-sources",
         ":framework-pm-common-shared-srcs",
         ":framework-minus-apex-aconfig-srcjars",
+        ":services.lmodroid-sources",
     ],
     visibility: ["//visibility:private"],
 }
@@ -363,6 +364,7 @@ java_library {
         "services.wifi",
         "service-blobstore",
         "service-jobscheduler",
+        "services.lmodroid",
         "android.hidl.base-V1.0-java",
     ] + select(release_flag("RELEASE_ANOMALY_DETECTOR"), {
         true: ["services.signal-collectors"],
