@@ -311,6 +311,8 @@ import java.util.TreeSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
+import com.libremobileos.server.LMOSystemServer;
+
 /**
  * Entry point to {@code system_server}.
  */
@@ -2870,6 +2872,10 @@ public final class SystemServer implements Dumpable {
         // Perfetto TracingServiceProxy
         t.traceBegin("startTracingServiceProxy");
         mSystemServiceManager.startService(TracingServiceProxy.class);
+        t.traceEnd();
+
+        t.traceBegin("startLMODroidServices");
+        LMOSystemServer.startServices(context, mSystemServiceManager);
         t.traceEnd();
 
         // It is now time to start up the app processes...
