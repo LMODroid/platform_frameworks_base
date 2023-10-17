@@ -92,7 +92,7 @@ class FaceIconViewController @Inject constructor(
             shouldUpdate = false
         }
         if (shouldUpdate && faceIconView.visibility != View.GONE) {
-            faceIconView.update(newState, keyguardJustShown)
+            faceIconView.updateState(newState)
         }
         lastState = newState
         keyguardJustShown = false
@@ -114,7 +114,7 @@ class FaceIconViewController @Inject constructor(
         val faceAuthAvailable = keyguardStateController.isFaceAuthEnabled()
                 && (faceDetectionRunning || keyguardUpdateMonitor.getIsFaceAuthenticated())
         val invisible = dozing || !faceAuthAvailable
-        return faceIconView.updateIconVisibility(!invisible)
+        return faceIconView.updateVisibility(!invisible)
     }
 
     private fun updateColor() {

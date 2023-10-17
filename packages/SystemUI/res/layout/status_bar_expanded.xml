@@ -43,10 +43,8 @@
         android:layout_height="@dimen/keyguard_lock_height"
         android:layout_marginTop="@dimen/status_bar_height"
         android:layout_gravity="top|center_horizontal"
-        android:contentDescription="@string/accessibility_unlock_button"
-        android:src="@drawable/ic_face"
-        android:scaleType="center"
-        android:tint="?attr/wallpaperTextColorAccent" />
+        android:gravity="center_horizontal"
+        android:scaleType="center" />
 
     <include layout="@layout/status_bar_expanded_plugin_frame"/>
 

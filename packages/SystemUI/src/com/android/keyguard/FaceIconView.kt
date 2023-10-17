@@ -19,111 +19,236 @@ package com.android.keyguard
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.ColorFilter
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.SparseArray
+import android.view.View
 import android.view.ViewTreeObserver.OnPreDrawListener
+import android.widget.FrameLayout
+
+import androidx.core.view.isVisible
+
 import com.android.systemui.R;
 import com.android.systemui.animation.Interpolators
 import com.android.systemui.statusbar.KeyguardAffordanceView
 
-/**
- * Manages the different states of the face unlock icon.
- */
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
+
 class FaceIconView(
     context: Context?, attrs: AttributeSet?
-) : KeyguardAffordanceView(context, attrs) {
+) : FrameLayout(context, attrs) {
 
-    private var iconColor = 0
-    private var oldState = 0
-    private var state = 0
-    private var keyguardJustShown = false
-    private var preDrawRegistered = false
-    private val drawableCache = SparseArray<Drawable>()
+    private var faceIcon: FaceIcon? = null
 
-    private val onPreDrawListener: OnPreDrawListener = object : OnPreDrawListener {
-        override fun onPreDraw(): Boolean {
-            viewTreeObserver.removeOnPreDrawListener(this)
-            preDrawRegistered = false
-            val newState = state
-            val icon = getIcon(newState)
-            setImageDrawable(icon, false)
-            if (newState == STATE_FACE_SCANNING) {
-                announceForAccessibility(
-                    resources.getString(
-                        R.string.accessibility_scanning_face
+    init {
+        setupLottieView()
+    }
+
+    private fun setupLottieView() {
+        val lottieView = LottieView(context).apply {
+            setFailureListener {
+                // If lottie files failed to load,
+                // It will fallback to normal icon.
+                setupIconView()
+            }
+        }
+        updateView(lottieView)
+    }
+
+    private fun setupIconView() {
+        val iconView = IconView(context)
+        updateView(iconView)   
+    }
+
+    private fun updateView(newView: FaceIcon) {
+        faceIcon = newView ?: return
+        removeAllViews()
+        addView(faceIcon as View)
+    }
+
+    fun updateColor(color: Int) {
+        faceIcon?.updateColor(color)
+    }
+
+    fun updateState(newState: Int) {
+        faceIcon?.updateState(newState)
+    }
+
+    fun updateVisibility(visible: Boolean): Boolean {
+        return faceIcon?.updateVisibility(visible) ?: false
+    }
+
+    private interface FaceIcon {
+        fun updateColor(color: Int)
+        fun updateState(newState: Int)
+        fun updateVisibility(visible: Boolean): Boolean
+    }
+
+    class LottieView(context: Context) : LottieAnimationView(context), FaceIcon {
+
+        private var oldState: Int = 0
+        private var lottieColor: Int = -1 // white
+
+        init {
+            // Load a lottie file to find if it's present or not
+            setAnimation(R.raw.lottie_face_unlock_running)
+        }
+
+        override fun updateColor(color: Int) {
+            lottieColor = color
+            updateColor()
+        }
+
+        override fun updateState(newState: Int) {
+            update(newState)
+        }
+
+        override fun updateVisibility(visible: Boolean): Boolean {
+            if (isVisible == visible) return false
+            isVisible = visible
+            return true
+        }
+
+        private fun updateColor() {
+            val filter = SimpleColorFilter(lottieColor)
+            val keyPath = KeyPath("**")
+            val valueCallback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
+            addValueCallback(keyPath, LottieProperty.COLOR_FILTER, valueCallback)
+        }
+
+        private fun update(newState: Int) {
+            if (oldState == newState) return
+            oldState = newState
+            val lottieRes = getLottieForState(newState)
+            setAnimation(lottieRes)
+            // Don't repeat for success state
+            repeatCount = if (newState == STATE_FACE_SUCCESS) {
+                0
+            } else {
+                LottieDrawable.INFINITE
+            }
+            // Update color for the new lottie
+            // since lottie file has white as default but we want to show wallpaper accent.
+            updateColor()
+            playAnimation()
+        }
+
+        private fun getLottieForState(state: Int): Int {
+            val lottieRes: Int = when (state) {
+                STATE_FACE_SCANNING -> R.raw.lottie_face_unlock_running
+                STATE_FACE_FAILED -> R.raw.lottie_face_unlock_running
+                STATE_FACE_SUCCESS -> R.raw.lottie_face_unlock_success
+                else -> throw IllegalArgumentException()
+            }
+            return lottieRes
+        }
+    }
+
+    class IconView(context: Context) : KeyguardAffordanceView(context), FaceIcon {
+
+        private var iconColor = 0
+        private var oldState = 0
+        private var state = 0
+        private var preDrawRegistered = false
+        private val drawableCache = SparseArray<Drawable>()
+
+        private val onPreDrawListener: OnPreDrawListener = object : OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                viewTreeObserver.removeOnPreDrawListener(this)
+                preDrawRegistered = false
+                val newState = state
+                val icon = getIcon(newState)
+                setImageDrawable(icon, false)
+                if (newState == STATE_FACE_SCANNING) {
+                    announceForAccessibility(
+                        resources.getString(
+                            R.string.accessibility_scanning_face
+                        )
                     )
-                )
+                }
+                return true
             }
-            return true
         }
-    }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
-        super.onConfigurationChanged(newConfig)
-        drawableCache.clear()
-    }
+        override fun updateColor(color: Int) {
+            updateIconColor(iconColor)
+        }
 
-    /**
-     * Update the icon visibility
-     * @return true if the visibility changed
-     */
-    fun updateIconVisibility(visible: Boolean): Boolean {
-        val wasVisible = visibility == VISIBLE
-        if (visible != wasVisible) {
-            visibility = if (visible) VISIBLE else INVISIBLE
-            animate().cancel()
-            if (visible) {
-                scaleX = 0f
-                scaleY = 0f
-                animate()
-                    .setInterpolator(Interpolators.LINEAR_OUT_SLOW_IN)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .withLayer()
-                    .setDuration(233)
-                    .start()
+        override fun updateState(newState: Int) {
+            update(newState)
+        }
+
+        override fun updateVisibility(visible: Boolean): Boolean {
+            return updateIconVisibility(visible)
+        }
+
+        override fun onConfigurationChanged(newConfig: Configuration?) {
+            super.onConfigurationChanged(newConfig)
+            drawableCache.clear()
+        }
+
+        private fun updateIconVisibility(visible: Boolean): Boolean {
+            val wasVisible = visibility == VISIBLE
+            if (visible != wasVisible) {
+                visibility = if (visible) VISIBLE else INVISIBLE
+                animate().cancel()
+                if (visible) {
+                    scaleX = 0f
+                    scaleY = 0f
+                    animate()
+                        .setInterpolator(Interpolators.LINEAR_OUT_SLOW_IN)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .withLayer()
+                        .setDuration(233)
+                        .start()
+                }
+                return true
             }
-            return true
+            return false
         }
-        return false
-    }
 
-    fun update(newState: Int, keyguardJustShown: Boolean) {
-        oldState = state
-        state = newState
-        this.keyguardJustShown = keyguardJustShown
-        if (!preDrawRegistered) {
-            preDrawRegistered = true
-            viewTreeObserver.addOnPreDrawListener(onPreDrawListener)
+        private fun update(newState: Int) {
+            oldState = state
+            state = newState
+            if (!preDrawRegistered) {
+                preDrawRegistered = true
+                viewTreeObserver.addOnPreDrawListener(onPreDrawListener)
+            }
         }
-    }
 
-    fun updateColor(iconColor: Int) {
-        if (this.iconColor == iconColor) {
-            return
+        private fun updateIconColor(iconColor: Int) {
+            if (this.iconColor == iconColor) {
+                return
+            }
+            drawableCache.clear()
+            this.iconColor = iconColor
+            imageTintList = ColorStateList.valueOf(iconColor)
         }
-        drawableCache.clear()
-        this.iconColor = iconColor
-        imageTintList = ColorStateList.valueOf(iconColor)
-    }
 
-    private fun getIcon(newState: Int): Drawable {
-        val iconRes = getIconForState(newState)
-        if (!drawableCache.contains(iconRes)) {
-            drawableCache.put(iconRes, context.getDrawable(iconRes))
+        private fun getIcon(newState: Int): Drawable {
+            val iconRes = getIconForState(newState)
+            if (!drawableCache.contains(iconRes)) {
+                drawableCache.put(iconRes, context.getDrawable(iconRes))
+            }
+            return drawableCache[iconRes]
         }
-        return drawableCache[iconRes]
-    }
 
-    private fun getIconForState(state: Int): Int {
-        val iconRes: Int = when (state) {
-            STATE_FACE_SCANNING -> R.drawable.ic_face // update icon later
-            STATE_FACE_FAILED -> R.drawable.ic_face // Animate for failed state
-            STATE_FACE_SUCCESS -> R.drawable.ic_face_unlocked
-            else -> throw IllegalArgumentException()
+        private fun getIconForState(state: Int): Int {
+            val iconRes: Int = when (state) {
+                STATE_FACE_SCANNING -> R.drawable.ic_face
+                STATE_FACE_FAILED -> R.drawable.ic_face
+                STATE_FACE_SUCCESS -> R.drawable.ic_face_unlocked
+                else -> throw IllegalArgumentException()
+            }
+            return iconRes
         }
-        return iconRes
     }
 
     companion object {
