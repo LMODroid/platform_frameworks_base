@@ -166,9 +166,11 @@ class FaceIconViewController @Inject constructor(
         override fun onDensityOrFontScaleChanged() {
             val faceIconView = mView ?: return
             val lp: ViewGroup.LayoutParams = faceIconView.getLayoutParams()
-            lp.width = faceIconView.resources.getDimensionPixelSize(R.dimen.keyguard_lock_width)
+            lp.width = faceIconView.resources.getDimensionPixelSize(
+                R.dimen.keyguard_face_icon_width
+            )
             lp.height = faceIconView.resources.getDimensionPixelSize(
-                R.dimen.keyguard_lock_height
+                R.dimen.keyguard_face_icon_height
             )
             faceIconView.setLayoutParams(lp)
             update(true /* force */)
