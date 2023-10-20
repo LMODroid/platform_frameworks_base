@@ -111,9 +111,11 @@ class FaceIconViewController @Inject constructor(
 
     private fun updateIconVisibility(): Boolean {
         val faceIconView = mView ?: return false
+        val isKeyguard = keyguardStateController.isShowing()
         val faceAuthAvailable = keyguardStateController.isFaceAuthEnabled()
                 && (faceDetectionRunning || keyguardUpdateMonitor.getIsFaceAuthenticated())
-        val invisible = dozing || !faceAuthAvailable
+        // Make sure it only visible in lockscreen with face auth available.
+        val invisible = dozing || !faceAuthAvailable || !isKeyguard
         return faceIconView.updateVisibility(!invisible)
     }
 
