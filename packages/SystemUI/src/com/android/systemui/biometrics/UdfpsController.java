@@ -1428,7 +1428,8 @@ public class UdfpsController implements DozeReceiver, Dumpable {
     }
 
     private boolean isAnimationPackageInstalled() {
-        String animationPackage = "com.libremobileos.overlay.customization.udfps.animations";
+        String animationPackage = mContext.getString(
+                com.android.internal.R.string.config_udfps_animation_customization_package);
         try {
             return mContext.getPackageManager()
                     .getPackageInfo(animationPackage, 0 /* flags */) != null;
