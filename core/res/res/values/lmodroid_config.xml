@@ -291,4 +291,7 @@
     <string-array name="config_oemFastChargerStatusPaths" translatable="false">
     </string-array>
 
+    <!-- Package that contains udfps animation customization or empty to disable -->
+    <string name="config_udfps_animation_customization_package">com.libremobileos.overlay.customization.udfps.animations</string>
+
 </resources>
