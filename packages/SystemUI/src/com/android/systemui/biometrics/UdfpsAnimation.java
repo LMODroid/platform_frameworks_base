@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -45,9 +46,6 @@ public class UdfpsAnimation extends ImageView {
     private static final boolean DEBUG = true;
     private static final String LOG_TAG = "UdfpsAnimations";
 
-    private static final String UDFPS_ANIM = Settings.Secure.UDFPS_ANIM;
-    private static final String UDFPS_ANIM_STYLE = Settings.Secure.UDFPS_ANIM_STYLE;
-
     private boolean mShowing = false;
     private Context mContext;
     private int mAnimationSize;
@@ -58,12 +56,10 @@ public class UdfpsAnimation extends ImageView {
     private WindowManager mWindowManager;
 
     private boolean mIsKeyguard;
-    private boolean mEnabled;
 
     private final int mMaxBurnInOffsetX;
     private final int mMaxBurnInOffsetY;
 
-    private int mSelectedAnim;
     private String[] mStyleNames;
 
     private final String mUdfpsAnimationPackage;
@@ -111,26 +107,40 @@ public class UdfpsAnimation extends ImageView {
         mStyleNames = mApkResources.getStringArray(res);
 
         setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
         TunerService.Tunable tunable = (key, newValue) -> {
-            switch (key) {
-                case UDFPS_ANIM:
-                    mEnabled = TunerService.parseIntegerSwitch(newValue, false);
-                    break;
-                case UDFPS_ANIM_STYLE:
-                    mSelectedAnim = newValue == null ? 0 : Integer.parseInt(newValue);
-                    updateAnimationStyle(mStyleNames[mSelectedAnim]);
-                    break;
+            int style = 0;
+            if (newValue != null) {
+                int value = Integer.parseInt(newValue);
+                style = (value < 0 || value >= mStyleNames.length) ? 0 : value;
             }
+            updateAnimationStyle(style);
         };
-        Dependency.get(TunerService.class).addTunable(tunable, UDFPS_ANIM, UDFPS_ANIM_STYLE);
+        Dependency.get(TunerService.class).addTunable(tunable, Settings.Secure.UDFPS_ANIM_STYLE);
     }
 
-    private void updateAnimationStyle(String drawableName) {
+    private void updateAnimationStyle(int styleIdx) {
+        Drawable bgDrawable = getBgDrawable(styleIdx);
+        // We have to set even if it's null
+        // to remove animation on 'none' style.
+        setBackgroundDrawable(bgDrawable);
+        recognizingAnim = bgDrawable != null ? (AnimationDrawable) getBackground() : null;
+    }
+
+    private Drawable getBgDrawable(int styleIdx) {
+        String drawableName = mStyleNames[styleIdx];
         if (DEBUG) Log.i(LOG_TAG, "Updating animation style to:" + drawableName);
-        int resId = mApkResources.getIdentifier(drawableName, "drawable", mUdfpsAnimationPackage);
-        if (DEBUG) Log.i(LOG_TAG, "Got resource id: "+ resId +" from package" );
-        setBackgroundDrawable(mApkResources.getDrawable(resId));
-        recognizingAnim = (AnimationDrawable) getBackground();
+        try {
+            int resId = mApkResources.getIdentifier(drawableName, "drawable", mUdfpsAnimationPackage);
+            if (DEBUG) Log.i(LOG_TAG, "Got resource id: "+ resId +" from package" );
+            return mApkResources.getDrawable(resId);
+        } catch (Resources.NotFoundException e) {
+            return null;
+        }
+    }
+
+    public boolean isAnimationEnabled() {
+        return recognizingAnim != null;
     }
 
     public void updatePosition(FingerprintSensorPropertiesInternal props) {
@@ -143,7 +153,7 @@ public class UdfpsAnimation extends ImageView {
     }
 
     public void show() {
-        if (!mShowing && mIsKeyguard && mEnabled) {
+        if (!mShowing && mIsKeyguard && isAnimationEnabled()) {
             mShowing = true;
             showAnimation();
         }

@@ -1276,4 +1276,8 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         }
     }
 
+    public boolean isAnimationEnabled() {
+        return mUdfpsAnimation != null && mUdfpsAnimation.isAnimationEnabled();
+    }
+
 }
