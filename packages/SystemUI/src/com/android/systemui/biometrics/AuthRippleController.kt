@@ -23,7 +23,6 @@ import android.content.Context
 import android.graphics.Point
 import android.hardware.biometrics.BiometricFingerprintConstants
 import android.hardware.biometrics.BiometricSourceType
-import android.provider.Settings
 import android.util.DisplayMetrics
 import androidx.annotation.VisibleForTesting
 import com.android.keyguard.KeyguardUpdateMonitor
@@ -51,7 +50,6 @@ import com.android.systemui.statusbar.phone.BiometricUnlockController
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.KeyguardStateController
 import com.android.systemui.util.ViewController
-import com.libremobileos.providers.LMOSettings
 import java.io.PrintWriter
 import javax.inject.Inject
 import javax.inject.Provider
@@ -330,15 +328,13 @@ class AuthRippleController @Inject constructor(
     private val udfpsControllerCallback =
         object : UdfpsController.Callback {
             override fun onFingerDown() {
-                if (Settings.Secure.getInt(sysuiContext.contentResolver,
-                       LMOSettings.Secure.UDFPS_ANIM, 0) == 0) {
+                if (udfpsController?.isAnimationEnabled() == false) {
                     showDwellRipple()
                 }
             }
 
             override fun onFingerUp() {
-                if (Settings.Secure.getInt(sysuiContext.contentResolver,
-                        LMOSettings.Secure.UDFPS_ANIM, 0) == 0) {
+                if (udfpsController?.isAnimationEnabled() == false) {
                     mView.retractDwellRipple()
                 }
             }
