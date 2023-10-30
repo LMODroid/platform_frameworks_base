@@ -5816,4 +5816,7 @@
     <string-array name="config_serviceStateLocationAllowedPackages">
         <item>"com.android.phone"</item>
     </string-array>
+
+    <!-- Whether the system uses auto-suspend mode. -->
+    <bool name="config_useAutoSuspend">true</bool>
 </resources>
