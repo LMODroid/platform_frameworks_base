@@ -3074,7 +3074,11 @@ public final class NotificationPanelViewController implements Dumpable {
                         break;
                     }
                 }
-                mPulseLightsView.animateNotification(notifPackageName);
+                // Animate edge light only for notification pulse.
+                // Package not empty means pulse caused by a notification.
+                if (!notifPackageName.isEmpty()) {
+                    mPulseLightsView.animateNotification(notifPackageName);
+                }
             }
         }
         mNotificationStackScrollLayoutController.setPulsing(pulsing, animatePulse);
