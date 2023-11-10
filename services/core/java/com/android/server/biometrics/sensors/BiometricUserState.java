@@ -147,6 +147,16 @@ public abstract class BiometricUserState<T extends BiometricAuthenticator.Identi
 
     public void removeBiometric(int biometricId) {
         synchronized (this) {
+            // Some HALs don't return the deleted ids properly
+            // when removing all biometrics.
+            // It just returns back the same id 0
+            // but 0 denotes 'remove all'
+            // can't fix hal so do it here.
+            if (biometricId == 0) {
+                mBiometrics.clear();
+                scheduleWriteStateLocked();
+                return;
+            }
             for (int i = 0; i < mBiometrics.size(); i++) {
                 if (mBiometrics.get(i).getBiometricId() == biometricId) {
                     mBiometrics.remove(i);
