@@ -410,7 +410,10 @@ public abstract class PowerManagerInternal {
         PACKAGE_INSTALL,
         // This hint allows OEMs to boost resources when app rotation animation occurs.
         // There is no fallback.
-        APP_ROTATE;
+        APP_ROTATE,
+        // This hint allows OEMs to boost resources when fingerprint finger down event occurs.
+        // This is a global boost triggering interaction as fallback.
+        FP_BOOST(BOOST_INTERACTION);
         // End boosts list
 
         // Fallback boost for given value
