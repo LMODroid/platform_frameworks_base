@@ -20,16 +20,20 @@ import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_AWA
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_WAKING;
 
 import android.annotation.NonNull;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.keyguard.KeyguardUpdateMonitor;
+import com.android.systemui.R;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.biometrics.AuthController;
 import com.android.systemui.dagger.SysUISingleton;
@@ -37,6 +41,7 @@ import com.android.systemui.doze.DozeHost;
 import com.android.systemui.doze.DozeLog;
 import com.android.systemui.doze.DozeReceiver;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
+import com.android.systemui.libremobileos.pulselight.PulseLightNotifManager;
 import com.android.systemui.shade.NotificationPanelViewController;
 import com.android.systemui.shade.NotificationShadeWindowViewController;
 import com.android.systemui.statusbar.NotificationShadeWindowController;
@@ -95,6 +100,11 @@ public final class DozeServiceHost implements DozeHost {
     private CentralSurfaces mCentralSurfaces;
     private boolean mAlwaysOnSuppressed;
     private boolean mPulsePending;
+    private final Context mContext;
+
+    // For pulse light
+    private boolean mPulseLightOnFaceDownOnly = false;
+    private boolean mIsFaceDown = false;
 
     @Inject
     public DozeServiceHost(DozeLog dozeLog, PowerManager powerManager,
@@ -110,7 +120,9 @@ public final class DozeServiceHost implements DozeHost {
             NotificationShadeWindowController notificationShadeWindowController,
             NotificationWakeUpCoordinator notificationWakeUpCoordinator,
             AuthController authController,
-            NotificationIconAreaController notificationIconAreaController) {
+            NotificationIconAreaController notificationIconAreaController,
+            PulseLightNotifManager pulseLightNotifManager,
+            Context context) {
         super();
         mDozeLog = dozeLog;
         mPowerManager = powerManager;
@@ -130,6 +142,10 @@ public final class DozeServiceHost implements DozeHost {
         mAuthController = authController;
         mNotificationIconAreaController = notificationIconAreaController;
         mHeadsUpManagerPhone.addListener(mOnHeadsUpChangedListener);
+        pulseLightNotifManager.addListener(mPulseLightNotifListener);
+        mContext = context;
+        mPulseLightOnFaceDownOnly = context.getResources()
+                .getBoolean(R.bool.config_showEdgeLightOnlyWhenFaceDown);
     }
 
     // TODO: we should try to not pass status bar in here if we can avoid it.
@@ -470,6 +486,11 @@ public final class DozeServiceHost implements DozeHost {
     final OnHeadsUpChangedListener mOnHeadsUpChangedListener = new OnHeadsUpChangedListener() {
         @Override
         public void onHeadsUpStateChanged(NotificationEntry entry, boolean isHeadsUp) {
+
+            if (noPulseForHeadsUp()) {
+                return;
+            }
+
             if (mStatusBarStateController.isDozing() && isHeadsUp) {
                 entry.setPulseSuppressed(false);
                 fireNotificationPulse(entry);
@@ -484,4 +505,43 @@ public final class DozeServiceHost implements DozeHost {
             }
         }
     };
+
+    private boolean noPulseForHeadsUp() {
+        // Show pulse for heads up only in the following cases
+        // - If pulse light is disabled.
+        // - If device is face up when pulse light is enabled with forced face down.
+        boolean noPulse = isPulseLightEnabled();
+        if (noPulse && mPulseLightOnFaceDownOnly) {
+            noPulse = mIsFaceDown;
+        }
+        return noPulse;
+    }
+
+    final PulseLightNotifManager.PulseLightNotifListener mPulseLightNotifListener =
+            new PulseLightNotifManager.PulseLightNotifListener() {
+
+            @Override
+            public void onNotification(NotificationEntry entry, boolean pulse) {
+                if (mStatusBarStateController.isDozing() && pulse) {
+                    entry.setPulseSuppressed(false);
+                    fireNotificationPulse(entry);
+                    if (isPulsing()) {
+                        mDozeScrimController.cancelPendingPulseTimeout();
+                    }
+                }
+                if (!pulse) {
+                    stopPulsing();
+                }
+            }
+
+            @Override
+            public void onFaceDownChanged(boolean faceDown) {
+                mIsFaceDown = faceDown;
+            }
+    };
+
+    private boolean isPulseLightEnabled() {
+        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.PULSE_AMBIENT_LIGHT, 0, UserHandle.USER_CURRENT) != 0;
+    }
 }

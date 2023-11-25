@@ -3060,8 +3060,7 @@ public final class NotificationPanelViewController implements Dumpable {
         if (!mPulsing && !mDozing) {
             mAnimateNextPositionUpdate = false;
         }
-        if ((mPulseLightsView != null) && pulseLights) {
-            mPulseLightsView.setVisibility(mPulsing ? View.VISIBLE : View.GONE);
+        if (mPulseLightsView != null && pulseLights) {
             if (mPulsing) {
                 // Get the notification that's pulsing
                 String notifPackageName = "";
@@ -3069,7 +3068,7 @@ public final class NotificationPanelViewController implements Dumpable {
                         new ArrayList(mNotifPipeline.getAllNotifs());
                 for (int i = 0; i < notificationEntries.size(); i++) {
                     NotificationEntry entry = notificationEntries.get(i);
-                    if (entry.showingPulsing()) {
+                    if (entry.showingPulseLight()) {
                         notifPackageName = entry.getSbn().getPackageName();
                         break;
                     }
@@ -3077,8 +3076,11 @@ public final class NotificationPanelViewController implements Dumpable {
                 // Animate edge light only for notification pulse.
                 // Package not empty means pulse caused by a notification.
                 if (!notifPackageName.isEmpty()) {
+                    mPulseLightsView.setVisibility(View.VISIBLE);
                     mPulseLightsView.animateNotification(notifPackageName);
                 }
+            } else {
+                mPulseLightsView.setVisibility(View.GONE);
             }
         }
         mNotificationStackScrollLayoutController.setPulsing(pulsing, animatePulse);

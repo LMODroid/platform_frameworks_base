@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.os.Handler;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.ArrayMap;
 import android.view.accessibility.AccessibilityManager;
@@ -91,11 +90,7 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
         mAccessibilityMgr = accessibilityManagerWrapper;
         mUiEventLogger = uiEventLogger;
         Resources resources = context.getResources();
-
-        // Update mMinimumDisplayTime value
-        updateHeadsUpMinimumDisplayTime();
-        setupPulseLightSettingsObserver(mHandler);
-
+        mMinimumDisplayTime = resources.getInteger(R.integer.heads_up_notification_minimum_time);
         mAutoDismissNotificationDecay = resources.getInteger(R.integer.heads_up_notification_decay);
         mTouchAcceptanceDelay = resources.getInteger(R.integer.touch_acceptance_delay);
         mSnoozedPackages = new ArrayMap<>();
@@ -487,47 +482,5 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
                             | AccessibilityManager.FLAG_CONTENT_ICONS
                             | AccessibilityManager.FLAG_CONTENT_TEXT);
         }
-    }
-
-    private void updateHeadsUpMinimumDisplayTime() {
-        int displayTime = mContext.getResources()
-                .getInteger(R.integer.heads_up_notification_minimum_time);
-        boolean pulseLightsEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.PULSE_AMBIENT_LIGHT, 0, UserHandle.USER_CURRENT) != 0;
-        // If pulse light is enabled, we need to show the headsup until
-        // the pulse light animation is completed
-        if (pulseLightsEnabled) {
-            int pulseLightDuration = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                    Settings.Secure.PULSE_AMBIENT_LIGHT_DURATION, 2,
-                    UserHandle.USER_CURRENT) * 1000;
-            // repeat = 0 means light will show up only one time.
-            // so to get actual lights animation count, repeat + 1.
-            int pulseLightRepeatCount = Settings.Secure
-                    .getIntForUser(mContext.getContentResolver(),
-                        Settings.Secure.PULSE_AMBIENT_LIGHT_REPEAT_COUNT, 0,
-                        UserHandle.USER_CURRENT) + 1;
-            int totalPulseLightDuration = pulseLightDuration * pulseLightRepeatCount;
-            displayTime = Math.max(displayTime, totalPulseLightDuration);
-        }
-        mMinimumDisplayTime = displayTime;
-    }
-
-    private void setupPulseLightSettingsObserver(Handler handler) {
-        ContentObserver settingsObserver = new ContentObserver(handler) {
-            @Override
-            public void onChange(boolean selfChange) {
-                // Update the minimum display time of the headsup
-                updateHeadsUpMinimumDisplayTime();
-            }
-        };
-        mContext.getContentResolver().registerContentObserver(
-                Settings.Secure.getUriFor(Settings.Secure.PULSE_AMBIENT_LIGHT), false,
-                settingsObserver, UserHandle.USER_CURRENT);
-        mContext.getContentResolver().registerContentObserver(
-                Settings.Secure.getUriFor(Settings.Secure.PULSE_AMBIENT_LIGHT_DURATION), false,
-                settingsObserver, UserHandle.USER_CURRENT);
-        mContext.getContentResolver().registerContentObserver(
-                Settings.Secure.getUriFor(Settings.Secure.PULSE_AMBIENT_LIGHT_REPEAT_COUNT), false,
-                settingsObserver, UserHandle.USER_CURRENT);
     }
 }

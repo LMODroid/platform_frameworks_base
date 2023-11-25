@@ -180,6 +180,9 @@ public final class NotificationEntry extends ListEntry {
      */
     private boolean mBlockable;
 
+    // For pulse light
+    private boolean mShowPulseLight = false;
+
     /**
      * @param sbn the StatusBarNotification from system server
      * @param ranking also from system server
@@ -938,6 +941,14 @@ public final class NotificationEntry extends ListEntry {
     /** Whether this notification is currently used to animate a launch. */
     public boolean isExpandAnimationRunning() {
         return mExpandAnimationRunning;
+    }
+
+    public void setPulseLightState(boolean value) {
+        mShowPulseLight = value;
+    }
+
+    public boolean showingPulseLight() {
+        return mShowPulseLight;
     }
 
     /** Information about a suggestion that is being edited. */

@@ -47,12 +47,6 @@
         android:gravity="center_horizontal"
         android:scaleType="center" />
 
-    <include layout="@layout/lights_view"
-        android:id="@+id/lights_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
     <include layout="@layout/status_bar_expanded_plugin_frame"/>
 
     <com.android.systemui.shade.NotificationsQuickSettingsContainer
@@ -174,4 +168,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
+
+    <include layout="@layout/lights_view"
+        android:id="@+id/lights_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
 </com.android.systemui.shade.NotificationPanelView>

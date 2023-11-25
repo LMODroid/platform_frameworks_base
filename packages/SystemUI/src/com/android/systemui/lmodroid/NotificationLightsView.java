@@ -1,5 +1,6 @@
 /*
 * Copyright (C) 2019-2021 crDroid Android Project
+* Copyright (C) 2023 The LibreMobileOS Foundation
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,9 +18,11 @@
 */
 package com.android.systemui.lmodroid;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
@@ -32,11 +35,14 @@ import android.widget.RelativeLayout;
 
 import androidx.palette.graphics.Palette;
 
+import com.android.internal.libremobileos.hardware.LineageHardwareManager;
+
 import com.android.settingslib.Utils;
 import com.android.systemui.R;
 import com.android.systemui.people.PeopleSpaceUtils;
 
-public class NotificationLightsView extends RelativeLayout {
+public class NotificationLightsView extends RelativeLayout
+        implements Animator.AnimatorListener {
 
     private static final boolean DEBUG = false;
     private static final String TAG = "NotificationLightsView";
@@ -44,6 +50,11 @@ public class NotificationLightsView extends RelativeLayout {
     private View mNotificationAnimView;
     private ValueAnimator mLightAnimator;
     private int color;
+
+    private boolean mOnlyWhenFaceDown = false;
+    private LineageHardwareManager mHardware;
+    private boolean mHasHbmSupport = false;
+    private boolean mHbmEnabled = false;
 
     public NotificationLightsView(Context context) {
         this(context, null);
@@ -60,6 +71,36 @@ public class NotificationLightsView extends RelativeLayout {
     public NotificationLightsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         if (DEBUG) Log.d(TAG, "new");
+        mOnlyWhenFaceDown = context.getResources()
+                .getBoolean(R.bool.config_showEdgeLightOnlyWhenFaceDown);
+        if (mOnlyWhenFaceDown) {
+            setBackgroundColor(Color.BLACK);
+            mHardware = LineageHardwareManager.getInstance(context);
+            if (mHardware != null) {
+                mHasHbmSupport = mHardware.isSupported(
+                        LineageHardwareManager.FEATURE_SUNLIGHT_ENHANCEMENT);
+            }
+        }
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation) {
+        disableHbm();
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        disableHbm();
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation) {
+        // Do nothing
+    }
+
+    @Override
+    public void onAnimationStart(Animator animation) {
+        enableHbm();
     }
 
     public void animateNotification(String notifPackageName) {
@@ -111,9 +152,14 @@ public class NotificationLightsView extends RelativeLayout {
         mLightAnimator.setDuration(duration);
         mLightAnimator.setRepeatCount(repeat);
         mLightAnimator.setRepeatMode(ValueAnimator.RESTART);
+        mLightAnimator.addListener(this);
         mLightAnimator.addUpdateListener(new AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
                 if (DEBUG) Log.d(TAG, "onAnimationUpdate");
+                // onAnimationStart() is being called before waking screen in ambient mode.
+                // So HBM don't get enabled since it needs the screen to be on.
+                // To fix this, Just try to enable HBM here too.
+                enableHbm();
                 float progress = ((Float) animation.getAnimatedValue()).floatValue();
                 leftView.setScaleY(progress);
                 rightView.setScaleY(progress);
@@ -130,4 +176,22 @@ public class NotificationLightsView extends RelativeLayout {
         if (DEBUG) Log.d(TAG, "start");
         mLightAnimator.start();
     }
+
+    private void enableHbm() {
+        if (mOnlyWhenFaceDown && mHardware != null && mHasHbmSupport && !mHbmEnabled) {
+            // Enable high brightness mode
+            mHardware.set(LineageHardwareManager.FEATURE_SUNLIGHT_ENHANCEMENT, true);
+            // Update the state.
+            mHbmEnabled = mHardware.get(LineageHardwareManager.FEATURE_SUNLIGHT_ENHANCEMENT);
+        }
+    }
+
+    private void disableHbm() {
+        if (mOnlyWhenFaceDown && mHardware != null && mHasHbmSupport) {
+            // Disable high brightness mode
+            mHardware.set(LineageHardwareManager.FEATURE_SUNLIGHT_ENHANCEMENT, false);
+            mHbmEnabled = false;
+        }
+    }
+
 }
