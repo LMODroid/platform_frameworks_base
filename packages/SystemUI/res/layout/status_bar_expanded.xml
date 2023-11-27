@@ -169,8 +169,8 @@
         android:layout_height="match_parent">
     </FrameLayout>
 
-    <include layout="@layout/lights_view"
-        android:id="@+id/lights_container"
+    <include layout="@layout/pulse_light_view"
+        android:id="@+id/pulse_light_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />

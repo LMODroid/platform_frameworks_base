@@ -156,6 +156,7 @@ import com.android.systemui.keyguard.ui.viewmodel.KeyguardLongPressViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.LockscreenToDreamingTransitionViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.LockscreenToOccludedTransitionViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.OccludedToLockscreenTransitionViewModel;
+import com.android.systemui.libremobileos.pulselight.PulseLightView;
 import com.android.systemui.media.controls.pipeline.MediaDataManager;
 import com.android.systemui.media.controls.ui.KeyguardMediaController;
 import com.android.systemui.media.controls.ui.MediaHierarchyManager;
@@ -163,7 +164,6 @@ import com.android.systemui.model.SysUiState;
 import com.android.systemui.navigationbar.NavigationBarController;
 import com.android.systemui.navigationbar.NavigationBarView;
 import com.android.systemui.navigationbar.NavigationModeController;
-import com.android.systemui.lmodroid.NotificationLightsView;
 import com.android.systemui.plugins.ClockAnimations;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.FalsingManager.FalsingTapListener;
@@ -683,7 +683,7 @@ public final class NotificationPanelViewController implements Dumpable {
 
     private final FaceIconViewController mFaceIconViewController;
 
-    private NotificationLightsView mPulseLightsView;
+    private PulseLightView mPulseLightView;
     private NotifPipeline mNotifPipeline;
 
     @Inject
@@ -1068,7 +1068,7 @@ public final class NotificationPanelViewController implements Dumpable {
         mShadeExpansionStateManager.addQsExpansionListener(this::onQsExpansionChanged);
         addTrackingHeadsUpListener(mNotificationStackScrollLayoutController::setTrackingHeadsUp);
         setKeyguardBottomArea(mView.findViewById(R.id.keyguard_bottom_area));
-        mPulseLightsView = (NotificationLightsView) mView.findViewById(R.id.lights_container);
+        mPulseLightView = (PulseLightView) mView.findViewById(R.id.pulse_light_view);
 
         initBottomArea();
 
@@ -3050,8 +3050,6 @@ public final class NotificationPanelViewController implements Dumpable {
         final boolean
                 animatePulse =
                 !mDozeParameters.getDisplayNeedsBlanking() && mDozeParameters.getAlwaysOn();
-        boolean pulseLights = Settings.Secure.getIntForUser(mView.getContext().getContentResolver(),
-                Settings.Secure.PULSE_AMBIENT_LIGHT, 0, UserHandle.USER_CURRENT) != 0;
         if (animatePulse) {
             mAnimateNextPositionUpdate = true;
         }
@@ -3060,32 +3058,42 @@ public final class NotificationPanelViewController implements Dumpable {
         if (!mPulsing && !mDozing) {
             mAnimateNextPositionUpdate = false;
         }
-        if (mPulseLightsView != null && pulseLights) {
-            if (mPulsing) {
-                // Get the notification that's pulsing
-                String notifPackageName = "";
-                List<NotificationEntry> notificationEntries =
-                        new ArrayList(mNotifPipeline.getAllNotifs());
-                for (int i = 0; i < notificationEntries.size(); i++) {
-                    NotificationEntry entry = notificationEntries.get(i);
-                    if (entry.showingPulseLight()) {
-                        notifPackageName = entry.getSbn().getPackageName();
-                        break;
-                    }
-                }
-                // Animate edge light only for notification pulse.
-                // Package not empty means pulse caused by a notification.
-                if (!notifPackageName.isEmpty()) {
-                    mPulseLightsView.setVisibility(View.VISIBLE);
-                    mPulseLightsView.animateNotification(notifPackageName);
-                }
-            } else {
-                mPulseLightsView.setVisibility(View.GONE);
-            }
-        }
+
+        showPulseLight();
+
         mNotificationStackScrollLayoutController.setPulsing(pulsing, animatePulse);
 
         updateKeyguardStatusViewAlignment(/* animate= */ true);
+    }
+
+    private void showPulseLight() {
+        if (mPulseLightView == null || !isPulseLightEnabled()) return;
+        if (mPulsing) {
+            // Get the notification that's pulsing
+            String notifPackageName = "";
+            List<NotificationEntry> notificationEntries =
+                    new ArrayList(mNotifPipeline.getAllNotifs());
+            for (int i = 0; i < notificationEntries.size(); i++) {
+                NotificationEntry entry = notificationEntries.get(i);
+                if (entry.showingPulseLight()) {
+                    notifPackageName = entry.getSbn().getPackageName();
+                    break;
+                }
+            }
+            // Animate edge light only for notification pulse.
+            // Package not empty means pulse caused by a notification.
+            if (!notifPackageName.isEmpty()) {
+                mPulseLightView.setVisibility(View.VISIBLE);
+                mPulseLightView.animateNotification(notifPackageName);
+            }
+        } else {
+            mPulseLightView.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean isPulseLightEnabled() {
+        return Settings.Secure.getIntForUser(mView.getContext().getContentResolver(),
+                Settings.Secure.PULSE_AMBIENT_LIGHT, 0, UserHandle.USER_CURRENT) != 0;
     }
 
     public void setAmbientIndicationTop(int ambientIndicationTop, boolean ambientTextVisible) {
