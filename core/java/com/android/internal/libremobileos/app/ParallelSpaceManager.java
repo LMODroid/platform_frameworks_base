@@ -155,4 +155,15 @@ public final class ParallelSpaceManager {
             throw new RuntimeException("Failed when removePackage(): " + e);
         }
     }
+
+    /**
+     * Get list of default cloned apps.
+     */
+    public List<String> getDefaultClonedApps() {
+        try {
+            return mParallelSpaceManager.getDefaultClonedApps();
+        } catch (RemoteException e) {
+            throw new RuntimeException("Failed when getDefaultClonedApps(): " + e);
+        }
+    }
 }

@@ -26,4 +26,5 @@ interface IParallelSpaceManager {
     UserInfo getOwner();
     int duplicatePackage(String packageName, int userId);
     int removePackage(String packageName, int userId);
+    List<String> getDefaultClonedApps();
 }
