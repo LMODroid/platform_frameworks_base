@@ -206,7 +206,7 @@ public final class AttributionSource implements Parcelable {
     }
 
     /** @hide */
-    public AttributionSource withToken(@NonNull Binder token) {
+    public AttributionSource withToken(@NonNull IBinder token) {
         return new AttributionSource(getUid(), getPid(), getPackageName(), getAttributionTag(),
                 token, mAttributionSourceState.renouncedPermissions, getNext());
     }

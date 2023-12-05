@@ -59,6 +59,7 @@ import android.media.AudioManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
@@ -1465,13 +1466,13 @@ public final class PermissionManager {
         // We use a shared static token for sources that are not registered since the token's
         // only used for process death detection. If we are about to use the source for security
         // enforcement we need to replace the binder with a unique one.
-        final AttributionSource registeredSource = source.withToken(new Binder());
         try {
-            mPermissionManager.registerAttributionSource(registeredSource.asState());
+            IBinder newToken = mPermissionManager.registerAttributionSource(source.asState());
+            return source.withToken(newToken);
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
         }
-        return registeredSource;
+        return source;
     }
 
     /**

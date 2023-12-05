@@ -423,10 +423,21 @@ public class PermissionManagerService extends IPermissionManager.Stub {
         }
     }
 
+    /**
+     * Reference propagation over binder is affected by the ownership of the object. So if
+     * the token is owned by client, references to the token on client side won't be
+     * propagated to the server and the token may still be garbage collected on server side.
+     * But if the token is owned by server, references to the token on client side will now
+     * be propagated to the server since it's a foreign object to the client, and that will
+     * keep the token referenced on the server side as long as the client is alive and
+     * holding it.
+     */
     @Override
-    public void registerAttributionSource(@NonNull AttributionSourceState source) {
+    public IBinder registerAttributionSource(@NonNull AttributionSourceState source) {
+        Binder token = new Binder();
         mAttributionSourceRegistry
-                .registerAttributionSource(new AttributionSource(source));
+                .registerAttributionSource(new AttributionSource(source).withToken(token));
+        return token;
     }
 
     @Override
