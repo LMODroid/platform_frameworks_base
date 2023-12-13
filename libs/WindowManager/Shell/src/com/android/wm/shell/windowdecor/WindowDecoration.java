@@ -40,6 +40,7 @@ import android.window.SurfaceSyncGroup;
 import android.window.TaskConstants;
 import android.window.WindowContainerTransaction;
 
+import com.android.internal.policy.ScreenDecorationsUtils;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.common.DisplayController;
 
@@ -286,12 +287,13 @@ public abstract class WindowDecoration<T extends View & TaskFocusStateConsumer>
                 .setShadowRadius(mTaskSurface, shadowRadius)
                 .setColor(mTaskSurface, mTmpColor)
                 .show(mTaskSurface);
+        final int cornerRadiusPixels = (int) ScreenDecorationsUtils.getWindowCornerRadius(mContext);
         finishT.setPosition(mTaskSurface, taskPosition.x, taskPosition.y)
                 .setShadowRadius(mTaskSurface, shadowRadius)
                 .setWindowCrop(mTaskSurface, outResult.mWidth, outResult.mHeight);
         if (mTaskInfo.getWindowingMode() == WINDOWING_MODE_FREEFORM) {
-            startT.setCornerRadius(mTaskSurface, params.mCornerRadius);
-            finishT.setCornerRadius(mTaskSurface, params.mCornerRadius);
+            startT.setCornerRadius(mTaskSurface, cornerRadiusPixels);
+            finishT.setCornerRadius(mTaskSurface, cornerRadiusPixels);
         }
 
         if (mCaptionWindowManager == null) {
