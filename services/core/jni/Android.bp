@@ -130,6 +130,7 @@ cc_defaults {
         "libmtp",
         "libnativehelper",
         "libnativewindow",
+        "libpowerext",
         "libpowermanager",
         "libprocessgroup",
         "libutils",
@@ -213,7 +214,6 @@ cc_defaults {
         "android.hardware.broadcastradio@common-utils-1x-lib",
         "libaidlcommonsupport",
         "libvirtualdevicebuildflags",
-        "//hardware/google/interfaces:pixel-power-ext-V1-cpp",
     ],
 
     product_variables: {
