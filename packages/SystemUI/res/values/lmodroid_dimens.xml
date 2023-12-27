@@ -21,5 +21,8 @@
 
     <!-- HD calling icon -->
     <dimen name="signal_icon_viewport_size">24dp</dimen>
+
+    <!-- Size to enlarge Enrollment GHBM Dot Size by in DP. -->
+    <dimen name="udfps_enroll_dot_additional_size">0dp</dimen>
     <dimen name="signal_icon_size_hd_calling">8sp</dimen>
 </resources>
