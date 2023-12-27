@@ -240,6 +240,9 @@ constructor(
                                         )
                                 }
                                 sensorRect = sensorBounds
+                                if (requestReason.isEnrollmentReason()) {
+                                    this.setEnrolling(true);
+                                }
                             }
                 } else {
                     overlayViewLegacy =
@@ -552,6 +555,10 @@ constructor(
         return subView
     }
 }
+
+@RequestReason
+private fun Int.isEnrollmentReason() =
+    this == REASON_ENROLL_FIND_SENSOR || this == REASON_ENROLL_ENROLLING
 
 @RequestReason
 private fun Int.isImportantForAccessibility() =
