@@ -236,6 +236,9 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
                     )
                     overlayTouchListener?.onTouchExplorationStateChanged(true)
                     useExpandedOverlay = featureFlags.isEnabled(Flags.UDFPS_NEW_TOUCH_DETECTION)
+                    if (requestReason.isEnrollmentReason()) {
+                        this.setEnrolling(true);
+                    }
                 }
             } catch (e: RuntimeException) {
                 Log.e(TAG, "showUdfpsOverlay | failed to add window", e)
