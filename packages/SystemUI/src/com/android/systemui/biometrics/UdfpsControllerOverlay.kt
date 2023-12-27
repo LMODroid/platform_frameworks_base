@@ -243,6 +243,9 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
                     )
                     overlayTouchListener?.onTouchExplorationStateChanged(true)
                     useExpandedOverlay = featureFlags.isEnabled(Flags.UDFPS_NEW_TOUCH_DETECTION)
+                    if (requestReason.isEnrollmentReason()) {
+                        this.setEnrolling(true);
+                    }
                 }
             } catch (e: RuntimeException) {
                 Log.e(TAG, "showUdfpsOverlay | failed to add window", e)
@@ -497,6 +500,10 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
         return subView
     }
 }
+
+@ShowReason
+private fun Int.isEnrollmentReason() =
+    this == REASON_ENROLL_FIND_SENSOR || this == REASON_ENROLL_ENROLLING
 
 @ShowReason
 private fun Int.isImportantForAccessibility() =
