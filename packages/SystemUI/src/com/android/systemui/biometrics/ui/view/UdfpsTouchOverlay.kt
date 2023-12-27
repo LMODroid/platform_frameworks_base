@@ -77,4 +77,7 @@ class UdfpsTouchOverlay(context: Context, attrs: AttributeSet?) : FrameLayout(co
         }
         udfpsDisplayMode?.disable(null /* onDisabled */)
     }
+
+    fun setEnrolling(enrolling: Boolean) = ghbmView?.setEnrolling(enrolling)
+
 }
