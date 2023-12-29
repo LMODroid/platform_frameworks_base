@@ -51,6 +51,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.VelocityTracker;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
 
@@ -101,6 +102,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -1238,16 +1240,24 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         // has had chance to switch out of HBM mode.
         // The delay, in ms is stored in config_udfpsDimmingDisableDelay.
         // If the delay is 0, the dim amount will be updated immediately.
-        final int delay = mContext.getResources().getInteger(
-                R.integer.config_udfpsDimmingDisableDelay);
-        if (delay > 0) {
-            UdfpsControllerOverlay overlay = mOverlay;
-            mFgExecutor.executeDelayed(() -> {
-                updateViewDimAmount(overlay, false);
-            }, delay);
-        } else {
-            updateViewDimAmount(mOverlay, false);
-        }
+        int delay = mContext.getResources().getInteger(R.integer.config_udfpsDimmingDisableDelay);
+        final AtomicInteger delayCounter = new AtomicInteger(delay);
+
+        UdfpsControllerOverlay overlay = mOverlay;
+        final Runnable dimmingDisableRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (delayCounter.getAndDecrement() <= 0) {
+                    updateViewDimAmount(overlay, false);
+                } else {
+                    View view = overlay.getFrame();
+                    if (view != null) {
+                        view.postOnAnimation(this);
+                    }
+                }
+            }
+        };
+        dimmingDisableRunnable.run();
     }
 
     /**

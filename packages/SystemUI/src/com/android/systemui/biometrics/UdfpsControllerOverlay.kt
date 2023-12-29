@@ -101,7 +101,8 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
         private val alternateBouncerInteractor: AlternateBouncerInteractor,
         private val isDebuggable: Boolean = Build.IS_DEBUGGABLE,
 ) {
-    private var frame: View? = null
+    var frame: View? = null
+        private set
     private var isDimmed = false
     private var hideOnUndim = false
     /** The view, when [isShowing], or null. */
