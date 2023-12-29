@@ -49,7 +49,7 @@
     <!-- Brightness range max for UDFPS dimming -->
     <integer name="config_udfpsDimmingBrightnessMax">0</integer>
 
-    <!-- The amount of delay to add when disabling the dimming.
+    <!-- The amount of frames to delay by when disabling the dim layer.
          This is used to prevent flickers due to the dimming being disabled
          before the screen has had chance to switch out of HBM mode -->
     <integer name="config_udfpsDimmingDisableDelay">0</integer>
