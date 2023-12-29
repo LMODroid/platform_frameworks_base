@@ -124,6 +124,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -1246,16 +1247,25 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         // Add a delay to ensure that the dim amount is updated after the display has had chance
         // to switch out of HBM mode. The delay, in ms is stored in config_udfpsDimmingDisableDelay.
         // If the delay is 0, the dim amount will be updated immediately.
-        final int delay = mContext.getResources().getInteger(
+        int delay = mContext.getResources().getInteger(
                 com.android.systemui.res.R.integer.config_udfpsDimmingDisableDelay);
-        if (delay > 0) {
-            UdfpsControllerOverlay overlay = mOverlay;
-            mFgExecutor.executeDelayed(() -> {
-                updateViewDimAmount(overlay);
-            }, delay);
-        } else {
-            updateViewDimAmount(mOverlay);
-        }
+        final AtomicInteger delayCounter = new AtomicInteger(delay);
+
+        UdfpsControllerOverlay overlay = mOverlay;
+        final Runnable dimmingDisableRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (delayCounter.getAndDecrement() <= 0) {
+                    updateViewDimAmount(overlay);
+                } else {
+                    View view = overlay.getFrame();
+                    if (view != null) {
+                        view.postOnAnimation(this);
+                    }
+                }
+            }
+        };
+        dimmingDisableRunnable.run();
     }
 
     /**
