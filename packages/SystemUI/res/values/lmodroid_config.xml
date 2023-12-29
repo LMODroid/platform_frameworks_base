@@ -54,6 +54,9 @@
          before the screen has had chance to switch out of HBM mode -->
     <integer name="config_udfpsDimmingDisableDelay">0</integer>
 
+    <!-- The same as above, for enrollment in Settings -->
+    <integer name="config_udfpsEnrollingDimmingDisableDelay">0</integer>
+
     <!-- Doze: does the double tap sensor need a proximity check? -->
     <bool name="doze_double_tap_proximity_check">false</bool>
 
