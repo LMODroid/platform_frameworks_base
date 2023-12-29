@@ -126,7 +126,8 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
         private val powerInteractor: PowerInteractor,
         @Application private val scope: CoroutineScope,
 ) {
-    private var frame: View? = null
+    var frame: View? = null
+        private set
     private var isDimmed = false
     private var hideOnUndim = false
     private val currentStateUpdatedToOffAodOrDozing: Flow<Unit> =
