@@ -1405,8 +1405,15 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         // Add a delay to ensure that the dim amount is updated after the display has had chance
         // to switch out of HBM mode. The delay, in ms is stored in config_udfpsDimmingDisableDelay.
         // If the delay is 0, the dim amount will be updated immediately.
-        int delay = mContext.getResources().getInteger(
-                com.android.systemui.R.integer.config_udfpsDimmingDisableDelay);
+        int delay = 0;
+        if (mOverlay.getRequestReason() == REASON_AUTH_KEYGUARD) {
+            delay = mContext.getResources().getInteger(
+                        com.android.systemui.R.integer.config_udfpsDimmingDisableDelay);
+        } else if ((mOverlay.getRequestReason() == REASON_ENROLL_ENROLLING) ||
+                (mOverlay.getRequestReason() == REASON_ENROLL_FIND_SENSOR)) {
+            delay = mContext.getResources().getInteger(
+                        com.android.systemui.R.integer.config_udfpsEnrollingDimmingDisableDelay);
+        }
         final AtomicInteger delayCounter = new AtomicInteger(delay);
 
         UdfpsControllerOverlay overlay = mOverlay;
