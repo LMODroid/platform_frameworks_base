@@ -18,6 +18,8 @@ package com.android.systemui.biometrics;
 
 import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ACQUIRED_GOOD;
 import static android.hardware.biometrics.BiometricOverlayConstants.REASON_AUTH_KEYGUARD;
+import static android.hardware.biometrics.BiometricOverlayConstants.REASON_ENROLL_ENROLLING;
+import static android.hardware.biometrics.BiometricOverlayConstants.REASON_ENROLL_FIND_SENSOR;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 import static com.android.systemui.classifier.Classifier.LOCK_ICON;
@@ -1240,7 +1242,14 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         // has had chance to switch out of HBM mode.
         // The delay, in ms is stored in config_udfpsDimmingDisableDelay.
         // If the delay is 0, the dim amount will be updated immediately.
-        int delay = mContext.getResources().getInteger(R.integer.config_udfpsDimmingDisableDelay);
+        int delay = 0;
+        if (mOverlay.getRequestReason() == REASON_AUTH_KEYGUARD) {
+            delay = mContext.getResources().getInteger(R.integer.config_udfpsDimmingDisableDelay);
+        } else if ((mOverlay.getRequestReason() == REASON_ENROLL_ENROLLING) ||
+                (mOverlay.getRequestReason() == REASON_ENROLL_FIND_SENSOR)) {
+            delay = mContext.getResources().getInteger(
+                        R.integer.config_udfpsEnrollingDimmingDisableDelay);
+        }
         final AtomicInteger delayCounter = new AtomicInteger(delay);
 
         UdfpsControllerOverlay overlay = mOverlay;

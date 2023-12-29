@@ -63,7 +63,10 @@
     <!-- The amount of frames to delay by when disabling the dim layer.
          This is used to prevent flickers due to the dimming being disabled
          before the screen has had chance to switch out of HBM mode -->
-     <integer name="config_udfpsDimmingDisableDelay">0</integer>
+    <integer name="config_udfpsDimmingDisableDelay">0</integer>
+
+    <!-- The same as above, for enrollment in Settings -->
+    <integer name="config_udfpsEnrollingDimmingDisableDelay">0</integer>
 
     <!-- Preferred max refresh rate at AOD & Ambient Display, if supported by the display. -->
     <integer name="config_aodMaxRefreshRate">-1</integer>
