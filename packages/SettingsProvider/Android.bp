@@ -25,6 +25,7 @@ android_library {
     srcs: [
         "src/**/*.java",
         "src/com/android/providers/settings/EventLogTags.logtags",
+        ":LMOSettingsProvider-sources",
     ],
     libs: [
         "telephony-common",
@@ -43,6 +44,10 @@ android_library {
         "notification_flags_lib",
         "SettingsLibDeviceStateRotationLock",
         "SettingsLibDisplayUtils",
+        "framework-lmodroid.static",
+    ],
+    resource_zips: [
+        ":LMOSettingsProvider-res",
     ],
     platform_apis: true,
 }
