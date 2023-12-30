@@ -24,16 +24,21 @@ android_app {
     srcs: [
         "src/**/*.java",
         "src/com/android/providers/settings/EventLogTags.logtags",
+        ":LMOSettingsProvider-sources",
     ],
     libs: [
         "telephony-common",
         "ims-common",
         "unsupportedappusage",
+        "framework-lmodroid",
     ],
     static_libs: [
         "junit",
         "SettingsLibDeviceStateRotationLock",
         "SettingsLibDisplayUtils",
+    ],
+    resource_zips: [
+        ":LMOSettingsProvider-res",
     ],
     platform_apis: true,
     certificate: "platform",
