@@ -25,11 +25,13 @@ android_library {
     srcs: [
         "src/**/*.java",
         "src/com/android/providers/settings/EventLogTags.logtags",
+        ":LMOSettingsProvider-sources",
     ],
     libs: [
         "telephony-common",
         "ims-common",
         "unsupportedappusage",
+        "framework-lmodroid",
     ],
     static_libs: [
         "aconfig_new_storage_flags_lib",
@@ -39,6 +41,9 @@ android_library {
         "libaconfig_java_proto_lite",
         "SettingsLibDeviceStateRotationLock",
         "SettingsLibDisplayUtils",
+    ],
+    resource_zips: [
+        ":LMOSettingsProvider-res",
     ],
     platform_apis: true,
 }
