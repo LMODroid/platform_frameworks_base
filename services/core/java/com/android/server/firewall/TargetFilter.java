@@ -29,7 +29,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-class TargetFilter {
+abstract class TargetFilter implements Filter {
     private static final String ATTR_TYPE = "type";
 
     private static final String VAL_SIGNATURE = "signature";
@@ -74,26 +74,33 @@ class TargetFilter {
         }
     };
 
-    private static final Filter SIGNATURE = new Filter() {
+    @Override
+    public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
+        return matchesPackage(ifw, resolvedComponent.getPackageName(), callerUid, receivingUid,
+                userId);
+    }
+
+    private static final Filter SIGNATURE = new TargetFilter() {
         @Override
-        public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid) {
+        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+                int receivingUid, int userId) {
             return ifw.signaturesMatch(callerUid, receivingUid);
         }
     };
 
-    private static final Filter SYSTEM = new Filter() {
+    private static final Filter SYSTEM = new TargetFilter() {
         @Override
-        public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid) {
+        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+                int receivingUid, int userId) {
             return isPrivilegedApp(receivingUid, -1);
         }
     };
 
-    private static final Filter SYSTEM_OR_SIGNATURE = new Filter() {
+    private static final Filter SYSTEM_OR_SIGNATURE = new TargetFilter() {
         @Override
-        public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid) {
+        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+                int receivingUid, int userId) {
             return isPrivilegedApp(receivingUid, -1) ||
                     ifw.signaturesMatch(callerUid, receivingUid);
         }

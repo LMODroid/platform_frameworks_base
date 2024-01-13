@@ -5906,6 +5906,11 @@ public class ActivityManagerService extends IActivityManager.Stub
         public Object getAMSLock() {
             return ActivityManagerService.this;
         }
+
+        @Override
+        public ContentResolver getContentResolver() {
+            return ActivityManagerService.this.mContext.getContentResolver();
+        }
     }
 
     public static int checkComponentPermission(String permission, int pid, int uid,
@@ -16725,16 +16730,35 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         @Override
         public boolean queryActivityAllowed(ComponentName resolvedActivity, Intent intent, int callerUid,
-            int callerPid, String resolvedType, ApplicationInfo resolvedApp) {
+            int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
             return mIntentFirewall.checkQueryActivity(resolvedActivity, intent, callerUid, callerPid,
-                resolvedType, resolvedApp);
+                resolvedType, resolvedApp, userId);
         }
 
         @Override
         public boolean queryServiceAllowed(ComponentName resolvedService, Intent intent, int callerUid,
-            int callerPid, String resolvedType, ApplicationInfo resolvedApp) {
+            int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
             return mIntentFirewall.checkQueryService(resolvedService, intent, callerUid, callerPid,
-                resolvedType, resolvedApp);
+                resolvedType, resolvedApp, userId);
+        }
+
+        @Override
+        public boolean queryReceiverAllowed(ComponentName resolvedReceiver, Intent intent, int callerUid,
+            int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
+            return mIntentFirewall.checkQueryReceiver(resolvedReceiver, intent, callerUid, callerPid,
+                resolvedType, resolvedApp, userId);
+        }
+
+        @Override
+        public boolean queryProviderAllowed(ComponentName resolvedProvider, Intent intent, int callerUid,
+            int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
+            return mIntentFirewall.checkQueryProvider(resolvedProvider, intent, callerUid, callerPid,
+                resolvedType, resolvedApp, userId);
+        }
+
+        @Override
+        public boolean queryPackageAllowed(int targetUid, String targetPackageName, int callerUid, int userId) {
+            return mIntentFirewall.checkQueryPackage(targetUid, targetPackageName, callerUid, userId);
         }
 
         @Override

@@ -34,8 +34,17 @@ public class IntentFilterFilter implements Filter {
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
+        if (intent == null) {
+            return false;
+        }
         return mIntentFilter.match(null, intent, false, "IntentFirewall:IntentFilterFilter") > 0;
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+        return false;
     }
 
     public static final FilterFactory FACTORY = new FilterFactory("intent-filter") {

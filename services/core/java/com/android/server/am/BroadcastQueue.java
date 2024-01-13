@@ -714,7 +714,7 @@ public final class BroadcastQueue {
             skip = true;
         }
         if (!skip && !mService.mIntentFirewall.checkBroadcast(r.intent, r.callingUid,
-                r.callingPid, r.resolvedType, filter.receiverList.uid)) {
+                r.callingPid, r.resolvedType, filter.receiverList.uid, r.userId)) {
             Slog.w(TAG, "Firewall blocked: broadcasting "
                     + r.intent.toString()
                     + " from " + r.callerPackage + " (pid=" + r.callingPid
@@ -1576,7 +1576,7 @@ public final class BroadcastQueue {
         }
         if (!skip) {
             skip = !mService.mIntentFirewall.checkBroadcast(r.intent, r.callingUid,
-                    r.callingPid, r.resolvedType, info.activityInfo.applicationInfo.uid);
+                    r.callingPid, r.resolvedType, info.activityInfo.applicationInfo.uid, r.userId);
             if (skip) {
                 Slog.w(TAG, "Firewall blocked: broadcasting "
                         + broadcastDescription(r, component));

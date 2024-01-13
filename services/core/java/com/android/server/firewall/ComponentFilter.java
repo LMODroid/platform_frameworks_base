@@ -33,8 +33,14 @@ public class ComponentFilter implements Filter {
 
     @Override
     public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-            int callerUid, int callerPid, String resolvedType, int receivingUid) {
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
         return mComponentName.equals(resolvedComponent);
+    }
+
+    @Override
+    public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+            int receivingUid, int userId) {
+        return false;
     }
 
     public static final FilterFactory FACTORY = new FilterFactory("component-filter") {

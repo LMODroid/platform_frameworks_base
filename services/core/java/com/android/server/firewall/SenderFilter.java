@@ -17,10 +17,12 @@
 package com.android.server.firewall;
 
 import android.app.AppGlobals;
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
+import android.content.pm.PackageManager;
 import android.os.Process;
 import android.os.RemoteException;
 import android.util.Slog;
@@ -29,7 +31,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-class SenderFilter {
+abstract class SenderFilter implements Filter {
     private static final String ATTR_TYPE = "type";
 
     private static final String VAL_SIGNATURE = "signature";
@@ -77,40 +79,67 @@ class SenderFilter {
         }
     };
 
-    private static final Filter SIGNATURE = new Filter() {
+    @Override
+    public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
+            int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
+        return matchesPackage(ifw, resolvedComponent.getPackageName(), callerUid, receivingUid,
+                userId);
+    }
+
+    private static final Filter SIGNATURE = new SenderFilter() {
         @Override
-        public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid) {
+        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+                int receivingUid, int userId) {
             return ifw.signaturesMatch(callerUid, receivingUid);
         }
     };
 
-    private static final Filter SYSTEM = new Filter() {
+    private static final Filter SYSTEM = new SenderFilter() {
         @Override
         public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid) {
+                int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
             return isPrivilegedApp(callerUid, callerPid);
+        }
+
+        @Override
+        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+                int receivingUid, int userId) {
+            return isPrivilegedApp(callerUid, -1);
         }
     };
 
-    private static final Filter SYSTEM_OR_SIGNATURE = new Filter() {
+    private static final Filter SYSTEM_OR_SIGNATURE = new SenderFilter() {
         @Override
         public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid) {
+                int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
             return isPrivilegedApp(callerUid, callerPid) ||
+                    ifw.signaturesMatch(callerUid, receivingUid);
+        }
+
+        @Override
+        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+                int receivingUid, int userId) {
+            return isPrivilegedApp(callerUid, -1) ||
                     ifw.signaturesMatch(callerUid, receivingUid);
         }
     };
 
-    private static final Filter USER_ID = new Filter() {
+    private static final Filter USER_ID = new SenderFilter() {
         @Override
         public boolean matches(IntentFirewall ifw, ComponentName resolvedComponent, Intent intent,
-                int callerUid, int callerPid, String resolvedType, int receivingUid) {
+                int callerUid, int callerPid, String resolvedType, int receivingUid, int userId) {
             // This checks whether the caller is either the system process, or has the same user id
             // I.e. the same app, or an app that uses the same shared user id.
             // This is the same set of applications that would be able to access the component if
             // it wasn't exported.
             return ifw.checkComponentPermission(null, callerPid, callerUid, receivingUid, false);
+        }
+
+        @Override
+        public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
+                int receivingUid, int userId) {
+            return ActivityManager.checkComponentPermission(null, callerUid, receivingUid, false)
+                    == PackageManager.PERMISSION_GRANTED;
         }
     };
 }
