@@ -157,6 +157,9 @@ constructor(
 
     private var overlayTouchListener: TouchExplorationStateChangeListener? = null
 
+    private val frameworkDimming = context.getResources().getBoolean(
+        R.bool.config_udfpsFrameworkDimming)
+
     private val coreLayoutParams =
         WindowManager.LayoutParams(
                 WindowManager.LayoutParams.TYPE_NAVIGATION_BAR_PANEL,
@@ -171,8 +174,10 @@ constructor(
                     WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
                 flags =
                     (Utils.FINGERPRINT_OVERLAY_LAYOUT_PARAM_FLAGS or
-                        WindowManager.LayoutParams.FLAG_DIM_BEHIND or
                         WindowManager.LayoutParams.FLAG_SPLIT_TOUCH)
+                if (frameworkDimming) {
+                    flags = flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+                }
                 privateFlags =
                     WindowManager.LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY or
                         WindowManager.LayoutParams.PRIVATE_FLAG_EXCLUDE_FROM_SCREEN_MAGNIFICATION
