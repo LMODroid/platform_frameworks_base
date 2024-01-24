@@ -326,7 +326,8 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
             }
             final boolean shouldRemove = !LocalServices.getService(ActivityManagerInternal.class)
                 .queryPackageAllowed(targetPkgSetting.getAppId(),
-                    targetPkgSetting.getPkg().getPackageName(), callingUid, userId);
+                    targetPkgSetting.getPkg() != null ? targetPkgSetting.getPkg().getPackageName()
+                    : null, callingUid, userId);
             if (shouldRemove) {
                 if (DEBUG_LOGGING) {
                     Slog.d(TAG, "forcibly filtered by ifw");

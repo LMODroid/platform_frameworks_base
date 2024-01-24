@@ -34,7 +34,12 @@ public class ProvisionedFilter implements Filter {
     @Override
     public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
             int receivingUid, int userId) {
-        return Settings.Global.getInt(ifw.getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0) == 1;
+        try {
+            return Settings.Global.getInt(ifw.getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0) == 1;
+        } catch (Exception ex) {
+            // It is probably too early to access settings
+            return false;
+        }
     }
 
     public static final FilterFactory FACTORY = new FilterFactory("is-provisioned") {

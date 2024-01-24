@@ -26,6 +26,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
+import android.os.Binder;
 import android.os.Environment;
 import android.os.FileObserver;
 import android.os.Handler;
@@ -188,48 +189,73 @@ public class IntentFirewall {
 
     public boolean checkQueryActivity(ComponentName resolvedActivity, Intent intent, int callerUid, int callerPid,
             String resolvedType, ApplicationInfo resolvedApp, int userId) {
-        return checkIntent(mActivityResolver, resolvedActivity, TYPE_ACTIVITY, intent,
-                callerUid, callerPid, resolvedType, resolvedApp.uid, true, userId);
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            return checkIntent(mActivityResolver, resolvedActivity, TYPE_ACTIVITY, intent,
+                    callerUid, callerPid, resolvedType, resolvedApp.uid, true, userId);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
     }
 
     public boolean checkQueryService(ComponentName resolvedService, Intent intent, int callerUid,
             int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
-        return checkIntent(mServiceResolver, resolvedService, TYPE_SERVICE, intent, callerUid,
-                callerPid, resolvedType, resolvedApp.uid, true, userId);
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            return checkIntent(mServiceResolver, resolvedService, TYPE_SERVICE, intent, callerUid,
+                    callerPid, resolvedType, resolvedApp.uid, true, userId);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
     }
 
     public boolean checkQueryReceiver(ComponentName resolvedReceiver, Intent intent, int callerUid,
             int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
-        return checkIntent(mBroadcastResolver, resolvedReceiver, TYPE_BROADCAST, intent, callerUid,
-                callerPid, resolvedType, resolvedApp.uid, true, userId);
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            return checkIntent(mBroadcastResolver, resolvedReceiver, TYPE_BROADCAST, intent, callerUid,
+                    callerPid, resolvedType, resolvedApp.uid, true, userId);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
     }
 
     public boolean checkQueryProvider(ComponentName resolvedService, Intent intent, int callerUid,
             int callerPid, String resolvedType, ApplicationInfo resolvedApp, int userId) {
-        return checkIntent(mProviderResolver, resolvedService, TYPE_PROVIDER, intent, callerUid,
-                callerPid, resolvedType, resolvedApp.uid, true, userId);
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            return checkIntent(mProviderResolver, resolvedService, TYPE_PROVIDER, intent, callerUid,
+                    callerPid, resolvedType, resolvedApp.uid, true, userId);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
     }
 
     public boolean checkQueryPackage(int targetUid, String targetPackageName, int callerUid, int userId) {
-        boolean log = false;
-        boolean block = false;
-        for (Rule rule : mPackageResolver) {
-            if (rule.matchesPackage(this, targetPackageName, callerUid, targetUid, userId)) {
-                block |= rule.getUnqueryable();
-                log |= rule.getLogQuery();
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            boolean log = false;
+            boolean block = false;
+            for (Rule rule : mPackageResolver) {
+                if (rule.matchesPackage(this, targetPackageName, callerUid, targetUid, userId)) {
+                    block |= rule.getUnqueryable();
+                    log |= rule.getLogQuery();
 
-                // if we've already determined that we should both block and log, there's no need
-                // to continue trying rules
-                if (block && log) {
-                    break;
+                    // if we've already determined that we should both block and log, there's no need
+                    // to continue trying rules
+                    if (block && log) {
+                        break;
+                    }
                 }
             }
-        }
 
-        if (log) {
-            logPackageQuery(targetUid, targetPackageName, callerUid, userId);
+            if (log) {
+                logPackageQuery(targetUid, targetPackageName, callerUid, userId);
+            }
+            return !block;
+        } finally {
+            Binder.restoreCallingIdentity(ident);
         }
-        return !block;
     }
 
     private boolean checkIntent(FirewallIntentResolver resolver, ComponentName resolvedComponent,
@@ -797,7 +823,7 @@ public class IntentFirewall {
     boolean signaturesMatch(int uid1, int uid2) {
         try {
             IPackageManager pm = AppGlobals.getPackageManager();
-            return pm.checkUidSignatures(uid1, uid2) == PackageManager.SIGNATURE_MATCH;
+            return pm != null && pm.checkUidSignatures(uid1, uid2) == PackageManager.SIGNATURE_MATCH;
         } catch (RemoteException ex) {
             Slog.e(TAG, "Remote exception while checking signatures", ex);
             return false;

@@ -46,6 +46,9 @@ abstract class SenderFilter implements Filter {
         }
 
         IPackageManager pm = AppGlobals.getPackageManager();
+        if (pm == null) {
+            return false;
+        }
         try {
             return (pm.getPrivateFlagsForUid(callerUid) & ApplicationInfo.PRIVATE_FLAG_PRIVILEGED)
                     != 0;

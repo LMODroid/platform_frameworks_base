@@ -49,6 +49,9 @@ public class SenderPackageFilter implements Filter {
     public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
             int receivingUid, int userId) {
         IPackageManager pm = AppGlobals.getPackageManager();
+        if (pm == null) {
+            return false;
+        }
 
         int packageUid = -1;
         try {
