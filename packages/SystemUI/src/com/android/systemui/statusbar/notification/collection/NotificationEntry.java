@@ -189,6 +189,9 @@ public final class NotificationEntry extends ListEntry {
      */
     private boolean mBlockable;
 
+    // For pulse light
+    private boolean mShowPulseLight = false;
+
     /**
      * Whether this notification has ever been a non-sticky HUN.
      */
@@ -1047,6 +1050,14 @@ public final class NotificationEntry extends ListEntry {
         HeadsUpStatusBarModel headsUpStatusBarModel = contentModel.getHeadsUpStatusBarModel();
         this.mHeadsUpStatusBarText.setValue(headsUpStatusBarModel.getPrivateText());
         this.mHeadsUpStatusBarTextPublic.setValue(headsUpStatusBarModel.getPublicText());
+    }
+
+    public void setPulseLightState(boolean value) {
+        mShowPulseLight = value;
+    }
+
+    public boolean showingPulseLight() {
+        return mShowPulseLight;
     }
 
     /** Information about a suggestion that is being edited. */
