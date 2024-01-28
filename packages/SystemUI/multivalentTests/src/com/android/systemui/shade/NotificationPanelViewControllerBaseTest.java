@@ -128,6 +128,7 @@ import com.android.systemui.statusbar.notification.ConversationNotificationManag
 import com.android.systemui.statusbar.notification.DynamicPrivacyController;
 import com.android.systemui.statusbar.notification.NotificationWakeUpCoordinator;
 import com.android.systemui.statusbar.notification.NotificationWakeUpCoordinatorLogger;
+import com.android.systemui.statusbar.notification.collection.NotifPipeline;
 import com.android.systemui.statusbar.notification.data.repository.NotificationsKeyguardViewStateRepository;
 import com.android.systemui.statusbar.notification.domain.interactor.ActiveNotificationsInteractor;
 import com.android.systemui.statusbar.notification.domain.interactor.NotificationsKeyguardInteractor;
@@ -287,6 +288,7 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
     @Mock protected SelectedUserInteractor mSelectedUserInteractor;
     @Mock protected ContentResolver mContentResolver;
     @Mock protected PowerManager mPowerManager;
+    @Mock private NotifPipeline mNotifPipeline;
 
     protected final int mMaxUdfpsBurnInOffsetY = 5;
     protected FakeFeatureFlagsClassic mFeatureFlags = new FakeFeatureFlagsClassic();
@@ -590,7 +592,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
                 mBrightnessMirrorShowingRepository,
                 new BlurConfig(0f, 0f),
                 () -> mKosmos.getFakeShadeDisplaysRepository(),
-                mContext);
+                mContext,
+                mNotifPipeline);
         mNotificationPanelViewController.initDependencies(
                 mCentralSurfaces,
                 null,

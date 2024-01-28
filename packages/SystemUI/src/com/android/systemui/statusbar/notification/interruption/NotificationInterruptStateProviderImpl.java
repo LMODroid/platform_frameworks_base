@@ -423,6 +423,12 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
                 }
         }
     }
+
+    @Override
+    public boolean shouldShowPulseLight(NotificationEntry entry, boolean forFaceDown) {
+        return shouldHeadsUpWhenDozing(entry, false /* log */, forFaceDown);
+    }
+
     private boolean shouldHeadsUpWhenAwake(NotificationEntry entry, boolean log) {
         StatusBarNotification sbn = entry.getSbn();
 
@@ -513,6 +519,10 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
      * @return true if the entry should ambient pulse, false otherwise
      */
     private boolean shouldHeadsUpWhenDozing(NotificationEntry entry, boolean log) {
+        return shouldHeadsUpWhenDozing(entry, log, false /* forFaceDown */);
+    }
+
+    private boolean shouldHeadsUpWhenDozing(NotificationEntry entry, boolean log, boolean forFaceDown) {
         if (!mAmbientDisplayConfiguration.pulseOnNotificationEnabled(mUserTracker.getUserId())) {
             if (log) mLogger.logNoPulsingSettingDisabled(entry);
             return false;
@@ -523,7 +533,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
             return false;
         }
 
-        if (!canAlertCommon(entry, log)) {
+        if (!canAlertCommon(entry, log, forFaceDown)) {
             if (log) mLogger.logNoPulsingNoAlert(entry);
             return false;
         }
@@ -560,6 +570,10 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
      * @return true if these checks pass, false if the notification should not alert
      */
     private boolean canAlertCommon(NotificationEntry entry, boolean log) {
+        return canAlertCommon(entry, log, false /* forFaceDown */);
+    }
+
+    private boolean canAlertCommon(NotificationEntry entry, boolean log, boolean forFaceDown) {
         for (int i = 0; i < mSuppressors.size(); i++) {
             if (mSuppressors.get(i).suppressInterruptions(entry)) {
                 if (log) {
@@ -575,6 +589,11 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
                 mLogger.logNoAlertingAppSuspended(entry);
             }
             return false;
+        }
+
+        // Ignore keyguard visibility condition for pulse light - face down
+        if (forFaceDown) {
+            return true;
         }
 
         if (mKeyguardNotificationVisibilityProvider.shouldHideNotification(entry)) {
