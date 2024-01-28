@@ -70,6 +70,7 @@ constructor(
     summarizationCoordinator: SummarizationCoordinator,
     highlightsCoordinator: HighlightsCoordinator,
     hsuCoordinator: HsuCoordinator,
+    pulseLightCoordinator: PulseLightCoordinator,
 ) : NotifCoordinators {
 
     private val mCoreCoordinators: MutableList<CoreCoordinator> = ArrayList()
@@ -108,6 +109,7 @@ constructor(
         mCoordinators.add(preparationCoordinator)
         mCoordinators.add(remoteInputCoordinator)
         mCoordinators.add(dismissibilityCoordinator)
+        mCoordinators.add(pulseLightCoordinator)
         mCoordinators.add(bundleCoordinator)
         mCoordinators.add(summarizationCoordinator)
         mCoordinators.add(statsLoggerCoordinator)

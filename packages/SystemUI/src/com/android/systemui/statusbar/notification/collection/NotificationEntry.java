@@ -202,6 +202,9 @@ public final class NotificationEntry extends ListEntry {
      */
     private boolean mBlockable;
 
+    // For pulse light
+    private boolean mShowPulseLight = false;
+
     /**
      * Whether this notification has ever been a non-sticky HUN.
      */
@@ -1127,6 +1130,14 @@ public final class NotificationEntry extends ListEntry {
             summarization = getRanking() != null ? getRanking().getSummarization() : null;
         }
         return summarization != null ? summarization.toString() : null;
+    }
+
+    public void setPulseLightState(boolean value) {
+        mShowPulseLight = value;
+    }
+
+    public boolean showingPulseLight() {
+        return mShowPulseLight;
     }
 
     /** Information about a suggestion that is being edited. */

@@ -52,6 +52,7 @@ import com.android.systemui.keyguard.WakefulnessLifecycle;
 import com.android.systemui.keyguard.domain.interactor.AodDimInteractor;
 import com.android.systemui.keyguard.domain.interactor.DozeInteractor;
 import com.android.systemui.kosmos.KosmosJavaAdapter;
+import com.android.systemui.libremobileos.pulselight.PulseLightNotifManager;
 import com.android.systemui.shade.NotificationShadeWindowViewController;
 import com.android.systemui.shade.domain.interactor.ShadeLockscreenInteractor;
 import com.android.systemui.statusbar.NotificationShadeWindowController;
@@ -112,6 +113,7 @@ public class DozeServiceHostTest extends SysuiTestCase {
 
     private Context mContextSpy;
     private KosmosJavaAdapter mKosmos;
+    @Mock private PulseLightNotifManager mPulseLightNotifManager;
 
     @Before
     public void setup() {
@@ -129,7 +131,7 @@ public class DozeServiceHostTest extends SysuiTestCase {
                 mShadeLockscreenInteractor, mDozeInteractor,
                 mKosmos.getDeviceEntryFingerprintAuthInteractor(),
                 mKosmos.getTestScope(), mContextSpy, mAmbientDisplayConfiguration,
-                mAodDimInteractor, mSelectedUserInteractor);
+                mAodDimInteractor, mSelectedUserInteractor, mPulseLightNotifManager);
 
         mDozeServiceHost.initialize(
                 mCentralSurfaces,
