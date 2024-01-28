@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.display.AmbientDisplayConfiguration;
 import android.os.SystemClock;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.format.Formatter;
 import android.util.IndentingPrintWriter;
 import android.util.Log;
@@ -46,6 +48,7 @@ import com.android.systemui.dock.DockManager;
 import com.android.systemui.doze.DozeMachine.State;
 import com.android.systemui.doze.dagger.DozeScope;
 import com.android.systemui.log.SessionTracker;
+import com.android.systemui.res.R;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.statusbar.phone.DozeParameters;
 import com.android.systemui.statusbar.policy.DevicePostureController;
@@ -57,6 +60,8 @@ import com.android.systemui.util.sensors.ProximityCheck;
 import com.android.systemui.util.sensors.ProximitySensor;
 import com.android.systemui.util.settings.SecureSettings;
 import com.android.systemui.util.wakelock.WakeLock;
+
+import com.libremobileos.providers.LMOSettings;
 
 import java.io.PrintWriter;
 import java.util.Optional;
@@ -260,9 +265,30 @@ public class DozeTriggers implements DozeMachine.Part {
             mDozeLog.tracePulseDropped("dozeSuppressed");
             return;
         }
-        requestPulse(DozeLog.PULSE_REASON_NOTIFICATION, false /* performedProxCheck */,
+        // Consider proximity check is done already
+        // if edge light on face down enabled
+        boolean performedProxCheck = canShowPulseLight();
+        requestPulse(DozeLog.PULSE_REASON_NOTIFICATION, performedProxCheck /* performedProxCheck */,
                 onPulseSuppressedListener);
         mDozeLog.traceNotificationPulse();
+    }
+
+    private boolean canShowPulseLight() {
+        return isPulseLightEnabled() && pulseLightOnlyWhenFaceDown();
+    }
+
+    private boolean isPulseLightEnabled() {
+        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                LMOSettings.Secure.PULSE_AMBIENT_LIGHT,
+                0, UserHandle.USER_CURRENT) != 0;
+    }
+
+    private boolean pulseLightOnlyWhenFaceDown() {
+        int pulseLightFaceDownDefault = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_edgeLightFaceDownEnabledByDefault) ? 1 : 0;
+        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                LMOSettings.Secure.PULSE_AMBIENT_LIGHT_FACE_DOWN,
+                pulseLightFaceDownDefault, UserHandle.USER_CURRENT) != 0;
     }
 
     private void onSideFingerprintAcquisitionStarted() {

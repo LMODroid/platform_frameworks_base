@@ -192,6 +192,9 @@ public final class NotificationEntry extends ListEntry {
      */
     private boolean mBlockable;
 
+    // For pulse light
+    private boolean mShowPulseLight = false;
+
     /**
      * Whether this notification has ever been a non-sticky HUN.
      */
@@ -1092,6 +1095,14 @@ public final class NotificationEntry extends ListEntry {
         } else {
             Log.wtf(TAG, "setting promoted content without feature flag enabled", new Throwable());
         }
+    }
+
+    public void setPulseLightState(boolean value) {
+        mShowPulseLight = value;
+    }
+
+    public boolean showingPulseLight() {
+        return mShowPulseLight;
     }
 
     /** Information about a suggestion that is being edited. */
