@@ -70,6 +70,7 @@ constructor(
     bundleCoordinator: BundleCoordinator,
     summarizationCoordinator: SummarizationCoordinator,
     automaticPromotionCoordinator: AutomaticPromotionCoordinator,
+    pulseLightCoordinator: PulseLightCoordinator,
 ) : NotifCoordinators {
 
     private val mCoreCoordinators: MutableList<CoreCoordinator> = ArrayList()
@@ -109,6 +110,7 @@ constructor(
         mCoordinators.add(remoteInputCoordinator)
         mCoordinators.add(dismissibilityCoordinator)
         mCoordinators.add(automaticPromotionCoordinator)
+        mCoordinators.add(pulseLightCoordinator)
         if (NotificationBundleUi.isEnabled) {
             mCoordinators.add(bundleCoordinator)
         }

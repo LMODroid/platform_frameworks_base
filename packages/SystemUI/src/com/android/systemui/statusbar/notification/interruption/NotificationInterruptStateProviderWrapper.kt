@@ -112,4 +112,9 @@ class NotificationInterruptStateProviderWrapper(
         traceSection("NotificationInterruptStateProviderWrapper#makeAndLogBubbleDecision") {
             wrapped.shouldBubbleUp(entry).let { DecisionImpl.of(it) }
         }
+
+    override fun shouldShowPulseLight(
+        entry: NotificationEntry,
+        ignoreLockscreenVisibility: Boolean,
+    ): Boolean = wrapped.shouldShowPulseLight(entry, ignoreLockscreenVisibility)
 }

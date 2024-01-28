@@ -276,6 +276,27 @@ constructor(
                 .decision
         }
 
+    override fun shouldShowPulseLight(
+        entry: NotificationEntry,
+        ignoreLockscreenVisibility: Boolean,
+    ): Boolean =
+        traceSection("VisualInterruptionDecisionProviderImpl#shouldShowPulseLight") {
+            check(started)
+
+            val suppressedBy =
+                checkConditions(PULSE)
+                    ?: filters
+                        .firstOrNull {
+                            it.types.contains(PULSE) &&
+                                !(ignoreLockscreenVisibility &&
+                                    it is AlertKeyguardVisibilitySuppressor) &&
+                                it.shouldSuppress(entry)
+                        }
+                        ?.let { LoggableDecision.suppressed(it) }
+                    ?: checkSuppressInterruptions(entry)
+            suppressedBy == null
+        }
+
     private fun makeLoggableBubbleDecision(entry: NotificationEntry): LoggableDecision =
         checkConditions(BUBBLE)
             ?: checkFilters(BUBBLE, entry)

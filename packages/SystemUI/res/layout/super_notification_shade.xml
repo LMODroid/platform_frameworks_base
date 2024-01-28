@@ -58,6 +58,14 @@
         android:layout_height="match_parent"
         sysui:ignoreRightInset="true" />
 
+    <!-- Ambient pulse (edge) light. Must be above the light reveal scrim, which stays black
+         while dozing, otherwise it isn't visible on AOD. -->
+    <include layout="@layout/pulse_light_view"
+        android:id="@+id/pulse_light_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <!-- Root for all keyguard content. It was previously located within the shade. -->
     <com.android.systemui.keyguard.ui.view.KeyguardRootView
         android:id="@id/keyguard_root_view"

@@ -181,4 +181,16 @@ interface VisualInterruptionDecisionProvider : CoreStartable {
      * @return the decision to display that notification as a bubble or not
      */
     fun makeAndLogBubbleDecision(entry: NotificationEntry): Decision
+
+    /**
+     * Decides whether a [notification][entry] should show the ambient pulse light. This follows
+     * the pulse decision, optionally ignoring whether the notification is hidden on the lockscreen
+     * (used when the pulse light is only shown while the device is face down).
+     *
+     * [start] must be called before this method can be called.
+     */
+    fun shouldShowPulseLight(
+        entry: NotificationEntry,
+        ignoreLockscreenVisibility: Boolean,
+    ): Boolean = makeUnloggedHeadsUpDecision(entry).shouldInterrupt
 }
