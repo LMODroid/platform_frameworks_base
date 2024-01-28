@@ -73,6 +73,7 @@ constructor(
     dreamCoordinator: DreamCoordinator,
     statsLoggerCoordinator: NotificationStatsLoggerCoordinator,
     bundleCoordinator: BundleCoordinator,
+    pulseLightCoordinator: PulseLightCoordinator,
 ) : NotifCoordinators {
 
     private val mCoreCoordinators: MutableList<CoreCoordinator> = ArrayList()
@@ -115,6 +116,7 @@ constructor(
         mCoordinators.add(preparationCoordinator)
         mCoordinators.add(remoteInputCoordinator)
         mCoordinators.add(dismissibilityCoordinator)
+        mCoordinators.add(pulseLightCoordinator)
 
         if (featureFlags.isEnabled(LOCKSCREEN_WALLPAPER_DREAM_ENABLED)) {
             mCoordinators.add(dreamCoordinator)
