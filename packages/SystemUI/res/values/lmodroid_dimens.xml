@@ -30,4 +30,8 @@
     <dimen name="keyguard_face_icon_height">42dp</dimen>
     <dimen name="keyguard_face_icon_width">42dp</dimen>
     <dimen name="keyguard_face_icon_padding">5dp</dimen>
+
+    <!-- HD calling icon -->
+    <dimen name="signal_icon_viewport_size">24dp</dimen>
+
 </resources>
