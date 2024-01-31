@@ -207,6 +207,7 @@ class MobileConnectionsRepositoryTest : SysuiTestCase() {
                 wifiManager,
                 wifiLogBuffer,
                 wifiTableLogBuffer,
+                mock(),
             )
 
         carrierConfigRepository =
@@ -244,6 +245,7 @@ class MobileConnectionsRepositoryTest : SysuiTestCase() {
                 logFactory = logBufferFactory,
                 mobileRepoFactory = connectionFactory,
                 carrierMergedRepoFactory = carrierMergedFactory,
+                imsRepoFactory = mock(),
             )
 
         underTest =
