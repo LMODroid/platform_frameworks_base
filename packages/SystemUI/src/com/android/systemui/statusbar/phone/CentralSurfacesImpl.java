@@ -970,33 +970,35 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             mNeedsNavigationBar = true;
         }
 
+        Uri forceShowNavbar = Settings.System.getUriFor(LMOSettings.System.FORCE_SHOW_NAVBAR);
         ContentObserver contentObserver = new ContentObserver(null) {
             @Override
-            public void onChange(boolean selfChange) {
-                if (mDisplayId == Display.DEFAULT_DISPLAY
-                        && mWindowManagerService != null) {
-                    boolean forcedVisibility = mNeedsNavigationBar || Settings.System.getInt(
-                            mContext.getContentResolver(),
-                            LMOSettings.System.FORCE_SHOW_NAVBAR, 0) != 0;
-                    boolean hasNavbar = getNavigationBarView() != null;
-                    mContext.getMainExecutor().execute(() -> {
-                        if (forcedVisibility) {
-                            if (!hasNavbar) {
-                                mNavigationBarController.onDisplayReady(mDisplayId);
+            public void onChange(boolean selfChange, Uri uri) {
+                if (uri.equals(forceShowNavbar)) {
+                    if (mDisplayId == Display.DEFAULT_DISPLAY
+                            && mWindowManagerService != null) {
+                        boolean forcedVisibility = mNeedsNavigationBar || Settings.System.getInt(
+                                mContext.getContentResolver(),
+                                LMOSettings.System.FORCE_SHOW_NAVBAR, 0) != 0;
+                        boolean hasNavbar = getNavigationBarView() != null;
+                        mContext.getMainExecutor().execute(() -> {
+                            if (forcedVisibility) {
+                                if (!hasNavbar) {
+                                    mNavigationBarController.onDisplayReady(mDisplayId);
+                                }
+                            } else {
+                                if (hasNavbar) {
+                                    mNavigationBarController.onDisplayRemoved(mDisplayId);
+                                }
                             }
-                        } else {
-                            if (hasNavbar) {
-                                mNavigationBarController.onDisplayRemoved(mDisplayId);
-                            }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         };
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(LMOSettings.System.FORCE_SHOW_NAVBAR), false,
-                contentObserver);
-        contentObserver.onChange(true);
+                forceShowNavbar, false, contentObserver);
+        contentObserver.onChange(true, forceShowNavbar);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
