@@ -20,6 +20,7 @@ import android.telephony.CellSignalStrength
 import android.telephony.SubscriptionInfo
 import android.telephony.TelephonyManager
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.statusbar.pipeline.ims.data.model.ImsStateModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.ResolvedNetworkType
@@ -164,6 +165,11 @@ interface MobileConnectionRepository {
      * @see [TelephonyManager.getEmergencyCallbackMode]
      */
     suspend fun isInEcmMode(): Boolean
+
+    /**
+     * The current state of the IMS with its capabilities
+     */
+    val imsState: StateFlow<ImsStateModel>
 
     companion object {
         /** The default number of levels to use for [numberOfLevels]. */
