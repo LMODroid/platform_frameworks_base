@@ -49,6 +49,8 @@ import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.flags.FeatureFlagsClassic
 import com.android.systemui.flags.Flags.ROAMING_INDICATOR_VIA_DISPLAY_INFO
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.statusbar.pipeline.ims.data.model.ImsStateModel
+import com.android.systemui.statusbar.pipeline.ims.data.repository.ImsRepository
 import com.android.systemui.statusbar.pipeline.mobile.data.MobileInputLogger
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState.Disconnected
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
@@ -109,6 +111,7 @@ class MobileConnectionRepositoryImpl(
     override val tableLogBuffer: TableLogBuffer,
     flags: FeatureFlagsClassic,
     scope: CoroutineScope,
+    imsRepo: ImsRepository,
 ) : MobileConnectionRepository {
     init {
         if (telephonyManager.subscriptionId != subId) {
@@ -458,6 +461,8 @@ class MobileConnectionRepositoryImpl(
             .flowOn(bgDispatcher)
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
+    override val imsState: StateFlow<ImsStateModel> = imsRepo.imsState
+
     class Factory
     @Inject
     constructor(
@@ -478,6 +483,7 @@ class MobileConnectionRepositoryImpl(
             subscriptionModel: Flow<SubscriptionModel?>,
             defaultNetworkName: NetworkNameModel,
             networkNameSeparator: String,
+            imsRepository: ImsRepository,
         ): MobileConnectionRepository {
             return MobileConnectionRepositoryImpl(
                 subId,
@@ -495,6 +501,7 @@ class MobileConnectionRepositoryImpl(
                 mobileLogger,
                 flags,
                 scope,
+                imsRepository,
             )
         }
     }

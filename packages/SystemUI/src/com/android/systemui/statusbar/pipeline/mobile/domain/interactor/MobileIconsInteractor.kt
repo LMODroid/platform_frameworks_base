@@ -113,6 +113,12 @@ interface MobileIconsInteractor {
     /** True if we're configured to force-hide the roaming and false otherwise. */
     val isRoamingForceHidden: Flow<Boolean>
 
+    /** True if we're configured to force-hide the hd (VoLTE/VoNR) and false otherwise. */
+    val isMobileHdForceHidden: Flow<Boolean>
+
+    /** True if we're configured to force-hide the hd (VoLTE/VoNR) and false otherwise. */
+    val isVoWifiForceHidden: Flow<Boolean>
+
     /**
      * True if the device-level service state (with -1 subscription id) reports emergency calls
      * only. This value is only useful when there are no other subscriptions OR all existing
@@ -392,6 +398,16 @@ constructor(
             .map { it.contains(ConnectivitySlot.ROAMING) }
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
+    override val isMobileHdForceHidden: Flow<Boolean> =
+        connectivityRepository.forceHiddenSlots
+            .map { it.contains(ConnectivitySlot.HD_CALLING) }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
+    override val isVoWifiForceHidden: Flow<Boolean> =
+        connectivityRepository.forceHiddenSlots
+            .map { it.contains(ConnectivitySlot.VOWIFI) }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
     override val isDeviceInEmergencyCallsOnlyMode: Flow<Boolean> =
         mobileConnectionsRepo.deviceServiceState.map { it?.isEmergencyOnly ?: false }
 
@@ -412,6 +428,8 @@ constructor(
                 isDefaultConnectionFailed,
                 isForceHidden,
                 isRoamingForceHidden,
+                isMobileHdForceHidden,
+                isVoWifiForceHidden,
                 mobileConnectionsRepo.getRepoForSubId(subId),
                 context,
             )

@@ -27,6 +27,7 @@ import com.android.systemui.flags.Flags
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.statusbar.connectivity.WifiPickerTrackerFactory
+import com.android.systemui.statusbar.pipeline.ims.data.repository.CommonImsRepositoryImpl
 import com.android.systemui.statusbar.pipeline.wifi.data.repository.demo.DemoModeWifiDataSource
 import com.android.systemui.statusbar.pipeline.wifi.data.repository.demo.DemoWifiRepository
 import com.android.systemui.statusbar.pipeline.wifi.data.repository.demo.model.FakeWifiEventModel
@@ -82,6 +83,8 @@ class WifiRepositorySwitcherTest : SysuiTestCase() {
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
+    private val commonImsRepo = mock<CommonImsRepositoryImpl>()
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -101,6 +104,7 @@ class WifiRepositorySwitcherTest : SysuiTestCase() {
                 wifiManager,
                 wifiLogBuffer,
                 tableLogger,
+                commonImsRepo,
             )
 
         whenever(demoModeWifiDataSource.wifiEvents).thenReturn(demoModelFlow)

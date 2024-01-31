@@ -84,6 +84,7 @@ class WifiRepositoryImplTest : SysuiTestCase() {
             wifiManager,
             logger,
             tableLogger,
+            mock(),
         )
     }
 

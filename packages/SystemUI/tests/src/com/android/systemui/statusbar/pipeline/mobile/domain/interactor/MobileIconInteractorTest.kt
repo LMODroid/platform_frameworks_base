@@ -750,6 +750,8 @@ class MobileIconInteractorTest : SysuiTestCase() {
             mobileIconsInteractor.isDefaultConnectionFailed,
             mobileIconsInteractor.isForceHidden,
             mobileIconsInteractor.isRoamingForceHidden,
+            mobileIconsInteractor.isMobileHdForceHidden,
+            mobileIconsInteractor.isVoWifiForceHidden,
             connectionRepository,
             context,
             overrides,
