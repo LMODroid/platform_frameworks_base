@@ -30,6 +30,7 @@ import android.graphics.Path.FillType;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.DrawableWrapper;
 import android.os.Handler;
 import android.telephony.CellSignalStrength;
@@ -68,6 +69,8 @@ public class SignalDrawable extends DrawableWrapper {
     private static final int STATE_MASK = 0xff << STATE_SHIFT;
     private static final int STATE_CUT = 2;
     private static final int STATE_CARRIER_CHANGE = 3;
+    private static final int STATE_R = 4;
+    private static final int STATE_CUT_AND_R = 5;
 
     private static final long DOT_DELAY = 1000;
 
@@ -81,11 +84,15 @@ public class SignalDrawable extends DrawableWrapper {
     private final Path mCutoutPath = new Path();
     private final Path mForegroundPath = new Path();
     private final Path mAttributionPath = new Path();
+    private final Path mRoamingPath = new Path();
     private final Matrix mAttributionScaleMatrix = new Matrix();
     private final Path mScaledAttributionPath = new Path();
+    private final Path mScaledRoamingPath = new Path();
     private final Handler mHandler;
     private final float mCutoutWidthFraction;
     private final float mCutoutHeightFraction;
+    private final float mRCutoutWidthFraction;
+    private final float mRCutoutHeightFraction;
     private float mDarkIntensity = -1;
     private final int mIntrinsicSize;
     private boolean mAnimating;
@@ -99,12 +106,19 @@ public class SignalDrawable extends DrawableWrapper {
         super(context.getDrawable(ICON_RES));
         final String attributionPathString = context.getString(
                 com.android.internal.R.string.config_signalAttributionPath);
+        final String roamingPathString = context.getString(
+                R.string.config_signalRoamingPath);
         mAttributionPath.set(PathParser.createPathFromPathData(attributionPathString));
+        mRoamingPath.set(PathParser.createPathFromPathData(roamingPathString));
         updateScaledAttributionPath();
         mCutoutWidthFraction = context.getResources().getFloat(
                 com.android.internal.R.dimen.config_signalCutoutWidthFraction);
         mCutoutHeightFraction = context.getResources().getFloat(
                 com.android.internal.R.dimen.config_signalCutoutHeightFraction);
+        mRCutoutWidthFraction = context.getResources().getFloat(
+                R.dimen.config_roamingCutoutWidthFraction);
+        mRCutoutHeightFraction = context.getResources().getFloat(
+                R.dimen.config_roamingCutoutHeightFraction);
         mDarkModeFillColor = Utils.getColorStateListDefaultColor(context,
                 R.color.dark_mode_icon_color_single_tone);
         mLightModeFillColor = Utils.getColorStateListDefaultColor(context,
@@ -124,6 +138,7 @@ public class SignalDrawable extends DrawableWrapper {
                     getBounds().width() / VIEWPORT, getBounds().height() / VIEWPORT);
         }
         mAttributionPath.transform(mAttributionScaleMatrix, mScaledAttributionPath);
+        mRoamingPath.transform(mAttributionScaleMatrix, mScaledRoamingPath);
     }
 
     @Override
@@ -250,9 +265,37 @@ public class SignalDrawable extends DrawableWrapper {
             drawDotAndPadding(x - dotSpacing * 2, y, dotPadding, dotSize, 0);
             canvas.drawPath(mCutoutPath, mTransparentPaint);
             canvas.drawPath(mForegroundPath, mForegroundPaint);
-        } else if (!newStatusBarIcons() && isInState(STATE_CUT)) {
-            float cutX = (mCutoutWidthFraction * width / VIEWPORT);
-            float cutY = (mCutoutHeightFraction * height / VIEWPORT);
+        } else if (!newStatusBarIcons() && isInState(STATE_CUT_AND_R)) {
+            // Roaming
+            float cutWidth = mRCutoutWidthFraction;
+            float cutHeight = mRCutoutHeightFraction;
+            float cutX = (cutWidth * width / VIEWPORT);
+            float cutY = (cutHeight * height / VIEWPORT);
+            float rIconOffset = -0.8f * (mCutoutWidthFraction * width / VIEWPORT);
+            mCutoutPath.moveTo(width + rIconOffset, height);
+            mCutoutPath.rLineTo(-cutX, 0);
+            mCutoutPath.rLineTo(0, -cutY);
+            mCutoutPath.rLineTo(cutX, 0);
+            mCutoutPath.rLineTo(0, cutY);
+            canvas.drawPath(mCutoutPath, mTransparentPaint);
+            // Adjust mScaledRoamingPath
+            Path adjustedRoamingPath = new Path(mScaledRoamingPath);
+            Matrix matrix = new Matrix();
+            // Flip the path horizontally to cancel canvas mirror
+            // as we don't want to flip the roaming icon in RTL
+            if (isRtl) {
+                matrix.set(flipHorizontally(adjustedRoamingPath));
+            }
+            matrix.postTranslate(rIconOffset, 0);
+            adjustedRoamingPath.transform(matrix);
+            canvas.drawPath(adjustedRoamingPath, mForegroundPaint);
+            // Attribution
+            mCutoutPath.reset();
+            mCutoutPath.setFillType(FillType.WINDING);
+            cutWidth = mCutoutWidthFraction;
+            cutHeight = mCutoutHeightFraction;
+            cutX = (cutWidth * width / VIEWPORT);
+            cutY = (cutHeight * height / VIEWPORT);
             mCutoutPath.moveTo(width, height);
             mCutoutPath.rLineTo(-cutX, 0);
             mCutoutPath.rLineTo(0, -cutY);
@@ -260,11 +303,43 @@ public class SignalDrawable extends DrawableWrapper {
             mCutoutPath.rLineTo(0, cutY);
             canvas.drawPath(mCutoutPath, mTransparentPaint);
             canvas.drawPath(mScaledAttributionPath, mForegroundPaint);
+        } else if (!newStatusBarIcons() && (isInState(STATE_CUT) || isInState(STATE_R))) {
+            boolean isRoaming = isInState(STATE_R);
+            float cutWidth = isRoaming ? mRCutoutWidthFraction : mCutoutWidthFraction;
+            float cutHeight = isRoaming ? mRCutoutHeightFraction : mCutoutHeightFraction;
+            float cutX = (cutWidth * width / VIEWPORT);
+            float cutY = (cutHeight * height / VIEWPORT);
+            mCutoutPath.moveTo(width, height);
+            mCutoutPath.rLineTo(-cutX, 0);
+            mCutoutPath.rLineTo(0, -cutY);
+            mCutoutPath.rLineTo(cutX, 0);
+            mCutoutPath.rLineTo(0, cutY);
+            canvas.drawPath(mCutoutPath, mTransparentPaint);
+            // Adjust mScaledRoamingPath
+            Path adjustedRoamingPath = new Path(mScaledRoamingPath);
+            // Flip the path horizontally to cancel canvas mirror
+            // as we don't want to flip the roaming icon in RTL
+            if (isRtl) {
+                Matrix matrix = flipHorizontally(adjustedRoamingPath);
+                adjustedRoamingPath.transform(matrix);
+            }
+            canvas.drawPath(isRoaming ? adjustedRoamingPath : mScaledAttributionPath,
+                    mForegroundPaint);
         }
         if (isRtl) {
             canvas.restore();
         }
         canvas.restore();
+    }
+
+    private Matrix flipHorizontally(Path path) {
+        RectF pathBounds = new RectF();
+        path.computeBounds(pathBounds, true);
+        float centerX = pathBounds.centerX();
+        float centerY = pathBounds.centerY();
+        Matrix matrix = new Matrix();
+        matrix.postScale(-1f, 1f, centerX, centerY);
+        return matrix;
     }
 
     private void drawDotAndPadding(float x, float y,
@@ -321,10 +396,13 @@ public class SignalDrawable extends DrawableWrapper {
         return (fullState & STATE_MASK) >> STATE_SHIFT;
     }
 
+    public static int getState(int level, int numLevels, boolean cutOut, boolean roaming) {
+        int state = cutOut ? (roaming ? STATE_CUT_AND_R : STATE_CUT) : (roaming ? STATE_R : 0);
+        return (state << STATE_SHIFT) | (numLevels << NUM_LEVEL_SHIFT) | level;
+    }
+
     public static int getState(int level, int numLevels, boolean cutOut) {
-        return ((cutOut ? STATE_CUT : 0) << STATE_SHIFT)
-                | (numLevels << NUM_LEVEL_SHIFT)
-                | level;
+        return getState(level, numLevels, cutOut, false);
     }
 
     @Override

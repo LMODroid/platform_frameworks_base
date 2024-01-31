@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.pipeline.mobile.data.repository.prod
 import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.statusbar.pipeline.ims.data.model.ImsStateModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.ResolvedNetworkType
@@ -27,6 +28,7 @@ import com.android.systemui.statusbar.pipeline.mobile.data.repository.MobileConn
 import com.android.systemui.statusbar.pipeline.shared.data.model.DataActivityModel
 import com.android.systemui.util.kotlin.Producer
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 fun BuildScope.MobileConnectionRepositoryKairosAdapter(
     kairosRepo: MobileConnectionRepositoryKairos
@@ -174,6 +176,7 @@ fun BuildScope.MobileConnectionRepositoryKairosAdapter(
                 }
             ),
         isInEcmMode = { kairosNetwork.transact { kairosRepo.isInEcmMode.sample() } },
+        imsState = MutableStateFlow(ImsStateModel()),
     )
 
 class MobileConnectionRepositoryKairosAdapter(
@@ -204,6 +207,7 @@ class MobileConnectionRepositoryKairosAdapter(
     override val isAllowedDuringAirplaneMode: StateFlow<Boolean>,
     override val hasPrioritizedNetworkCapabilities: StateFlow<Boolean>,
     private val isInEcmMode: Producer<Boolean>,
+    override val imsState: StateFlow<ImsStateModel>,
 ) : MobileConnectionRepository {
     override fun setDataEnabled(enabled: Boolean) {
         underlyingRepo.setDataEnabled(enabled)

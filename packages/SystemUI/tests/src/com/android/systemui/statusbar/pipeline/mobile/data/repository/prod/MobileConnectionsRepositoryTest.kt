@@ -490,6 +490,7 @@ abstract class MobileConnectionsRepositoryTest<T : MobileConnectionsRepository> 
                 wifiManager,
                 wifiLogBuffer,
                 wifiTableLogBuffer,
+                mock(),
             )
 
         carrierConfigRepository = kosmos.carrierConfigRepository
@@ -521,6 +522,7 @@ abstract class MobileConnectionsRepositoryTest<T : MobileConnectionsRepository> 
                 logFactory = logBufferFactory,
                 mobileRepoFactory = connectionFactory,
                 carrierMergedRepoFactory = carrierMergedFactory,
+                imsRepoFactory = mock(),
             )
 
         underTest = recreateRepo()

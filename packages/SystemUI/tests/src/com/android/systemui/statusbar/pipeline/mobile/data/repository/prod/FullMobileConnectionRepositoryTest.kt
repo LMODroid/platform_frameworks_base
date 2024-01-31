@@ -31,6 +31,7 @@ import com.android.systemui.flags.FakeFeatureFlagsClassic
 import com.android.systemui.flags.Flags.ROAMING_INDICATOR_VIA_DISPLAY_INFO
 import com.android.systemui.log.table.logcatTableLogBuffer
 import com.android.systemui.log.table.tableLogBufferFactory
+import com.android.systemui.statusbar.pipeline.ims.data.repository.ImsRepositoryImpl
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.SubscriptionModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.SystemUiCarrierConfig
@@ -84,6 +85,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
     private val mobileFactory = mock<MobileConnectionRepositoryImpl.Factory>()
     private val carrierMergedFactory = mock<CarrierMergedConnectionRepository.Factory>()
     private val connectivityManager = mock<ConnectivityManager>()
+    private val imsRepoFactory = mock<ImsRepositoryImpl.Factory>()
 
     private val subscriptionModel =
         MutableStateFlow(
@@ -109,7 +111,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
                 this.isAllowedDuringAirplaneMode.value = true
             }
 
-        whenever(mobileFactory.build(eq(SUB_ID), any(), any(), eq(DEFAULT_NAME_MODEL), eq(SEP)))
+        whenever(mobileFactory.build(eq(SUB_ID), any(), any(), eq(DEFAULT_NAME_MODEL), eq(SEP)), imsRepoFactory.build(eq(SUB_ID)))
             .thenReturn(mobileRepo)
         whenever(carrierMergedFactory.build(eq(SUB_ID), any())).thenReturn(carrierMergedRepo)
     }
@@ -128,7 +130,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
             assertThat(underTest.activeRepo.value).isEqualTo(carrierMergedRepo)
             assertThat(underTest.operatorAlphaShort.value).isEqualTo(carrierMergedOperatorName)
             verify(mobileFactory, never())
-                .build(SUB_ID, tableLogBuffer, subscriptionModel, DEFAULT_NAME_MODEL, SEP)
+                .build(SUB_ID, tableLogBuffer, subscriptionModel, DEFAULT_NAME_MODEL, SEP, imsRepoFactory.build(SUB_ID))
         }
 
     @Test
@@ -337,6 +339,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
                     kosmos.tableLogBufferFactory,
                     mobileFactory,
                     carrierMergedFactory,
+                    imsRepoFactory,
                 )
 
             // Create two connections for the same subId. Similar to if the connection appeared
@@ -372,6 +375,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
                     kosmos.tableLogBufferFactory,
                     mobileFactory,
                     carrierMergedFactory,
+                    imsRepoFactory,
                 )
 
             val connection1 =
@@ -582,6 +586,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
                 testScope.backgroundScope,
                 mobileFactory,
                 carrierMergedFactory,
+                imsRepoFactory,
             )
     }
 
@@ -606,8 +611,9 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
                 tableLogBuffer,
                 flags,
                 testScope.backgroundScope,
+                imsRepoFactory.build(SUB_ID),
             )
-        whenever(mobileFactory.build(eq(SUB_ID), any(), any(), eq(DEFAULT_NAME_MODEL), eq(SEP)))
+        whenever(mobileFactory.build(eq(SUB_ID), any(), any(), eq(DEFAULT_NAME_MODEL), eq(SEP)), imsRepoFactory.build(SUB_ID),)
             .thenReturn(realRepo)
 
         return realRepo
