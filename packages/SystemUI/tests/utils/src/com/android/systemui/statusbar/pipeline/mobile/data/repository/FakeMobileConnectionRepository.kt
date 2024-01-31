@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.pipeline.mobile.data.repository
 
 import android.telephony.TelephonyManager.UNKNOWN_CARRIER_ID
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.statusbar.pipeline.ims.data.model.ImsStateModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.ResolvedNetworkType
@@ -73,6 +74,8 @@ class FakeMobileConnectionRepository(
     override fun setDataEnabled(enabled: Boolean) {
         _dataEnabled.value = enabled
     }
+
+    override val imsState = MutableStateFlow(ImsStateModel())
 
     /**
      * Set [primaryLevel] and [cdmaLevel]. Convenient when you don't care about the connection type
