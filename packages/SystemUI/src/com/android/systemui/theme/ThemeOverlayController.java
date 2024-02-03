@@ -124,8 +124,6 @@ import javax.inject.Inject;
 @SysUISingleton
 public class ThemeOverlayController implements CoreStartable, Dumpable {
     protected static final String TAG = "ThemeOverlayController";
-    protected static final String OVERLAY_BERRY_BLACK_THEME =
-            "com.libremobileos.overlay.customization.blacktheme";
     private static final boolean DEBUG = true;
 
     private final ThemeOverlayApplier mThemeManager;
@@ -179,6 +177,8 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
     private boolean mDeferredThemeEvaluation;
     // Determines if we should ignore THEME_CUSTOMIZATION_OVERLAY_PACKAGES setting changes.
     private boolean mSkipSettingChange;
+
+    private String mBlackThemeOverlayPackage;
 
     private final ConfigurationListener mConfigurationListener =
             new ConfigurationListener() {
@@ -423,6 +423,8 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
         mIsMonochromaticEnabled = featureFlags.isEnabled(Flags.MONOCHROMATIC_THEME);
         mIsMonetEnabled = featureFlags.isEnabled(Flags.MONET);
         mIsFidelityEnabled = featureFlags.isEnabled(Flags.COLOR_FIDELITY);
+        mBlackThemeOverlayPackage = context.getString(
+                com.android.internal.R.string.config_black_theme_overlay_package);
         mConfigurationController = configurationController;
         mDeviceProvisionedController = deviceProvisionedController;
         mBroadcastDispatcher = broadcastDispatcher;
@@ -836,7 +838,7 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
                 mContext.getContentResolver(), LMOSettings.Secure.BERRY_BLACK_THEME,
                 0, currentUser) == 1) && isNightMode();
         if (categoryToPackage.containsKey(OVERLAY_CATEGORY_SYSTEM_PALETTE) && isBlackMode) {
-            OverlayIdentifier blackTheme = new OverlayIdentifier(OVERLAY_BERRY_BLACK_THEME);
+            OverlayIdentifier blackTheme = new OverlayIdentifier(mBlackThemeOverlayPackage);
             categoryToPackage.put(OVERLAY_CATEGORY_SYSTEM_PALETTE, blackTheme);
         }
 
