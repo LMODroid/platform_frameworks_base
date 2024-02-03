@@ -39,6 +39,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
 import android.content.om.FabricatedOverlay;
 import android.content.om.OverlayIdentifier;
 import android.content.om.OverlayInfo;
@@ -101,12 +102,14 @@ public class ThemeOverlayApplierTest extends SysuiTestCase {
     private ThemeOverlayApplier mManager;
     private boolean mGetOverlayInfoEnabled = true;
 
+    @Mock private Context mockedContext;
+
     @Before
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
         mManager = new ThemeOverlayApplier(mOverlayManager, MoreExecutors.directExecutor(),
                 LAUNCHER_PACKAGE, THEMEPICKER_PACKAGE, mDumpManager,
-                MoreExecutors.directExecutor()) {
+                MoreExecutors.directExecutor(), mockedContext) {
             @Override
             protected OverlayManagerTransaction.Builder getTransactionBuilder() {
                 return mTransactionBuilder;
