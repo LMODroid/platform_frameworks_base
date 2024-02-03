@@ -17,6 +17,7 @@ package com.android.systemui.theme;
 
 
 import android.annotation.AnyThread;
+import android.content.Context;
 import android.content.om.FabricatedOverlay;
 import android.content.om.OverlayIdentifier;
 import android.content.om.OverlayInfo;
@@ -66,9 +67,6 @@ public class ThemeOverlayApplier implements Dumpable {
     static final String SETTINGS_PACKAGE = "com.android.settings";
     @VisibleForTesting
     static final String SYSUI_PACKAGE = "com.android.systemui";
-
-    static final String OVERLAY_BLACK_THEME =
-            "com.libremobileos.overlay.customization.blacktheme";
 
     static final String OVERLAY_CATEGORY_DYNAMIC_COLOR =
             "android.theme.customization.dynamic_color";
@@ -151,18 +149,23 @@ public class ThemeOverlayApplier implements Dumpable {
     private final String mLauncherPackage;
     private final String mThemePickerPackage;
 
+    private final String mBlackThemeOverlayPackage;
+
     @Inject
     public ThemeOverlayApplier(OverlayManager overlayManager,
             @Background Executor bgExecutor,
             @Named(ThemeModule.LAUNCHER_PACKAGE) String launcherPackage,
             @Named(ThemeModule.THEME_PICKER_PACKAGE) String themePickerPackage,
             DumpManager dumpManager,
-            @Main Executor mainExecutor) {
+            @Main Executor mainExecutor,
+            Context context) {
         mOverlayManager = overlayManager;
         mBgExecutor = bgExecutor;
         mMainExecutor = mainExecutor;
         mLauncherPackage = launcherPackage;
         mThemePickerPackage = themePickerPackage;
+        mBlackThemeOverlayPackage = context.getString(
+                com.android.internal.R.string.config_black_theme_overlay_package);
         mTargetPackageToCategories.put(ANDROID_PACKAGE, Sets.newHashSet(
                 OVERLAY_CATEGORY_SYSTEM_PALETTE, OVERLAY_CATEGORY_ACCENT_COLOR,
                 OVERLAY_CATEGORY_DYNAMIC_COLOR,
@@ -274,7 +277,7 @@ public class ThemeOverlayApplier implements Dumpable {
     ) {
         OverlayManagerTransaction.Builder transaction = getTransactionBuilder();
         try {
-            transaction.setEnabled(getOverlayID(OVERLAY_BLACK_THEME), isBlackMode, currentUser);
+            transaction.setEnabled(getOverlayID(mBlackThemeOverlayPackage), isBlackMode, currentUser);
             transaction.setEnabled(getOverlayID("android:neutral"), !isBlackMode, currentUser);
             mOverlayManager.commit(transaction.build());
             if (onComplete != null) {
