@@ -71,4 +71,7 @@
 
     <!-- Whether to force notifications to take up the full width of the screen in landscape -->
     <bool name="config_fullWidthNotificationsInLandscape">false</bool>
+
+    <!-- Doze: should pulse on pick up? -->
+    <bool name="doze_pulse_on_pick_up">true</bool>
 </resources>
