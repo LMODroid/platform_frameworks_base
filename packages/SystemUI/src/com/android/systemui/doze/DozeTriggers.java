@@ -117,6 +117,7 @@ public class DozeTriggers implements DozeMachine.Part {
     private boolean mWantTouchScreenSensors;
     private boolean mWantSensors;
     private boolean mInAod;
+    private boolean mPulseOnPickup;
 
     private final UserTracker.Callback mUserChangedCallback =
             new UserTracker.Callback() {
@@ -232,6 +233,7 @@ public class DozeTriggers implements DozeMachine.Part {
 
         mPulseLightOnFaceDown = mContext.getResources()
                 .getBoolean(R.bool.config_showEdgeLightOnlyWhenFaceDown);
+        mPulseOnPickup = mContext.getResources().getBoolean(R.bool.doze_pulse_on_pick_up);
     }
 
     @Override
@@ -341,7 +343,12 @@ public class DozeTriggers implements DozeMachine.Part {
                         mDozeLog.traceSensorEventDropped(pulseReason, "keyguard occluded");
                         return;
                     }
-                    gentleWakeUp(pulseReason);
+                    if (mPulseOnPickup) {
+                        requestPulse(pulseReason, sensorPerformedProxCheck /* alreadyPerformedProxCheck */,
+                                null /* onPulseSuppressedListener */);
+                    } else {
+                        gentleWakeUp(pulseReason);
+                    }
                 } else if (isUdfpsLongPress) {
                     if (canPulse(mMachine.getState(), true)) {
                         mDozeLog.d("updfsLongPress - setting aodInterruptRunnable to run when "
