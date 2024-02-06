@@ -19,12 +19,21 @@ package com.android.systemui;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Process;
+import android.util.Log;
 
 public class SystemUISecondaryUserService extends Service {
+
+    private static final String TAG = "SysUISecondaryService";
 
     @Override
     public void onCreate() {
         super.onCreate();
+        if (Process.myUserHandle().isSystem()) {
+            Log.w(TAG, "SecondaryServices started for System User. Stopping it.");
+            stopSelf();
+            return;
+        }
         ((SystemUIApplication) getApplication()).startSecondaryUserServicesIfNeeded();
     }
 

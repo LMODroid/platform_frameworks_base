@@ -109,7 +109,7 @@ public class SystemUIApplication extends Application implements
         View.setTracedRequestLayoutClassClass(
                 SystemProperties.get("persist.debug.trace_request_layout_class", null));
 
-        if (Process.myUserHandle().equals(UserHandle.SYSTEM)) {
+        if (Process.myUserHandle().isSystem()) {
             IntentFilter bootCompletedFilter = new
                     IntentFilter(Intent.ACTION_LOCKED_BOOT_COMPLETED);
             bootCompletedFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
@@ -176,7 +176,11 @@ public class SystemUIApplication extends Application implements
      * <p>This method must only be called from the main thread.</p>
      */
 
-    public void startServicesIfNeeded() {
+    public void startSystemUserServicesIfNeeded() {
+        if (!Process.myUserHandle().isSystem()) {
+            Log.wtf(TAG, "Tried starting SystemUser services on non-SystemUser");
+            return;  // Per-user startables are handled in #startSystemUserServicesIfNeeded.
+        }
         final String vendorComponent = mInitializer.getVendorComponent(getResources());
 
         // Sort the startables so that we get a deterministic ordering.
@@ -196,6 +200,9 @@ public class SystemUIApplication extends Application implements
      * <p>This method must only be called from the main thread.</p>
      */
     void startSecondaryUserServicesIfNeeded() {
+        if (Process.myUserHandle().isSystem()) {
+            return;  // Per-user startables are handled in #startSystemUserServicesIfNeeded.
+        }
         // Sort the startables so that we get a deterministic ordering.
         Map<Class<?>, Provider<CoreStartable>> sortedStartables = new TreeMap<>(
                 Comparator.comparing(Class::getName));

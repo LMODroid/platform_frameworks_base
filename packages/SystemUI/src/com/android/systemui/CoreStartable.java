@@ -35,7 +35,7 @@ import java.io.PrintWriter;
  *  abstract fun bind(impl: FoobarStartable): CoreStartable
  *  </pre>
  *
- * @see SystemUIApplication#startServicesIfNeeded()
+ * @see SystemUIApplication#startSystemUserServicesIfNeeded()
  */
 public interface CoreStartable extends Dumpable {
 

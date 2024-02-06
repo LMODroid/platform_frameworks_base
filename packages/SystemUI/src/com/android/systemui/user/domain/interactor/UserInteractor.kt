@@ -654,7 +654,7 @@ constructor(
 
         // Connect to the new secondary user's service (purely to ensure that a persistent
         // SystemUI application is created for that user)
-        if (userId != Process.myUserHandle().identifier) {
+        if (userId != Process.myUserHandle().identifier && !Process.myUserHandle().isSystem()) {
             applicationContext.startServiceAsUser(
                 intent,
                 UserHandle.of(userId),
