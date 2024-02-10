@@ -4909,7 +4909,7 @@ public class ComputerEngine implements Computer {
             final PackageStateInternal ps = mSettings.getPackage(providerInfo.packageName);
             final ComponentName component =
                     new ComponentName(providerInfo.packageName, providerInfo.name);
-            boolean shouldRemove = mInjector.getLocalService(ActivityManagerInternal.class)
+            boolean shouldRemove = !mInjector.getLocalService(ActivityManagerInternal.class)
                 .queryProviderAllowed(new ComponentName(providerInfo.packageName, providerInfo.name), null, Binder.getCallingUid(),
                 Binder.getCallingPid(), null, providerInfo.applicationInfo, callingUserId);
             if (!shouldRemove && !shouldFilterApplication(ps, Binder.getCallingUid(), component,
