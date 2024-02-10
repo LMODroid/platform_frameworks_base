@@ -81,6 +81,8 @@ class FakeMobileIconsInteractor(
 
     override val isForceHidden = MutableStateFlow(false)
 
+    override val isRoamingForceHidden = MutableStateFlow(false)
+    
     override val isDeviceInEmergencyCallsOnlyMode = MutableStateFlow(false)
 
     /** Always returns a new fake interactor */
