@@ -231,7 +231,6 @@ public class UserManagerServiceShellCommand extends ShellCommand {
                             i,
                             user.id,
                             user.name,
-                            user.userType,
                             user.userType.replace("android.os.usertype.", ""),
                             UserInfo.flagsToString(user.flags),
                             hasParent ? " (parentId=" + user.profileGroupId + ")" : "",
