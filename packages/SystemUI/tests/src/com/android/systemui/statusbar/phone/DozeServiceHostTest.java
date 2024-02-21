@@ -45,6 +45,7 @@ import com.android.systemui.doze.DozeLog;
 import com.android.systemui.flags.FakeFeatureFlagsClassic;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
 import com.android.systemui.keyguard.domain.interactor.DozeInteractor;
+import com.android.systemui.libremobileos.pulselight.PulseLightNotifManager;
 import com.android.systemui.shade.NotificationShadeWindowViewController;
 import com.android.systemui.shade.ShadeViewController;
 import com.android.systemui.statusbar.NotificationShadeWindowController;
@@ -98,6 +99,7 @@ public class DozeServiceHostTest extends SysuiTestCase {
     @Mock private AuthController mAuthController;
     @Mock private DozeHost.Callback mCallback;
     @Mock private DozeInteractor mDozeInteractor;
+    @Mock private PulseLightNotifManager mPulseLightNotifManager;
 
     private final FakeFeatureFlagsClassic mFeatureFlags = new FakeFeatureFlagsClassic();
 
@@ -110,7 +112,7 @@ public class DozeServiceHostTest extends SysuiTestCase {
                 () -> mBiometricUnlockController, () -> mAssistManager, mDozeScrimController,
                 mKeyguardUpdateMonitor, mPulseExpansionHandler, mNotificationShadeWindowController,
                 mNotificationWakeUpCoordinator, mAuthController, mNotificationIconAreaController,
-                mDozeInteractor);
+                mDozeInteractor, mPulseLightNotifManager, mContext);
 
         mDozeServiceHost.initialize(
                 mCentralSurfaces,
