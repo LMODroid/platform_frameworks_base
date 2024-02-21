@@ -127,7 +127,8 @@ public class AlertingNotificationManagerTest extends SysuiTestCase {
                 n,
                 new UserHandle(ActivityManager.getCurrentUser()),
                 null /* overrideGroupKey */,
-                0 /* postTime */);
+                0 /* postTime */,
+                false /* isContentSecure */);
     }
 
     protected StatusBarNotification createSbn(int id, Notification.Builder n) {
