@@ -24,6 +24,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.demomode.DemoMode
 import com.android.systemui.demomode.DemoModeController
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.statusbar.pipeline.ims.data.repository.CommonImsRepositoryImpl
 import com.android.systemui.statusbar.pipeline.shared.data.repository.FakeConnectivityRepository
 import com.android.systemui.statusbar.pipeline.wifi.data.repository.demo.DemoModeWifiDataSource
 import com.android.systemui.statusbar.pipeline.wifi.data.repository.demo.DemoWifiRepository
@@ -32,6 +33,7 @@ import com.android.systemui.statusbar.pipeline.wifi.data.repository.prod.WifiRep
 import com.android.systemui.statusbar.pipeline.wifi.shared.WifiInputLogger
 import com.android.systemui.util.concurrency.FakeExecutor
 import com.android.systemui.util.mockito.kotlinArgumentCaptor
+import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.whenever
 import com.android.systemui.util.time.FakeSystemClock
 import com.google.common.truth.Truth.assertThat
@@ -71,6 +73,8 @@ class WifiRepositorySwitcherTest : SysuiTestCase() {
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
+    private val commonImsRepo = mock<CommonImsRepositoryImpl>()
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -89,6 +93,7 @@ class WifiRepositorySwitcherTest : SysuiTestCase() {
                 testDispatcher,
                 testScope.backgroundScope,
                 wifiManager,
+                commonImsRepo,
             )
 
         whenever(demoModeWifiDataSource.wifiEvents).thenReturn(demoModelFlow)

@@ -84,6 +84,7 @@ class WifiRepositoryViaTrackerLibTest : SysuiTestCase() {
             wifiManager,
             logger,
             tableLogger,
+            mock(),
         )
     }
 

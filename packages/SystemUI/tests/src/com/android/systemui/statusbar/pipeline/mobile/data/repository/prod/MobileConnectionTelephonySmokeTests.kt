@@ -35,6 +35,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.flags.FakeFeatureFlagsClassic
 import com.android.systemui.flags.Flags
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.statusbar.pipeline.ims.data.repository.ImsRepositoryImpl
 import com.android.systemui.statusbar.pipeline.mobile.data.MobileInputLogger
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
@@ -107,6 +108,7 @@ class MobileConnectionTelephonySmokeTests : SysuiTestCase() {
     @Mock private lateinit var logger: MobileInputLogger
     @Mock private lateinit var tableLogger: TableLogBuffer
     @Mock private lateinit var subscriptionModel: StateFlow<SubscriptionModel?>
+    private val imsRepo = mock<ImsRepositoryImpl>()
 
     private val mobileMappings = FakeMobileMappingsProxy()
     private val systemUiCarrierConfig =
@@ -146,6 +148,7 @@ class MobileConnectionTelephonySmokeTests : SysuiTestCase() {
                 tableLogger,
                 flags,
                 testScope.backgroundScope,
+                imsRepo,
             )
     }
 
