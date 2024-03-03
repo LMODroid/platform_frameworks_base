@@ -156,7 +156,9 @@ public class NavigationBarInflaterView extends FrameLayout {
                     mIsHintEnabled = Settings.System.getInt(mContext.getContentResolver(),
                             LMOSettings.System.NAVIGATION_BAR_HINT, 0) != 0;
                     updateHint();
-                    onLikelyDefaultLayoutChange();
+                    mContext.getMainExecutor().execute(() -> {
+                        onLikelyDefaultLayoutChange();
+                    });
                 }
             }
         };
