@@ -93,9 +93,6 @@ public class NavigationBarInflaterView extends FrameLayout {
     private static final String ABSOLUTE_SUFFIX = "A";
     private static final String ABSOLUTE_VERTICAL_CENTERED_SUFFIX = "C";
 
-    private static final String OVERLAY_NAVIGATION_HIDE_HINT =
-            "com.libremobileos.overlay.customization.navbar.nohint";
-
     private static class Listener implements NavigationModeController.ModeChangedListener {
         private final WeakReference<NavigationBarInflaterView> mSelf;
 
@@ -135,6 +132,7 @@ public class NavigationBarInflaterView extends FrameLayout {
 
     private boolean mInverseLayout;
     private boolean mIsHintEnabled;
+    private String mNavigationNoHintOverlayPackage;
 
     private final ContentObserver mContentObserver;
 
@@ -144,6 +142,8 @@ public class NavigationBarInflaterView extends FrameLayout {
         mOverviewProxyService = Dependency.get(OverviewProxyService.class);
         mListener = new Listener(this);
         mNavBarMode = Dependency.get(NavigationModeController.class).addListener(mListener);
+        mNavigationNoHintOverlayPackage = context.getString(
+                com.android.internal.R.string.config_navigation_no_hint_overlay_package);
         mContentObserver = new ContentObserver(null) {
             @Override
             public void onChange(boolean selfChange, @Nullable Uri uri) {
@@ -293,15 +293,15 @@ public class NavigationBarInflaterView extends FrameLayout {
         final boolean state = mNavBarMode == NAV_BAR_MODE_GESTURAL && !mIsHintEnabled;
         final int userId = ActivityManager.getCurrentUser();
         try {
-            iom.setEnabled(OVERLAY_NAVIGATION_HIDE_HINT, state, userId);
+            iom.setEnabled(mNavigationNoHintOverlayPackage, state, userId);
             if (state) {
                 // As overlays are also used to apply navigation mode, it is needed to set
                 // our customization overlay to highest priority to ensure it is applied.
-                iom.setHighestPriority(OVERLAY_NAVIGATION_HIDE_HINT, userId);
+                iom.setHighestPriority(mNavigationNoHintOverlayPackage, userId);
             }
         } catch (IllegalArgumentException | RemoteException e) {
             Log.e(TAG, "Failed to " + (state ? "enable" : "disable")
-                    + " overlay " + OVERLAY_NAVIGATION_HIDE_HINT + " for user " + userId);
+                    + " overlay " + mNavigationNoHintOverlayPackage + " for user " + userId);
         }
     }
 
