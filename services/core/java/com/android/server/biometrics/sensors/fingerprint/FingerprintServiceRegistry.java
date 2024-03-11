@@ -20,6 +20,7 @@ import static android.hardware.biometrics.BiometricAuthenticator.TYPE_FINGERPRIN
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.Context;
 import android.hardware.biometrics.BiometricManager;
 import android.hardware.biometrics.IBiometricService;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
@@ -45,8 +46,8 @@ public class FingerprintServiceRegistry extends BiometricServiceRegistry<Service
 
     /** Creates a new registry tied to the given service. */
     public FingerprintServiceRegistry(@NonNull IFingerprintService service,
-            @Nullable Supplier<IBiometricService> biometricSupplier) {
-        super(biometricSupplier);
+            @Nullable Supplier<IBiometricService> biometricSupplier, Context context) {
+        super(biometricSupplier, context);
         mService = service;
     }
 
