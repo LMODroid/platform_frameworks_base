@@ -769,7 +769,7 @@ public class FaceService extends SystemService {
         mLockPatternUtils = new LockPatternUtils(context);
         mBiometricStateCallback = new BiometricStateCallback<>(UserManager.get(context));
         mAuthenticationStateListeners = new AuthenticationStateListeners();
-        mRegistry = new FaceServiceRegistry(mServiceWrapper, biometricServiceSupplier);
+        mRegistry = new FaceServiceRegistry(mServiceWrapper, biometricServiceSupplier, context);
         mRegistry.addAllRegisteredCallback(new IFaceAuthenticatorsRegisteredCallback.Stub() {
             @Override
             public void onAllAuthenticatorsRegistered(List<FaceSensorPropertiesInternal> sensors) {
