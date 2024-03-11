@@ -20,6 +20,7 @@ import static android.hardware.biometrics.BiometricAuthenticator.TYPE_FACE;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.Context;
 import android.hardware.biometrics.BiometricManager;
 import android.hardware.biometrics.IBiometricService;
 import android.hardware.face.FaceSensorPropertiesInternal;
@@ -45,8 +46,8 @@ public class FaceServiceRegistry extends BiometricServiceRegistry<ServiceProvide
 
     /** Creates a new registry tied to the given service. */
     public FaceServiceRegistry(@NonNull IFaceService service,
-            @Nullable Supplier<IBiometricService> biometricSupplier) {
-        super(biometricSupplier);
+            @Nullable Supplier<IBiometricService> biometricSupplier, Context context) {
+        super(biometricSupplier, context);
         mService = service;
     }
 

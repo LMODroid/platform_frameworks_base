@@ -1068,7 +1068,8 @@ public class FingerprintService extends SystemService {
                                         resetLockoutRequiresHardwareAuthToken);
 
         mHandler = new Handler(Looper.getMainLooper());
-        mRegistry = new FingerprintServiceRegistry(mServiceWrapper, biometricServiceSupplier);
+        mRegistry =
+            new FingerprintServiceRegistry(mServiceWrapper, biometricServiceSupplier, context);
         mRegistry.addAllRegisteredCallback(new IFingerprintAuthenticatorsRegisteredCallback.Stub() {
             @Override
             public void onAllAuthenticatorsRegistered(
