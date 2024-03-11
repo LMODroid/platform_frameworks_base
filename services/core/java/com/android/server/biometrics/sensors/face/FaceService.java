@@ -708,7 +708,7 @@ public class FaceService extends SystemService {
         mBiometricStateCallback = new BiometricStateCallback<>(UserManager.get(context));
         mRegistry = new FaceServiceRegistry(mServiceWrapper,
                 () -> IBiometricService.Stub.asInterface(
-                        ServiceManager.getService(Context.BIOMETRIC_SERVICE)));
+                        ServiceManager.getService(Context.BIOMETRIC_SERVICE)), context);
         mRegistry.addAllRegisteredCallback(new IFaceAuthenticatorsRegisteredCallback.Stub() {
             @Override
             public void onAllAuthenticatorsRegistered(List<FaceSensorPropertiesInternal> sensors) {

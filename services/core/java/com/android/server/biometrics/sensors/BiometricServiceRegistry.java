@@ -19,6 +19,7 @@ package com.android.server.biometrics.sensors;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.Context;
 import android.hardware.biometrics.IBiometricAuthenticator;
 import android.hardware.biometrics.IBiometricService;
 import android.hardware.biometrics.SensorPropertiesInternal;
@@ -32,6 +33,8 @@ import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.ServiceThread;
+import com.android.server.biometrics.sensors.face.FaceServiceRegistry;
+import com.android.server.libremobileos.FaceUnlockHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,8 +66,14 @@ public abstract class BiometricServiceRegistry<T extends BiometricServiceProvide
     @NonNull
     private final RemoteCallbackList<C> mRegisteredCallbacks = new RemoteCallbackList<>();
 
-    public BiometricServiceRegistry(@NonNull Supplier<IBiometricService> biometricSupplier) {
+    @NonNull
+    private final FaceUnlockHelper mFaceUnlockHelper;
+    private volatile boolean mFirstTime = true;
+
+    public BiometricServiceRegistry(@NonNull Supplier<IBiometricService> biometricSupplier,
+            Context context) {
         mBiometricServiceSupplier = biometricSupplier;
+        mFaceUnlockHelper = new FaceUnlockHelper(context);
     }
 
     /**
@@ -132,9 +141,33 @@ public abstract class BiometricServiceRegistry<T extends BiometricServiceProvide
 
     private synchronized void finishRegistration(
             @NonNull List<T> providers, @NonNull List<P> allProps) {
-        mServiceProviders = Collections.unmodifiableList(providers);
-        mAllProps = Collections.unmodifiableList(allProps);
-        broadcastAllAuthenticatorsRegistered();
+        // AuthService registers the authenticators only once and
+        // then onAllAuthenticatorsRegistered() callbacks are invoked.
+        // The callbacks are removed as soon as it invoked.
+        // Our LMO face unlock authenticator isn't being registered via AuthService.
+        // When we register it, the onAllAuthenticatorsRegistered() callbacks aren't available
+        // at that time so our face unlock won't be initialized properly
+        // and end up with bugs like "Face unlock isn't working after reboot".
+        // As a workaround, we don't invoke callbacks if it's first time (from AuthService).
+        // Instead we register our face unlock here on first time to make sure
+        // callbacks are being called only after our face authenticator registration.
+        // If properties aren't empty, it's from hardware face sensor.
+        // so allow to invoke callbacks regardless of the first time.
+        if (this instanceof FaceServiceRegistry) {
+            if (!allProps.isEmpty() || !mFirstTime) {
+                mServiceProviders = Collections.unmodifiableList(providers);
+                mAllProps = Collections.unmodifiableList(allProps);
+                broadcastAllAuthenticatorsRegistered();
+            } else {
+                mFirstTime = false;
+                mFaceUnlockHelper.registerLMOFaceAuthenticator();
+            }
+        } else {
+            // Allow as like before for authenticators other than face.
+            mServiceProviders = Collections.unmodifiableList(providers);
+            mAllProps = Collections.unmodifiableList(allProps);
+            broadcastAllAuthenticatorsRegistered();
+        }
     }
 
     /**
