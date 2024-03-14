@@ -730,8 +730,8 @@ static jobject KeyedVectorToHashMap (JNIEnv *env, KeyedVector<String8, String8> 
     jclass clazz = gFields.hashmapClassId;
     jobject hashMap = env->NewObject(clazz, gFields.hashmap.init);
     for (size_t i = 0; i < map.size(); ++i) {
-        jstring jkey = env->NewStringUTF(map.keyAt(i).string());
-        jstring jvalue = env->NewStringUTF(map.valueAt(i).string());
+        jstring jkey = env->NewStringUTF(map.keyAt(i).c_str());
+        jstring jvalue = env->NewStringUTF(map.valueAt(i).c_str());
         env->CallObjectMethod(hashMap, gFields.hashmap.put, jkey, jvalue);
         env->DeleteLocalRef(jkey);
         env->DeleteLocalRef(jvalue);
@@ -1195,7 +1195,7 @@ static jobject android_media_MediaDrm_getKeyRequest(
         jbyteArray jrequest = VectorToJByteArray(env, request);
         env->SetObjectField(keyObj, gFields.keyRequest.data, jrequest);
 
-        jstring jdefaultUrl = env->NewStringUTF(defaultUrl.string());
+        jstring jdefaultUrl = env->NewStringUTF(defaultUrl.c_str());
         env->SetObjectField(keyObj, gFields.keyRequest.defaultUrl, jdefaultUrl);
 
         switch (keyRequestType) {
@@ -1358,7 +1358,7 @@ static jobject android_media_MediaDrm_getProvisionRequestNative(
         jbyteArray jrequest = VectorToJByteArray(env, request);
         env->SetObjectField(provisionObj, gFields.provisionRequest.data, jrequest);
 
-        jstring jdefaultUrl = env->NewStringUTF(defaultUrl.string());
+        jstring jdefaultUrl = env->NewStringUTF(defaultUrl.c_str());
         env->SetObjectField(provisionObj, gFields.provisionRequest.defaultUrl, jdefaultUrl);
     }
 
@@ -1712,7 +1712,7 @@ static jstring android_media_MediaDrm_getPropertyString(
         return NULL;
     }
 
-    return env->NewStringUTF(value.string());
+    return env->NewStringUTF(value.c_str());
 }
 
 static jbyteArray android_media_MediaDrm_getPropertyByteArray(

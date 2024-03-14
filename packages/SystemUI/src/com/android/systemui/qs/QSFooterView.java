@@ -46,7 +46,7 @@ import androidx.annotation.VisibleForTesting;
 
 import com.android.settingslib.development.DevelopmentSettingsEnabler;
 import com.android.settingslib.net.DataUsageController;
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
 import com.libremobileos.providers.LMOSettings;
 
