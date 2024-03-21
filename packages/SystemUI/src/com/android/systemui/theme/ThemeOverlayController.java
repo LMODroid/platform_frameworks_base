@@ -386,7 +386,10 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
             boolean newProfile = Intent.ACTION_PROFILE_ADDED.equals(intent.getAction());
             boolean isParallelSpace =
                     com.libremobileos.content.Intent.ACTION_PARALLEL_SPACE_CHANGED.equals(intent.getAction());
-            if (newProfile || isParallelSpace) {
+            if (isParallelSpace) {
+                if (DEBUG) Log.d(TAG, "Updating overlays for user switch / profile added.");
+                reevaluateSystemTheme(true /* forceReload */);
+            } else if (newProfile) {
                 UserHandle newUserHandle = intent.getParcelableExtra(Intent.EXTRA_USER,
                         android.os.UserHandle.class);
                 boolean isManagedProfile =
