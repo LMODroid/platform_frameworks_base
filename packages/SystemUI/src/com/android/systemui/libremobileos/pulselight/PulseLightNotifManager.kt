@@ -84,7 +84,7 @@ class PulseLightNotifManager @Inject constructor(
         val pulseAmbientLightRepeatCount =
                 Settings.Secure.getUriFor(PULSE_AMBIENT_LIGHT_REPEAT_COUNT)
         val contentObserver = object: ContentObserver(null) {
-            override fun onChange(selfChange: Boolean, uri: Uri) {
+            override fun onChange(selfChange: Boolean, uri: Uri?) {
                 when (uri) {
                     pulseAmbientLight -> {
                         enabled = getSettingsInt(PULSE_AMBIENT_LIGHT, 0) == 1
@@ -97,6 +97,7 @@ class PulseLightNotifManager @Inject constructor(
                         // so to get actual lights animation count, repeat + 1.
                         lightCount = 1 + getSettingsInt(PULSE_AMBIENT_LIGHT_REPEAT_COUNT, 0)
                     }
+                    else -> { /* Nothing */}
                 }
             }
         }
@@ -122,9 +123,10 @@ class PulseLightNotifManager @Inject constructor(
         isFaceDown = faceDown
         notifListener?.onFaceDownChanged(faceDown)
         // Stop pulsing on lifting the device
-        if (!faceDown && pulseStopRunnable != null) {
-            handler.removeCallbacks(pulseStopRunnable)
-            handler.post(pulseStopRunnable)
+        val stopRunnable = pulseStopRunnable
+        if (!faceDown && stopRunnable != null) {
+            handler.removeCallbacks(stopRunnable)
+            handler.post(stopRunnable)
         }
     }
 
@@ -143,8 +145,9 @@ class PulseLightNotifManager @Inject constructor(
             entry.setPulseLightState(false)
             notifListener?.onNotification(entry, false)
             pulseStopRunnable = null
+        }.also {
+            handler.postDelayed(it, pulsingTime)
         }
-        handler.postDelayed(pulseStopRunnable, pulsingTime)
     }
 
     private fun canPulse(entry: NotificationEntry): Boolean {
