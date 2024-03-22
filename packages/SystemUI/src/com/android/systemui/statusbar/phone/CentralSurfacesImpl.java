@@ -1468,7 +1468,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         // might still be running and the panel background will remain transparent until it's
         // completed (~0.5s). To prevent this, cancel the unlock animation as soon as we start
         // expanding.
-        if (mLastExpansionFraction == 0f && fraction > 0f && !isKeyguardShowing()
+        if (mLastExpansionFraction == 0f && fraction > 0f && !mKeyguardStateController.isShowing()
                 && mKeyguardViewMediator.isAnimatingBetweenKeyguardAndSurfaceBehind()) {
             Log.i(TAG, "cancelling kg exit anim, panel expanding fraction=" + fraction
                     + " mLastExpansionFraction=" + mLastExpansionFraction);
