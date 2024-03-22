@@ -28,10 +28,11 @@ import com.android.keyguard.FaceIconView.Companion.STATE_FACE_SUCCESS
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.keyguard.KeyguardUpdateMonitorCallback
 import com.android.settingslib.Utils
-import com.android.systemui.R
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.plugins.statusbar.StatusBarStateController
+import com.android.systemui.keyguard.domain.interactor.KeyguardFaceAuthInteractor
+import com.android.systemui.res.R
 import com.android.systemui.statusbar.StatusBarState
 import com.android.systemui.statusbar.phone.KeyguardBypassController
 import com.android.systemui.statusbar.policy.ConfigurationController
@@ -50,6 +51,7 @@ class FaceIconViewController @Inject constructor(
     private val configurationController: ConfigurationController,
     private val keyguardBypassController: KeyguardBypassController,
     private val keyguardStateController: KeyguardStateController,
+    private val keyguardFaceAuthInteractor: KeyguardFaceAuthInteractor,
     @Main private val resources: Resources,
 ) : ViewController<FaceIconView?>(view) {
 
@@ -104,8 +106,8 @@ class FaceIconViewController @Inject constructor(
     private fun updateIconVisibility(): Boolean {
         val faceIconView = mView ?: return false
         val isKeyguard = keyguardStateController.isShowing()
-        val faceAuthAvailable = keyguardStateController.isFaceAuthEnabled()
-                && (faceDetectionRunning || keyguardUpdateMonitor.getIsFaceAuthenticated())
+        val faceAuthAvailable = keyguardFaceAuthInteractor.isFaceAuthEnabledAndEnrolled()
+                && (faceDetectionRunning || keyguardFaceAuthInteractor.isAuthenticated())
         // Make sure it only visible in lockscreen with face auth available.
         val invisible = dozing || !faceAuthAvailable || !isKeyguard
         return faceIconView.updateVisibility(!invisible)
@@ -126,14 +128,14 @@ class FaceIconViewController @Inject constructor(
     }
 
     private val state: Int
-        get() = if (keyguardUpdateMonitor.getIsFaceAuthenticated()
+        get() = if (keyguardFaceAuthInteractor.isAuthenticated()
                     && (keyguardStateController.canDismissLockScreen()
                     || !keyguardStateController.isShowing()
                     || keyguardStateController.isKeyguardGoingAway()
                     || keyguardStateController.isKeyguardFadingAway()) && !simLocked
         ) {
             STATE_FACE_SUCCESS
-        } else if (keyguardUpdateMonitor.isFaceDetectionRunning()) {
+        } else if (keyguardFaceAuthInteractor.isRunning()) {
             STATE_FACE_SCANNING
         } else {
             STATE_FACE_FAILED

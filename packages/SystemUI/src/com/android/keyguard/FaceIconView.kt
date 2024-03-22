@@ -30,7 +30,7 @@ import android.widget.FrameLayout
 import androidx.core.view.isVisible
 
 import com.android.app.animation.Interpolators
-import com.android.systemui.R;
+import com.android.systemui.res.R
 import com.android.systemui.statusbar.KeyguardAffordanceView
 
 import com.airbnb.lottie.LottieAnimationView
@@ -41,7 +41,7 @@ import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 
 class FaceIconView(
-    context: Context?, attrs: AttributeSet?
+    context: Context, attrs: AttributeSet?
 ) : FrameLayout(context, attrs) {
 
     private var faceIcon: FaceIcon? = null
