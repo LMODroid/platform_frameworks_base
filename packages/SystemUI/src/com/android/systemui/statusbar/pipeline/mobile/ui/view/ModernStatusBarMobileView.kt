@@ -48,7 +48,9 @@ class ModernStatusBarMobileView(
     override fun initView(slot: String, bindingCreator: () -> ModernStatusBarViewBinding) {
         super.initView(slot, bindingCreator)
         // Resize HD icon to make fit into the mobile view
-        val signalSize = context.resources.getDimensionPixelSize(R.dimen.signal_icon_size)
+        val signalSize = context.resources.getDimensionPixelSize(
+                com.android.settingslib.R.dimen.signal_icon_size
+        )
         val viewportSize = context.resources.getDimensionPixelSize(
                 R.dimen.signal_icon_viewport_size
         )
