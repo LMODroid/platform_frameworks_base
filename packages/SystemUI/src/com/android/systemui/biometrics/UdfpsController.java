@@ -35,7 +35,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.hardware.biometrics.BiometricFingerprintConstants;
-import android.hardware.biometrics.BiometricOverlayConstants;
 import android.hardware.biometrics.SensorProperties;
 import android.hardware.display.DisplayManager;
 import android.hardware.fingerprint.FingerprintManager;
@@ -819,8 +818,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         final int requestReason = overlay.getRequestReason();
 
         if (mUdfpsAnimation != null) {
-            mUdfpsAnimation.setIsKeyguard(requestReason ==
-                    BiometricOverlayConstants.REASON_AUTH_KEYGUARD);
+            mUdfpsAnimation.setIsKeyguard(requestReason == REASON_AUTH_KEYGUARD);
         }
 
         if (requestReason == REASON_AUTH_KEYGUARD
