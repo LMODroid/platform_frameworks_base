@@ -3383,7 +3383,16 @@ static const JNINativeMethod gMethods[] =
                                 android_media_AudioSystem_clearPreferredMixerAttributes),
          MAKE_AUDIO_SYSTEM_METHOD(supportsBluetoothVariableLatency),
          MAKE_AUDIO_SYSTEM_METHOD(setBluetoothVariableLatencyEnabled),
-         MAKE_AUDIO_SYSTEM_METHOD(isBluetoothVariableLatencyEnabled)};
+         MAKE_AUDIO_SYSTEM_METHOD(isBluetoothVariableLatencyEnabled),
+         MAKE_JNI_NATIVE_METHOD("setAppVolume",
+                                "(Ljava/lang/String;F)I",
+                                android_media_AudioSystem_setAppVolume),
+         MAKE_JNI_NATIVE_METHOD("setAppMute",
+                                "(Ljava/lang/String;Z)I",
+                                android_media_AudioSystem_setAppMute),
+         MAKE_JNI_NATIVE_METHOD("listAppVolumes",
+                                "(Ljava/util/ArrayList;)I",
+                                android_media_AudioSystem_listAppVolumes)};
 
 static const JNINativeMethod gEventHandlerMethods[] =
         {MAKE_JNI_NATIVE_METHOD("native_setup", "(Ljava/lang/Object;)V",
