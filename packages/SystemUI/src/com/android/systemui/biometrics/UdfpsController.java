@@ -994,11 +994,11 @@ public class UdfpsController implements DozeReceiver, Dumpable {
 
     private void initUdfpsFrameworkDimming() {
         mUseFrameworkDimming = mContext.getResources().getBoolean(
-                com.android.systemui.R.bool.config_udfpsFrameworkDimming);
+                com.android.systemui.res.R.bool.config_udfpsFrameworkDimming);
 
         if (mUseFrameworkDimming) {
             String[] array = mContext.getResources().getStringArray(
-                    com.android.systemui.R.array.config_udfpsDimmingBrightnessAlphaArray);
+                    com.android.systemui.res.R.array.config_udfpsDimmingBrightnessAlphaArray);
             mBrightnessAlphaArray = new int[array.length][2];
             for (int i = 0; i < array.length; i++) {
                 String[] s = array[i].split(",");
@@ -1017,9 +1017,9 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                 Settings.System.SCREEN_BRIGHTNESS, 100);
         // Since the brightness is taken from the system settings, we need to interpolate it
         final int brightnessMin = mContext.getResources().getInteger(
-                com.android.systemui.R.integer.config_udfpsDimmingBrightnessMin);
+                com.android.systemui.res.R.integer.config_udfpsDimmingBrightnessMin);
         final int brightnessMax = mContext.getResources().getInteger(
-                com.android.systemui.R.integer.config_udfpsDimmingBrightnessMax);
+                com.android.systemui.res.R.integer.config_udfpsDimmingBrightnessMax);
         if (brightnessMax > 0) {
             brightness = interpolate(brightness, 0, 255, brightnessMin, brightnessMax);
         }
@@ -1193,7 +1193,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         int delay = 0;
         if (mOverlay.getRequestReason() == REASON_AUTH_KEYGUARD) {
             delay = mContext.getResources().getInteger(
-                        com.android.systemui.R.integer.config_udfpsDimmingDisableDelay);
+                        com.android.systemui.res.R.integer.config_udfpsDimmingDisableDelay);
         } else if ((mOverlay.getRequestReason() == REASON_ENROLL_ENROLLING) ||
                 (mOverlay.getRequestReason() == REASON_ENROLL_FIND_SENSOR)) {
             delay = mContext.getResources().getInteger(
