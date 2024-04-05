@@ -276,6 +276,9 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
                             overlayTouchListener!!
                     )
                     overlayTouchListener?.onTouchExplorationStateChanged(true)
+                    if (requestReason.isEnrollmentReason()) {
+                        this.setEnrolling(true);
+                    }
                 }
             } catch (e: RuntimeException) {
                 Log.e(TAG, "showUdfpsOverlay | failed to add window", e)
@@ -504,6 +507,10 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
         return subView
     }
 }
+
+@ShowReason
+private fun Int.isEnrollmentReason() =
+    this == REASON_ENROLL_FIND_SENSOR || this == REASON_ENROLL_ENROLLING
 
 @RequestReason
 private fun Int.isImportantForAccessibility() =
