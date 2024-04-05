@@ -100,16 +100,12 @@ class PulseLightView @JvmOverloads constructor(
             UserHandle.USER_CURRENT
         )
         val color = getLightColor(notificationPackageName)
-        val leftView = findViewById<ImageView>(R.id.animation_left)
-        val rightView = findViewById<ImageView>(R.id.animation_right)
-        if (leftView == null || rightView == null) {
-            stopAnimation()
-            return
-        }
-        leftView?.setColorFilter(color)
-        rightView?.setColorFilter(color)
-        leftView?.layoutParams?.width = width
-        rightView?.layoutParams?.width = width
+        val leftView = requireViewById<ImageView>(R.id.animation_left)
+        val rightView = requireViewById<ImageView>(R.id.animation_right)
+        leftView.setColorFilter(color)
+        rightView.setColorFilter(color)
+        leftView.layoutParams.width = width
+        rightView.layoutParams.width = width
         lightAnimator = ValueAnimator.ofFloat(*floatArrayOf(0.0f, 2.0f)).apply {
             duration = lightDuration
             repeatCount = repeat
@@ -121,16 +117,16 @@ class PulseLightView @JvmOverloads constructor(
                 // To fix this, Just try to enable HBM here too.
                 enableHbm()
                 val progress = animation.animatedValue as Float
-                leftView?.scaleY = progress
-                rightView?.scaleY = progress
+                leftView.scaleY = progress
+                rightView.scaleY = progress
                 var alpha = 1.0f
                 if (progress <= 0.3f) {
                     alpha = progress / 0.3f
                 } else if (progress >= 1.0f) {
                     alpha = 2.0f - progress
                 }
-                leftView?.alpha = alpha
-                rightView?.alpha = alpha
+                leftView.alpha = alpha
+                rightView.alpha = alpha
             }
             start()
         }
