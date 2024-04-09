@@ -26,7 +26,7 @@ import android.net.wifi.WifiManager
 import android.provider.Settings
 import android.util.AttributeSet
 import android.widget.ImageView
-import com.android.systemui.R
+import com.android.systemui.res.R
 import com.libremobileos.providers.LMOSettings.Secure.SHOW_WIFI_STANDARD_ICON
 
 class WifiStandardImageView @JvmOverloads constructor(
