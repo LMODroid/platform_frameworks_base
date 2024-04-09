@@ -72,6 +72,8 @@ class ScreenRecordPermissionDialogDelegate(
     private lateinit var tapsView: View
     private lateinit var audioSwitch: Switch
     private lateinit var audioSwitchContainer: ViewGroup
+    private lateinit var keepScreenAwakeSwitch: Switch
+    private lateinit var keepScreenAwakeSwitchContainer: ViewGroup
     private lateinit var options: Spinner
 
     override fun createDialog(): SystemUIDialog {
@@ -118,16 +120,21 @@ class ScreenRecordPermissionDialogDelegate(
     private fun initRecordOptionsView() {
         audioSwitch = dialog.requireViewById(R.id.screenrecord_audio_switch)
         tapsSwitch = dialog.requireViewById(R.id.screenrecord_taps_switch)
+        keepScreenAwakeSwitch = dialog.requireViewById(R.id.screenrecord_keep_screen_awake_switch)
         audioSwitchContainer = dialog.requireViewById(R.id.screenrecord_audio_switch_container)
         tapsSwitchContainer = dialog.requireViewById(R.id.screenrecord_taps_switch_container)
+        keepScreenAwakeSwitchContainer =
+            dialog.requireViewById(R.id.screenrecord_keep_screen_awake_switch_container)
 
         // Add these listeners so that the switch only responds to movement
         // within its target region, to meet accessibility requirements
         audioSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
         tapsSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
+        keepScreenAwakeSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
 
         audioSwitchContainer.setOnClickListener { audioSwitch.toggle() }
         tapsSwitchContainer.setOnClickListener { tapsSwitch.toggle() }
+        keepScreenAwakeSwitchContainer.setOnClickListener { keepScreenAwakeSwitch.toggle() }
 
         tapsView = dialog.requireViewById(R.id.show_taps)
         updateTapsViewVisibility()
@@ -180,6 +187,7 @@ class ScreenRecordPermissionDialogDelegate(
         val audioMode =
             if (audioSwitch.isChecked) options.selectedItem as ScreenRecordingAudioSource
             else ScreenRecordingAudioSource.NONE
+        val keepScreenAwake = keepScreenAwakeSwitch.isChecked
         val startIntent =
             PendingIntent.getForegroundService(
                 userContext,
@@ -189,7 +197,8 @@ class ScreenRecordPermissionDialogDelegate(
                     Activity.RESULT_OK,
                     audioMode.ordinal,
                     showTaps,
-                    captureTarget
+                    captureTarget,
+                    keepScreenAwake
                 ),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )

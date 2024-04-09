@@ -129,38 +129,15 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
      */
     public static Intent getStartIntent(Context context, int resultCode,
             int audioSource, boolean showTaps,
-            @Nullable MediaProjectionCaptureTarget captureTarget) {
+            @Nullable MediaProjectionCaptureTarget captureTarget,
+            boolean keepScreenAwake) {
         return new Intent(context, RecordingService.class)
                 .setAction(ACTION_START)
                 .putExtra(EXTRA_RESULT_CODE, resultCode)
                 .putExtra(EXTRA_AUDIO_SOURCE, audioSource)
                 .putExtra(EXTRA_SHOW_TAPS, showTaps)
-                .putExtra(EXTRA_CAPTURE_TARGET, captureTarget);
-    }
-
-    /**
-     * Get an intent to start the recording service.
-     *
-     * @param context    Context from the requesting activity
-     * @param resultCode The result code from {@link android.app.Activity#onActivityResult(int, int,
-     *                   android.content.Intent)}
-     * @param audioSource   The ordinal value of the audio source
-     *                      {@link com.android.systemui.screenrecord.ScreenRecordingAudioSource}
-     * @param showTaps   True to make touches visible while recording
-     * @param keepScreenAwake True to make the screen keep awake while recording
-     * @param captureTarget   pass this parameter to capture a specific part instead
-     *                        of the full screen
-     */
-    public static Intent getStartIntent(Context context, int resultCode,
-            int audioSource, boolean showTaps, boolean keepScreenAwake,
-            @Nullable MediaProjectionCaptureTarget captureTarget) {
-        return new Intent(context, RecordingService.class)
-                .setAction(ACTION_START)
-                .putExtra(EXTRA_RESULT_CODE, resultCode)
-                .putExtra(EXTRA_AUDIO_SOURCE, audioSource)
-                .putExtra(EXTRA_SHOW_TAPS, showTaps)
-                .putExtra(EXTRA_KEEP_SCREEN_AWAKE, keepScreenAwake)
-                .putExtra(EXTRA_CAPTURE_TARGET, captureTarget);
+                .putExtra(EXTRA_CAPTURE_TARGET, captureTarget)
+                .putExtra(EXTRA_KEEP_SCREEN_AWAKE, keepScreenAwake);
     }
 
     @Override

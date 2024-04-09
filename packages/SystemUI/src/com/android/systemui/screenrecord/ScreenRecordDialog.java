@@ -149,7 +149,7 @@ public class ScreenRecordDialog extends SystemUIDialog {
                 RecordingService.REQUEST_CODE,
                 RecordingService.getStartIntent(
                         userContext, Activity.RESULT_OK,
-                        audioMode.ordinal(), showTaps, keepScreenAwake, captureTarget),
+                        audioMode.ordinal(), showTaps, captureTarget, keepScreenAwake),
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         PendingIntent stopIntent = PendingIntent.getService(userContext,
                 RecordingService.REQUEST_CODE,
