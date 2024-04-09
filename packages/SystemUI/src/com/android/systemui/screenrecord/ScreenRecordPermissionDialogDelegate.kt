@@ -261,6 +261,8 @@ class ScreenRecordPermissionDialogDelegate(
     private fun savePrefs() {
         val userContext = userContextProvider.userContext
         Prefs.putInt(userContext, PREF_TAPS, if (tapsSwitch.isChecked) 1 else 0)
+        Prefs.putInt(userContext, PREF_KEEP_SCREEN_AWAKE,
+                if (keepScreenAwakeSwitch.isChecked) 1 else 0)
         Prefs.putInt(userContext, PREF_DOT, if (stopDotSwitch.isChecked) 1 else 0)
         Prefs.putInt(userContext, PREF_LOW, if (lowQualitySwitch.isChecked) 1 else 0)
         Prefs.putInt(userContext, PREF_LONGER, if (longerDurationSwitch.isChecked) 1 else 0)
@@ -273,6 +275,7 @@ class ScreenRecordPermissionDialogDelegate(
     private fun loadPrefs() {
         val userContext = userContextProvider.userContext
         tapsSwitch.isChecked = Prefs.getInt(userContext, PREF_TAPS, 0) == 1
+        keepScreenAwakeSwitch.isChecked = Prefs.getInt(userContext, PREF_KEEP_SCREEN_AWAKE, 0) == 1
         stopDotSwitch.isChecked = Prefs.getInt(userContext, PREF_DOT, 0) == 1
         lowQualitySwitch.isChecked = Prefs.getInt(userContext, PREF_LOW, 0) == 1
         longerDurationSwitch.isChecked = Prefs.getInt(userContext, PREF_LONGER, 0) == 1
@@ -310,6 +313,7 @@ class ScreenRecordPermissionDialogDelegate(
         private const val INTERVAL_MS: Long = 1000
 
         private const val PREF_TAPS = "screenrecord_show_taps"
+        private const val PREF_KEEP_SCREEN_AWAKE = "screenrecord_keep_screen_awake"
         private const val PREF_DOT = "screenrecord_show_dot"
         private const val PREF_LOW = "screenrecord_use_low_quality"
         private const val PREF_LONGER = "screenrecord_use_longer_timeout"
