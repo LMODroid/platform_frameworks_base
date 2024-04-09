@@ -24,12 +24,12 @@ import android.os.Handler
 import android.os.UserHandle
 import android.provider.Settings
 
-import com.android.systemui.R
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.plugins.statusbar.StatusBarStateController
+import com.android.systemui.res.R
 import com.android.systemui.statusbar.notification.collection.NotificationEntry
 import com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProvider
-import com.android.systemui.plugins.statusbar.StatusBarStateController
 
 import com.libremobileos.providers.LMOSettings
 

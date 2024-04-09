@@ -31,8 +31,8 @@ import androidx.core.view.isVisible
 import androidx.palette.graphics.Palette
 
 import com.android.settingslib.Utils
-import com.android.systemui.R
 import com.android.systemui.people.PeopleSpaceUtils
+import com.android.systemui.res.R
 
 import com.libremobileos.hardware.LineageHardwareManager
 import com.libremobileos.providers.LMOSettings
