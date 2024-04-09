@@ -40,8 +40,8 @@ import android.widget.ImageView;
 import android.graphics.Rect;
 
 import com.android.systemui.Dependency;
-import com.android.systemui.R;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.res.R;
 
 import com.libremobileos.providers.LMOSettings;
 
