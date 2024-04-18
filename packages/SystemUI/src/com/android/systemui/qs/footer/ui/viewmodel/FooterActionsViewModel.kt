@@ -92,12 +92,12 @@ class FooterActionsViewModel(
             // b/240563302).
             val delay = 0.99f
             _alpha.value = expansion
-            _backgroundAlpha.value = max(0f, expansion - delay) / (1f - delay)
+            _backgroundAlpha.value = 0f
         } else {
             // Only start fading in the footer actions when we are at least 90% expanded.
             val delay = 0.9f
             _alpha.value = max(0f, expansion - delay) / (1 - delay)
-            _backgroundAlpha.value = 1f
+            _backgroundAlpha.value = 0f
         }
     }
 
