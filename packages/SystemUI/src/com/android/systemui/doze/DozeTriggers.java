@@ -194,8 +194,6 @@ public class DozeTriggers implements DozeMachine.Part {
         }
     }
 
-    private boolean mPulseLightOnFaceDown = false;
-
     @Inject
     public DozeTriggers(Context context, DozeHost dozeHost,
             AmbientDisplayConfiguration config,
@@ -231,8 +229,6 @@ public class DozeTriggers implements DozeMachine.Part {
         mKeyguardStateController = keyguardStateController;
         mUserTracker = userTracker;
 
-        mPulseLightOnFaceDown = mContext.getResources()
-                .getBoolean(R.bool.config_showEdgeLightOnlyWhenFaceDown);
         mPulseOnPickup = mContext.getResources().getBoolean(R.bool.doze_pulse_on_pick_up);
     }
 
@@ -277,10 +273,21 @@ public class DozeTriggers implements DozeMachine.Part {
     }
 
     private boolean canShowPulseLight() {
-        return mPulseLightOnFaceDown
-                && (Settings.Secure.getIntForUser(
-                mContext.getContentResolver(), LMOSettings.Secure.PULSE_AMBIENT_LIGHT,
-                0, UserHandle.USER_CURRENT) != 0);
+        return isPulseLightEnabled() && pulseLightOnlyWhenFaceDown();
+    }
+
+    private boolean isPulseLightEnabled() {
+        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                LMOSettings.Secure.PULSE_AMBIENT_LIGHT,
+                0, UserHandle.USER_CURRENT) != 0;
+    }
+
+    private boolean pulseLightOnlyWhenFaceDown() {
+        int pulseLightFaceDownDefault = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_edgeLightFaceDownEnabledByDefault) ? 1 : 0;
+        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                LMOSettings.Secure.PULSE_AMBIENT_LIGHT_FACE_DOWN,
+                pulseLightFaceDownDefault, UserHandle.USER_CURRENT) != 0;
     }
 
     private static void runIfNotNull(Runnable runnable) {

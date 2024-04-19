@@ -110,7 +110,6 @@ public final class DozeServiceHost implements DozeHost {
     private final Context mContext;
 
     // For pulse light
-    private boolean mPulseLightOnFaceDownOnly = false;
     private boolean mIsFaceDown = false;
 
     @Inject
@@ -153,8 +152,6 @@ public final class DozeServiceHost implements DozeHost {
         mDozeInteractor = dozeInteractor;
         pulseLightNotifManager.addListener(mPulseLightNotifListener);
         mContext = context;
-        mPulseLightOnFaceDownOnly = context.getResources()
-                .getBoolean(R.bool.config_showEdgeLightOnlyWhenFaceDown);
     }
 
     // TODO: we should try to not pass status bar in here if we can avoid it.
@@ -529,7 +526,7 @@ public final class DozeServiceHost implements DozeHost {
         // - If pulse light is disabled.
         // - If device is face up when pulse light is enabled with forced face down.
         boolean noPulse = isPulseLightEnabled();
-        if (noPulse && mPulseLightOnFaceDownOnly) {
+        if (noPulse && pulseLightOnlyWhenFaceDown()) {
             noPulse = mIsFaceDown;
         }
         return noPulse;
@@ -561,5 +558,13 @@ public final class DozeServiceHost implements DozeHost {
     private boolean isPulseLightEnabled() {
         return Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 LMOSettings.Secure.PULSE_AMBIENT_LIGHT, 0, UserHandle.USER_CURRENT) != 0;
+    }
+
+    private boolean pulseLightOnlyWhenFaceDown() {
+        int pulseLightFaceDownDefault = mContext.getResources().getBoolean(
+                    com.android.internal.R.bool.config_edgeLightFaceDownEnabledByDefault) ? 1 : 0;
+        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                LMOSettings.Secure.PULSE_AMBIENT_LIGHT_FACE_DOWN,
+                pulseLightFaceDownDefault, UserHandle.USER_CURRENT) != 0;
     }
 }

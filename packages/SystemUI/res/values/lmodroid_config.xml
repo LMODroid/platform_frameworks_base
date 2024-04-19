@@ -66,9 +66,6 @@
     <!-- Whether usage of the proximity sensor during doze is supported -->
     <bool name="doze_proximity_sensor_supported">true</bool>
 
-    <!-- Whether to enable edge light only when the device face down -->
-    <bool name="config_showEdgeLightOnlyWhenFaceDown">false</bool>
-
     <!-- Doze: should pulse on pick up? -->
     <bool name="doze_pulse_on_pick_up">false</bool>
 
