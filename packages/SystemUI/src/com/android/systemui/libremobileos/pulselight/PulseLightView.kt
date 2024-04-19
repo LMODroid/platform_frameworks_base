@@ -18,9 +18,11 @@ package com.android.systemui.libremobileos.pulselight
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.database.ContentObserver
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.UserHandle
 import android.provider.Settings
 import android.util.AttributeSet
@@ -47,22 +49,51 @@ class PulseLightView @JvmOverloads constructor(
     private var lightAnimator: ValueAnimator? = null
 
     private var onlyWhenFaceDown = false
+    private val onlyWhenFaceDownDefault by lazy {
+        val default = context?.resources?.getBoolean(
+            com.android.internal.R.bool.config_edgeLightFaceDownEnabledByDefault
+        ) ?: false
+        if (default) 1 else 0
+    }
+
     private var lineageHardware: LineageHardwareManager? = null
     private var hasHbmSupport = false
     private var hbmEnabled = false
 
     init {
-        onlyWhenFaceDown = context?.resources
-            ?.getBoolean(R.bool.config_showEdgeLightOnlyWhenFaceDown) ?: false
-        if (onlyWhenFaceDown) {
-            setBackgroundColor(Color.BLACK)
-            lineageHardware = LineageHardwareManager.getInstance(context)
-            lineageHardware?.let { hardware ->
-                hasHbmSupport = hardware.isSupported(
-                    LineageHardwareManager.FEATURE_SUNLIGHT_ENHANCEMENT
-                )
+        setupContentObserver()
+        lineageHardware = LineageHardwareManager.getInstance(context).also { hardware ->
+            hasHbmSupport = hardware.isSupported(
+                LineageHardwareManager.FEATURE_SUNLIGHT_ENHANCEMENT
+            )
+        }
+    }
+
+    private fun setupContentObserver() {
+        val pulseAmbientLightFaceDown = Settings.Secure.getUriFor(PULSE_AMBIENT_LIGHT_FACE_DOWN)
+        val contentObserver = object: ContentObserver(null) {
+            override fun onChange(selfChange: Boolean, uri: Uri?) {
+                onlyWhenFaceDown = Settings.Secure.getIntForUser(
+                    context.contentResolver,
+                    PULSE_AMBIENT_LIGHT_FACE_DOWN,
+                    onlyWhenFaceDownDefault,
+                    UserHandle.USER_CURRENT
+                ) != 0
+                updateBackgroundColor()
             }
         }
+        context.contentResolver.registerContentObserver(
+                pulseAmbientLightFaceDown, false, contentObserver, UserHandle.USER_CURRENT)
+        contentObserver.onChange(true, pulseAmbientLightFaceDown)
+    }
+
+    private fun updateBackgroundColor() {
+        val bgColor = if (onlyWhenFaceDown) {
+            Color.BLACK
+        } else {
+            Color.TRANSPARENT
+        }
+        setBackgroundColor(bgColor)
     }
 
     override fun onAnimationStart(animator: Animator) {
@@ -201,6 +232,9 @@ class PulseLightView @JvmOverloads constructor(
         private const val COLOR_MODE_APP = 0
         private const val COLOR_MODE_AUTO = 1
         // private const val COLOR_MODE_MANUAL = 2 (not used here)
+
+        private const val PULSE_AMBIENT_LIGHT_FACE_DOWN =
+                LMOSettings.Secure.PULSE_AMBIENT_LIGHT_FACE_DOWN
     }
 
 }
