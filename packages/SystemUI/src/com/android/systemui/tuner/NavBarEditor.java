@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -90,7 +91,7 @@ import static com.android.systemui.navigationbar.NavigationBarInflaterView.RIGHT
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.extractButton;
 import static com.android.systemui.navigationbar.NavigationBarInflaterView.extractSize;
 
-public class NavBarEditor extends PreferenceFragment implements TunerService.Tunable,
+public class NavBarEditor extends PreferenceFragment implements
             NavigationModeController.ModeChangedListener {
     private static final String TAG = "NavBarEditor";
     private static final int READ_REQUEST = 42;
@@ -120,6 +121,19 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
     private PreviewNavInflater mPreview;
     private String mCurrentLayout;
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
+
+    private final ContentObserver mContentObserver = new ContentObserver(null) {
+        @Override
+        public void onChange(boolean selfChange, @Nullable Uri uri) {
+            if (Settings.Secure.getUriFor(NAV_BAR_VIEWS).equals(uri)) {
+                String newValue = Settings.Secure.getString(
+                        getContext().getContentResolver(), NAV_BAR_VIEWS);
+                getContext().getMainExecutor().execute(() -> {
+                    onSettingsChanged(NAV_BAR_VIEWS, newValue);
+                });
+            }
+        }
+    };
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -196,7 +210,10 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
         mNavBarAdapter.setTouchHelper(itemTouchHelper);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         setHasOptionsMenu(true);
-        Dependency.get(TunerService.class).addTunable(this, NAV_BAR_VIEWS);
+        Uri navigationBarView = Settings.Secure.getUriFor(NAV_BAR_VIEWS);
+        context.getContentResolver().registerContentObserver(navigationBarView, false,
+                mContentObserver);
+        mContentObserver.onChange(true, navigationBarView);
     }
 
     protected String getDefaultLayout() {
@@ -217,11 +234,10 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
     public void onDestroyView() {
         super.onDestroyView();
         Dependency.get(NavigationModeController.class).removeListener(this);
-        Dependency.get(TunerService.class).removeTunable(this);
+        getContext().getContentResolver().unregisterContentObserver(mContentObserver);
     }
 
-    @Override
-    public void onTuningChanged(String key, String navLayout) {
+    private void onSettingsChanged(String key, String navLayout) {
         if (!NAV_BAR_VIEWS.equals(key)) return;
         mCurrentLayout = navLayout;
         if (navLayout == null) {
@@ -256,7 +272,7 @@ public class NavBarEditor extends PreferenceFragment implements TunerService.Tun
                     NAV_BAR_VIEWS, null);
             return true;
         } else if (item.getItemId() == R.id.nav_bar_restore) {
-            onTuningChanged(NAV_BAR_VIEWS, mCurrentLayout);
+            onSettingsChanged(NAV_BAR_VIEWS, mCurrentLayout);
             return true;
         } else if (item.getItemId() == R.id.nav_bar_save) {
             if (!mNavBarAdapter.hasHomeButton()) {
