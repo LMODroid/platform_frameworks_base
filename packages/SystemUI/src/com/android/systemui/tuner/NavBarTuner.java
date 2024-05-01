@@ -49,6 +49,8 @@ import androidx.preference.PreferenceFragment;
 import com.android.systemui.Dependency;
 import com.android.systemui.res.R;
 import com.android.systemui.tuner.TunerService.Tunable;
+import com.android.tools.r8.keepanno.annotations.KeepTarget;
+import com.android.tools.r8.keepanno.annotations.UsesReflection;
 
 import java.util.ArrayList;
 
@@ -71,6 +73,9 @@ public class NavBarTuner extends PreferenceFragment {
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    // aapt doesn't generate keep rules for android:fragment references in <Preference> tags, so
+    // explicitly declare references per usage in `R.xml.nav_bar_tuner`. See b/120445169.
+    @UsesReflection(@KeepTarget(classConstant = NavBarEditor.class))
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.nav_bar_tuner);
