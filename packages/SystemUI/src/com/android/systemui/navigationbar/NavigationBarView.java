@@ -612,7 +612,9 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
     }
 
     public KeyButtonDrawable getBackDrawable() {
-        KeyButtonDrawable drawable = getDrawable(R.drawable.ic_sysbar_back);
+        KeyButtonDrawable drawable = mShowSwipeUpUi
+                ? getDrawable(R.drawable.ic_sysbar_back_quick_step)
+                : getDrawable(R.drawable.ic_sysbar_back);
         orientBackButton(drawable);
         return drawable;
     }
