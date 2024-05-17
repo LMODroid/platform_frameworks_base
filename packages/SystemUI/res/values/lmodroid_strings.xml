@@ -118,6 +118,8 @@
     <string name="navbar_editor_summary">Configure navigaton bar</string>
     <!-- SysUI Tuner: Adjust button width dialog title [CHAR LIMIT=60] -->
     <string name="adjust_button_width">Adjust button width</string>
+    <string name="navbar_force_menu_key_title">Force menu key</string>
+    <string name="navbar_force_menu_key_summary">Always show the menu key regardless of the context</string>
 
     <!-- WiFi standard numbering on statusbar -->
     <string name="status_bar_wifi_standard">Wi-Fi standard number</string>

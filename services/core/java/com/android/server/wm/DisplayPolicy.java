@@ -2335,7 +2335,8 @@ public class DisplayPolicy {
             // the intermediate state to system UI. Otherwise, it might trigger redundant effects.
             return;
         }
-        final boolean forceMenu = false; // TODO user setting?
+        final boolean forceMenu = Settings.Secure.getInt(
+                mContext.getContentResolver(), LMOSettings.Secure.NAV_BAR_FORCE_MENU_KEY, 0) != 0;
         final WindowState navColorWin = chooseNavigationColorWindowLw(mNavBarColorWindowCandidate,
                 mDisplayContent.mInputMethodWindow, mNavigationBarPosition);
         final boolean isNavbarColorManagedByIme =
