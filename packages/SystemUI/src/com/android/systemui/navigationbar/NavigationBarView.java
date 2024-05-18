@@ -741,7 +741,7 @@ public class NavigationBarView extends FrameLayout implements DragDropSurfaceCal
         boolean disableImeSwitcher =
                 (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SWITCHER_SHOWN) == 0
                 || isImeRenderingNavButtons()
-                || (!QuickStepContract.isLegacyMode(mNavBarMode) && !disableCursorKeys);
+                || (QuickStepContract.isLegacyMode(mNavBarMode) && !disableCursorKeys);
         mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher, !disableImeSwitcher);
 
 
