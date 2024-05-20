@@ -5226,6 +5226,9 @@ public class UserManagerService extends IUserManager.Stub {
         if (userInfo.isProfile()) {
             sendProfileAddedBroadcast(userInfo.profileGroupId, userInfo.id);
         } else {
+            // Don't enable user switch on parallel space creation.
+            if (userInfo.isParallel()) return;
+
             // If the user switch hasn't been explicitly toggled on or off by the user, turn it on.
             if (android.provider.Settings.Global.getString(mContext.getContentResolver(),
                     android.provider.Settings.Global.USER_SWITCHER_ENABLED) == null) {
