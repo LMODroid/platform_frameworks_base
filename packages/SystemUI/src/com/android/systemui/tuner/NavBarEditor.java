@@ -588,8 +588,10 @@ public class NavBarEditor extends PreferenceFragment implements
         }
 
         private void showAddDialog(final Context context) {
+            final String homeKey =
+                    QuickStepContract.isGesturalMode(mNavBarMode) ? HOME_HANDLE : HOME;
             final String[] options = new String[] {
-                    BACK, HOME, RECENT, NAVSPACE, LEFT, RIGHT, VOLUME_UP, VOLUME_DOWN,
+                    BACK, homeKey, RECENT, NAVSPACE, LEFT, RIGHT, VOLUME_UP, VOLUME_DOWN,
                     POWER, CLIPBOARD, MENU_IME_ROTATE, CONTEXTUAL, KEY, IME_SWITCHER
             };
             final CharSequence[] labels = new CharSequence[options.length];
