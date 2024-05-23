@@ -49,6 +49,10 @@ class ModernShadeCarrierGroupMobileView(
         requireViewById<AutoMarqueeTextView>(R.id.mobile_carrier_text).setTextAppearance(resId)
     }
 
+    public fun updateTextColor(color: Int) {
+        requireViewById<AutoMarqueeTextView>(R.id.mobile_carrier_text).setTextColor(color)
+    }
+
     companion object {
 
         /**
