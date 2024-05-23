@@ -15,7 +15,7 @@
 -->
 <resources>
     <dimen name="settingslib_segmented_button_spacing">0dp</dimen>
-    <dimen name="settingslib_borderless_button_radius">2dp</dimen>
+    <dimen name="settingslib_borderless_button_radius">28dp</dimen>
     <style name="SettingsLibTextAppearanceSegmentedButton">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@*android:string/config_bodyFontFamilyMedium</item>

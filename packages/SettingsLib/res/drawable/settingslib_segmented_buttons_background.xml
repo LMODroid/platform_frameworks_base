@@ -16,5 +16,5 @@
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
     <corners android:radius="@dimen/settingslib_borderless_button_radius" />
-    <solid android:color="?android:attr/colorPrimaryDark" />
+    <solid android:color="?android:attr/colorButtonNormal" />
 </shape>
