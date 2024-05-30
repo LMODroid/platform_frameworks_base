@@ -88,6 +88,10 @@ public class UriTest extends TestCase {
         assertNull(u.getHost());
     }
 
+    @AsbSecurityTest(cveBugId = 261721900)
+    @SmallTest
+    public void testSc
+
     @SmallTest
     public void testStringUri() {
         assertEquals("bob lee",
