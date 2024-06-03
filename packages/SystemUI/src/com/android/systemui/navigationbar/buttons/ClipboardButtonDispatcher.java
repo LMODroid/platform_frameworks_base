@@ -19,7 +19,7 @@ package com.android.systemui.navigationbar.buttons;
 import android.util.Log;
 import android.view.View;
 
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
 public class ClipboardButtonDispatcher extends ButtonDispatcher {
     private KeyButtonDrawable mImageDrawable1;
