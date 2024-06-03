@@ -20,7 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.KeyEvent;
 
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
