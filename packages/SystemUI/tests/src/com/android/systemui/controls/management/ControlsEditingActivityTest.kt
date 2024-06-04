@@ -18,6 +18,7 @@ import com.android.systemui.controls.CustomIconCache
 import com.android.systemui.controls.controller.ControlsControllerImpl
 import com.android.systemui.settings.UserTracker
 import com.android.systemui.util.concurrency.FakeExecutor
+import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.time.FakeSystemClock
 import com.google.common.truth.Truth.assertThat
 import java.util.concurrent.CountDownLatch
@@ -171,6 +172,8 @@ class ControlsEditingActivityTest : SysuiTestCase() {
             controller,
             userTracker,
             customIconCache,
+            mock(),
+            mock(),
         ) {
 
         var startActivityData: StartActivityData? = null

@@ -76,13 +76,13 @@ class PanelTaskViewControllerTest : SysuiTestCase() {
             uiExecutor.execute(it.arguments[0] as Runnable)
             true
         }
-        whenever(activityContext.resources).thenReturn(context.resources)
+        whenever(activityContext!!.resources).thenReturn(context.resources)
 
         uiExecutor = FakeExecutor(FakeSystemClock())
 
         underTest =
             PanelTaskViewController(
-                activityContext,
+                activityContext!!,
                 uiExecutor,
                 pendingIntent,
                 taskView,
