@@ -17,6 +17,7 @@
 package com.android.systemui.controls.controller
 
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.ContextWrapper
@@ -146,6 +147,9 @@ class ControlsControllerImplTest : SysuiTestCase() {
 
     private val user = mContext.userId
     private val otherUser = user + 1
+
+    @Captor
+    private lateinit var broadcastReceiverCaptor: ArgumentCaptor<BroadcastReceiver>
 
     @Before
     fun setUp() {

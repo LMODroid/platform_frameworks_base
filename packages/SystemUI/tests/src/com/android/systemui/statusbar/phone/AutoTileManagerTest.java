@@ -566,7 +566,7 @@ public class AutoTileManagerTest extends SysuiTestCase {
 
         verify(mDeviceControlsController).setCallback(captor.capture());
 
-        captor.getValue().onControlsUpdate(3);
+        captor.getValue().onControlsAvailable(3);
         verify(mQsHost).addTile(spec, 3);
         verify(mAutoAddTracker).setTileAdded(spec);
     }
@@ -603,7 +603,7 @@ public class AutoTileManagerTest extends SysuiTestCase {
 
         verify(mDeviceControlsController).setCallback(captor.capture());
 
-        captor.getValue().onControlsUpdate(3);
+        captor.getValue().onControlsAvailable(3);
         verify(mQsHost, never()).addTile(spec, 3);
         verify(mAutoAddTracker, never()).setTileAdded(spec);
     }
