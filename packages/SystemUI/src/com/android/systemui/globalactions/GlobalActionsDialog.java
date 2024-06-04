@@ -743,7 +743,7 @@ public class GlobalActionsDialog extends GlobalActionsDialogLite
 
         void showLockMessage() {
             Drawable lockIcon = mContext.getDrawable(com.android.internal.R.drawable.ic_lock);
-            lockIcon.setTint(mContext.getColor(com.android.systemui.R.color.control_primary_text));
+            lockIcon.setTint(mContext.getColor(com.android.systemui.res.R.color.control_primary_text));
             mLockMessage.setCompoundDrawablesWithIntrinsicBounds(null, lockIcon, null, null);
             mLockMessageContainer.setVisibility(View.VISIBLE);
         }
