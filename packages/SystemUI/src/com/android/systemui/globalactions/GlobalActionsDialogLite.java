@@ -1925,7 +1925,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                 Log.w(TAG, "No users action found at position: " + position);
                 return null;
             }
-            int viewLayoutResource = com.android.systemui.res.R.layout.global_actions_power_item;
+            int viewLayoutResource = getGridItemLayoutResource();
             View view = convertView != null ? convertView
                     : LayoutInflater.from(mContext).inflate(viewLayoutResource, parent, false);
             view.setOnClickListener(v -> onClickItem(position));
