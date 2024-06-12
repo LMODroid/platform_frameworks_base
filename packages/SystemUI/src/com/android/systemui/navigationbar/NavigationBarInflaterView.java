@@ -30,6 +30,7 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -50,6 +51,7 @@ import com.android.systemui.navigationbar.buttons.KeyButtonView;
 import com.android.systemui.navigationbar.buttons.ReverseLinearLayout;
 import com.android.systemui.navigationbar.buttons.ReverseLinearLayout.ReverseRelativeLayout;
 import com.android.systemui.recents.OverviewProxyService;
+import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shared.system.QuickStepContract;
 
 import com.libremobileos.providers.LMOSettings;
@@ -134,7 +136,11 @@ public class NavigationBarInflaterView extends FrameLayout {
     private boolean mIsHintEnabled;
     private String mNavigationNoHintOverlayPackage;
 
+    private final Uri mNavBarInverse;
+    private final Uri mNavigationBarHint;
     private final ContentObserver mContentObserver;
+    private final UserTracker mUserTracker;
+    private UserTracker.Callback mUserTrackerCallback;
 
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -144,20 +150,31 @@ public class NavigationBarInflaterView extends FrameLayout {
         mNavBarMode = Dependency.get(NavigationModeController.class).addListener(mListener);
         mNavigationNoHintOverlayPackage = context.getString(
                 com.android.internal.R.string.config_navigation_no_hint_overlay_package);
+        mNavBarInverse = Settings.Secure.getUriFor(NAV_BAR_INVERSE);
+        mNavigationBarHint = Settings.System.getUriFor(
+                LMOSettings.System.NAVIGATION_BAR_HINT);
         mContentObserver = new ContentObserver(null) {
             @Override
             public void onChange(boolean selfChange, @Nullable Uri uri) {
-                if (Settings.Secure.getUriFor(NAV_BAR_INVERSE).equals(uri)) {
-                    mInverseLayout = Settings.Secure.getInt(mContext.getContentResolver(),
-                            NAV_BAR_INVERSE, 0) != 0;
+                if (mNavBarInverse.equals(uri)) {
+                    mInverseLayout = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                            NAV_BAR_INVERSE, 0, UserHandle.USER_CURRENT) != 0;
                     updateLayoutInversion();
-                } else if (Settings.System.getUriFor(
-                        LMOSettings.System.NAVIGATION_BAR_HINT).equals(uri)) {
-                    mIsHintEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                            LMOSettings.System.NAVIGATION_BAR_HINT, 0) != 0;
+                } else if (mNavigationBarHint.equals(uri)) {
+                    mIsHintEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                            LMOSettings.System.NAVIGATION_BAR_HINT, 0,
+                            UserHandle.USER_CURRENT) != 0;
                     updateHint();
                     onLikelyDefaultLayoutChange();
                 }
+            }
+        };
+        mUserTracker = Dependency.get(UserTracker.class);
+        mUserTrackerCallback = new UserTracker.Callback() {
+            @Override
+            public void onUserChanged(int newUser, Context userContext) {
+                mContentObserver.onChange(true, mNavBarInverse);
+                mContentObserver.onChange(true, mNavigationBarHint);
             }
         };
     }
@@ -210,21 +227,21 @@ public class NavigationBarInflaterView extends FrameLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Uri navBarInverse = Settings.Secure.getUriFor(NAV_BAR_INVERSE);
-        Uri navigationBarHint = Settings.System.getUriFor(
-                LMOSettings.System.NAVIGATION_BAR_HINT);
-        mContext.getContentResolver().registerContentObserver(navBarInverse, false,
-                mContentObserver);
-        mContext.getContentResolver().registerContentObserver(navigationBarHint, false,
-                mContentObserver);
-        mContentObserver.onChange(true, navBarInverse);
-        mContentObserver.onChange(true, navigationBarHint);
+        mContext.getContentResolver().registerContentObserver(mNavBarInverse, false,
+                mContentObserver, UserHandle.USER_ALL);
+        mContext.getContentResolver().registerContentObserver(mNavigationBarHint, false,
+                mContentObserver, UserHandle.USER_ALL);
+        mContentObserver.onChange(true, mNavBarInverse);
+        mContentObserver.onChange(true, mNavigationBarHint);
+        mUserTracker.addCallback(mUserTrackerCallback,
+                mContext.getMainExecutor());
     }
 
     @Override
     protected void onDetachedFromWindow() {
         Dependency.get(NavigationModeController.class).removeListener(mListener);
         mContext.getContentResolver().unregisterContentObserver(mContentObserver);
+        mUserTracker.removeCallback(mUserTrackerCallback);
         super.onDetachedFromWindow();
     }
 
