@@ -126,12 +126,15 @@ class GameSpaceManager @Inject constructor(
     fun isGameActive() = activeGame != null
 
     fun shouldSuppressFullScreenIntent() =
-        Settings.System.getInt(context.contentResolver,
-            LMOSettings.System.GAMESPACE_SUPPRESS_FULLSCREEN_INTENT, 0) == 1 && isGameActive()
+        Settings.System.getIntForUser(context.contentResolver,
+            LMOSettings.System.GAMESPACE_SUPPRESS_FULLSCREEN_INTENT, 0,
+            UserHandle.USER_CURRENT) == 1 && isGameActive()
 
     private fun checkGameList(packageName: String?): String? {
         packageName ?: return null
-        val games = Settings.System.getString(context.contentResolver, LMOSettings.System.GAMESPACE_GAME_LIST)
+        val games = Settings.System.getStringForUser(context.contentResolver,
+                LMOSettings.System.GAMESPACE_GAME_LIST,
+                UserHandle.USER_CURRENT)
         if (games.isNullOrEmpty())
             return null
 
