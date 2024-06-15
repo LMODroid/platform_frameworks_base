@@ -1197,7 +1197,7 @@ public class ClipboardService extends SystemService {
                 } else {
                     toastToShow = Toast.makeText(
                             getContext(), UiThread.get().getLooper(), message,
-                            Toast.LENGTH_SHORT);
+                            Toast.LENGTH_LONG);
                 }
                 toastToShow.show();
             } catch (PackageManager.NameNotFoundException e) {
