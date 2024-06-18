@@ -197,7 +197,7 @@ public class QSFooterView extends FrameLayout {
     private void updateResources() {
         updateFooterAnimator();
         updateEditButtonResources();
-        updateBuildTextResources();
+        updateUsageTextResources();
         MarginLayoutParams lp = (MarginLayoutParams) getLayoutParams();
         lp.height = getResources().getDimensionPixelSize(R.dimen.qs_footer_height);
         int sideMargin = getResources().getDimensionPixelSize(R.dimen.qs_footer_margin);
@@ -217,8 +217,8 @@ public class QSFooterView extends FrameLayout {
         mEditButton.setPadding(padding, padding, padding, padding);
     }
 
-    private void updateBuildTextResources() {
-        FontSizeUtils.updateFontSizeFromStyle(mBuildText, R.style.TextAppearance_QS_Status_Build);
+    private void updateUsageTextResources() {
+        FontSizeUtils.updateFontSizeFromStyle(mUsageText, R.style.TextAppearance_QS_Status_Build);
     }
 
     private void updateFooterAnimator() {
