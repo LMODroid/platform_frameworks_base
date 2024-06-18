@@ -241,7 +241,7 @@ public class SignalDrawable extends DrawableWrapper {
             drawDotAndPadding(x - dotSpacing * 2, y, dotPadding, dotSize, 0);
             canvas.drawPath(mCutoutPath, mTransparentPaint);
             canvas.drawPath(mForegroundPath, mForegroundPaint);
-        } else if (isInState(STATE_CUT_AND_R)) {
+        } else if (!newStatusBarIcons() && isInState(STATE_CUT_AND_R)) {
             // Roaming
             float cutWidth = mRCutoutWidthFraction;
             float cutHeight = mRCutoutHeightFraction;
@@ -274,7 +274,7 @@ public class SignalDrawable extends DrawableWrapper {
             mCutoutPath.rLineTo(0, cutY);
             canvas.drawPath(mCutoutPath, mTransparentPaint);
             canvas.drawPath(mScaledAttributionPath, mForegroundPaint);
-        } else if (isInState(STATE_CUT) || isInState(STATE_R)) {
+        } else if (!newStatusBarIcons() && (isInState(STATE_CUT) || isInState(STATE_R))) {
             boolean isRoaming = isInState(STATE_R);
             float cutWidth = isRoaming ? mRCutoutWidthFraction : mCutoutWidthFraction;
             float cutHeight = isRoaming ? mRCutoutHeightFraction : mCutoutHeightFraction;

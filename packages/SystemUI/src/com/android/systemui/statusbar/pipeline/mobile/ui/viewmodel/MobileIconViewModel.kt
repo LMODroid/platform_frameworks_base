@@ -145,6 +145,8 @@ class MobileIconViewModel(
 
     override val activityContainerVisible: Flow<Boolean> =
         vmProvider.flatMapLatest { it.activityContainerVisible }
+
+    override val showHd: Flow<Boolean> = vmProvider.flatMapLatest { it.showHd }
 }
 
 /** Representation of this network when it is non-terrestrial (e.g., satellite) */
@@ -165,6 +167,7 @@ private class CarrierBasedSatelliteViewModelImpl(
     override val activityInVisible: Flow<Boolean> = flowOf(false)
     override val activityOutVisible: Flow<Boolean> = flowOf(false)
     override val activityContainerVisible: Flow<Boolean> = flowOf(false)
+    override val showHd: Flow<Boolean> = flowOf(false)
 }
 
 /** Terrestrial (cellular) icon. */

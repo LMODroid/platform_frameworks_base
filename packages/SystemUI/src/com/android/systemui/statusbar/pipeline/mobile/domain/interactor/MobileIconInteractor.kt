@@ -367,12 +367,14 @@ class MobileIconInteractorImpl(
             numberOfLevels,
             showExclamationMark,
             carrierNetworkChangeActive,
-        ) { shownLevel, numberOfLevels, showExclamationMark, carrierNetworkChange ->
+            showRoaming,
+        ) { shownLevel, numberOfLevels, showExclamationMark, carrierNetworkChange, showRoaming ->
             SignalIconModel.Cellular(
                 shownLevel,
                 numberOfLevels,
                 showExclamationMark,
                 carrierNetworkChange,
+                showRoaming,
             )
         }
 
@@ -392,6 +394,7 @@ class MobileIconInteractorImpl(
                 numberOfLevels.value,
                 showExclamationMark.value,
                 carrierNetworkChangeActive.value,
+                showRoaming.value,
             )
         isNonTerrestrial
             .flatMapLatest { ntn ->
