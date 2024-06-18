@@ -68,7 +68,7 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.view.RotationPolicy;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardUpdateMonitor;
-import com.android.systemui.animation.DialogLaunchAnimator;
+import com.android.systemui.animation.DialogTransitionAnimator;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.controls.dagger.ControlsComponent;
@@ -79,6 +79,7 @@ import com.android.systemui.controls.management.ControlsAnimations;
 import com.android.systemui.controls.ui.ControlsUiController;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.globalactions.domain.interactor.GlobalActionsInteractor;
 import com.android.systemui.model.SysUiState;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.GlobalActions.GlobalActionsManager;
@@ -209,8 +210,9 @@ public class GlobalActionsDialog extends GlobalActionsDialogLite
             PackageManager packageManager,
             ShadeController shadeController,
             KeyguardUpdateMonitor keyguardUpdateMonitor,
-            DialogLaunchAnimator dialogLaunchAnimator,
+            DialogTransitionAnimator dialogTransitionAnimator,
             SelectedUserInteractor selectedUserInteractor,
+            GlobalActionsInteractor interactor,
             ControlsComponent controlsComponent) {
         super(context,
                 windowManagerFuncs,
@@ -244,8 +246,9 @@ public class GlobalActionsDialog extends GlobalActionsDialogLite
                 packageManager,
                 shadeController,
                 keyguardUpdateMonitor,
-                dialogLaunchAnimator,
+                dialogTransitionAnimator,
                 selectedUserInteractor,
+                interactor,
                 controlsComponent);
 
         mLockPatternUtils = lockPatternUtils;
