@@ -36,6 +36,7 @@ interface IPowerManager
     void updateWakeLockUids(IBinder lock, in int[] uids);
     oneway void setPowerExtMode(String mode_name, boolean enabled);
     oneway void setPowerExtBoost(String boost_name, int durationMs);
+    oneway void notifyAppState(String packActName, int pid, int uid, boolean active);
     oneway void setPowerBoost(int boost, int durationMs);
     oneway void setPowerMode(int mode, boolean enabled);
 
