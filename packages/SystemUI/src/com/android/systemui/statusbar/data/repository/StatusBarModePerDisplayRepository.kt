@@ -333,7 +333,8 @@ constructor(
                     appearanceRegions=$appearanceRegions,
                     navbarColorManagedByIme=$navbarColorManagedByIme,
                     requestedVisibleTypes=${requestedVisibleTypes.toWindowInsetsString()},
-                    letterboxDetails=$letterboxDetails
+                    letterboxDetails=$letterboxDetails,
+                    needsMenu=$needsMenu
                     )
                     """
                 .trimIndent()
