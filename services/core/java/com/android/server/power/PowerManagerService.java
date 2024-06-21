@@ -999,6 +999,10 @@ public final class PowerManagerService extends SystemService
             PowerManagerService.nativeSetPowerExtBoost(boost, fallback, durationMs);
         }
 
+        public void nativeNotifyAppState(String packActName, int pid, int uid, boolean active) {
+            PowerManagerService.nativeNotifyAppState(packActName, pid, uid, active);
+        }
+
         /** Wrapper for PowerManager.nativeSetPowerBoost */
         public void nativeSetPowerBoost(int boost, int durationMs) {
             PowerManagerService.nativeSetPowerBoost(boost, durationMs);
@@ -1202,6 +1206,7 @@ public final class PowerManagerService extends SystemService
     private static native void nativeSetAutoSuspend(boolean enable);
     private static native void nativeSetPowerExtMode(String mode, int fallback, boolean enabled);
     private static native void nativeSetPowerExtBoost(String boost, int fallback, int durationMs);
+    private static native void nativeNotifyAppState(String packActName, int pid, int uid, boolean active);
     private static native void nativeSetPowerBoost(int boost, int durationMs);
     private static native boolean nativeSetPowerMode(int mode, boolean enabled);
     private static native boolean nativeForceSuspend();
@@ -4734,6 +4739,10 @@ public final class PowerManagerService extends SystemService
         mNativeWrapper.nativeSetPowerExtBoost(boost, fallback, durationMs);
     }
 
+    private void notifyAppStateInternal(String packActName, int pid, int uid, boolean active) {
+        mNativeWrapper.nativeNotifyAppState(packActName, pid, uid, active);
+    }
+
     private void setPowerBoostInternal(int boost, int durationMs) {
         // Maybe filter the event.
         mNativeWrapper.nativeSetPowerBoost(boost, durationMs);
@@ -6049,6 +6058,16 @@ public final class PowerManagerService extends SystemService
             mContext.enforceCallingOrSelfPermission(android.Manifest.permission.DEVICE_POWER, null);
             PowerExtBoosts boost = PowerExtBoosts.valueOf(boost_name);
             setPowerExtBoostInternal(boost.name(), boost.getFallback(), durationMs);
+        }
+
+        @Override // Binder call
+        public void notifyAppState(String packActName, int pid, int uid, boolean active) {
+            if (!mSystemReady) {
+                // Service not ready yet, so who the heck cares about power hints, bah.
+                return;
+            }
+            mContext.enforceCallingOrSelfPermission(android.Manifest.permission.DEVICE_POWER, null);
+            notifyAppStateInternal(packActName, pid, uid, active);
         }
 
         @Override // Binder call
@@ -7582,6 +7601,11 @@ public final class PowerManagerService extends SystemService
         public void setPowerExtBoost(String boost_name, int durationMs) {
             PowerExtBoosts boost = PowerExtBoosts.valueOf(boost_name);
             setPowerExtBoostInternal(boost.name(), boost.getFallback(), durationMs);
+        }
+
+        @Override
+        public void notifyAppState(String packActName, int pid, int uid, boolean active) {
+            notifyAppStateInternal(packActName, pid, uid, active);
         }
 
         @Override
