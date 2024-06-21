@@ -123,6 +123,10 @@ static void setPowerBoost(Boost boost, int32_t durationMs) {
     SurfaceComposerClient::notifyPowerBoost(static_cast<int32_t>(boost));
 }
 
+static void notifyAppState(const ::std::string& packActName, int pid, int uid, bool active) {
+    gPowerExtController.notifyAppState(packActName, pid, uid, active);
+}
+
 static bool setPowerMode(Mode mode, bool enabled) {
     android::base::Timer t;
     auto result = gPowerHalController.setMode(mode, enabled);
@@ -319,6 +323,14 @@ static void nativeSetPowerExtBoost(JNIEnv* env, jclass /* clazz */, jstring boos
     }
 }
 
+static void nativeNotifyAppState(JNIEnv* env, jclass /* clazz */, jstring packActName,
+                                      jint pid, jint uid, jboolean active) {
+    ScopedUtfChars packActNameStr(env, packActName);
+    if (packActNameStr.c_str() != NULL) {
+        notifyAppState(packActNameStr.c_str(), pid, uid, active);
+    }
+}
+
 static void nativeSetPowerBoost(JNIEnv* /* env */, jclass /* clazz */, jint boost,
                                 jint durationMs) {
     setPowerBoost(static_cast<Boost>(boost), durationMs);
@@ -348,6 +360,7 @@ static const JNINativeMethod gPowerManagerServiceMethods[] = {
         {"nativeSetAutoSuspend", "(Z)V", (void*)nativeSetAutoSuspend},
         {"nativeSetPowerExtMode", "(Ljava/lang/String;IZ)V", (void*)nativeSetPowerExtMode},
         {"nativeSetPowerExtBoost", "(Ljava/lang/String;II)V", (void*)nativeSetPowerExtBoost},
+        {"nativeNotifyAppState", "(Ljava/lang/String;IIZ)V", (void*)nativeNotifyAppState},
         {"nativeSetPowerBoost", "(II)V", (void*)nativeSetPowerBoost},
         {"nativeSetPowerMode", "(IZ)Z", (void*)nativeSetPowerMode},
 };

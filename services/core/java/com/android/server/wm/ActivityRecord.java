@@ -5793,14 +5793,27 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             mTaskSupervisor.onProcessActivityStateChanged(app, false /* forceBatch */);
         }
 
+        mPowerManagerInternal = LocalServices.getService(PowerManagerInternal.class);
         if (state == RESUMED || state == STARTED) {
-            if (mPowerManagerInternal == null) {
-               mPowerManagerInternal = LocalServices.getService(PowerManagerInternal.class);
-            }
             if (mPowerManagerInternal != null) {
+                final int pid = getPid();
+                String packActName = mActivityComponent.getPackageName() + "/"
+                        + mActivityComponent.getClassName();
                 mPowerManagerInternal.setPowerExtBoost(PowerExtBoosts.ACTIVITY_SWITCH.name(), 2000);
+                mPowerManagerInternal.notifyAppState(packActName, pid,
+                        info.applicationInfo.uid, true /* active */); 
             } else {
-                Slog.v(TAG, "Failed to sendPowerHint for ACTIVITY_SWITCH");
+                Slog.v(TAG, "Failed to sendPowerHint for ACTIVITY_SWITCH and notifyAppState for opened app");
+            }
+        } else if (state == PAUSED || state == STOPPED || state == DESTROYED) {
+            if (mPowerManagerInternal != null) {
+                final int pid = getPid();
+                String packActName = mActivityComponent.getPackageName() + "/"
+                        + mActivityComponent.getClassName();
+                mPowerManagerInternal.notifyAppState(packActName, pid,
+                        info.applicationInfo.uid, false /* inactive */);
+            } else {
+                Slog.v(TAG, "Failed to notifyAppState for paused/closed app");
             }
         }
 

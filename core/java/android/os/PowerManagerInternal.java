@@ -262,6 +262,21 @@ public abstract class PowerManagerInternal {
     public abstract void setPowerExtBoost(String boost_name, int durationMs);
 
     /**
+     * NotifyAppState() is called to notify the power HAL about the state of an
+     * application. This is used to boost based on the application and it's
+     * characteristics. For example, games based on the Unity may need specific
+     * actions to ensure smoother performance.
+     *
+     * @param packActName The package name and activity name of the application,
+     *        separated by a slash. For example,
+     *        "com.glbenchmark.glbenchmark27/net.kishonti.benchui.BenchTestActivity".
+     * @param pid The PID of the application.
+     * @param uid The UID of the application.
+     * @param state The state of the application, active or inactive.
+     */
+    public abstract void notifyAppState(String packActName, int pid, int uid, boolean state);
+
+    /**
      * SetPowerBoost() indicates the device may need to boost some resources, as
      * the load is likely to increase before the kernel governors can react.
      * Depending on the boost, it may be appropriate to raise the frequencies of
