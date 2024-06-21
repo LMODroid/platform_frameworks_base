@@ -31,6 +31,7 @@
 #include "jni.h"
 
 #include <nativehelper/ScopedUtfChars.h>
+#include <nativehelper/utils.h>
 #include <powermanager/PowerHalController.h>
 
 #include <limits.h>
@@ -276,16 +277,12 @@ static void nativeSetAutoSuspend(JNIEnv* /* env */, jclass /* clazz */, jboolean
 static void nativeSetPowerExtMode(JNIEnv* env, jclass /* clazz */, jstring mode,
                                    jint fallback, jboolean enabled) {
     bool isSupported = isPowerExtAvailable();
-    const char* modeStr = nullptr;
+    std::string modeStr(GET_UTF_OR_RETURN_VOID(env, mode));
     if (isSupported) {
-        if ((modeStr = env->GetStringUTFChars(mode, nullptr))) {
-            if (boostCache.find(modeStr) != boostCache.end()) {
-                isSupported = boostCache[modeStr];
-            } else {
-                isSupported = boostCache[modeStr] = isPowerExtModeSupported(modeStr);
-            }
+        if (boostCache.find(modeStr) != boostCache.end()) {
+            isSupported = boostCache[modeStr];
         } else {
-            isSupported = false;
+            isSupported = boostCache[modeStr] = isPowerExtModeSupported(modeStr);
         }
     }
     if (isSupported) {
@@ -293,42 +290,30 @@ static void nativeSetPowerExtMode(JNIEnv* env, jclass /* clazz */, jstring mode,
     } else if (fallback >= 0) {
         setPowerMode(static_cast<Mode>(fallback), enabled);
     }
-    if (modeStr) {
-        env->ReleaseStringUTFChars(mode, modeStr);
-    }
 }
 
 static void nativeSetPowerExtBoost(JNIEnv* env, jclass /* clazz */, jstring boost,
                                    jint fallback, jint durationMs) {
     bool isSupported = isPowerExtAvailable();
-    const char* boostStr = nullptr;
+    std::string boostStr(GET_UTF_OR_RETURN_VOID(env, boost));
     if (isSupported) {
-        if ((boostStr = env->GetStringUTFChars(boost, nullptr))) {
             if (boostCache.find(boostStr) != boostCache.end()) {
                 isSupported = boostCache[boostStr];
             } else {
                 isSupported = boostCache[boostStr] = isPowerExtBoostSupported(boostStr);
             }
-        } else {
-            isSupported = false;
-        }
     }
     if (isSupported) {
         setPowerExtBoost(boostStr, durationMs);
     } else if (fallback >= 0) {
         setPowerBoost(static_cast<Boost>(fallback), durationMs);
     }
-    if (boostStr) {
-        env->ReleaseStringUTFChars(boost, boostStr);
-    }
 }
 
 static void nativeNotifyAppState(JNIEnv* env, jclass /* clazz */, jstring packActName,
                                       jint pid, jint uid, jboolean active) {
-    ScopedUtfChars packActNameStr(env, packActName);
-    if (packActNameStr.c_str() != NULL) {
-        notifyAppState(packActNameStr.c_str(), pid, uid, active);
-    }
+    std::string packActNameStr(GET_UTF_OR_RETURN_VOID(env, packActName));
+    notifyAppState(packActNameStr, pid, uid, active);
 }
 
 static void nativeSetPowerBoost(JNIEnv* /* env */, jclass /* clazz */, jint boost,
