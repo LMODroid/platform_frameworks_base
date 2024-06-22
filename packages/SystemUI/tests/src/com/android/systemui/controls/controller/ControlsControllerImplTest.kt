@@ -36,11 +36,12 @@ import com.android.systemui.controls.ControlStatus
 import com.android.systemui.controls.ControlsServiceInfo
 import com.android.systemui.controls.management.ControlsListingController
 import com.android.systemui.controls.panels.AuthorizedPanelsRepository
-import com.android.systemui.controls.panels.FakeSelectedComponentRepository
+import com.android.systemui.controls.panels.selectedComponentRepository
 import com.android.systemui.controls.ui.ControlsUiController
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.settings.UserFileManager
 import com.android.systemui.settings.UserTracker
+import com.android.systemui.testKosmos
 import com.android.systemui.util.concurrency.FakeExecutor
 import com.android.systemui.util.mockito.whenever
 import com.android.systemui.util.time.FakeSystemClock
@@ -71,12 +72,13 @@ import org.mockito.Mockito.verifyNoMoreInteractions
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import java.io.File
-import java.util.*
+import java.util.Optional
 import java.util.function.Consumer
 
 @SmallTest
 @RunWith(AndroidTestingRunner::class)
 class ControlsControllerImplTest : SysuiTestCase() {
+    private val kosmos = testKosmos()
 
     @Mock
     private lateinit var uiController: ControlsUiController
@@ -110,8 +112,6 @@ class ControlsControllerImplTest : SysuiTestCase() {
     @Captor
     private lateinit var listingCallbackCaptor:
             ArgumentCaptor<ControlsListingController.ControlsListingCallback>
-
-    private val preferredPanelRepository = FakeSelectedComponentRepository()
 
     private lateinit var delayableExecutor: FakeExecutor
     private lateinit var controller: ControlsControllerImpl
@@ -181,7 +181,7 @@ class ControlsControllerImplTest : SysuiTestCase() {
                 wrapper,
                 delayableExecutor,
                 uiController,
-                preferredPanelRepository,
+                kosmos.selectedComponentRepository,
                 bindingController,
                 listingController,
                 userFileManager,
@@ -235,7 +235,7 @@ class ControlsControllerImplTest : SysuiTestCase() {
                 mContext,
                 delayableExecutor,
                 uiController,
-                preferredPanelRepository,
+                kosmos.selectedComponentRepository,
                 bindingController,
                 listingController,
                 userFileManager,
@@ -255,7 +255,7 @@ class ControlsControllerImplTest : SysuiTestCase() {
                 mContext,
                 delayableExecutor,
                 uiController,
-                preferredPanelRepository,
+                kosmos.selectedComponentRepository,
                 bindingController,
                 listingController,
                 userFileManager,

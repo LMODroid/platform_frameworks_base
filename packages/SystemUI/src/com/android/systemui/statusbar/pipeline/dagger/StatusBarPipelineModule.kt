@@ -29,13 +29,13 @@ import com.android.systemui.statusbar.pipeline.airplane.data.repository.Airplane
 import com.android.systemui.statusbar.pipeline.airplane.data.repository.AirplaneModeRepositoryImpl
 import com.android.systemui.statusbar.pipeline.airplane.ui.viewmodel.AirplaneModeViewModel
 import com.android.systemui.statusbar.pipeline.airplane.ui.viewmodel.AirplaneModeViewModelImpl
+import com.android.systemui.statusbar.pipeline.icons.shared.BindableIconsRegistry
+import com.android.systemui.statusbar.pipeline.icons.shared.BindableIconsRegistryImpl
 import com.android.systemui.statusbar.pipeline.ims.data.repository.CommonImsRepository
 import com.android.systemui.statusbar.pipeline.ims.data.repository.CommonImsRepositoryImpl
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.CarrierConfigCoreStartable
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.MobileConnectionsRepository
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.MobileRepositorySwitcher
-import com.android.systemui.statusbar.pipeline.mobile.data.repository.UserSetupRepository
-import com.android.systemui.statusbar.pipeline.mobile.data.repository.UserSetupRepositoryImpl
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconsInteractor
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconsInteractorImpl
 import com.android.systemui.statusbar.pipeline.mobile.ui.MobileUiAdapter
@@ -44,6 +44,8 @@ import com.android.systemui.statusbar.pipeline.mobile.util.MobileMappingsProxy
 import com.android.systemui.statusbar.pipeline.mobile.util.MobileMappingsProxyImpl
 import com.android.systemui.statusbar.pipeline.mobile.util.SubscriptionManagerProxy
 import com.android.systemui.statusbar.pipeline.mobile.util.SubscriptionManagerProxyImpl
+import com.android.systemui.statusbar.pipeline.satellite.data.DeviceBasedSatelliteRepository
+import com.android.systemui.statusbar.pipeline.satellite.data.prod.DeviceBasedSatelliteRepositoryImpl
 import com.android.systemui.statusbar.pipeline.shared.data.repository.ConnectivityRepository
 import com.android.systemui.statusbar.pipeline.shared.data.repository.ConnectivityRepositoryImpl
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.CollapsedStatusBarViewBinder
@@ -60,6 +62,8 @@ import com.android.systemui.statusbar.pipeline.wifi.data.repository.prod.WifiRep
 import com.android.systemui.statusbar.pipeline.wifi.data.repository.prod.WifiRepositoryViaTrackerLib
 import com.android.systemui.statusbar.pipeline.wifi.domain.interactor.WifiInteractor
 import com.android.systemui.statusbar.pipeline.wifi.domain.interactor.WifiInteractorImpl
+import com.android.systemui.statusbar.policy.data.repository.UserSetupRepository
+import com.android.systemui.statusbar.policy.data.repository.UserSetupRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -78,7 +82,15 @@ abstract class StatusBarPipelineModule {
     abstract fun airplaneModeViewModel(impl: AirplaneModeViewModelImpl): AirplaneModeViewModel
 
     @Binds
+    abstract fun bindableIconsRepository(impl: BindableIconsRegistryImpl): BindableIconsRegistry
+
+    @Binds
     abstract fun connectivityRepository(impl: ConnectivityRepositoryImpl): ConnectivityRepository
+
+    @Binds
+    abstract fun deviceBasedSatelliteRepository(
+        impl: DeviceBasedSatelliteRepositoryImpl
+    ): DeviceBasedSatelliteRepository
 
     @Binds abstract fun wifiRepository(impl: WifiRepositorySwitcher): WifiRepository
 
@@ -256,6 +268,13 @@ abstract class StatusBarPipelineModule {
         @VerboseMobileViewLog
         fun provideVerboseMobileViewLogBuffer(factory: LogBufferFactory): LogBuffer {
             return factory.create("VerboseMobileViewLog", 100)
+        }
+
+        @Provides
+        @SysUISingleton
+        @OemSatelliteInputLog
+        fun provideOemSatelliteInputLog(factory: LogBufferFactory): LogBuffer {
+            return factory.create("DeviceBasedSatelliteInputLog", 32)
         }
 
         const val FIRST_MOBILE_SUB_SHOWING_NETWORK_TYPE_ICON =

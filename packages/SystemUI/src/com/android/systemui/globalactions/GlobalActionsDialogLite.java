@@ -136,7 +136,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.MultiListLayout;
 import com.android.systemui.MultiListLayout.MultiListAdapter;
 import com.android.systemui.animation.DialogCuj;
-import com.android.systemui.animation.DialogLaunchAnimator;
+import com.android.systemui.animation.DialogTransitionAnimator;
 import com.android.systemui.animation.Expandable;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -146,6 +146,7 @@ import com.android.systemui.controls.ui.ControlsActivity;
 import com.android.systemui.controls.ui.ControlsUiController;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.globalactions.domain.interactor.GlobalActionsInteractor;
 import com.android.systemui.plugins.GlobalActions.GlobalActionsManager;
 import com.android.systemui.plugins.GlobalActionsPanelPlugin;
 import com.android.systemui.scrim.ScrimDrawable;
@@ -285,7 +286,8 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     private int mOrientation;
     protected final ShadeController mShadeController;
     protected final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
-    private final DialogLaunchAnimator mDialogLaunchAnimator;
+    private final DialogTransitionAnimator mDialogTransitionAnimator;
+    private final GlobalActionsInteractor mInteractor;
     private final ControlsComponent mControlsComponent;
 
     @VisibleForTesting
@@ -396,8 +398,9 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
             PackageManager packageManager,
             ShadeController shadeController,
             KeyguardUpdateMonitor keyguardUpdateMonitor,
-            DialogLaunchAnimator dialogLaunchAnimator,
+            DialogTransitionAnimator dialogTransitionAnimator,
             SelectedUserInteractor selectedUserInteractor,
+            GlobalActionsInteractor interactor,
             ControlsComponent controlsComponent) {
         mContext = context;
         mWindowManagerFuncs = windowManagerFuncs;
@@ -433,8 +436,9 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         mOrientation = resources.getConfiguration().orientation;
         mShadeController = shadeController;
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
-        mDialogLaunchAnimator = dialogLaunchAnimator;
+        mDialogTransitionAnimator = dialogTransitionAnimator;
         mSelectedUserInteractor = selectedUserInteractor;
+        mInteractor = interactor;
 
         // receive broadcasts
         IntentFilter filter = new IntentFilter();
@@ -567,12 +571,12 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         // Don't acquire soft keyboard focus, to avoid destroying state when capturing bugreports
         mDialog.getWindow().addFlags(FLAG_ALT_FOCUSABLE_IM);
 
-        DialogLaunchAnimator.Controller controller =
-                expandable != null ? expandable.dialogLaunchController(
+        DialogTransitionAnimator.Controller controller =
+                expandable != null ? expandable.dialogTransitionController(
                         new DialogCuj(InteractionJankMonitor.CUJ_SHADE_DIALOG_OPEN,
                                 INTERACTION_JANK_TAG)) : null;
         if (controller != null) {
-            mDialogLaunchAnimator.show(mDialog, controller);
+            mDialogTransitionAnimator.show(mDialog, controller);
         } else {
             mDialog.show();
         }
@@ -1321,6 +1325,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                 return;
             }
             Trace.instantForTrack(Trace.TRACE_TAG_APP, "bugreport", "BugReportAction#onPress");
+            Log.d(TAG, "BugReportAction#onPress");
             // Add a little delay before executing, to give the
             // dialog a chance to go away before it takes a
             // screenshot.
@@ -1336,6 +1341,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                             Log.w(TAG, "Bugreport handler could not be launched");
                             Trace.instantForTrack(Trace.TRACE_TAG_APP, "bugreport",
                                     "BugReportAction#requestingInteractiveBugReport");
+                            Log.d(TAG, "BugReportAction#requestingInteractiveBugReport");
                             mIActivityManager.requestInteractiveBugReport();
                         }
                     } catch (RemoteException e) {
@@ -1357,6 +1363,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                 mUiEventLogger.log(GlobalActionsEvent.GA_BUGREPORT_LONG_PRESS);
                 Trace.instantForTrack(Trace.TRACE_TAG_APP, "bugreport",
                         "BugReportAction#requestingFullBugReport");
+                Log.d(TAG, "BugReportAction#requestingFullBugReport");
                 mIActivityManager.requestFullBugReport();
             } catch (RemoteException e) {
             }
@@ -1677,6 +1684,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         mUiEventLogger.log(GlobalActionsEvent.GA_POWER_MENU_CLOSE);
         mWindowManagerFuncs.onGlobalActionsHidden();
         mLifecycle.setCurrentState(Lifecycle.State.CREATED);
+        mInteractor.onDismissed();
     }
 
     /**
@@ -1686,6 +1694,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     public void onShow(DialogInterface dialog) {
         mMetricsLogger.visible(MetricsEvent.POWER_MENU);
         mUiEventLogger.log(GlobalActionsEvent.GA_POWER_MENU_OPEN);
+        mInteractor.onShown();
     }
 
     /**
@@ -1778,7 +1787,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                     // Usually clicking an item shuts down the phone, locks, or starts an activity.
                     // We don't want to animate back into the power button when that happens, so we
                     // disable the dialog animation before dismissing.
-                    mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+                    mDialogTransitionAnimator.disableAllCurrentDialogsExitAnimations();
                     mDialog.dismiss();
                 } else {
                     Log.w(TAG, "Action long-clicked while mDialog is null.");
@@ -1800,7 +1809,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                         // Usually clicking an item shuts down the phone, locks, or starts an
                         // activity. We don't want to animate back into the power button when that
                         // happens, so we disable the dialog animation before dismissing.
-                        mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+                        mDialogTransitionAnimator.disableAllCurrentDialogsExitAnimations();
                         mDialog.dismiss();
                     }
                 } else {
@@ -1871,7 +1880,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                     // Usually clicking an item shuts down the phone, locks, or starts an activity.
                     // We don't want to animate back into the power button when that happens, so we
                     // disable the dialog animation before dismissing.
-                    mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+                    mDialogTransitionAnimator.disableAllCurrentDialogsExitAnimations();
                     mDialog.dismiss();
                 } else {
                     Log.w(TAG, "Action long-clicked while mDialog is null.");
@@ -1889,7 +1898,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                     // Usually clicking an item shuts down the phone, locks, or starts an activity.
                     // We don't want to animate back into the power button when that happens, so we
                     // disable the dialog animation before dismissing.
-                    mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+                    mDialogTransitionAnimator.disableAllCurrentDialogsExitAnimations();
                     mDialog.dismiss();
                 } else {
                     Log.w(TAG, "Action clicked while mDialog is null.");
@@ -2015,7 +2024,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                     // Usually clicking an item shuts down the phone, locks, or starts an activity.
                     // We don't want to animate back into the power button when that happens, so we
                     // disable the dialog animation before dismissing.
-                    mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+                    mDialogTransitionAnimator.disableAllCurrentDialogsExitAnimations();
                     mDialog.dismiss();
                 } else {
                     Log.w(TAG, "Action long-clicked while mDialog is null.");
@@ -2032,7 +2041,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                     // Usually clicking an item shuts down the phone, locks, or starts an activity.
                     // We don't want to animate back into the power button when that happens, so we
                     // disable the dialog animation before dismissing.
-                    mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+                    mDialogTransitionAnimator.disableAllCurrentDialogsExitAnimations();
                     mDialog.dismiss();
                 } else {
                     Log.w(TAG, "Action clicked while mDialog is null.");
@@ -2562,7 +2571,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                     // These broadcasts are usually received when locking the device, swiping up to
                     // home (which collapses the shade), etc. In those cases, we usually don't want
                     // to animate this dialog back into the view, so we disable the exit animations.
-                    mDialogLaunchAnimator.disableAllCurrentDialogsExitAnimations();
+                    mDialogTransitionAnimator.disableAllCurrentDialogsExitAnimations();
                     mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_DISMISS, reason));
                 }
             } else if (TelephonyManager.ACTION_EMERGENCY_CALLBACK_MODE_CHANGED.equals(action)) {
@@ -2968,6 +2977,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                     return true;
                 }
             });
+            mGlobalActionsLayout.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
             mGlobalActionsLayout.setRotationListener(this::onRotate);
             mGlobalActionsLayout.setAdapter(mAdapter);
             ViewGroup root = (ViewGroup) mGlobalActionsLayout.getRootView();
@@ -3133,7 +3143,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
             // By default this dialog windowAnimationStyle is null, and therefore windowAnimations
             // should be equal to 0 which means we need to animate the dialog in-window. If it's not
             // equal to 0, it means it has been overridden to animate (e.g. by the
-            // DialogLaunchAnimator) so we don't run the animation.
+            // DialogTransitionAnimator) so we don't run the animation.
             boolean shouldAnimateInWindow = getWindow().getAttributes().windowAnimations == 0;
             if (shouldAnimateInWindow) {
                 startAnimation(true /* isEnter */, null /* then */);

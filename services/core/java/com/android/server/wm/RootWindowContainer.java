@@ -63,7 +63,6 @@ import static com.android.server.wm.ActivityTaskManagerService.TAG_SWITCH;
 import static com.android.server.wm.ActivityTaskManagerService.isPip2ExperimentEnabled;
 import static com.android.server.wm.ActivityTaskSupervisor.DEFER_RESUME;
 import static com.android.server.wm.ActivityTaskSupervisor.ON_TOP;
-import static com.android.server.wm.ActivityTaskSupervisor.PRESERVE_WINDOWS;
 import static com.android.server.wm.ActivityTaskSupervisor.dumpHistoryList;
 import static com.android.server.wm.ActivityTaskSupervisor.printThisActivity;
 import static com.android.server.wm.KeyguardController.KEYGUARD_SLEEP_TOKEN_TAG;
@@ -84,6 +83,7 @@ import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_WILL_PLACE
 import static com.android.server.wm.WindowManagerService.WINDOWS_FREEZING_SCREENS_NONE;
 import static com.android.server.wm.WindowSurfacePlacer.SET_UPDATE_ROTATION;
 import static com.android.server.wm.WindowSurfacePlacer.SET_WALLPAPER_ACTION_PENDING;
+import static com.android.systemui.shared.Flags.enableHomeDelay;
 
 import static java.lang.Integer.MAX_VALUE;
 
@@ -153,6 +153,7 @@ import com.android.server.pm.UserManagerInternal;
 import com.android.server.policy.PermissionPolicyInternal;
 import com.android.server.policy.WindowManagerPolicy;
 import com.android.server.utils.Slogf;
+import com.android.window.flags.Flags;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -252,6 +253,8 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
     /** Reference to default display so we can quickly look it up. */
     private DisplayContent mDefaultDisplay;
     private final SparseArray<IntArray> mDisplayAccessUIDs = new SparseArray<>();
+    private final SparseArray<SurfaceControl.Transaction> mDisplayTransactions =
+            new SparseArray<>();
 
     /** The current user */
     int mCurrentUser;
@@ -572,22 +575,6 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         }, true /* traverseTopToBottom */);
     }
 
-    /**
-     * Returns the app window token for the input binder if it exist in the system.
-     * NOTE: Only one AppWindowToken is allowed to exist in the system for a binder token, since
-     * AppWindowToken represents an activity which can only exist on one display.
-     */
-    ActivityRecord getActivityRecord(IBinder binder) {
-        for (int i = mChildren.size() - 1; i >= 0; --i) {
-            final DisplayContent dc = mChildren.get(i);
-            final ActivityRecord activity = dc.getActivityRecord(binder);
-            if (activity != null) {
-                return activity;
-            }
-        }
-        return null;
-    }
-
     /** Returns the window token for the input binder if it exist in the system. */
     WindowToken getWindowToken(IBinder binder) {
         for (int i = mChildren.size() - 1; i >= 0; --i) {
@@ -628,10 +615,8 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
     }
 
     void refreshSecureSurfaceState() {
-        forAllWindows((w) -> {
-            if (w.mHasSurface) {
-                w.setSecureLocked(w.isSecureLocked());
-            }
+        forAllWindows(w -> {
+            w.setSecureLocked(w.isSecureLocked());
         }, true /* traverseTopToBottom */);
     }
 
@@ -801,11 +786,18 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);
         }
 
+        if (Flags.bundleClientTransactionFlag()) {
+            // mWmService.mResizingWindows is populated in #applySurfaceChangesTransaction()
+            handleResizingWindows();
+
+            // Called after #handleResizingWindows to include WindowStateResizeItem if any.
+            mWmService.mAtmService.getLifecycleManager().dispatchPendingTransactions();
+        }
+
         // Send any pending task-info changes that were queued-up during a layout deferment
         mWmService.mAtmService.mTaskOrganizerController.dispatchPendingEvents();
         mWmService.mAtmService.mTaskFragmentOrganizerController.dispatchPendingEvents();
         mWmService.mSyncEngine.onSurfacePlacement();
-        mWmService.mAnimator.executeAfterPrepareSurfacesRunnables();
 
         checkAppTransitionReady(surfacePlacer);
 
@@ -844,11 +836,10 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             }
         }
 
-        handleResizingWindows();
+        if (!Flags.bundleClientTransactionFlag()) {
+            handleResizingWindows();
+        }
         clearFrameChangingWindows();
-
-        // Called after #handleResizingWindows to include WindowStateResizeItem if any.
-        mWmService.mAtmService.getLifecycleManager().dispatchPendingTransactions();
 
         if (mWmService.mDisplayFrozen) {
             ProtoLog.v(WM_DEBUG_ORIENTATION,
@@ -1000,11 +991,13 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             final DisplayContent dc = mChildren.get(j);
             if (dc == defaultDc) continue;
             dc.applySurfaceChangesTransaction();
+            mDisplayTransactions.append(dc.mDisplayId, dc.getSyncTransaction());
         }
 
         // Give the display manager a chance to adjust properties like display rotation if it needs
         // to.
-        mWmService.mDisplayManagerInternal.performTraversal(t);
+        mWmService.mDisplayManagerInternal.performTraversal(t, mDisplayTransactions);
+        mDisplayTransactions.clear();
     }
 
     /**
@@ -1473,11 +1466,17 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             aInfo = info.first;
             homeIntent = info.second;
         }
+
         if (aInfo == null || homeIntent == null) {
             return false;
         }
 
         if (!canStartHomeOnDisplayArea(aInfo, taskDisplayArea, allowInstrumenting)) {
+            return false;
+        }
+
+        if (enableHomeDelay() && !mService.mAmInternal.isThemeOverlayReady(userId)) {
+            Slog.d(TAG, "ThemeHomeDelay: Home launch was deferred.");
             return false;
         }
 
@@ -1776,8 +1775,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         // activities are affecting configuration now.
         // Passing null here for 'starting' param value, so that visibility of actual starting
         // activity will be properly updated.
-        ensureActivitiesVisible(null /* starting */, 0 /* configChanges */,
-                false /* preserveWindows */, false /* notifyClients */);
+        ensureActivitiesVisible(null /* starting */, false /* notifyClients */);
 
         if (displayId == INVALID_DISPLAY) {
             // The caller didn't provide a valid display id, skip updating config.
@@ -1801,7 +1799,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         if (displayContent != null) {
             // Update the configuration of the activities on the display.
             return displayContent.updateDisplayOverrideConfigurationLocked(config, starting,
-                    deferResume, null /* result */);
+                    deferResume);
         } else {
             return true;
         }
@@ -1888,16 +1886,18 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
      * Make sure that all activities that need to be visible in the system actually are and update
      * their configuration.
      */
-    void ensureActivitiesVisible(ActivityRecord starting, int configChanges,
-            boolean preserveWindows) {
-        ensureActivitiesVisible(starting, configChanges, preserveWindows, true /* notifyClients */);
+    void ensureActivitiesVisible() {
+        ensureActivitiesVisible(null /* starting */);
+    }
+
+    void ensureActivitiesVisible(ActivityRecord starting) {
+        ensureActivitiesVisible(starting, true /* notifyClients */);
     }
 
     /**
-     * @see #ensureActivitiesVisible(ActivityRecord, int, boolean)
+     * @see #ensureActivitiesVisible()
      */
-    void ensureActivitiesVisible(ActivityRecord starting, int configChanges,
-            boolean preserveWindows, boolean notifyClients) {
+    void ensureActivitiesVisible(ActivityRecord starting, boolean notifyClients) {
         if (mTaskSupervisor.inActivityVisibilityUpdate()
                 || mTaskSupervisor.isRootVisibilityUpdateDeferred()) {
             // Don't do recursive work.
@@ -1908,8 +1908,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             // First the front root tasks. In case any are not fullscreen and are in front of home.
             for (int displayNdx = getChildCount() - 1; displayNdx >= 0; --displayNdx) {
                 final DisplayContent display = getChildAt(displayNdx);
-                display.ensureActivitiesVisible(starting, configChanges, preserveWindows,
-                        notifyClients);
+                display.ensureActivitiesVisible(starting, notifyClients);
             }
         } finally {
             mTaskSupervisor.endActivityVisibilityUpdate();
@@ -2182,7 +2181,11 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
                     organizedTf.mClearedTaskFragmentForPip = true;
                 }
 
-                transitionController.collect(rootTask);
+                if (isPip2ExperimentEnabled()) {
+                    transitionController.collectExistenceChange(rootTask);
+                } else {
+                    transitionController.collect(rootTask);
+                }
 
                 if (transitionController.isShellTransitionsEnabled()) {
                     // set mode NOW so that when we reparent the activity, it won't be resumed.
@@ -2260,7 +2263,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             try {
                 if (localVisibilityDeferred) {
                     mTaskSupervisor.setDeferRootVisibilityUpdate(false);
-                    ensureActivitiesVisible(null, 0, false /* preserveWindows */);
+                    ensureActivitiesVisible();
                 }
             } finally {
                 transitionController.continueTransitionReady();
@@ -2393,7 +2396,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             // It may be nothing to resume because there are pausing activities or all the top
             // activities are resumed. Then it still needs to make sure all visible activities are
             // running in case the tasks were reordered or there are non-top visible activities.
-            ensureActivitiesVisible(null /* starting */, 0 /* configChanges */, !PRESERVE_WINDOWS);
+            ensureActivitiesVisible();
         }
     }
 
@@ -2505,6 +2508,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             if (displayShouldSleep == display.isSleeping()) {
                 continue;
             }
+            final boolean wasSleeping = display.isSleeping();
             display.setIsSleeping(displayShouldSleep);
 
             if (display.mTransitionController.isShellTransitionsEnabled()
@@ -2530,9 +2534,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
                 // Use NONE if keyguard is not showing.
                 int transit = TRANSIT_NONE;
                 Task startTask = null;
-                if (!display.getDisplayPolicy().isAwake()) {
-                    // Note that currently this only happens on default display because non-default
-                    // display is always awake.
+                if (wasSleeping) {
                     transit = TRANSIT_WAKE;
                 } else if (display.isKeyguardOccluded()) {
                     // The display was awake so this is resuming activity for occluding keyguard.
@@ -2565,8 +2567,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
                     // display orientation can be updated first if needed. Otherwise there may
                     // have redundant configuration changes due to apply outdated display
                     // orientation (from keyguard) to activity.
-                    rootTask.ensureActivitiesVisible(null /* starting */, 0 /* configChanges */,
-                            false /* preserveWindows */);
+                    rootTask.ensureActivitiesVisible(null /* starting */);
                 }
             });
         }
@@ -2801,6 +2802,9 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         } else {
             throw new RuntimeException("Create the same sleep token twice: " + token);
         }
+        if (isSwappingDisplay) {
+            display.mWallpaperController.onDisplaySwitchStarted();
+        }
         return token;
     }
 
@@ -2908,8 +2912,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             if (allowDelay) {
                 result[0] &= task.goToSleepIfPossible(shuttingDown);
             } else {
-                task.ensureActivitiesVisible(null /* starting */, 0 /* configChanges */,
-                        !PRESERVE_WINDOWS);
+                task.ensureActivitiesVisible(null /* starting */);
             }
         });
         return result[0];
@@ -3797,8 +3800,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
                 }
             }
             if (!mHasActivityStarted) {
-                ensureActivitiesVisible(null /* starting */, 0 /* configChanges */,
-                        false /* preserveWindows */);
+                ensureActivitiesVisible();
             }
             return mHasActivityStarted;
         }

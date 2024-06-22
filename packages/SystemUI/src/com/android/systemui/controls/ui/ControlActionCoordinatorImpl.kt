@@ -36,6 +36,7 @@ import com.android.systemui.broadcast.BroadcastSender
 import com.android.systemui.controls.ControlsMetricsLogger
 import com.android.systemui.controls.settings.ControlsSettingsRepository
 import com.android.systemui.dagger.SysUISingleton
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.globalactions.GlobalActionsComponent
 import com.android.systemui.plugins.ActivityStarter
@@ -48,17 +49,17 @@ import javax.inject.Inject
 
 @SysUISingleton
 class ControlActionCoordinatorImpl @Inject constructor(
-        private val context: Context,
-        private val bgExecutor: DelayableExecutor,
-        @Main private val uiExecutor: DelayableExecutor,
-        private val activityStarter: ActivityStarter,
-        private val broadcastSender: BroadcastSender,
-        private val keyguardStateController: KeyguardStateController,
-        private val taskViewFactory: Optional<TaskViewFactory>,
-        private val controlsMetricsLogger: ControlsMetricsLogger,
-        private val vibrator: VibratorHelper,
-        private val controlsSettingsRepository: ControlsSettingsRepository,
-        private val globalActionsComponent: GlobalActionsComponent,
+    private val context: Context,
+    @Background private val bgExecutor: DelayableExecutor,
+    @Main private val uiExecutor: DelayableExecutor,
+    private val activityStarter: ActivityStarter,
+    private val broadcastSender: BroadcastSender,
+    private val keyguardStateController: KeyguardStateController,
+    private val taskViewFactory: Optional<TaskViewFactory>,
+    private val controlsMetricsLogger: ControlsMetricsLogger,
+    private val vibrator: VibratorHelper,
+    private val controlsSettingsRepository: ControlsSettingsRepository,
+    private val globalActionsComponent: GlobalActionsComponent,
 ) : ControlActionCoordinator {
     private var dialog: Dialog? = null
     private var pendingAction: Action? = null

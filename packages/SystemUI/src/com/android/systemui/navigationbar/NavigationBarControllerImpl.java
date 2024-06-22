@@ -44,6 +44,7 @@ import android.view.WindowManagerGlobal;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.statusbar.RegisterStatusBarResult;
 import com.android.settingslib.applications.InterestingConfigChanges;
@@ -92,7 +93,16 @@ public class NavigationBarControllerImpl implements
     private final TaskbarDelegate mTaskbarDelegate;
     private final NavBarHelper mNavBarHelper;
     private int mNavMode;
+    /**
+     * Indicates whether the active display is a large screen, e.g. tablets, foldable devices in
+     * the unfolded state.
+     */
     @VisibleForTesting boolean mTaskbarShowing;
+    /**
+     * Indicates whether the device is a phone, rather than everything else (e.g. foldables,
+     * tablets) is considered not a handheld device.
+     */
+    @VisibleForTesting boolean mIsPhone;
 
     /** A displayId - nav bar maps. */
     @VisibleForTesting
@@ -142,6 +152,8 @@ public class NavigationBarControllerImpl implements
                 dumpManager, autoHideController, lightBarController, pipOptional,
                 backAnimation.orElse(null), taskStackChangeListeners);
         overviewProxyService.addCallback(this);
+        mIsPhone =
+                mContext.getResources().getIntArray(R.array.config_foldedDeviceStates).length == 0;
         dumpManager.registerDumpable(this);
     }
 
@@ -272,9 +284,8 @@ public class NavigationBarControllerImpl implements
 
     /** @return {@code true} if taskbar is enabled, false otherwise */
     private boolean initializeTaskbarIfNecessary() {
-        // Enable for large screens or (phone AND flag is set); assuming phone = !mIsLargeScreen
-        boolean taskbarEnabled = (shouldShowTaskbar() || enableTaskbarNavbarUnification())
-                && shouldCreateNavBarAndTaskBar(mContext, mContext.getDisplayId());
+        boolean taskbarEnabled = supportsTaskbar() && shouldCreateNavBarAndTaskBar(
+                mContext.getDisplayId());
 
         if (taskbarEnabled) {
             Trace.beginSection("NavigationBarController#initializeTaskbarIfNecessary");
@@ -291,6 +302,12 @@ public class NavigationBarControllerImpl implements
             mTaskbarDelegate.destroy();
         }
         return taskbarEnabled;
+    }
+
+    @VisibleForTesting
+    boolean supportsTaskbar() {
+        // Enable for tablets, unfolded state on a foldable device or (non handheld AND flag is set)
+        return shouldShowTaskbar() || (!mIsPhone && enableTaskbarNavbarUnification());
     }
 
     private final CommandQueue.Callbacks mCommandQueueCallbacks = new CommandQueue.Callbacks() {
@@ -320,9 +337,6 @@ public class NavigationBarControllerImpl implements
             final NavigationBarView navBarView = getNavigationBarView(displayId);
             if (navBarView != null) {
                 navBarView.showPinningEnterExitToast(entering);
-            } else if (displayId == mDisplayTracker.getDefaultDisplayId()
-                    && mTaskbarDelegate.isInitialized()) {
-                mTaskbarDelegate.showPinningEnterExitToast(entering);
             }
         }
 
@@ -332,9 +346,6 @@ public class NavigationBarControllerImpl implements
             final NavigationBarView navBarView = getNavigationBarView(displayId);
             if (navBarView != null) {
                 navBarView.showPinningEscapeToast();
-            } else if (displayId == mDisplayTracker.getDefaultDisplayId()
-                    && mTaskbarDelegate.isInitialized()) {
-                mTaskbarDelegate.showPinningEscapeToast();
             }
         }
     };

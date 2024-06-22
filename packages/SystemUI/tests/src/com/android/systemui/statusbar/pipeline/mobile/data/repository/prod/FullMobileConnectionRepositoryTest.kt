@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.pipeline.mobile.data.repository.prod
 
 import android.net.ConnectivityManager
+import android.os.PersistableBundle
 import android.telephony.ServiceState
 import android.telephony.SignalStrength
 import android.telephony.SubscriptionManager.PROFILE_CLASS_UNSET
@@ -32,6 +33,7 @@ import com.android.systemui.log.table.TableLogBufferFactory
 import com.android.systemui.statusbar.pipeline.ims.data.repository.ImsRepositoryImpl
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.SubscriptionModel
+import com.android.systemui.statusbar.pipeline.mobile.data.model.SystemUiCarrierConfig
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.FakeMobileConnectionRepository
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.MobileConnectionRepository
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.prod.FullMobileConnectionRepository.Companion.COL_EMERGENCY
@@ -99,6 +101,9 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
                 profileClass = PROFILE_CLASS_UNSET,
             )
         )
+
+    // Use a real config, with no overrides
+    private val systemUiCarrierConfig = SystemUiCarrierConfig(SUB_ID, PersistableBundle())
 
     private lateinit var mobileRepo: FakeMobileConnectionRepository
     private lateinit var carrierMergedRepo: FakeMobileConnectionRepository
@@ -696,7 +701,7 @@ class FullMobileConnectionRepositoryTest : SysuiTestCase() {
                 SEP,
                 connectivityManager,
                 telephonyManager,
-                systemUiCarrierConfig = mock(),
+                systemUiCarrierConfig = systemUiCarrierConfig,
                 fakeBroadcastDispatcher,
                 mobileMappingsProxy = mock(),
                 testDispatcher,

@@ -40,6 +40,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager.Policy;
 import android.app.Person;
 import android.app.RemoteInput;
+import android.app.RemoteInputHistoryItem;
 import android.content.Context;
 import android.content.pm.ShortcutInfo;
 import android.net.Uri;
@@ -127,6 +128,7 @@ public final class NotificationEntry extends ListEntry {
     public int targetSdk;
     private long lastFullScreenIntentLaunchTime = NOT_LAUNCHED_YET;
     public CharSequence remoteInputText;
+    public List<RemoteInputHistoryItem> remoteInputs = null;
     public String remoteInputMimeType;
     public Uri remoteInputUri;
     public ContentInfo remoteInputAttachment;
@@ -171,7 +173,7 @@ public final class NotificationEntry extends ListEntry {
     private int mBucket = BUCKET_ALERTING;
     @Nullable private Long mPendingAnimationDuration;
     private boolean mIsMarkedForUserTriggeredMovement;
-    private boolean mIsAlerting;
+    private boolean mIsHeadsUpEntry;
 
     public boolean mRemoteEditImeAnimatingAway;
     public boolean mRemoteEditImeVisible;
@@ -968,12 +970,12 @@ public final class NotificationEntry extends ListEntry {
         mIsMarkedForUserTriggeredMovement = marked;
     }
 
-    public void setIsAlerting(boolean isAlerting) {
-        mIsAlerting = isAlerting;
+    public void setIsHeadsUpEntry(boolean isHeadsUpEntry) {
+        mIsHeadsUpEntry = isHeadsUpEntry;
     }
 
-    public boolean isAlerting() {
-        return mIsAlerting;
+    public boolean isHeadsUpEntry() {
+        return mIsHeadsUpEntry;
     }
 
     /** Set whether this notification is currently used to animate a launch. */
@@ -997,6 +999,23 @@ public final class NotificationEntry extends ListEntry {
         final Class<? extends Notification.Style> style =
                 getSbn().getNotification().getNotificationStyle();
         return style == null ? "nostyle" : style.getSimpleName();
+    }
+
+    /**
+     * Return {@code true} if notification's visibility is {@link Notification.VISIBILITY_PRIVATE}
+     */
+    public boolean isNotificationVisibilityPrivate() {
+        return getSbn().getNotification().visibility == Notification.VISIBILITY_PRIVATE;
+    }
+
+    /**
+     * Return {@code true} if notification's channel lockscreen visibility is
+     * {@link Notification.VISIBILITY_PRIVATE}
+     */
+    public boolean isChannelVisibilityPrivate() {
+        return getRanking().getChannel() != null
+                && getRanking().getChannel().getLockscreenVisibility()
+                == Notification.VISIBILITY_PRIVATE;
     }
 
     public void setPulseLightState(boolean value) {

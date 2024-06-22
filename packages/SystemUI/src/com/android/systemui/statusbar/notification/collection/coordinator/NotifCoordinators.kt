@@ -23,6 +23,7 @@ import com.android.systemui.statusbar.notification.collection.PipelineDumper
 import com.android.systemui.statusbar.notification.collection.coordinator.dagger.CoordinatorScope
 import com.android.systemui.statusbar.notification.collection.listbuilder.pluggable.NotifSectioner
 import com.android.systemui.statusbar.notification.collection.provider.SectionStyleProvider
+import com.android.systemui.statusbar.notification.shared.NotificationsLiveDataStoreRefactor
 import javax.inject.Inject
 
 /**
@@ -52,6 +53,7 @@ class NotifCoordinatorsImpl @Inject constructor(
         mediaCoordinator: MediaCoordinator,
         preparationCoordinator: PreparationCoordinator,
         remoteInputCoordinator: RemoteInputCoordinator,
+        rowAlertTimeCoordinator: RowAlertTimeCoordinator,
         rowAppearanceCoordinator: RowAppearanceCoordinator,
         stackCoordinator: StackCoordinator,
         shadeEventCoordinator: ShadeEventCoordinator,
@@ -61,6 +63,7 @@ class NotifCoordinatorsImpl @Inject constructor(
         sensitiveContentCoordinator: SensitiveContentCoordinator,
         dismissibilityCoordinator: DismissibilityCoordinator,
         dreamCoordinator: DreamCoordinator,
+        statsLoggerCoordinator: NotificationStatsLoggerCoordinator,
         pulseLightCoordinator: PulseLightCoordinator,
 ) : NotifCoordinators {
 
@@ -68,9 +71,7 @@ class NotifCoordinatorsImpl @Inject constructor(
     private val mCoordinators: MutableList<Coordinator> = ArrayList()
     private val mOrderedSections: MutableList<NotifSectioner> = ArrayList()
 
-    /**
-     * Creates all the coordinators.
-     */
+    /** Creates all the coordinators. */
     init {
         // Attach core coordinators.
         mCoreCoordinators.add(dataStoreCoordinator)
@@ -88,6 +89,7 @@ class NotifCoordinatorsImpl @Inject constructor(
         mCoordinators.add(groupCountCoordinator)
         mCoordinators.add(groupWhenCoordinator)
         mCoordinators.add(mediaCoordinator)
+        mCoordinators.add(rowAlertTimeCoordinator)
         mCoordinators.add(rowAppearanceCoordinator)
         mCoordinators.add(stackCoordinator)
         mCoordinators.add(shadeEventCoordinator)
@@ -104,6 +106,10 @@ class NotifCoordinatorsImpl @Inject constructor(
 
         if (featureFlags.isEnabled(LOCKSCREEN_WALLPAPER_DREAM_ENABLED)) {
             mCoordinators.add(dreamCoordinator)
+        }
+
+        if (NotificationsLiveDataStoreRefactor.isEnabled) {
+            mCoordinators.add(statsLoggerCoordinator)
         }
 
         // Manually add Ordered Sections

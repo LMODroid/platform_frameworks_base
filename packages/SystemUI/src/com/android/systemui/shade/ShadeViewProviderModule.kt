@@ -36,6 +36,7 @@ import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlags
 import com.android.systemui.scene.shared.model.Scene
 import com.android.systemui.scene.shared.model.SceneContainerConfig
+import com.android.systemui.scene.shared.model.SceneDataSourceDelegator
 import com.android.systemui.scene.ui.view.SceneWindowRootView
 import com.android.systemui.scene.ui.view.WindowRootView
 import com.android.systemui.scene.ui.viewmodel.SceneContainerViewModel
@@ -73,6 +74,7 @@ abstract class ShadeViewProviderModule {
             flagsProvider: Provider<SceneContainerFlags>,
             scenesProvider: Provider<Set<@JvmSuppressWildcards Scene>>,
             layoutInsetController: NotificationInsetsController,
+            sceneDataSourceDelegator: Provider<SceneDataSourceDelegator>,
         ): WindowRootView {
             return if (sceneContainerFlags.isEnabled()) {
                 val sceneWindowRootView =
@@ -85,6 +87,7 @@ abstract class ShadeViewProviderModule {
                     flags = flagsProvider.get(),
                     scenes = scenesProvider.get(),
                     layoutInsetController = layoutInsetController,
+                    sceneDataSourceDelegator = sceneDataSourceDelegator.get(),
                 )
                 sceneWindowRootView
             } else {

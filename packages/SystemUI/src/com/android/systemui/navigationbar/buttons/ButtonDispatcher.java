@@ -24,6 +24,9 @@ import android.animation.ValueAnimator;
 import android.util.Log;
 import android.view.View;
 import android.view.View.AccessibilityDelegate;
+import android.view.ViewGroup;
+
+import com.android.systemui.navigationbar.NavBarButtonClickLogger;
 
 import java.util.ArrayList;
 
@@ -53,6 +56,7 @@ public class ButtonDispatcher implements DragDropSurfaceCallback {
     private boolean mVertical;
     private ValueAnimator mFadeAnimator;
     private AccessibilityDelegate mAccessibilityDelegate;
+    private NavBarButtonClickLogger mNavBarButtonClickLogger;
     private DragDropSurfaceCallback mCallback;
 
     private final ValueAnimator.AnimatorUpdateListener mAlphaListener = animation ->
@@ -357,5 +361,37 @@ public class ButtonDispatcher implements DragDropSurfaceCallback {
 
     public void setForceDisableOverviewCallback(DragDropSurfaceCallback forceDisableOverviewCallback) {
         mCallback = forceDisableOverviewCallback;
+    }
+
+    /**
+     * Sets the NavBarButtonClickLogger for all the KeyButtonViews respectively.
+     */
+    public void setNavBarButtonClickLogger(NavBarButtonClickLogger navBarButtonClickLogger) {
+        if (navBarButtonClickLogger != null) {
+            mNavBarButtonClickLogger = navBarButtonClickLogger;
+            final int size = mViews.size();
+            for (int i = 0; i < size; i++) {
+                final View v = mViews.get(i);
+                setNavBarButtonClickLoggerForViewChildren(v);
+            }
+        }
+    }
+
+    /**
+     * Recursively explores view hierarchy until the children of provided view are of type
+     * KeyButtonView, so the NavBarButtonClickLogger can be set on them.
+     */
+    private void setNavBarButtonClickLoggerForViewChildren(View v) {
+        if (v instanceof KeyButtonView) {
+            ((KeyButtonView) v).setNavBarButtonClickLogger(mNavBarButtonClickLogger);
+            return;
+        }
+
+        if (v instanceof ViewGroup viewGroup) {
+            final int childrenCount = viewGroup.getChildCount();
+            for (int i = 0; i < childrenCount; i++) {
+                setNavBarButtonClickLoggerForViewChildren(viewGroup.getChildAt(i));
+            }
+        }
     }
 }

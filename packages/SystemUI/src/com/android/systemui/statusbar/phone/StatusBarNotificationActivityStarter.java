@@ -52,9 +52,10 @@ import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.ActivityIntentHelper;
 import com.android.systemui.EventLogTags;
-import com.android.systemui.animation.ActivityLaunchAnimator;
+import com.android.systemui.animation.ActivityTransitionAnimator;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.DisplayId;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.power.domain.interactor.PowerInteractor;
@@ -62,6 +63,7 @@ import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shade.ShadeController;
 import com.android.systemui.shade.ShadeViewController;
 import com.android.systemui.shade.domain.interactor.ShadeAnimationInteractor;
+import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.NotificationClickNotifier;
 import com.android.systemui.statusbar.NotificationLockscreenUserManager;
 import com.android.systemui.statusbar.NotificationPresenter;
@@ -105,6 +107,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
     private final NotificationVisibilityProvider mVisibilityProvider;
     private final HeadsUpManager mHeadsUpManager;
     private final ActivityStarter mActivityStarter;
+    private final CommandQueue mCommandQueue;
     private final NotificationClickNotifier mClickNotifier;
     private final StatusBarKeyguardViewManager mStatusBarKeyguardViewManager;
     private final KeyguardManager mKeyguardManager;
@@ -126,7 +129,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
     private final NotificationPresenter mPresenter;
     private final ShadeViewController mShadeViewController;
     private final NotificationShadeWindowController mNotificationShadeWindowController;
-    private final ActivityLaunchAnimator mActivityLaunchAnimator;
+    private final ActivityTransitionAnimator mActivityTransitionAnimator;
     private final NotificationLaunchAnimatorControllerProvider mNotificationAnimationProvider;
     private final PowerInteractor mPowerInteractor;
     private final UserTracker mUserTracker;
@@ -141,10 +144,11 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
             Context context,
             @DisplayId int displayId,
             Handler mainThreadHandler,
-            Executor uiBgExecutor,
+            @Background Executor uiBgExecutor,
             NotificationVisibilityProvider visibilityProvider,
             HeadsUpManager headsUpManager,
             ActivityStarter activityStarter,
+            CommandQueue commandQueue,
             NotificationClickNotifier clickNotifier,
             StatusBarKeyguardViewManager statusBarKeyguardViewManager,
             KeyguardManager keyguardManager,
@@ -164,7 +168,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
             NotificationPresenter presenter,
             ShadeViewController shadeViewController,
             NotificationShadeWindowController notificationShadeWindowController,
-            ActivityLaunchAnimator activityLaunchAnimator,
+            ActivityTransitionAnimator activityTransitionAnimator,
             ShadeAnimationInteractor shadeAnimationInteractor,
             NotificationLaunchAnimatorControllerProvider notificationAnimationProvider,
             LaunchFullScreenIntentProvider launchFullScreenIntentProvider,
@@ -178,6 +182,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
         mVisibilityProvider = visibilityProvider;
         mHeadsUpManager = headsUpManager;
         mActivityStarter = activityStarter;
+        mCommandQueue = commandQueue;
         mClickNotifier = clickNotifier;
         mStatusBarKeyguardViewManager = statusBarKeyguardViewManager;
         mKeyguardManager = keyguardManager;
@@ -198,7 +203,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
         mOnUserInteractionCallback = onUserInteractionCallback;
         mPresenter = presenter;
         mShadeViewController = shadeViewController;
-        mActivityLaunchAnimator = activityLaunchAnimator;
+        mActivityTransitionAnimator = activityTransitionAnimator;
         mNotificationAnimationProvider = notificationAnimationProvider;
         mPowerInteractor = powerInteractor;
         mUserTracker = userTracker;
@@ -445,15 +450,16 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
             boolean isActivityIntent) {
         mLogger.logStartNotificationIntent(entry);
         try {
-            ActivityLaunchAnimator.Controller animationController =
-                    new StatusBarLaunchAnimatorController(
+            ActivityTransitionAnimator.Controller animationController =
+                    new StatusBarTransitionAnimatorController(
                             mNotificationAnimationProvider.getAnimatorController(row, null),
-                            mShadeViewController,
                             mShadeAnimationInteractor,
                             mShadeController,
                             mNotificationShadeWindowController,
+                            mCommandQueue,
+                            mDisplayId,
                             isActivityIntent);
-            mActivityLaunchAnimator.startPendingIntentWithAnimation(
+            mActivityTransitionAnimator.startPendingIntentWithAnimation(
                     animationController,
                     animate,
                     intent.getCreatorPackage(),
@@ -487,16 +493,17 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
             @Override
             public boolean onDismiss() {
                 AsyncTask.execute(() -> {
-                    ActivityLaunchAnimator.Controller animationController =
-                            new StatusBarLaunchAnimatorController(
+                    ActivityTransitionAnimator.Controller animationController =
+                            new StatusBarTransitionAnimatorController(
                                     mNotificationAnimationProvider.getAnimatorController(row),
-                                    mShadeViewController,
                                     mShadeAnimationInteractor,
                                     mShadeController,
                                     mNotificationShadeWindowController,
+                                    mCommandQueue,
+                                    mDisplayId,
                                     true /* isActivityIntent */);
 
-                    mActivityLaunchAnimator.startIntentWithAnimation(
+                    mActivityTransitionAnimator.startIntentWithAnimation(
                             animationController, animate, intent.getPackage(),
                             (adapter) -> TaskStackBuilder.create(mContext)
                                     .addNextIntentWithParentStack(intent)
@@ -533,22 +540,23 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
                         tsb.addNextIntent(intent);
                     }
 
-                    ActivityLaunchAnimator.Controller viewController =
-                            ActivityLaunchAnimator.Controller.fromView(view,
+                    ActivityTransitionAnimator.Controller viewController =
+                            ActivityTransitionAnimator.Controller.fromView(view,
                                     InteractionJankMonitor.CUJ_SHADE_APP_LAUNCH_FROM_HISTORY_BUTTON
                             );
-                    ActivityLaunchAnimator.Controller animationController =
+                    ActivityTransitionAnimator.Controller animationController =
                             viewController == null ? null
-                                : new StatusBarLaunchAnimatorController(
+                                : new StatusBarTransitionAnimatorController(
                                         viewController,
-                                        mShadeViewController,
                                         mShadeAnimationInteractor,
                                         mShadeController,
                                         mNotificationShadeWindowController,
+                                        mCommandQueue,
+                                        mDisplayId,
                                         true /* isActivityIntent */);
 
-                    mActivityLaunchAnimator.startIntentWithAnimation(animationController, animate,
-                            intent.getPackage(),
+                    mActivityTransitionAnimator.startIntentWithAnimation(
+                            animationController, animate, intent.getPackage(),
                             (adapter) -> tsb.startActivities(
                                     getActivityOptions(mDisplayId, adapter),
                                     mUserTracker.getUserHandle()));
@@ -567,7 +575,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
 
     private void removeHunAfterClick(ExpandableNotificationRow row) {
         String key = row.getEntry().getSbn().getKey();
-        if (mHeadsUpManager != null && mHeadsUpManager.isAlerting(key)) {
+        if (mHeadsUpManager != null && mHeadsUpManager.isHeadsUpEntry(key)) {
             // Release the HUN notification to the shade.
             if (mPresenter.isPresenterFullyCollapsed()) {
                 HeadsUpUtil.setNeedsHeadsUpDisappearAnimationAfterClick(row, true);
