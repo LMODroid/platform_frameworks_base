@@ -211,9 +211,6 @@ public abstract class UEventObserver {
 
             if (!mTempObserversToSignal.isEmpty()) {
                 final UEvent event = new UEvent(message);
-                if (event.get("NAME") == null) {
-                    return;
-                }
                 final int N = mTempObserversToSignal.size();
                 for (int i = 0; i < N; i++) {
                     final UEventObserver observer = mTempObserversToSignal.get(i);
