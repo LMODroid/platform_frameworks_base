@@ -123,7 +123,7 @@ public class FaceUnlockHelper {
     private FaceSensorConfigurations getFaceSensorConfigurations(Context context, int sensorId) {
         final FaceSensorConfigurations faceSensorConfigurations =
                     new FaceSensorConfigurations(true /*  resetLockoutRequiresChallenge */);
-        String sensorConfig = sensorId + ":" + TYPE_FACE + ":" + Authenticators.BIOMETRIC_STRONG;
+        String sensorConfig = sensorId + ":" + TYPE_FACE + ":" + Authenticators.BIOMETRIC_WEAK;
         String[] hidlConfigStrings = { sensorConfig };
         faceSensorConfigurations.addHidlConfigs(hidlConfigStrings, context);
         return faceSensorConfigurations;
