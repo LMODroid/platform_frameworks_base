@@ -103,7 +103,7 @@ public class FaceUnlockHelper {
                             != Authenticators.EMPTY_SET;
                 } while (foundDuplicate);
                 faceService.registerAuthenticators(getHidlFaceSensorProps(newId,
-                        Authenticators.BIOMETRIC_STRONG));
+                        Authenticators.BIOMETRIC_WEAK));
             } else {
                 Slog.i(TAG, "Using hardware face sensor.");
             }
