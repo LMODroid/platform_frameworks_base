@@ -23,6 +23,7 @@ import static com.android.systemui.theme.ThemeOverlayApplier.COLOR_SOURCE_HOME;
 import static com.android.systemui.theme.ThemeOverlayApplier.COLOR_SOURCE_LOCK;
 import static com.android.systemui.theme.ThemeOverlayApplier.COLOR_SOURCE_PRESET;
 import static com.android.systemui.theme.ThemeOverlayApplier.OVERLAY_CATEGORY_ACCENT_COLOR;
+import static com.android.systemui.theme.ThemeOverlayApplier.OVERLAY_CATEGORY_DISPLAY_CUTOUT;
 import static com.android.systemui.theme.ThemeOverlayApplier.OVERLAY_CATEGORY_DYNAMIC_COLOR;
 import static com.android.systemui.theme.ThemeOverlayApplier.OVERLAY_CATEGORY_SYSTEM_PALETTE;
 import static com.android.systemui.theme.ThemeOverlayApplier.OVERLAY_COLOR_BOTH;
@@ -179,6 +180,8 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
     private boolean mSkipSettingChange;
 
     private String mBlackThemeOverlayPackage;
+
+    private String mEdgeCutoutOverlayPackage;
 
     private final ConfigurationListener mConfigurationListener =
             new ConfigurationListener() {
@@ -425,6 +428,8 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
         mIsFidelityEnabled = featureFlags.isEnabled(Flags.COLOR_FIDELITY);
         mBlackThemeOverlayPackage = context.getString(
                 com.android.internal.R.string.config_black_theme_overlay_package);
+        mEdgeCutoutOverlayPackage = context.getString(
+                com.android.internal.R.string.config_edge_cutout_overlay_package);
         mConfigurationController = configurationController;
         mDeviceProvisionedController = deviceProvisionedController;
         mBroadcastDispatcher = broadcastDispatcher;
@@ -486,6 +491,27 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
 
         mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(LMOSettings.Secure.BERRY_BLACK_THEME),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        if (DEBUG) Log.d(TAG, "Overlay changed for user: " + userId);
+                        if (mUserTracker.getUserId() != userId) {
+                            return;
+                        }
+                        if (!mDeviceProvisionedController.isUserSetup(userId)) {
+                            Log.i(TAG, "Theme application deferred when setting changed.");
+                            mDeferredThemeEvaluation = true;
+                            return;
+                        }
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
+
+        mSecureSettings.registerContentObserverForUser(
+                Settings.Secure.getUriFor(LMOSettings.Secure.EDGE_CUTOUT),
                 false,
                 new ContentObserver(mBgHandler) {
                     @Override
@@ -840,6 +866,14 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
         if (categoryToPackage.containsKey(OVERLAY_CATEGORY_SYSTEM_PALETTE) && isBlackMode) {
             OverlayIdentifier blackTheme = new OverlayIdentifier(mBlackThemeOverlayPackage);
             categoryToPackage.put(OVERLAY_CATEGORY_SYSTEM_PALETTE, blackTheme);
+        }
+
+        boolean isEdgeCutoutEnabled = (Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), LMOSettings.Secure.EDGE_CUTOUT,
+                0, currentUser) == 1);
+        if (isEdgeCutoutEnabled) {
+            OverlayIdentifier edgeCutout = new OverlayIdentifier(mEdgeCutoutOverlayPackage);
+            categoryToPackage.put(OVERLAY_CATEGORY_DISPLAY_CUTOUT, edgeCutout);
         }
 
         Set<UserHandle> managedProfiles = new HashSet<>();
