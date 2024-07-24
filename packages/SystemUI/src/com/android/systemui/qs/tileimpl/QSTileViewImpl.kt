@@ -563,7 +563,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
         setChevronColor(chevronColor)
     }
 
-    private fun setColor(color: Int) {
+    protected fun setColor(color: Int) {
         colorBackgroundDrawable.mutate().setTint(color)
         paintColor = color
     }
