@@ -526,7 +526,7 @@ class ControlsUiControllerImpl @Inject constructor (
         val container = parent.requireViewById<FrameLayout>(R.id.controls_panel)
         container.visibility = View.VISIBLE
         container.post {
-            taskViewFactory.get().create(activityContext, uiExecutor) { taskView ->
+            taskViewFactory.get().create(activityContext ?: context, uiExecutor) { taskView ->
                 taskViewController = PanelTaskViewController(
                         activityContext ?: context,
                         uiExecutor,
