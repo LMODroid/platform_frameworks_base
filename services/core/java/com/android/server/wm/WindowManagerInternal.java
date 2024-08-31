@@ -358,6 +358,11 @@ public abstract class WindowManagerInternal {
         default void dragRecipientExited(IWindow window) {}
     }
 
+    public interface DisplaySecureContentListener {
+        public void onDisplayHasSecureWindowOnScreenChanged(
+                int displayId, boolean hasSecureWindowOnScreen);
+    }
+
     /**
      * Request the interface to access features implemented by AccessibilityController.
      */
@@ -961,4 +966,9 @@ public abstract class WindowManagerInternal {
      * @param displayId the id of display to check if there is a software navigation bar.
      */
     public abstract boolean hasNavigationBar(int displayId);
+
+    public abstract void registerDisplaySecureContentListener(
+            DisplaySecureContentListener listener);
+    public abstract void unregisterDisplaySecureContentListener(
+            DisplaySecureContentListener listener);
 }
