@@ -477,6 +477,8 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import com.libremobileos.providers.LMOSettings;
+
 /** @hide */
 public class NotificationManagerService extends SystemService {
     public static final String TAG = "NotificationService";
@@ -852,6 +854,7 @@ public class NotificationManagerService extends SystemService {
     private NotificationListenerStats mNotificationListenerStats;
     private NotificationUsageStats mUsageStats;
     private boolean mLockScreenAllowSecureNotifications = true;
+    private boolean mForceNonDismissible = false;
     final ArrayMap<String, ArrayMap<Integer,
             RemoteCallbackList<ICallNotificationEventCallback>>>
             mCallNotificationEventCallbacks = new ArrayMap<>();
@@ -2698,6 +2701,8 @@ public class NotificationManagerService extends SystemService {
                 = Secure.getUriFor(Secure.NOTIFICATION_BUBBLES);
         private final Uri NOTIFICATION_RATE_LIMIT_URI
                 = Settings.Global.getUriFor(Settings.Global.MAX_NOTIFICATION_ENQUEUE_RATE);
+        private final Uri NOTIFICATION_FORCE_NON_DISMISSIBLE_URI
+                = Settings.System.getUriFor(LMOSettings.System.NOTIFICATION_FORCE_NON_DISMISSIBLE);
         private final Uri NOTIFICATION_HISTORY_ENABLED
                 = Secure.getUriFor(Secure.NOTIFICATION_HISTORY_ENABLED);
         private final Uri NOTIFICATION_SHOW_MEDIA_ON_QUICK_SETTINGS_URI
@@ -2721,6 +2726,8 @@ public class NotificationManagerService extends SystemService {
             resolver.registerContentObserver(NOTIFICATION_BADGING_URI,
                     false, this, USER_ALL);
             resolver.registerContentObserver(NOTIFICATION_RATE_LIMIT_URI,
+                    false, this, USER_ALL);
+            resolver.registerContentObserver(NOTIFICATION_FORCE_NON_DISMISSIBLE_URI,
                     false, this, USER_ALL);
             resolver.registerContentObserver(NOTIFICATION_BUBBLES_URI,
                     false, this, USER_ALL);
@@ -2755,6 +2762,10 @@ public class NotificationManagerService extends SystemService {
             if (uri == null || NOTIFICATION_RATE_LIMIT_URI.equals(uri)) {
                 mMaxPackageEnqueueRate = Settings.Global.getFloat(resolver,
                             Settings.Global.MAX_NOTIFICATION_ENQUEUE_RATE, mMaxPackageEnqueueRate);
+            }
+            if (uri == null || NOTIFICATION_FORCE_NON_DISMISSIBLE_URI.equals(uri)) {
+                mForceNonDismissible = Settings.System.getInt(resolver,
+                        LMOSettings.System.NOTIFICATION_FORCE_NON_DISMISSIBLE, 0) != 0;
             }
             if (uri == null || NOTIFICATION_BADGING_URI.equals(uri)) {
                 mPreferencesHelper.updateBadgingEnabled();
@@ -9902,7 +9913,8 @@ public class NotificationManagerService extends SystemService {
                 || isDefaultSearchSelectorPackage(ai.packageName)
                 || isDefaultAdservicesPackage(ai.packageName)
                 || hasFlag(notification.flags, FLAG_COMPUTER_CONTROL)
-                || isNotificationAttachedToComputerControlSession(id, tag, ai.packageName);
+                || isNotificationAttachedToComputerControlSession(id, tag, ai.packageName)
+                || mForceNonDismissible;
     }
 
     /**
