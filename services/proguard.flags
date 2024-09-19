@@ -143,3 +143,5 @@
 -keep class com.google.android.submerge.** {
     *;
 }
+# Keep lmodroid framework sources
+-keep,allowoptimization,allowaccessmodification class com.libremobileos.** { *; }
