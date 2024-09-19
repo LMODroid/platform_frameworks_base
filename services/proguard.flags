@@ -125,3 +125,6 @@
 # CoverageService guards optional jacoco class references with a runtime guard, so we can safely
 # suppress build-time warnings.
 -dontwarn org.jacoco.agent.rt.*
+
+# Keep lmodroid framework sources
+-keep,allowoptimization,allowaccessmodification class com.libremobileos.** { *; }
