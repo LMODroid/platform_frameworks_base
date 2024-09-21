@@ -72,7 +72,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.compose.animation.Expandable
 import com.android.compose.animation.scene.SceneScope
-import com.android.compose.modifiers.background
 import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.compose.theme.colorAttr
 import com.android.systemui.animation.Expandable
@@ -133,7 +132,6 @@ fun FooterActions(
 
     // Collect alphas as soon as we are composed, even when not visible.
     val alpha by viewModel.alpha.collectAsStateWithLifecycle()
-    val backgroundAlpha = viewModel.backgroundAlpha.collectAsStateWithLifecycle()
 
     var security by remember { mutableStateOf<FooterActionsSecurityButtonViewModel?>(null) }
     var foregroundServices by remember {
@@ -162,28 +160,13 @@ fun FooterActions(
         }
     }
 
-    val backgroundColor = colorAttr(R.attr.underSurface)
     val contentColor = LocalAndroidColorScheme.current.onSurface
-    val backgroundTopRadius = dimensionResource(R.dimen.qs_corner_radius)
-    val backgroundModifier =
-        remember(
-            backgroundColor,
-            backgroundAlpha,
-            backgroundTopRadius,
-        ) {
-            Modifier.background(
-                backgroundColor,
-                backgroundAlpha::value,
-                RoundedCornerShape(topStart = backgroundTopRadius, topEnd = backgroundTopRadius),
-            )
-        }
 
     val horizontalPadding = dimensionResource(R.dimen.qs_content_horizontal_padding)
     Row(
         modifier
             .fillMaxWidth()
             .graphicsLayer { this.alpha = alpha }
-            .then(backgroundModifier)
             .padding(
                 top = dimensionResource(R.dimen.qs_footer_actions_top_padding),
                 bottom = dimensionResource(R.dimen.qs_footer_actions_bottom_padding),

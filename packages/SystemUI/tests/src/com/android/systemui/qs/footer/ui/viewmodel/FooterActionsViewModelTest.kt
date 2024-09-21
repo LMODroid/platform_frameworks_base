@@ -393,30 +393,6 @@ class FooterActionsViewModelTest : SysuiTestCase() {
     }
 
     @Test
-    fun backgroundAlpha_inSplitShade_followsExpansion_with_0_15_delay() {
-        val underTest = utils.footerActionsViewModel()
-        val floatTolerance = 0.01f
-
-        underTest.onQuickSettingsExpansionChanged(0f, isInSplitShade = true)
-        assertThat(underTest.backgroundAlpha.value).isEqualTo(0f)
-
-        underTest.onQuickSettingsExpansionChanged(0.1f, isInSplitShade = true)
-        assertThat(underTest.backgroundAlpha.value).isEqualTo(0f)
-
-        underTest.onQuickSettingsExpansionChanged(0.14f, isInSplitShade = true)
-        assertThat(underTest.backgroundAlpha.value).isEqualTo(0f)
-
-        underTest.onQuickSettingsExpansionChanged(0.235f, isInSplitShade = true)
-        assertThat(underTest.backgroundAlpha.value).isWithin(floatTolerance).of(0.1f)
-
-        underTest.onQuickSettingsExpansionChanged(0.575f, isInSplitShade = true)
-        assertThat(underTest.backgroundAlpha.value).isWithin(floatTolerance).of(0.5f)
-
-        underTest.onQuickSettingsExpansionChanged(1f, isInSplitShade = true)
-        assertThat(underTest.backgroundAlpha.value).isEqualTo(1f)
-    }
-
-    @Test
     fun alpha_inSingleShade_followsExpansion_with_0_9_delay() {
         val underTest = utils.footerActionsViewModel()
         val floatTolerance = 0.01f
@@ -438,19 +414,5 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
         underTest.onQuickSettingsExpansionChanged(1f, isInSplitShade = false)
         assertThat(underTest.alpha.value).isEqualTo(1f)
-    }
-
-    @Test
-    fun backgroundAlpha_inSingleShade_always1() {
-        val underTest = utils.footerActionsViewModel()
-
-        underTest.onQuickSettingsExpansionChanged(0f, isInSplitShade = false)
-        assertThat(underTest.backgroundAlpha.value).isEqualTo(1f)
-
-        underTest.onQuickSettingsExpansionChanged(0.5f, isInSplitShade = false)
-        assertThat(underTest.backgroundAlpha.value).isEqualTo(1f)
-
-        underTest.onQuickSettingsExpansionChanged(1f, isInSplitShade = false)
-        assertThat(underTest.backgroundAlpha.value).isEqualTo(1f)
     }
 }

@@ -82,10 +82,6 @@ class FooterActionsViewModel(
     private val _alpha = MutableStateFlow(1f)
     val alpha: StateFlow<Float> = _alpha.asStateFlow()
 
-    /** The alpha the background of the UI rendering this ViewModel should have. */
-    private val _backgroundAlpha = MutableStateFlow(1f)
-    val backgroundAlpha: StateFlow<Float> = _backgroundAlpha.asStateFlow()
-
     /** Called when the expansion of the Quick Settings changed. */
     fun onQuickSettingsExpansionChanged(expansion: Float, isInSplitShade: Boolean) {
         if (isInSplitShade) {
@@ -93,12 +89,10 @@ class FooterActionsViewModel(
             // show.
             val delay = 0.15f
             _alpha.value = expansion
-            _backgroundAlpha.value = max(0f, expansion - delay) / (1f - delay)
         } else {
             // Only start fading in the footer actions when we are at least 90% expanded.
             val delay = 0.9f
             _alpha.value = max(0f, expansion - delay) / (1 - delay)
-            _backgroundAlpha.value = 1f
         }
     }
 
