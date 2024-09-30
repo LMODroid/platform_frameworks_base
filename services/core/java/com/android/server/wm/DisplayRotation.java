@@ -65,6 +65,7 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.ArraySet;
+import android.util.Log;
 import android.util.RotationUtils;
 import android.util.Slog;
 import android.util.TimeUtils;
@@ -83,6 +84,8 @@ import com.android.server.UiThread;
 import com.android.server.policy.WindowManagerPolicy;
 import com.android.server.statusbar.StatusBarManagerInternal;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -492,6 +495,35 @@ public class DisplayRotation {
     }
 
     /**
+     * Get the rotation for the given orientation.
+     */
+    private int getRotationForOrientation(int orientation) {
+        switch (orientation) {
+            case Surface.ROTATION_0:
+                return 0; // no rotation
+            case Surface.ROTATION_90:
+                return 1; // rotated 90 degrees clockwise
+            case Surface.ROTATION_270:
+                return 3; // rotated 270 degrees clockwise
+            default:
+                return 0; // default to no rotation
+        }
+    }
+
+    /**
+     * Update the value of a node in the system property tree.
+     */
+    private void setNodeScreenValue(String node, int value) {
+        try {
+            FileOutputStream fos = new FileOutputStream(node);
+            fos.write(String.valueOf(value).getBytes());
+            fos.close();
+        } catch (IOException e) {
+            Slog.e(TAG, "Failed to write to node " + node, e);
+        }
+    }
+
+    /**
      * Update rotation with an option to force the update. This updates the container's perception
      * of rotation and, depending on the top activities, will freeze the screen or start seamless
      * rotation. The display itself gets rotated in {@link DisplayContent#applyRotationLocked}
@@ -508,6 +540,22 @@ public class DisplayRotation {
      */
     boolean updateRotationUnchecked(boolean forceUpdate) {
         final int displayId = mDisplayContent.getDisplayId();
+        if (mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_device_use_screen_rotation_orientation)) {
+            int rotationForOrientation = getRotationForOrientation(mDisplayContent.getDisplayInfo().rotation);
+            String mScreenRotationOrientationNode = mContext.getResources().getString(com.android.internal.R.string.config_screen_rotation_orientation_node);
+            Log.d("updateRotationUnchecked", "updateRotationUnchecked:displayId==" + displayId + " rotation:  " + rotationForOrientation);
+            if (displayId == 0) {
+                if (rotationForOrientation == 0) {
+                    setNodeScreenValue(mScreenRotationOrientationNode, 0); //PORTRAIT
+                } else if (rotationForOrientation == 1) {
+                    setNodeScreenValue(mScreenRotationOrientationNode, 1); //ROTATION_90
+                } else if (rotationForOrientation == 3) {
+                    setNodeScreenValue(mScreenRotationOrientationNode, 3); //ROTATION_270
+                }
+            }
+        }
+
         if (!forceUpdate) {
             if (mDeferredRotationPauseCount > 0) {
                 // Rotation updates have been paused temporarily. Defer the update until updates
