@@ -677,11 +677,11 @@ public class ComputerEngine implements Computer {
             int userId, int callingUid, int callingPid,
             boolean includeInstantApps, boolean resolveForStart) {
         if (!mUserManager.exists(userId)) return Collections.emptyList();
-        enforceCrossUserOrProfilePermission(callingUid,
+        enforceCrossUserOrProfilePermission(Binder.getCallingUid(),
                 userId,
                 false /*requireFullPermission*/,
                 false /*checkShell*/,
-                "query intent receivers");
+                "query intent services");
         final String instantAppPkgName = getInstantAppPackageName(callingUid);
         flags = updateFlagsForResolve(flags, userId, callingUid, includeInstantApps,
                 false /* isImplicitImageCaptureIntentAndNotSetByDpc */);
@@ -2303,10 +2303,10 @@ public class ComputerEngine implements Computer {
             return true;
         }
         if (requireFullPermission) {
-            return hasPermission(Manifest.permission.INTERACT_ACROSS_USERS_FULL);
+            return hasPermission(Manifest.permission.INTERACT_ACROSS_USERS_FULL, callingUid);
         }
-        return hasPermission(android.Manifest.permission.INTERACT_ACROSS_USERS_FULL)
-                || hasPermission(Manifest.permission.INTERACT_ACROSS_USERS);
+        return hasPermission(android.Manifest.permission.INTERACT_ACROSS_USERS_FULL, callingUid)
+            || hasPermission(Manifest.permission.INTERACT_ACROSS_USERS, callingUid);
     }
 
     /**
@@ -2319,6 +2319,11 @@ public class ComputerEngine implements Computer {
 
     private boolean hasPermission(String permission) {
         return mContext.checkCallingOrSelfPermission(permission)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean hasPermission(String permission, int uid) {
+        return mContext.checkPermission(permission, /* pid= */ -1, uid)
                 == PackageManager.PERMISSION_GRANTED;
     }
 
@@ -4739,7 +4744,7 @@ public class ComputerEngine implements Computer {
 
         if (!forceAllowCrossUser) {
             enforceCrossUserPermission(
-                    callingUid,
+                    Binder.getCallingUid(),
                     userId,
                     false /* requireFullPermission */,
                     false /* checkShell */,
@@ -5324,7 +5329,7 @@ public class ComputerEngine implements Computer {
     @Override
     public int getComponentEnabledSetting(@NonNull ComponentName component, int callingUid,
             @UserIdInt int userId) {
-        enforceCrossUserPermission(callingUid, userId, false /*requireFullPermission*/,
+        enforceCrossUserPermission(Binder.getCallingUid(), userId, false /*requireFullPermission*/,
                 false /*checkShell*/, "getComponentEnabled");
         return getComponentEnabledSettingInternal(component, callingUid, userId);
     }
