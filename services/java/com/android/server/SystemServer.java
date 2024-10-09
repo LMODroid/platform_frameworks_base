@@ -2658,6 +2658,10 @@ public final class SystemServer implements Dumpable {
                     = mPackageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT);
 
             if (hasFeatureFace) {
+                t.traceBegin("startLMOFaceUnlockService");
+                LMOSystemServer.startFaceUnlockService(context, mSystemServiceManager);
+                t.traceEnd();
+
                 t.traceBegin("StartFaceSensor");
                 final FaceService faceService =
                         mSystemServiceManager.startService(FaceService.class);
