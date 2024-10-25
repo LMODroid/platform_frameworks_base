@@ -75,3 +75,7 @@
 -keepclassmembers class com.android.systemui.customization.R$* {
     public static <fields>;
 }
+
+-keep class com.android.systemui.statusbar.phone.ExpandableIndicator {
+    *;
+}
