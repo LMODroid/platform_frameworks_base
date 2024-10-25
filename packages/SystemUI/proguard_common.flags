@@ -52,3 +52,7 @@
   static *** v(...);
 }
 -maximumremovedandroidloglevel 2
+
+-keep class com.android.systemui.statusbar.phone.ExpandableIndicator {
+    *;
+}
