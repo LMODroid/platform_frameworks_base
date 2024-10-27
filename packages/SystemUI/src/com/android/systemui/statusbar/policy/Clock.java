@@ -113,7 +113,7 @@ public class Clock extends TextView implements
     private static final int AM_PM_STYLE_SMALL   = 1;
     private static final int AM_PM_STYLE_GONE    = 2;
 
-    private int mAmPmStyle = AM_PM_STYLE_GONE;
+    private int mAmPmStyle = AM_PM_STYLE_SMALL;
     private ContentObserver mContentObserver;
     private boolean mShowSeconds;
     private Handler mSecondsHandler;
@@ -153,7 +153,7 @@ public class Clock extends TextView implements
                 0, 0);
         try {
             mAmPmStyle = Settings.System.getInt(mContext.getContentResolver(),
-                    LMOSettings.System.STATUS_BAR_AM_PM, AM_PM_STYLE_GONE);
+                    LMOSettings.System.STATUS_BAR_AM_PM, AM_PM_STYLE_SMALL);
             mContentObserver = new ContentObserver(null) {
                 @Override
                 public void onChange(boolean selfChange, Uri uri) {
@@ -161,7 +161,7 @@ public class Clock extends TextView implements
                             LMOSettings.System.STATUS_BAR_AM_PM).equals(uri)) {
                         mAmPmStyle = Settings.System.getInt(
                                 mContext.getContentResolver(),
-                                LMOSettings.System.STATUS_BAR_AM_PM, AM_PM_STYLE_GONE);
+                                LMOSettings.System.STATUS_BAR_AM_PM, AM_PM_STYLE_SMALL);
                         // Force refresh of dependent variables.
                         mContentDescriptionFormatString = "";
                         mDateTimePatternGenerator = null;
