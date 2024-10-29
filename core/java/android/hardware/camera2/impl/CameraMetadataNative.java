@@ -63,6 +63,7 @@ import android.hardware.camera2.params.OisSample;
 import android.hardware.camera2.params.RecommendedStreamConfiguration;
 import android.hardware.camera2.params.RecommendedStreamConfigurationMap;
 import android.hardware.camera2.params.ReprocessFormatsMap;
+import android.hardware.camera2.params.SharedSessionConfiguration;
 import android.hardware.camera2.params.StreamConfiguration;
 import android.hardware.camera2.params.StreamConfigurationDuration;
 import android.hardware.camera2.params.StreamConfigurationMap;
@@ -861,6 +862,15 @@ public class CameraMetadataNative implements Parcelable {
                         return (T) metadata.getLensIntrinsicSamples();
                     }
                 });
+        sGetCommandMap.put(
+                CameraCharacteristics.SHARED_SESSION_CONFIGURATION.getNativeKey(),
+                        new GetCommand() {
+                    @Override
+                    @SuppressWarnings("unchecked")
+                    public <T> T getValue(CameraMetadataNative metadata, Key<T> key) {
+                        return (T) metadata.getSharedSessionConfiguration();
+                    }
+                });
     }
 
     private int[] getAvailableFormats() {
@@ -1627,6 +1637,22 @@ public class CameraMetadataNative implements Parcelable {
                 jpegRConfigurations, jpegRMinFrameDurations, jpegRStallDurations,
                 highSpeedVideoConfigurations, inputOutputFormatsMap,
                 listHighResolution);
+    }
+
+    private SharedSessionConfiguration getSharedSessionConfiguration() {
+        if (!Flags.cameraMultiClient()) {
+            return null;
+        }
+        Integer sharedSessionColorSpace = getBase(
+                CameraCharacteristics.SHARED_SESSION_COLOR_SPACE);
+        long[] sharedOutputConfigurations = getBase(
+                CameraCharacteristics.SHARED_SESSION_OUTPUT_CONFIGURATIONS);
+
+        if ((sharedSessionColorSpace == null) || (sharedOutputConfigurations == null)) {
+            return null;
+        }
+
+        return new SharedSessionConfiguration(sharedSessionColorSpace, sharedOutputConfigurations);
     }
 
     private StreamConfigurationMap getStreamConfigurationMapMaximumResolution() {
