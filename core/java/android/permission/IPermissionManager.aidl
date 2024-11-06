@@ -92,5 +92,7 @@ interface IPermissionManager {
 
     IBinder registerAttributionSource(in AttributionSourceState source);
 
+    int getRegisteredAttributionSourceCount(int uid);
+
     boolean isRegisteredAttributionSource(in AttributionSourceState source);
 }

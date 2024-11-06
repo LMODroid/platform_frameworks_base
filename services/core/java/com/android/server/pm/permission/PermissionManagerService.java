@@ -447,6 +447,11 @@ public class PermissionManagerService extends IPermissionManager.Stub {
     }
 
     @Override
+    public int getRegisteredAttributionSourceCount(int uid) {
+        return mAttributionSourceRegistry.getRegisteredAttributionSourceCount(uid);
+    }
+
+    @Override
     public List<String> getAutoRevokeExemptionRequestedPackages(int userId) {
         return getPackagesWithAutoRevokePolicy(AUTO_REVOKE_DISCOURAGED, userId);
     }
@@ -597,6 +602,7 @@ public class PermissionManagerService extends IPermissionManager.Stub {
     /* End of delegate methods to PermissionManagerServiceInterface */
 
     private class PermissionManagerServiceInternalImpl implements PermissionManagerServiceInternal {
+
         @Override
         public int checkPermission(@NonNull String packageName, @NonNull String permissionName,
                 @UserIdInt int userId) {
@@ -802,6 +808,7 @@ public class PermissionManagerService extends IPermissionManager.Stub {
         public void resetRuntimePermissions(@NonNull AndroidPackage pkg, @UserIdInt int userId) {
             mPermissionManagerServiceImpl.resetRuntimePermissions(pkg, userId);
         }
+
         @Override
         public void resetRuntimePermissionsForUser(@UserIdInt int userId) {
             mPermissionManagerServiceImpl.resetRuntimePermissionsForUser(userId);
@@ -1028,6 +1035,25 @@ public class PermissionManagerService extends IPermissionManager.Stub {
             }
         }
 
+        public int getRegisteredAttributionSourceCount(int uid) {
+            mContext.enforceCallingOrSelfPermission(UPDATE_APP_OPS_STATS,
+                    "getting the number of registered AttributionSources requires "
+                            + "UPDATE_APP_OPS_STATS");
+            // Influence the system to perform a garbage collection, so the provided number is as
+            // accurate as possible
+            System.gc();
+            System.gc();
+            synchronized (mLock) {
+                int numForUid = 0;
+                for (Map.Entry<IBinder, AttributionSource> entry : mAttributions.entrySet()) {
+                    if (entry.getValue().getUid() == uid) {
+                        numForUid++;
+                    }
+                }
+                return numForUid;
+            }
+        }
+
         private int resolveUid(int uid) {
             final VoiceInteractionManagerInternal vimi = LocalServices
                     .getService(VoiceInteractionManagerInternal.class);
@@ -1194,7 +1220,6 @@ public class PermissionManagerService extends IPermissionManager.Stub {
                 @Nullable String message, boolean forDataDelivery, boolean startDataDelivery,
                 boolean fromDatasource, int attributedOp) {
             PermissionInfo permissionInfo = sPlatformPermissions.get(permission);
-
             if (permissionInfo == null) {
                 try {
                     permissionInfo = context.getPackageManager().getPermissionInfo(permission, 0);
@@ -1325,8 +1350,8 @@ public class PermissionManagerService extends IPermissionManager.Stub {
 
                 // If the call is from a datasource we need to vet only the chain before it. This
                 // way we can avoid the datasource creating an attribution context for every call.
-                if (!(fromDatasource && current.equals(attributionSource))
-                        && next != null && !current.isTrusted(context)) {
+                boolean isDatasource = fromDatasource && current.equals(attributionSource);
+                if (!isDatasource && next != null && !current.isTrusted(context)) {
                     return PermissionChecker.PERMISSION_HARD_DENIED;
                 }
 
