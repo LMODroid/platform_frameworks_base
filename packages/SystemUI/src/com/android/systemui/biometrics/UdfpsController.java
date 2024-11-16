@@ -876,6 +876,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         if (udfpsView.isDisplayConfigured()) {
             udfpsView.unconfigureDisplay();
         }
+        mOverlay.setDimAmount(0f);
     }
 
     /**
