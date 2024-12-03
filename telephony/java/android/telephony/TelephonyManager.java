@@ -6238,6 +6238,7 @@ public class TelephonyManager {
      * @deprecated use {@link #getImsPrivateUserIdentity()}
      */
     @UnsupportedAppUsage
+    @Deprecated
     public String getIsimImpi() {
         try {
             IPhoneSubInfo info = getSubscriberInfoService();
@@ -6324,6 +6325,7 @@ public class TelephonyManager {
      * @deprecated use {@link #getImsPublicUserIdentities()}
      */
     @UnsupportedAppUsage
+    @Deprecated
     @Nullable
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public String[] getIsimImpu() {
@@ -8194,6 +8196,7 @@ public class TelephonyManager {
      *          {@link PackageManager#FEATURE_TELEPHONY_RADIO_ACCESS}.
      * @hide
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     @SystemApi
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_RADIO_ACCESS)
@@ -13511,6 +13514,7 @@ public class TelephonyManager {
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CARRIERLOCK)
     public int setAllowedCarriers(int slotIndex, List<CarrierIdentifier> carriers) {
