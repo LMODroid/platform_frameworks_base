@@ -8220,6 +8220,9 @@ public class TelephonyManager {
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public boolean nvResetConfig(int resetType) {
+        if (resetType != 1) {  // 1: reload NV reset (reboot modem)
+            return false;
+        }
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
@@ -8257,16 +8260,6 @@ public class TelephonyManager {
     @SystemApi
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_RADIO_ACCESS)
     public boolean resetRadioConfig() {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                return telephony.resetModemConfig(getSlotIndex());
-            }
-        } catch (RemoteException ex) {
-            Rlog.e(TAG, "resetRadioConfig RemoteException", ex);
-        } catch (NullPointerException ex) {
-            Rlog.e(TAG, "resetRadioConfig NPE", ex);
-        }
         return false;
     }
 
