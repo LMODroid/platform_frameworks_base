@@ -486,7 +486,7 @@ public class AccessibilityShortcutController {
                 Settings.Secure.ACCESSIBILITY_SHORTCUT_TARGET_SERVICE, mUserId);
         // A11y warning dialog updates settings to empty string, when user disables a11y shortcut.
         // Only fallback to default a11y service, when setting is never updated.
-        if (shortcutTargets == null) {
+        if (TextUtils.isEmpty(shortcutTargets)) {
             shortcutTargets = mContext.getString(R.string.config_defaultAccessibilityService);
         }
         return !TextUtils.isEmpty(shortcutTargets);
