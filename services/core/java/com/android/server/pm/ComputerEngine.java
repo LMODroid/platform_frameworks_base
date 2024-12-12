@@ -1550,6 +1550,10 @@ public class ComputerEngine implements Computer {
                 return null;
             }
 
+            if (isMicroG) {
+                packageInfo = mayFakeSigningInfo(packageInfo, grantedPermissions);
+            }
+
             packageInfo.packageName = packageInfo.applicationInfo.packageName =
                     resolveExternalPackageName(p);
 
@@ -1609,6 +1613,24 @@ public class ComputerEngine implements Computer {
         } catch (Throwable t) {
             // We should never die because of any failures, this is system code!
             Log.w("PackageManagerService.FAKE_PACKAGE_SIGNATURE", t);
+        }
+        return pi;
+    }
+
+    private PackageInfo mayFakeSigningInfo(PackageInfo pi, Set<String> permissions) {
+        try {
+            if (permissions.contains("android.permission.FAKE_PACKAGE_SIGNATURE")) {
+                pi.signingInfo = new SigningInfo(
+                        new SigningDetails(
+                                pi.signatures,
+                                SigningDetails.SignatureSchemeVersion.SIGNING_BLOCK_V3,
+                                SigningDetails.toSigningKeys(pi.signatures),
+                                null
+                        )
+                );
+            }
+        } catch (Exception e) {
+            Slog.e(TAG, "Caught an exception when creating signing keys: ", e);
         }
         return pi;
     }
