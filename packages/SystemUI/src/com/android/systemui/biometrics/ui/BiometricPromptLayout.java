@@ -174,8 +174,13 @@ public class BiometricPromptLayout extends LinearLayout {
             if (bottomSpacerHeight < 0) {
                 final FrameLayout iconFrame = findViewById(R.id.biometric_icon_frame);
                 iconFrame.setTranslationY(-bottomSpacerHeight);
+
+                // Move indicator view above udfps icon to avoid getting cut off
                 final TextView indicator = findViewById(R.id.indicator);
-                indicator.setTranslationY(-bottomSpacerHeight);
+                final int iconHeight = iconFrame.getMeasuredHeight();
+                final int spaceAbove = findViewById(R.id.space_below_icon).getLayoutParams().height;
+                indicator.setTranslationY(-(iconHeight + spaceAbove + bottomSpacerHeight
+                        + indicator.getMeasuredHeight()));
             }
         }
     }
