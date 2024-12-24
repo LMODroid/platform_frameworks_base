@@ -1865,15 +1865,15 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         mHandler.removeMessages(H.DISMISS);
         rescheduleTimeoutH();
 
-        if (mShowing && !mIsAnimatingDismiss) {
-            Log.i(TAG, "volume dialog is already showing");
-            return;
-        }
-
         if (mConfigChanged) {
             initDialog(lockTaskModeState); // resets mShowing to false
             mConfigurableTexts.update();
             mConfigChanged = false;
+        }
+
+        if (mShowing && !mIsAnimatingDismiss) {
+            Log.i(TAG, "volume dialog is already showing");
+            return;
         }
 
         if (mDefaultRow == null) {
