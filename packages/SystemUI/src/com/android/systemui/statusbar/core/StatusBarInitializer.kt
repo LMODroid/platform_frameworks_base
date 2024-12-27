@@ -22,6 +22,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.core.StatusBarInitializer.OnStatusBarViewInitializedListener
 import com.android.systemui.statusbar.core.StatusBarInitializer.OnStatusBarViewUpdatedListener
 import com.android.systemui.statusbar.phone.PhoneStatusBarTransitions
+import com.android.systemui.statusbar.phone.PhoneStatusBarView
 import com.android.systemui.statusbar.phone.PhoneStatusBarViewController
 import com.android.systemui.statusbar.phone.fragment.CollapsedStatusBarFragment
 import com.android.systemui.statusbar.phone.fragment.dagger.StatusBarFragmentComponent
@@ -59,6 +60,7 @@ interface StatusBarInitializer {
 
     interface OnStatusBarViewUpdatedListener {
         fun onStatusBarViewUpdated(
+            statusBarView: PhoneStatusBarView,
             statusBarViewController: PhoneStatusBarViewController,
             statusBarTransitions: PhoneStatusBarTransitions,
         )
@@ -86,6 +88,7 @@ constructor(
                             (fragment as CollapsedStatusBarFragment).statusBarFragmentComponent
                                 ?: throw IllegalStateException()
                         statusBarViewUpdatedListener?.onStatusBarViewUpdated(
+                            statusBarFragmentComponent.phoneStatusBarView,
                             statusBarFragmentComponent.phoneStatusBarViewController,
                             statusBarFragmentComponent.phoneStatusBarTransitions,
                         )
