@@ -18,6 +18,7 @@ package com.android.server.firewall;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -35,7 +36,7 @@ public class ProvisionedFilter implements Filter {
     public boolean matchesPackage(IntentFirewall ifw, String resolvedPackage, int callerUid,
             int receivingUid, int userId) {
         try {
-            return Settings.Global.getInt(ifw.getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0) == 1;
+            return SystemProperties.getBoolean("persist.sys.device_provisioned", false);
         } catch (Exception ex) {
             // It is probably too early to access settings
             return false;
