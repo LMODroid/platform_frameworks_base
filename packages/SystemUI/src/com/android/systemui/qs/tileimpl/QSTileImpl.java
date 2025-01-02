@@ -322,13 +322,18 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
 
     private void handleClick(int category, QSEvent event, int message, int eventId, Expandable expandable) {
         final KeyguardManager keyguardManager = mContext.getSystemService(KeyguardManager.class);
+        final Runnable sendMessageRunnable = () -> {
+            mHandler.obtainMessage(message, eventId, 0, expandable).sendToTarget();
+        };
         mMetricsLogger.write(populate(new LogMaker(category).setType(TYPE_ACTION)
                 .addTaggedData(FIELD_STATUS_BAR_STATE, mStatusBarStateController.getState())));
         mUiEventLogger.logWithInstanceId(event, 0, getMetricsSpec(), getInstanceId());
         if (!keyguardManager.isKeyguardLocked() ||
                 Settings.Secure.getInt(mContext.getContentResolver(),
                 LMOSettings.Secure.QS_TILES_TOGGLEABLE_ON_LOCK_SCREEN, 1) == 1) {
-            mHandler.obtainMessage(message, eventId, 0, expandable).sendToTarget();
+            sendMessageRunnable.run();
+        } else {
+            mActivityStarter.postQSRunnableDismissingKeyguard(sendMessageRunnable);
         }
     }
 
