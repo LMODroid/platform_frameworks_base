@@ -337,6 +337,10 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 Settings.Secure.getInt(mContext.getContentResolver(),
                 LMOSettings.Secure.QS_TILES_TOGGLEABLE_ON_LOCK_SCREEN, 1) == 1) {
             mHandler.obtainMessage(message, eventId, 0, view).sendToTarget();
+        } else {
+            mActivityStarter.postQSRunnableDismissingKeyguard(() -> {
+                mHandler.obtainMessage(message, eventId, 0, view).sendToTarget();
+            });
         }
     }
 
