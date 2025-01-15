@@ -22,6 +22,7 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.view.WindowInsets
 import android.widget.ImageView
@@ -67,6 +68,7 @@ object BiometricViewSizeBinder {
                 !view.context.packageManager.hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE)
         val windowManager = WindowManagerUtils.getWindowManager(view.context)
 
+        val indicatorView = view.requireViewById<TextView>(R.id.indicator)
         val panelView = view.requireViewById<View>(R.id.panel)
         val cornerRadius = view.resources.getDimension(R.dimen.biometric_dialog_corner_size)
         val pxToDp =
@@ -151,6 +153,96 @@ object BiometricViewSizeBinder {
         largeConstraintSet.setVisibility(R.id.auth_screen, View.GONE)
         largeConstraintSet.setVisibility(R.id.credential_view, View.VISIBLE)
         largeConstraintSet.setVisibility(R.id.fallback_view, View.GONE)
+
+        // Read before any ConstraintSet is applied, clearing the top anchor resets the margin
+        val indicatorMarginTop =
+            (indicatorView.layoutParams as ViewGroup.MarginLayoutParams).topMargin
+        val indicatorAboveIconMarginBottom =
+            view.resources.getDimensionPixelSize(R.dimen.biometric_indicator_above_margin_bottom)
+        val indicatorMaxWidth =
+            view.resources.getDimensionPixelSize(R.dimen.biometric_dialog_indicator_max_width)
+        var indicatorMessage = ""
+
+        fun BiometricPromptLayoutState.isIconShown() =
+            activeView == BiometricPromptView.BIOMETRIC && !hideSensorIcon && size.isMedium
+
+        // If the udfps sensor is close to the bottom of the display, the indicator text below the
+        // icon gets pushed out of the screen. Move it above the icon in that case.
+        fun ConstraintSet.moveIndicatorAboveIconIfNeeded(
+            state: BiometricPromptLayoutState,
+            bottomInset: Int,
+        ) {
+            if (
+                !state.isIconShown() ||
+                    state.position != PromptPosition.Bottom ||
+                    view.findViewById<View>(R.id.scrollBarrier) == null
+            ) {
+                return
+            }
+            val indicatorHeight =
+                indicatorMarginTop +
+                    indicatorView.lineHeight +
+                    indicatorView.paddingTop +
+                    indicatorView.paddingBottom
+            if (indicatorHeight + bottomInset <= state.iconPosition.bottom) {
+                return
+            }
+            clear(R.id.indicator, ConstraintSet.TOP)
+            connect(
+                R.id.indicator,
+                ConstraintSet.BOTTOM,
+                R.id.scrollBarrier,
+                ConstraintSet.TOP,
+                indicatorAboveIconMarginBottom,
+            )
+            connect(
+                R.id.scrollView,
+                ConstraintSet.BOTTOM,
+                R.id.indicator,
+                ConstraintSet.TOP,
+                indicatorMarginTop,
+            )
+        }
+
+        // In landscape the indicator is centered below the icon, so a long message can extend past
+        // the display edge if the udfps sensor is close to it. Shift it back on screen.
+        fun indicatorTranslationX(state: BiometricPromptLayoutState?): Float {
+            if (
+                state == null ||
+                    !state.isIconShown() ||
+                    indicatorView.layoutParams.width != ViewGroup.LayoutParams.WRAP_CONTENT
+            ) {
+                return 0f
+            }
+            val indicatorWidth =
+                minOf(
+                    indicatorView.paint.measureText(indicatorMessage).toInt() +
+                        indicatorView.totalPaddingLeft +
+                        indicatorView.totalPaddingRight,
+                    indicatorMaxWidth,
+                )
+            val overhang = (indicatorWidth - state.iconSize.first) / 2
+            val navBarInsets =
+                windowManager.maximumWindowMetrics.windowInsets.getInsets(
+                    WindowInsets.Type.navigationBars()
+                )
+            val iconPosition = state.iconPosition
+            return when (state.position) {
+                PromptPosition.Right ->
+                    if (iconPosition.right > 0) {
+                        minOf(0, iconPosition.right - navBarInsets.right - overhang)
+                    } else {
+                        0
+                    }
+                PromptPosition.Left ->
+                    if (iconPosition.left > 0) {
+                        maxOf(0, overhang - (iconPosition.left - navBarInsets.left))
+                    } else {
+                        0
+                    }
+                else -> 0
+            }.toFloat()
+        }
 
         view.repeatWhenAttached {
             lifecycleScope.launch {
@@ -398,6 +490,13 @@ object BiometricViewSizeBinder {
                         }
                     }
 
+                    // Keep the indicator text on screen
+                    nextConstraintSet.moveIndicatorAboveIconIfNeeded(currentState, bottomInset)
+                    nextConstraintSet.setTranslationX(
+                        R.id.indicator,
+                        indicatorTranslationX(currentState),
+                    )
+
                     // Handle landscape flip logic
                     if (currentState.position.isLeft) {
                         nextConstraintSet.clear(R.id.scrollView, ConstraintSet.LEFT)
@@ -445,6 +544,13 @@ object BiometricViewSizeBinder {
 
                     panelView.visibility = View.VISIBLE
                     panelView.invalidateOutline()
+                }
+            }
+
+            lifecycleScope.launch {
+                viewModel.message.collect { message ->
+                    indicatorMessage = message.message
+                    indicatorView.translationX = indicatorTranslationX(previousLayoutState)
                 }
             }
         }

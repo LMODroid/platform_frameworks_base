@@ -21,6 +21,7 @@
 
     <!-- HD calling icon -->
     <dimen name="signal_icon_viewport_size">24dp</dimen>
+    <dimen name="signal_icon_size_hd_calling">8sp</dimen>
 
     <!-- Size to enlarge Enrollment GHBM Dot Size by in DP. -->
     <dimen name="udfps_enroll_dot_additional_size">0dp</dimen>
@@ -29,5 +30,7 @@
     <dimen name="keyguard_face_icon_height">42dp</dimen>
     <dimen name="keyguard_face_icon_width">42dp</dimen>
     <dimen name="keyguard_face_icon_padding">5dp</dimen>
-    <dimen name="signal_icon_size_hd_calling">8sp</dimen>
+
+    <!-- Biometric prompt -->
+    <dimen name="biometric_indicator_above_margin_bottom">8dp</dimen>
 </resources>
