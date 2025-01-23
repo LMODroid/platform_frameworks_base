@@ -52,7 +52,7 @@ interface ImsRepository {
 @OptIn(ExperimentalCoroutinesApi::class)
 class ImsRepositoryImpl(
     override val subId: Int,
-    imsManager: ImsManager,
+    imsManager: ImsManager?,
     subscriptionManager: SubscriptionManager,
     bgDispatcher: CoroutineDispatcher,
     scope: CoroutineScope,
@@ -60,7 +60,7 @@ class ImsRepositoryImpl(
 
     private val imsCallback: StateFlow<ImsCallbackState> = run {
         val initial = ImsCallbackState()
-        val imsMmTelManager = imsManager.getImsMmTelManager(subId)
+        val imsMmTelManager = imsManager?.getImsMmTelManager(subId)
         callbackFlow {
                 val registrationCallback = object: RegistrationCallback() {
                     override fun onRegistered(attributes: ImsRegistrationAttributes) {
@@ -80,31 +80,31 @@ class ImsRepositoryImpl(
                 }
                 val stateCallback = object: ImsStateCallback() {
                     override fun onAvailable() {
-                        imsMmTelManager.registerImsRegistrationCallback(
+                        imsMmTelManager?.registerImsRegistrationCallback(
                                 bgDispatcher.asExecutor(), registrationCallback
                         )
-                        imsMmTelManager.registerMmTelCapabilityCallback(
+                        imsMmTelManager?.registerMmTelCapabilityCallback(
                                 bgDispatcher.asExecutor(), capabilityCallback
                         )
                     }
 
                     override fun onUnavailable(reason: Int) {
-                        imsMmTelManager.unregisterImsRegistrationCallback(registrationCallback)
-                        imsMmTelManager.unregisterMmTelCapabilityCallback(capabilityCallback)
+                        imsMmTelManager?.unregisterImsRegistrationCallback(registrationCallback)
+                        imsMmTelManager?.unregisterMmTelCapabilityCallback(capabilityCallback)
                     }
 
                     override fun onError() {
-                        imsMmTelManager.unregisterImsRegistrationCallback(registrationCallback)
-                        imsMmTelManager.unregisterMmTelCapabilityCallback(capabilityCallback)
+                        imsMmTelManager?.unregisterImsRegistrationCallback(registrationCallback)
+                        imsMmTelManager?.unregisterMmTelCapabilityCallback(capabilityCallback)
                     }
                 }
-                imsMmTelManager.registerImsStateCallback(
+                imsMmTelManager?.registerImsStateCallback(
                         bgDispatcher.asExecutor(), stateCallback
                 )
                 awaitClose {
-                    imsMmTelManager.unregisterImsStateCallback(stateCallback)
-                    imsMmTelManager.unregisterImsRegistrationCallback(registrationCallback)
-                    imsMmTelManager.unregisterMmTelCapabilityCallback(capabilityCallback)
+                    imsMmTelManager?.unregisterImsStateCallback(stateCallback)
+                    imsMmTelManager?.unregisterImsRegistrationCallback(registrationCallback)
+                    imsMmTelManager?.unregisterMmTelCapabilityCallback(capabilityCallback)
                 }
         }
         .retryWhen { cause, _ ->
@@ -144,7 +144,7 @@ class ImsRepositoryImpl(
     class Factory
     @Inject
     constructor(
-        private val imsManager: ImsManager,
+        private val imsManager: ImsManager?,
         private val subscriptionManager: SubscriptionManager,
         @Background private val bgDispatcher: CoroutineDispatcher,
         @Application private val scope: CoroutineScope,
