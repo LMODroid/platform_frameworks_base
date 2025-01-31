@@ -336,11 +336,9 @@ object BiometricViewSizeBinder {
                                         // enough space
                                         if (indicatorHeight + bottomInset > iconPosition.bottom) {
                                             mediumConstraintSet.apply {
-                                                connect(
+                                                clear(
                                                     R.id.indicator,
-                                                    ConstraintSet.TOP,
-                                                    R.id.innerConstraint,
-                                                    ConstraintSet.BOTTOM
+                                                    ConstraintSet.TOP
                                                 )
                                                 connect(
                                                     R.id.indicator,
@@ -356,7 +354,8 @@ object BiometricViewSizeBinder {
                                             }
                                             indicatorView
                                                 .updateLayoutParams<ConstraintLayout.LayoutParams> {
-                                                    topToBottom = R.id.innerConstraint
+                                                    topToBottom =
+                                                        ConstraintLayout.LayoutParams.UNSET
                                                     bottomToTop = R.id.biometric_icon
                                                     bottomMargin = indicatorMarginTop
                                                 }
