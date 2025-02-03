@@ -178,6 +178,7 @@ public class DozeMachine {
     private State mState = State.UNINITIALIZED;
     private int mPulseReason;
     private boolean mWakeLockHeldForCurrentState = false;
+    public boolean pausedDueToAOD = false;
 
     @Inject
     public DozeMachine(@WrappedService Service service,

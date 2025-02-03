@@ -32,13 +32,16 @@ import javax.inject.Inject;
 public class DozePauser implements DozeMachine.Part {
     public static final String TAG = DozePauser.class.getSimpleName();
     private final AlarmTimeout mPauseTimeout;
+    private final AlarmTimeout mAODTimeout;
     private DozeMachine mMachine;
     private final AlwaysOnDisplayPolicy mPolicy;
+    private final Integer aodTimeoutDebounce = 20;
 
     @Inject
     public DozePauser(@Main Handler handler, AlarmManager alarmManager,
             AlwaysOnDisplayPolicy policy) {
         mPauseTimeout = new AlarmTimeout(alarmManager, this::onTimeout, TAG, handler);
+        mAODTimeout = new AlarmTimeout(alarmManager, this::onAODTimeout, TAG, handler);
         mPolicy = policy;
     }
 
@@ -51,16 +54,38 @@ public class DozePauser implements DozeMachine.Part {
     public void transitionTo(DozeMachine.State oldState, DozeMachine.State newState) {
         switch (newState) {
             case DOZE_AOD_PAUSING:
-                mPauseTimeout.schedule(mPolicy.proxScreenOffDelayMs,
-                        AlarmTimeout.MODE_IGNORE_IF_SCHEDULED);
+                if (!mMachine.pausedDueToAOD) {
+                    mPauseTimeout.schedule(mPolicy.proxScreenOffDelayMs,
+                            AlarmTimeout.MODE_IGNORE_IF_SCHEDULED);
+                }
                 break;
+            case DOZE_AOD:
+                if (mPolicy.aodScreenOnTimeoutMs > 0) {
+                    mAODTimeout.schedule(mPolicy.aodScreenOnTimeoutMs,
+                            AlarmTimeout.MODE_IGNORE_IF_SCHEDULED);
+                }
+                break;
+            case DOZE_AOD_PAUSED:
+                break; // avoid resetting some vars
             default:
                 mPauseTimeout.cancel();
+                mAODTimeout.cancel();
+                mMachine.pausedDueToAOD = false;
                 break;
         }
     }
 
     private void onTimeout() {
         mMachine.requestState(DozeMachine.State.DOZE_AOD_PAUSED);
+    }
+
+    private void onAODTimeout() {
+        if (!mMachine.isExecutingTransition() &&
+            !(mMachine.getState() == DozeMachine.State.DOZE_AOD_PAUSED)) {
+            mMachine.requestState(DozeMachine.State.DOZE_AOD_PAUSING);
+            mPauseTimeout.schedule(aodTimeoutDebounce,
+                    AlarmTimeout.MODE_IGNORE_IF_SCHEDULED);
+            mMachine.pausedDueToAOD = true;
+        }
     }
 }
