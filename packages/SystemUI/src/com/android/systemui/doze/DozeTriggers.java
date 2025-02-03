@@ -447,8 +447,11 @@ public class DozeTriggers implements DozeMachine.Part {
         }
 
         if (far && (paused || pausing)) {
-            mDozeLog.d("Prox FAR, unpausing AOD");
-            mMachine.requestState(DozeMachine.State.DOZE_AOD);
+            if (!mMachine.pausedDueToAOD) {
+                mDozeLog.d("Prox FAR, unpausing AOD");
+                mMachine.requestState(DozeMachine.State.DOZE_AOD);
+                mMachine.pausedDueToAOD = false;
+            }
         } else if (near && aod) {
             mDozeLog.d("Prox NEAR, starting pausing AOD countdown");
             mMachine.requestState(DozeMachine.State.DOZE_AOD_PAUSING);

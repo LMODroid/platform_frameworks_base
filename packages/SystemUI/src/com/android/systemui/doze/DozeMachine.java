@@ -156,6 +156,7 @@ public class DozeMachine {
     private int mPulseReason;
     private boolean mWakeLockHeldForCurrentState = false;
     private int mUiModeType = Configuration.UI_MODE_TYPE_NORMAL;
+    public boolean pausedDueToAOD = false;
 
     @Inject
     public DozeMachine(@WrappedService Service service,
