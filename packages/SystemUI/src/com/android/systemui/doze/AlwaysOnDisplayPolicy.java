@@ -34,6 +34,8 @@ import com.android.internal.display.BrightnessSynchronizer;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.res.R;
 
+import com.libremobileos.providers.LMOSettings;
+
 import javax.inject.Inject;
 
 /**
@@ -49,6 +51,8 @@ public class AlwaysOnDisplayPolicy {
     private static final long DEFAULT_PROX_COOLDOWN_PERIOD_MS = 5 * DateUtils.SECOND_IN_MILLIS;
     private static final long DEFAULT_WALLPAPER_VISIBILITY_MS = 60 * DateUtils.SECOND_IN_MILLIS;
     private static final long DEFAULT_WALLPAPER_FADE_OUT_MS = 400;
+    private static final long DEFAULT_TIMEOUT_MS = 15 * DateUtils.SECOND_IN_MILLIS;
+    private static final long NO_TIMEOUT_MS = 0L;
 
     static final String KEY_SCREEN_BRIGHTNESS_ARRAY = "screen_brightness_array";
     static final String KEY_DIMMING_SCRIM_ARRAY = "dimming_scrim_array";
@@ -98,6 +102,15 @@ public class AlwaysOnDisplayPolicy {
      * @see #KEY_PROX_SCREEN_OFF_DELAY_MS
      */
     public long proxScreenOffDelayMs;
+
+    /**
+     * Timeout(ms) to turn off the screen after entering AoD.
+     * particularly useful when the display is prone to burn-in,
+     * and for video mode panels which require the CPU to be awake
+     * to display literally anything.
+     *
+     */
+    public long aodScreenOnTimeoutMs;
 
     /**
      * The threshold time(ms) to trigger the cooldown timer, which will
@@ -151,16 +164,23 @@ public class AlwaysOnDisplayPolicy {
     private final class SettingsObserver extends ContentObserver {
         private final Uri ALWAYS_ON_DISPLAY_CONSTANTS_URI
                 = Settings.Global.getUriFor(Settings.Global.ALWAYS_ON_DISPLAY_CONSTANTS);
+        private final Uri DOZE_ALWAYS_ON_TIMEOUT_URI
+                = Settings.Secure.getUriFor(LMOSettings.Secure.DOZE_ALWAYS_ON_TIMEOUT);
+
+        private final ContentResolver mResolver;
 
         SettingsObserver(Handler handler) {
             super(handler);
+            mResolver = mContext.getContentResolver();
         }
 
         void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(ALWAYS_ON_DISPLAY_CONSTANTS_URI,
+            mResolver.registerContentObserver(ALWAYS_ON_DISPLAY_CONSTANTS_URI,
                     false, this, UserHandle.USER_ALL);
+            mResolver.registerContentObserver(DOZE_ALWAYS_ON_TIMEOUT_URI,
+                    false, this);
             update(null);
+            update(DOZE_ALWAYS_ON_TIMEOUT_URI);
         }
 
         @Override
@@ -206,6 +226,17 @@ public class AlwaysOnDisplayPolicy {
                 wallpaperDimmingScrimArray = mParser.getIntArray(KEY_WALLPAPER_DIMMING_SCRIM_ARRAY,
                         resources.getIntArray(
                                 R.array.config_doze_brightness_sensor_to_wallpaper_scrim_opacity));
+            } else if (DOZE_ALWAYS_ON_TIMEOUT_URI.equals(uri)) {
+                final Resources resources = mContext.getResources();
+                int defaultValue = resources.getBoolean(
+                        com.android.internal.R.bool.config_dozeAlwaysOnDisplayTimeoutByDefault)
+                        ? 1 : 0;
+                boolean timeoutEnabled = Settings.Secure.getIntForUser(
+                        mResolver,
+                        LMOSettings.Secure.DOZE_ALWAYS_ON_TIMEOUT,
+                        defaultValue,
+                        UserHandle.USER_CURRENT) == 1;
+                aodScreenOnTimeoutMs = timeoutEnabled ? DEFAULT_TIMEOUT_MS : NO_TIMEOUT_MS;
             }
         }
     }
