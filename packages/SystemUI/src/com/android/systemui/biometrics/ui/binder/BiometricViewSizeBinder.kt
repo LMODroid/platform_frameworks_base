@@ -102,6 +102,7 @@ object BiometricViewSizeBinder {
             val midGuideline = view.findViewById<Guideline>(R.id.midGuideline)
 
             val indicatorView = view.requireViewById<View>(R.id.indicator)
+            val scrollView = view.requireViewById<View>(R.id.scrollView)
             val iconHolderView = view.requireViewById<View>(R.id.biometric_icon)
             val panelView = view.requireViewById<View>(R.id.panel)
             val cornerRadius = view.resources.getDimension(R.dimen.biometric_dialog_corner_size)
@@ -332,6 +333,9 @@ object BiometricViewSizeBinder {
                                         val indicatorHeight = indicatorView.measuredHeight +
                                             indicatorMarginTop
                                         val bottomInset = Utils.getNavbarInsets(view.context).bottom
+                                        val marginBottom = view.resources.getDimensionPixelSize(
+                                            R.dimen.biometric_indicator_above_margin_bottom
+                                        )
                                         // move the indicator text above udfps icon if we don't have
                                         // enough space
                                         if (indicatorHeight + bottomInset > iconPosition.bottom) {
@@ -339,6 +343,14 @@ object BiometricViewSizeBinder {
                                                 clear(
                                                     R.id.indicator,
                                                     ConstraintSet.TOP
+                                                )
+                                                setVerticalBias(
+                                                    R.id.indicator,
+                                                    1.0f
+                                                )
+                                                setVerticalBias(
+                                                    R.id.scrollView,
+                                                    0f
                                                 )
                                                 connect(
                                                     R.id.indicator,
@@ -349,6 +361,11 @@ object BiometricViewSizeBinder {
                                                 setMargin(
                                                     R.id.indicator,
                                                     ConstraintSet.BOTTOM,
+                                                    marginBottom
+                                                )
+                                                setMargin(
+                                                    R.id.scrollView,
+                                                    ConstraintSet.BOTTOM,
                                                     indicatorMarginTop
                                                 )
                                             }
@@ -357,6 +374,10 @@ object BiometricViewSizeBinder {
                                                     topToBottom =
                                                         ConstraintLayout.LayoutParams.UNSET
                                                     bottomToTop = R.id.biometric_icon
+                                                    bottomMargin = marginBottom
+                                                }
+                                            scrollView
+                                                .updateLayoutParams<ConstraintLayout.LayoutParams> {
                                                     bottomMargin = indicatorMarginTop
                                                 }
                                         }
