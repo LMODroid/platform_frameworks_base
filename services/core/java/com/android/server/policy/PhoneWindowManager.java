@@ -670,6 +670,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Click volume down + power for partial screenshot
     boolean mClickPartialScreenshot;
 
+    // Volume Up and Down to mute on Android TV
+    boolean mVolUpAndDownMute;
+
     private boolean mPendingKeyguardOccluded;
     private boolean mKeyguardOccludedChanged;
 
@@ -1108,6 +1111,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     LMOSettings.System.VOLUME_ANSWER_CALL), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    LMOSettings.System.VOLUME_UP_AND_DOWN_MUTE), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -2822,22 +2828,39 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         }
 
-        mKeyCombinationManager.addRule(
-                new TwoKeysCombinationRule(KEYCODE_VOLUME_DOWN, KEYCODE_VOLUME_UP) {
-                    @Override
-                    public boolean preCondition() {
-                        return mAccessibilityShortcutController
-                                .isAccessibilityShortcutAvailable(isKeyguardLocked());
-                    }
-                    @Override
-                    public void execute() {
-                        interceptAccessibilityShortcutChord();
-                    }
-                    @Override
-                    public void cancel() {
-                        cancelPendingAccessibilityShortcutAction();
-                    }
-                });
+        if (mHasFeatureLeanback) {
+            mKeyCombinationManager.addRule(
+                    new TwoKeysCombinationRule(KEYCODE_VOLUME_DOWN, KEYCODE_VOLUME_UP) {
+                        @Override
+                        public boolean preCondition() {
+                            return mVolUpAndDownMute;
+                        }
+                        @Override
+                        public void execute() {
+                            triggerVirtualKeypress(KeyEvent.KEYCODE_VOLUME_MUTE);
+                        }
+                        @Override
+                        public void cancel() {
+                        }
+                    });
+        } else {
+            mKeyCombinationManager.addRule(
+                    new TwoKeysCombinationRule(KEYCODE_VOLUME_DOWN, KEYCODE_VOLUME_UP) {
+                        @Override
+                        public boolean preCondition() {
+                            return mAccessibilityShortcutController
+                                    .isAccessibilityShortcutAvailable(isKeyguardLocked());
+                        }
+                        @Override
+                        public void execute() {
+                            interceptAccessibilityShortcutChord();
+                        }
+                        @Override
+                        public void cancel() {
+                            cancelPendingAccessibilityShortcutAction();
+                        }
+                    });
+        }
 
         // Volume up + power can either be the "ringer toggle chord" or as another way to
         // launch GlobalActions. This behavior can change at runtime so we must check behavior
@@ -3387,6 +3410,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             UserHandle.USER_CURRENT) == 1;
             mCameraLaunch = Settings.System.getIntForUser(resolver,
                     LMOSettings.System.CAMERA_LAUNCH, 0,
+                    UserHandle.USER_CURRENT) == 1;
+            mVolUpAndDownMute = Settings.System.getIntForUser(resolver,
+                    LMOSettings.System.VOLUME_UP_AND_DOWN_MUTE, 0,
                     UserHandle.USER_CURRENT) == 1;
 
             // Configure wake gesture.
