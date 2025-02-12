@@ -842,7 +842,10 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                     }
                     break;
                 case USERS:
-                    if (mUserManager.getUsers().size() > 1) {
+                    // Only switchable users count (not parallel spaces), and only if multi-user is on
+                    if (mUserManager.isUserSwitcherEnabled()
+                            && mUserManager.getUsers().stream()
+                                    .filter(UserInfo::supportsSwitchTo).count() > 1) {
                         addUserActions(mUsersItems, currentUserInfo);
                         addIfShouldShowAction(tempActions, new UsersAction());
                     }
