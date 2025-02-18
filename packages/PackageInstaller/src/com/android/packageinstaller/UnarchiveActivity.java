@@ -17,24 +17,31 @@
 package com.android.packageinstaller;
 
 import static android.Manifest.permission;
+import static android.content.pm.Flags.usePiaV2;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ARCHIVED_PACKAGES;
 import static android.view.WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
+
+import static com.android.packageinstaller.PackageUtil.getReasonForDebug;
 
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.InstallSourceInfo;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Process;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.android.packageinstaller.v2.ui.UnarchiveLaunch;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -57,6 +64,23 @@ public class UnarchiveActivity extends Activity {
         getWindow().addSystemFlags(SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS);
 
         super.onCreate(null);
+
+        boolean testOverrideForPiaV2 = Settings.System.getInt(getContentResolver(),
+                "use_pia_v2", 0) == 1;
+        boolean usePiaV2aConfig = usePiaV2();
+
+        if (usePiaV2aConfig || testOverrideForPiaV2) {
+            Log.d(TAG, getReasonForDebug(usePiaV2aConfig, testOverrideForPiaV2));
+
+            Intent piaV2 = new Intent(getIntent());
+            piaV2.putExtra(UnarchiveLaunch.EXTRA_CALLING_PKG_NAME, getLaunchedFromPackage());
+            piaV2.putExtra(UnarchiveLaunch.EXTRA_CALLING_PKG_UID, getLaunchedFromUid());
+            piaV2.setClass(this, UnarchiveLaunch.class);
+            piaV2.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+            startActivity(piaV2);
+            finish();
+            return;
+        }
 
         int callingUid = getLaunchedFromUid();
         if (callingUid == Process.INVALID_UID) {

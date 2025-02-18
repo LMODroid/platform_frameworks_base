@@ -401,4 +401,23 @@ public class PackageUtil {
         }
         return null;
     }
+
+    /**
+     * Returns a string containing the reason for using Pia V2. Used for debugging purposes
+     */
+    public static String getReasonForDebug(boolean usePiaV2aConfig, boolean testOverrideForPiaV2) {
+        StringBuilder sb = new StringBuilder("Using Pia V2 due to: ");
+        boolean aconfigUsed = false;
+        if (usePiaV2aConfig) {
+            sb.append("aconfig flag USE_PIA_V2");
+            aconfigUsed = true;
+        }
+        if (testOverrideForPiaV2) {
+            if (aconfigUsed) {
+                sb.append(" and ");
+            }
+            sb.append("testOverrideForPiaV2.");
+        }
+        return sb.toString();
+    }
 }

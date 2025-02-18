@@ -17,7 +17,9 @@
 package com.android.packageinstaller;
 
 import static android.content.pm.Flags.usePiaV2;
+
 import static com.android.packageinstaller.PackageUtil.getMaxTargetSdkVersionForUid;
+import static com.android.packageinstaller.PackageUtil.getReasonForDebug;
 
 import android.Manifest;
 import android.app.Activity;
@@ -41,8 +43,11 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.EventLog;
 import android.util.Log;
+
 import androidx.annotation.Nullable;
+
 import com.android.packageinstaller.v2.ui.InstallLaunch;
+
 import java.util.Arrays;
 
 /**
@@ -69,7 +74,7 @@ public class InstallStart extends Activity {
         boolean usePiaV2aConfig = usePiaV2();
 
         if (usePiaV2aConfig || testOverrideForPiaV2) {
-            logReasonForDebug(usePiaV2aConfig, testOverrideForPiaV2);
+            Log.d(TAG, getReasonForDebug(usePiaV2aConfig, testOverrideForPiaV2));
 
             Intent piaV2 = new Intent(getIntent());
             piaV2.putExtra(InstallLaunch.EXTRA_CALLING_PKG_NAME, getLaunchedFromPackage());
@@ -409,21 +414,5 @@ public class InstallStart extends Activity {
                         R.string.unknown_apps_user_restriction_dlg_text);
         }
         return null;
-    }
-
-    private void logReasonForDebug(boolean usePiaV2aConfig, boolean testOverrideForPiaV2) {
-        StringBuilder sb = new StringBuilder("Using Pia V2 due to: ");
-        boolean aconfigUsed = false;
-        if (usePiaV2aConfig) {
-            sb.append("aconfig flag USE_PIA_V2");
-            aconfigUsed = true;
-        }
-        if (testOverrideForPiaV2) {
-            if (aconfigUsed) {
-                sb.append(" and ");
-            }
-            sb.append("testOverrideForPiaV2.");
-        }
-        Log.i(TAG, sb.toString());
     }
 }
