@@ -16,6 +16,126 @@
 
 package com.android.packageinstaller.v2.model
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.IntentSender
+import android.content.pm.PackageInstaller
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
+import android.os.Process
+import android.util.Log
+import com.android.packageinstaller.v2.model.PackageUtil.getPackageNameForUid
+import com.android.packageinstaller.v2.model.PackageUtil.isPermissionGranted
+import com.android.packageinstaller.v2.model.PackageUtil.isUidRequestingPermission
+import java.io.IOException
 
-class UnarchiveRepository(private val context: Context)
+class UnarchiveRepository(private val context: Context) {
+
+    private val packageManager: PackageManager = context.packageManager
+    private val packageInstaller: PackageInstaller = packageManager.packageInstaller
+
+    private lateinit var intent: Intent
+    private lateinit var targetPackageName: String
+    private lateinit var intentSender: IntentSender
+
+    fun performPreUnarchivalChecks(intent: Intent, callerInfo: CallerInfo): UnarchiveStage {
+        this.intent = intent
+
+        val callingUid = callerInfo.uid
+        if (callingUid == Process.INVALID_UID) {
+            Log.e(LOG_TAG, "Could not determine the launching uid.")
+            return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
+        }
+
+        val callingPackage = getPackageNameForUid(context, callingUid, null)
+        if (callingPackage == null) {
+            Log.e(LOG_TAG, "Package not found for originating uid $callingUid")
+            return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
+        }
+
+
+        // We don't check the AppOpsManager here for REQUEST_INSTALL_PACKAGES because the requester
+        // is not the source of the installation.
+        val hasRequestInstallPermission = isUidRequestingPermission(
+            packageManager, callingUid, Manifest.permission.REQUEST_INSTALL_PACKAGES
+        )
+        val hasInstallPermission =
+            isPermissionGranted(context, Manifest.permission.INSTALL_PACKAGES, callingUid)
+
+        if (!hasRequestInstallPermission && !hasInstallPermission) {
+            Log.e(
+                LOG_TAG, ("Uid " + callingUid + " does not have "
+                    + Manifest.permission.REQUEST_INSTALL_PACKAGES + " or "
+                    + Manifest.permission.INSTALL_PACKAGES)
+            )
+            return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
+        }
+
+        targetPackageName = intent.getStringExtra(PackageInstaller.EXTRA_PACKAGE_NAME)!!
+        intentSender =
+            intent.getParcelableExtra(EXTRA_UNARCHIVE_INTENT_SENDER, IntentSender::class.java)!!
+
+        return UnarchiveReady()
+    }
+
+    fun showUnarchivalConfirmation(): UnarchiveStage {
+        var appTitle: String
+        try {
+            appTitle = getAppTitle(targetPackageName, PackageManager.MATCH_ARCHIVED_PACKAGES)
+        } catch (e: NameNotFoundException) {
+            Log.e(LOG_TAG, "Invalid packageName $targetPackageName: ", e)
+            return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
+        }
+
+        val installSource = packageManager.getInstallSourceInfo(targetPackageName)
+        val installingPackageName =
+            installSource.updateOwnerPackageName ?: installSource.installingPackageName
+        if (installingPackageName == null) {
+            return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
+        }
+
+        var installerTitle: String
+        try {
+            installerTitle = getAppTitle(installingPackageName, 0)
+        } catch (e: NameNotFoundException) {
+            Log.e(LOG_TAG, "Could not find installer", e)
+            return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
+        }
+
+        return UnarchiveUserActionRequired(appTitle, installerTitle)
+    }
+
+    @Throws(NameNotFoundException::class)
+    private fun getAppTitle(packageName: String, flags: Long): String {
+        val appInfo = packageManager.getApplicationInfo(
+            packageName,
+            PackageManager.ApplicationInfoFlags.of(flags)
+        )
+        return appInfo.loadLabel(packageManager).toString()
+    }
+
+    @SuppressLint("MissingPermission")
+    fun beginUnarchive(): UnarchiveStage {
+        try {
+            packageInstaller.requestUnarchive(targetPackageName, intentSender)
+        } catch (e: Exception) {
+            when (e) {
+                is IOException, is NameNotFoundException ->
+                    Log.e(LOG_TAG, "RequestUnarchive failed with %s." + e.message)
+            }
+            return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
+        }
+        return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_UNARCHIVE_DONE, Activity.RESULT_OK)
+    }
+
+    companion object {
+        private val LOG_TAG = UnarchiveRepository::class.java.simpleName
+        private const val EXTRA_UNARCHIVE_INTENT_SENDER =
+            "android.content.pm.extra.UNARCHIVE_INTENT_SENDER"
+    }
+
+    data class CallerInfo(val packageName: String?, val uid: Int)
+}

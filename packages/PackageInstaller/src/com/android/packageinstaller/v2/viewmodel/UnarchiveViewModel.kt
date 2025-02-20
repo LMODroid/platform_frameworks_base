@@ -17,8 +17,36 @@
 package com.android.packageinstaller.v2.viewmodel
 
 import android.app.Application
+import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.android.packageinstaller.v2.model.UnarchiveRepository
+import com.android.packageinstaller.v2.model.UnarchiveStage
 
 class UnarchiveViewModel(app: Application, val repository: UnarchiveRepository) :
-    AndroidViewModel(app)
+    AndroidViewModel(app) {
+
+    private val _currentUnarchiveStage = MutableLiveData<UnarchiveStage>()
+    val currentUnarchiveStage: LiveData<UnarchiveStage>
+        get() = _currentUnarchiveStage
+
+    fun preprocessIntent(intent: Intent, info: UnarchiveRepository.CallerInfo) {
+        val stage = repository.performPreUnarchivalChecks(intent, info)
+        if (stage.stageCode == UnarchiveStage.STAGE_READY) {
+            showUnarchiveConfirmation()
+        } else {
+            _currentUnarchiveStage.value = stage
+        }
+    }
+
+    fun showUnarchiveConfirmation() {
+        val stage = repository.showUnarchivalConfirmation()
+        _currentUnarchiveStage.value = stage
+    }
+
+    fun beginUnarchive() {
+        val stage = repository.beginUnarchive()
+        _currentUnarchiveStage.value = stage
+    }
+}
