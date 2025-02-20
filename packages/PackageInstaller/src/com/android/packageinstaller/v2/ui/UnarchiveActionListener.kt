@@ -16,9 +16,16 @@
 
 package com.android.packageinstaller.v2.ui
 
+import android.app.PendingIntent
+
 interface UnarchiveActionListener {
     /**
      * Indicates that the user has confirmed proceeding with app unarchival
      */
     fun beginUnarchive()
+
+    /**
+     * Handle positive button click even from UnarchivalError dialogs
+     */
+    fun handleUnarchiveErrorAction(unarchiveStatus: Int, installerPkg: String?, pi: PendingIntent?)
 }

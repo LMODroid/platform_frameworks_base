@@ -16,18 +16,27 @@
 
 package com.android.packageinstaller.v2.ui
 
+import android.app.ActivityOptions
+import android.app.BroadcastOptions
+import android.app.PendingIntent
+import android.content.Intent
+import android.content.pm.PackageInstaller
+import android.net.Uri
 import android.os.Bundle
 import android.os.Process
+import android.provider.Settings
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.android.packageinstaller.v2.model.UnarchiveAborted
+import com.android.packageinstaller.v2.model.UnarchiveError
 import com.android.packageinstaller.v2.model.UnarchiveRepository
 import com.android.packageinstaller.v2.model.UnarchiveStage
 import com.android.packageinstaller.v2.model.UnarchiveUserActionRequired
 import com.android.packageinstaller.v2.ui.fragments.UnarchiveConfirmationFragment
+import com.android.packageinstaller.v2.ui.fragments.UnarchiveErrorFragment
 import com.android.packageinstaller.v2.viewmodel.UnarchiveViewModel
 import com.android.packageinstaller.v2.viewmodel.UnarchiveViewModelFactory
 
@@ -40,6 +49,11 @@ class UnarchiveLaunch : FragmentActivity(), UnarchiveActionListener {
             UnarchiveLaunch::class.java.packageName + ".callingPkgName"
         val TAG: String = UnarchiveLaunch::class.java.simpleName
         private const val TAG_DIALOG = "dialog"
+
+        private const val ACTION_UNARCHIVE_DIALOG: String =
+            "com.android.intent.action.UNARCHIVE_DIALOG"
+        private const val ACTION_UNARCHIVE_ERROR_DIALOG: String =
+            "com.android.intent.action.UNARCHIVE_ERROR_DIALOG"
     }
 
     private var unarchiveViewModel: UnarchiveViewModel? = null
@@ -63,8 +77,11 @@ class UnarchiveLaunch : FragmentActivity(), UnarchiveActionListener {
             intent.getStringExtra(EXTRA_CALLING_PKG_NAME),
             intent.getIntExtra(EXTRA_CALLING_PKG_UID, Process.INVALID_UID)
         )
+        when (intent.action) {
+            ACTION_UNARCHIVE_DIALOG -> unarchiveViewModel!!.preprocessIntent(intent, info)
+            ACTION_UNARCHIVE_ERROR_DIALOG -> unarchiveViewModel!!.showUnarchiveError(intent)
+        }
 
-        unarchiveViewModel!!.preprocessIntent(intent, info)
         unarchiveViewModel!!.currentUnarchiveStage.observe(this) { stage: UnarchiveStage ->
             onUnarchiveStageChange(stage)
         }
@@ -83,11 +100,69 @@ class UnarchiveLaunch : FragmentActivity(), UnarchiveActionListener {
                 val confirmationDialog = UnarchiveConfirmationFragment.newInstance(uar)
                 showDialogInner(confirmationDialog)
             }
+
+            UnarchiveStage.STAGE_ERROR -> {
+                val error = stage as UnarchiveError
+                val errorDialog = UnarchiveErrorFragment.newInstance(error)
+                showDialogInner(errorDialog)
+            }
         }
     }
 
     override fun beginUnarchive() {
         unarchiveViewModel!!.beginUnarchive()
+    }
+
+    override fun handleUnarchiveErrorAction(
+        unarchiveStatus: Int,
+        installerPkg: String?,
+        pi: PendingIntent?
+    ) {
+        // Allow the error handling actvities to start in the background.
+        val options = BroadcastOptions.makeBasic()
+        options.setPendingIntentBackgroundActivityStartMode(
+            ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+        )
+
+        when (unarchiveStatus) {
+            PackageInstaller.UNARCHIVAL_ERROR_USER_ACTION_NEEDED -> {
+                baseContext.startIntentSender(
+                    pi!!.intentSender,
+                    /* fillInIntent= */ null,
+                    /* flagsMask= */ 0,
+                    Intent.FLAG_ACTIVITY_NEW_TASK,
+                    /* extraFlags= */ 0,
+                    options.toBundle()
+                )
+            }
+
+            PackageInstaller.UNARCHIVAL_ERROR_INSUFFICIENT_STORAGE -> {
+                if (pi != null) {
+                    baseContext.startIntentSender(
+                        pi.intentSender,
+                        /* fillInIntent= */ null,
+                        /* flagsMask= */ 0,
+                        Intent.FLAG_ACTIVITY_NEW_TASK,
+                        /* extraFlags= */ 0,
+                        options.toBundle()
+                    )
+                } else {
+                    val intent = Intent("android.intent.action.MANAGE_PACKAGE_STORAGE")
+                    startActivity(intent, options.toBundle())
+                }
+            }
+
+            PackageInstaller.UNARCHIVAL_ERROR_INSTALLER_DISABLED -> {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                val uri = Uri.fromParts("package", installerPkg!!, null)
+                intent.setData(uri)
+                startActivity(intent, options.toBundle())
+            }
+
+            else -> {
+                // Do nothing. The rest of the dialogs are purely informational.
+            }
+        }
     }
 
     /**

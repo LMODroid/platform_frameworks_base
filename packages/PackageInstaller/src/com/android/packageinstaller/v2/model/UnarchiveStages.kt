@@ -17,6 +17,7 @@
 package com.android.packageinstaller.v2.model
 
 import android.app.Activity
+import android.app.PendingIntent
 
 sealed class UnarchiveStage(val stageCode: Int) {
 
@@ -25,6 +26,7 @@ sealed class UnarchiveStage(val stageCode: Int) {
         const val STAGE_ABORTED = 0
         const val STAGE_READY = 1
         const val STAGE_USER_ACTION_REQUIRED = 2
+        const val STAGE_ERROR = 3
     }
 }
 
@@ -42,3 +44,11 @@ class UnarchiveReady() : UnarchiveStage(STAGE_READY)
 
 data class UnarchiveUserActionRequired(val appTitle: String, val installerTitle: String) :
     UnarchiveStage(STAGE_USER_ACTION_REQUIRED)
+
+data class UnarchiveError(
+    val unarchivalStatus: Int,
+    val installerPackageName: String?,
+    val installerAppTitle: String?,
+    val requiredBytes: Long,
+    val pendingIntent: PendingIntent?
+) : UnarchiveStage(STAGE_ERROR)

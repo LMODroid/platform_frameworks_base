@@ -16,6 +16,10 @@
 
 package com.android.packageinstaller;
 
+import static android.content.pm.Flags.usePiaV2;
+
+import static com.android.packageinstaller.PackageUtil.getReasonForDebug;
+
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -24,11 +28,16 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageInstaller;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
+
+import com.android.packageinstaller.v2.ui.UnarchiveLaunch;
 
 import java.util.Objects;
 
 public class UnarchiveErrorActivity extends Activity {
 
+    static final String LOG_TAG = UnarchiveErrorActivity.class.getSimpleName();
     static final String EXTRA_REQUIRED_BYTES =
             "com.android.content.pm.extra.UNARCHIVE_EXTRA_REQUIRED_BYTES";
     static final String EXTRA_INSTALLER_PACKAGE_NAME =
@@ -39,6 +48,23 @@ public class UnarchiveErrorActivity extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(null);
+
+        boolean testOverrideForPiaV2 = Settings.System.getInt(getContentResolver(),
+                "use_pia_v2", 0) == 1;
+        boolean usePiaV2aConfig = usePiaV2();
+
+        if (usePiaV2aConfig || testOverrideForPiaV2) {
+            Log.d(LOG_TAG, getReasonForDebug(usePiaV2aConfig, testOverrideForPiaV2));
+
+            Intent piaV2 = new Intent(getIntent());
+            piaV2.putExtra(UnarchiveLaunch.EXTRA_CALLING_PKG_NAME, getLaunchedFromPackage());
+            piaV2.putExtra(UnarchiveLaunch.EXTRA_CALLING_PKG_UID, getLaunchedFromUid());
+            piaV2.setClass(this, UnarchiveLaunch.class);
+            piaV2.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+            startActivity(piaV2);
+            finish();
+            return;
+        }
 
         Bundle extras = getIntent().getExtras();
         int unarchivalStatus = extras.getInt(PackageInstaller.EXTRA_UNARCHIVE_STATUS);

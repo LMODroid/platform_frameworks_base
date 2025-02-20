@@ -49,4 +49,9 @@ class UnarchiveViewModel(app: Application, val repository: UnarchiveRepository) 
         val stage = repository.beginUnarchive()
         _currentUnarchiveStage.value = stage
     }
+
+    fun showUnarchiveError(intent: Intent) {
+        val stage = repository.showUnarchiveError(intent)
+        _currentUnarchiveStage.value = stage
+    }
 }
