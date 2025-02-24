@@ -10199,9 +10199,19 @@ public class TelephonyManager {
     public boolean hasCarrierPrivileges(int subId) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                return telephony.getCarrierPrivilegeStatus(subId)
-                        == CARRIER_PRIVILEGE_STATUS_HAS_ACCESS;
+            if (telephony == null) {
+                Rlog.e(TAG, "hasCarrierPrivileges: no Telephony service");
+                return false;
+            }
+            int status = telephony.getCarrierPrivilegeStatus(subId);
+            switch (status) {
+                case CARRIER_PRIVILEGE_STATUS_HAS_ACCESS:
+                    return true;
+                case CARRIER_PRIVILEGE_STATUS_NO_ACCESS:
+                    return false;
+                default:
+                    Rlog.e(TAG, "hasCarrierPrivileges: " + status);
+                    return false;
             }
         } catch (RemoteException ex) {
             Rlog.e(TAG, "hasCarrierPrivileges RemoteException", ex);
