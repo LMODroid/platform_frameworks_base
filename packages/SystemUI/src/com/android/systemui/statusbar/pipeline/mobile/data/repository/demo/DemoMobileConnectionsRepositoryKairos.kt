@@ -28,8 +28,8 @@ import com.android.systemui.activated
 import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.Events
 import com.android.systemui.kairos.ExperimentalKairosApi
-import com.android.systemui.kairos.GroupedEvents
 import com.android.systemui.kairos.Incremental
+import com.android.systemui.kairos.KeyedEvents
 import com.android.systemui.kairos.State
 import com.android.systemui.kairos.TransactionScope
 import com.android.systemui.kairos.asIncremental
@@ -84,13 +84,13 @@ constructor(
             event?.let { (event.subId ?: lastSeenSubId.sample())?.let { it to event } }
         }
 
-    private val mobileEventsBySubId: GroupedEvents<Int, FakeNetworkEventModel> =
+    private val mobileEventsBySubId: KeyedEvents<Int, FakeNetworkEventModel> =
         mobileEventsWithSubId.map { mapOf(it) }.groupByKey()
 
     private val carrierMergedEvents: Events<FakeWifiEventModel.CarrierMerged> =
         wifiEvents.filterIsInstance<FakeWifiEventModel.CarrierMerged>()
 
-    private val wifiEventsBySubId: GroupedEvents<Int, FakeWifiEventModel.CarrierMerged> =
+    private val wifiEventsBySubId: KeyedEvents<Int, FakeWifiEventModel.CarrierMerged> =
         carrierMergedEvents.groupBy { it.subscriptionId }
 
     private val lastSeenSubId: State<Int?> = buildState {

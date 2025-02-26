@@ -186,7 +186,7 @@ fun <A, B> Events<A>.map(transform: TransactionScope.(A) -> B): Events<B> {
 
 /**
  * Like [map], but the emission is not cached during the transaction. Use only if [transform] is
- * fast and pure.
+ * fast and pure. If you are unsure if you need this, then you should prefer [map].
  *
  * @sample com.android.systemui.kairos.KairosSamples.mapCheap
  * @see map

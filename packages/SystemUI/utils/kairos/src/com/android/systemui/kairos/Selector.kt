@@ -61,7 +61,7 @@ fun <A> State<A>.selector(numDistinctValues: Int? = null): StateSelector<A> =
 class StateSelector<in A>
 internal constructor(
     private val upstream: State<A>,
-    private val groupedChanges: GroupedEvents<A, Boolean>,
+    private val groupedChanges: KeyedEvents<A, Boolean>,
 ) {
     /**
      * Returns a [State] that tracks whether the upstream [State] is currently holding the given

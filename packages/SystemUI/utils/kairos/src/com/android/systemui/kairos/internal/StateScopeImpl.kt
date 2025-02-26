@@ -20,9 +20,9 @@ import com.android.systemui.kairos.DeferredValue
 import com.android.systemui.kairos.Events
 import com.android.systemui.kairos.EventsInit
 import com.android.systemui.kairos.EventsLoop
-import com.android.systemui.kairos.GroupedEvents
 import com.android.systemui.kairos.Incremental
 import com.android.systemui.kairos.IncrementalInit
+import com.android.systemui.kairos.KeyedEvents
 import com.android.systemui.kairos.State
 import com.android.systemui.kairos.StateInit
 import com.android.systemui.kairos.StateScope
@@ -78,7 +78,7 @@ internal class StateScopeImpl(val evalScope: EvalScope, val endSignalLazy: Lazy<
         init: DeferredValue<Map<K, Stateful<B>>>,
         numKeys: Int?,
     ): Pair<Events<Map<K, Maybe<A>>>, DeferredValue<Map<K, B>>> {
-        val eventsByKey: GroupedEvents<K, Maybe<Stateful<A>>> = groupByKey(numKeys)
+        val eventsByKey: KeyedEvents<K, Maybe<Stateful<A>>> = groupByKey(numKeys)
         val initOut: Lazy<Map<K, B>> = deferAsync {
             init.unwrapped.value.mapValues { (k, stateful) ->
                 val newEnd = eventsByKey[k]

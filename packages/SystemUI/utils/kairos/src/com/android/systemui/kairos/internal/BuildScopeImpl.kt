@@ -25,9 +25,9 @@ import com.android.systemui.kairos.EffectScope
 import com.android.systemui.kairos.EventProducerScope
 import com.android.systemui.kairos.Events
 import com.android.systemui.kairos.EventsInit
-import com.android.systemui.kairos.GroupedEvents
 import com.android.systemui.kairos.KairosCoroutineScope
 import com.android.systemui.kairos.KairosNetwork
+import com.android.systemui.kairos.KeyedEvents
 import com.android.systemui.kairos.LocalNetwork
 import com.android.systemui.kairos.MutableEvents
 import com.android.systemui.kairos.TransactionScope
@@ -204,7 +204,7 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         initialSpecs: DeferredValue<Map<K, BuildSpec<B>>>,
         numKeys: Int?,
     ): Pair<Events<Map<K, Maybe<A>>>, DeferredValue<Map<K, B>>> {
-        val eventsByKey: GroupedEvents<K, Maybe<BuildSpec<A>>> = groupByKey(numKeys)
+        val eventsByKey: KeyedEvents<K, Maybe<BuildSpec<A>>> = groupByKey(numKeys)
         val initOut: Lazy<Map<K, B>> = deferAsync {
             initialSpecs.unwrapped.value.mapValues { (k, spec) ->
                 val newEnd = eventsByKey[k]

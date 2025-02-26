@@ -26,12 +26,12 @@ import com.android.systemui.kairos.util.maybeSecond
 import com.android.systemui.kairos.util.orError
 
 /**
- * Returns a [GroupedEvents] that can be used to efficiently split a single [Events] into multiple
+ * Returns a [KeyedEvents] that can be used to efficiently split a single [Events] into multiple
  * downstream [Events].
  *
  * The input [Events] emits [Map] instances that specify which downstream [Events] the associated
  * value will be emitted from. These downstream [Events] can be obtained via
- * [GroupedEvents.eventsForKey].
+ * [KeyedEvents.eventsForKey].
  *
  * An example:
  * ```
@@ -48,18 +48,18 @@ import com.android.systemui.kairos.util.orError
  *
  * The optional [numKeys] argument is an optimization used to initialize the internal [HashMap].
  *
- * Note that the returned [GroupedEvents] should be cached and re-used to gain the performance
+ * Note that the returned [KeyedEvents] should be cached and re-used to gain the performance
  * benefit.
  *
  * @sample com.android.systemui.kairos.KairosSamples.groupByKey
  * @see selector
  */
 @ExperimentalKairosApi
-fun <K, A> Events<Map<K, A>>.groupByKey(numKeys: Int? = null): GroupedEvents<K, A> =
-    GroupedEvents(demuxMap({ init.connect(this) }, numKeys))
+fun <K, A> Events<Map<K, A>>.groupByKey(numKeys: Int? = null): KeyedEvents<K, A> =
+    KeyedEvents(demuxMap({ init.connect(this) }, numKeys))
 
 /**
- * Returns a [GroupedEvents] that can be used to efficiently split a single [Events] into multiple
+ * Returns a [KeyedEvents] that can be used to efficiently split a single [Events] into multiple
  * downstream [Events]. The downstream [Events] are associated with a [key][K], which is derived
  * from each emission of the original [Events] via [extractKey].
  *
@@ -77,7 +77,7 @@ fun <K, A> Events<Map<K, A>>.groupByKey(numKeys: Int? = null): GroupedEvents<K, 
 fun <K, A> Events<A>.groupBy(
     numKeys: Int? = null,
     extractKey: TransactionScope.(A) -> K,
-): GroupedEvents<K, A> = map { mapOf(extractKey(it) to it) }.groupByKey(numKeys)
+): KeyedEvents<K, A> = map { mapOf(extractKey(it) to it) }.groupByKey(numKeys)
 
 /**
  * A mapping from keys of type [K] to [Events] emitting values of type [A].
@@ -85,7 +85,7 @@ fun <K, A> Events<A>.groupBy(
  * @see groupByKey
  */
 @ExperimentalKairosApi
-class GroupedEvents<in K, out A> internal constructor(internal val impl: DemuxImpl<K, A>) {
+class KeyedEvents<in K, out A> internal constructor(internal val impl: DemuxImpl<K, A>) {
     /**
      * Returns an [Events] that emits values of type [A] that correspond to the given [key].
      *
@@ -121,7 +121,7 @@ class GroupedEvents<in K, out A> internal constructor(internal val impl: DemuxIm
 fun <A> Events<A>.partition(
     predicate: TransactionScope.(A) -> Boolean
 ): Pair<Events<A>, Events<A>> {
-    val grouped: GroupedEvents<Boolean, A> = groupBy(numKeys = 2, extractKey = predicate)
+    val grouped: KeyedEvents<Boolean, A> = groupBy(numKeys = 2, extractKey = predicate)
     return Pair(grouped.eventsForKey(true), grouped.eventsForKey(false))
 }
 
