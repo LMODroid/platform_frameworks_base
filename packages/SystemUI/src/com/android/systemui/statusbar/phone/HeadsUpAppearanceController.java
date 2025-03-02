@@ -251,18 +251,18 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
     private void setPinnedStatus(PinnedStatus pinnedStatus) {
         if (mPinnedStatus != pinnedStatus) {
             View clockView = mClockController.getClock();
-            boolean isRightClock = clockView.getId() == R.id.clock_right;
+            boolean notLeftClock = clockView.getId() != R.id.clock;
             mPinnedStatus = pinnedStatus;
             if (pinnedStatus.isPinned()) {
                 updateParentClipping(false /* shouldClip */);
                 mView.setVisibility(View.VISIBLE);
                 show(mView);
-                if (!StatusBarRootModernization.isEnabled() && !isRightClock) {
+                if (!StatusBarRootModernization.isEnabled() && !notLeftClock) {
                     hide(mClockView, View.INVISIBLE);
                 }
                 mOperatorNameViewOptional.ifPresent(view -> hide(view, View.INVISIBLE));
             } else {
-                if (!StatusBarRootModernization.isEnabled() && !isRightClock) {
+                if (!StatusBarRootModernization.isEnabled() && !notLeftClock) {
                     show(mClockView);
                 }
                 mOperatorNameViewOptional.ifPresent(this::show);
