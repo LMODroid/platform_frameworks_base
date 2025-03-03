@@ -61,7 +61,7 @@ import kotlinx.coroutines.withTimeoutOrNull
  * used to enable/disable or set level of flashlight
  */
 interface FlashlightRepository {
-    val state: Flow<FlashlightModel>
+    val state: StateFlow<FlashlightModel>
 
     val deviceSupportsFlashlight: Boolean
 
