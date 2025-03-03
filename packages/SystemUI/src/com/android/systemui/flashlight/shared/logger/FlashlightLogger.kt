@@ -20,6 +20,7 @@ import com.android.systemui.flashlight.shared.model.FlashlightModel
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.core.LogLevel.DEBUG
 import com.android.systemui.log.core.LogLevel.WARNING
+import com.android.systemui.log.core.LogLevel.WTF
 import com.android.systemui.log.dagger.FlashlightLog
 import javax.inject.Inject
 
@@ -35,6 +36,10 @@ class FlashlightLogger @Inject constructor(@FlashlightLog private val buffer: Lo
 
     fun w(msg: String) {
         buffer.log(TAG, WARNING, { str1 = msg }, { "$str1" })
+    }
+
+    fun wtf(msg: String) {
+        buffer.log(TAG, WTF, { str1 = msg }, { "$str1" })
     }
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package com.android.systemui.qs.tiles.impl.flashlight.domain.model
+package com.android.systemui.qs.tiles.impl.flashlight.domain.interactor
 
-sealed interface FlashlightTileModel {
-    /**
-     * In this state, the tile can be turned on or off.
-     *
-     * @param isEnabled is true when the flashlight is on and false when off.
-     */
-    @JvmInline value class FlashlightAvailable(val isEnabled: Boolean) : FlashlightTileModel
+import com.android.systemui.flashlight.domain.interactor.flashlightInteractor
+import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.statusbar.policy.flashlightController
 
-    /** In this state the tile is grayed out and flashlight cannot be turned on. */
-    data object FlashlightTemporarilyUnavailable : FlashlightTileModel
-}
+val Kosmos.flashlightTileDataInteractor: FlashlightTileDataInteractor by
+    Kosmos.Fixture { FlashlightTileDataInteractor(flashlightController) { flashlightInteractor } }

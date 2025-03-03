@@ -1,6 +1,7 @@
 package com.android.systemui.qs.tiles
 
 import android.os.Handler
+import android.platform.test.annotations.DisableFlags
 import android.platform.test.flag.junit.FlagsParameterization
 import android.platform.test.flag.junit.FlagsParameterization.allCombinationsOf
 import android.testing.TestableLooper
@@ -33,6 +34,7 @@ import platform.test.runner.parameterized.Parameters
 
 @RunWith(ParameterizedAndroidJunit4::class)
 @TestableLooper.RunWithLooper(setAsMainLooper = true)
+@DisableFlags(com.android.systemui.Flags.FLAG_FLASHLIGHT_STRENGTH)
 @SmallTest
 class FlashlightTileTest(flags: FlagsParameterization) : SysuiTestCase() {
 

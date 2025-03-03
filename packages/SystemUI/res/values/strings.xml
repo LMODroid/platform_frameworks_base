@@ -917,9 +917,10 @@
     <string name="quick_settings_flashlight_label">Flashlight</string>
     <!-- QuickSettings: Flashlight, used when it's not available due to camera in use [CHAR LIMIT=NONE] -->
     <string name="quick_settings_flashlight_camera_in_use">Camera in use</string>
-
     <!-- Flashlight dialog title [CHAR LIMIT=NONE] -->
     <string name="flashlight_dialog_title">Flashlight Strength</string>
+    <!-- QuickSettings: Flashlight tile level percentage [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_flashlight_tile_level_percentage"><xliff:g id="percentage" example="46">%1$d</xliff:g>%%</string>
 
     <!-- QuickSettings: Cellular detail panel title [CHAR LIMIT=NONE] -->
     <string name="quick_settings_cellular_detail_title">Mobile data</string>
