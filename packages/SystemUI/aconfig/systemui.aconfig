@@ -343,6 +343,14 @@ flag {
 }
 
 flag {
+   name: "flashlight_strength"
+   namespace: "systemui"
+   description: "Enable the flashlight strength feature in systemui, allowing QS flashlight tile to"
+       "open a dialog with a slider to adjust the flashlight strength level."
+   bug: "393389286"
+}
+
+flag {
    name: "qs_new_tiles"
    namespace: "systemui"
    description: "Use the new tiles in the Quick Settings. Should have no behavior changes."
