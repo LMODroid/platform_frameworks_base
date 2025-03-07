@@ -187,8 +187,7 @@ constructor(
                     with(lockSection) { LockIcon() }
 
                     // Aligned to bottom and constrained to below the lock icon.
-                    // TODO("b/383588832") change this away from "keyguard_bottom_area"
-                    Column(modifier = Modifier.fillMaxWidth().sysuiResTag("keyguard_bottom_area")) {
+                    Column(modifier = Modifier.fillMaxWidth().sysuiResTag("keyguard_root_view")) {
                         if (isUdfpsVisible && ambientIndicationSectionOptional.isPresent) {
                             with(ambientIndicationSectionOptional.get()) {
                                 AmbientIndication(modifier = Modifier.fillMaxWidth())
