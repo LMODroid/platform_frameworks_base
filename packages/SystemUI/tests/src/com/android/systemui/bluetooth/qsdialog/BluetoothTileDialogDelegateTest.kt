@@ -26,7 +26,6 @@ import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.animation.DialogTransitionAnimator
 import com.android.systemui.bluetooth.ui.viewModel.BluetoothDetailsContentViewModel
-import com.android.systemui.bluetooth.ui.viewModel.BluetoothTileDialogCallback
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.model.SysUiState
@@ -59,7 +58,6 @@ import org.mockito.junit.MockitoRule
 class BluetoothTileDialogDelegateTest : SysuiTestCase() {
     companion object {
         const val DEVICE_NAME = "device"
-        const val DEVICE_CONNECTION_SUMMARY = "active"
         const val ENABLED = true
         const val CONTENT_HEIGHT = WRAP_CONTENT
     }
@@ -71,8 +69,6 @@ class BluetoothTileDialogDelegateTest : SysuiTestCase() {
         BluetoothDetailsContentManager.Factory
 
     @Mock private lateinit var bluetoothDetailsContentManager: BluetoothDetailsContentManager
-
-    @Mock private lateinit var bluetoothTileDialogCallback: BluetoothTileDialogCallback
 
     @Mock private lateinit var uiEventLogger: UiEventLogger
 
@@ -105,7 +101,6 @@ class BluetoothTileDialogDelegateTest : SysuiTestCase() {
             BluetoothTileDialogDelegate(
                 uiProperties,
                 CONTENT_HEIGHT,
-                bluetoothTileDialogCallback,
                 {},
                 uiEventLogger,
                 sysuiDialogFactory,
@@ -128,15 +123,7 @@ class BluetoothTileDialogDelegateTest : SysuiTestCase() {
                 )
             }
 
-        whenever(
-                bluetoothDetailsContentManagerFactory.create(
-                    any(),
-                    anyInt(),
-                    any(),
-                    anyBoolean(),
-                    any(),
-                )
-            )
+        whenever(bluetoothDetailsContentManagerFactory.create(any(), anyInt(), anyBoolean(), any()))
             .thenReturn(bluetoothDetailsContentManager)
     }
 
@@ -145,7 +132,6 @@ class BluetoothTileDialogDelegateTest : SysuiTestCase() {
         val dialog = mBluetoothTileDialogDelegate.createDialog()
         dialog.show()
 
-        verify(bluetoothDetailsContentManager).bind(any())
         verify(bluetoothDetailsContentManager).start()
         dialog.dismiss()
         verify(bluetoothDetailsContentManager).releaseView()
