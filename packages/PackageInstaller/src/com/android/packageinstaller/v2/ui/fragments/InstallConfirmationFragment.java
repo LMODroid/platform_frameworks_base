@@ -26,10 +26,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,7 +60,7 @@ public class InstallConfirmationFragment extends DialogFragment {
      * Creates a new instance of this fragment with necessary data set as fragment arguments
      *
      * @param dialogData {@link InstallUserActionRequired} object containing data to display
-     *         in the dialog
+     *                   in the dialog
      * @return an instance of the fragment
      */
     public static InstallConfirmationFragment newInstance(
@@ -89,44 +88,34 @@ public class InstallConfirmationFragment extends DialogFragment {
         setDialogData(requireArguments());
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
-        View dialogView = getLayoutInflater().inflate(R.layout.install_content_view, null);
+
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
+        ((ImageView) dialogView.requireViewById(R.id.app_icon))
+            .setImageDrawable(mDialogData.getAppIcon());
+        ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
 
         int positiveBtnTextRes;
+        int titleRes;
         if (mDialogData.isAppUpdating()) {
-            if (mDialogData.getSourceApp() != null) {
-                positiveBtnTextRes = R.string.update_anyway;
-            } else {
-                positiveBtnTextRes = R.string.update;
-            }
+            // TODO: handle update ownership case
+            titleRes = R.string.title_update;
+            positiveBtnTextRes = R.string.button_update;
         } else {
-            positiveBtnTextRes = R.string.install;
+            titleRes = R.string.title_install;
+            positiveBtnTextRes = R.string.button_install;
         }
 
         mDialog = new AlertDialog.Builder(requireContext())
-            .setIcon(mDialogData.getAppIcon())
-            .setTitle(mDialogData.getAppLabel())
+            .setTitle(titleRes)
             .setView(dialogView)
             .setPositiveButton(positiveBtnTextRes,
                 (dialogInt, which) -> mInstallActionListener.onPositiveResponse(
                     InstallUserActionRequired.USER_ACTION_REASON_INSTALL_CONFIRMATION))
-            .setNegativeButton(R.string.cancel,
+            .setNegativeButton(R.string.button_cancel,
                 (dialogInt, which) -> mInstallActionListener.onNegativeResponse(
                     mDialogData.getStageCode()))
             .create();
-
-        TextView viewToEnable;
-        if (mDialogData.isAppUpdating()) {
-            viewToEnable = dialogView.requireViewById(R.id.install_confirm_question_update);
-            String sourcePackageName = mDialogData.getSourceApp();
-            if (sourcePackageName != null) {
-                // Show the update-ownership change message
-                viewToEnable.setText(Html.fromHtml(sourcePackageName, Html.FROM_HTML_MODE_LEGACY));
-            }
-        } else {
-            viewToEnable = dialogView.requireViewById(R.id.install_confirm_question);
-        }
-        viewToEnable.setVisibility(View.VISIBLE);
-        viewToEnable.setMovementMethod(new ScrollingMovementMethod());
 
         return mDialog;
     }

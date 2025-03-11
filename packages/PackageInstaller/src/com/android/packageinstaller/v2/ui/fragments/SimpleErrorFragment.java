@@ -24,6 +24,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -69,9 +72,20 @@ public class SimpleErrorFragment extends DialogFragment {
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" +
             "Dialog message: " + requireContext().getString(mMessageResId));
+
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        TextView customMessage = dialogView.requireViewById(R.id.custom_message);
+        customMessage.setText(mMessageResId);
+        customMessage.setVisibility(View.VISIBLE);
+        customMessage.setGravity(Gravity.CENTER);
+
+        View titleView = getLayoutInflater()
+                .inflate(R.layout.install_blocked_custom_title_layout, null);
+
         return new AlertDialog.Builder(requireContext())
-            .setMessage(mMessageResId)
-            .setPositiveButton(R.string.ok,
+            .setCustomTitle(titleView)
+            .setView(dialogView)
+            .setNegativeButton(R.string.button_close,
                 (dialog, which) ->
                     mInstallActionListener.onNegativeResponse(InstallStage.STAGE_ABORTED))
             .create();

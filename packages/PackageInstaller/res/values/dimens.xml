@@ -53,4 +53,13 @@
     <!-- Dialog padding minus control padding, used to fix alignment. -->
     <dimen name="select_dialog_padding_start_material">20dp</dimen>
     <dimen name="select_dialog_drawable_padding_start_material">20dp</dimen>
+
+    <dimen name="app_snippet_icon_dimen">40dp</dimen>
+    <dimen name="app_icon_margin">12dp</dimen>
+    <dimen name="lock_icon_dimen">32dp</dimen>
+    <dimen name="app_snippet_layout_vertical_margin">16dp</dimen>
+    <dimen name="app_label_padding">18dp</dimen>
+    <dimen name="dialog_inter_element_margin">16dp</dimen>
+    <dimen name="alert_dialog_inner_padding">24dp</dimen>
+    <dimen name="button_min_height">40dp</dimen>
 </resources>

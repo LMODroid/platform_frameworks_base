@@ -40,4 +40,9 @@ interface InstallActionListener {
      * Launch the intent to open the newly installed / updated app.
      */
     fun openInstalledApp(intent: Intent?)
+
+    /**
+     * Launch the intent to open Storage Manager in Settings app.
+     */
+    fun sendManageAppsIntent()
 }

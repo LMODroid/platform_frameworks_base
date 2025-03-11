@@ -28,12 +28,14 @@ import android.os.UserManager
 import android.provider.Settings
 import android.util.Log
 import android.view.Window
+
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+
 import com.android.packageinstaller.R
 import com.android.packageinstaller.v2.model.InstallAborted
 import com.android.packageinstaller.v2.model.InstallFailed
@@ -82,6 +84,13 @@ class InstallLaunch : FragmentActivity(), InstallActionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        // The base theme inherits a deviceDefault theme. Applying a material style on the base
+        // theme below will enable using Material components, like the Material Progress Bar in the
+        // fragments
+        theme.applyStyle(
+            com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight,
+            /* force= */ false)
+
         fragmentManager = supportFragmentManager
         appOpsManager = getSystemService(AppOpsManager::class.java)
         installRepository = InstallRepository(applicationContext)
@@ -243,11 +252,11 @@ class InstallLaunch : FragmentActivity(), InstallActionListener {
         }
         return when (restriction) {
             UserManager.DISALLOW_INSTALL_APPS ->
-                SimpleErrorFragment.newInstance(R.string.install_apps_user_restriction_dlg_text)
+                SimpleErrorFragment.newInstance(R.string.message_no_install_apps_restriction)
 
             UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES,
             UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES_GLOBALLY ->
-                SimpleErrorFragment.newInstance(R.string.unknown_apps_user_restriction_dlg_text)
+                SimpleErrorFragment.newInstance(R.string.message_no_install_unknown_apps_restriction)
 
             else -> null
         }
@@ -335,6 +344,12 @@ class InstallLaunch : FragmentActivity(), InstallActionListener {
         if (intent != null && intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
             startActivity(intent)
         }
+    }
+
+    override fun sendManageAppsIntent() {
+        val intent = Intent("android.intent.action.MANAGE_PACKAGE_STORAGE")
+        startActivity(intent)
+        setResult(RESULT_FIRST_USER, null, true)
     }
 
     private fun registerAppOpChangeListener(listener: UnknownSourcesListener, packageName: String) {

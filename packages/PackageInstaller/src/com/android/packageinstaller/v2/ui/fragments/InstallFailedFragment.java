@@ -30,8 +30,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInstaller;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,7 +64,7 @@ public class InstallFailedFragment extends DialogFragment {
      * Creates a new instance of this fragment with necessary data set as fragment arguments
      *
      * @param dialogData {@link InstallFailed} object containing data to display in the
-     *         dialog
+     *                   dialog
      * @return an instance of the fragment
      */
     public static InstallFailedFragment newInstance(@NonNull InstallFailed dialogData) {
@@ -90,48 +93,66 @@ public class InstallFailedFragment extends DialogFragment {
         setDialogData(requireArguments());
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
-        View dialogView = getLayoutInflater().inflate(R.layout.install_content_view, null);
-        AlertDialog dialog = new AlertDialog.Builder(requireContext())
-            .setTitle(mDialogData.getAppLabel())
-            .setIcon(mDialogData.getAppIcon())
-            .setView(dialogView)
-            .setPositiveButton(R.string.done,
-                (dialogInt, which) -> mInstallActionListener.onNegativeResponse(
-                    mDialogData.getStageCode()))
-            .create();
-        setExplanationFromErrorCode(mDialogData.getStatusCode(), dialogView);
 
-        return dialog;
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        dialogView.requireViewById(R.id.custom_message).setVisibility(View.VISIBLE);
+        dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
+        ((ImageView) dialogView.requireViewById(R.id.app_icon))
+            .setImageDrawable(mDialogData.getAppIcon());
+        ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
+
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .setNegativeButton(R.string.button_close,
+                    (dialogInt, which) -> mInstallActionListener.onNegativeResponse(
+                        mDialogData.getStageCode()));
+        setDialogStringsFromErrorCode(mDialogData.getLegacyCode(), dialogBuilder, dialogView);
+
+        return dialogBuilder.create();
     }
 
     /**
-     * Unhide the appropriate label for the statusCode.
+     * Set corresponding dialog title and message for the failure statusCode.
      *
      * @param statusCode The status code from the package installer.
      */
-    private void setExplanationFromErrorCode(int statusCode, View dialogView) {
+    private void setDialogStringsFromErrorCode(int statusCode, AlertDialog.Builder builder,
+                                               View dialogView) {
         Log.i(LOG_TAG, "Installation status code: " + statusCode);
 
-        View viewToEnable;
+        TextView customMessage = dialogView.requireViewById(R.id.custom_message);
         switch (statusCode) {
-            case PackageInstaller.STATUS_FAILURE_BLOCKED:
-                viewToEnable = dialogView.requireViewById(R.id.install_failed_blocked);
-                break;
-            case PackageInstaller.STATUS_FAILURE_CONFLICT:
-                viewToEnable = dialogView.requireViewById(R.id.install_failed_conflict);
-                break;
-            case PackageInstaller.STATUS_FAILURE_INCOMPATIBLE:
-                viewToEnable = dialogView.requireViewById(R.id.install_failed_incompatible);
-                break;
-            case PackageInstaller.STATUS_FAILURE_INVALID:
-                viewToEnable = dialogView.requireViewById(R.id.install_failed_invalid_apk);
-                break;
-            default:
-                viewToEnable = dialogView.requireViewById(R.id.install_failed);
-                break;
+            case PackageInstaller.STATUS_FAILURE_BLOCKED -> {
+                customMessage.setText(R.string.message_install_failed_blocked);
+                builder.setTitle(R.string.title_install_failed_blocked);
+            }
+            case PackageInstaller.STATUS_FAILURE_CONFLICT -> {
+                customMessage.setText(R.string.message_install_failed_conflict);
+                builder.setTitle(R.string.title_cant_install_app);
+            }
+            case PackageInstaller.STATUS_FAILURE_INCOMPATIBLE -> {
+                customMessage.setText(R.string.message_install_failed_incompatible);
+                builder.setTitle(R.string.title_install_failed_incompatible);
+            }
+            case PackageInstaller.STATUS_FAILURE_INVALID -> {
+                customMessage.setText(R.string.message_install_failed_invalid);
+                builder.setTitle(R.string.title_cant_install_app);
+            }
+            case PackageInstaller.STATUS_FAILURE_STORAGE -> {
+                customMessage.setText(
+                        Html.fromHtml(
+                            getString(R.string.message_install_failed_less_storage, 0),
+                            Html.FROM_HTML_MODE_LEGACY));
+                builder.setTitle(R.string.title_install_failed_less_storage)
+                        .setPositiveButton(R.string.button_manage_apps, (dialog, which) ->
+                            mInstallActionListener.sendManageAppsIntent());
+            }
+            default -> {
+                customMessage.setVisibility(View.GONE);
+                builder.setTitle(R.string.title_install_failed_not_installed);
+            }
         }
-
-        viewToEnable.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -149,6 +170,6 @@ public class InstallFailedFragment extends DialogFragment {
         Intent resultIntent = args.getParcelable(ARGS_RESULT_INTENT, Intent.class);
 
         mDialogData = new InstallFailed(appSnippet, legacyCode, statusCode, message,
-                shouldReturnResult, resultIntent);
+            shouldReturnResult, resultIntent);
     }
 }

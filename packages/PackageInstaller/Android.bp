@@ -55,6 +55,7 @@ android_app {
         "androidx.leanback_leanback",
         "androidx.lifecycle_lifecycle-extensions",
         "androidx.lifecycle_lifecycle-livedata",
+        "com.google.android.material_material",
         "kotlin-parcelize-runtime",
     ],
 
@@ -89,6 +90,7 @@ android_app {
         "androidx.leanback_leanback",
         "androidx.lifecycle_lifecycle-extensions",
         "androidx.lifecycle_lifecycle-livedata",
+        "com.google.android.material_material",
         "kotlin-parcelize-runtime",
     ],
     aaptflags: ["--product tablet"],
@@ -124,6 +126,7 @@ android_app {
         "androidx.leanback_leanback",
         "androidx.lifecycle_lifecycle-extensions",
         "androidx.lifecycle_lifecycle-livedata",
+        "com.google.android.material_material",
         "kotlin-parcelize-runtime",
     ],
     aaptflags: ["--product tv"],

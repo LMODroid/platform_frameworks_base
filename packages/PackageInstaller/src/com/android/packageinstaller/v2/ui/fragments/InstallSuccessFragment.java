@@ -31,6 +31,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,7 +65,7 @@ public class InstallSuccessFragment extends DialogFragment {
      * Create a new instance of this fragment with necessary data set as fragment arguments
      *
      * @param dialogData {@link InstallSuccess} object containing data to display in the
-     *         dialog
+     *                   dialog
      * @return an instance of the fragment
      */
     public static InstallSuccessFragment newInstance(@NonNull InstallSuccess dialogData) {
@@ -90,18 +92,21 @@ public class InstallSuccessFragment extends DialogFragment {
         setDialogData(requireArguments());
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
-        View dialogView = getLayoutInflater().inflate(R.layout.install_content_view, null);
+
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
+        ((ImageView) dialogView.requireViewById(R.id.app_icon))
+            .setImageDrawable(mDialogData.getAppIcon());
+        ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
+
         mDialog = new AlertDialog.Builder(requireContext())
-            .setTitle(mDialogData.getAppLabel())
-            .setIcon(mDialogData.getAppIcon())
+            .setTitle(R.string.title_installed)
             .setView(dialogView)
-            .setNegativeButton(R.string.done,
+            .setNegativeButton(R.string.button_done,
                 (dialog, which) -> mInstallActionListener.onNegativeResponse(
                     mDialogData.getStageCode()))
-            .setPositiveButton(R.string.launch, (dialog, which) -> {})
+            .setPositiveButton(R.string.button_open, (dialog, which) -> {})
             .create();
-
-        dialogView.requireViewById(R.id.install_success).setVisibility(View.VISIBLE);
 
         return mDialog;
     }

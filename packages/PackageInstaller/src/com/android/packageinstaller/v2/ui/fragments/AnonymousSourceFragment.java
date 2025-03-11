@@ -22,8 +22,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+
 import com.android.packageinstaller.R;
 import com.android.packageinstaller.v2.model.InstallStage;
 import com.android.packageinstaller.v2.model.InstallUserActionRequired;
@@ -50,14 +54,22 @@ public class AnonymousSourceFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.i(LOG_TAG, "Creating " + LOG_TAG);
-        mDialog = new AlertDialog.Builder(requireContext())
-            .setMessage(R.string.anonymous_source_warning)
-            .setPositiveButton(R.string.anonymous_source_continue,
-                ((dialog, which) -> mInstallActionListener.onPositiveResponse(
-                    InstallUserActionRequired.USER_ACTION_REASON_ANONYMOUS_SOURCE)))
-            .setNegativeButton(R.string.cancel,
-                ((dialog, which) -> mInstallActionListener.onNegativeResponse(
-                    InstallStage.STAGE_USER_ACTION_REQUIRED))).create();
+
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        TextView customMessage = dialogView.requireViewById(R.id.custom_message);
+        customMessage.setText(R.string.message_anonymous_source_warning);
+        customMessage.setVisibility(View.VISIBLE);
+
+        mDialog = new AlertDialog.Builder(
+                requireContext(), R.style.Theme_PackageInstaller_AlertDialog_Variant)
+                .setTitle(R.string.title_anonymous_source_warning)
+                .setView(dialogView)
+                .setPositiveButton(R.string.button_continue,
+                        ((dialog, which) -> mInstallActionListener.onPositiveResponse(
+                                InstallUserActionRequired.USER_ACTION_REASON_ANONYMOUS_SOURCE)))
+                .setNegativeButton(R.string.button_cancel,
+                        ((dialog, which) -> mInstallActionListener.onNegativeResponse(
+                                InstallStage.STAGE_USER_ACTION_REQUIRED))).create();
         return mDialog;
     }
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2025 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- TODO(b/274120822): Add product configs for required strings -->
+
+    <!-- Dialog Titles -->
+    <string name="title_unknown_source_blocked">Permission needed</string>
+    <string name="title_anonymous_source_warning">Install from unknown source?</string>
+    <string name="title_install_blocked">Install blocked</string>
+
+    <string name="title_install_staging">Preparing to install app&#8230;</string>
+
+    <string name="title_install">Install this app?</string>
+    <string name="title_installing">Installing&#8230;</string>
+    <string name="title_installed">App installed</string>
+
+    <string name="title_reinstall">Reinstall this app?</string>
+    <string name="title_reinstalling">Reinstalling&#8230;</string>
+    <string name="title_reinstalled">App reinstalled</string>
+
+    <string name="title_update">Update this app?</string>
+    <string name="title_update_ownership_change">Update this app with <xliff:g id="new_update_owner">%1$s</xliff:g>?</string>
+    <string name="title_updating">Updating&#8230;</string>
+    <string name="title_updated">App updated</string>
+
+    <string name="title_cant_install_app">Can\'t install app</string>
+    <string name="title_install_failed_blocked">Install blocked</string>
+    <string name="title_install_failed_incompatible">App not compatible</string>
+    <string name="title_install_failed_invalid_package">Invalid package</string>
+    <string name="title_install_failed_less_storage">Not enough storage</string>
+    <string name="title_install_failed_not_installed">App not installed</string>
+
+    <string name="title_uninstall">Uninstall this app?</string>
+    <!-- Dialog Titles end -->
+
+    <!-- Dialog Messages -->
+    <string name="message_update_owner_change">This app normally receives updates from &lt;b><xliff:g id="existing_update_owner">%1$s</xliff:g>&lt;/b>. By updating from a different source, you may receive future updates from any source on your tablet. App functionality may change.</string>
+    <string name="message_external_source_blocked">To protect your phone and data, &lt;b><xliff:g id="installer_app_label">%1$s</xliff:g>&lt;/b> needs permission to install unknown apps. You can change this in Settings.</string>
+    <string name="message_anonymous_source_warning"> Your phone and personal data are more vulnerable to attack by unknown apps. By installing this app, you agree that you are responsible for any damage to your phone or loss of data that may result from its use.</string>
+
+    <string name="message_install_failed_blocked">This app was blocked from being installed</string>
+    <string name="message_install_failed_conflict">This app conflicts with an app already on your device</string>
+    <string name="message_install_failed_incompatible">This app is not compatible with your device</string>
+    <string name="message_install_failed_invalid">There\'s a problem with this app\'s installation file</string>
+    <string name="message_install_failed_less_storage">To install this app, free up &lt;b><xliff:g id="required_space" example="100MB">%1$s</xliff:g>&lt;/b>, then try again</string>
+
+    <string name="message_parse_failed">There is a problem with the app file</string>
+
+    <string name="message_no_install_apps_restriction">Installing apps has been restricted</string>
+    <string name="message_no_install_unknown_apps_restriction">Installing unknown apps has been restricted</string>
+
+    <string name="message_uninstall_keep_data">Keep <xliff:g id="size" example="1.5MB">%1$s</xliff:g> of app data.</string>
+    <string name="message_uninstall_with_clone_instance">A clone of this app exists and will also be deleted</string>
+    <!-- Dialog Messages end -->
+
+    <!-- Dialog Buttons -->
+    <string name="button_install">Install</string>
+    <string name="button_update">Update</string>
+    <string name="button_update_anyway">Update anyway</string>
+    <string name="button_done">Done</string>
+    <string name="button_open">Open</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_continue">Continue</string>
+    <string name="button_close">Close</string>
+    <string name="button_uninstall">Uninstall</string>
+    <string name="button_reinstall">Reinstall</string>
+    <string name="button_manage_apps">Manage apps</string>
+    <!-- Dialog Buttons end -->
+
+    <!-- Miscellaneous -->
+    <!-- Miscellaneous end -->
+
+    <!-- Package Installer App V2 Strings section end -->
+</resources>

@@ -51,7 +51,7 @@ public class ParseErrorFragment extends DialogFragment {
      * Create a new instance of this fragment with necessary data set as fragment arguments
      *
      * @param dialogData {@link InstallAborted} object containing data to display in the
-     *         dialog
+     *                   dialog
      * @return an instance of the fragment
      */
     public static ParseErrorFragment newInstance(@NonNull InstallAborted dialogData) {
@@ -80,8 +80,9 @@ public class ParseErrorFragment extends DialogFragment {
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
         return new AlertDialog.Builder(requireContext())
-            .setMessage(R.string.Parse_error_dlg_text)
-            .setPositiveButton(R.string.ok,
+            .setTitle(R.string.title_cant_install_app)
+            .setMessage(R.string.message_parse_failed)
+            .setNegativeButton(R.string.button_close,
                 (dialog, which) ->
                     mInstallActionListener.onNegativeResponse(
                         mDialogData.getActivityResultCode(), mDialogData.getResultIntent()))

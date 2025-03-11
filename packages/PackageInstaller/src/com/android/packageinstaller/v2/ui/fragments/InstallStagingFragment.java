@@ -23,9 +23,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
 import com.android.packageinstaller.R;
 
 public class InstallStagingFragment extends DialogFragment {
@@ -38,14 +40,14 @@ public class InstallStagingFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Log.i(LOG_TAG, "Creating " + LOG_TAG);
-        View dialogView = getLayoutInflater().inflate(R.layout.install_content_view, null);
-        dialogView.requireViewById(R.id.staging).setVisibility(View.VISIBLE);
+
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        dialogView.requireViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
 
         mDialog = new AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.app_name_unknown))
-            .setIcon(R.drawable.ic_file_download)
+            .setTitle(R.string.title_install_staging)
             .setView(dialogView)
-            .setNegativeButton(R.string.cancel, null)
+            .setNegativeButton(R.string.button_cancel, null)
             .setCancelable(false)
             .create();
 
@@ -57,7 +59,7 @@ public class InstallStagingFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
         mDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(false);
-        mProgressBar = mDialog.requireViewById(R.id.progress_indeterminate);
+        mProgressBar = mDialog.requireViewById(R.id.progress_bar);
         mProgressBar.setProgress(0);
         mProgressBar.setMax(100);
         mProgressBar.setIndeterminate(false);

@@ -17,4 +17,5 @@
 
 <resources>
     <color name="bigIconColor">#C8CCCE</color>
+    <color name="colorButtonOutline">@android:color/system_outline_variant_light</color>
 </resources>

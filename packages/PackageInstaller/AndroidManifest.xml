@@ -47,7 +47,8 @@
 
         <activity android:name=".v2.ui.InstallLaunch"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"/>
+            android:exported="false"
+            android:theme="@style/Theme.PackageInstaller"/>
 
         <activity android:name=".InstallStart"
                 android:exported="true"

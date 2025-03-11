@@ -24,6 +24,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +52,7 @@ public class InstallInstallingFragment extends DialogFragment {
      * Creates a new instance of this fragment with necessary data set as fragment arguments
      *
      * @param dialogData {@link InstallInstalling} object containing data to display in the
-     *         dialog
+     *                   dialog
      * @return an instance of the fragment
      */
     public static InstallInstallingFragment newInstance(@NonNull InstallInstalling dialogData) {
@@ -68,15 +70,19 @@ public class InstallInstallingFragment extends DialogFragment {
         setDialogData(requireArguments());
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
-        View dialogView = getLayoutInflater().inflate(R.layout.install_content_view, null);
+
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        dialogView.requireViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+        dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
+        ((ImageView) dialogView.requireViewById(R.id.app_icon))
+            .setImageDrawable(mDialogData.getAppIcon());
+        ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
+
         mDialog = new AlertDialog.Builder(requireContext())
-            .setTitle(mDialogData.getAppLabel())
-            .setIcon(mDialogData.getAppIcon())
+            .setTitle(R.string.title_installing)
             .setView(dialogView)
-            .setNegativeButton(R.string.cancel, null)
             .create();
 
-        dialogView.requireViewById(R.id.installing).setVisibility(View.VISIBLE);
         this.setCancelable(false);
 
         return mDialog;
