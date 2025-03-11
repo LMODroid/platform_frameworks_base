@@ -18,8 +18,7 @@ package com.android.packageinstaller.v2.ui.fragments;
 
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_ACTION_REASON;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
-import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_IS_UPDATING;
-import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_SOURCE_APP;
+import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_SOURCE_PKG;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -71,8 +70,7 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putInt(ARGS_ACTION_REASON, dialogData.getActionReason());
         args.putParcelable(ARGS_APP_SNIPPET, dialogData.getAppSnippet());
-        args.putBoolean(ARGS_IS_UPDATING, dialogData.isAppUpdating());
-        args.putString(ARGS_SOURCE_APP, dialogData.getSourceApp());
+        args.putString(ARGS_SOURCE_PKG, dialogData.getUnknownSourcePackageName());
 
         ExternalSourcesBlockedFragment fragment = new ExternalSourcesBlockedFragment();
         fragment.setArguments(args);
@@ -107,7 +105,7 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
                 .setView(dialogView)
                 .setPositiveButton(R.string.external_sources_settings,
                         (dialog, which) -> mInstallActionListener.sendUnknownAppsIntent(
-                                mDialogData.getSourceApp()))
+                            mDialogData.getUnknownSourcePackageName()))
                 .setNegativeButton(R.string.cancel,
                         (dialog, which) -> mInstallActionListener.onNegativeResponse(
                                 mDialogData.getStageCode()))
@@ -144,10 +142,9 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
     private void setDialogData(Bundle args) {
         int actionReason = args.getInt(ARGS_ACTION_REASON);
         AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET, AppSnippet.class);
-        boolean isUpdating = args.getBoolean(ARGS_IS_UPDATING);
-        String sourceApp = args.getString(ARGS_SOURCE_APP);
+        String sourcePkg = args.getString(ARGS_SOURCE_PKG);
 
-        mDialogData = new InstallUserActionRequired(actionReason, appSnippet, isUpdating,
-                sourceApp);
+        mDialogData = new InstallUserActionRequired(actionReason, appSnippet, false, null, null,
+            sourcePkg);
     }
 }

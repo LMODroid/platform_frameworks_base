@@ -653,10 +653,12 @@ class InstallRepository(private val context: Context) {
                 return InstallAborted(ABORT_REASON_INTERNAL_ERROR)
             }
         }
-        return InstallUserActionRequired(
-            USER_ACTION_REASON_INSTALL_CONFIRMATION, appSnippet, isAppUpdating(newPackageInfo!!),
-            getUpdateMessage(newPackageInfo!!, userActionReason)
-        )
+        val isAppUpdating = isAppUpdating(newPackageInfo)
+        val (existingUpdateOwner, requestedUpdateOwner) =
+            getUpdateOwners(newPackageInfo, userActionReason, isAppUpdating)
+
+        return InstallUserActionRequired(USER_ACTION_REASON_INSTALL_CONFIRMATION, appSnippet,
+            isAppUpdating, existingUpdateOwner, requestedUpdateOwner)
     }
 
     /**
@@ -668,32 +670,38 @@ class InstallRepository(private val context: Context) {
     private fun processSessionInfo(sessionInfo: SessionInfo, userActionReason: Int): InstallStage {
         newPackageInfo = generateStubPackageInfo(sessionInfo.getAppPackageName())
         appSnippet = getAppSnippet(context, sessionInfo)
+        val isAppUpdating = isAppUpdating(newPackageInfo)
+        val (existingUpdateOwner, requestedUpdateOwner) =
+            getUpdateOwners(newPackageInfo, userActionReason, isAppUpdating)
 
-        return InstallUserActionRequired(
-            USER_ACTION_REASON_INSTALL_CONFIRMATION, appSnippet, isAppUpdating(newPackageInfo!!),
-            getUpdateMessage(newPackageInfo!!, userActionReason)
-
-        )
+        return InstallUserActionRequired(USER_ACTION_REASON_INSTALL_CONFIRMATION, appSnippet,
+            isAppUpdating, existingUpdateOwner, requestedUpdateOwner)
     }
 
-    private fun getUpdateMessage(pkgInfo: PackageInfo, userActionReason: Int): String? {
-        if (isAppUpdating(pkgInfo)) {
-            val existingUpdateOwnerLabel = getExistingUpdateOwnerLabel(pkgInfo)
+    private fun getUpdateOwners(
+        pkgInfo: PackageInfo?,
+        userActionReason: Int,
+        isAppUpdating: Boolean
+    ): Pair<CharSequence?, CharSequence?> {
+        if (pkgInfo == null) {
+            return Pair(null, null)
+        }
 
+        val existingUpdateOwnerLabel = getExistingUpdateOwnerLabel(pkgInfo)
+
+        var requestedUpdateOwnerLabel: CharSequence? = if (
+            isAppUpdating &&
+            !TextUtils.isEmpty(existingUpdateOwnerLabel) &&
+            userActionReason == PackageInstaller.REASON_REMIND_OWNERSHIP
+        ) {
             val originatingPackageName =
                 getPackageNameForUid(context, originatingUid, callingPackage)
-            val requestedUpdateOwnerLabel = getApplicationLabel(originatingPackageName)
-
-            if (!TextUtils.isEmpty(existingUpdateOwnerLabel)
-                && userActionReason == PackageInstaller.REASON_REMIND_OWNERSHIP
-            ) {
-                return context.getString(
-                    R.string.install_confirm_question_update_owner_reminder,
-                    requestedUpdateOwnerLabel, existingUpdateOwnerLabel
-                )
-            }
+            getApplicationLabel(originatingPackageName)
+        } else {
+            null
         }
-        return null
+
+        return Pair(existingUpdateOwnerLabel, requestedUpdateOwnerLabel)
     }
 
     private fun getExistingUpdateOwnerLabel(pkgInfo: PackageInfo): CharSequence? {
@@ -723,7 +731,10 @@ class InstallRepository(private val context: Context) {
         }
     }
 
-    private fun isAppUpdating(newPkgInfo: PackageInfo): Boolean {
+    private fun isAppUpdating(newPkgInfo: PackageInfo?): Boolean {
+        if (newPkgInfo == null) {
+            return false
+        }
         var pkgName = newPkgInfo.packageName
         // Check if there is already a package on the device with this name
         // but it has been renamed to something else.
@@ -815,7 +826,7 @@ class InstallRepository(private val context: Context) {
                     val sourceAppSnippet = getAppSnippet(context, sourceInfo)
                     InstallUserActionRequired(
                         USER_ACTION_REASON_UNKNOWN_SOURCE, appSnippet = sourceAppSnippet,
-                        sourceApp = requestInfo.originatingPackage
+                        unknownSourcePackageName = requestInfo.originatingPackage
                     )
                 } catch (e: PackageManager.NameNotFoundException) {
                     Log.e(LOG_TAG, "Did not find appInfo for " + requestInfo.originatingPackage)

@@ -44,10 +44,9 @@ data class InstallUserActionRequired(
     val actionReason: Int,
     val appSnippet: PackageUtil.AppSnippet? = null,
     val isAppUpdating: Boolean = false,
-    /**
-     * This holds either a package name or the app label of the install source.
-     */
-    val sourceApp: String? = null,
+    val existingUpdateOwnerLabel: CharSequence? = null,
+    val requestedUpdateOwnerLabel: CharSequence? = null,
+    val unknownSourcePackageName: String? = null,
 ) : InstallStage(STAGE_USER_ACTION_REQUIRED) {
 
     val appIcon: Drawable?
