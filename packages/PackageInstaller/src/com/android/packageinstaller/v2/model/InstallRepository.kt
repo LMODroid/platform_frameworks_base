@@ -38,9 +38,10 @@ import android.os.UserManager
 import android.text.TextUtils
 import android.util.EventLog
 import android.util.Log
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.android.packageinstaller.R
+
 import com.android.packageinstaller.common.EventResultPersister
 import com.android.packageinstaller.common.EventResultPersister.OutOfIdsException
 import com.android.packageinstaller.common.InstallEventReceiver
@@ -52,6 +53,9 @@ import com.android.packageinstaller.v2.model.InstallAborted.Companion.DLG_PACKAG
 import com.android.packageinstaller.v2.model.InstallUserActionRequired.Companion.USER_ACTION_REASON_ANONYMOUS_SOURCE
 import com.android.packageinstaller.v2.model.InstallUserActionRequired.Companion.USER_ACTION_REASON_INSTALL_CONFIRMATION
 import com.android.packageinstaller.v2.model.InstallUserActionRequired.Companion.USER_ACTION_REASON_UNKNOWN_SOURCE
+import com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_NEW
+import com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_REINSTALL
+import com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_UPDATE
 import com.android.packageinstaller.v2.model.PackageUtil.canPackageQuery
 import com.android.packageinstaller.v2.model.PackageUtil.generateStubPackageInfo
 import com.android.packageinstaller.v2.model.PackageUtil.getAppSnippet
@@ -61,12 +65,14 @@ import com.android.packageinstaller.v2.model.PackageUtil.isCallerSessionOwner
 import com.android.packageinstaller.v2.model.PackageUtil.isInstallPermissionGrantedOrRequested
 import com.android.packageinstaller.v2.model.PackageUtil.isPermissionGranted
 import com.android.packageinstaller.v2.model.PackageUtil.localLogv
-import java.io.File
-import java.io.IOException
+
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
+import java.io.File
+import java.io.IOException
 
 class InstallRepository(private val context: Context) {
 
@@ -84,6 +90,7 @@ class InstallRepository(private val context: Context) {
     private val _installResult = MutableLiveData<InstallStage>()
     val installResult: LiveData<InstallStage>
         get() = _installResult
+    private var installType = INSTALL_TYPE_NEW
 
     /**
      * Session ID for a session created when caller uses PackageInstaller APIs
@@ -653,12 +660,13 @@ class InstallRepository(private val context: Context) {
                 return InstallAborted(ABORT_REASON_INTERNAL_ERROR)
             }
         }
-        val isAppUpdating = isAppUpdating(newPackageInfo)
+        installType = getInstallType(newPackageInfo)
         val (existingUpdateOwner, requestedUpdateOwner) =
-            getUpdateOwners(newPackageInfo, userActionReason, isAppUpdating)
+            getUpdateOwners(newPackageInfo, userActionReason,
+                /* isAppUpdating= */ (installType != INSTALL_TYPE_NEW))
 
         return InstallUserActionRequired(USER_ACTION_REASON_INSTALL_CONFIRMATION, appSnippet,
-            isAppUpdating, existingUpdateOwner, requestedUpdateOwner)
+            installType, existingUpdateOwner, requestedUpdateOwner)
     }
 
     /**
@@ -670,12 +678,13 @@ class InstallRepository(private val context: Context) {
     private fun processSessionInfo(sessionInfo: SessionInfo, userActionReason: Int): InstallStage {
         newPackageInfo = generateStubPackageInfo(sessionInfo.getAppPackageName())
         appSnippet = getAppSnippet(context, sessionInfo)
-        val isAppUpdating = isAppUpdating(newPackageInfo)
+        installType = getInstallType(newPackageInfo)
         val (existingUpdateOwner, requestedUpdateOwner) =
-            getUpdateOwners(newPackageInfo, userActionReason, isAppUpdating)
+            getUpdateOwners(newPackageInfo, userActionReason,
+                /* isAppUpdating= */ (installType != INSTALL_TYPE_NEW))
 
         return InstallUserActionRequired(USER_ACTION_REASON_INSTALL_CONFIRMATION, appSnippet,
-            isAppUpdating, existingUpdateOwner, requestedUpdateOwner)
+            installType, existingUpdateOwner, requestedUpdateOwner)
     }
 
     private fun getUpdateOwners(
@@ -731,9 +740,9 @@ class InstallRepository(private val context: Context) {
         }
     }
 
-    private fun isAppUpdating(newPkgInfo: PackageInfo?): Boolean {
+    private fun getInstallType(newPkgInfo: PackageInfo?): Int {
         if (newPkgInfo == null) {
-            return false
+            return INSTALL_TYPE_NEW
         }
         var pkgName = newPkgInfo.packageName
         // Check if there is already a package on the device with this name
@@ -754,13 +763,25 @@ class InstallRepository(private val context: Context) {
                 pkgName, PackageManager.MATCH_UNINSTALLED_PACKAGES
             )
             // If the package is archived, treat it as an update case.
-            if (!appInfo.isArchived && appInfo.flags and ApplicationInfo.FLAG_INSTALLED == 0) {
-                return false
+            if (appInfo.isArchived) {
+                return INSTALL_TYPE_UPDATE
+            } else if (appInfo.flags and ApplicationInfo.FLAG_INSTALLED == 0) {
+                return INSTALL_TYPE_NEW
+            }
+
+            val currentPkgInfo = packageManager.getPackageInfo(
+                pkgName, PackageManager.MATCH_UNINSTALLED_PACKAGES)
+            val currentVersionCode = currentPkgInfo.longVersionCode
+            var newVersionCode = newPkgInfo.longVersionCode
+
+            return if (currentVersionCode == newVersionCode) {
+                INSTALL_TYPE_REINSTALL
+            } else {
+                INSTALL_TYPE_UPDATE
             }
         } catch (e: PackageManager.NameNotFoundException) {
-            return false
+            return INSTALL_TYPE_NEW
         }
-        return true
     }
 
     /**
@@ -886,7 +907,7 @@ class InstallRepository(private val context: Context) {
         }
         val installId: Int
         try {
-            _installResult.value = InstallInstalling(appSnippet)
+            _installResult.value = InstallInstalling(appSnippet, installType)
             installId = InstallEventReceiver.addObserver(
                 context, EventResultPersister.GENERATE_NEW_ID
             ) { statusCode: Int, legacyStatus: Int, message: String?, serviceId: Int ->
@@ -940,7 +961,8 @@ class InstallRepository(private val context: Context) {
                 val intent = packageManager.getLaunchIntentForPackage(newPackageInfo!!.packageName)
                 if (isLauncherActivityEnabled(intent)) intent else null
             }
-            _installResult.setValue(InstallSuccess(appSnippet, shouldReturnResult, resultIntent))
+            _installResult.setValue(
+                InstallSuccess(appSnippet, shouldReturnResult, resultIntent, installType))
         } else {
             // TODO (b/346655018): Use INSTALL_FAILED_ABORTED legacyCode in the condition
             // statusCode can be STATUS_FAILURE_ABORTED if:

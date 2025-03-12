@@ -19,8 +19,11 @@ package com.android.packageinstaller.v2.ui.fragments;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_ACTION_REASON;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_EXISTING_OWNER;
-import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_IS_UPDATING;
+import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_INSTALL_TYPE;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_NEW_OWNER;
+import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_NEW;
+import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_REINSTALL;
+import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_UPDATE;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -71,7 +74,7 @@ public class InstallConfirmationFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putInt(ARGS_ACTION_REASON, dialogData.getActionReason());
         args.putParcelable(ARGS_APP_SNIPPET, dialogData.getAppSnippet());
-        args.putBoolean(ARGS_IS_UPDATING, dialogData.isAppUpdating());
+        args.putInt(ARGS_INSTALL_TYPE, dialogData.getInstallType());
         args.putCharSequence(ARGS_EXISTING_OWNER, dialogData.getExistingUpdateOwnerLabel());
         args.putCharSequence(ARGS_NEW_OWNER, dialogData.getRequestedUpdateOwnerLabel());
 
@@ -101,26 +104,38 @@ public class InstallConfirmationFragment extends DialogFragment {
 
         int positiveBtnTextRes;
         String title;
-        if (mDialogData.isAppUpdating()) {
-            if (mDialogData.getExistingUpdateOwnerLabel() != null
-                    && mDialogData.getRequestedUpdateOwnerLabel() != null) {
-                title = getString(R.string.title_update_ownership_change,
-                    mDialogData.getRequestedUpdateOwnerLabel());
-                positiveBtnTextRes = R.string.button_update_anyway;
-
-                TextView customMessage = dialogView.requireViewById(R.id.custom_message);
-                customMessage.setVisibility(View.VISIBLE);
-                String updateOwnerString = getString(R.string.message_update_owner_change,
-                        mDialogData.getExistingUpdateOwnerLabel());
-                customMessage.setText(Html.fromHtml(updateOwnerString, Html.FROM_HTML_MODE_LEGACY));
-                customMessage.setMovementMethod(new ScrollingMovementMethod());
-            } else {
-                title = getString(R.string.title_update);
-                positiveBtnTextRes = R.string.button_update;
+        switch (mDialogData.getInstallType()) {
+            case INSTALL_TYPE_NEW -> {
+                title = getString(R.string.title_install);
+                positiveBtnTextRes = R.string.button_install;
             }
-        } else {
-            title = getString(R.string.title_install);
-            positiveBtnTextRes = R.string.button_install;
+            case INSTALL_TYPE_REINSTALL -> {
+                title = getString(R.string.title_reinstall);
+                positiveBtnTextRes = R.string.button_reinstall;
+            }
+            case INSTALL_TYPE_UPDATE -> {
+                if (mDialogData.getExistingUpdateOwnerLabel() != null
+                        && mDialogData.getRequestedUpdateOwnerLabel() != null) {
+                    title = getString(R.string.title_update_ownership_change,
+                        mDialogData.getRequestedUpdateOwnerLabel());
+                    positiveBtnTextRes = R.string.button_update_anyway;
+
+                    TextView customMessage = dialogView.requireViewById(R.id.custom_message);
+                    customMessage.setVisibility(View.VISIBLE);
+                    String updateOwnerString = getString(R.string.message_update_owner_change,
+                        mDialogData.getExistingUpdateOwnerLabel());
+                    customMessage.setText(
+                            Html.fromHtml(updateOwnerString, Html.FROM_HTML_MODE_LEGACY));
+                    customMessage.setMovementMethod(new ScrollingMovementMethod());
+                } else {
+                    title = getString(R.string.title_update);
+                    positiveBtnTextRes = R.string.button_update;
+                }
+            }
+            default -> {
+                title = getString(R.string.title_install);
+                positiveBtnTextRes = R.string.button_install;
+            }
         }
 
         mDialog = new AlertDialog.Builder(requireContext())
@@ -166,11 +181,11 @@ public class InstallConfirmationFragment extends DialogFragment {
     private void setDialogData(Bundle args) {
         int actionReason = args.getInt(ARGS_ACTION_REASON);
         AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET, AppSnippet.class);
-        boolean isUpdating = args.getBoolean(ARGS_IS_UPDATING);
+        int installType = args.getInt(ARGS_INSTALL_TYPE);
         CharSequence existingOwner = args.getCharSequence(ARGS_EXISTING_OWNER);
         CharSequence newOwner = args.getCharSequence(ARGS_NEW_OWNER);
 
-        mDialogData = new InstallUserActionRequired(actionReason, appSnippet, isUpdating,
+        mDialogData = new InstallUserActionRequired(actionReason, appSnippet, installType,
             existingOwner, newOwner, null);
     }
 }
