@@ -293,11 +293,7 @@ fun ContentScope.OverlayShadeHeader(
     viewModel: ShadeHeaderViewModel,
     modifier: Modifier = Modifier,
 ) {
-    OverlayShadeHeaderPartialStateless(
-        viewModel,
-        viewModel.showClock,
-        modifier,
-    )
+    OverlayShadeHeaderPartialStateless(viewModel, viewModel.showClock, modifier)
 }
 
 /**
@@ -634,7 +630,10 @@ private fun ContentScope.StatusIcons(
         Utils.getColorAttrDefaultColor(themedContext, android.R.attr.textColorPrimaryInverse)
 
     val carrierIconSlots =
-        listOf(stringResource(id = com.android.internal.R.string.status_bar_mobile))
+        listOf(
+            stringResource(id = com.android.internal.R.string.status_bar_mobile),
+            stringResource(id = com.android.internal.R.string.status_bar_stacked_mobile),
+        )
     val cameraSlot = stringResource(id = com.android.internal.R.string.status_bar_camera)
     val micSlot = stringResource(id = com.android.internal.R.string.status_bar_microphone)
     val locationSlot = stringResource(id = com.android.internal.R.string.status_bar_location)

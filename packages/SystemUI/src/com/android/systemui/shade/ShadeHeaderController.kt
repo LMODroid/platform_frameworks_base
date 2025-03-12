@@ -403,7 +403,10 @@ constructor(
         }
 
         carrierIconSlots =
-            listOf(header.context.getString(com.android.internal.R.string.status_bar_mobile))
+            listOf(
+                header.context.getString(com.android.internal.R.string.status_bar_mobile),
+                header.context.getString(com.android.internal.R.string.status_bar_stacked_mobile),
+            )
         mShadeCarrierGroupController =
             shadeCarrierGroupControllerBuilder.setShadeCarrierGroup(mShadeCarrierGroup).build()
 

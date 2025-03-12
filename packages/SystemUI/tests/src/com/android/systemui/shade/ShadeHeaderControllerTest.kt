@@ -216,7 +216,10 @@ class ShadeHeaderControllerTest : SysuiTestCase() {
         whenever(view.isAttachedToWindow).thenReturn(true)
         shadeHeaderController.init()
         carrierIconSlots =
-            listOf(context.getString(com.android.internal.R.string.status_bar_mobile))
+            listOf(
+                context.getString(com.android.internal.R.string.status_bar_mobile),
+                context.getString(com.android.internal.R.string.status_bar_stacked_mobile),
+            )
     }
 
     @Test
