@@ -16,11 +16,12 @@
 
 package com.android.systemui.statusbar.pipeline.battery.ui.binder
 
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -31,7 +32,6 @@ import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.UnifiedBattery
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel.Companion.STATUS_BAR_BATTERY_HEIGHT
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel.Companion.STATUS_BAR_BATTERY_WIDTH
 import kotlinx.coroutines.flow.Flow
 
 /** In cases where the battery needs to be bound to an existing android view */
@@ -52,10 +52,10 @@ object UnifiedBatteryViewBinder {
                     )
                     setContent {
                         val isDark by isAreaDark.collectAsStateWithLifecycle(IsAreaDark { true })
+                        val height = with(LocalDensity.current) { STATUS_BAR_BATTERY_HEIGHT.toDp() }
                         UnifiedBattery(
                             modifier =
-                                Modifier.height(STATUS_BAR_BATTERY_HEIGHT)
-                                    .width(STATUS_BAR_BATTERY_WIDTH),
+                                Modifier.height(height).aspectRatio(BatteryViewModel.ASPECT_RATIO),
                             viewModelFactory = viewModelFactory,
                             isDark = isDark,
                         )

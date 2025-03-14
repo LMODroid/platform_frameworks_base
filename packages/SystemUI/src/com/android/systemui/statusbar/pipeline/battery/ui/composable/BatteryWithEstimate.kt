@@ -19,19 +19,22 @@ package com.android.systemui.statusbar.pipeline.battery.ui.composable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BatteryWithEstimate(
     viewModelFactory: BatteryViewModel.Factory,
@@ -42,20 +45,22 @@ fun BatteryWithEstimate(
     val viewModel =
         rememberViewModel(traceName = "BatteryWithEstimate") { viewModelFactory.create() }
 
+    val batteryHeight =
+        with(LocalDensity.current) { BatteryViewModel.STATUS_BAR_BATTERY_HEIGHT.toDp() }
+
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         UnifiedBattery(
             viewModelFactory = viewModelFactory,
             isDark = isDark,
             modifier =
-                Modifier.fillMaxHeight()
-                    .padding(vertical = 2.dp)
-                    .align(Alignment.Bottom)
-                    .aspectRatio(viewModel.aspectRatio),
+                Modifier.height(batteryHeight)
+                    .align(Alignment.CenterVertically)
+                    .aspectRatio(BatteryViewModel.ASPECT_RATIO),
         )
         if (showEstimate) {
             viewModel.batteryTimeRemainingEstimate?.let {
                 Spacer(modifier.width(4.dp))
-                Text(text = it, color = Color.White)
+                Text(text = it, color = Color.White, style = MaterialTheme.typography.bodyMedium)
             }
         }
     }

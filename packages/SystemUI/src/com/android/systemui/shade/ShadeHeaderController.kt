@@ -39,11 +39,10 @@ import android.view.WindowInsets
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
@@ -391,7 +390,7 @@ constructor(
                         id = R.id.battery_meter_composable_view
                         val showBatteryEstimate by showBatteryEstimate.collectAsStateWithLifecycle()
                         BatteryWithEstimate(
-                            modifier = Modifier.height(17.dp).wrapContentWidth(),
+                            modifier = Modifier.wrapContentSize(),
                             viewModelFactory = batteryViewModelFactory,
                             isDark = { true },
                             showEstimate = showBatteryEstimate,

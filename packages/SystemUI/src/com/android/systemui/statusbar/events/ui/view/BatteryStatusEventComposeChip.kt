@@ -22,10 +22,11 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.events.BackgroundAnimatableView
@@ -62,10 +63,10 @@ constructor(level: Int, context: Context, attrs: AttributeSet? = null) :
         composeInner.apply {
             setContent {
                 val isFull = BatteryInteractor.isBatteryFull(level)
+                val height =
+                    with(LocalDensity.current) { BatteryViewModel.STATUS_BAR_BATTERY_HEIGHT.toDp() }
                 BatteryCanvas(
-                    modifier =
-                        Modifier.width(BatteryViewModel.STATUS_BAR_BATTERY_WIDTH)
-                            .height(BatteryViewModel.STATUS_BAR_BATTERY_HEIGHT),
+                    modifier = Modifier.height(height).aspectRatio(BatteryViewModel.ASPECT_RATIO),
                     path = BatteryFrame.pathSpec,
                     // TODO(b/394659067): get a content description for this chip
                     contentDescription = "",
