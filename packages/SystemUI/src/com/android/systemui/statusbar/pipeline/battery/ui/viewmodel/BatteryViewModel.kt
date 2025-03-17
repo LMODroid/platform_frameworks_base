@@ -132,24 +132,24 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
                 Charging,
                 Defend ->
                     ColorProfile(
-                        dark = BatteryColors.DarkThemeChargingColors,
-                        light = BatteryColors.LightThemeChargingColors,
+                        dark = BatteryColors.DarkTheme.Charging,
+                        light = BatteryColors.LightTheme.Charging,
                     )
                 PowerSave ->
                     ColorProfile(
-                        dark = BatteryColors.DarkThemePowerSaveColors,
-                        light = BatteryColors.LightThemePowerSaveColors,
+                        dark = BatteryColors.DarkTheme.PowerSave,
+                        light = BatteryColors.LightTheme.PowerSave,
                     )
                 else ->
                     if (isCritical) {
                         ColorProfile(
-                            dark = BatteryColors.DarkThemeErrorColors,
-                            light = BatteryColors.LightThemeErrorColors,
+                            dark = BatteryColors.DarkTheme.Error,
+                            light = BatteryColors.LightTheme.Error,
                         )
                     } else {
                         ColorProfile(
-                            dark = BatteryColors.DarkThemeDefaultColors,
-                            light = BatteryColors.LightThemeDefaultColors,
+                            dark = BatteryColors.DarkTheme.Default,
+                            light = BatteryColors.LightTheme.Default,
                         )
                     }
             }
@@ -161,8 +161,8 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
             traceName = "colorProfile",
             initialValue =
                 ColorProfile(
-                    dark = BatteryColors.DarkThemeDefaultColors,
-                    light = BatteryColors.LightThemeDefaultColors,
+                    dark = BatteryColors.DarkTheme.Default,
+                    light = BatteryColors.LightTheme.Default,
                 ),
             source = _colorProfile,
         )
@@ -256,4 +256,4 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
 }
 
 /** Wrap the light and dark color into a single object so the view can decide which one it needs */
-data class ColorProfile(val dark: BatteryColors, val light: BatteryColors)
+data class ColorProfile(val dark: BatteryColors.DarkTheme, val light: BatteryColors.LightTheme)

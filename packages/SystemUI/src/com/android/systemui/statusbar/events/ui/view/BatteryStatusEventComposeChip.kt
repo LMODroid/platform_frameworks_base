@@ -31,7 +31,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.events.BackgroundAnimatableView
 import com.android.systemui.statusbar.pipeline.battery.domain.interactor.BatteryInteractor
-import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryColors.LightThemeChargingColors
+import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryColors
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryFrame
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryGlyph
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryCanvas
@@ -78,7 +78,7 @@ constructor(level: Int, context: Context, attrs: AttributeSet? = null) :
                         else level.glyphRepresentation() + BatteryGlyph.Bolt,
                     level = level,
                     isFull = isFull,
-                    colorsProvider = { LightThemeChargingColors },
+                    colorsProvider = { BatteryColors.DarkTheme.Charging },
                 )
             }
         }
