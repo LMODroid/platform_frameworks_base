@@ -76,8 +76,8 @@ internal class Network(val coroutineScope: CoroutineScope) : NetworkScope {
     private val inputScheduleChan = Channel<ScheduledAction<*>>()
 
     override fun scheduleOutput(output: Output<*>) {
-        val continuationInterceptor =
-            output.context[ContinuationInterceptor] ?: Dispatchers.Unconfined
+        val continuationInterceptor: ContinuationInterceptor =
+            output.interceptor ?: Dispatchers.Unconfined
         outputsByDispatcher.computeIfAbsent(continuationInterceptor) { ArrayDeque() }.add(output)
     }
 

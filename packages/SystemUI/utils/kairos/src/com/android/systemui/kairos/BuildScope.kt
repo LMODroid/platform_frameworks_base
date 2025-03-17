@@ -184,7 +184,10 @@ interface BuildScope : HasNetwork, StateScope {
      * The return value from [block] can be accessed via the returned [DeferredValue].
      */
     // TODO: return a DisposableHandle instead of Job?
-    fun <A> asyncScope(block: BuildSpec<A>): Pair<DeferredValue<A>, Job>
+    fun <A> asyncScope(
+        coroutineContext: CoroutineContext = EmptyCoroutineContext,
+        block: BuildSpec<A>,
+    ): Pair<DeferredValue<A>, Job>
 
     // TODO: once we have context params, these can all become extensions:
 
@@ -689,8 +692,11 @@ interface BuildScope : HasNetwork, StateScope {
      * emitting) then [block] will be invoked for the first time with the new value; otherwise, it
      * will be invoked with the [current][sample] value.
      */
-    fun <A> State<A>.observe(block: EffectScope.(A) -> Unit = {}): DisposableHandle =
-        now.map { sample() }.mergeWith(changes) { _, new -> new }.observe { block(it) }
+    fun <A> State<A>.observe(
+        coroutineContext: CoroutineContext = EmptyCoroutineContext,
+        block: EffectScope.(A) -> Unit = {},
+    ): DisposableHandle =
+        now.map { sample() }.mergeWith(changes) { _, new -> new }.observe(coroutineContext, block)
 }
 
 /**
@@ -724,14 +730,14 @@ fun <A> BuildScope.asyncEvent(block: suspend () -> A): Events<A> =
  *       context: CoroutineContext = EmptyCoroutineContext,
  *       block: EffectScope.() -> Unit,
  *   ): Job =
- *       launchScope { now.observe(context) { block() } }
+ *       launchScope(context) { now.observe { block() } }
  * ```
  */
 @ExperimentalKairosApi
 fun BuildScope.effect(
     context: CoroutineContext = EmptyCoroutineContext,
     block: EffectScope.() -> Unit,
-): Job = launchScope { now.observe(context) { block() } }
+): Job = launchScope(context) { now.observe { block() } }
 
 /**
  * Launches [block] in a new coroutine, returning a [Job] bound to the coroutine.
@@ -746,8 +752,10 @@ fun BuildScope.effect(
  * ```
  */
 @ExperimentalKairosApi
-fun BuildScope.launchEffect(block: suspend KairosCoroutineScope.() -> Unit): Job =
-    asyncEffect(block)
+fun BuildScope.launchEffect(
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend KairosCoroutineScope.() -> Unit,
+): Job = asyncEffect(context, block)
 
 /**
  * Launches [block] in a new coroutine, returning the result as a [Deferred].
@@ -756,7 +764,6 @@ fun BuildScope.launchEffect(block: suspend KairosCoroutineScope.() -> Unit): Job
  * done because the current [BuildScope] might be deactivated within this transaction, perhaps due
  * to a -Latest combinator. If this happens, then the coroutine will never actually be started.
  *
- * Shorthand for:
  * ```
  *   fun <R> BuildScope.asyncEffect(block: suspend KairosScope.() -> R): Deferred<R> =
  *       CompletableDeferred<R>.apply {
@@ -766,9 +773,12 @@ fun BuildScope.launchEffect(block: suspend KairosCoroutineScope.() -> Unit): Job
  * ```
  */
 @ExperimentalKairosApi
-fun <R> BuildScope.asyncEffect(block: suspend KairosCoroutineScope.() -> R): Deferred<R> {
+fun <R> BuildScope.asyncEffect(
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend KairosCoroutineScope.() -> R,
+): Deferred<R> {
     val result = CompletableDeferred<R>()
-    val job = effect { launch { result.complete(block()) } }
+    val job = effect(context) { launch { result.complete(block()) } }
     val handle = job.invokeOnCompletion { result.cancel() }
     result.invokeOnCompletion {
         handle.dispose()
@@ -779,7 +789,10 @@ fun <R> BuildScope.asyncEffect(block: suspend KairosCoroutineScope.() -> R): Def
 
 /** Like [BuildScope.asyncScope], but ignores the result of [block]. */
 @ExperimentalKairosApi
-fun BuildScope.launchScope(block: BuildSpec<*>): Job = asyncScope(block).second
+fun BuildScope.launchScope(
+    coroutineContext: CoroutineContext = EmptyCoroutineContext,
+    block: BuildSpec<*>,
+): Job = asyncScope(coroutineContext, block).second
 
 /**
  * Creates an instance of an [Events] with elements that are emitted from [builder].

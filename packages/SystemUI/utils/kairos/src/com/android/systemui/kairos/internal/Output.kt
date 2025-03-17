@@ -16,11 +16,10 @@
 
 package com.android.systemui.kairos.internal
 
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.coroutines.ContinuationInterceptor
 
 internal class Output<A>(
-    val context: CoroutineContext = EmptyCoroutineContext,
+    val interceptor: ContinuationInterceptor? = null,
     val onDeath: () -> Unit = {},
     val onEmit: EvalScope.(A) -> Unit,
 ) {

@@ -23,13 +23,18 @@ import com.android.systemui.kairos.internal.util.awaitCancellationAndThen
 import com.android.systemui.kairos.internal.util.childScope
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.DisposableHandle
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 
 /** Marks APIs that are still **experimental** and shouldn't be used in general production code. */
 @RequiresOptIn(
@@ -125,7 +130,10 @@ fun <T> ConflatedMutableEvents(network: KairosNetwork): CoalescingMutableEvents<
  * are unregistered and effects are cancelled.
  */
 @ExperimentalKairosApi
-suspend fun <R> KairosNetwork.activateSpec(spec: BuildSpec<R>, block: suspend (R) -> Unit) {
+suspend fun <R> KairosNetwork.activateSpec(
+    spec: BuildSpec<R>,
+    block: suspend KairosCoroutineScope.(R) -> Unit,
+) {
     activateSpec {
         val result = spec.applySpec()
         launchEffect { block(result) }
@@ -140,26 +148,33 @@ internal class LocalNetwork(
     override suspend fun <R> transact(block: TransactionScope.() -> R): R =
         network.transaction("KairosNetwork.transact") { block() }.awaitOrCancel()
 
-    override suspend fun activateSpec(spec: BuildSpec<*>) {
+    override suspend fun activateSpec(spec: BuildSpec<*>): Unit = coroutineScope {
         val stopEmitter = conflatedMutableEvents<Unit>()
-        network
-            .transaction("KairosNetwork.activateSpec") {
-                val buildScope =
-                    BuildScopeImpl(
-                        stateScope =
-                            StateScopeImpl(
-                                evalScope = this,
-                                endSignalLazy = lazy { mergeLeft(stopEmitter, endSignal) },
-                            ),
-                        coroutineScope = scope,
-                    )
-                buildScope.launchScope {
-                    spec.applySpec()
-                    launchEffect { awaitCancellationAndThen { stopEmitter.emit(Unit) } }
-                }
+        lateinit var completionHandle: DisposableHandle
+        val job =
+            launch(start = CoroutineStart.LAZY) {
+                network
+                    .transaction("KairosNetwork.activateSpec") {
+                        val buildScope =
+                            BuildScopeImpl(
+                                stateScope =
+                                    StateScopeImpl(
+                                        evalScope = this,
+                                        endSignalLazy = lazy { mergeLeft(stopEmitter, endSignal) },
+                                    ),
+                                coroutineScope = this@coroutineScope,
+                            )
+                        buildScope.launchScope {
+                            spec.applySpec()
+                            launchEffect { awaitCancellationAndThen { stopEmitter.emit(Unit) } }
+                        }
+                    }
+                    .awaitOrCancel()
+                    .joinOrCancel()
+                completionHandle.dispose()
             }
-            .awaitOrCancel()
-            .joinOrCancel()
+        completionHandle = scope.coroutineContext.job.invokeOnCompletion { job.cancel() }
+        job.start()
     }
 
     private suspend fun <T> Deferred<T>.awaitOrCancel(): T =
