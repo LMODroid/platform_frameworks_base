@@ -92,11 +92,11 @@ fun BatteryCanvas(
                     }
                 drawPath(path.path, bgColor)
                 // Then draw the body, clipped to the fill level
-                clipRect(0f, 0f, innerWidth, innerHeight) {
+                clipRect(0f, 0f, level.scaledLevel(), innerHeight) {
                     drawRoundRect(
                         color = colors.fill,
                         topLeft = Offset.Zero,
-                        size = Size(width = level.scaledLevel(), height = innerHeight),
+                        size = Size(width = innerWidth, height = innerHeight),
                         cornerRadius = CornerRadius(2f),
                     )
                 }
