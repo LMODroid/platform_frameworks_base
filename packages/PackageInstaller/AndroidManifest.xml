@@ -121,7 +121,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:noHistory="true"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.PackageInstaller">
         </activity>
 
         <receiver android:name=".common.UninstallEventReceiver"

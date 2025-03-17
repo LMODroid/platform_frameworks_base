@@ -50,7 +50,7 @@ public class UninstallErrorFragment extends DialogFragment {
      * Create a new instance of this fragment with necessary data set as fragment arguments
      *
      * @param dialogData {@link UninstallAborted} object containing data to display in the
-     *         dialog
+     *                   dialog
      * @return an instance of the fragment
      */
     public static UninstallErrorFragment newInstance(UninstallAborted dialogData) {
@@ -75,13 +75,11 @@ public class UninstallErrorFragment extends DialogFragment {
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-            .setMessage(mDialogData.getDialogTextResource())
-            .setNegativeButton(R.string.ok,
+                .setMessage(mDialogData.getDialogTextResource())
+                .setTitle(mDialogData.getDialogTitleResource())
+                .setPositiveButton(R.string.button_close,
                 (dialogInt, which) -> mUninstallActionListener.onNegativeResponse());
 
-        if (mDialogData.getDialogTitleResource() != 0) {
-            builder.setTitle(mDialogData.getDialogTitleResource());
-        }
         return builder.create();
     }
 

@@ -18,6 +18,7 @@ package com.android.packageinstaller.v2.model
 import android.app.Activity
 import android.app.Notification
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import com.android.packageinstaller.R
 
 sealed class UninstallStage(val stageCode: Int) {
@@ -27,23 +28,27 @@ sealed class UninstallStage(val stageCode: Int) {
         const val STAGE_ABORTED = 0
         const val STAGE_READY = 1
         const val STAGE_USER_ACTION_REQUIRED = 2
-        const val STAGE_UNINSTALLING = 3
-        const val STAGE_SUCCESS = 4
-        const val STAGE_FAILED = 5
+        const val STAGE_SUCCESS = 3
+        const val STAGE_FAILED = 4
     }
 }
 
 class UninstallReady : UninstallStage(STAGE_READY)
 
 data class UninstallUserActionRequired(
-    val title: String? = null,
+    val title: String,
     val message: String? = null,
+    val buttonText: String,
     val appDataSize: Long = 0,
-    val isArchive: Boolean = false
-) : UninstallStage(STAGE_USER_ACTION_REQUIRED)
+    val appSnippet: PackageUtil.AppSnippet? = null,
+) : UninstallStage(STAGE_USER_ACTION_REQUIRED) {
 
-data class UninstallUninstalling(val appLabel: CharSequence, val isCloneUser: Boolean) :
-    UninstallStage(STAGE_UNINSTALLING)
+    val appIcon: Drawable?
+        get() = appSnippet?.icon
+
+    val appLabel: String?
+        get() = appSnippet?.let { appSnippet.label as String? }
+}
 
 data class UninstallSuccess(
     val resultIntent: Intent? = null,
@@ -88,13 +93,13 @@ data class UninstallAborted(val abortReason: Int) : UninstallStage(STAGE_ABORTED
     init {
         when (abortReason) {
             ABORT_REASON_APP_UNAVAILABLE -> {
-                dialogTitleResource = R.string.app_not_found_dlg_title
-                dialogTextResource = R.string.app_not_found_dlg_text
+                dialogTitleResource = R.string.title_uninstall_app_not_found
+                dialogTextResource = R.string.message_uninstall_app_not_found
             }
 
             ABORT_REASON_USER_NOT_ALLOWED -> {
-                dialogTitleResource = 0
-                dialogTextResource = R.string.user_is_not_allowed_dlg_text
+                dialogTitleResource = R.string.title_uninstall_user_not_allowed
+                dialogTextResource = R.string.message_uninstall_user_not_allowed
             }
 
             ABORT_REASON_UNINSTALL_DONE -> {
@@ -103,8 +108,8 @@ data class UninstallAborted(val abortReason: Int) : UninstallStage(STAGE_ABORTED
             }
 
             else -> {
-                dialogTitleResource = 0
-                dialogTextResource = R.string.generic_error_dlg_text
+                dialogTitleResource = R.string.title_uninstall_failed
+                dialogTextResource = R.string.message_uninstall_failed
             }
         }
     }

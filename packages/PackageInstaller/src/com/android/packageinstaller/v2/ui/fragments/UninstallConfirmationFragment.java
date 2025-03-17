@@ -19,7 +19,8 @@ package com.android.packageinstaller.v2.ui.fragments;
 import static android.text.format.Formatter.formatFileSize;
 
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_DATA_SIZE;
-import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_IS_ARCHIVE;
+import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
+import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_BUTTON_TEXT;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_MESSAGE;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_TITLE;
 
@@ -31,6 +32,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +40,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.packageinstaller.R;
+import com.android.packageinstaller.v2.model.PackageUtil.AppSnippet;
 import com.android.packageinstaller.v2.model.UninstallUserActionRequired;
 import com.android.packageinstaller.v2.ui.UninstallActionListener;
 
@@ -59,16 +62,17 @@ public class UninstallConfirmationFragment extends DialogFragment {
      * Create a new instance of this fragment with necessary data set as fragment arguments
      *
      * @param dialogData {@link UninstallUserActionRequired} object containing data to
-     *         display in the dialog
+     *                   display in the dialog
      * @return an instance of the fragment
      */
     public static UninstallConfirmationFragment newInstance(
             @NonNull UninstallUserActionRequired dialogData) {
         Bundle args = new Bundle();
-        args.putLong(ARGS_APP_DATA_SIZE, dialogData.getAppDataSize());
-        args.putBoolean(ARGS_IS_ARCHIVE, dialogData.isArchive());
         args.putString(ARGS_TITLE, dialogData.getTitle());
         args.putString(ARGS_MESSAGE, dialogData.getMessage());
+        args.putString(ARGS_BUTTON_TEXT, dialogData.getButtonText());
+        args.putLong(ARGS_APP_DATA_SIZE, dialogData.getAppDataSize());
+        args.putParcelable(ARGS_APP_SNIPPET, dialogData.getAppSnippet());
 
         UninstallConfirmationFragment fragment = new UninstallConfirmationFragment();
         fragment.setArguments(args);
@@ -87,28 +91,36 @@ public class UninstallConfirmationFragment extends DialogFragment {
         setDialogData(requireArguments());
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-            .setTitle(mDialogData.getTitle())
-            .setPositiveButton(mDialogData.isArchive() ? R.string.archive : R.string.ok,
-                (dialogInt, which) -> mUninstallActionListener.onPositiveResponse(
-                    mKeepData != null && mKeepData.isChecked()))
-            .setNegativeButton(R.string.cancel,
-                (dialogInt, which) -> mUninstallActionListener.onNegativeResponse());
+
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
+        ((ImageView) dialogView.requireViewById(R.id.app_icon))
+            .setImageDrawable(mDialogData.getAppIcon());
+        ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
+
+        if (mDialogData.getMessage() != null) {
+            TextView customMessage = dialogView.requireViewById(R.id.custom_message);
+            customMessage.setText(mDialogData.getMessage());
+            customMessage.setVisibility(View.VISIBLE);
+        }
 
         long appDataSize = mDialogData.getAppDataSize();
-        if (appDataSize == 0) {
-            builder.setMessage(mDialogData.getMessage());
-        } else {
-            View dialogView = getLayoutInflater().inflate(R.layout.uninstall_content_view, null);
-
-            ((TextView) dialogView.requireViewById(R.id.message)).setText(mDialogData.getMessage());
-            mKeepData = dialogView.requireViewById(R.id.keepData);
+        if (appDataSize != 0) {
+            mKeepData = dialogView.requireViewById(R.id.keep_data);
             mKeepData.setVisibility(View.VISIBLE);
-            mKeepData.setText(getString(R.string.uninstall_keep_data,
+            mKeepData.setText(getString(R.string.message_uninstall_keep_data,
                 formatFileSize(getContext(), appDataSize)));
-
-            builder.setView(dialogView);
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
+                .setTitle(mDialogData.getTitle())
+                .setView(dialogView)
+                .setPositiveButton(mDialogData.getButtonText(),
+                    (dialogInt, which) -> mUninstallActionListener.onPositiveResponse(
+                        mKeepData != null && mKeepData.isChecked()))
+                .setNegativeButton(R.string.button_cancel,
+                    (dialogInt, which) -> mUninstallActionListener.onNegativeResponse());
+
         return builder.create();
     }
 
@@ -120,10 +132,12 @@ public class UninstallConfirmationFragment extends DialogFragment {
 
     private void setDialogData(Bundle args) {
         long appDataSize = args.getLong(ARGS_APP_DATA_SIZE);
-        boolean isArchive = args.getBoolean(ARGS_IS_ARCHIVE);
-        String title = args.getString(ARGS_TITLE);
+        String buttonText = args.getString(ARGS_BUTTON_TEXT);
         String message = args.getString(ARGS_MESSAGE);
+        AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET, AppSnippet.class);
+        String title = args.getString(ARGS_TITLE);
 
-        mDialogData = new UninstallUserActionRequired(title, message, appDataSize, isArchive);
+        mDialogData = new UninstallUserActionRequired(title, message, buttonText, appDataSize,
+            appSnippet);
     }
 }
