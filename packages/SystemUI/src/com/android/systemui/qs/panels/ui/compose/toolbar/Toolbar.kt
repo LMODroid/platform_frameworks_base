@@ -24,10 +24,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.development.ui.compose.BuildNumber
+import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.qs.footer.ui.compose.IconButton
+import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.ToolbarViewModel
 import com.android.systemui.qs.ui.compose.borderOnFocus
 
@@ -51,16 +54,26 @@ fun Toolbar(viewModel: ToolbarViewModel, modifier: Modifier = Modifier) {
         )
 
         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-            BuildNumber(
-                viewModelFactory = viewModel.buildNumberViewModelFactory,
-                textColor = MaterialTheme.colorScheme.onSurface,
-                modifier =
-                    Modifier.borderOnFocus(
-                            color = MaterialTheme.colorScheme.secondary,
-                            cornerSize = CornerSize(1.dp),
-                        )
-                        .wrapContentSize(),
-            )
+            val context = LocalContext.current
+            val textFeedbackViewModel =
+                rememberViewModel("", context) {
+                    viewModel.textFeedbackContentViewModelFactory.create(context)
+                }
+
+            if (textFeedbackViewModel.textFeedback != TextFeedbackViewModel.NoFeedback) {
+                TextFeedback(textFeedbackViewModel.textFeedback, Modifier.wrapContentSize())
+            } else {
+                BuildNumber(
+                    viewModelFactory = viewModel.buildNumberViewModelFactory,
+                    textColor = MaterialTheme.colorScheme.onSurface,
+                    modifier =
+                        Modifier.borderOnFocus(
+                                color = MaterialTheme.colorScheme.secondary,
+                                cornerSize = CornerSize(1.dp),
+                            )
+                            .wrapContentSize(),
+                )
+            }
         }
 
         IconButton(

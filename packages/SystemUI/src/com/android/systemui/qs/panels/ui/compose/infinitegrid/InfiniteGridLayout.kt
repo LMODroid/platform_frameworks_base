@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.util.fastMap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,6 +42,7 @@ import com.android.systemui.qs.panels.ui.viewmodel.DetailsViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.IconTilesViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.InfiniteGridViewModel
+import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackContentViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.TileViewModel
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.ui.ElementKeys.toElementKey
@@ -54,6 +56,7 @@ constructor(
     private val detailsViewModel: DetailsViewModel,
     private val iconTilesViewModel: IconTilesViewModel,
     private val viewModelFactory: InfiniteGridViewModel.Factory,
+    private val textFeedbackContentViewModelFactory: TextFeedbackContentViewModel.Factory,
     private val tileHapticsViewModelFactoryProvider: TileHapticsViewModelFactoryProvider,
 ) : PaginatableGridLayout {
 
@@ -74,6 +77,12 @@ constructor(
         val columnsWithMediaViewModel =
             rememberViewModel(traceName = "InfiniteGridLAyout.TileGrid") {
                 viewModel.columnsWithMediaViewModelFactory.create(LOCATION_QS)
+            }
+
+        val context = LocalContext.current
+        val textFeedbackViewModel =
+            rememberViewModel(traceName = "InfiniteGridLayout.TileGrid", context) {
+                textFeedbackContentViewModelFactory.create(context)
             }
 
         val columns = columnsWithMediaViewModel.columns
@@ -119,6 +128,7 @@ constructor(
                         ),
                     detailsViewModel = detailsViewModel,
                     isVisible = listening,
+                    requestToggleTextFeedback = textFeedbackViewModel::requestShowFeedback,
                 )
             }
         }

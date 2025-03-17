@@ -39,7 +39,8 @@ import com.android.systemui.util.mockito.argumentCaptor
 import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.nullable
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -53,11 +54,19 @@ import org.mockito.kotlin.eq
 @RunWith(AndroidJUnit4::class)
 @TestableLooper.RunWithLooper
 class FooterActionsInteractorTest : SysuiTestCase() {
+    private val testDispatcher = StandardTestDispatcher()
+    private val testScope = TestScope(testDispatcher)
     private lateinit var utils: FooterActionsTestUtils
 
     @Before
     fun setUp() {
-        utils = FooterActionsTestUtils(context, TestableLooper.get(this), TestCoroutineScheduler())
+        utils =
+            FooterActionsTestUtils(
+                context,
+                TestableLooper.get(this),
+                testScope.testScheduler,
+                testScope.backgroundScope,
+            )
     }
 
     @Test

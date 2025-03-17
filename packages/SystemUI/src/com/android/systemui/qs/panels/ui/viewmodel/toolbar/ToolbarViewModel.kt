@@ -33,6 +33,7 @@ import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.powerButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.settingsButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.userSwitcherViewModel
+import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackContentViewModel
 import com.android.systemui.res.R
 import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
@@ -48,6 +49,7 @@ class ToolbarViewModel
 constructor(
     editModeButtonViewModelFactory: EditModeButtonViewModel.Factory,
     val buildNumberViewModelFactory: BuildNumberViewModel.Factory,
+    val textFeedbackContentViewModelFactory: TextFeedbackContentViewModel.Factory,
     private val footerActionsInteractor: FooterActionsInteractor,
     private val globalActionsDialogLiteProvider: Provider<GlobalActionsDialogLite>,
     private val falsingInteractor: FalsingInteractor,

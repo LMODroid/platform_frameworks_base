@@ -86,6 +86,8 @@ import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsForegroundServicesButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsSecurityButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsViewModel
+import com.android.systemui.qs.panels.ui.compose.toolbar.TextFeedback.tag
+import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackViewModel
 import com.android.systemui.qs.ui.composable.QuickSettings
 import com.android.systemui.qs.ui.composable.QuickSettingsTheme
 import com.android.systemui.qs.ui.compose.borderOnFocus
@@ -143,6 +145,10 @@ fun FooterActions(
     var userSwitcher by remember { mutableStateOf<FooterActionsButtonViewModel?>(null) }
     var power by remember { mutableStateOf(viewModel.initialPower()) }
 
+    var textFeedback by remember {
+        mutableStateOf<TextFeedbackViewModel>(TextFeedbackViewModel.NoFeedback)
+    }
+
     LaunchedEffect(
         context,
         qsVisibilityLifecycleOwner,
@@ -150,6 +156,7 @@ fun FooterActions(
         viewModel.security,
         viewModel.foregroundServices,
         viewModel.userSwitcher,
+        viewModel.textFeedback,
     ) {
         launch {
             // Listen for dialog requests as soon as we are composed, even when not visible.
@@ -162,6 +169,7 @@ fun FooterActions(
             launch { viewModel.foregroundServices.collect { foregroundServices = it } }
             launch { viewModel.userSwitcher.collect { userSwitcher = it } }
             launch { viewModel.power.collect { power = it } }
+            launch { viewModel.textFeedback.collect { textFeedback = it } }
         }
     }
 
@@ -200,12 +208,20 @@ fun FooterActions(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(LocalContentColor provides contentColor) {
-            if (security == null && foregroundServices == null) {
+            if (
+                security == null &&
+                    foregroundServices == null &&
+                    textFeedback == TextFeedbackViewModel.NoFeedback
+            ) {
                 Spacer(Modifier.weight(1f))
             }
 
             val useModifierBasedExpandable = remember { QSComposeFragment.isEnabled }
-            SecurityButton({ security }, useModifierBasedExpandable, Modifier.weight(1f))
+            if (textFeedback != TextFeedbackViewModel.NoFeedback) {
+                TextFeedback({ textFeedback }, Modifier.weight(1f))
+            } else {
+                SecurityButton({ security }, useModifierBasedExpandable, Modifier.weight(1f))
+            }
             ForegroundServicesButton({ foregroundServices }, useModifierBasedExpandable)
             IconButton(
                 { userSwitcher },
@@ -244,6 +260,21 @@ private fun SecurityButton(
         useModifierBasedExpandable,
         modifier,
     )
+}
+
+@Composable
+private fun TextFeedback(model: () -> TextFeedbackViewModel, modifier: Modifier = Modifier) {
+    val model = model()
+    if (model is TextFeedbackViewModel.LoadedTextFeedback) {
+        TextButton(
+            model.icon,
+            model.label,
+            showNewDot = false,
+            useModifierBasedExpandable = false,
+            onClick = null,
+            modifier = modifier.tag(),
+        )
+    }
 }
 
 /** The foreground services button. */

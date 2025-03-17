@@ -37,6 +37,7 @@ import com.android.systemui.plugins.qs.QSTile
 import com.android.systemui.qs.footer.domain.interactor.FooterActionsInteractorImpl
 import com.android.systemui.qs.footer.foregroundServicesRepository
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsViewModel
+import com.android.systemui.qs.panels.domain.interactor.textFeedbackInteractor
 import com.android.systemui.security.data.repository.securityRepository
 import com.android.systemui.settings.userTracker
 import com.android.systemui.shade.domain.interactor.shadeModeInteractor
@@ -99,7 +100,8 @@ val Kosmos.footerActionsViewModelFactory by Fixture {
         footerActionsInteractor = footerActionsInteractor,
         shadeModeInteractor = shadeModeInteractor,
         globalActionsDialogLiteProvider = { mock() },
-        activityStarter,
+        activityStarter = activityStarter,
+        textFeedbackInteractor = textFeedbackInteractor,
         showPowerButton = true,
     )
 }

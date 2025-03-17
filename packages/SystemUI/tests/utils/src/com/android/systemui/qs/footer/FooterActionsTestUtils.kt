@@ -40,8 +40,16 @@ import com.android.systemui.qs.footer.domain.interactor.FooterActionsInteractor
 import com.android.systemui.qs.footer.domain.interactor.FooterActionsInteractorImpl
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.createFooterActionsViewModel
+import com.android.systemui.qs.panels.data.repository.ToggleTextFeedbackRepository
+import com.android.systemui.qs.panels.domain.interactor.TextFeedbackInteractor
+import com.android.systemui.qs.pipeline.data.repository.FakeInstalledTilesComponentRepository
+import com.android.systemui.qs.pipeline.data.repository.InstalledTilesComponentRepository
+import com.android.systemui.qs.tiles.base.shared.model.FakeQSTileConfigProvider
+import com.android.systemui.qs.tiles.base.shared.model.QSTileConfigProvider
 import com.android.systemui.security.data.repository.SecurityRepository
 import com.android.systemui.security.data.repository.SecurityRepositoryImpl
+import com.android.systemui.settings.FakeUserTracker
+import com.android.systemui.settings.UserTracker
 import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.statusbar.policy.DeviceProvisionedController
 import com.android.systemui.statusbar.policy.FakeSecurityController
@@ -59,6 +67,7 @@ import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.settings.FakeGlobalSettings
 import com.android.systemui.util.settings.GlobalSettings
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -71,6 +80,7 @@ class FooterActionsTestUtils(
     private val context: Context,
     private val testableLooper: TestableLooper,
     private val scheduler: TestCoroutineScheduler,
+    private val applicationCoroutineScope: CoroutineScope,
 ) {
     private val mockActivityStarter: ActivityStarter = mock<ActivityStarter>()
 
@@ -87,6 +97,7 @@ class FooterActionsTestUtils(
     fun footerActionsViewModel(
         @Application context: Context = this.context.applicationContext,
         footerActionsInteractor: FooterActionsInteractor = footerActionsInteractor(),
+        textFeedbackInteractor: TextFeedbackInteractor = textFeedbackInteractor(),
         falsingManager: FalsingManager = FalsingManagerFake(),
         globalActionsDialogLite: GlobalActionsDialogLite = mock(),
         showPowerButton: Boolean = true,
@@ -95,6 +106,7 @@ class FooterActionsTestUtils(
         return createFooterActionsViewModel(
             context,
             footerActionsInteractor,
+            textFeedbackInteractor,
             MutableStateFlow(shadeMode),
             falsingManager,
             globalActionsDialogLite,
@@ -173,6 +185,27 @@ class FooterActionsTestUtils(
             userInfoController,
             settings,
             userRepository,
+        )
+    }
+
+    fun toggleTextFeedbackRepository(): ToggleTextFeedbackRepository {
+        return ToggleTextFeedbackRepository()
+    }
+
+    fun textFeedbackInteractor(
+        toggleTextFeedbackRepository: ToggleTextFeedbackRepository = toggleTextFeedbackRepository(),
+        qsTileConfigProvider: QSTileConfigProvider = FakeQSTileConfigProvider(),
+        installedTilesComponentRepository: InstalledTilesComponentRepository =
+            FakeInstalledTilesComponentRepository(),
+        userTracker: UserTracker = FakeUserTracker(),
+        bgDispatcher: CoroutineDispatcher = StandardTestDispatcher(scheduler),
+    ): TextFeedbackInteractor {
+        return TextFeedbackInteractor(
+            toggleTextFeedbackRepository,
+            qsTileConfigProvider,
+            installedTilesComponentRepository,
+            userTracker,
+            bgDispatcher,
         )
     }
 }

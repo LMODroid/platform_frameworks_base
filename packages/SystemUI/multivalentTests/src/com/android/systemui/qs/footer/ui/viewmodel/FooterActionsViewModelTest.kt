@@ -18,25 +18,38 @@ package com.android.systemui.qs.footer.ui.viewmodel
 
 import android.graphics.drawable.Drawable
 import android.os.UserManager
+import android.platform.test.annotations.DisableFlags
+import android.platform.test.annotations.EnableFlags
 import android.testing.TestableLooper
 import android.testing.TestableLooper.RunWithLooper
 import android.view.ContextThemeWrapper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.internal.logging.testing.UiEventLoggerFake
 import com.android.settingslib.Utils
 import com.android.settingslib.drawable.UserIconDrawable
+import com.android.systemui.InstanceIdSequenceFake
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.broadcast.BroadcastDispatcher
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.coroutines.collectLastValue
+import com.android.systemui.flags.DisableSceneContainer
+import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.qs.FakeFgsManagerController
 import com.android.systemui.qs.QSSecurityFooterUtils
+import com.android.systemui.qs.QsEventLoggerFake
+import com.android.systemui.qs.flags.QSComposeFragment
 import com.android.systemui.qs.footer.FooterActionsTestUtils
 import com.android.systemui.qs.footer.domain.model.SecurityButtonConfig
+import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackViewModel
+import com.android.systemui.qs.pipeline.shared.TileSpec
+import com.android.systemui.qs.tiles.base.shared.model.FakeQSTileConfigProvider
+import com.android.systemui.qs.tiles.base.shared.model.QSTileConfigProvider
 import com.android.systemui.res.R
 import com.android.systemui.security.data.model.SecurityModel
 import com.android.systemui.shade.shared.model.ShadeMode
+import com.android.systemui.statusbar.connectivity.ConnectivityModule
 import com.android.systemui.statusbar.policy.FakeSecurityController
 import com.android.systemui.statusbar.policy.FakeUserInfoController
 import com.android.systemui.statusbar.policy.FakeUserInfoController.FakeInfo
@@ -72,7 +85,13 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
     @Before
     fun setUp() {
-        utils = FooterActionsTestUtils(context, TestableLooper.get(this), testScope.testScheduler)
+        utils =
+            FooterActionsTestUtils(
+                context,
+                TestableLooper.get(this),
+                testScope.testScheduler,
+                testScope.backgroundScope,
+            )
     }
 
     private fun runTest(block: suspend TestScope.() -> Unit) {
@@ -401,5 +420,106 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
         underTest.onQuickSettingsExpansionChanged(1f, isInSplitShade = false)
         assertThat(underTest.alpha.value).isEqualTo(1f)
+    }
+
+    @Test
+    @DisableFlags(QSComposeFragment.FLAG_NAME)
+    @DisableSceneContainer
+    fun textFeedback_neverFeedback() = runTest {
+        val qsTileConfigProvider = createAndPopulateQsTileConfigProvider()
+        val textFeedbackInteractor =
+            utils.textFeedbackInteractor(qsTileConfigProvider = qsTileConfigProvider)
+        val underTest =
+            utils.footerActionsViewModel(
+                textFeedbackInteractor = textFeedbackInteractor,
+                shadeMode = ShadeMode.Single,
+            )
+
+        val textFeedback by collectLastValue(underTest.textFeedback)
+
+        assertThat(textFeedback).isEqualTo(TextFeedbackViewModel.NoFeedback)
+
+        textFeedbackInteractor.requestShowFeedback(AIRPLANE_MODE_TILE_SPEC)
+
+        assertThat(textFeedback).isEqualTo(TextFeedbackViewModel.NoFeedback)
+    }
+
+    @Test
+    @EnableFlags(QSComposeFragment.FLAG_NAME)
+    fun textFeedback_composeFragmentEnabled() = runTest { textFeedback_newComposeUI() }
+
+    @Test
+    @EnableSceneContainer
+    fun textFeedback_sceneContainerEnabled() = runTest { textFeedback_newComposeUI() }
+
+    private fun TestScope.textFeedback_newComposeUI() {
+        val qsTileConfigProvider = createAndPopulateQsTileConfigProvider()
+        val textFeedbackInteractor =
+            utils.textFeedbackInteractor(qsTileConfigProvider = qsTileConfigProvider)
+        val securityController = FakeSecurityController()
+
+        // We need Security so the combined flow will have at least one value
+        val qsSecurityFooterUtils = mock<QSSecurityFooterUtils>()
+
+        // Mock QSSecurityFooter to map a SecurityModel into a SecurityButtonConfig using the
+        // logic in securityToConfig.
+        val securityToConfig: (SecurityModel) -> SecurityButtonConfig? = { null }
+        whenever(qsSecurityFooterUtils.getButtonConfig(any())).thenAnswer {
+            securityToConfig(it.arguments.first() as SecurityModel)
+        }
+        val fgsManagerController =
+            FakeFgsManagerController(showFooterDot = false, numRunningPackages = 1)
+
+        val underTest =
+            utils.footerActionsViewModel(
+                textFeedbackInteractor = textFeedbackInteractor,
+                footerActionsInteractor =
+                    utils.footerActionsInteractor(
+                        foregroundServicesRepository =
+                            utils.foregroundServicesRepository(fgsManagerController),
+                        securityRepository = utils.securityRepository(securityController),
+                        qsSecurityFooterUtils = qsSecurityFooterUtils,
+                    ),
+                shadeMode = ShadeMode.Single,
+            )
+
+        val textFeedback by collectLastValue(underTest.textFeedback)
+        val foregroundServices by collectLastValue(underTest.foregroundServices)
+
+        assertThat(textFeedback).isEqualTo(TextFeedbackViewModel.NoFeedback)
+        assertThat(foregroundServices!!.displayText).isTrue()
+
+        textFeedbackInteractor.requestShowFeedback(AIRPLANE_MODE_TILE_SPEC)
+
+        val config = qsTileConfigProvider.getConfig(AIRPLANE_MODE_TILE_SPEC.spec)
+        assertThat(textFeedback)
+            .isEqualTo(
+                TextFeedbackViewModel.LoadedTextFeedback(
+                    label = context.getString(config.uiConfig.labelRes),
+                    icon =
+                        Icon.Loaded(
+                            drawable = context.getDrawable(config.uiConfig.iconRes)!!,
+                            contentDescription = null,
+                            res = config.uiConfig.iconRes,
+                        ),
+                )
+            )
+        assertThat(foregroundServices!!.displayText).isFalse()
+    }
+
+    companion object {
+        val AIRPLANE_MODE_TILE_SPEC = TileSpec.create(ConnectivityModule.AIRPLANE_MODE_TILE_SPEC)
+
+        private fun createAndPopulateQsTileConfigProvider(): QSTileConfigProvider {
+            val logger =
+                QsEventLoggerFake(UiEventLoggerFake(), InstanceIdSequenceFake(Int.MAX_VALUE))
+
+            return FakeQSTileConfigProvider().apply {
+                putConfig(
+                    AIRPLANE_MODE_TILE_SPEC,
+                    ConnectivityModule.provideAirplaneModeTileConfig(logger),
+                )
+            }
+        }
     }
 }

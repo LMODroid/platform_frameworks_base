@@ -100,6 +100,7 @@ import com.android.systemui.qs.panels.ui.viewmodel.TileUiState
 import com.android.systemui.qs.panels.ui.viewmodel.TileViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toIconProvider
 import com.android.systemui.qs.panels.ui.viewmodel.toUiState
+import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
@@ -140,6 +141,7 @@ fun Tile(
     tileHapticsViewModelFactoryProvider: TileHapticsViewModelFactoryProvider,
     modifier: Modifier = Modifier,
     isVisible: () -> Boolean = { true },
+    requestToggleTextFeedback: (TileSpec) -> Unit = {},
     detailsViewModel: DetailsViewModel?,
 ) {
     trace(tile.traceName) {
@@ -215,6 +217,9 @@ fun Tile(
                             coroutineScope.launch {
                                 currentBounceableInfo.bounceable.animateBounce()
                             }
+                        }
+                        if (uiState.accessibilityUiState.toggleableState != null && iconOnly) {
+                            requestToggleTextFeedback(tile.spec)
                         }
                     }
                 },
