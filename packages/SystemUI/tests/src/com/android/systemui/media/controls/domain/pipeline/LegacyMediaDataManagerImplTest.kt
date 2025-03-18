@@ -34,10 +34,10 @@ import android.media.session.PlaybackState
 import android.net.Uri
 import android.os.Bundle
 import android.platform.test.annotations.DisableFlags
-import android.platform.test.flag.junit.FlagsParameterization
 import android.service.notification.StatusBarNotification
 import android.testing.TestableLooper.RunWithLooper
 import androidx.media.utils.MediaConstants
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.dx.mockito.inline.extended.ExtendedMockito
 import com.android.keyguard.KeyguardUpdateMonitor
@@ -87,8 +87,6 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.capture
 import org.mockito.kotlin.eq
 import org.mockito.quality.Strictness
-import platform.test.runner.parameterized.ParameterizedAndroidJunit4
-import platform.test.runner.parameterized.Parameters
 
 private const val KEY = "KEY"
 private const val KEY_2 = "KEY_2"
@@ -103,8 +101,8 @@ private const val USER_ID = 0
 
 @SmallTest
 @RunWithLooper(setAsMainLooper = true)
-@RunWith(ParameterizedAndroidJunit4::class)
-class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCase() {
+@RunWith(AndroidJUnit4::class)
+class LegacyMediaDataManagerImplTest : SysuiTestCase() {
 
     @JvmField @Rule val mockito = MockitoJUnit.rule()
     @Mock lateinit var controller: MediaController
@@ -136,20 +134,6 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
     @Captor lateinit var sessionCallbackCaptor: ArgumentCaptor<(String) -> Unit>
     @Mock private lateinit var ugm: IUriGrantsManager
     @Mock private lateinit var imageSource: ImageDecoder.Source
-
-    companion object {
-        @JvmStatic
-        @Parameters(name = "{0}")
-        fun getParams(): List<FlagsParameterization> {
-            return FlagsParameterization.progressionOf(
-                Flags.FLAG_MEDIA_LOAD_METADATA_VIA_MEDIA_DATA_LOADER
-            )
-        }
-    }
-
-    init {
-        mSetFlagsRule.setFlagsParameterization(flags)
-    }
 
     private val kosmos = testKosmos().apply { mediaLogger = mockMediaLogger }
     private val testDispatcher = kosmos.testDispatcher
@@ -310,7 +294,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
     @Test
     fun testLoadsMetadataOnBackground() {
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
-        testScope.assertRunAllReady(foreground = 0, background = 1)
+        testScope.runAllReady()
     }
 
     @Test
@@ -328,7 +312,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         mediaDataManager.addListener(listener)
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
 
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -346,7 +330,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         mediaDataManager.addListener(listener)
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
 
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -375,7 +359,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
     fun testOnMetaDataLoaded_conservesActiveFlag() {
         mediaDataManager.addListener(listener)
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -419,7 +403,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
             }
 
         mediaDataManager.onNotificationAdded(KEY, notif)
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -431,53 +415,6 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
             )
 
         assertThat(mediaDataCaptor.value!!.app).isEqualTo(subName)
-    }
-
-    @Test
-    fun testLoadMediaDataInBg_invalidTokenNoCrash() {
-        val bundle = Bundle()
-        // wrong data type
-        bundle.putParcelable(Notification.EXTRA_MEDIA_SESSION, Bundle())
-        val rcn =
-            SbnBuilder().run {
-                setPkg(SYSTEM_PACKAGE_NAME)
-                modifyNotification(context).also {
-                    it.setSmallIcon(android.R.drawable.ic_media_pause)
-                    it.addExtras(bundle)
-                    it.setStyle(
-                        MediaStyle().apply { setRemotePlaybackInfo("Remote device", 0, null) }
-                    )
-                }
-                build()
-            }
-
-        mediaDataManager.loadMediaDataInBg(KEY, rcn, null)
-        // no crash even though the data structure is incorrect
-    }
-
-    @Test
-    fun testLoadMediaDataInBg_invalidMediaRemoteIntentNoCrash() {
-        val bundle = Bundle()
-        // wrong data type
-        bundle.putParcelable(Notification.EXTRA_MEDIA_REMOTE_INTENT, Bundle())
-        val rcn =
-            SbnBuilder().run {
-                setPkg(SYSTEM_PACKAGE_NAME)
-                modifyNotification(context).also {
-                    it.setSmallIcon(android.R.drawable.ic_media_pause)
-                    it.addExtras(bundle)
-                    it.setStyle(
-                        MediaStyle().apply {
-                            setMediaSession(session.sessionToken)
-                            setRemotePlaybackInfo("Remote device", 0, null)
-                        }
-                    )
-                }
-                build()
-            }
-
-        mediaDataManager.loadMediaDataInBg(KEY, rcn, null)
-        // no crash even though the data structure is incorrect
     }
 
     @Test
@@ -505,7 +442,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
 
         // Then a media control is created with a placeholder title string
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -535,7 +472,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
 
         // Then a media control is created with a placeholder title string
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -576,7 +513,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
 
         // Then the media control is added using the notification's title
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -684,7 +621,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         // GIVEN that the manager has two notifications with resume actions
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
         mediaDataManager.onNotificationAdded(KEY_2, mediaNotification)
-        testScope.assertRunAllReady(foreground = 2, background = 2)
+        testScope.runAllReady()
 
         verify(listener)
             .onMediaDataLoaded(
@@ -978,7 +915,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         )
 
         // Resumption controls are not added.
-        testScope.assertRunAllReady(foreground = 0, background = 1)
+        testScope.runAllReady()
         verify(listener, never())
             .onMediaDataLoaded(
                 eq(PACKAGE_NAME),
@@ -1009,7 +946,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         )
 
         // Resumption controls are not added.
-        testScope.assertRunAllReady(foreground = 0, background = 1)
+        testScope.runAllReady()
         verify(listener, never())
             .onMediaDataLoaded(
                 eq(PACKAGE_NAME),
@@ -1076,7 +1013,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         mediaDataManager.onNotificationAdded(KEY, notif)
 
         // THEN it still loads
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -1099,7 +1036,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
     fun testOnMediaDataTimedOut_updatesLastActiveTime() {
         // GIVEN that the manager has a notification
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
 
         // WHEN the notification times out
         clock.advanceTime(100)
@@ -1208,7 +1145,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
 
         // WHEN the notification is loaded
         mediaDataManager.onNotificationAdded(KEY, notif)
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
 
         // THEN only the first MAX_COMPACT_ACTIONS are actually set
         verify(listener)
@@ -1244,7 +1181,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
 
         // WHEN the notification is loaded
         mediaDataManager.onNotificationAdded(KEY, notif)
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
 
         // THEN only the first MAX_NOTIFICATION_ACTIONS are actually included
         verify(listener)
@@ -1278,7 +1215,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
             }
         mediaDataManager.onNotificationAdded(KEY, notifWithAction)
 
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -1469,7 +1406,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
 
         // update to remote cast
         mediaDataManager.onNotificationAdded(KEY, remoteCastNotification)
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(logger)
             .logPlaybackLocationChange(
                 anyInt(),
@@ -1795,7 +1732,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         reset(listener)
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
 
-        testScope.assertRunAllReady(foreground = 0, background = 1)
+        testScope.runAllReady()
         verify(listener, never())
             .onMediaDataLoaded(
                 eq(KEY),
@@ -1816,7 +1753,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
             mediaNotification.also { it.notification.contentIntent = getNewPendingIntent() }
         mediaDataManager.onNotificationAdded(KEY, mediaNotification)
 
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -1829,22 +1766,11 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         verify(kosmos.mediaLogger, never()).logDuplicateMediaNotification(eq(KEY))
     }
 
-    private fun TestScope.assertRunAllReady(foreground: Int = 0, background: Int = 0) {
+    private fun TestScope.runAllReady() {
         runCurrent()
-        if (Flags.mediaLoadMetadataViaMediaDataLoader()) {
-            advanceUntilIdle()
-            // It doesn't make much sense to count tasks when we use coroutines in loader
-            // so this check is skipped in that scenario.
-            backgroundExecutor.runAllReady()
-            foregroundExecutor.runAllReady()
-        } else {
-            if (background > 0) {
-                assertThat(backgroundExecutor.runAllReady()).isEqualTo(background)
-            }
-            if (foreground > 0) {
-                assertThat(foregroundExecutor.runAllReady()).isEqualTo(foreground)
-            }
-        }
+        advanceUntilIdle()
+        backgroundExecutor.runAllReady()
+        foregroundExecutor.runAllReady()
     }
 
     /** Helper function to add a basic media notification and capture the resulting MediaData */
@@ -1855,7 +1781,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
     /** Helper function to add the given notification and capture the resulting MediaData */
     private fun addNotificationAndLoad(sbn: StatusBarNotification) {
         mediaDataManager.onNotificationAdded(KEY, sbn)
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
         verify(listener)
             .onMediaDataLoaded(
                 eq(KEY),
@@ -1890,7 +1816,7 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
             packageName,
         )
 
-        testScope.assertRunAllReady(foreground = 1, background = 1)
+        testScope.runAllReady()
 
         verify(listener)
             .onMediaDataLoaded(
