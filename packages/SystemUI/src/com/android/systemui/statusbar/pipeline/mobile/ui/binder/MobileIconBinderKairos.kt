@@ -174,17 +174,29 @@ object MobileIconBinderKairos {
                         }
 
                         // Set the icon for the triangle
-                        viewModel.icon.observe { icon ->
+                        viewModel.icon.pairwise(initialPreviousValue = null).observe {
+                            (oldIcon, newIcon) ->
+                            val shouldRequestLayout =
+                                when {
+                                    oldIcon == null -> true
+                                    oldIcon is SignalIconModel.Cellular &&
+                                        newIcon is SignalIconModel.Cellular ->
+                                        oldIcon.numberOfLevels != newIcon.numberOfLevels
+                                    else -> false
+                                }
                             viewModel.verboseLogger?.logBinderReceivedSignalIcon(
                                 view,
                                 viewModel.subscriptionId,
-                                icon,
+                                newIcon,
                             )
-                            if (icon is SignalIconModel.Cellular) {
+                            if (newIcon is SignalIconModel.Cellular) {
                                 iconView.setImageDrawable(mobileDrawable)
-                                mobileDrawable.level = icon.toSignalDrawableState()
-                            } else if (icon is SignalIconModel.Satellite) {
-                                IconViewBinder.bind(icon.icon, iconView)
+                                mobileDrawable.level = newIcon.toSignalDrawableState()
+                            } else if (newIcon is SignalIconModel.Satellite) {
+                                IconViewBinder.bind(newIcon.icon, iconView)
+                            }
+                            if (shouldRequestLayout) {
+                                iconView.requestLayout()
                             }
                         }
 
