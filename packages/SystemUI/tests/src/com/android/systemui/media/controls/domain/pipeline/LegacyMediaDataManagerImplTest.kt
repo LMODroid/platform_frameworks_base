@@ -46,8 +46,6 @@ import com.android.systemui.InstanceIdSequenceFake
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.broadcast.BroadcastDispatcher
 import com.android.systemui.dump.DumpManager
-import com.android.systemui.flags.Flags.MEDIA_RETAIN_SESSIONS
-import com.android.systemui.flags.fakeFeatureFlagsClassic
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.media.controls.domain.resume.MediaResumeListener
@@ -156,7 +154,6 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
     private val kosmos = testKosmos().apply { mediaLogger = mockMediaLogger }
     private val testDispatcher = kosmos.testDispatcher
     private val testScope = kosmos.testScope
-    private val fakeFeatureFlags = kosmos.fakeFeatureFlagsClassic
     private val mediaControllerFactory = kosmos.fakeMediaControllerFactory
     private val instanceIdSequence = InstanceIdSequenceFake(1 shl 20)
 
@@ -246,7 +243,6 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         // treat mediaSessionBasedFilter as a listener for testing.
         listener = mediaSessionBasedFilter
 
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, false)
         whenever(logger.getNewInstanceId()).thenReturn(instanceIdSequence.newInstanceId())
         whenever(keyguardUpdateMonitor.isUserInLockdown(any())).thenReturn(false)
     }
@@ -1657,210 +1653,6 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
         assertThat(mediaDataCaptor.value.isClearable).isFalse()
     }
 
-    @DisableFlags(Flags.FLAG_MEDIA_CONTROLS_BUTTON_MEDIA3)
-    @Test
-    fun testRetain_notifPlayer_notifRemoved_setToResume() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-
-        // When a media control based on notification is added, times out, and then removed
-        addNotificationAndLoad()
-        mediaDataManager.setInactive(KEY, timedOut = true)
-        assertThat(mediaDataCaptor.value.active).isFalse()
-        mediaDataManager.onNotificationRemoved(KEY)
-
-        // It is converted to a resume player
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
-        assertThat(mediaDataCaptor.value.resumption).isTrue()
-        assertThat(mediaDataCaptor.value.active).isFalse()
-        verify(logger)
-            .logActiveConvertedToResume(
-                anyInt(),
-                eq(PACKAGE_NAME),
-                eq(mediaDataCaptor.value.instanceId),
-            )
-    }
-
-    @DisableFlags(Flags.FLAG_MEDIA_CONTROLS_BUTTON_MEDIA3)
-    @Test
-    fun testRetain_notifPlayer_sessionDestroyed_doesNotChange() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-
-        // When a media control based on notification is added and times out
-        addNotificationAndLoad()
-        mediaDataManager.setInactive(KEY, timedOut = true)
-        assertThat(mediaDataCaptor.value.active).isFalse()
-
-        // and then the session is destroyed
-        sessionCallbackCaptor.value.invoke(KEY)
-
-        // It remains as a regular player
-        verify(listener, never()).onMediaDataRemoved(eq(KEY), anyBoolean())
-        verify(listener, never())
-            .onMediaDataLoaded(eq(PACKAGE_NAME), any(), any(), anyBoolean(), anyInt(), anyBoolean())
-    }
-
-    @DisableFlags(Flags.FLAG_MEDIA_CONTROLS_BUTTON_MEDIA3)
-    @Test
-    fun testRetain_notifPlayer_removeWhileActive_fullyRemoved() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-
-        // When a media control based on notification is added and then removed, without timing out
-        addNotificationAndLoad()
-        val data = mediaDataCaptor.value
-        assertThat(data.active).isTrue()
-        mediaDataManager.onNotificationRemoved(KEY)
-
-        // It is fully removed
-        verify(listener).onMediaDataRemoved(eq(KEY), eq(false))
-        verify(logger).logMediaRemoved(anyInt(), eq(PACKAGE_NAME), eq(data.instanceId))
-        verify(listener, never())
-            .onMediaDataLoaded(eq(PACKAGE_NAME), any(), any(), anyBoolean(), anyInt(), anyBoolean())
-    }
-
-    @Test
-    fun testRetain_canResume_removeWhileActive_setToResume() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-
-        // When a media control that supports resumption is added
-        addNotificationAndLoad()
-        val dataResumable = mediaDataCaptor.value.copy(resumeAction = Runnable {})
-        mediaDataManager.onMediaDataLoaded(KEY, null, dataResumable)
-
-        // And then removed while still active
-        mediaDataManager.onNotificationRemoved(KEY)
-
-        // It is converted to a resume player
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
-        assertThat(mediaDataCaptor.value.resumption).isTrue()
-        assertThat(mediaDataCaptor.value.active).isFalse()
-        verify(logger)
-            .logActiveConvertedToResume(
-                anyInt(),
-                eq(PACKAGE_NAME),
-                eq(mediaDataCaptor.value.instanceId),
-            )
-    }
-
-    @Test
-    fun testRetain_sessionPlayer_notifRemoved_doesNotChange() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-        addPlaybackStateAction()
-
-        // When a media control with PlaybackState actions is added, times out,
-        // and then the notification is removed
-        addNotificationAndLoad()
-        val data = mediaDataCaptor.value
-        assertThat(data.active).isTrue()
-        mediaDataManager.setInactive(KEY, timedOut = true)
-        mediaDataManager.onNotificationRemoved(KEY)
-
-        // It remains as a regular player
-        verify(listener, never()).onMediaDataRemoved(eq(KEY), anyBoolean())
-        verify(listener, never())
-            .onMediaDataLoaded(eq(PACKAGE_NAME), any(), any(), anyBoolean(), anyInt(), anyBoolean())
-    }
-
-    @Test
-    fun testRetain_sessionPlayer_sessionDestroyed_setToResume() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-        addPlaybackStateAction()
-
-        // When a media control with PlaybackState actions is added, times out,
-        // and then the session is destroyed
-        addNotificationAndLoad()
-        val data = mediaDataCaptor.value
-        assertThat(data.active).isTrue()
-        mediaDataManager.setInactive(KEY, timedOut = true)
-        sessionCallbackCaptor.value.invoke(KEY)
-
-        // It is converted to a resume player
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
-        assertThat(mediaDataCaptor.value.resumption).isTrue()
-        assertThat(mediaDataCaptor.value.active).isFalse()
-        verify(logger)
-            .logActiveConvertedToResume(
-                anyInt(),
-                eq(PACKAGE_NAME),
-                eq(mediaDataCaptor.value.instanceId),
-            )
-    }
-
-    @Test
-    fun testRetain_sessionPlayer_destroyedWhileActive_noResume_fullyRemoved() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-        addPlaybackStateAction()
-
-        // When a media control using session actions is added, and then the session is destroyed
-        // without timing out first
-        addNotificationAndLoad()
-        val data = mediaDataCaptor.value
-        assertThat(data.active).isTrue()
-        sessionCallbackCaptor.value.invoke(KEY)
-
-        // It is fully removed
-        verify(listener).onMediaDataRemoved(eq(KEY), eq(false))
-        verify(logger).logMediaRemoved(anyInt(), eq(PACKAGE_NAME), eq(data.instanceId))
-        verify(listener, never())
-            .onMediaDataLoaded(eq(PACKAGE_NAME), any(), any(), anyBoolean(), anyInt(), anyBoolean())
-    }
-
-    @Test
-    fun testRetain_sessionPlayer_canResume_destroyedWhileActive_setToResume() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-        addPlaybackStateAction()
-
-        // When a media control using session actions and that does allow resumption is added,
-        addNotificationAndLoad()
-        val dataResumable = mediaDataCaptor.value.copy(resumeAction = Runnable {})
-        mediaDataManager.onMediaDataLoaded(KEY, null, dataResumable)
-
-        // And then the session is destroyed without timing out first
-        sessionCallbackCaptor.value.invoke(KEY)
-
-        // It is converted to a resume player
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
-        assertThat(mediaDataCaptor.value.resumption).isTrue()
-        assertThat(mediaDataCaptor.value.active).isFalse()
-        verify(logger)
-            .logActiveConvertedToResume(
-                anyInt(),
-                eq(PACKAGE_NAME),
-                eq(mediaDataCaptor.value.instanceId),
-            )
-    }
-
     @Test
     fun testSessionPlayer_sessionDestroyed_noResume_fullyRemoved() {
         addPlaybackStateAction()
@@ -1935,19 +1727,6 @@ class LegacyMediaDataManagerImplTest(flags: FlagsParameterization) : SysuiTestCa
                 eq(PACKAGE_NAME),
                 eq(mediaDataCaptor.value.instanceId),
             )
-    }
-
-    @Test
-    fun testSessionDestroyed_noNotificationKey_stillRemoved() {
-        fakeFeatureFlags.set(MEDIA_RETAIN_SESSIONS, true)
-
-        // When a notiifcation is added and then removed before it is fully processed
-        mediaDataManager.onNotificationAdded(KEY, mediaNotification)
-        backgroundExecutor.runAllReady()
-        mediaDataManager.onNotificationRemoved(KEY)
-
-        // We still make sure to remove it
-        verify(listener).onMediaDataRemoved(eq(KEY), eq(false))
     }
 
     @Test

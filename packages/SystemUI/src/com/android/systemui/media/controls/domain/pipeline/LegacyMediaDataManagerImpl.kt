@@ -1171,8 +1171,6 @@ class LegacyMediaDataManagerImpl(
             logger.logMediaRemoved(removed.appUid, removed.packageName, removed.instanceId)
         } else if (isAbleToResume(removed)) {
             convertToResumePlayer(key, removed)
-        } else if (mediaFlags.isRetainingPlayersEnabled()) {
-            handlePossibleRemoval(key, removed, notificationRemoved = true)
         } else {
             notifyMediaDataRemoved(key)
             logger.logMediaRemoved(removed.appUid, removed.packageName, removed.instanceId)
@@ -1198,18 +1196,14 @@ class LegacyMediaDataManagerImpl(
      * if it was removed before becoming inactive. (Assumes that [removed] was removed from
      * [mediaEntries] before this function was called)
      */
-    private fun handlePossibleRemoval(
-        key: String,
-        removed: MediaData,
-        notificationRemoved: Boolean = false,
-    ) {
+    private fun handlePossibleRemoval(key: String, removed: MediaData) {
         val hasSession = removed.token != null
         if (hasSession && removed.semanticActions != null) {
             // The app was using session actions, and the session is still valid: keep player
             if (DEBUG) Log.d(TAG, "Notification removed but using session actions $key")
             mediaEntries.put(key, removed)
             notifyMediaDataLoaded(key, key, removed)
-        } else if (!notificationRemoved && removed.semanticActions == null) {
+        } else if (removed.semanticActions == null) {
             // The app was using notification actions, and notif wasn't removed yet: keep player
             if (DEBUG) Log.d(TAG, "Session destroyed but using notification actions $key")
             mediaEntries.put(key, removed)
@@ -1220,14 +1214,10 @@ class LegacyMediaDataManagerImpl(
             if (DEBUG) Log.d(TAG, "Removing still-active player $key")
             notifyMediaDataRemoved(key)
             logger.logMediaRemoved(removed.appUid, removed.packageName, removed.instanceId)
-        } else if (mediaFlags.isRetainingPlayersEnabled() || isAbleToResume(removed)) {
+        } else if (isAbleToResume(removed)) {
             // Convert to resume
             if (DEBUG) {
-                Log.d(
-                    TAG,
-                    "Notification ($notificationRemoved) and/or session " +
-                        "($hasSession) gone for inactive player $key",
-                )
+                Log.d(TAG, "Session ($hasSession) gone for inactive player $key")
             }
             convertToResumePlayer(key, removed)
         } else {
