@@ -53,9 +53,8 @@ constructor(
     private val mediaLogger: MediaLogger,
 ) {
 
-    val hasAnyMediaOrRecommendations: StateFlow<Boolean> = interactor.hasAnyMediaOrRecommendation
-    val hasActiveMediaOrRecommendations: StateFlow<Boolean> =
-        interactor.hasActiveMediaOrRecommendation
+    val hasAnyMedia: StateFlow<Boolean> = interactor.hasAnyMedia
+    val hasActiveMedia: StateFlow<Boolean> = interactor.hasActiveMedia
     val mediaItems: StateFlow<List<MediaControlViewModel>> =
         interactor.currentMedia
             .map { sortedItems ->

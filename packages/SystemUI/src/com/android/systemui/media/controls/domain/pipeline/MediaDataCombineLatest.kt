@@ -18,7 +18,6 @@ package com.android.systemui.media.controls.domain.pipeline
 
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.controls.shared.model.MediaDeviceData
-import com.android.systemui.media.controls.shared.model.SmartspaceMediaData
 import javax.inject.Inject
 
 /** Combines [MediaDataManager.Listener] events with [MediaDeviceManager.Listener] events. */
@@ -33,8 +32,6 @@ class MediaDataCombineLatest @Inject constructor() :
         oldKey: String?,
         data: MediaData,
         immediately: Boolean,
-        receivedSmartspaceCardLatency: Int,
-        isSsReactivated: Boolean
     ) {
         if (oldKey != null && oldKey != key && entries.contains(oldKey)) {
             entries[key] = data to entries.remove(oldKey)?.second
@@ -45,20 +42,8 @@ class MediaDataCombineLatest @Inject constructor() :
         }
     }
 
-    override fun onSmartspaceMediaDataLoaded(
-        key: String,
-        data: SmartspaceMediaData,
-        shouldPrioritize: Boolean
-    ) {
-        listeners.toSet().forEach { it.onSmartspaceMediaDataLoaded(key, data) }
-    }
-
     override fun onMediaDataRemoved(key: String, userInitiated: Boolean) {
         remove(key, userInitiated)
-    }
-
-    override fun onSmartspaceMediaDataRemoved(key: String, immediately: Boolean) {
-        listeners.toSet().forEach { it.onSmartspaceMediaDataRemoved(key, immediately) }
     }
 
     override fun onMediaDeviceChanged(key: String, oldKey: String?, data: MediaDeviceData?) {

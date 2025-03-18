@@ -94,8 +94,6 @@ constructor(
         oldKey: String?,
         data: MediaData,
         immediately: Boolean,
-        receivedSmartspaceCardLatency: Int,
-        isSsReactivated: Boolean,
     ) {
         if (mediaControlsDeviceManagerBackgroundExecution()) {
             bgExecutor.execute { onMediaLoaded(key, oldKey, data) }

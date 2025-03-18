@@ -1224,7 +1224,7 @@ public final class NotificationPanelViewController implements
     private ClockSize computeDesiredClockSizeForSplitShade() {
         // Media is not visible to the user on AOD.
         boolean isMediaVisibleToUser =
-                mMediaDataManager.hasActiveMediaOrRecommendation() && !isOnAod();
+                mMediaDataManager.hasActiveMedia() && !isOnAod();
         if (isMediaVisibleToUser) {
             // When media is visible, it overlaps with the large clock. Use small clock instead.
             return ClockSize.SMALL;
@@ -1265,7 +1265,7 @@ public final class NotificationPanelViewController implements
 
     private boolean hasVisibleNotifications() {
         return mActiveNotificationsInteractor.getAreAnyNotificationsPresentValue()
-                || mMediaDataManager.hasActiveMediaOrRecommendation();
+                || mMediaDataManager.hasActiveMedia();
     }
 
     @Override

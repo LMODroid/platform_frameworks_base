@@ -59,11 +59,11 @@ constructor(
             traceName = "showMedia",
             initialValue =
                 disableFlagsInteractor.disableFlags.value.isQuickSettingsEnabled() &&
-                    mediaCarouselInteractor.hasActiveMediaOrRecommendation.value,
+                    mediaCarouselInteractor.hasActiveMedia.value,
             source =
                 disableFlagsInteractor.disableFlags.flatMapLatestConflated {
                     if (it.isQuickSettingsEnabled()) {
-                        mediaCarouselInteractor.hasActiveMediaOrRecommendation
+                        mediaCarouselInteractor.hasActiveMedia
                     } else {
                         flowOf(false)
                     }

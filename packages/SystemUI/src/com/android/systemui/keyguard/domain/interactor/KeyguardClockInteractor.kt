@@ -113,7 +113,7 @@ constructor(
             combine(
                 shadeModeInteractor.isShadeLayoutWide,
                 areAnyNotificationsPresent,
-                mediaCarouselInteractor.hasActiveMediaOrRecommendation,
+                mediaCarouselInteractor.hasActiveMedia,
                 keyguardInteractor.isDozing,
                 isOnAod,
             ) { isShadeLayoutWide, hasNotifs, hasMedia, isDozing, isOnAod ->

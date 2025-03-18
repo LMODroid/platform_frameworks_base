@@ -55,7 +55,7 @@ constructor(
     private val sceneInteractor: SceneInteractor,
 ) : ExclusiveActivatable() {
 
-    val isMediaVisible: StateFlow<Boolean> = mediaCarouselInteractor.hasAnyMediaOrRecommendation
+    val isMediaVisible: StateFlow<Boolean> = mediaCarouselInteractor.hasAnyMedia
 
     private val footerActionsControllerInitialized = AtomicBoolean(false)
 

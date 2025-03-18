@@ -439,6 +439,7 @@ class MediaHierarchyManagerTest : SysuiTestCase() {
 
     @Test
     fun getGuidedTransformationTranslationY_previousHostInvisible_returnsZero() {
+        whenever(mediaDataManager.hasActiveMedia()).thenReturn(false)
         goToLockscreen()
         enterGuidedTransformation()
         whenever(lockHost.visible).thenReturn(false)
@@ -479,7 +480,7 @@ class MediaHierarchyManagerTest : SysuiTestCase() {
         whenever(lockHost.visible).thenReturn(false)
         whenever(qsHost.visible).thenReturn(true)
         whenever(qqsHost.visible).thenReturn(true)
-        whenever(mediaDataManager.hasActiveMediaOrRecommendation()).thenReturn(true)
+        whenever(mediaDataManager.hasActiveMedia()).thenReturn(true)
 
         assertThat(mediaHierarchyManager.isCurrentlyInGuidedTransformation()).isFalse()
     }
@@ -492,7 +493,7 @@ class MediaHierarchyManagerTest : SysuiTestCase() {
         whenever(lockHost.visible).thenReturn(false)
         whenever(qsHost.visible).thenReturn(true)
         whenever(qqsHost.visible).thenReturn(true)
-        whenever(mediaDataManager.hasActiveMediaOrRecommendation()).thenReturn(false)
+        whenever(mediaDataManager.hasActiveMedia()).thenReturn(false)
 
         assertThat(mediaHierarchyManager.isCurrentlyInGuidedTransformation()).isTrue()
     }
@@ -614,7 +615,7 @@ class MediaHierarchyManagerTest : SysuiTestCase() {
     @Test
     fun testCommunalLocationVisibilityWithShadeShowing() =
         testScope.runTest {
-            whenever(mediaDataManager.hasActiveMediaOrRecommendation()).thenReturn(true)
+            whenever(mediaDataManager.hasActiveMedia()).thenReturn(true)
             keyguardTransitionRepository.sendTransitionSteps(
                 from = KeyguardState.LOCKSCREEN,
                 to = KeyguardState.GLANCEABLE_HUB,
@@ -647,7 +648,7 @@ class MediaHierarchyManagerTest : SysuiTestCase() {
     @Test
     fun testCommunalLocationVisibilityWithPrimaryBouncerShowing() =
         testScope.runTest {
-            whenever(mediaDataManager.hasActiveMediaOrRecommendation()).thenReturn(true)
+            whenever(mediaDataManager.hasActiveMedia()).thenReturn(true)
             keyguardTransitionRepository.sendTransitionSteps(
                 from = KeyguardState.LOCKSCREEN,
                 to = KeyguardState.GLANCEABLE_HUB,
@@ -791,7 +792,7 @@ class MediaHierarchyManagerTest : SysuiTestCase() {
         whenever(statusBarStateController.isExpanded).thenReturn(true)
 
         // When there is no longer any active media
-        whenever(mediaDataManager.hasActiveMediaOrRecommendation()).thenReturn(false)
+        whenever(mediaDataManager.hasActiveMedia()).thenReturn(false)
         mediaHierarchyManager.qsExpanded = false
 
         // Then the carousel is set to not visible

@@ -2309,7 +2309,7 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
 
                 boolean hasNotifications =
                         mActiveNotificationsInteractor.getAreAnyNotificationsPresentValue();
-                if (!hasNotifications && !mMediaDataManager.hasActiveMediaOrRecommendation()) {
+                if (!hasNotifications && !mMediaDataManager.hasActiveMedia()) {
                     // No notifications are visible, let's animate to the height of qs instead
                     if (isQsFragmentCreated()) {
                         // Let's interpolate to the header height instead of the top padding,

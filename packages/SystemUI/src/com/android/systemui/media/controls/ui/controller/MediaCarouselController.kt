@@ -449,8 +449,6 @@ constructor(
                     oldKey: String?,
                     data: MediaData,
                     immediately: Boolean,
-                    receivedSmartspaceCardLatency: Int,
-                    isSsReactivated: Boolean,
                 ) {
                     debugLogger.logMediaLoaded(key, data.active)
                     val onUiExecutionEnd =
@@ -599,10 +597,7 @@ constructor(
                 setNewViewModelsList(it)
 
                 // Update host visibility when media changes.
-                merge(
-                        mediaCarouselViewModel.hasAnyMediaOrRecommendations,
-                        mediaCarouselViewModel.hasActiveMediaOrRecommendations,
-                    )
+                merge(mediaCarouselViewModel.hasAnyMedia, mediaCarouselViewModel.hasActiveMedia)
                     .collect { updateHostVisibility() }
             }
         }
@@ -1148,7 +1143,7 @@ constructor(
 
                 val shouldCloseGuts =
                     !currentlyExpanded &&
-                        !mediaManager.hasActiveMediaOrRecommendation() &&
+                        !mediaManager.hasActiveMedia() &&
                         desiredHostState.showsOnlyActiveMedia
 
                 if (!SceneContainerFlag.isEnabled) {

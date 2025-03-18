@@ -295,7 +295,7 @@ class QSFragmentComposeViewModelTest : AbstractQSFragmentComposeViewModelTest() 
         }
 
     @Test
-    fun mediaInRow_mediaRecommendation_onlyQSInRow() =
+    fun mediaInRow_mediaNotActive_onlyQSInRow() =
         with(kosmos) {
             testScope.testWithinLifecycle {
                 setConfigurationForMediaInRow(mediaInRow = true)
@@ -504,9 +504,8 @@ class QSFragmentComposeViewModelTest : AbstractQSFragmentComposeViewModelTest() 
         with(kosmos) {
             val activeMedia = state == ACTIVE_MEDIA
             val anyMedia = state != NO_MEDIA
-            whenever(legacyMediaDataManagerImpl.hasActiveMediaOrRecommendation())
-                .thenReturn(activeMedia)
-            whenever(legacyMediaDataManagerImpl.hasAnyMediaOrRecommendation()).thenReturn(anyMedia)
+            whenever(legacyMediaDataManagerImpl.hasActiveMedia()).thenReturn(activeMedia)
+            whenever(legacyMediaDataManagerImpl.hasAnyMedia()).thenReturn(anyMedia)
             qqsMediaHost.updateViewVisibility()
             qsMediaHost.updateViewVisibility()
         }

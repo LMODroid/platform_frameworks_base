@@ -575,14 +575,6 @@ class LegacyMediaDataManagerImpl(
         return existed
     }
 
-    /**
-     * Called whenever the recommendation has been expired or removed by the user. This will remove
-     * the recommendation card entirely from the carousel.
-     */
-    override fun dismissSmartspaceRecommendation(key: String, delay: Long) {
-        // TODO(b/382680767): remove
-    }
-
     private suspend fun loadMediaDataForResumption(
         userId: Int,
         desc: MediaDescription,
@@ -861,27 +853,15 @@ class LegacyMediaDataManagerImpl(
     /** Invoked when the user has dismissed the media carousel */
     override fun onSwipeToDismiss() = mediaDataFilter.onSwipeToDismiss()
 
-    /** Are there any media notifications active, including the recommendations? */
-    override fun hasActiveMediaOrRecommendation() = mediaDataFilter.hasActiveMedia()
-
-    /**
-     * Are there any media entries we should display, including the recommendations?
-     * - If resumption is enabled, this will include inactive players
-     * - If resumption is disabled, we only want to show active players
-     */
-    override fun hasAnyMediaOrRecommendation() = mediaDataFilter.hasAnyMedia()
-
-    /** Are there any resume media notifications active, excluding the recommendations? */
+    /** Are there any active media notifications? */
     override fun hasActiveMedia() = mediaDataFilter.hasActiveMedia()
 
     /**
-     * Are there any resume media notifications active, excluding the recommendations?
+     * Are there any media notifications, including inactive ones?
      * - If resumption is enabled, this will include inactive players
      * - If resumption is disabled, we only want to show active players
      */
     override fun hasAnyMedia() = mediaDataFilter.hasAnyMedia()
-
-    override fun isRecommendationActive() = false
 
     override fun dump(pw: PrintWriter, args: Array<out String>) {
         pw.apply {

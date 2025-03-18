@@ -142,8 +142,7 @@ class MediaDataFilterImplTest : SysuiTestCase() {
 
             mediaDataFilter.onMediaDataLoaded(KEY, null, dataMain)
 
-            verify(listener)
-                .onMediaDataLoaded(eq(KEY), eq(null), eq(dataMain), eq(true), eq(0), eq(false))
+            verify(listener).onMediaDataLoaded(eq(KEY), eq(null), eq(dataMain), eq(true))
             verify(mediaLogger)
                 .logMediaLoaded(eq(dataMain.instanceId), eq(dataMain.active), anyString())
             assertThat(currentMedia).containsExactly(mediaCommonModel)
@@ -158,8 +157,7 @@ class MediaDataFilterImplTest : SysuiTestCase() {
 
             mediaDataFilter.onMediaDataLoaded(KEY, null, dataGuest)
 
-            verify(listener, never())
-                .onMediaDataLoaded(any(), any(), any(), anyBoolean(), anyInt(), anyBoolean())
+            verify(listener, never()).onMediaDataLoaded(any(), any(), any(), anyBoolean())
             verify(mediaLogger, never()).logMediaLoaded(any(), anyBoolean(), anyString())
             assertThat(currentMedia).doesNotContain(mediaCommonModel)
         }
@@ -236,23 +234,14 @@ class MediaDataFilterImplTest : SysuiTestCase() {
             setUser(USER_GUEST)
 
             // THEN we should add back the guest user media
-            verify(listener)
-                .onMediaDataLoaded(eq(KEY_ALT), eq(null), eq(dataGuest), eq(true), eq(0), eq(false))
+            verify(listener).onMediaDataLoaded(eq(KEY_ALT), eq(null), eq(dataGuest), eq(true))
             verify(mediaLogger)
                 .logMediaLoaded(eq(dataGuest.instanceId), eq(dataGuest.active), anyString())
 
             reset(mediaLogger)
 
             // but not the main user's
-            verify(listener, never())
-                .onMediaDataLoaded(
-                    eq(KEY),
-                    any(),
-                    eq(dataMain),
-                    anyBoolean(),
-                    anyInt(),
-                    anyBoolean(),
-                )
+            verify(listener, never()).onMediaDataLoaded(eq(KEY), any(), eq(dataMain), anyBoolean())
             verify(mediaLogger, never())
                 .logMediaLoaded(eq(dataMain.instanceId), anyBoolean(), anyString())
             assertThat(currentMedia).containsExactly(MediaCommonModel(guestLoadedStatesModel))

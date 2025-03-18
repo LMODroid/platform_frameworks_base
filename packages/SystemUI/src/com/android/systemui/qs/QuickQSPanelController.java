@@ -90,7 +90,7 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> 
 
     @Override
     StateFlow<Boolean> getMediaVisibleFlow() {
-        return mMediaCarouselInteractor.getHasActiveMediaOrRecommendation();
+        return mMediaCarouselInteractor.getHasActiveMedia();
     }
 
     private void updateMediaExpansion() {

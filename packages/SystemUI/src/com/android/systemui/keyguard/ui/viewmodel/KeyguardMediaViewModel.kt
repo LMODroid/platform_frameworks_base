@@ -48,12 +48,11 @@ constructor(
                     if (isDozing) {
                         flowOf(false)
                     } else {
-                        mediaCarouselInteractor.hasActiveMediaOrRecommendation
+                        mediaCarouselInteractor.hasActiveMedia
                     }
                 },
             initialValue =
-                !keyguardInteractor.isDozing.value &&
-                    mediaCarouselInteractor.hasActiveMediaOrRecommendation.value,
+                !keyguardInteractor.isDozing.value && mediaCarouselInteractor.hasActiveMedia.value,
         )
 
     val isShadeLayoutWide: Boolean by

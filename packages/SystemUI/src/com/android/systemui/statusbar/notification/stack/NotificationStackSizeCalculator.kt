@@ -203,7 +203,7 @@ constructor(
         val stackHeightSequence = computeHeightPerNotificationLimit(stack, shelfHeight)
 
         // TODO: Avoid making this split shade assumption by simply checking the stack for media
-        val isMediaShowing = mediaDataManager.hasActiveMediaOrRecommendation()
+        val isMediaShowing = mediaDataManager.hasActiveMedia()
         val isMediaShowingInStack =
             isMediaShowing && !splitShadeStateController.shouldUseSplitNotificationShade(resources)
 
@@ -469,7 +469,8 @@ constructor(
         val height = view.heightWithoutLockscreenConstraints.toFloat()
         val gapAndDividerHeight =
             calculateGapAndDividerHeight(stack, previousView, current = view, visibleIndex)
-        val canPeek = view is ExpandableNotificationRow &&
+        val canPeek =
+            view is ExpandableNotificationRow &&
                 if (NotificationBundleUi.isEnabled) view.entryAdapter?.canPeek() == true
                 else view.entryLegacy.isStickyAndNotDemoted
 

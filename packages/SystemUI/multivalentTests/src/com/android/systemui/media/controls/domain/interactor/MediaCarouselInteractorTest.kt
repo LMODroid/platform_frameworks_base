@@ -54,20 +54,19 @@ class MediaCarouselInteractorTest : SysuiTestCase() {
     @Test
     fun addUserMediaEntry_activeThenInactivate() =
         testScope.runTest {
-            val hasActiveMediaOrRecommendation by
-                collectLastValue(underTest.hasActiveMediaOrRecommendation)
+            val hasActiveMedia by collectLastValue(underTest.hasActiveMedia)
 
             val userMedia = MediaData(active = true)
 
             mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
 
-            assertThat(hasActiveMediaOrRecommendation).isTrue()
+            assertThat(hasActiveMedia).isTrue()
             assertThat(underTest.hasActiveMedia()).isTrue()
             assertThat(underTest.hasAnyMedia()).isTrue()
 
             mediaFilterRepository.addSelectedUserMediaEntry(userMedia.copy(active = false))
 
-            assertThat(hasActiveMediaOrRecommendation).isFalse()
+            assertThat(hasActiveMedia).isFalse()
             assertThat(underTest.hasActiveMedia()).isFalse()
             assertThat(underTest.hasAnyMedia()).isTrue()
         }
@@ -75,8 +74,7 @@ class MediaCarouselInteractorTest : SysuiTestCase() {
     @Test
     fun addInactiveUserMediaEntry_thenRemove() =
         testScope.runTest {
-            val hasActiveMediaOrRecommendation by
-                collectLastValue(underTest.hasActiveMediaOrRecommendation)
+            val hasActiveMedia by collectLastValue(underTest.hasActiveMedia)
 
             val userMedia = MediaData(active = false)
             val instanceId = userMedia.instanceId
@@ -84,7 +82,7 @@ class MediaCarouselInteractorTest : SysuiTestCase() {
             mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
             mediaFilterRepository.addMediaDataLoadingState(MediaDataLoadingModel.Loaded(instanceId))
 
-            assertThat(hasActiveMediaOrRecommendation).isFalse()
+            assertThat(hasActiveMedia).isFalse()
             assertThat(underTest.hasActiveMedia()).isFalse()
             assertThat(underTest.hasAnyMedia()).isTrue()
 
@@ -94,7 +92,7 @@ class MediaCarouselInteractorTest : SysuiTestCase() {
                 MediaDataLoadingModel.Removed(instanceId)
             )
 
-            assertThat(hasActiveMediaOrRecommendation).isFalse()
+            assertThat(hasActiveMedia).isFalse()
             assertThat(underTest.hasActiveMedia()).isFalse()
             assertThat(underTest.hasAnyMedia()).isFalse()
         }
@@ -104,14 +102,6 @@ class MediaCarouselInteractorTest : SysuiTestCase() {
         testScope.runTest { assertThat(underTest.hasAnyMedia()).isFalse() }
 
     @Test
-    fun hasAnyMediaOrRecommendation_noMediaSet_returnsFalse() =
-        testScope.runTest { assertThat(underTest.hasAnyMediaOrRecommendation.value).isFalse() }
-
-    @Test
     fun hasActiveMedia_noMediaSet_returnsFalse() =
         testScope.runTest { assertThat(underTest.hasActiveMedia()).isFalse() }
-
-    @Test
-    fun hasActiveMediaOrRecommendation_nothingSet_returnsFalse() =
-        testScope.runTest { assertThat(underTest.hasActiveMediaOrRecommendation.value).isFalse() }
 }

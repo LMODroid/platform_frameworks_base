@@ -72,7 +72,7 @@ constructor(
     /** Whether clicking on the empty area of the shade does something */
     val isEmptySpaceClickable: StateFlow<Boolean> = _isEmptySpaceClickable.asStateFlow()
 
-    val isMediaVisible: StateFlow<Boolean> = mediaCarouselInteractor.hasActiveMediaOrRecommendation
+    val isMediaVisible: StateFlow<Boolean> = mediaCarouselInteractor.hasActiveMedia
 
     private val _isQsEnabled =
         MutableStateFlow(!disableFlagsInteractor.disableFlags.value.isQuickSettingsEnabled())

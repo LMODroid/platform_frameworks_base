@@ -297,14 +297,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         backgroundExecutor.runAllReady()
         foregroundExecutor.runAllReady()
         verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(null), capture(mediaDataCaptor), eq(true))
 
         mediaDataProcessor.setInactive(PACKAGE_NAME, timedOut = true)
         verify(logger)
@@ -337,15 +330,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         mediaDataProcessor.onNotificationAdded(KEY, mediaNotification)
 
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value!!.isExplicit).isTrue()
     }
 
@@ -354,15 +339,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         mediaDataProcessor.onNotificationAdded(KEY, mediaNotification)
 
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value!!.isExplicit).isFalse()
     }
 
@@ -382,15 +359,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
     fun testOnMetaDataLoaded_conservesActiveFlag() {
         mediaDataProcessor.onNotificationAdded(KEY, mediaNotification)
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value!!.active).isTrue()
     }
 
@@ -426,15 +395,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         mediaDataProcessor.onNotificationAdded(KEY, notif)
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
 
         assertThat(mediaDataCaptor.value!!.app).isEqualTo(subName)
     }
@@ -465,15 +426,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // Then a media control is created with a placeholder title string
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         val placeholderTitle = context.getString(R.string.controls_media_empty_title, APP_NAME)
         assertThat(mediaDataCaptor.value.song).isEqualTo(placeholderTitle)
     }
@@ -495,15 +448,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // Then a media control is created with a placeholder title string
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         val placeholderTitle = context.getString(R.string.controls_media_empty_title, APP_NAME)
         assertThat(mediaDataCaptor.value.song).isEqualTo(placeholderTitle)
     }
@@ -536,15 +481,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // Then the media control is added using the notification's title
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.song).isEqualTo(SESSION_TITLE)
     }
 
@@ -567,14 +504,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // THEN active media is not converted to resume.
         verify(listener, never())
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
         verify(logger, never())
             .logActiveConvertedToResume(anyInt(), eq(PACKAGE_NAME), eq(instanceId))
         verify(logger, never()).logResumeMediaAdded(anyInt(), eq(PACKAGE_NAME), any())
@@ -600,14 +530,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // THEN active media is not converted to resume.
         verify(listener, never())
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
         verify(logger, never())
             .logActiveConvertedToResume(anyInt(), eq(PACKAGE_NAME), eq(instanceId))
         verify(logger, never()).logResumeMediaAdded(anyInt(), eq(PACKAGE_NAME), any())
@@ -625,14 +548,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         mediaDataProcessor.onNotificationRemoved(KEY)
         // THEN the media data indicates that it is for resumption
         verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.resumption).isTrue()
         assertThat(mediaDataCaptor.value.isPlaying).isFalse()
         verify(logger).logActiveConvertedToResume(anyInt(), eq(PACKAGE_NAME), eq(data.instanceId))
@@ -645,27 +561,11 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         mediaDataProcessor.onNotificationAdded(KEY_2, mediaNotification)
         testScope.runAllReady()
 
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         val data = mediaDataCaptor.value
         assertThat(data.resumption).isFalse()
 
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY_2),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY_2), eq(null), capture(mediaDataCaptor), eq(true))
         val data2 = mediaDataCaptor.value
         assertThat(data2.resumption).isFalse()
 
@@ -676,14 +576,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         mediaDataProcessor.onNotificationRemoved(KEY)
         // THEN the data is for resumption and the key is migrated to the package name
         verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.resumption).isTrue()
         verify(listener, never()).onMediaDataRemoved(eq(KEY), anyBoolean())
         // WHEN the second is removed
@@ -695,8 +588,6 @@ class MediaDataProcessorTest() : SysuiTestCase() {
                 eq(PACKAGE_NAME),
                 capture(mediaDataCaptor),
                 eq(true),
-                eq(0),
-                eq(false),
             )
         assertThat(mediaDataCaptor.value.resumption).isTrue()
         verify(listener).onMediaDataRemoved(eq(KEY_2), eq(false))
@@ -751,14 +642,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // Then it is converted to resumption
         verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.resumption).isTrue()
         assertThat(mediaDataCaptor.value.isPlaying).isFalse()
 
@@ -939,14 +823,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         // Resumption controls are not added.
         testScope.runAllReady()
         verify(listener, never())
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(null), capture(mediaDataCaptor), eq(true))
     }
 
     @Test
@@ -970,14 +847,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         // Resumption controls are not added.
         testScope.runAllReady()
         verify(listener, never())
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(null), capture(mediaDataCaptor), eq(true))
     }
 
     @Test
@@ -1036,15 +906,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // THEN it still loads
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
     }
 
     @Test
@@ -1066,15 +928,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         mediaDataProcessor.setInactive(KEY, timedOut = true, forceUpdate = true)
 
         // THEN the last active time is changed
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.lastActive).isAtLeast(currentTime)
     }
 
@@ -1094,14 +948,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // THEN the last active time is changed
         verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.resumption).isTrue()
         assertThat(mediaDataCaptor.value.lastActive).isAtLeast(currentTime)
 
@@ -1130,14 +977,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // THEN the last active time is not changed
         verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.resumption).isTrue()
         assertThat(mediaDataCaptor.value.lastActive).isLessThan(currentTime)
 
@@ -1170,15 +1010,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         testScope.runAllReady()
 
         // THEN only the first MAX_COMPACT_ACTIONS are actually set
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.actionsToShowInCompact.size)
             .isEqualTo(MediaDataProcessor.MAX_COMPACT_ACTIONS)
     }
@@ -1206,15 +1038,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         testScope.runAllReady()
 
         // THEN only the first MAX_NOTIFICATION_ACTIONS are actually included
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.actions.size)
             .isEqualTo(MediaDataProcessor.MAX_NOTIFICATION_ACTIONS)
     }
@@ -1238,15 +1062,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         mediaDataProcessor.onNotificationAdded(KEY, notifWithAction)
 
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
 
         assertThat(mediaDataCaptor.value!!.semanticActions).isNull()
         assertThat(mediaDataCaptor.value!!.actions).hasSize(1)
@@ -1514,15 +1330,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         testScope.onStateUpdated(KEY, state)
 
         // Listener is notified of updated state
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.isPlaying).isTrue()
     }
 
@@ -1533,8 +1341,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         // No media added with this key
 
         testScope.onStateUpdated(KEY, state)
-        verify(listener, never())
-            .onMediaDataLoaded(eq(KEY), any(), any(), anyBoolean(), anyInt(), anyBoolean())
+        verify(listener, never()).onMediaDataLoaded(eq(KEY), any(), any(), anyBoolean())
     }
 
     @Test
@@ -1550,8 +1357,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // Then no changes are made
         testScope.onStateUpdated(KEY, state)
-        verify(listener, never())
-            .onMediaDataLoaded(eq(KEY), any(), any(), anyBoolean(), anyInt(), anyBoolean())
+        verify(listener, never()).onMediaDataLoaded(eq(KEY), any(), any(), anyBoolean())
     }
 
     @Test
@@ -1562,15 +1368,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         addNotificationAndLoad()
         testScope.onStateUpdated(KEY, state)
 
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.isPlaying).isFalse()
         assertThat(mediaDataCaptor.value.semanticActions).isNotNull()
     }
@@ -1611,8 +1409,6 @@ class MediaDataProcessorTest() : SysuiTestCase() {
                 eq(PACKAGE_NAME),
                 capture(mediaDataCaptor),
                 eq(true),
-                eq(0),
-                eq(false),
             )
         assertThat(mediaDataCaptor.value.isPlaying).isFalse()
         assertThat(mediaDataCaptor.value.semanticActions).isNotNull()
@@ -1631,15 +1427,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         addNotificationAndLoad()
         testScope.onStateUpdated(KEY, state)
 
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.isPlaying).isFalse()
         assertThat(mediaDataCaptor.value.semanticActions).isNull()
     }
@@ -1693,14 +1481,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         verify(listener).onMediaDataRemoved(eq(KEY), eq(false))
         verify(logger).logMediaRemoved(anyInt(), eq(PACKAGE_NAME), eq(data.instanceId))
         verify(listener, never())
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
     }
 
     @Test
@@ -1717,8 +1498,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         // It is fully removed
         verify(listener).onMediaDataRemoved(eq(KEY), eq(false))
         verify(logger).logMediaRemoved(anyInt(), eq(PACKAGE_NAME), eq(data.instanceId))
-        verify(listener, never())
-            .onMediaDataLoaded(eq(PACKAGE_NAME), any(), any(), anyBoolean(), anyInt(), anyBoolean())
+        verify(listener, never()).onMediaDataLoaded(eq(PACKAGE_NAME), any(), any(), anyBoolean())
     }
 
     @Test
@@ -1735,14 +1515,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         // It is converted to a resume player
         verify(listener)
-            .onMediaDataLoaded(
-                eq(PACKAGE_NAME),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(PACKAGE_NAME), eq(KEY), capture(mediaDataCaptor), eq(true))
         assertThat(mediaDataCaptor.value.resumption).isTrue()
         assertThat(mediaDataCaptor.value.active).isFalse()
         verify(logger)
@@ -1826,14 +1599,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
 
         testScope.runAllReady()
         verify(listener, never())
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(KEY), eq(KEY), capture(mediaDataCaptor), eq(true))
         verify(kosmos.mediaLogger).logDuplicateMediaNotification(eq(KEY))
     }
 
@@ -1851,15 +1617,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         mediaDataProcessor.onNotificationAdded(KEY, mediaNotification)
 
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(KEY),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(KEY), capture(mediaDataCaptor), eq(true))
         verify(kosmos.mediaLogger, never()).logDuplicateMediaNotification(eq(KEY))
     }
 
@@ -1879,15 +1637,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
     private fun addNotificationAndLoad(sbn: StatusBarNotification) {
         mediaDataProcessor.onNotificationAdded(KEY, sbn)
         testScope.runAllReady()
-        verify(listener)
-            .onMediaDataLoaded(
-                eq(KEY),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+        verify(listener).onMediaDataLoaded(eq(KEY), eq(null), capture(mediaDataCaptor), eq(true))
     }
 
     /** Helper function to set up a PlaybackState with action */
@@ -1915,14 +1665,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
         testScope.runAllReady()
 
         verify(listener)
-            .onMediaDataLoaded(
-                eq(packageName),
-                eq(null),
-                capture(mediaDataCaptor),
-                eq(true),
-                eq(0),
-                eq(false),
-            )
+            .onMediaDataLoaded(eq(packageName), eq(null), capture(mediaDataCaptor), eq(true))
     }
 
     /** Helper function to update state and run executors */

@@ -85,8 +85,6 @@ constructor(
         oldKey: String?,
         data: MediaData,
         immediately: Boolean,
-        receivedSmartspaceCardLatency: Int,
-        isSsReactivated: Boolean,
     ) {
         if (oldKey != null && oldKey != key) {
             mediaFilterRepository.removeMediaEntry(oldKey)

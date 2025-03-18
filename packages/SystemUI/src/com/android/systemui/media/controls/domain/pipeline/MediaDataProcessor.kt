@@ -53,7 +53,6 @@ import com.android.systemui.media.controls.shared.MediaLogger
 import com.android.systemui.media.controls.shared.model.MediaAction
 import com.android.systemui.media.controls.shared.model.MediaButton
 import com.android.systemui.media.controls.shared.model.MediaData
-import com.android.systemui.media.controls.shared.model.SmartspaceMediaData
 import com.android.systemui.media.controls.ui.view.MediaViewHolder
 import com.android.systemui.media.controls.util.MediaControllerFactory
 import com.android.systemui.media.controls.util.MediaFlags
@@ -828,47 +827,16 @@ class MediaDataProcessor(
          * @param immediately indicates should apply the UI changes immediately, otherwise wait
          *   until the next refresh-round before UI becomes visible. True by default to take in
          *   place immediately.
-         * @param receivedSmartspaceCardLatency is the latency between headphone connects and sysUI
-         *   displays Smartspace media targets. Will be 0 if the data is not activated by Smartspace
-         *   signal.
-         * @param isSsReactivated indicates resume media card is reactivated by Smartspace
-         *   recommendation signal
          */
         fun onMediaDataLoaded(
             key: String,
             oldKey: String?,
             data: MediaData,
             immediately: Boolean = true,
-            receivedSmartspaceCardLatency: Int = 0,
-            isSsReactivated: Boolean = false,
-        ) {}
-
-        /**
-         * Called whenever there's new Smartspace media data loaded.
-         *
-         * @param shouldPrioritize indicates the sorting priority of the Smartspace card. If true,
-         *   it will be prioritized as the first card. Otherwise, it will show up as the last card
-         *   as default.
-         */
-        // TODO(b/382680767): remove
-        fun onSmartspaceMediaDataLoaded(
-            key: String,
-            data: SmartspaceMediaData,
-            shouldPrioritize: Boolean = false,
         ) {}
 
         /** Called whenever a previously existing Media notification was removed. */
         fun onMediaDataRemoved(key: String, userInitiated: Boolean) {}
-
-        /**
-         * Called whenever a previously existing Smartspace media data was removed.
-         *
-         * @param immediately indicates should apply the UI changes immediately, otherwise wait
-         *   until the next refresh-round before UI becomes visible. True by default to take in
-         *   place immediately.
-         */
-        // TODO(b/382680767): remove
-        fun onSmartspaceMediaDataRemoved(key: String, immediately: Boolean = true) {}
 
         /** Called whenever the current active media notification changes */
         fun onCurrentActiveMediaChanged(key: String?, data: MediaData?) {}

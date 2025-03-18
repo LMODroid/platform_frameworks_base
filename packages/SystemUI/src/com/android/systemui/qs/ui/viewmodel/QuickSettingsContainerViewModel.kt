@@ -77,7 +77,7 @@ constructor(
     val showMedia: Boolean by
         hydrator.hydratedStateOf(
             traceName = "showMedia",
-            source = mediaCarouselInteractor.hasAnyMediaOrRecommendation,
+            source = mediaCarouselInteractor.hasAnyMedia,
         )
 
     override suspend fun onActivated(): Nothing {

@@ -260,9 +260,9 @@ constructor(
             desiredLocation == LOCATION_COMMUNAL_HUB ||
                 (previousLocation == LOCATION_COMMUNAL_HUB && desiredLocation == LOCATION_QS)
 
-    /** Is there any active media or recommendation in the carousel? */
-    private var hasActiveMediaOrRecommendation: Boolean = false
-        get() = mediaManager.hasActiveMediaOrRecommendation()
+    /** Is there any active media in the carousel? */
+    private var hasActiveMedia: Boolean = false
+        get() = mediaManager.hasActiveMedia()
 
     /** Are we currently waiting on an animation to start? */
     private var animationPending: Boolean = false
@@ -1017,7 +1017,7 @@ constructor(
     fun isCurrentlyInGuidedTransformation(): Boolean {
         return hasValidStartAndEndLocations() &&
             getTransformationProgress() >= 0 &&
-            (areGuidedTransitionHostsVisible() || !hasActiveMediaOrRecommendation)
+            (areGuidedTransitionHostsVisible() || !hasActiveMedia)
     }
 
     private fun hasValidStartAndEndLocations(): Boolean {
@@ -1153,7 +1153,7 @@ constructor(
 
             var newLocation = resolveLocationForFading()
             // Don't use the overlay when fading or when we don't have active media
-            var canUseOverlay = !isCurrentlyFading() && hasActiveMediaOrRecommendation
+            var canUseOverlay = !isCurrentlyFading() && hasActiveMedia
             if (isCrossFadeAnimatorRunning) {
                 if (
                     getHost(newLocation)?.visible == true &&
@@ -1327,7 +1327,7 @@ constructor(
                 isLockScreenShadeVisibleToUser() ||
                 isHomeScreenShadeVisibleToUser() ||
                 isGlanceableHubVisibleToUser()
-        val mediaVisible = qsExpanded || hasActiveMediaOrRecommendation
+        val mediaVisible = qsExpanded || hasActiveMedia
         logger.logUserVisibilityChange(shadeVisible, mediaVisible)
         mediaCarouselController.mediaCarouselScrollHandler.visibleToUser =
             shadeVisible && mediaVisible
