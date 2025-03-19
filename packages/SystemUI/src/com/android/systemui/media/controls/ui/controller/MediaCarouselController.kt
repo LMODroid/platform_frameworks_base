@@ -44,6 +44,7 @@ import com.android.internal.logging.InstanceId
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.keyguard.KeyguardUpdateMonitorCallback
 import com.android.systemui.Dumpable
+import com.android.systemui.Flags
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
@@ -195,7 +196,7 @@ constructor(
     val mediaFrame: ViewGroup
 
     @VisibleForTesting
-    lateinit var settingsButton: ImageView
+    lateinit var settingsButton: View
         private set
 
     private val mediaContent: ViewGroup
@@ -483,8 +484,14 @@ constructor(
 
     private fun inflateSettingsButton() {
         val settings =
-            LayoutInflater.from(context)
-                .inflate(R.layout.media_carousel_settings_button, mediaFrame, false) as ImageView
+            if (Flags.mediaControlsUiUpdate()) {
+                LayoutInflater.from(context)
+                    .inflate(R.layout.media_carousel_settings_button, mediaFrame, false)
+                    as ViewGroup
+            } else {
+                LayoutInflater.from(context)
+                    .inflate(R.layout.media_carousel_settings_button_legacy, mediaFrame, false)
+            }
         if (this::settingsButton.isInitialized) {
             mediaFrame.removeView(settingsButton)
         }
@@ -1111,11 +1118,17 @@ constructor(
                 // communal for aesthetic and accessibility purposes since the background of
                 // Glanceable Hub is a dynamic color.
                 if (desiredLocation == MediaHierarchyManager.LOCATION_COMMUNAL_HUB) {
-                    settingsButton.setColorFilter(
-                        context.getColor(com.android.internal.R.color.materialColorOnPrimary)
-                    )
+                    settingsButton
+                        .requireViewById<ImageView>(R.id.settings_cog)
+                        .setColorFilter(
+                            context.getColor(com.android.internal.R.color.materialColorOnPrimary)
+                        )
                 } else {
-                    settingsButton.setColorFilter(context.getColor(R.color.notification_gear_color))
+                    settingsButton
+                        .requireViewById<ImageView>(R.id.settings_cog)
+                        .setColorFilter(
+                            context.getColor(com.android.internal.R.color.materialColorOnSurface)
+                        )
                 }
 
                 val shouldCloseGuts =
