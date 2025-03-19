@@ -381,7 +381,7 @@ constructor(
         postOnUiThread {
             statusBarStateController.setLeaveOpenOnKeyguardHide(true)
             activityStarterInternal.executeRunnableDismissingKeyguard(
-                runnable = { runnable?.let { postOnUiThread(runnable = it) } },
+                runnable = { runnable?.let { postOnUiThread(delay = 500, runnable = it) } },
             )
         }
     }
