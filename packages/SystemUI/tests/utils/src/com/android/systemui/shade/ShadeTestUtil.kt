@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.android.systemui.shade
 
+import com.android.compose.animation.scene.ContentKey
 import com.android.compose.animation.scene.ObservableTransitionState
+import com.android.compose.animation.scene.OverlayKey
 import com.android.compose.animation.scene.SceneKey
 import com.android.systemui.SysuiTestableContext
 import com.android.systemui.res.R
 import com.android.systemui.scene.domain.interactor.SceneInteractor
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
+import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.data.repository.FakeShadeRepository
 import com.android.systemui.shade.data.repository.ShadeRepository
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
+import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestScope
@@ -208,42 +215,51 @@ class ShadeTestUtilSceneImpl(
     val shadeRepository: ShadeRepository,
     val context: SysuiTestableContext,
     val shadeInteractor: ShadeInteractor,
+    val shadeModeInteractor: ShadeModeInteractor,
 ) : ShadeTestUtilDelegate {
     val isUserInputOngoing = MutableStateFlow(true)
 
+    private val notificationsShade: ContentKey
+        get() = if (shadeModeInteractor.isDualShade) Overlays.NotificationsShade else Scenes.Shade
+
+    private val quickSettingsShade: ContentKey
+        get() =
+            if (shadeModeInteractor.isDualShade) {
+                Overlays.QuickSettingsShade
+            } else {
+                Scenes.QuickSettings
+            }
+
     override fun setShadeAndQsExpansion(shadeExpansion: Float, qsExpansion: Float) {
         shadeRepository.setLegacyIsQsExpanded(qsExpansion > 0f)
-        if (shadeExpansion == 1f) {
-            setIdleScene(Scenes.Shade)
-        } else if (qsExpansion == 1f) {
-            setIdleScene(Scenes.QuickSettings)
-        } else if (shadeExpansion == 0f && qsExpansion == 0f) {
-            setIdleScene(Scenes.Lockscreen)
-        } else if (shadeExpansion == 0f) {
-            setTransitionProgress(Scenes.Lockscreen, Scenes.QuickSettings, qsExpansion)
-        } else if (qsExpansion == 0f) {
-            setTransitionProgress(Scenes.Lockscreen, Scenes.Shade, shadeExpansion)
-        } else {
-            setTransitionProgress(Scenes.Shade, Scenes.QuickSettings, qsExpansion)
+        when {
+            shadeExpansion == 1f -> setIdleContent(notificationsShade)
+            qsExpansion == 1f -> setIdleContent(quickSettingsShade)
+            shadeExpansion == 0f && qsExpansion == 0f -> setIdleScene(Scenes.Lockscreen)
+            shadeExpansion == 0f ->
+                setTransitionProgress(Scenes.Lockscreen, quickSettingsShade, qsExpansion)
+            qsExpansion == 0f ->
+                setTransitionProgress(Scenes.Lockscreen, notificationsShade, shadeExpansion)
+            else -> setTransitionProgress(notificationsShade, quickSettingsShade, qsExpansion)
         }
 
         // Requesting a value will cause the stateIn to begin flowing, otherwise incorrect values
-        // may not flow fast enough to the stateIn
+        // may not flow fast enough to the stateIn.
         shadeInteractor.isAnyFullyExpanded.value
     }
 
     /** Sets shade expansion to a value between 0-1. */
     override fun setShadeExpansion(shadeExpansion: Float) {
-        setShadeAndQsExpansion(shadeExpansion, 0f)
+        setShadeAndQsExpansion(shadeExpansion, qsExpansion = 0f)
     }
 
     /** Sets QS expansion to a value between 0-1. */
     override fun setQsExpansion(qsExpansion: Float) {
-        setShadeAndQsExpansion(0f, qsExpansion)
+        setShadeAndQsExpansion(shadeExpansion = 0f, qsExpansion)
     }
 
     override fun programmaticCollapseShade() {
-        setTransitionProgress(Scenes.Shade, Scenes.Lockscreen, .5f, false)
+        setTransitionProgress(notificationsShade, Scenes.Lockscreen, .5f, false)
     }
 
     override fun setQsFullscreen(qsFullscreen: Boolean) {
@@ -257,12 +273,16 @@ class ShadeTestUtilSceneImpl(
     }
 
     override fun setLockscreenShadeExpansion(lockscreenShadeExpansion: Float) {
-        if (lockscreenShadeExpansion == 0f) {
-            setIdleScene(Scenes.Lockscreen)
-        } else if (lockscreenShadeExpansion == 1f) {
-            setIdleScene(Scenes.Shade)
-        } else {
-            setTransitionProgress(Scenes.Lockscreen, Scenes.Shade, lockscreenShadeExpansion)
+        when (lockscreenShadeExpansion) {
+            0f -> setIdleScene(Scenes.Lockscreen)
+            1f ->
+                setIdleContent(contentKey = notificationsShade, backgroundScene = Scenes.Lockscreen)
+            else ->
+                setTransitionProgress(
+                    Scenes.Lockscreen,
+                    notificationsShade,
+                    lockscreenShadeExpansion,
+                )
         }
     }
 
@@ -274,33 +294,93 @@ class ShadeTestUtilSceneImpl(
         isUserInputOngoing.value = tracking
     }
 
+    private fun setIdleContent(
+        contentKey: ContentKey,
+        backgroundScene: SceneKey = sceneInteractor.currentScene.value,
+    ) {
+        when (contentKey) {
+            is SceneKey -> setIdleScene(contentKey)
+            is OverlayKey -> setIdleOverlay(contentKey, backgroundScene)
+        }
+    }
+
     private fun setIdleScene(scene: SceneKey) {
         sceneInteractor.changeScene(scene, "ShadeTestUtil.setIdleScene")
-        val transitionState =
-            MutableStateFlow<ObservableTransitionState>(ObservableTransitionState.Idle(scene))
-        sceneInteractor.setTransitionState(transitionState)
+        sceneInteractor.setTransitionState(flowOf(ObservableTransitionState.Idle(scene)))
+        testScope.runCurrent()
+    }
+
+    private fun setIdleOverlay(overlay: OverlayKey, currentScene: SceneKey) {
+        sceneInteractor.showOverlay(overlay, "ShadeTestUtil.setIdleOnOverlay")
+        sceneInteractor.setTransitionState(
+            flowOf(
+                ObservableTransitionState.Idle(
+                    currentScene = currentScene,
+                    currentOverlays = setOf(overlay),
+                )
+            )
+        )
         testScope.runCurrent()
     }
 
     private fun setTransitionProgress(
-        from: SceneKey,
-        to: SceneKey,
+        from: ContentKey,
+        to: ContentKey,
         progress: Float,
         isInitiatedByUserInput: Boolean = true,
     ) {
-        sceneInteractor.changeScene(from, "ShadeTestUtil.setTransitionProgress")
+        val loggingReason = "ShadeTestUtil.setTransitionProgress"
+        // Set the initial state
+        when (from) {
+            is SceneKey -> sceneInteractor.changeScene(from, loggingReason)
+            is OverlayKey -> sceneInteractor.showOverlay(from, loggingReason)
+        }
+
         val transitionState =
-            MutableStateFlow<ObservableTransitionState>(
-                ObservableTransitionState.Transition(
-                    fromScene = from,
-                    toScene = to,
-                    currentScene = flowOf(to),
-                    progress = MutableStateFlow(progress),
-                    isInitiatedByUserInput = isInitiatedByUserInput,
-                    isUserInputOngoing = isUserInputOngoing,
-                )
-            )
-        sceneInteractor.setTransitionState(transitionState)
+            when {
+                from is SceneKey && to is SceneKey ->
+                    ObservableTransitionState.Transition(
+                        fromScene = from,
+                        toScene = to,
+                        currentScene = flowOf(to),
+                        progress = flowOf(progress),
+                        isInitiatedByUserInput = isInitiatedByUserInput,
+                        isUserInputOngoing = isUserInputOngoing,
+                    )
+                from is SceneKey && to is OverlayKey ->
+                    ObservableTransitionState.Transition.showOverlay(
+                        overlay = to,
+                        fromScene = from,
+                        currentOverlays = flowOf(emptySet()),
+                        progress = flowOf(progress),
+                        isInitiatedByUserInput = isInitiatedByUserInput,
+                        isUserInputOngoing = isUserInputOngoing,
+                    )
+                from is OverlayKey && to is SceneKey ->
+                    ObservableTransitionState.Transition.hideOverlay(
+                        overlay = from,
+                        toScene = to,
+                        currentOverlays = flowOf(emptySet()),
+                        progress = flowOf(progress),
+                        isInitiatedByUserInput = isInitiatedByUserInput,
+                        isUserInputOngoing = isUserInputOngoing,
+                    )
+                from is OverlayKey && to is OverlayKey ->
+                    ObservableTransitionState.Transition.ReplaceOverlay(
+                        fromOverlay = from,
+                        toOverlay = to,
+                        currentScene = sceneInteractor.currentScene.value,
+                        currentOverlays = flowOf(emptySet()),
+                        progress = flowOf(progress),
+                        isInitiatedByUserInput = isInitiatedByUserInput,
+                        isUserInputOngoing = isUserInputOngoing,
+                        previewProgress = flowOf(0f),
+                        isInPreviewStage = flowOf(false),
+                    )
+                else -> error("Invalid content keys for transition: from=$from, to=$to")
+            }
+
+        sceneInteractor.setTransitionState(flowOf(transitionState))
         testScope.runCurrent()
     }
 

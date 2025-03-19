@@ -32,6 +32,8 @@ import com.android.systemui.power.data.repository.fakePowerRepository
 import com.android.systemui.power.shared.model.WakefulnessState
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
+import com.android.systemui.shade.domain.interactor.enableDualShade
+import com.android.systemui.shade.domain.interactor.enableSingleShade
 import com.android.systemui.shade.shadeTestUtil
 import com.android.systemui.statusbar.data.repository.fakeRemoteInputRepository
 import com.android.systemui.statusbar.notification.data.repository.FakeHeadsUpRowRepository
@@ -46,6 +48,7 @@ import com.android.systemui.testKosmos
 import com.android.systemui.util.ui.isAnimating
 import com.android.systemui.util.ui.value
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
@@ -56,6 +59,7 @@ import org.junit.runner.RunWith
 import platform.test.runner.parameterized.ParameterizedAndroidJunit4
 import platform.test.runner.parameterized.Parameters
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(ParameterizedAndroidJunit4::class)
 class NotificationListViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
@@ -449,6 +453,60 @@ class NotificationListViewModelTest(flags: FlagsParameterization) : SysuiTestCas
 
             // THEN footer is hidden
             assertThat(shouldShow?.value).isFalse()
+        }
+
+    @Test
+    @EnableSceneContainer
+    fun shouldShowFooterView_dualShade_trueWhenShadeIsExpanded() =
+        testScope.runTest {
+            kosmos.enableDualShade()
+            runCurrent()
+
+            val shouldShow by collectLastValue(underTest.shouldShowFooterView)
+
+            // WHEN shade is open
+            fakeKeyguardRepository.setStatusBarState(StatusBarState.SHADE)
+            shadeTestUtil.setShadeExpansion(1f)
+            runCurrent()
+
+            // THEN footer is shown
+            assertThat(shouldShow?.value).isTrue()
+        }
+
+    @Test
+    @EnableSceneContainer
+    fun shouldShowFooterView_singleShade_falseWhenNoNotifs() =
+        testScope.runTest {
+            kosmos.enableSingleShade()
+            val shouldShow by collectLastValue(underTest.shouldShowFooterView)
+
+            // WHEN shade is open, has no notifs
+            fakeKeyguardRepository.setStatusBarState(StatusBarState.SHADE)
+            shadeTestUtil.setShadeExpansion(1f)
+            activeNotificationListRepository.setActiveNotifs(count = 0)
+            runCurrent()
+
+            // THEN footer is hidden
+            assertThat(shouldShow?.value).isFalse()
+        }
+
+    @Test
+    @EnableSceneContainer
+    fun shouldShowFooterView_dualShade_trueWhenNoNotifs() =
+        testScope.runTest {
+            kosmos.enableDualShade()
+            runCurrent()
+
+            val shouldShow by collectLastValue(underTest.shouldShowFooterView)
+
+            // WHEN shade is open, has no notifs
+            fakeKeyguardRepository.setStatusBarState(StatusBarState.SHADE)
+            shadeTestUtil.setShadeExpansion(1f)
+            activeNotificationListRepository.setActiveNotifs(count = 0)
+            runCurrent()
+
+            // THEN footer is shown
+            assertThat(shouldShow?.value).isTrue()
         }
 
     @Test

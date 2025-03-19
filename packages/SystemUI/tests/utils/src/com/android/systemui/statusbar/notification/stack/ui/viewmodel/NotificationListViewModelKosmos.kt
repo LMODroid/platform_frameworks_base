@@ -21,6 +21,7 @@ import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.shade.domain.interactor.shadeInteractor
+import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.statusbar.chips.ui.viewmodel.ongoingActivityChipsViewModel
 import com.android.systemui.statusbar.domain.interactor.remoteInputInteractor
 import com.android.systemui.statusbar.notification.domain.interactor.activeNotificationsInteractor
@@ -45,6 +46,7 @@ val Kosmos.notificationListViewModel by Fixture {
         headsUpNotificationInteractor,
         remoteInputInteractor,
         shadeInteractor,
+        shadeModeInteractor,
         userSetupInteractor,
         testDispatcher,
         dumpManager,

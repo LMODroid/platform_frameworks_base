@@ -23,6 +23,7 @@ import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.shade.data.repository.fakeShadeRepository
 import com.android.systemui.shade.domain.interactor.shadeInteractor
+import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 
 var Kosmos.shadeTestUtil: ShadeTestUtil by
     Kosmos.Fixture {
@@ -34,6 +35,7 @@ var Kosmos.shadeTestUtil: ShadeTestUtil by
                     fakeShadeRepository,
                     testableContext,
                     shadeInteractor,
+                    shadeModeInteractor,
                 )
             } else {
                 ShadeTestUtilLegacyImpl(
