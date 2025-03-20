@@ -18,9 +18,6 @@ package com.android.systemui.qs.panels.ui.compose
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.click
@@ -39,9 +36,9 @@ import com.android.compose.theme.PlatformTheme
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
-import com.android.systemui.qs.panels.shared.model.SizedTile
-import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.DefaultEditTileGrid
+import com.android.systemui.qs.panels.ui.model.GridCell
+import com.android.systemui.qs.panels.ui.model.TileGridCell
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.model.TileCategory
@@ -58,21 +55,20 @@ class ResizingTest : SysuiTestCase() {
     @get:Rule val composeRule = createComposeRule()
 
     @Composable
-    private fun EditTileGridUnderTest(
-        listState: EditTileListState,
-        onResize: (TileSpec, Boolean) -> Unit,
-    ) {
+    private fun EditTileGridUnderTest(listState: EditTileListState) {
+        val largeTilesSpecs = TestLargeTilesSpecs.toMutableSet()
         PlatformTheme {
             DefaultEditTileGrid(
                 listState = listState,
                 otherTiles = listOf(),
-                columns = 4,
-                largeTilesSpan = 4,
                 modifier = Modifier.fillMaxSize(),
                 onAddTile = { _, _ -> },
                 onRemoveTile = {},
                 onSetTiles = {},
-                onResize = onResize,
+                onResize = { spec, toIcon ->
+                    if (toIcon) largeTilesSpecs.remove(spec) else largeTilesSpecs.add(spec)
+                    listState.updateTiles(TestEditTiles, largeTilesSpecs)
+                },
                 onStopEditing = {},
                 onReset = null,
             )
@@ -81,11 +77,9 @@ class ResizingTest : SysuiTestCase() {
 
     @Test
     fun toggleIconTileWithA11yAction_shouldBeLarge() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) { spec, toIcon -> tiles = tiles.resize(spec, toIcon) }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
         composeRule
@@ -95,16 +89,14 @@ class ResizingTest : SysuiTestCase() {
                 context.getString(R.string.accessibility_qs_edit_toggle_tile_size_action)
             )
 
-        assertThat(tiles.find { it.tile.tileSpec.spec == "tileA" }?.width).isEqualTo(2)
+        assertTileHasWidth(listState.tiles, "tileA", 2)
     }
 
     @Test
     fun toggleLargeTileWithA11yAction_shouldBeIcon() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) { spec, toIcon -> tiles = tiles.resize(spec, toIcon) }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
         composeRule
@@ -114,16 +106,14 @@ class ResizingTest : SysuiTestCase() {
                 context.getString(R.string.accessibility_qs_edit_toggle_tile_size_action)
             )
 
-        assertThat(tiles.find { it.tile.tileSpec.spec == "tileD_large" }?.width).isEqualTo(1)
+        assertTileHasWidth(listState.tiles, "tileD_large", 1)
     }
 
     @Test
     fun tapOnIconResizingHandle_shouldBeLarge() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) { spec, toIcon -> tiles = tiles.resize(spec, toIcon) }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
         composeRule
@@ -135,16 +125,14 @@ class ResizingTest : SysuiTestCase() {
             }
         composeRule.waitForIdle()
 
-        assertThat(tiles.find { it.tile.tileSpec.spec == "tileA" }?.width).isEqualTo(2)
+        assertTileHasWidth(listState.tiles, "tileA", 2)
     }
 
     @Test
     fun tapOnLargeResizingHandle_shouldBeIcon() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) { spec, toIcon -> tiles = tiles.resize(spec, toIcon) }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
         composeRule
@@ -156,16 +144,14 @@ class ResizingTest : SysuiTestCase() {
             }
         composeRule.waitForIdle()
 
-        assertThat(tiles.find { it.tile.tileSpec.spec == "tileD_large" }?.width).isEqualTo(1)
+        assertTileHasWidth(listState.tiles, "tileD_large", 1)
     }
 
     @Test
     fun resizedIcon_shouldBeLarge() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) { spec, toIcon -> tiles = tiles.resize(spec, toIcon) }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
         composeRule
@@ -177,16 +163,14 @@ class ResizingTest : SysuiTestCase() {
             }
         composeRule.waitForIdle()
 
-        assertThat(tiles.find { it.tile.tileSpec.spec == "tileA" }?.width).isEqualTo(2)
+        assertTileHasWidth(listState.tiles, "tileA", 2)
     }
 
     @Test
     fun resizedLarge_shouldBeIcon() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) { spec, toIcon -> tiles = tiles.resize(spec, toIcon) }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
         composeRule
@@ -198,48 +182,27 @@ class ResizingTest : SysuiTestCase() {
             }
         composeRule.waitForIdle()
 
-        assertThat(tiles.find { it.tile.tileSpec.spec == "tileD_large" }?.width).isEqualTo(1)
+        assertTileHasWidth(listState.tiles, "tileD_large", 1)
+    }
+
+    private fun assertTileHasWidth(tiles: List<GridCell>, spec: String, expectedWidth: Int) {
+        val tile =
+            tiles.find { it is TileGridCell && it.tile.tileSpec.spec == spec } as TileGridCell
+        assertThat(tile.width).isEqualTo(expectedWidth)
     }
 
     companion object {
-        private fun List<SizedTile<EditTileViewModel>>.resize(
-            spec: TileSpec,
-            toIcon: Boolean,
-        ): List<SizedTile<EditTileViewModel>> {
-            return map {
-                if (it.tile.tileSpec == spec) {
-                    SizedTileImpl(it.tile, width = if (toIcon) 1 else 2)
-                } else {
-                    it
-                }
-            }
-        }
-
-        private fun createEditTile(tileSpec: String): SizedTile<EditTileViewModel> {
-            return SizedTileImpl(
-                EditTileViewModel(
-                    tileSpec = TileSpec.create(tileSpec),
-                    icon =
-                        Icon.Resource(
-                            android.R.drawable.star_on,
-                            ContentDescription.Loaded(tileSpec),
-                        ),
-                    label = AnnotatedString(tileSpec),
-                    appName = null,
-                    isCurrent = true,
-                    availableEditActions = emptySet(),
-                    category = TileCategory.UNKNOWN,
-                ),
-                getWidth(tileSpec),
+        private fun createEditTile(tileSpec: String): EditTileViewModel {
+            return EditTileViewModel(
+                tileSpec = TileSpec.create(tileSpec),
+                icon =
+                    Icon.Resource(android.R.drawable.star_on, ContentDescription.Loaded(tileSpec)),
+                label = AnnotatedString(tileSpec),
+                appName = null,
+                isCurrent = true,
+                availableEditActions = emptySet(),
+                category = TileCategory.UNKNOWN,
             )
-        }
-
-        private fun getWidth(tileSpec: String): Int {
-            return if (tileSpec.endsWith("large")) {
-                2
-            } else {
-                1
-            }
         }
 
         private val TestEditTiles =
@@ -250,5 +213,7 @@ class ResizingTest : SysuiTestCase() {
                 createEditTile("tileD_large"),
                 createEditTile("tileE"),
             )
+        private val TestLargeTilesSpecs =
+            TestEditTiles.filter { it.tileSpec.spec.endsWith("large") }.map { it.tileSpec }.toSet()
     }
 }

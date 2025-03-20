@@ -18,9 +18,6 @@ package com.android.systemui.qs.panels.ui.compose
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -34,9 +31,9 @@ import com.android.compose.theme.PlatformTheme
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
-import com.android.systemui.qs.panels.shared.model.SizedTile
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.DefaultEditTileGrid
+import com.android.systemui.qs.panels.ui.model.TileGridCell
 import com.android.systemui.qs.panels.ui.viewmodel.AvailableEditActions
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
 import com.android.systemui.qs.pipeline.shared.TileSpec
@@ -53,20 +50,20 @@ class DragAndDropTest : SysuiTestCase() {
 
     // TODO(ostonge): Investigate why drag isn't detected when using performTouchInput
     @Composable
-    private fun EditTileGridUnderTest(
-        listState: EditTileListState,
-        onSetTiles: (List<TileSpec>) -> Unit,
-    ) {
+    private fun EditTileGridUnderTest(listState: EditTileListState) {
         PlatformTheme {
             DefaultEditTileGrid(
                 listState = listState,
                 otherTiles = listOf(),
-                columns = 4,
-                largeTilesSpan = 4,
                 modifier = Modifier.fillMaxSize(),
                 onAddTile = { _, _ -> },
                 onRemoveTile = {},
-                onSetTiles = onSetTiles,
+                onSetTiles = {
+                    listState.updateTiles(
+                        it.map { tileSpec -> createEditTile(tileSpec.spec) },
+                        TestLargeTilesSpecs,
+                    )
+                },
                 onResize = { _, _ -> },
                 onStopEditing = {},
                 onReset = null,
@@ -76,16 +73,12 @@ class DragAndDropTest : SysuiTestCase() {
 
     @Test
     fun draggedTile_shouldDisappear() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) {
-                tiles = it.map { tileSpec -> createEditTile(tileSpec.spec) }
-            }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
-        listState.onStarted(TestEditTiles[0], DragType.Move)
+        listState.onStarted(listState.tiles[0] as TileGridCell, DragType.Move)
 
         // Tile is being dragged, it should be replaced with a placeholder
         composeRule.onNodeWithContentDescription("tileA").assertDoesNotExist()
@@ -106,11 +99,18 @@ class DragAndDropTest : SysuiTestCase() {
     @Test
     fun nonRemovableDraggedTile_removeHeaderShouldNotExist() {
         val nonRemovableTile = createEditTile("tileA", isRemovable = false)
-        val listState = EditTileListState(listOf(nonRemovableTile), columns = 4, largeTilesSpan = 2)
-        composeRule.setContent { EditTileGridUnderTest(listState) {} }
+        val listState =
+            EditTileListState(
+                listOf(nonRemovableTile),
+                TestLargeTilesSpecs,
+                columns = 4,
+                largeTilesSpan = 2,
+            )
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
-        listState.onStarted(nonRemovableTile, DragType.Move)
+        val sizedTile = SizedTileImpl(nonRemovableTile, width = 1)
+        listState.onStarted(sizedTile, DragType.Move)
 
         // Tile is being dragged, it should be replaced with a placeholder
         composeRule.onNodeWithContentDescription("tileA").assertDoesNotExist()
@@ -122,11 +122,18 @@ class DragAndDropTest : SysuiTestCase() {
     @Test
     fun droppedNonRemovableDraggedTile_shouldStayInGrid() {
         val nonRemovableTile = createEditTile("tileA", isRemovable = false)
-        val listState = EditTileListState(listOf(nonRemovableTile), columns = 4, largeTilesSpan = 2)
-        composeRule.setContent { EditTileGridUnderTest(listState) {} }
+        val listState =
+            EditTileListState(
+                listOf(nonRemovableTile),
+                TestLargeTilesSpecs,
+                columns = 4,
+                largeTilesSpan = 2,
+            )
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
-        listState.onStarted(nonRemovableTile, DragType.Move)
+        val sizedTile = SizedTileImpl(nonRemovableTile, width = 1)
+        listState.onStarted(sizedTile, DragType.Move)
 
         // Tile is being dragged, it should be replaced with a placeholder
         composeRule.onNodeWithContentDescription("tileA").assertDoesNotExist()
@@ -144,16 +151,12 @@ class DragAndDropTest : SysuiTestCase() {
 
     @Test
     fun draggedTile_shouldChangePosition() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) {
-                tiles = it.map { tileSpec -> createEditTile(tileSpec.spec) }
-            }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
-        listState.onStarted(TestEditTiles[0], DragType.Move)
+        listState.onStarted(listState.tiles[0] as TileGridCell, DragType.Move)
 
         // Remove drop zone should appear
         composeRule.onNodeWithText("Remove").assertExists()
@@ -176,16 +179,12 @@ class DragAndDropTest : SysuiTestCase() {
 
     @Test
     fun draggedTileOut_shouldBeRemoved() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) {
-                tiles = it.map { tileSpec -> createEditTile(tileSpec.spec) }
-            }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
-        listState.onStarted(TestEditTiles[0], DragType.Move)
+        listState.onStarted(listState.tiles[0] as TileGridCell, DragType.Move)
 
         // Remove drop zone should appear
         composeRule.onNodeWithText("Remove").assertExists()
@@ -208,16 +207,13 @@ class DragAndDropTest : SysuiTestCase() {
 
     @Test
     fun draggedNewTileIn_shouldBeAdded() {
-        var tiles by mutableStateOf(TestEditTiles)
-        val listState = EditTileListState(tiles, columns = 4, largeTilesSpan = 2)
-        composeRule.setContent {
-            EditTileGridUnderTest(listState) {
-                tiles = it.map { tileSpec -> createEditTile(tileSpec.spec) }
-            }
-        }
+        val listState =
+            EditTileListState(TestEditTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
+        composeRule.setContent { EditTileGridUnderTest(listState) }
         composeRule.waitForIdle()
 
-        listState.onStarted(createEditTile("tile_new", isRemovable = false), DragType.Add)
+        val sizedTile = SizedTileImpl(createEditTile("tile_new", isRemovable = false), width = 1)
+        listState.onStarted(sizedTile, DragType.Add)
 
         // Remove drop zone should appear
         composeRule.onNodeWithText("Remove").assertExists()
@@ -248,32 +244,18 @@ class DragAndDropTest : SysuiTestCase() {
         private fun createEditTile(
             tileSpec: String,
             isRemovable: Boolean = true,
-        ): SizedTile<EditTileViewModel> {
-            return SizedTileImpl(
-                EditTileViewModel(
-                    tileSpec = TileSpec.create(tileSpec),
-                    icon =
-                        Icon.Resource(
-                            android.R.drawable.star_on,
-                            ContentDescription.Loaded(tileSpec),
-                        ),
-                    label = AnnotatedString(tileSpec),
-                    appName = null,
-                    isCurrent = true,
-                    availableEditActions =
-                        if (isRemovable) setOf(AvailableEditActions.REMOVE) else emptySet(),
-                    category = TileCategory.UNKNOWN,
-                ),
-                getWidth(tileSpec),
+        ): EditTileViewModel {
+            return EditTileViewModel(
+                tileSpec = TileSpec.create(tileSpec),
+                icon =
+                    Icon.Resource(android.R.drawable.star_on, ContentDescription.Loaded(tileSpec)),
+                label = AnnotatedString(tileSpec),
+                appName = null,
+                isCurrent = true,
+                availableEditActions =
+                    if (isRemovable) setOf(AvailableEditActions.REMOVE) else emptySet(),
+                category = TileCategory.UNKNOWN,
             )
-        }
-
-        private fun getWidth(tileSpec: String): Int {
-            return if (tileSpec.endsWith("large")) {
-                2
-            } else {
-                1
-            }
         }
 
         private val TestEditTiles =
@@ -284,5 +266,7 @@ class DragAndDropTest : SysuiTestCase() {
                 createEditTile("tileD_large"),
                 createEditTile("tileE"),
             )
+        private val TestLargeTilesSpecs =
+            TestEditTiles.filter { it.tileSpec.spec.endsWith("large") }.map { it.tileSpec }.toSet()
     }
 }

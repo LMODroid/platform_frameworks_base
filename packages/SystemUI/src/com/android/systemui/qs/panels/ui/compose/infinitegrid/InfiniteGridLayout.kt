@@ -17,6 +17,7 @@
 package com.android.systemui.qs.panels.ui.compose.infinitegrid
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -33,10 +34,10 @@ import com.android.systemui.haptics.msdl.qs.TileHapticsViewModelFactoryProvider
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager.Companion.LOCATION_QS
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
+import com.android.systemui.qs.panels.ui.compose.EditTileListState
 import com.android.systemui.qs.panels.ui.compose.PaginatableGridLayout
 import com.android.systemui.qs.panels.ui.compose.TileListener
 import com.android.systemui.qs.panels.ui.compose.bounceableInfo
-import com.android.systemui.qs.panels.ui.compose.rememberEditListState
 import com.android.systemui.qs.panels.ui.viewmodel.BounceableTileViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.DetailsViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
@@ -161,24 +162,21 @@ constructor(
         val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
         val largeTiles by iconTilesViewModel.largeTiles.collectAsStateWithLifecycle()
 
-        // Non-current tiles should always be displayed as icon tiles.
-        val sizedTiles =
-            remember(tiles, largeTiles, largeTilesSpan) {
-                tiles.map {
-                    SizedTileImpl(
-                        it,
-                        if (!it.isCurrent || !largeTiles.contains(it.tileSpec)) 1
-                        else largeTilesSpan,
-                    )
-                }
+        val (currentTiles, otherTiles) = tiles.partition { it.isCurrent }
+        val listState =
+            remember(columns, largeTilesSpan) {
+                EditTileListState(
+                    currentTiles,
+                    largeTiles,
+                    columns = columns,
+                    largeTilesSpan = largeTilesSpan,
+                )
             }
+        LaunchedEffect(currentTiles, largeTiles) { listState.updateTiles(currentTiles, largeTiles) }
 
-        val (currentTiles, otherTiles) = sizedTiles.partition { it.tile.isCurrent }
-        val currentListState = rememberEditListState(currentTiles, columns, largeTilesSpan)
         DefaultEditTileGrid(
-            listState = currentListState,
+            listState = listState,
             otherTiles = otherTiles,
-            columns = columns,
             modifier = modifier,
             onAddTile = onAddTile,
             onRemoveTile = onRemoveTile,
@@ -186,7 +184,6 @@ constructor(
             onResize = iconTilesViewModel::resize,
             onStopEditing = onStopEditing,
             onReset = viewModel::showResetDialog,
-            largeTilesSpan = largeTilesSpan,
         )
     }
 

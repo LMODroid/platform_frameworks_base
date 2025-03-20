@@ -59,6 +59,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -93,6 +95,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -106,7 +109,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -127,9 +129,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastMap
 import com.android.compose.gesture.effect.rememberOffsetOverscrollEffectFactory
 import com.android.compose.modifiers.height
+import com.android.compose.modifiers.thenIf
 import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.systemui.common.ui.compose.load
-import com.android.systemui.qs.panels.shared.model.SizedTile
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.DragAndDropState
 import com.android.systemui.qs.panels.ui.compose.DragType
@@ -170,6 +172,9 @@ import com.android.systemui.res.R
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 object TileType
@@ -228,9 +233,7 @@ private fun EditModeTopBar(onStopEditing: () -> Unit, onReset: (() -> Unit)?) {
 @Composable
 fun DefaultEditTileGrid(
     listState: EditTileListState,
-    otherTiles: List<SizedTile<EditTileViewModel>>,
-    columns: Int,
-    largeTilesSpan: Int,
+    otherTiles: List<EditTileViewModel>,
     modifier: Modifier,
     onAddTile: (TileSpec, Int) -> Unit,
     onRemoveTile: (TileSpec) -> Unit,
@@ -306,15 +309,7 @@ fun DefaultEditTileGrid(
                     modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
                 )
 
-                CurrentTilesGrid(
-                    listState,
-                    selectionState,
-                    columns,
-                    largeTilesSpan,
-                    onResize,
-                    onRemoveTile,
-                    onSetTiles,
-                )
+                CurrentTilesGrid(listState, selectionState, onResize, onRemoveTile, onSetTiles)
 
                 // Sets a minimum height to be used when available tiles are hidden
                 Box(
@@ -349,7 +344,7 @@ fun DefaultEditTileGrid(
                             AvailableTileGrid(
                                 availableTiles,
                                 selectionState,
-                                columns,
+                                listState.columns,
                                 { onAddTile(it, listState.tileSpecs().size) }, // Add to the end
                                 listState,
                             )
@@ -513,8 +508,6 @@ private fun RemoveTileTarget(onClick: () -> Unit) {
 private fun CurrentTilesGrid(
     listState: EditTileListState,
     selectionState: MutableSelectionState,
-    columns: Int,
-    largeTilesSpan: Int,
     onResize: (TileSpec, toIcon: Boolean) -> Unit,
     onRemoveTile: (TileSpec) -> Unit,
     onSetTiles: (List<TileSpec>) -> Unit,
@@ -530,11 +523,10 @@ private fun CurrentTilesGrid(
     var gridContentOffset by remember { mutableStateOf(Offset(0f, 0f)) }
     val coroutineScope = rememberCoroutineScope()
 
-    val cells = listState.tiles
     val primaryColor = MaterialTheme.colorScheme.primary
     TileLazyGrid(
         state = gridState,
-        columns = GridCells.Fixed(columns),
+        columns = GridCells.Fixed(listState.columns),
         contentPadding = PaddingValues(CurrentTilesGridPadding),
         modifier =
             Modifier.fillMaxWidth()
@@ -561,11 +553,10 @@ private fun CurrentTilesGrid(
                 .testTag(CURRENT_TILES_GRID_TEST_TAG),
     ) {
         EditTiles(
-            cells = cells,
-            dragAndDropState = listState,
+            listState = listState,
             selectionState = selectionState,
+            gridState = gridState,
             coroutineScope = coroutineScope,
-            largeTilesSpan = largeTilesSpan,
             onRemoveTile = onRemoveTile,
         ) { resizingOperation ->
             when (resizingOperation) {
@@ -581,7 +572,6 @@ private fun CurrentTilesGrid(
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun AvailableTileGrid(
     tiles: List<AvailableTileGridCell>,
@@ -660,32 +650,30 @@ private fun GridCell.key(index: Int): Any {
 /**
  * Adds a list of [GridCell] to the lazy grid
  *
- * @param cells the list of [GridCell]
- * @param dragAndDropState the [DragAndDropState] for this grid
+ * @param listState the [EditTileListState] for this grid
  * @param selectionState the [MutableSelectionState] for this grid
+ * @param gridState the [LazyGridState] for this grid
  * @param coroutineScope the [CoroutineScope] to be used for the tiles
- * @param largeTilesSpan the width used for large tiles
  * @param onRemoveTile the callback when a tile is removed from this grid
  * @param onResize the callback when a tile has a new [ResizeOperation]
  */
 fun LazyGridScope.EditTiles(
-    cells: List<GridCell>,
-    dragAndDropState: DragAndDropState,
+    listState: EditTileListState,
     selectionState: MutableSelectionState,
+    gridState: LazyGridState,
     coroutineScope: CoroutineScope,
-    largeTilesSpan: Int,
     onRemoveTile: (TileSpec) -> Unit,
     onResize: (operation: ResizeOperation) -> Unit,
 ) {
-    items(
-        count = cells.size,
-        key = { cells[it].key(it) },
-        span = { cells[it].span },
-        contentType = { TileType },
-    ) { index ->
-        when (val cell = cells[index]) {
+    itemsIndexed(
+        items = listState.tiles,
+        key = { index, item -> item.key(index) },
+        span = { _, item -> item.span },
+        contentType = { _, _ -> TileType },
+    ) { index, cell ->
+        when (cell) {
             is TileGridCell ->
-                if (dragAndDropState.isMoving(cell.tile.tileSpec)) {
+                if (listState.isMoving(cell.tile.tileSpec)) {
                     // If the tile is being moved, replace it with a visible spacer
                     SpacerGridCell(
                         Modifier.background(
@@ -700,12 +688,13 @@ fun LazyGridScope.EditTiles(
                     TileGridCell(
                         cell = cell,
                         index = index,
-                        dragAndDropState = dragAndDropState,
+                        dragAndDropState = listState,
                         selectionState = selectionState,
+                        gridState = gridState,
                         onResize = onResize,
                         onRemoveTile = onRemoveTile,
                         coroutineScope = coroutineScope,
-                        largeTilesSpan = largeTilesSpan,
+                        largeTilesSpan = listState.largeTilesSpan,
                         modifier =
                             Modifier.animateItem(
                                 placementSpec =
@@ -749,6 +738,7 @@ private fun TileGridCell(
     index: Int,
     dragAndDropState: DragAndDropState,
     selectionState: MutableSelectionState,
+    gridState: LazyGridState,
     onResize: (operation: ResizeOperation) -> Unit,
     onRemoveTile: (TileSpec) -> Unit,
     coroutineScope: CoroutineScope,
@@ -780,8 +770,21 @@ private fun TileGridCell(
         }
     }
 
-    val totalPadding =
-        with(LocalDensity.current) { (largeTilesSpan - 1) * TileArrangementPadding.roundToPx() }
+    val tilePadding = with(LocalDensity.current) { TileArrangementPadding.roundToPx() }
+    LaunchedEffect(gridState) {
+        snapshotFlow { gridState.layoutInfo }
+            .map { layoutInfo ->
+                layoutInfo.visibleItemsInfo
+                    .find { it.key == cell.key }
+                    ?.let { (it.span == 1) to it.size.width }
+            }
+            .filterNotNull()
+            .distinctUntilChanged()
+            .collect { (isIcon, width) ->
+                resizingState.updateAnchors(isIcon, width, largeTilesSpan, tilePadding)
+            }
+    }
+
     val colors = EditModeTileDefaults.editTileColors()
     val toggleSizeLabel = stringResource(R.string.accessibility_qs_edit_toggle_tile_size_action)
     val togglePlacementModeLabel =
@@ -798,13 +801,7 @@ private fun TileGridCell(
     InteractiveTileContainer(
         tileState = tileState,
         resizingState = resizingState,
-        modifier =
-            modifier.height(TileHeight).fillMaxWidth().onSizeChanged {
-                // Calculate the min/max width from the idle size
-                val min = if (cell.isIcon) it.width else (it.width - totalPadding) / largeTilesSpan
-                val max = if (cell.isIcon) (it.width * largeTilesSpan) + totalPadding else it.width
-                resizingState.updateAnchors(min.toFloat(), max.toFloat())
-            },
+        modifier = modifier.height(TileHeight).fillMaxWidth(),
         onClick = {
             if (tileState == TileState.Removable) {
                 onRemoveTile(cell.tile.tileSpec)
@@ -819,9 +816,22 @@ private fun TileGridCell(
             animateColorAsState(
                 if (tileState == TileState.Placeable) placeableColor else colors.background
             )
+
+        // Rapidly composing elements with the draggable modifier can cause visual jank. This
+        // usually happens when resizing a tile multiple times. We can fix this by applying the
+        // draggable modifier after the first frame
+        var isReadyToDrag by remember { mutableStateOf(false) }
+        LaunchedEffect(Unit) { isReadyToDrag = true }
+        val draggableModifier =
+            Modifier.dragAndDropTileSource(
+                SizedTileImpl(cell.tile, cell.width),
+                dragAndDropState,
+                DragType.Move,
+                selectionState::unSelect,
+            )
+
         Box(
-            modifier
-                .fillMaxSize()
+            Modifier.fillMaxSize()
                 .semantics(mergeDescendants = true) {
                     this.stateDescription = stateDescription
                     contentDescription = cell.tile.label.text
@@ -839,12 +849,7 @@ private fun TileGridCell(
                         )
                 }
                 .selectableTile(cell.tile.tileSpec, selectionState)
-                .dragAndDropTileSource(
-                    SizedTileImpl(cell.tile, cell.width),
-                    dragAndDropState,
-                    DragType.Move,
-                    selectionState::unSelect,
-                )
+                .thenIf(isReadyToDrag) { draggableModifier }
                 .tileBackground { backgroundColor }
         ) {
             EditTile(
@@ -1025,11 +1030,11 @@ fun EditTile(
 
 private fun toAvailableTiles(
     currentTiles: List<GridCell>,
-    otherTiles: List<SizedTile<EditTileViewModel>>,
+    otherTiles: List<EditTileViewModel>,
 ): List<AvailableTileGridCell> {
     return currentTiles.filterIsInstance<TileGridCell>().fastMap {
         AvailableTileGridCell(it.tile, isAvailable = false)
-    } + otherTiles.fastMap { AvailableTileGridCell(it.tile) }
+    } + otherTiles.fastMap { AvailableTileGridCell(it) }
 }
 
 private fun MeasureScope.iconHorizontalCenter(containerSize: Int): Float {

@@ -16,15 +16,14 @@
 
 package com.android.systemui.qs.panels.ui.compose
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.geometry.Offset
 import com.android.systemui.qs.panels.shared.model.SizedTile
+import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.selection.PlacementEvent
 import com.android.systemui.qs.panels.ui.model.GridCell
 import com.android.systemui.qs.panels.ui.model.TileGridCell
@@ -33,24 +32,14 @@ import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
 import com.android.systemui.qs.pipeline.shared.TileSpec
 
 /**
- * Creates the edit tile list state that is remembered across compositions.
- *
- * Changes to the tiles or columns will recreate the state.
+ * Holds the state for the tiles to display and builds a grid using their sizes and the available
+ * columns.
  */
-@Composable
-fun rememberEditListState(
-    tiles: List<SizedTile<EditTileViewModel>>,
-    columns: Int,
-    largeTilesSpan: Int,
-): EditTileListState {
-    return remember(tiles, columns) { EditTileListState(tiles, columns, largeTilesSpan) }
-}
-
-/** Holds the temporary state of the tile list during a drag movement where we move tiles around. */
 class EditTileListState(
-    tiles: List<SizedTile<EditTileViewModel>>,
-    private val columns: Int,
-    private val largeTilesSpan: Int,
+    initialTiles: List<EditTileViewModel>,
+    initialLargeTiles: Set<TileSpec>,
+    val columns: Int,
+    val largeTilesSpan: Int,
 ) : DragAndDropState {
     override var draggedCell by mutableStateOf<SizedTile<EditTileViewModel>?>(null)
         private set
@@ -70,9 +59,18 @@ class EditTileListState(
         get() = draggedCell != null
 
     private val _tiles: SnapshotStateList<GridCell> =
-        tiles.toGridCells(columns).toMutableStateList()
-    val tiles: List<GridCell>
-        get() = _tiles.toList()
+        initialTiles.toGridCells(initialLargeTiles).toMutableStateList()
+    val tiles: List<GridCell> = _tiles
+
+    /** Update the grid with this new list of tiles and new set of large tileSpecs. */
+    fun updateTiles(tiles: List<EditTileViewModel>, largeTiles: Set<TileSpec>) {
+        tiles.toGridCells(largeTiles).let {
+            _tiles.apply {
+                clear()
+                addAll(it)
+            }
+        }
+    }
 
     fun tileSpecs(): List<TileSpec> {
         return _tiles.filterIsInstance<TileGridCell>().map { it.tile.tileSpec }
@@ -96,8 +94,7 @@ class EditTileListState(
 
             if (cell.isIcon == toIcon) return
 
-            _tiles.removeAt(fromIndex)
-            _tiles.add(fromIndex, cell.copy(width = if (toIcon) 1 else largeTilesSpan))
+            _tiles[fromIndex] = cell.copy(width = if (toIcon) 1 else largeTilesSpan)
             regenerateGrid(fromIndex)
         }
     }
@@ -193,6 +190,24 @@ class EditTileListState(
                 }
             }
         }
+    }
+
+    private fun List<TileGridCell>.updateLargeWidth(
+        previousWidth: Int,
+        newWidth: Int,
+    ): List<TileGridCell> {
+        return if (previousWidth != newWidth) {
+            map { if (!it.isIcon) it.copy(width = newWidth) else it }
+        } else {
+            this
+        }
+    }
+
+    private fun List<EditTileViewModel>.toGridCells(largeTiles: Set<TileSpec>): List<GridCell> {
+        return map {
+                SizedTileImpl(it, if (largeTiles.contains(it.tileSpec)) largeTilesSpan else 1)
+            }
+            .toGridCells(columns)
     }
 
     /** Regenerate the list of [GridCell] with their new potential rows */
