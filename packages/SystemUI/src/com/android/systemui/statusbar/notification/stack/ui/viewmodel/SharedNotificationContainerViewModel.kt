@@ -85,6 +85,7 @@ import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
 import com.android.systemui.shade.shared.model.ShadeMode.Dual
 import com.android.systemui.shade.shared.model.ShadeMode.Single
 import com.android.systemui.shade.shared.model.ShadeMode.Split
+import com.android.systemui.statusbar.notification.domain.interactor.ActiveNotificationsInteractor
 import com.android.systemui.statusbar.notification.domain.interactor.HeadsUpNotificationInteractor
 import com.android.systemui.statusbar.notification.stack.domain.interactor.NotificationStackAppearanceInteractor
 import com.android.systemui.statusbar.notification.stack.domain.interactor.SharedNotificationContainerInteractor
@@ -111,6 +112,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onStart
@@ -178,6 +180,7 @@ constructor(
     headsUpNotificationInteractor: Lazy<HeadsUpNotificationInteractor>,
     private val largeScreenHeaderHelperLazy: Lazy<LargeScreenHeaderHelper>,
     unfoldTransitionInteractor: UnfoldTransitionInteractor,
+    val activeNotificationsInteractor: ActiveNotificationsInteractor,
 ) : FlowDumperImpl(dumpManager) {
 
     /**
@@ -868,32 +871,43 @@ constructor(
      * @param calculateHeight is calling computeHeight in NotificationStackSizeCalculator The edge
      *   case is that when maxNotifications is 0, we won't take shelfHeight into account
      */
-    fun getNotificationStackAbsoluteBottom(
+    fun getNotificationStackAbsoluteBottomOnLockscreen(
         calculateMaxNotifications: (Float, Boolean) -> Int,
         calculateHeight: (Int) -> Float,
-        shelfHeight: Float,
     ): Flow<Float> {
         SceneContainerFlag.assertInLegacyMode()
-
         return combine(
-                getLockscreenDisplayConfig(calculateMaxNotifications).map { (_, maxNotifications) ->
-                    val height = calculateHeight(maxNotifications)
-                    if (maxNotifications == 0) {
-                        height - shelfHeight
-                    } else {
-                        height
-                    }
-                },
-                bounds.map { it.top },
-                isOnLockscreenWithoutShade,
-            ) { height, top, isOnLockscreenWithoutShade ->
-                if (isOnLockscreenWithoutShade) {
-                    top + height
+                activeNotificationsInteractor.areAnyNotificationsPresent,
+                isOnLockscreen,
+                ::Pair,
+            )
+            .flatMapLatest { (hasNotifications, isOnLockscreen) ->
+                if (hasNotifications && isOnLockscreen) {
+                    combine(
+                            getLockscreenDisplayConfig(calculateMaxNotifications).map {
+                                (_, maxNotifications) ->
+                                maxNotifications
+                            },
+                            bounds.map { it.top },
+                            isOnLockscreenWithoutShade,
+                            interactor.notificationStackChanged,
+                        ) {
+                            maxNotifications,
+                            top,
+                            isOnLockscreenWithoutShade,
+                            notificationStackChanged ->
+                            if (isOnLockscreenWithoutShade && maxNotifications != -1) {
+                                val height = calculateHeight(maxNotifications)
+                                top + height
+                            } else {
+                                null
+                            }
+                        }
+                        .filterNotNull()
                 } else {
-                    null
+                    flowOf(0f)
                 }
             }
-            .filterNotNull()
     }
 
     fun notificationStackChanged() {

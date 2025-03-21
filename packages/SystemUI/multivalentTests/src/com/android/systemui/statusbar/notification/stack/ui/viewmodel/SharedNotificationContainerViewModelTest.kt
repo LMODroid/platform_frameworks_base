@@ -63,14 +63,16 @@ import com.android.systemui.scene.data.repository.Idle
 import com.android.systemui.scene.data.repository.Transition
 import com.android.systemui.scene.data.repository.setTransition
 import com.android.systemui.scene.domain.interactor.sceneInteractor
-import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
+import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.domain.interactor.enableDualShade
 import com.android.systemui.shade.domain.interactor.enableSingleShade
 import com.android.systemui.shade.domain.interactor.enableSplitShade
 import com.android.systemui.shade.mockLargeScreenHeaderHelper
 import com.android.systemui.shade.shadeTestUtil
+import com.android.systemui.statusbar.notification.data.repository.activeNotificationListRepository
+import com.android.systemui.statusbar.notification.data.repository.setActiveNotifs
 import com.android.systemui.statusbar.notification.stack.domain.interactor.sharedNotificationContainerInteractor
 import com.android.systemui.statusbar.notification.stack.ui.viewmodel.SharedNotificationContainerViewModel.HorizontalPosition
 import com.android.systemui.testKosmos
@@ -1356,7 +1358,7 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
 
     @Test
     @DisableSceneContainer
-    fun notificationAbsoluteBottom() =
+    fun notificationAbsoluteBottom_maxNotificationChanged() =
         testScope.runTest {
             var notificationCount = 2
             val calculateSpace = { _: Float, _: Boolean -> notificationCount }
@@ -1365,24 +1367,22 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
             val calculateHeight = { count: Int -> count * heightForNotification + shelfHeight }
             val stackAbsoluteBottom by
                 collectLastValue(
-                    underTest.getNotificationStackAbsoluteBottom(
+                    underTest.getNotificationStackAbsoluteBottomOnLockscreen(
                         calculateSpace,
                         calculateHeight,
-                        shelfHeight,
                     )
                 )
-            advanceTimeBy(50L)
+            kosmos.activeNotificationListRepository.setActiveNotifs(notificationCount)
             showLockscreen()
-
             shadeTestUtil.setSplitShade(false)
             keyguardInteractor.setNotificationContainerBounds(
                 NotificationContainerBounds(top = 100F, bottom = 300F)
             )
-            configurationRepository.onAnyConfigurationChange()
 
+            sharedNotificationContainerInteractor.notificationStackChanged()
+            advanceTimeBy(50L)
             assertThat(stackAbsoluteBottom).isEqualTo(150F)
 
-            // Also updates when directly requested (as it would from NotificationStackScrollLayout)
             notificationCount = 3
             sharedNotificationContainerInteractor.notificationStackChanged()
             advanceTimeBy(50L)
@@ -1391,36 +1391,124 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
 
     @Test
     @DisableSceneContainer
-    fun notificationAbsoluteBottom_maxNotificationIsZero_noShelfHeight() =
+    fun notificationAbsoluteBottom_noNotificationOnLockscreen() =
         testScope.runTest {
-            var notificationCount = 2
+            val notificationCount = 0
             val calculateSpace = { _: Float, _: Boolean -> notificationCount }
             val shelfHeight = 10F
             val heightForNotification = 20F
             val calculateHeight = { count: Int -> count * heightForNotification + shelfHeight }
             val stackAbsoluteBottom by
                 collectLastValue(
-                    underTest.getNotificationStackAbsoluteBottom(
+                    underTest.getNotificationStackAbsoluteBottomOnLockscreen(
                         calculateSpace,
                         calculateHeight,
-                        shelfHeight,
                     )
                 )
+            showLockscreen()
+            shadeTestUtil.setSplitShade(false)
+            keyguardInteractor.setNotificationContainerBounds(
+                NotificationContainerBounds(top = 100F, bottom = 300F)
+            )
+            kosmos.activeNotificationListRepository.setActiveNotifs(notificationCount)
             advanceTimeBy(50L)
+
+            assertThat(stackAbsoluteBottom).isEqualTo(0F)
+        }
+
+    @Test
+    @DisableSceneContainer
+    fun notificationAbsoluteBottomOnLockscreen_heightChangedWithoutMaxNotificationChange() =
+        testScope.runTest {
+            val notificationCount = 2
+            val calculateSpace = { _: Float, _: Boolean -> notificationCount }
+            var shelfHeight = 10F
+            val heightForNotification = 20F
+            val calculateHeight = { count: Int -> count * heightForNotification + shelfHeight }
+            val stackAbsoluteBottom by
+                collectLastValue(
+                    underTest.getNotificationStackAbsoluteBottomOnLockscreen(
+                        calculateSpace,
+                        calculateHeight,
+                    )
+                )
+            kosmos.activeNotificationListRepository.setActiveNotifs(notificationCount)
             showLockscreen()
 
             shadeTestUtil.setSplitShade(false)
             keyguardInteractor.setNotificationContainerBounds(
                 NotificationContainerBounds(top = 100F, bottom = 300F)
             )
-            configurationRepository.onAnyConfigurationChange()
 
-            assertThat(stackAbsoluteBottom).isEqualTo(150F)
-
-            notificationCount = 0
             sharedNotificationContainerInteractor.notificationStackChanged()
             advanceTimeBy(50L)
-            assertThat(stackAbsoluteBottom).isEqualTo(100F)
+            assertThat(stackAbsoluteBottom).isEqualTo(150F)
+
+            shelfHeight = 0f
+            sharedNotificationContainerInteractor.notificationStackChanged()
+            advanceTimeBy(50L)
+            assertThat(stackAbsoluteBottom).isEqualTo(140F)
+        }
+
+    @Test
+    @DisableSceneContainer
+    fun notificationAbsoluteBottomOnLockscreen_zeroOnHomescreen() =
+        testScope.runTest {
+            val calculateSpace = { _: Float, _: Boolean -> -1 }
+            val shelfHeight = 10F
+            val heightForNotification = 20F
+            val calculateHeight = { count: Int -> count * heightForNotification + shelfHeight }
+            val stackAbsoluteBottom by
+                collectLastValue(
+                    underTest.getNotificationStackAbsoluteBottomOnLockscreen(
+                        calculateSpace,
+                        calculateHeight,
+                    )
+                )
+            advanceTimeBy(50L)
+
+            shadeTestUtil.setSplitShade(false)
+            keyguardInteractor.setNotificationContainerBounds(
+                NotificationContainerBounds(top = 100F, bottom = 300F)
+            )
+            kosmos.setTransition(
+                sceneTransition = Idle(Scenes.Gone),
+                stateTransition = TransitionStep(from = LOCKSCREEN, to = GONE),
+            )
+            assertThat(stackAbsoluteBottom).isEqualTo(0F)
+        }
+
+    @Test
+    @DisableSceneContainer
+    fun notificationAbsoluteBottom_notReactToHeightChangeOnShade() =
+        testScope.runTest {
+            val notificationCount = 2
+            val calculateSpace = { _: Float, _: Boolean -> notificationCount }
+            val shelfHeight = 10F
+            val heightForNotification = 20F
+            val calculateHeight = { count: Int -> count * heightForNotification + shelfHeight }
+            val stackAbsoluteBottom by
+                collectLastValue(
+                    underTest.getNotificationStackAbsoluteBottomOnLockscreen(
+                        calculateSpace,
+                        calculateHeight,
+                    )
+                )
+            showLockscreen()
+            shadeTestUtil.setSplitShade(false)
+            kosmos.activeNotificationListRepository.setActiveNotifs(notificationCount)
+            keyguardInteractor.setNotificationContainerBounds(
+                NotificationContainerBounds(top = 100F, bottom = 300F)
+            )
+            advanceTimeBy(50L)
+            assertThat(stackAbsoluteBottom).isEqualTo(150F)
+
+            showLockscreenWithQSExpanded()
+            keyguardInteractor.setNotificationContainerBounds(
+                NotificationContainerBounds(top = 200F, bottom = 300F)
+            )
+            advanceTimeBy(50L)
+            assertThat(stackAbsoluteBottom).isEqualTo(150F)
         }
 
     @Test

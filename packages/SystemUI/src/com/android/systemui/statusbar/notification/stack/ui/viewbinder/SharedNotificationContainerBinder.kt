@@ -147,7 +147,7 @@ constructor(
                         if (extendedWallpaperEffects()) {
                             launch {
                                 combine(
-                                        viewModel.getNotificationStackAbsoluteBottom(
+                                        viewModel.getNotificationStackAbsoluteBottomOnLockscreen(
                                             calculateMaxNotifications = calculateMaxNotifications,
                                             calculateHeight = { maxNotifications ->
                                                 notificationStackSizeCalculator.computeHeight(
@@ -157,7 +157,6 @@ constructor(
                                                     stack = controller.view,
                                                 )
                                             },
-                                            controller.getShelfHeight().toFloat(),
                                         ),
                                         viewModel.configurationBasedDimensions.map { it.marginTop },
                                         ::Pair,

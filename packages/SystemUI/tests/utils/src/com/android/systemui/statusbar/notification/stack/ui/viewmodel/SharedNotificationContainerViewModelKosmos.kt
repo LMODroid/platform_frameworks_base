@@ -59,6 +59,7 @@ import com.android.systemui.kosmos.applicationCoroutineScope
 import com.android.systemui.shade.domain.interactor.shadeInteractor
 import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.shade.largeScreenHeaderHelper
+import com.android.systemui.statusbar.notification.domain.interactor.activeNotificationsInteractor
 import com.android.systemui.statusbar.notification.stack.domain.interactor.headsUpNotificationInteractor
 import com.android.systemui.statusbar.notification.stack.domain.interactor.notificationStackAppearanceInteractor
 import com.android.systemui.statusbar.notification.stack.domain.interactor.sharedNotificationContainerInteractor
@@ -116,5 +117,6 @@ val Kosmos.sharedNotificationContainerViewModel by Fixture {
         unfoldTransitionInteractor = unfoldTransitionInteractor,
         glanceableHubToAodTransitionViewModel = glanceableHubToAodTransitionViewModel,
         aodToGlanceableHubTransitionViewModel = aodToGlanceableHubTransitionViewModel,
+        activeNotificationsInteractor = activeNotificationsInteractor,
     )
 }
