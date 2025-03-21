@@ -425,6 +425,9 @@ public class Clock extends TextView implements
 
     private void reloadDimens() {
         FontSizeUtils.updateFontSize(this, R.dimen.status_bar_clock_size);
+
+        // Note: The padding for the clock in the shade is controlled by ShadeHeaderController so
+        // this just affects the status bar clock.
         setPaddingRelative(
                 mContext.getResources().getDimensionPixelSize(
                         R.dimen.status_bar_clock_starting_padding),

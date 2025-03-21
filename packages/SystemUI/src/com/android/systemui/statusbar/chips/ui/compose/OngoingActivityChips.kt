@@ -25,9 +25,8 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.unit.dp
 import com.android.systemui.compose.modifiers.sysuiResTag
-import com.android.systemui.res.R
 import com.android.systemui.statusbar.chips.StatusBarChipsReturnAnimations
 import com.android.systemui.statusbar.chips.ui.model.MultipleOngoingActivityChipsModel
 import com.android.systemui.statusbar.notification.icon.ui.viewbinder.NotificationIconContainerViewBinder
@@ -53,13 +52,11 @@ fun OngoingActivityChips(
     val shownChips = chips.active.filter { !it.isHidden }
     if (shownChips.isNotEmpty()) {
         Row(
-            modifier =
-                modifier
-                    .fillMaxHeight()
-                    .padding(start = dimensionResource(R.dimen.ongoing_activity_chip_margin_start)),
+            // The status bar clock will have some end padding so we don't need as much padding
+            // at the beginning of the row (but we need more padding between chips)
+            modifier = modifier.fillMaxHeight().padding(start = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement =
-                Arrangement.spacedBy(dimensionResource(R.dimen.ongoing_activity_chip_margin_start)),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             shownChips.forEach {
                 key(it.key) {
