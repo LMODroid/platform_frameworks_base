@@ -40,11 +40,8 @@ import kotlinx.coroutines.flow.Flow
 @SysUISingleton
 class PrimaryBouncerToLockscreenTransitionViewModel
 @Inject
-constructor(
-    private val blurConfig: BlurConfig,
-    animationFlow: KeyguardTransitionAnimationFlow,
-    shadeDependentFlows: ShadeDependentFlows,
-) : DeviceEntryIconTransition, PrimaryBouncerTransition {
+constructor(private val blurConfig: BlurConfig, animationFlow: KeyguardTransitionAnimationFlow) :
+    DeviceEntryIconTransition, PrimaryBouncerTransition {
     private val transitionAnimation =
         animationFlow
             .setup(
@@ -75,24 +72,23 @@ constructor(
         transitionAnimation.immediatelyTransitionTo(1f)
 
     override val windowBlurRadius: Flow<Float> =
-        shadeDependentFlows.transitionFlow(
-            flowWhenShadeIsExpanded =
-                if (Flags.notificationShadeBlur()) {
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.maxBlurRadiusPx)
+        transitionAnimation.sharedFlowWithShade(
+            duration = FromPrimaryBouncerTransitionInteractor.TO_LOCKSCREEN_DURATION,
+            onStep = { step, isShadeExpanded ->
+                if (isShadeExpanded) {
+                    if (Flags.notificationShadeBlur()) {
+                        blurConfig.maxBlurRadiusPx
+                    } else {
+                        blurConfig.minBlurRadiusPx
+                    }
                 } else {
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.minBlurRadiusPx)
-                },
-            flowWhenShadeIsNotExpanded =
-                transitionAnimation.sharedFlow(
-                    duration = FromPrimaryBouncerTransitionInteractor.TO_LOCKSCREEN_DURATION,
-                    onStep = {
-                        transitionProgressToBlurRadius(
-                            starBlurRadius = blurConfig.maxBlurRadiusPx,
-                            endBlurRadius = blurConfig.minBlurRadiusPx,
-                            transitionProgress = it,
-                        )
-                    },
-                ),
+                    transitionProgressToBlurRadius(
+                        starBlurRadius = blurConfig.maxBlurRadiusPx,
+                        endBlurRadius = blurConfig.minBlurRadiusPx,
+                        transitionProgress = step,
+                    )
+                }
+            },
         )
 
     override val notificationBlurRadius: Flow<Float> =

@@ -211,7 +211,6 @@ class LockscreenToOccludedTransitionViewModelTest(flags: FlagsParameterization) 
         testScope.runTest {
             val actual by collectLastValue(underTest.deviceEntryParentViewAlpha)
             shadeExpanded(false)
-            runCurrent()
 
             // fade out
             repository.sendTransitionStep(step(0f, TransitionState.STARTED))

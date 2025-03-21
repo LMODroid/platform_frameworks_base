@@ -30,6 +30,7 @@ import com.android.systemui.keyguard.shared.model.TransitionState
 import com.android.systemui.keyguard.shared.model.TransitionStep
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.scene.shared.model.Scenes
+import com.android.systemui.shade.shadeTestUtil
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
 import kotlin.time.Duration.Companion.milliseconds
@@ -46,6 +47,7 @@ class KeyguardTransitionAnimationFlowTest : SysuiTestCase() {
     val testScope = kosmos.testScope
     val animationFlow = kosmos.keyguardTransitionAnimationFlow
     val repository = kosmos.fakeKeyguardTransitionRepository
+    val shadeTestUtil by lazy { kosmos.shadeTestUtil }
 
     private lateinit var underTest: KeyguardTransitionAnimationFlow.FlowBuilder
 
@@ -288,6 +290,78 @@ class KeyguardTransitionAnimationFlowTest : SysuiTestCase() {
             assertThat(values.size).isEqualTo(2)
             assertThat(values[0]).isEqualTo(0.3f)
             assertThat(values[0]).isEqualTo(0.3f)
+        }
+
+    @Test
+    fun sharedFlowWithShadeExpanded() =
+        testScope.runTest {
+            val flow =
+                underTest.sharedFlowWithShade(
+                    duration = 1000.milliseconds,
+                    onStep = { step, isShadeExpanded -> if (isShadeExpanded) 0f else 1f },
+                )
+            val values by collectValues(flow)
+            shadeTestUtil.setQsExpansion(1f)
+
+            repository.sendTransitionStep(step(0.0f, TransitionState.STARTED))
+            repository.sendTransitionStep(step(0.3f, TransitionState.RUNNING))
+
+            assertThat(values.size).isEqualTo(2)
+            assertThat(values[0]).isEqualTo(0f)
+            assertThat(values[0]).isEqualTo(0f)
+        }
+
+    @Test
+    fun sharedFlowWithShadeNotExpanded() =
+        testScope.runTest {
+            val flow =
+                underTest.sharedFlowWithShade(
+                    duration = 1000.milliseconds,
+                    onStep = { step, isShadeExpanded -> if (isShadeExpanded) 0f else 1f },
+                )
+            val values by collectValues(flow)
+            shadeTestUtil.setQsExpansion(0f)
+
+            repository.sendTransitionStep(step(0.0f, TransitionState.STARTED))
+            repository.sendTransitionStep(step(0.3f, TransitionState.RUNNING))
+
+            assertThat(values.size).isEqualTo(2)
+            assertThat(values[0]).isEqualTo(1f)
+            assertThat(values[0]).isEqualTo(1f)
+        }
+
+    @Test
+    fun sharedFlowWithShadeExpanded_onCancelRunsWhenSpecified() =
+        testScope.runTest {
+            val flow =
+                underTest.sharedFlowWithShade(
+                    duration = 100.milliseconds,
+                    onStep = { step, _ -> step },
+                    onCancel = { isShadeExpanded -> if (isShadeExpanded) 100f else 200f },
+                )
+            val animationValues by collectLastValue(flow)
+            shadeTestUtil.setQsExpansion(1f)
+
+            repository.sendTransitionStep(step(0.0f, TransitionState.STARTED))
+            repository.sendTransitionStep(step(0.5f, TransitionState.CANCELED))
+            assertThat(animationValues).isEqualTo(100f)
+        }
+
+    @Test
+    fun sharedFlowWithShadeNotExpanded_onCancelRunsWhenSpecified() =
+        testScope.runTest {
+            val flow =
+                underTest.sharedFlowWithShade(
+                    duration = 100.milliseconds,
+                    onStep = { step, _ -> step },
+                    onCancel = { isShadeExpanded -> if (isShadeExpanded) 100f else 200f },
+                )
+            val animationValues by collectLastValue(flow)
+            shadeTestUtil.setQsExpansion(0f)
+
+            repository.sendTransitionStep(step(0.0f, TransitionState.STARTED))
+            repository.sendTransitionStep(step(0.5f, TransitionState.CANCELED))
+            assertThat(animationValues).isEqualTo(200f)
         }
 
     private fun assertFloat(actual: Float?, expected: Float) {

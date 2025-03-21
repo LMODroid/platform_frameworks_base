@@ -26,16 +26,14 @@ import com.android.systemui.keyguard.ui.KeyguardTransitionAnimationFlow
 import com.android.systemui.keyguard.ui.transitions.BlurConfig
 import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.flow.Flow
 
 @SysUISingleton
 class PrimaryBouncerToOccludedTransitionViewModel
 @Inject
-constructor(
-    shadeDependentFlows: ShadeDependentFlows,
-    blurConfig: BlurConfig,
-    animationFlow: KeyguardTransitionAnimationFlow,
-) : PrimaryBouncerTransition {
+constructor(blurConfig: BlurConfig, animationFlow: KeyguardTransitionAnimationFlow) :
+    PrimaryBouncerTransition {
     private val transitionAnimation =
         animationFlow
             .setup(
@@ -45,15 +43,19 @@ constructor(
             .setupWithoutSceneContainer(edge = Edge.create(PRIMARY_BOUNCER, OCCLUDED))
 
     override val windowBlurRadius: Flow<Float> =
-        shadeDependentFlows.transitionFlow(
-            flowWhenShadeIsExpanded =
-                if (Flags.notificationShadeBlur()) {
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.maxBlurRadiusPx)
+        transitionAnimation.sharedFlowWithShade(
+            duration = 1.milliseconds,
+            onStep = { step, isShadeExpanded ->
+                if (isShadeExpanded) {
+                    if (Flags.notificationShadeBlur()) {
+                        blurConfig.maxBlurRadiusPx
+                    } else {
+                        blurConfig.minBlurRadiusPx
+                    }
                 } else {
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.minBlurRadiusPx)
-                },
-            flowWhenShadeIsNotExpanded =
-                transitionAnimation.immediatelyTransitionTo(blurConfig.minBlurRadiusPx),
+                    blurConfig.minBlurRadiusPx
+                }
+            },
         )
 
     override val notificationBlurRadius: Flow<Float> =

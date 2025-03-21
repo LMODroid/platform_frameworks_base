@@ -30,6 +30,7 @@ import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.ui.composable.transitions.TO_BOUNCER_FADE_FRACTION
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -40,11 +41,8 @@ import kotlinx.coroutines.flow.emptyFlow
 @SysUISingleton
 class AlternateBouncerToPrimaryBouncerTransitionViewModel
 @Inject
-constructor(
-    animationFlow: KeyguardTransitionAnimationFlow,
-    blurConfig: BlurConfig,
-    shadeDependentFlows: ShadeDependentFlows,
-) : DeviceEntryIconTransition, PrimaryBouncerTransition {
+constructor(animationFlow: KeyguardTransitionAnimationFlow, blurConfig: BlurConfig) :
+    DeviceEntryIconTransition, PrimaryBouncerTransition {
     private val transitionAnimation =
         animationFlow
             .setup(
@@ -73,9 +71,17 @@ constructor(
 
     val notificationAlpha: Flow<Float> =
         if (Flags.bouncerUiRevamp()) {
-            shadeDependentFlows.transitionFlow(
-                flowWhenShadeIsNotExpanded = lockscreenAlpha,
-                flowWhenShadeIsExpanded = transitionAnimation.immediatelyTransitionTo(1f),
+            transitionAnimation.sharedFlowWithShade(
+                duration = FromAlternateBouncerTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
+                onStep = { step, isShadeExpanded ->
+                    if (isShadeExpanded) {
+                        1f
+                    } else if (Flags.bouncerUiRevamp()) {
+                        alphaForAnimationStep(step)
+                    } else {
+                        null
+                    }
+                },
             )
         } else {
             alphaFlow
@@ -83,10 +89,11 @@ constructor(
 
     override val notificationBlurRadius: Flow<Float> =
         if (Flags.bouncerUiRevamp()) {
-            shadeDependentFlows.transitionFlow(
-                flowWhenShadeIsNotExpanded = emptyFlow(),
-                flowWhenShadeIsExpanded =
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.maxBlurRadiusPx),
+            transitionAnimation.sharedFlowWithShade(
+                duration = 1.milliseconds,
+                onStep = { _, isShadeExpanded ->
+                    if (isShadeExpanded) blurConfig.maxBlurRadiusPx else null
+                },
             )
         } else {
             emptyFlow<Float>()
@@ -96,24 +103,29 @@ constructor(
         transitionAnimation.immediatelyTransitionTo(0f)
 
     override val windowBlurRadius: Flow<Float> =
-        shadeDependentFlows.transitionFlow(
-            flowWhenShadeIsExpanded =
-                if (Flags.notificationShadeBlur()) {
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.maxBlurRadiusPx)
+        transitionAnimation.sharedFlowWithShade(
+            duration = FromAlternateBouncerTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
+            onStep = { step, isShadeExpanded ->
+                if (isShadeExpanded) {
+                    if (Flags.notificationShadeBlur()) {
+                        blurConfig.maxBlurRadiusPx
+                    } else {
+                        blurConfig.minBlurRadiusPx
+                    }
                 } else {
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.minBlurRadiusPx)
-                },
-            flowWhenShadeIsNotExpanded =
-                transitionAnimation.sharedFlow(
-                    duration = FromAlternateBouncerTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
-                    onStep = { step ->
-                        transitionProgressToBlurRadius(
-                            starBlurRadius = blurConfig.minBlurRadiusPx,
-                            endBlurRadius = blurConfig.maxBlurRadiusPx,
-                            transitionProgress = step,
-                        )
-                    },
-                    onFinish = { blurConfig.maxBlurRadiusPx },
-                ),
+                    transitionProgressToBlurRadius(
+                        starBlurRadius = blurConfig.minBlurRadiusPx,
+                        endBlurRadius = blurConfig.maxBlurRadiusPx,
+                        transitionProgress = step,
+                    )
+                }
+            },
+            onFinish = { isShadeExpanded ->
+                if (isShadeExpanded && !Flags.notificationShadeBlur()) {
+                    blurConfig.minBlurRadiusPx
+                } else {
+                    blurConfig.maxBlurRadiusPx
+                }
+            },
         )
 }

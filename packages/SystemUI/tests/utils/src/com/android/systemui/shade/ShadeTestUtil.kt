@@ -25,6 +25,7 @@ import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.data.repository.FakeShadeRepository
 import com.android.systemui.shade.data.repository.ShadeRepository
+import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestScope
@@ -134,6 +135,7 @@ class ShadeTestUtilLegacyImpl(
     val testScope: TestScope,
     val shadeRepository: FakeShadeRepository,
     val context: SysuiTestableContext,
+    val shadeInteractor: ShadeInteractor,
 ) : ShadeTestUtilDelegate {
     override fun setShadeAndQsExpansion(shadeExpansion: Float, qsExpansion: Float) {
         shadeRepository.setLegacyShadeExpansion(shadeExpansion)
@@ -160,18 +162,18 @@ class ShadeTestUtilLegacyImpl(
     /** Sets shade expansion to a value between 0-1. */
     override fun setShadeExpansion(shadeExpansion: Float) {
         shadeRepository.setLegacyShadeExpansion(shadeExpansion)
-        testScope.runCurrent()
+        processUpdate()
     }
 
     /** Sets QS expansion to a value between 0-1. */
     override fun setQsExpansion(qsExpansion: Float) {
         shadeRepository.setQsExpansion(qsExpansion)
-        testScope.runCurrent()
+        processUpdate()
     }
 
     override fun programmaticCollapseShade() {
         shadeRepository.setLegacyShadeExpansion(.5f)
-        testScope.runCurrent()
+        processUpdate()
     }
 
     override fun setQsFullscreen(qsFullscreen: Boolean) {
@@ -180,6 +182,14 @@ class ShadeTestUtilLegacyImpl(
 
     override fun setLegacyExpandedOrAwaitingInputTransfer(expanded: Boolean) {
         shadeRepository.setLegacyExpandedOrAwaitingInputTransfer(expanded)
+    }
+
+    private fun processUpdate() {
+        testScope.runCurrent()
+
+        // Requesting a value will cause the stateIn to begin flowing, otherwise incorrect values
+        // may not flow fast enough to the stateIn
+        shadeInteractor.isAnyFullyExpanded.value
     }
 
     override fun setSplitShade(splitShade: Boolean) {
@@ -197,6 +207,7 @@ class ShadeTestUtilSceneImpl(
     val sceneInteractor: SceneInteractor,
     val shadeRepository: ShadeRepository,
     val context: SysuiTestableContext,
+    val shadeInteractor: ShadeInteractor,
 ) : ShadeTestUtilDelegate {
     val isUserInputOngoing = MutableStateFlow(true)
 
@@ -215,6 +226,10 @@ class ShadeTestUtilSceneImpl(
         } else {
             setTransitionProgress(Scenes.Shade, Scenes.QuickSettings, qsExpansion)
         }
+
+        // Requesting a value will cause the stateIn to begin flowing, otherwise incorrect values
+        // may not flow fast enough to the stateIn
+        shadeInteractor.isAnyFullyExpanded.value
     }
 
     /** Sets shade expansion to a value between 0-1. */

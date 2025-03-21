@@ -35,10 +35,7 @@ import kotlinx.coroutines.flow.Flow
 @SysUISingleton
 class LockscreenToDreamingTransitionViewModel
 @Inject
-constructor(
-    shadeDependentFlows: ShadeDependentFlows,
-    animationFlow: KeyguardTransitionAnimationFlow,
-) : DeviceEntryIconTransition {
+constructor(animationFlow: KeyguardTransitionAnimationFlow) : DeviceEntryIconTransition {
     private val transitionAnimation =
         animationFlow.setup(
             duration = TO_DREAMING_DURATION,
@@ -59,10 +56,7 @@ constructor(
 
     /** Lockscreen views alpha */
     val lockscreenAlpha: Flow<Float> =
-        transitionAnimation.sharedFlow(
-            duration = 250.milliseconds,
-            onStep = { 1f - it },
-        )
+        transitionAnimation.sharedFlow(duration = 250.milliseconds, onStep = { 1f - it })
 
     val shortcutsAlpha: Flow<Float> =
         transitionAnimation.sharedFlow(
@@ -73,14 +67,10 @@ constructor(
         )
 
     override val deviceEntryParentViewAlpha: Flow<Float> =
-        shadeDependentFlows.transitionFlow(
-            flowWhenShadeIsNotExpanded =
-                transitionAnimation.sharedFlow(
-                    duration = 250.milliseconds,
-                    onStep = { 1f - it },
-                    onCancel = { 0f },
-                ),
-            flowWhenShadeIsExpanded = transitionAnimation.immediatelyTransitionTo(0f),
+        transitionAnimation.sharedFlowWithShade(
+            duration = 250.milliseconds,
+            onStep = { step, isShadeExpanded -> if (isShadeExpanded) 0f else 1f - step },
+            onCancel = { 0f },
         )
 
     companion object {

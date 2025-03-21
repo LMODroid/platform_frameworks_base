@@ -41,11 +41,8 @@ import kotlinx.coroutines.flow.emptyFlow
 @SysUISingleton
 class LockscreenToPrimaryBouncerTransitionViewModel
 @Inject
-constructor(
-    private val blurConfig: BlurConfig,
-    shadeDependentFlows: ShadeDependentFlows,
-    animationFlow: KeyguardTransitionAnimationFlow,
-) : DeviceEntryIconTransition, PrimaryBouncerTransition {
+constructor(private val blurConfig: BlurConfig, animationFlow: KeyguardTransitionAnimationFlow) :
+    DeviceEntryIconTransition, PrimaryBouncerTransition {
     private val transitionAnimation =
         animationFlow
             .setup(
@@ -75,9 +72,12 @@ constructor(
 
     val notificationAlpha: Flow<Float> =
         if (Flags.bouncerUiRevamp()) {
-            shadeDependentFlows.transitionFlow(
-                flowWhenShadeIsNotExpanded = lockscreenAlpha,
-                flowWhenShadeIsExpanded = transitionAnimation.immediatelyTransitionTo(1f),
+            transitionAnimation.sharedFlowWithShade(
+                duration = 200.milliseconds,
+                onStep = { step, isShadeExpanded ->
+                    if (isShadeExpanded) 1f else alphaForAnimationStep(step)
+                },
+                onFinish = { isShadeExpanded -> if (isShadeExpanded) 1f else 0f },
             )
         } else {
             lockscreenAlpha
@@ -85,44 +85,41 @@ constructor(
 
     override val notificationBlurRadius: Flow<Float> =
         if (Flags.bouncerUiRevamp()) {
-            shadeDependentFlows.transitionFlow(
-                flowWhenShadeIsNotExpanded = emptyFlow(),
-                flowWhenShadeIsExpanded =
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.maxBlurRadiusPx),
+            transitionAnimation.sharedFlowWithShade(
+                duration = 1.milliseconds,
+                onStep = { _, isShadeExpanded ->
+                    if (isShadeExpanded) blurConfig.maxBlurRadiusPx else null
+                },
             )
         } else {
             emptyFlow()
         }
 
     override val deviceEntryParentViewAlpha: Flow<Float> =
-        shadeDependentFlows.transitionFlow(
-            flowWhenShadeIsNotExpanded =
-                transitionAnimation.sharedFlow(
-                    duration = 250.milliseconds,
-                    onStep = { 1f - it },
-                    onCancel = { 0f },
-                    onFinish = { 0f },
-                ),
-            flowWhenShadeIsExpanded = transitionAnimation.immediatelyTransitionTo(0f),
+        transitionAnimation.sharedFlowWithShade(
+            duration = 250.milliseconds,
+            onStep = { step, isShadeExpanded -> if (isShadeExpanded) 0f else 1f - step },
+            onCancel = { 0f },
+            onFinish = { 0f },
         )
+
     override val windowBlurRadius: Flow<Float> =
-        shadeDependentFlows.transitionFlow(
-            flowWhenShadeIsExpanded =
-                if (Flags.notificationShadeBlur()) {
-                    transitionAnimation.immediatelyTransitionTo(blurConfig.maxBlurRadiusPx)
+        transitionAnimation.sharedFlowWithShade(
+            duration = FromLockscreenTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
+            onStep = { step, isShadeExpanded ->
+                if (isShadeExpanded) {
+                    if (Flags.notificationShadeBlur()) {
+                        blurConfig.maxBlurRadiusPx
+                    } else {
+                        null
+                    }
                 } else {
-                    emptyFlow()
-                },
-            flowWhenShadeIsNotExpanded =
-                transitionAnimation.sharedFlow(
-                    duration = FromLockscreenTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
-                    onStep = {
-                        transitionProgressToBlurRadius(
-                            starBlurRadius = blurConfig.minBlurRadiusPx,
-                            endBlurRadius = blurConfig.maxBlurRadiusPx,
-                            transitionProgress = it,
-                        )
-                    },
-                ),
+                    transitionProgressToBlurRadius(
+                        starBlurRadius = blurConfig.minBlurRadiusPx,
+                        endBlurRadius = blurConfig.maxBlurRadiusPx,
+                        transitionProgress = step,
+                    )
+                }
+            },
         )
 }

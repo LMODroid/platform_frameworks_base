@@ -29,6 +29,8 @@ import com.android.systemui.keyguard.shared.model.TransitionState.RUNNING
 import com.android.systemui.keyguard.shared.model.TransitionState.STARTED
 import com.android.systemui.keyguard.shared.model.TransitionStep
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
+import com.android.systemui.shade.domain.interactor.ShadeInteractor
+import dagger.Lazy
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
@@ -37,6 +39,8 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapNotNull
+
+typealias IsShadeExpanded = Boolean
 
 /**
  * Assists in creating sub-flows for a KeyguardTransition. Call [setup] once for a transition, and
@@ -48,6 +52,7 @@ class KeyguardTransitionAnimationFlow
 constructor(
     private val transitionInteractor: KeyguardTransitionInteractor,
     private val logger: KeyguardTransitionAnimationLogger,
+    private val shadeInteractor: Lazy<ShadeInteractor>,
 ) {
     /** Invoke once per transition between FROM->TO states to get access to a shared flow. */
     fun setup(duration: Duration, edge: Edge): FlowBuilder {
@@ -92,6 +97,56 @@ constructor(
                     name = name,
                 )
                 .mapNotNull { stateToValue -> stateToValue.value }
+        }
+
+        /**
+         * Transitions will occur over a [transitionDuration] with [TransitionStep]s being emitted
+         * in the range of [0, 1]. View animations should begin and end within a subset of this
+         * range. This function maps the [startTime] and [duration] into [0, 1], when this subset is
+         * valid.
+         *
+         * This overload provides additional information about the shade expansion state as recorded
+         * when STARTED was emitted.
+         *
+         * Note that [onStep] accepts a null return value. When null, no animation information will
+         * be emitted, effectively saying "do not change the value on this frame"
+         *
+         * Note that [onCancel] isn't used when the scene framework is enabled.
+         */
+        fun sharedFlowWithShade(
+            duration: Duration = transitionDuration,
+            onStep: (Float, IsShadeExpanded) -> Float?,
+            startTime: Duration = 0.milliseconds,
+            onStart: (() -> Unit)? = null,
+            onCancel: ((IsShadeExpanded) -> Float)? = null,
+            onFinish: ((IsShadeExpanded) -> Float)? = null,
+            interpolator: Interpolator = LINEAR,
+            name: String? = null,
+        ): Flow<Float> {
+            var isShadeExpanded = false
+            return sharedFlow(
+                duration = duration,
+                onStep = { step -> onStep(step, isShadeExpanded) },
+                startTime = startTime,
+                onStart = {
+                    isShadeExpanded = shadeInteractor.get().isAnyFullyExpanded.value
+                    if (onStart != null) onStart()
+                },
+                onCancel =
+                    if (onCancel != null) {
+                        { onCancel(isShadeExpanded) }
+                    } else {
+                        null
+                    },
+                onFinish =
+                    if (onFinish != null) {
+                        { onFinish(isShadeExpanded) }
+                    } else {
+                        null
+                    },
+                interpolator = interpolator,
+                name = name,
+            )
         }
 
         /**
