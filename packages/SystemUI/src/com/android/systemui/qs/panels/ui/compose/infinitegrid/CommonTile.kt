@@ -58,6 +58,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
@@ -66,8 +67,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorProducer
 import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -85,6 +90,7 @@ import com.android.compose.modifiers.size
 import com.android.compose.modifiers.thenIf
 import com.android.compose.ui.graphics.painter.rememberDrawablePainter
 import com.android.systemui.Flags
+import com.android.systemui.Flags.iconRefresh2025
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.common.ui.compose.load
@@ -291,12 +297,22 @@ fun SmallTileContent(
                 }
             }
 
-        Image(
-            painter = painter,
-            contentDescription = icon.contentDescription?.load(),
-            colorFilter = ColorFilter.tint(color = animatedColor),
-            modifier = iconModifier,
-        )
+        if (iconRefresh2025()) {
+            NonClippedImage(
+                painter = painter,
+                contentDescription = icon.contentDescription?.load(),
+                colorFilter = ColorFilter.tint(color = animatedColor),
+                modifier = iconModifier,
+                contentScale = ContentScale.Crop,
+            )
+        } else {
+            Image(
+                painter = painter,
+                contentDescription = icon.contentDescription?.load(),
+                colorFilter = ColorFilter.tint(color = animatedColor),
+                modifier = iconModifier,
+            )
+        }
     } else {
         Icon(icon = icon, tint = animatedColor, modifier = iconModifier)
     }
@@ -395,4 +411,42 @@ object CommonTileDefaults {
     const val TILE_INITIAL_DELAY_MILLIS = 2000
 
     @Composable fun longPressLabel() = stringResource(id = R.string.accessibility_long_click_tile)
+}
+
+/** Same as Image, but it doesn't clip its content. */
+@Composable
+private fun NonClippedImage(
+    painter: Painter,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    alignment: Alignment = Alignment.Center,
+    contentScale: ContentScale = ContentScale.Fit,
+    alpha: Float = DefaultAlpha,
+    colorFilter: ColorFilter,
+) {
+    val semantics =
+        if (contentDescription != null) {
+            Modifier.semantics {
+                this.contentDescription = contentDescription
+                this.role = Role.Image
+            }
+        } else {
+            Modifier
+        }
+
+    // Explicitly use a simple Layout implementation here as Spacer squashes any non fixed
+    // constraint with zero
+    Layout(
+        modifier
+            .then(semantics)
+            .paint(
+                painter,
+                alignment = alignment,
+                contentScale = contentScale,
+                alpha = alpha,
+                colorFilter = colorFilter,
+            )
+    ) { _, constraints ->
+        layout(constraints.minWidth, constraints.minHeight) {}
+    }
 }
