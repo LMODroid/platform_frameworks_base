@@ -35,7 +35,6 @@ import androidx.compose.foundation.LocalOverscrollFactory
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.clipScrollableContainer
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -56,20 +55,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -182,7 +178,7 @@ object TileType
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun EditModeTopBar(onStopEditing: () -> Unit, onReset: (() -> Unit)?) {
-    val primaryContainerColor = MaterialTheme.colorScheme.primaryContainer
+    val surfaceEffect2 = LocalAndroidColorScheme.current.surfaceEffect2
     TopAppBar(
         colors =
             TopAppBarDefaults.topAppBarColors(
@@ -199,7 +195,7 @@ private fun EditModeTopBar(onStopEditing: () -> Unit, onReset: (() -> Unit)?) {
         navigationIcon = {
             IconButton(
                 onClick = onStopEditing,
-                modifier = Modifier.drawBehind { drawCircle(primaryContainerColor) },
+                modifier = Modifier.drawBehind { drawCircle(surfaceEffect2) },
             ) {
                 Icon(
                     Icons.AutoMirrored.Filled.ArrowBack,
@@ -305,7 +301,6 @@ fun DefaultEditTileGrid(
                 CurrentTilesGridHeader(
                     listState,
                     selectionState,
-                    onRemoveTile,
                     modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
                 )
 
@@ -317,10 +312,16 @@ fun DefaultEditTileGrid(
                         .requiredHeightIn(AvailableTilesGridMinHeight)
                         .animateContentSize()
                 ) {
+                    // Only show available tiles when a drag or placement isn't in progress, OR
+                    // the drag is within the current tiles grid
+                    val showAvailableTiles =
+                        !(listState.dragInProgress || selectionState.placementEnabled) ||
+                            listState.dragType == DragType.Move
+
                     // Using the fully qualified name here as a workaround for AnimatedVisibility
                     // not being available from a Box
                     androidx.compose.animation.AnimatedVisibility(
-                        visible = !listState.dragInProgress && !selectionState.placementEnabled,
+                        visible = showAvailableTiles,
                         enter = fadeIn(),
                         exit = fadeOut(),
                     ) {
@@ -404,7 +405,6 @@ private fun AutoScrollGrid(
 }
 
 private enum class EditModeHeaderState {
-    Remove,
     Place,
     Idle,
 }
@@ -420,14 +420,9 @@ private fun rememberEditModeState(
         selectionState.selected,
         selectionState.placementEnabled,
     ) {
-        val canRemove =
-            listState.isDraggedCellRemovable ||
-                selectionState.selection?.let { listState.isRemovable(it) } ?: false
-
         editGridHeaderState.value =
             when {
                 selectionState.placementEnabled -> EditModeHeaderState.Place
-                canRemove -> EditModeHeaderState.Remove
                 else -> EditModeHeaderState.Idle
             }
     }
@@ -439,7 +434,6 @@ private fun rememberEditModeState(
 private fun CurrentTilesGridHeader(
     listState: EditTileListState,
     selectionState: MutableSelectionState,
-    onRemoveTile: (TileSpec) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val editGridHeaderState by rememberEditModeState(listState, selectionState)
@@ -452,14 +446,6 @@ private fun CurrentTilesGridHeader(
     ) { state ->
         EditGridHeader {
             when (state) {
-                EditModeHeaderState.Remove -> {
-                    RemoveTileTarget {
-                        selectionState.selection?.let {
-                            selectionState.unSelect()
-                            onRemoveTile(it)
-                        }
-                    }
-                }
                 EditModeHeaderState.Place -> {
                     EditGridCenteredText(text = stringResource(id = R.string.tap_to_position_tile))
                 }
@@ -486,22 +472,6 @@ private fun EditGridHeader(
 @Composable
 private fun EditGridCenteredText(text: String, modifier: Modifier = Modifier) {
     Text(text = text, style = MaterialTheme.typography.titleSmall, modifier = modifier)
-}
-
-@Composable
-private fun RemoveTileTarget(onClick: () -> Unit) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = tileHorizontalArrangement(),
-        modifier =
-            Modifier.wrapContentSize()
-                .clickable(onClick = onClick)
-                .border(1.dp, LocalContentColor.current, shape = CircleShape)
-                .padding(10.dp),
-    ) {
-        Icon(imageVector = Icons.Default.Clear, contentDescription = null)
-        Text(text = stringResource(id = R.string.qs_customize_remove))
-    }
 }
 
 @Composable

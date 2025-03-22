@@ -80,12 +80,6 @@ class EditTileListState(
         return _tiles.indexOfFirst { it is TileGridCell && it.tile.tileSpec == tileSpec }
     }
 
-    fun isRemovable(tileSpec: TileSpec): Boolean {
-        return _tiles.find {
-            it is TileGridCell && it.tile.tileSpec == tileSpec && it.tile.isRemovable
-        } != null
-    }
-
     /** Resize the tile corresponding to the [TileSpec] to [toIcon] */
     fun resizeTile(tileSpec: TileSpec, toIcon: Boolean) {
         val fromIndex = indexOf(tileSpec)

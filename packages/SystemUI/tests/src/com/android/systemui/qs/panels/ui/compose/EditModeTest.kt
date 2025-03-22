@@ -28,7 +28,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.text.AnnotatedString
@@ -93,36 +92,6 @@ class EditModeTest : SysuiTestCase() {
             listOf("tileA", "tileB", "tileC", "tileD_large", "tileE", "tileF")
         )
         composeRule.assertAvailableTilesGridContainsExactly(TestEditTiles.map { it.tileSpec.spec })
-    }
-
-    @Test
-    fun clickRemoveTarget_shouldRemoveSelection() {
-        composeRule.setContent { EditTileGridUnderTest(TestEditTiles) }
-        composeRule.waitForIdle()
-
-        // Selects first "tileA", i.e. the one in the current grid
-        composeRule.onAllNodesWithText("tileA").onFirst().performClick()
-        composeRule.onNodeWithText("Remove").performClick() // Removes
-
-        composeRule.waitForIdle()
-
-        composeRule.assertCurrentTilesGridContainsExactly(
-            listOf("tileB", "tileC", "tileD_large", "tileE")
-        )
-        composeRule.assertAvailableTilesGridContainsExactly(TestEditTiles.map { it.tileSpec.spec })
-    }
-
-    @Test
-    fun selectNonRemovableTile_removeTargetShouldHide() {
-        val nonRemovableTile = createEditTile("tileA", isRemovable = false)
-        composeRule.setContent { EditTileGridUnderTest(listOf(nonRemovableTile)) }
-        composeRule.waitForIdle()
-
-        // Selects first "tileA", i.e. the one in the current grid
-        composeRule.onAllNodesWithText("tileA").onFirst().performClick()
-
-        // Assert the remove target isn't shown
-        composeRule.onNodeWithText("Remove").assertDoesNotExist()
     }
 
     @Test

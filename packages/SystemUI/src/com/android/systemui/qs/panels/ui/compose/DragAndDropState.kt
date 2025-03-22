@@ -172,7 +172,7 @@ private fun DragAndDropEvent.toOffset(): Offset {
 private fun insertAfter(item: LazyGridItemInfo, offset: Offset): Boolean {
     // We want to insert the tile after the target if we're aiming at the end of a large tile
     // TODO(ostonge): Verify this behavior in RTL
-    val itemCenter = item.offset.x + item.size.width * .75
+    val itemCenter = item.offset.x + item.size.width * .5
     return item.span != 1 && offset.x > itemCenter
 }
 
