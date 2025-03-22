@@ -26,13 +26,9 @@ constructor(
     val dynamicIconTilesViewModelFactory: DynamicIconTilesViewModel.Factory,
     val columnsWithMediaViewModelFactory: QSColumnsViewModel.Factory,
     val squishinessViewModel: TileSquishinessViewModel,
-    private val resetDialogDelegate: QSResetDialogDelegate,
+    val snapshotViewModelFactory: InfiniteGridSnapshotViewModel.Factory,
+    val resetDialogDelegateFactory: QSResetDialogDelegate.Factory,
 ) {
-
-    fun showResetDialog() {
-        resetDialogDelegate.showDialog()
-    }
-
     @AssistedFactory
     interface Factory {
         fun create(): InfiniteGridViewModel

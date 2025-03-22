@@ -18,6 +18,7 @@ package com.android.systemui.qs.panels.ui.compose
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.click
@@ -37,12 +38,15 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.DefaultEditTileGrid
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.EditAction
 import com.android.systemui.qs.panels.ui.model.GridCell
 import com.android.systemui.qs.panels.ui.model.TileGridCell
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
+import com.android.systemui.qs.panels.ui.viewmodel.infiniteGridSnapshotViewModelFactory
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.model.TileCategory
 import com.android.systemui.res.R
+import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -54,6 +58,9 @@ import org.junit.runner.RunWith
 class ResizingTest : SysuiTestCase() {
     @get:Rule val composeRule = createComposeRule()
 
+    private val kosmos = testKosmos()
+    private val snapshotViewModelFactory = kosmos.infiniteGridSnapshotViewModelFactory
+
     @Composable
     private fun EditTileGridUnderTest(listState: EditTileListState) {
         val largeTilesSpecs = TestLargeTilesSpecs.toMutableSet()
@@ -62,16 +69,18 @@ class ResizingTest : SysuiTestCase() {
                 listState = listState,
                 allTiles = listState.tiles.filterIsInstance<TileGridCell>().map { it.tile },
                 modifier = Modifier.fillMaxSize(),
-                onAddTile = { _, _ -> },
-                onRemoveTile = {},
-                onSetTiles = {},
-                onResize = { spec, toIcon ->
-                    if (toIcon) largeTilesSpecs.remove(spec) else largeTilesSpecs.add(spec)
-                    listState.updateTiles(TestEditTiles, largeTilesSpecs)
-                },
+                snapshotViewModel = remember { snapshotViewModelFactory.create() },
                 onStopEditing = {},
-                onReset = null,
-            )
+            ) { action ->
+                when (action) {
+                    is EditAction.ResizeTile -> {
+                        if (action.toIcon) largeTilesSpecs.remove(action.tileSpec)
+                        else largeTilesSpecs.add(action.tileSpec)
+                        listState.updateTiles(TestEditTiles, largeTilesSpecs)
+                    }
+                    else -> {}
+                }
+            }
         }
     }
 

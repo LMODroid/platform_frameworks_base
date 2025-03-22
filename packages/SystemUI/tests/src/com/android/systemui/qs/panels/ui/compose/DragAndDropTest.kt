@@ -18,6 +18,7 @@ package com.android.systemui.qs.panels.ui.compose
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -33,11 +34,14 @@ import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.DefaultEditTileGrid
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.EditAction
 import com.android.systemui.qs.panels.ui.model.TileGridCell
 import com.android.systemui.qs.panels.ui.viewmodel.AvailableEditActions
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
+import com.android.systemui.qs.panels.ui.viewmodel.infiniteGridSnapshotViewModelFactory
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.model.TileCategory
+import com.android.systemui.testKosmos
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,6 +52,9 @@ import org.junit.runner.RunWith
 class DragAndDropTest : SysuiTestCase() {
     @get:Rule val composeRule = createComposeRule()
 
+    private val kosmos = testKosmos()
+    private val snapshotViewModelFactory = kosmos.infiniteGridSnapshotViewModelFactory
+
     // TODO(ostonge): Investigate why drag isn't detected when using performTouchInput
     @Composable
     private fun EditTileGridUnderTest(listState: EditTileListState) {
@@ -56,18 +63,19 @@ class DragAndDropTest : SysuiTestCase() {
                 listState = listState,
                 allTiles = listState.tiles.filterIsInstance<TileGridCell>().map { it.tile },
                 modifier = Modifier.fillMaxSize(),
-                onAddTile = { _, _ -> },
-                onRemoveTile = {},
-                onSetTiles = {
-                    listState.updateTiles(
-                        it.map { tileSpec -> createEditTile(tileSpec.spec) },
-                        TestLargeTilesSpecs,
-                    )
-                },
-                onResize = { _, _ -> },
+                snapshotViewModel = remember { snapshotViewModelFactory.create() },
                 onStopEditing = {},
-                onReset = null,
-            )
+            ) { action ->
+                when (action) {
+                    is EditAction.SetTiles -> {
+                        listState.updateTiles(
+                            action.tileSpecs.map { tileSpec -> createEditTile(tileSpec.spec) },
+                            TestLargeTilesSpecs,
+                        )
+                    }
+                    else -> error("Not expecting action $action from test")
+                }
+            }
         }
     }
 

@@ -28,6 +28,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.text.AnnotatedString
@@ -38,10 +39,13 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.DefaultEditTileGrid
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.EditAction
 import com.android.systemui.qs.panels.ui.viewmodel.AvailableEditActions
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
+import com.android.systemui.qs.panels.ui.viewmodel.infiniteGridSnapshotViewModelFactory
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.model.TileCategory
+import com.android.systemui.testKosmos
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,6 +55,9 @@ import org.junit.runner.RunWith
 class EditModeTest : SysuiTestCase() {
     @get:Rule val composeRule = createComposeRule()
 
+    private val kosmos = testKosmos()
+    private val snapshotViewModelFactory = kosmos.infiniteGridSnapshotViewModelFactory
+
     @Composable
     private fun EditTileGridUnderTest() {
         val allTiles = remember { TestEditTiles.toMutableStateList() }
@@ -59,24 +66,37 @@ class EditModeTest : SysuiTestCase() {
             EditTileListState(currentTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
         LaunchedEffect(currentTiles) { listState.updateTiles(currentTiles, TestLargeTilesSpecs) }
 
+        val snapshotViewModel = remember { snapshotViewModelFactory.create() }
+
         PlatformTheme {
             DefaultEditTileGrid(
                 listState = listState,
                 allTiles = allTiles,
                 modifier = Modifier.fillMaxSize(),
-                onAddTile = { spec, _ ->
-                    val index = allTiles.indexOfFirst { it.tileSpec == spec }
-                    allTiles[index] = allTiles[index].copy(isCurrent = true)
-                },
-                onRemoveTile = { spec ->
-                    val index = allTiles.indexOfFirst { it.tileSpec == spec }
-                    allTiles[index] = allTiles[index].copy(isCurrent = false)
-                },
-                onSetTiles = {},
-                onResize = { _, _ -> },
+                snapshotViewModel = snapshotViewModel,
                 onStopEditing = {},
-                onReset = null,
-            )
+            ) { action ->
+                snapshotViewModel.takeSnapshot(
+                    currentTiles.map { it.tileSpec },
+                    TestLargeTilesSpecs,
+                )
+
+                when (action) {
+                    is EditAction.AddTile -> {
+                        val index = allTiles.indexOfFirst { it.tileSpec == action.tileSpec }
+                        allTiles[index] = allTiles[index].copy(isCurrent = true)
+                    }
+                    is EditAction.InsertTile -> {
+                        val index = allTiles.indexOfFirst { it.tileSpec == action.tileSpec }
+                        allTiles[index] = allTiles[index].copy(isCurrent = true)
+                    }
+                    is EditAction.RemoveTile -> {
+                        val index = allTiles.indexOfFirst { it.tileSpec == action.tileSpec }
+                        allTiles[index] = allTiles[index].copy(isCurrent = false)
+                    }
+                    else -> error("Not expecting action $action from test")
+                }
+            }
         }
     }
 
@@ -86,7 +106,6 @@ class EditModeTest : SysuiTestCase() {
         composeRule.waitForIdle()
 
         composeRule.onNodeWithContentDescription("tileF").performClick() // Tap to add
-        composeRule.waitForIdle()
 
         composeRule.assertCurrentTilesGridContainsExactly(
             listOf("tileA", "tileB", "tileC", "tileD_large", "tileE", "tileF")
@@ -109,6 +128,22 @@ class EditModeTest : SysuiTestCase() {
         composeRule.assertCurrentTilesGridContainsExactly(
             listOf("tileB", "tileC", "tileD_large", "tileE", "tileA")
         )
+    }
+
+    @Test
+    fun performAction_undoAppears() {
+        composeRule.setContent { EditTileGridUnderTest() }
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithContentDescription("tileF").performClick() // Tap to add
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithText("Undo").assertExists()
+
+        composeRule.onNodeWithText("Undo").performClick() // Undo addition
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithText("Undo").assertDoesNotExist()
     }
 
     private fun ComposeContentTestRule.assertCurrentTilesGridContainsExactly(specs: List<String>) =

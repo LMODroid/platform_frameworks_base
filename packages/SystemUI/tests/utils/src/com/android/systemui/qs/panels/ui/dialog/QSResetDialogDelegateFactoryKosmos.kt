@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package com.android.systemui.qs.panels.ui.viewmodel
+package com.android.systemui.qs.panels.ui.dialog
 
 import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.qs.panels.ui.dialog.qsResetDialogDelegateFactoryKosmos
+import com.android.systemui.qs.panels.domain.interactor.sizedTilesResetInteractor
+import com.android.systemui.shade.data.repository.shadeDialogContextInteractor
+import com.android.systemui.statusbar.phone.systemUIDialogFactory
 
-val Kosmos.infiniteGridViewModelFactory by
+val Kosmos.qsResetDialogDelegateFactoryKosmos by
     Kosmos.Fixture {
-        object : InfiniteGridViewModel.Factory {
-            override fun create(): InfiniteGridViewModel {
-                return InfiniteGridViewModel(
-                    dynamicIconTilesViewModelFactory,
-                    qsColumnsViewModelFactory,
-                    tileSquishinessViewModel,
-                    infiniteGridSnapshotViewModelFactory,
-                    qsResetDialogDelegateFactoryKosmos,
+        object : QSResetDialogDelegate.Factory {
+            override fun create(onReset: () -> Unit): QSResetDialogDelegate {
+                return QSResetDialogDelegate(
+                    systemUIDialogFactory,
+                    shadeDialogContextInteractor,
+                    sizedTilesResetInteractor,
+                    onReset,
                 )
             }
         }

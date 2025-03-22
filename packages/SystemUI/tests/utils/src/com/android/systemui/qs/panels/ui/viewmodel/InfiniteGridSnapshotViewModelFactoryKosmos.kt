@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package com.android.systemui.qs.panels.ui.dialog
+package com.android.systemui.qs.panels.ui.viewmodel
 
 import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.qs.panels.domain.interactor.sizedTilesResetInteractor
-import com.android.systemui.shade.data.repository.shadeDialogContextInteractor
-import com.android.systemui.statusbar.phone.systemUIDialogFactory
+import com.android.systemui.qs.panels.domain.interactor.iconTilesInteractor
+import com.android.systemui.qs.pipeline.domain.interactor.currentTilesInteractor
 
-val Kosmos.qsResetDialogDelegateKosmos by
+val Kosmos.infiniteGridSnapshotViewModelFactory by
     Kosmos.Fixture {
-        QSResetDialogDelegate(
-            systemUIDialogFactory,
-            shadeDialogContextInteractor,
-            sizedTilesResetInteractor,
-        )
+        object : InfiniteGridSnapshotViewModel.Factory {
+            override fun create(): InfiniteGridSnapshotViewModel {
+                return InfiniteGridSnapshotViewModel(currentTilesInteractor, iconTilesInteractor)
+            }
+        }
     }
