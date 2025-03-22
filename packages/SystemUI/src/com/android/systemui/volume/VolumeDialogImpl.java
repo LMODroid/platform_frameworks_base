@@ -1684,16 +1684,6 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         mHandler.post(() -> {
             if (mODICaptionsTooltipView != null) {
                 mODICaptionsTooltipView.setAlpha(0.0f);
-
-                final int[] odiTooltipLocation = mODICaptionsTooltipView.getLocationOnScreen();
-                final int[] odiButtonLocation = mODICaptionsIcon.getLocationOnScreen();
-
-                final float heightDiffForCentering =
-                        (mODICaptionsTooltipView.getHeight() - mODICaptionsIcon.getHeight()) / 2f;
-
-                mODICaptionsTooltipView.setTranslationY(
-                        odiButtonLocation[1] - odiTooltipLocation[1] - heightDiffForCentering);
-
                 mODICaptionsTooltipView.animate()
                         .alpha(1.0f)
                         .setStartDelay(mDialogShowAnimationDurationMs)

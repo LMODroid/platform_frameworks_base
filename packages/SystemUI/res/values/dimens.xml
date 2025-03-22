@@ -640,7 +640,7 @@
 
     <dimen name="volume_dialog_background_blur_radius">0dp</dimen>
 
-    <dimen name="volume_tool_tip_horizontal_margin">76dp</dimen>
+    <dimen name="volume_tool_tip_top_margin">2dp</dimen>
 
     <dimen name="volume_tool_tip_arrow_corner_radius">2dp</dimen>
 
