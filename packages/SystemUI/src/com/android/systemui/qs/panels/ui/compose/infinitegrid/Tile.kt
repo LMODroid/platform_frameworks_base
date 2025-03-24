@@ -37,7 +37,6 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
@@ -89,9 +88,7 @@ import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.qs.flags.QsDetailedView
 import com.android.systemui.qs.panels.ui.compose.BounceableInfo
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.InactiveCornerRadius
-import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileEndPadding
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileHeight
-import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileStartPadding
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.longPressLabel
 import com.android.systemui.qs.panels.ui.viewmodel.AccessibilityUiState
 import com.android.systemui.qs.panels.ui.viewmodel.DetailsViewModel
@@ -256,6 +253,8 @@ fun Tile(
                         accessibilityUiState = uiState.accessibilityUiState,
                         squishiness = squishiness,
                         isVisible = isVisible,
+                        modifier =
+                            Modifier.largeTilePadding(isDualTarget = uiState.handlesLongClick),
                     )
                 }
             }
@@ -299,8 +298,7 @@ fun TileContainer(
                     accessibilityUiState = accessibilityUiState,
                     iconOnly = iconOnly,
                 )
-                .sysuiResTag(if (iconOnly) TEST_TAG_SMALL else TEST_TAG_LARGE)
-                .thenIf(!iconOnly) { Modifier.largeTilePadding() }, // Icon tiles are center aligned
+                .sysuiResTag(if (iconOnly) TEST_TAG_SMALL else TEST_TAG_LARGE),
         content = content,
     )
 }
@@ -343,10 +341,6 @@ private fun Context.getTileIcon(icon: IconProvider): Icon {
 
 fun tileHorizontalArrangement(): Arrangement.Horizontal {
     return spacedBy(space = CommonTileDefaults.TileArrangementPadding, alignment = Alignment.Start)
-}
-
-fun Modifier.largeTilePadding(): Modifier {
-    return padding(start = TileStartPadding, end = TileEndPadding)
 }
 
 @Composable

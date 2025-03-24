@@ -35,11 +35,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -65,6 +68,7 @@ import androidx.compose.ui.graphics.ColorProducer
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -84,11 +88,15 @@ import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.common.ui.compose.load
 import com.android.systemui.compose.modifiers.sysuiResTag
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.ChevronSize
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.SideIconHeight
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.SideIconWidth
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TILE_INITIAL_DELAY_MILLIS
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TILE_MARQUEE_ITERATIONS
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileDualTargetEndPadding
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileEndPadding
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileLabelBlurWidth
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileStartPadding
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.longPressLabel
 import com.android.systemui.qs.panels.ui.viewmodel.AccessibilityUiState
 import com.android.systemui.qs.ui.compose.borderOnFocus
@@ -96,6 +104,7 @@ import com.android.systemui.res.R
 
 private const val TEST_TAG_TOGGLE = "qs_tile_toggle_target"
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LargeTileContent(
     label: String,
@@ -104,15 +113,18 @@ fun LargeTileContent(
     sideDrawable: Drawable?,
     colors: TileColors,
     squishiness: () -> Float,
+    modifier: Modifier = Modifier,
     isVisible: () -> Boolean = { true },
     accessibilityUiState: AccessibilityUiState? = null,
     iconShape: RoundedCornerShape = RoundedCornerShape(CommonTileDefaults.InactiveCornerRadius),
     toggleClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
 ) {
+    val isDualTarget = toggleClick != null
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = tileHorizontalArrangement(),
+        modifier = modifier,
     ) {
         // Icon
         val longPressLabel = longPressLabel().takeIf { onLongClick != null }
@@ -125,7 +137,7 @@ fun LargeTileContent(
                     .clip(iconShape)
                     .verticalSquish(squishiness)
                     .drawBehind { drawRect(animatedBackgroundColor) }
-                    .thenIf(toggleClick != null) {
+                    .thenIf(isDualTarget) {
                         Modifier.borderOnFocus(color = focusBorderColor, iconShape.topEnd)
                             .combinedClickable(
                                 onClick = toggleClick!!,
@@ -170,6 +182,13 @@ fun LargeTileContent(
                 painter = rememberDrawablePainter(sideDrawable),
                 contentDescription = null,
                 modifier = Modifier.width(SideIconWidth).height(SideIconHeight),
+            )
+        } else if (isDualTarget) {
+            Icon(
+                painterResource(R.drawable.ic_qs_dual_target_arrow),
+                contentDescription = null,
+                tint = { colors.label },
+                modifier = Modifier.size(ChevronSize),
             )
         }
     }
@@ -331,15 +350,30 @@ private fun TileLabel(
     )
 }
 
+/**
+ * Apply the correct padding for large tiles
+ *
+ * Large tiles have a different end padding based on the content, such as if it's a dual target tile
+ * or if it has a side drawable.
+ */
+fun Modifier.largeTilePadding(isDualTarget: Boolean = false): Modifier {
+    return padding(
+        start = TileStartPadding,
+        end = if (isDualTarget) TileDualTargetEndPadding else TileEndPadding,
+    )
+}
+
 object CommonTileDefaults {
     val IconSize = 32.dp
     val LargeTileIconSize = 28.dp
     val SideIconWidth = 32.dp
     val SideIconHeight = 20.dp
+    val ChevronSize = 16.dp
     val ToggleTargetSize = 56.dp
     val TileHeight = 72.dp
     val TileStartPadding = 8.dp
-    val TileEndPadding = 16.dp
+    val TileEndPadding = 12.dp
+    val TileDualTargetEndPadding = 8.dp
     val TileArrangementPadding = 6.dp
     val InactiveCornerRadius = 50.dp
     val TileLabelBlurWidth = 32.dp
