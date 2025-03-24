@@ -33,6 +33,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.android.systemui.fragments.FragmentHostManager.FragmentListener;
 import com.android.systemui.plugins.qs.QS;
+import com.android.systemui.qs.flags.QSComposeFragment;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.notification.AboveShelfObserver;
 
@@ -114,13 +115,15 @@ public class NotificationsQuickSettingsContainer extends ConstraintLayout
 
     public void setQSContainerPaddingBottom(int paddingBottom) {
         mLastQSPaddingBottom = paddingBottom;
-        if (mQSContainer != null) {
-            mQSContainer.setPadding(
-                    mQSContainer.getPaddingLeft(),
-                    mQSContainer.getPaddingTop(),
-                    mQSContainer.getPaddingRight(),
-                    paddingBottom
-            );
+        if (!QSComposeFragment.isEnabled()) {
+            if (mQSContainer != null) {
+                mQSContainer.setPadding(
+                        mQSContainer.getPaddingLeft(),
+                        mQSContainer.getPaddingTop(),
+                        mQSContainer.getPaddingRight(),
+                        paddingBottom
+                );
+            }
         }
     }
 
