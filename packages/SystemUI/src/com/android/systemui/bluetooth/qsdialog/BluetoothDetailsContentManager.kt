@@ -38,6 +38,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.internal.R as InternalR
 import com.android.internal.logging.UiEventLogger
+import com.android.systemui.bluetooth.ui.viewModel.BluetoothDetailsContentViewModel
+import com.android.systemui.bluetooth.ui.viewModel.BluetoothTileDialogCallback
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.res.R
 import com.android.systemui.util.time.SystemClock

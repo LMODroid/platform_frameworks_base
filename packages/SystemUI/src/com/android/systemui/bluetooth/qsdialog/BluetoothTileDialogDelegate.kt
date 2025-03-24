@@ -19,6 +19,8 @@ package com.android.systemui.bluetooth.qsdialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.android.internal.logging.UiEventLogger
+import com.android.systemui.bluetooth.ui.viewModel.BluetoothDetailsContentViewModel
+import com.android.systemui.bluetooth.ui.viewModel.BluetoothTileDialogCallback
 import com.android.systemui.qs.flags.QsDetailedView
 import com.android.systemui.res.R
 import com.android.systemui.shade.domain.interactor.ShadeDialogContextInteractor

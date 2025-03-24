@@ -25,6 +25,8 @@ import com.android.internal.logging.UiEventLogger
 import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.animation.DialogTransitionAnimator
+import com.android.systemui.bluetooth.ui.viewModel.BluetoothDetailsContentViewModel
+import com.android.systemui.bluetooth.ui.viewModel.BluetoothTileDialogCallback
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.model.SysUiState

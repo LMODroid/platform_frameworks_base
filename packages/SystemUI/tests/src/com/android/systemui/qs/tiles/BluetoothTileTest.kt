@@ -21,7 +21,7 @@ import com.android.settingslib.Utils
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
-import com.android.systemui.bluetooth.qsdialog.BluetoothDetailsContentViewModel
+import com.android.systemui.bluetooth.ui.viewModel.BluetoothDetailsContentViewModel
 import com.android.systemui.classifier.FalsingManagerFake
 import com.android.systemui.flags.FeatureFlagsClassic
 import com.android.systemui.plugins.ActivityStarter

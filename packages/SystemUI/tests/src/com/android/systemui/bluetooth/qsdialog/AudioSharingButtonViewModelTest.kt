@@ -25,6 +25,8 @@ import com.android.settingslib.bluetooth.BluetoothUtils
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.bluetooth.LocalBluetoothManager
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.bluetooth.ui.viewModel.AudioSharingButtonState
+import com.android.systemui.bluetooth.ui.viewModel.AudioSharingButtonViewModel
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.lifecycle.activateIn

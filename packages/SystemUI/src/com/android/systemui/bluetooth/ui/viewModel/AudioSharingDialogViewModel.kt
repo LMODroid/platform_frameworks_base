@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.android.systemui.bluetooth.qsdialog
+package com.android.systemui.bluetooth.ui.viewModel
 
 import android.content.Context
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.bluetooth.LocalBluetoothManager
+import com.android.systemui.bluetooth.qsdialog.AudioSharingInteractor
+import com.android.systemui.bluetooth.qsdialog.DeviceItemInteractor
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.res.R
 import dagger.assisted.Assisted

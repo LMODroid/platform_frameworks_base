@@ -42,7 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.android.systemui.bluetooth.qsdialog.BluetoothDetailsContent
-import com.android.systemui.bluetooth.qsdialog.BluetoothDetailsViewModel
+import com.android.systemui.bluetooth.ui.viewModel.BluetoothDetailsViewModel
 import com.android.systemui.plugins.qs.TileDetailsViewModel
 import com.android.systemui.qs.flags.QsDetailedView
 import com.android.systemui.qs.panels.ui.viewmodel.DetailsViewModel

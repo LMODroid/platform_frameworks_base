@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.bluetooth.qsdialog
+package com.android.systemui.bluetooth.ui.viewModel
 
 import android.content.Context
 import android.content.Intent
@@ -36,9 +36,21 @@ import com.android.systemui.Prefs
 import com.android.systemui.animation.DialogCuj
 import com.android.systemui.animation.DialogTransitionAnimator
 import com.android.systemui.animation.Expandable
+import com.android.systemui.bluetooth.qsdialog.AudioSharingInteractor
+import com.android.systemui.bluetooth.qsdialog.BluetoothAutoOnInteractor
+import com.android.systemui.bluetooth.qsdialog.BluetoothDetailsContentManager
 import com.android.systemui.bluetooth.qsdialog.BluetoothDetailsContentManager.Companion.ACTION_AUDIO_SHARING
 import com.android.systemui.bluetooth.qsdialog.BluetoothDetailsContentManager.Companion.ACTION_PAIR_NEW_DEVICE
 import com.android.systemui.bluetooth.qsdialog.BluetoothDetailsContentManager.Companion.ACTION_PREVIOUSLY_CONNECTED_DEVICE
+import com.android.systemui.bluetooth.qsdialog.BluetoothDeviceMetadataInteractor
+import com.android.systemui.bluetooth.qsdialog.BluetoothStateInteractor
+import com.android.systemui.bluetooth.qsdialog.BluetoothTileDialogDelegate
+import com.android.systemui.bluetooth.qsdialog.BluetoothTileDialogLogger
+import com.android.systemui.bluetooth.qsdialog.BluetoothTileDialogUiEvent
+import com.android.systemui.bluetooth.qsdialog.DeviceFetchTrigger
+import com.android.systemui.bluetooth.qsdialog.DeviceItemActionInteractor
+import com.android.systemui.bluetooth.qsdialog.DeviceItemClick
+import com.android.systemui.bluetooth.qsdialog.DeviceItemInteractor
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
