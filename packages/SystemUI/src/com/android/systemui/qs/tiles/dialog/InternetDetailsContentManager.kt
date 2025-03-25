@@ -396,7 +396,9 @@ constructor(
         }
         alertDialog =
             AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.auto_data_switch_disable_title, carrierName))
+                .setTitle(
+                    context.getString(R.string.auto_data_switch_disable_title, carrierName)
+                )
                 .setMessage(R.string.auto_data_switch_disable_message)
                 .setNegativeButton(R.string.auto_data_switch_dialog_negative_button) { _, _ -> }
                 .setPositiveButton(R.string.auto_data_switch_dialog_positive_button) { _, _ ->
@@ -425,7 +427,6 @@ constructor(
     }
 
     private fun showTurnOffMobileDialog() {
-        val context = contentView.context
         var carrierName: CharSequence? = getMobileNetworkTitle(defaultDataSubId)
         val isInService: Boolean =
             internetDetailsContentController.isVoiceStateInService(defaultDataSubId)
@@ -435,7 +436,9 @@ constructor(
         alertDialog =
             AlertDialog.Builder(context)
                 .setTitle(R.string.mobile_data_disable_title)
-                .setMessage(context.getString(R.string.mobile_data_disable_message, carrierName))
+                .setMessage(
+                    context.getString(R.string.mobile_data_disable_message, carrierName)
+                )
                 .setNegativeButton(android.R.string.cancel) { _: DialogInterface?, _: Int -> }
                 .setPositiveButton(
                     com.android.internal.R.string.alert_windows_notification_turn_off_action
@@ -454,7 +457,6 @@ constructor(
         SystemUIDialog.setShowForAllUsers(alertDialog, true)
         SystemUIDialog.registerDismissListener(alertDialog)
         SystemUIDialog.setWindowOnTop(alertDialog, keyguard.isShowing())
-
         alertDialog!!.show()
     }
 
@@ -822,22 +824,6 @@ constructor(
             activeAutoSwitchNonDdsSubId =
                 internetDetailsContentController.getActiveAutoSwitchNonDdsSubId(),
         )
-    }
-
-    /**
-     * Handles window focus changes. If the activity loses focus and the system UI dialog is
-     * showing, it dismisses the current alert dialog to prevent it from persisting in the
-     * background.
-     *
-     * @param dialog The internet system UI dialog whose focus state has changed.
-     * @param hasFocus True if the window has gained focus, false otherwise.
-     */
-    fun onWindowFocusChanged(dialog: SystemUIDialog, hasFocus: Boolean) {
-        if (alertDialog != null && !alertDialog!!.isShowing) {
-            if (!hasFocus && dialog.isShowing) {
-                dialog.dismiss()
-            }
-        }
     }
 
     private fun getDefaultCarrierName(): String? {
