@@ -32,10 +32,8 @@ import androidx.compose.material3.SliderState
 import androidx.compose.material3.VerticalSlider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -81,12 +79,21 @@ fun Slider(
         )
     },
 ) {
-    require(stepDistance >= 0) { "stepDistance must not be negative" }
-    val snappedValue by valueState(value, isEnabled)
-    val hapticsViewModel = haptics.createViewModel(snappedValue, valueRange, interactionSource)
+    require(stepDistance >= 0f) { "stepDistance must not be negative" }
+    val animatedValue by
+        animateFloatAsState(
+            targetValue = value,
+            animationSpec =
+                spring(
+                    dampingRatio = Spring.DampingRatioNoBouncy,
+                    stiffness = Spring.StiffnessMedium,
+                ),
+            label = "VolumeSliderValueAnimation",
+        )
+    val hapticsViewModel = haptics.createViewModel(animatedValue, valueRange, interactionSource)
 
     val sliderState =
-        remember(valueRange) { SliderState(value = snappedValue, valueRange = valueRange) }
+        remember(valueRange) { SliderState(value = animatedValue, valueRange = valueRange) }
     val valueChange: (Float) -> Unit = { newValue ->
         hapticsViewModel?.onValueChange(newValue)
         onValueChanged(newValue)
@@ -94,7 +101,7 @@ fun Slider(
     val semantics =
         createSemantics(
             accessibilityParams,
-            snappedValue,
+            value,
             valueRange,
             valueChange,
             isEnabled,
@@ -103,10 +110,10 @@ fun Slider(
 
     sliderState.onValueChangeFinished = {
         hapticsViewModel?.onValueChangeEnded()
-        onValueChangeFinished?.invoke(snappedValue)
+        onValueChangeFinished?.invoke(animatedValue)
     }
     sliderState.onValueChange = valueChange
-    sliderState.value = snappedValue
+    sliderState.value = animatedValue
 
     if (isVertical) {
         VerticalSlider(
@@ -130,28 +137,6 @@ fun Slider(
             modifier = modifier.clearAndSetSemantics(semantics),
         )
     }
-}
-
-@Composable
-private fun valueState(targetValue: Float, isEnabled: Boolean): State<Float> {
-    var prevValue by remember { mutableFloatStateOf(targetValue) }
-    var prevEnabled by remember { mutableStateOf(isEnabled) }
-    // Don't animate slider value when receive the first value and when changing isEnabled state
-    val value =
-        if (prevEnabled != isEnabled) mutableFloatStateOf(targetValue)
-        else
-            animateFloatAsState(
-                targetValue = targetValue,
-                animationSpec =
-                    spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessMedium,
-                    ),
-                label = "VolumeSliderValueAnimation",
-            )
-    prevValue = targetValue
-    prevEnabled = isEnabled
-    return value
 }
 
 private fun createSemantics(
