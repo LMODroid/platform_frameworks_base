@@ -16,25 +16,65 @@
 
 package com.android.systemui.qs.panels.ui.viewmodel
 
+import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager.Companion.LOCATION_QS
+import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.dialog.QSResetDialogDelegate
+import com.android.systemui.qs.pipeline.shared.TileSpec
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 class InfiniteGridViewModel
 @AssistedInject
 constructor(
-    val dynamicIconTilesViewModelFactory: DynamicIconTilesViewModel.Factory,
+    dynamicIconTilesViewModelFactory: DynamicIconTilesViewModel.Factory,
     val columnsWithMediaViewModelFactory: QSColumnsViewModel.Factory,
     val squishinessViewModel: TileSquishinessViewModel,
     private val resetDialogDelegate: QSResetDialogDelegate,
-) {
+) : ExclusiveActivatable(), PaginatableGridViewModel {
+    val iconTilesViewModel = dynamicIconTilesViewModelFactory.create()
+    val columnsWithMediaViewModel = columnsWithMediaViewModelFactory.create(LOCATION_QS)
+
+    override val pageKeys: Array<Any>
+        get() =
+            arrayOf(
+                columnsWithMediaViewModel.columns,
+                iconTilesViewModel.largeTilesState.value,
+                iconTilesViewModel.largeTilesSpanState.value,
+            )
 
     fun showResetDialog() {
         resetDialogDelegate.showDialog()
     }
 
+    override fun splitIntoPages(tiles: List<TileViewModel>, rows: Int): List<List<TileViewModel>> {
+        return splitInRows(
+                tiles.map { SizedTileImpl(it, widthOf(it.spec)) },
+                columnsWithMediaViewModel.columns,
+            )
+            .chunked(rows)
+            .map { it.flatten().map { it.tile } }
+    }
+
+    override suspend fun onActivated(): Nothing {
+        coroutineScope {
+            launch { iconTilesViewModel.activate() }
+            launch { columnsWithMediaViewModel.activate() }
+            awaitCancellation()
+        }
+    }
+
+    private fun widthOf(spec: TileSpec): Int {
+        return if (iconTilesViewModel.largeTilesState.value.contains(spec))
+            iconTilesViewModel.largeTilesSpanState.value
+        else 1
+    }
+
     @AssistedFactory
-    interface Factory {
-        fun create(): InfiniteGridViewModel
+    interface Factory : PaginatableGridViewModel.Factory {
+        override fun create(): InfiniteGridViewModel
     }
 }

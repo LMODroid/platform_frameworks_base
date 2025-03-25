@@ -24,8 +24,6 @@ import com.android.systemui.qs.panels.ui.viewmodel.toolbar.editModeButtonViewMod
 val Kosmos.paginatedGridViewModel by
     Kosmos.Fixture {
         PaginatedGridViewModel(
-            iconTilesViewModel,
-            qsColumnsViewModelFactory,
             inFirstPageViewModel,
             buildNumberViewModelFactory,
             editModeButtonViewModelFactory,
