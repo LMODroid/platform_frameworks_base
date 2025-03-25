@@ -113,11 +113,11 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         coroutineContext: CoroutineContext,
         block: EffectScope.(A) -> Unit,
     ): DisposableHandle {
-        val subRef = AtomicReference<Maybe<Output<A>>>(null)
+        val subRef = AtomicReference<Maybe<Output<A>>?>(null)
         val childScope = coroutineScope.childScope()
-        lateinit var cancelHandle: DisposableHandle
+        var cancelHandle: DisposableHandle? = null
         val handle = DisposableHandle {
-            cancelHandle.dispose()
+            cancelHandle?.dispose()
             subRef.getAndSet(Absent)?.let { output ->
                 if (output is Present) {
                     @Suppress("DeferredResultUnused")
