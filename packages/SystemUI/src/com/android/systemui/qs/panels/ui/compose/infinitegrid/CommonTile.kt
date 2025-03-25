@@ -66,6 +66,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorProducer
 import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -79,6 +80,7 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.semantics.toggleableState
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.android.compose.modifiers.size
 import com.android.compose.modifiers.thenIf
@@ -101,6 +103,7 @@ import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults
 import com.android.systemui.qs.panels.ui.viewmodel.AccessibilityUiState
 import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
+import kotlin.math.abs
 
 private const val TEST_TAG_TOGGLE = "qs_tile_toggle_target"
 
@@ -330,17 +333,19 @@ private fun TileLabel(
                     if (textSize > size.width) {
                         // Draw a blur over the end of the text
                         val edgeWidthPx = TileLabelBlurWidth.toPx()
-                        drawRect(
-                            topLeft = Offset(size.width - edgeWidthPx, 0f),
-                            size = Size(edgeWidthPx, size.height),
-                            brush =
-                                Brush.horizontalGradient(
-                                    colors = listOf(Color.Transparent, Color.Black),
-                                    startX = size.width,
-                                    endX = size.width - edgeWidthPx,
-                                ),
-                            blendMode = BlendMode.DstIn,
-                        )
+                        if (layoutDirection == LayoutDirection.Rtl) {
+                            drawFadedEdge(
+                                startX = 0f,
+                                endX = edgeWidthPx,
+                                colors = listOf(Color.Transparent, Color.Black),
+                            )
+                        } else {
+                            drawFadedEdge(
+                                startX = size.width - edgeWidthPx,
+                                endX = size.width,
+                                colors = listOf(Color.Black, Color.Transparent),
+                            )
+                        }
                     }
                 }
                 .basicMarquee(
@@ -360,6 +365,15 @@ fun Modifier.largeTilePadding(isDualTarget: Boolean = false): Modifier {
     return padding(
         start = TileStartPadding,
         end = if (isDualTarget) TileDualTargetEndPadding else TileEndPadding,
+    )
+}
+
+private fun DrawScope.drawFadedEdge(startX: Float, endX: Float, colors: List<Color>) {
+    drawRect(
+        topLeft = Offset(startX, 0f),
+        size = Size(abs(endX - startX), size.height),
+        brush = Brush.horizontalGradient(colors = colors, startX = startX, endX = endX),
+        blendMode = BlendMode.DstIn,
     )
 }
 

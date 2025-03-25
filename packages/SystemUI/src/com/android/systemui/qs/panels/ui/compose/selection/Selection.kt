@@ -264,7 +264,7 @@ private fun MinimumInteractiveSizeComponent(
                         val radius = constraints.maxHeight / 2f
                         val rotationCenter = Offset(constraints.maxWidth - radius, radius)
                         val position = offsetForAngle(angle(), radius, rotationCenter) + offset()
-                        placeable.place(
+                        placeable.placeRelative(
                             position.x.roundToInt() - placeable.width / 2,
                             position.y.roundToInt() - placeable.height / 2,
                         )
@@ -285,7 +285,7 @@ private fun Modifier.resizable(selected: Boolean, state: ResizingState): Modifie
             state.anchoredDraggableState.requireOffset().roundToInt().takeIf { !isIdle }
                 ?: constraints.maxWidth
         val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))
-        layout(constraints.maxWidth, placeable.height) { placeable.place(0, 0) }
+        layout(constraints.maxWidth, placeable.height) { placeable.placeRelative(0, 0) }
     }
 }
 

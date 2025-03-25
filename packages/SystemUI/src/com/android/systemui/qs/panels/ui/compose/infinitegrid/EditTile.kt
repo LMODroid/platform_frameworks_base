@@ -971,7 +971,7 @@ fun EditTile(
                         }
 
                     layout(constraints.maxWidth, constraints.maxHeight) {
-                        placeable.place(startPadding.roundToInt(), 0)
+                        placeable.placeRelative(startPadding.roundToInt(), 0)
                     }
                 }
                 .largeTilePadding()
