@@ -41,20 +41,21 @@ fun <T> ActivatedKairosSpec(
     kairosNetwork: KairosNetwork,
     block: @Composable (T) -> Unit,
 ) {
-    val uninit = Any()
-    var state by remember { mutableStateOf<Any?>(uninit) }
+    var state by remember { mutableStateOf<Any?>(Uninitialized) }
     LaunchedEffect(key1 = Unit) {
         kairosNetwork.activateSpec {
             val v = buildSpec.applySpec()
             launchEffect {
                 state = v
-                awaitClose { state = uninit }
+                awaitClose { state = Uninitialized }
             }
         }
     }
     state.let {
-        if (it !== uninit) {
+        if (it !== Uninitialized) {
             @Suppress("UNCHECKED_CAST") block(it as T)
         }
     }
 }
+
+private object Uninitialized
