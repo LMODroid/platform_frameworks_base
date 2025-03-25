@@ -48,6 +48,8 @@ constructor(
     val columns: Int
         get() = columnsWithMediaViewModel.columns
 
+    val largeTilesState = hydrator.hydratedStateOf(traceName = "largeTiles", source = largeTiles)
+
     fun registerSideSwipeGesture() {
         falsingInteractor.isFalseTouch(QS_SWIPE_SIDE)
     }

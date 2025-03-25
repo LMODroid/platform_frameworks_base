@@ -33,6 +33,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -77,9 +78,10 @@ constructor(
 
         val columns = viewModel.columns
         val rows = integerResource(R.integer.quick_settings_paginated_grid_num_rows)
+        val largeTiles by viewModel.largeTilesState
 
         val pages =
-            remember(tiles, columns, rows) {
+            remember(tiles, columns, rows, largeTiles) {
                 delegateGridLayout.splitIntoPages(tiles, rows = rows, columns = columns)
             }
 
