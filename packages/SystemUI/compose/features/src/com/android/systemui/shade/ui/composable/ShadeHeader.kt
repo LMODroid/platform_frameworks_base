@@ -51,12 +51,14 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentScope
@@ -87,6 +89,7 @@ import com.android.systemui.shade.ui.composable.ShadeHeader.Dimensions.Collapsed
 import com.android.systemui.shade.ui.composable.ShadeHeader.Values.ClockScale
 import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel
 import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel.HeaderChipHighlight
+import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.phone.StatusBarLocation
 import com.android.systemui.statusbar.phone.StatusIconContainer
 import com.android.systemui.statusbar.pipeline.mobile.ui.view.ModernShadeCarrierGroupMobileView
@@ -197,10 +200,14 @@ fun ContentScope.CollapsedShadeHeader(
                     SystemIconChip(
                         onClick = viewModel::onSystemIconChipClicked.takeIf { isSplitShade }
                     ) {
+                        val paddingEnd =
+                            with(LocalDensity.current) {
+                                (if (NewStatusBarIcons.isEnabled) 3.sp else 6.sp).toDp()
+                            }
                         StatusIcons(
                             viewModel = viewModel,
                             useExpandedFormat = useExpandedTextFormat,
-                            modifier = Modifier.padding(end = 6.dp).weight(1f, fill = false),
+                            modifier = Modifier.padding(end = paddingEnd).weight(1f, fill = false),
                         )
                         BatteryIcon(
                             createBatteryMeterViewController =
@@ -268,10 +275,14 @@ fun ContentScope.ExpandedShadeHeader(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 SystemIconChip {
+                    val paddingEnd =
+                        with(LocalDensity.current) {
+                            (if (NewStatusBarIcons.isEnabled) 3.sp else 6.sp).toDp()
+                        }
                     StatusIcons(
                         viewModel = viewModel,
                         useExpandedFormat = useExpandedFormat,
-                        modifier = Modifier.padding(end = 6.dp).weight(1f, fill = false),
+                        modifier = Modifier.padding(end = paddingEnd).weight(1f, fill = false),
                     )
                     BatteryIcon(
                         useExpandedFormat = useExpandedFormat,
@@ -352,10 +363,14 @@ fun ContentScope.OverlayShadeHeaderPartialStateless(
                     backgroundColor = chipHighlight.backgroundColor(MaterialTheme.colorScheme),
                     onClick = viewModel::onSystemIconChipClicked,
                 ) {
+                    val paddingEnd =
+                        with(LocalDensity.current) {
+                            (if (NewStatusBarIcons.isEnabled) 3.sp else 6.sp).toDp()
+                        }
                     StatusIcons(
                         viewModel = viewModel,
                         useExpandedFormat = false,
-                        modifier = Modifier.padding(end = 6.dp).weight(1f, fill = false),
+                        modifier = Modifier.padding(end = paddingEnd).weight(1f, fill = false),
                     )
                     BatteryIcon(
                         createBatteryMeterViewController =
