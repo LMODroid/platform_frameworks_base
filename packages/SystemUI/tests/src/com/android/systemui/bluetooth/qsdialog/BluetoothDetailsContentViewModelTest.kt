@@ -312,4 +312,18 @@ class BluetoothDetailsContentViewModelTest : SysuiTestCase() {
             assertThat(actual).isFalse()
         }
     }
+
+    @Test
+    fun testUpdateTitleAndSubtitle() {
+        testScope.runTest {
+            assertThat(bluetoothDetailsContentViewModel.title).isEqualTo("")
+            assertThat(bluetoothDetailsContentViewModel.subTitle).isEqualTo("")
+
+            bluetoothDetailsContentViewModel.showDialog(expandable)
+            runCurrent()
+
+            assertThat(bluetoothDetailsContentViewModel.title).isEqualTo("Bluetooth")
+            assertThat(bluetoothDetailsContentViewModel.subTitle).isEqualTo("Bluetooth is off")
+        }
+    }
 }

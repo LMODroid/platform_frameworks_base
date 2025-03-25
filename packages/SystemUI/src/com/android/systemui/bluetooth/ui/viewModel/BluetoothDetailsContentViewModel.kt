@@ -24,6 +24,9 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.annotation.DimenRes
 import androidx.annotation.StringRes
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.internal.jank.InteractionJankMonitor
 import com.android.settingslib.volume.domain.interactor.AudioModeInteractor
@@ -87,6 +90,12 @@ constructor(
     private val bluetoothDialogDelegateFactory: BluetoothTileDialogDelegate.Factory,
     private val bluetoothDetailsContentManagerFactory: BluetoothDetailsContentManager.Factory,
 ) {
+
+    var title by mutableStateOf("")
+        private set
+
+    var subTitle by mutableStateOf("")
+        private set
 
     lateinit var contentManager: BluetoothDetailsContentManager
     private var job: Job? = null
@@ -183,6 +192,8 @@ constructor(
                 deviceItemInteractor.updateDeviceItems(context, DeviceFetchTrigger.FIRST_LOAD)
             }
 
+            title = context.getString(R.string.quick_settings_bluetooth_label)
+
             // deviceItemUpdate is emitted when device item list is done fetching, update UI and
             // stop the progress bar.
             combine(deviceItemInteractor.deviceItemUpdate, deviceItemInteractor.showSeeAllUpdate) {
@@ -257,8 +268,9 @@ constructor(
             // the device item list.
             bluetoothStateInteractor.bluetoothStateUpdate
                 .onEach {
-                    detailsUIState.bluetoothState.value =
-                        BluetoothState(it, UiProperties.build(it, isAutoOnToggleFeatureAvailable()))
+                    val uiProperties = UiProperties.build(it, isAutoOnToggleFeatureAvailable())
+                    subTitle = context.getString(uiProperties.subTitleResId)
+                    detailsUIState.bluetoothState.value = BluetoothState(it, uiProperties)
                     updateDeviceItemJob?.cancel()
                     updateDeviceItemJob = launch {
                         deviceItemInteractor.updateDeviceItems(

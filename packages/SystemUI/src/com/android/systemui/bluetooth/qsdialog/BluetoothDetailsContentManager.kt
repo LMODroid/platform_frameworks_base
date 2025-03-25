@@ -129,6 +129,7 @@ constructor(
     private lateinit var contentView: View
     private lateinit var doneButton: Button
     private lateinit var bluetoothToggle: Switch
+    private lateinit var titleTextView: TextView
     private lateinit var subtitleTextView: TextView
     private lateinit var seeAllButton: View
     private lateinit var pairNewDeviceButton: View
@@ -163,6 +164,7 @@ constructor(
 
         doneButton = contentView.requireViewById(R.id.done_button)
         bluetoothToggle = contentView.requireViewById(R.id.bluetooth_toggle)
+        titleTextView = contentView.requireViewById(R.id.bluetooth_tile_dialog_title)
         subtitleTextView = contentView.requireViewById(R.id.bluetooth_tile_dialog_subtitle)
         seeAllButton = contentView.requireViewById(R.id.see_all_button)
         pairNewDeviceButton = contentView.requireViewById(R.id.pair_new_device_button)
@@ -182,7 +184,15 @@ constructor(
         setupRecyclerView()
         setupDoneButton()
 
-        subtitleTextView.text = contentView.context.getString(initialUiProperties.subTitleResId)
+        if (isInDialog) {
+            subtitleTextView.text = contentView.context.getString(initialUiProperties.subTitleResId)
+        } else {
+            // If rendering with tile details view, the title and subtitle will be added in the
+            // `TileDetails`
+            titleTextView.visibility = GONE
+            subtitleTextView.visibility = GONE
+        }
+
         seeAllButton.setOnClickListener { onSeeAllClicked(it) }
         pairNewDeviceButton.setOnClickListener { onPairNewDeviceClicked(it) }
         audioSharingButton.apply {
@@ -332,7 +342,9 @@ constructor(
             setEnabled(true)
             alpha = ENABLED_ALPHA
         }
-        subtitleTextView.text = contentView.context.getString(uiProperties.subTitleResId)
+        if (isInDialog) {
+            subtitleTextView.text = contentView.context.getString(uiProperties.subTitleResId)
+        }
         autoOnToggleLayout.visibility = uiProperties.autoOnToggleVisibility
     }
 

@@ -26,9 +26,9 @@ class BluetoothDetailsViewModel(
         onSettingsClick()
     }
 
-    // TODO: b/378513956 Update the placeholder text
-    override val title = "Bluetooth"
+    override val title: String
+        get() = detailsContentViewModel.title
 
-    // TODO: b/378513956 Update the placeholder text
-    override val subTitle = "Tap to connect or disconnect a device"
+    override val subTitle: String
+        get() = detailsContentViewModel.subTitle
 }
