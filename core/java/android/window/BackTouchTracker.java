@@ -135,6 +135,16 @@ public class BackTouchTracker {
         mShouldUpdateStartLocation = false;
     }
 
+    /**
+     * Updates the swipe edge. This is useful when it's not clear yet which swipe edge the gesture
+     * is performed on from the start of the gesture (for example trackpad back gestures).
+     *
+     * @param swipeEdge the updated swipeEdge value
+     */
+    public void updateSwipeEdge(@BackEvent.SwipeEdge int swipeEdge) {
+        mSwipeEdge = swipeEdge;
+    }
+
     /** Resets the tracker. */
     public void reset() {
         mInitTouchX = 0;
