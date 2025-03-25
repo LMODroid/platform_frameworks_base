@@ -38,7 +38,6 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -48,6 +47,7 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.app.animation.Interpolators
+import com.android.keyguard.AlphaOptimizedLinearLayout
 import com.android.settingslib.Utils
 import com.android.systemui.Dumpable
 import com.android.systemui.animation.ShadeInterpolation
@@ -81,6 +81,7 @@ import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.phone.ui.TintedIconManager
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryWithEstimate
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
+import com.android.systemui.statusbar.pipeline.shared.ui.view.SystemStatusIconsLayoutHelper
 import com.android.systemui.statusbar.policy.Clock
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.NextAlarmController
@@ -383,6 +384,10 @@ constructor(
             //     fgColor, /* single tone (current default) */
             // )
         } else {
+            // Configure the correct margins for the system icon container
+            val statusIcons = mView.requireViewById<AlphaOptimizedLinearLayout>(R.id.statusIcons)
+            SystemStatusIconsLayoutHelper.configurePaddingForNewStatusBarIcons(statusIcons)
+
             // Configure the compose battery view
             val batteryComposeView =
                 ComposeView(mView.context).apply {

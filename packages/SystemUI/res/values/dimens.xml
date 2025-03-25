@@ -189,6 +189,9 @@
     <!-- End padding for left-aligned status bar clock -->
     <dimen name="status_bar_left_clock_end_padding">2sp</dimen>
 
+    <!-- Margins before/after the new wifi icon -->
+    <dimen name="status_bar_wifi_signal_horizontal_margin">3sp</dimen>
+
     <!-- Spacing after the wifi signals that is present if there are any icons following it. -->
     <dimen name="status_bar_wifi_signal_spacer_width">2.5sp</dimen>
 
@@ -197,6 +200,7 @@
     <!-- Size of the view displaying the wifi signal icon in the status bar. This value should
         match the core/status_bar_system_icon_size and change to sp unit -->
     <dimen name="status_bar_wifi_signal_size">15sp</dimen>
+    <dimen name="status_bar_wifi_signal_height_updated">12sp</dimen>
 
     <!-- Size of the view displaying the mobile inout icon in the status bar. -->
     <dimen name="status_bar_mobile_inout_container_size">17sp</dimen>
@@ -218,13 +222,17 @@
         Note: can be removed once new_status_bar_icons is rolled out -->
     <dimen name="status_bar_mobile_container_corner_radius">9sp</dimen>
 
+    <!-- Start-side margin for the mobile container (before the RAT or triangle) -->
+    <dimen name="status_bar_mobile_container_margin_start">3sp</dimen>
+    <dimen name="status_bar_mobile_container_margin_end">3sp</dimen>
+
     <!-- Size of the view displaying the mobile signal icon in the status bar. This value should
         match the viewport height of mobile signal drawables such as ic_lte_mobiledata -->
     <dimen name="status_bar_mobile_type_size_updated">12sp</dimen>
     <!-- Size of the view that contains the network type. Should be equal to
    status_bar_mobile_type_size + 2, to account for 1sp top and bottom padding -->
-    <dimen name="status_bar_mobile_container_height_updated">14sp</dimen>
-    <dimen name="status_bar_mobile_container_margin_end">2sp</dimen>
+    <dimen name="status_bar_mobile_container_height_updated">12sp</dimen>
+    <dimen name="status_bar_mobile_type_container_margin_end">2sp</dimen>
     <!-- Corner radius for the background of the network type indicator. Should be equal to
         status_bar_mobile_container_height / 2 -->
     <dimen name="status_bar_mobile_container_corner_radius_updated">7sp</dimen>
@@ -1013,6 +1021,8 @@
 
     <!-- Padding between signal cluster and battery icon -->
     <dimen name="signal_cluster_battery_padding">6dp</dimen>
+    <!-- Padding between signal cluster and battery icon when NewStatusBarIcons is on -->
+    <dimen name="signal_cluster_battery_padding_new">3sp</dimen>
 
     <!-- end padding for battery icon in status bar -->
     <dimen name="status_bar_battery_end_padding">0dp</dimen>

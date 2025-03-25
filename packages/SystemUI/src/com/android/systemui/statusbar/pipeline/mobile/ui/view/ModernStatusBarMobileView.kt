@@ -21,6 +21,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
+import com.android.keyguard.AlphaOptimizedLinearLayout
 import com.android.systemui.kairos.BuildSpec
 import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.KairosNetwork
@@ -69,6 +70,53 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
         mobileHd.layoutParams = lp
     }
 
+    /**
+     * When [NewStatusBarIcons] is enabled, we have to tweak the layout. This can be moved directly
+     * into the layout xml when the flag is rolled out fully
+     */
+    private fun configureLayoutForNewStatusBarIcons() {
+        // Margins around the entire container
+        requireViewById<AlphaOptimizedLinearLayout>(R.id.mobile_group).apply {
+            val lp = layoutParams as MarginLayoutParams
+            lp.marginStart =
+                context.resources.getDimensionPixelSize(
+                    R.dimen.status_bar_mobile_container_margin_start
+                )
+            lp.marginEnd =
+                context.resources.getDimensionPixelSize(
+                    R.dimen.status_bar_mobile_container_margin_end
+                )
+        }
+
+        // triangle
+        requireViewById<ImageView>(R.id.mobile_signal).apply {
+            layoutParams.height =
+                context.resources.getDimensionPixelSize(
+                    R.dimen.status_bar_mobile_signal_size_updated
+                )
+        }
+
+        // RAT indicator container
+        requireViewById<FrameLayout>(R.id.mobile_type_container).apply {
+            // marginStart is moved to the outer group
+            (layoutParams as MarginLayoutParams).marginStart = 0
+            (layoutParams as MarginLayoutParams).marginEnd =
+                context.resources.getDimensionPixelSize(
+                    R.dimen.status_bar_mobile_type_container_margin_end
+                )
+            layoutParams.height =
+                context.resources.getDimensionPixelSize(
+                    R.dimen.status_bar_mobile_container_height_updated
+                )
+        }
+
+        // RAT indicator
+        requireViewById<ImageView>(R.id.mobile_type).apply {
+            layoutParams.height =
+                context.resources.getDimensionPixelSize(R.dimen.status_bar_mobile_type_size_updated)
+        }
+    }
+
     companion object {
 
         /**
@@ -85,43 +133,17 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
             return (LayoutInflater.from(context)
                     .inflate(R.layout.status_bar_mobile_signal_group_new, null)
                     as ModernStatusBarMobileView)
-                .also {
+                .apply {
                     // Flag-specific configuration
                     if (NewStatusBarIcons.isEnabled) {
-                        // triangle
-                        it.requireViewById<ImageView>(R.id.mobile_signal).apply {
-                            layoutParams.height =
-                                context.resources.getDimensionPixelSize(
-                                    R.dimen.status_bar_mobile_signal_size_updated
-                                )
-                        }
-
-                        // RAT indicator container
-                        it.requireViewById<FrameLayout>(R.id.mobile_type_container).apply {
-                            (layoutParams as MarginLayoutParams).marginEnd =
-                                context.resources.getDimensionPixelSize(
-                                    R.dimen.status_bar_mobile_container_margin_end
-                                )
-                            layoutParams.height =
-                                context.resources.getDimensionPixelSize(
-                                    R.dimen.status_bar_mobile_container_height_updated
-                                )
-                        }
-
-                        // RAT indicator
-                        it.requireViewById<ImageView>(R.id.mobile_type).apply {
-                            layoutParams.height =
-                                context.resources.getDimensionPixelSize(
-                                    R.dimen.status_bar_mobile_type_size_updated
-                                )
-                        }
+                        configureLayoutForNewStatusBarIcons()
                     }
 
-                    it.subId = viewModel.subscriptionId
-                    it.initView(slot) {
-                        MobileIconBinder.bind(view = it, viewModel = viewModel, logger = logger)
+                    subId = viewModel.subscriptionId
+                    initView(slot) {
+                        MobileIconBinder.bind(view = this, viewModel = viewModel, logger = logger)
                     }
-                    logger.logNewViewBinding(it, viewModel)
+                    logger.logNewViewBinding(this, viewModel)
                 }
         }
 
@@ -148,33 +170,7 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
                     .apply {
                         // Flag-specific configuration
                         if (NewStatusBarIcons.isEnabled) {
-                            // triangle
-                            requireViewById<ImageView>(R.id.mobile_signal).apply {
-                                layoutParams.height =
-                                    context.resources.getDimensionPixelSize(
-                                        R.dimen.status_bar_mobile_signal_size_updated
-                                    )
-                            }
-
-                            // RAT indicator container
-                            requireViewById<FrameLayout>(R.id.mobile_type_container).apply {
-                                (layoutParams as MarginLayoutParams).marginEnd =
-                                    context.resources.getDimensionPixelSize(
-                                        R.dimen.status_bar_mobile_container_margin_end
-                                    )
-                                layoutParams.height =
-                                    context.resources.getDimensionPixelSize(
-                                        R.dimen.status_bar_mobile_container_height_updated
-                                    )
-                            }
-
-                            // RAT indicator
-                            requireViewById<ImageView>(R.id.mobile_type).apply {
-                                layoutParams.height =
-                                    context.resources.getDimensionPixelSize(
-                                        R.dimen.status_bar_mobile_type_size_updated
-                                    )
-                            }
+                            configureLayoutForNewStatusBarIcons()
                         }
 
                         subId = subscriptionId

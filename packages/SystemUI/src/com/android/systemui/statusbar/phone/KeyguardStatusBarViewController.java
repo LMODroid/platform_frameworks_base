@@ -45,6 +45,7 @@ import androidx.core.animation.AnimatorListenerAdapter;
 import androidx.core.animation.ValueAnimator;
 
 import com.android.app.animation.InterpolatorsAndroidX;
+import com.android.keyguard.AlphaOptimizedLinearLayout;
 import com.android.keyguard.CarrierTextController;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
@@ -82,6 +83,7 @@ import com.android.systemui.statusbar.phone.ui.StatusBarIconController;
 import com.android.systemui.statusbar.phone.ui.TintedIconManager;
 import com.android.systemui.statusbar.pipeline.battery.ui.binder.UnifiedBatteryViewBinder;
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel;
+import com.android.systemui.statusbar.pipeline.shared.ui.view.SystemStatusIconsLayoutHelper;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
@@ -492,6 +494,10 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
                     DarkIconInteractor.toIsAreaDark(mView.darkChangeFlow()));
 
             mSystemIconsContainer.addView(batteryComposeView, -1);
+            // Set the margins for the system icons appropriately
+            AlphaOptimizedLinearLayout systemIcons =
+                    mSystemIconsContainer.findViewById(R.id.statusIcons);
+            SystemStatusIconsLayoutHelper.configurePaddingForNewStatusBarIcons(systemIcons);
         }
     }
 
