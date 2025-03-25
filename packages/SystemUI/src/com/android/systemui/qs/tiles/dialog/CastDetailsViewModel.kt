@@ -23,6 +23,7 @@ import android.provider.Settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.android.internal.app.MediaRouteChooserContentManager
 import com.android.internal.app.MediaRouteControllerContentManager
 import com.android.internal.app.MediaRouteDialogPresenter
 import com.android.systemui.plugins.qs.TileDetailsViewModel
@@ -38,7 +39,10 @@ constructor(
     private val qsTileIntentUserActionHandler: QSTileIntentUserInputHandler,
     @Assisted private val context: Context,
     @Assisted private val routeTypes: Int,
-) : MediaRouteControllerContentManager.Delegate, TileDetailsViewModel {
+) :
+    MediaRouteChooserContentManager.Delegate,
+    MediaRouteControllerContentManager.Delegate,
+    TileDetailsViewModel {
     private var detailsViewTitle by mutableStateOf(DEFAULT_TITLE)
     private val detailsViewSubTitle = if (shouldShowChooserDialog()) DEFAULT_SUBTITLE else ""
     var deviceIcon: Drawable? by mutableStateOf(null)
@@ -50,6 +54,10 @@ constructor(
 
     fun shouldShowChooserDialog(): Boolean {
         return MediaRouteDialogPresenter.shouldShowChooserDialog(context, routeTypes)
+    }
+
+    fun createChooserContentManager(): MediaRouteChooserContentManager {
+        return MediaRouteChooserContentManager(context, this)
     }
 
     fun createControllerContentManager(): MediaRouteControllerContentManager {
@@ -81,9 +89,15 @@ constructor(
         // TODO(b/378514236): Finish implementing this function.
     }
 
+    override fun showProgressBarWhenEmpty(): Boolean {
+        return false
+    }
+
     companion object {
         // TODO(b/388321032): Replace this string with a string in a translatable xml file.
         const val DEFAULT_TITLE = "Cast screen to device"
         const val DEFAULT_SUBTITLE = "Searching for devices..."
+        const val CHOOSER_VIEW_TEST_TAG = "CastChooserView"
+        const val CONTROLLER_VIEW_TEST_TAG = "CastControllerView"
     }
 }

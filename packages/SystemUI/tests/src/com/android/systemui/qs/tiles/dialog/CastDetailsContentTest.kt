@@ -24,8 +24,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.internal.app.MediaRouteChooserContentManager
 import com.android.internal.app.MediaRouteControllerContentManager
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.qs.tiles.impl.mediaroute.mediaRouteChooserContentManager
 import com.android.systemui.qs.tiles.impl.mediaroute.mediaRouteControllerContentManager
 import com.android.systemui.testKosmos
 import org.junit.Rule
@@ -42,12 +44,33 @@ import org.mockito.kotlin.verify
 class CastDetailsContentTest : SysuiTestCase() {
     @get:Rule val composeRule = createComposeRule()
     private val kosmos = testKosmos()
+    private val chooserContentManager: MediaRouteChooserContentManager =
+        kosmos.mediaRouteChooserContentManager
     private val controllerContentManager: MediaRouteControllerContentManager =
         kosmos.mediaRouteControllerContentManager
     private val viewModel: CastDetailsViewModel =
         mock<CastDetailsViewModel> {
+            on { createChooserContentManager() } doReturn chooserContentManager
             on { createControllerContentManager() } doReturn controllerContentManager
         }
+
+    @Test
+    fun shouldShowChooserDialogTrue_showChooserUI() {
+        viewModel.stub { on { shouldShowChooserDialog() } doReturn true }
+
+        composeRule.setContent { CastDetailsContent(viewModel) }
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithTag(CastDetailsViewModel.CHOOSER_VIEW_TEST_TAG).assertExists()
+        composeRule
+            .onNodeWithTag(CastDetailsViewModel.CONTROLLER_VIEW_TEST_TAG)
+            .assertDoesNotExist()
+        composeRule.onNodeWithContentDescription("device icon").assertDoesNotExist()
+        composeRule.onNodeWithText("Disconnect").assertDoesNotExist()
+
+        verify(chooserContentManager).bindViews(any())
+        verify(chooserContentManager).onAttachedToWindow()
+    }
 
     @Test
     fun shouldShowChooserDialogFalse_showControllerUI() {
@@ -56,9 +79,10 @@ class CastDetailsContentTest : SysuiTestCase() {
         composeRule.setContent { CastDetailsContent(viewModel) }
         composeRule.waitForIdle()
 
-        composeRule.onNodeWithTag("CastControllerView").assertExists()
+        composeRule.onNodeWithTag(CastDetailsViewModel.CONTROLLER_VIEW_TEST_TAG).assertExists()
         composeRule.onNodeWithContentDescription("device icon").assertExists()
         composeRule.onNodeWithText("Disconnect").assertExists()
+        composeRule.onNodeWithTag(CastDetailsViewModel.CHOOSER_VIEW_TEST_TAG).assertDoesNotExist()
 
         verify(controllerContentManager).bindViews(any())
         verify(controllerContentManager).onAttachedToWindow()

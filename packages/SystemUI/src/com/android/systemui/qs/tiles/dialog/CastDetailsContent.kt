@@ -31,12 +31,16 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.viewinterop.AndroidView
 import com.android.compose.ui.graphics.painter.rememberDrawablePainter
 import com.android.internal.R
+import com.android.internal.app.MediaRouteChooserContentManager
 import com.android.internal.app.MediaRouteControllerContentManager
 
 @Composable
 fun CastDetailsContent(castDetailsViewModel: CastDetailsViewModel) {
     if (castDetailsViewModel.shouldShowChooserDialog()) {
-        // TODO(b/378514236): Show the chooser UI here.
+        val contentManager: MediaRouteChooserContentManager = remember {
+            castDetailsViewModel.createChooserContentManager()
+        }
+        CastChooserView(contentManager)
         return
     }
 
@@ -59,9 +63,26 @@ fun CastDetailsContent(castDetailsViewModel: CastDetailsViewModel) {
 }
 
 @Composable
+fun CastChooserView(contentManager: MediaRouteChooserContentManager) {
+    AndroidView(
+        modifier = Modifier.fillMaxWidth().testTag(CastDetailsViewModel.CHOOSER_VIEW_TEST_TAG),
+        factory = { context ->
+            // Inflate with the existing dialog xml layout
+            val view =
+                LayoutInflater.from(context).inflate(R.layout.media_route_chooser_dialog, null)
+            contentManager.bindViews(view)
+            contentManager.onAttachedToWindow()
+
+            view
+        },
+        onRelease = { contentManager.onDetachedFromWindow() },
+    )
+}
+
+@Composable
 fun CastControllerView(contentManager: MediaRouteControllerContentManager) {
     AndroidView(
-        modifier = Modifier.fillMaxWidth().testTag("CastControllerView"),
+        modifier = Modifier.fillMaxWidth().testTag(CastDetailsViewModel.CONTROLLER_VIEW_TEST_TAG),
         factory = { context ->
             // Inflate with the existing dialog xml layout
             val view =
