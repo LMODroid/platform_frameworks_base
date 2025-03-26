@@ -37,6 +37,9 @@ import com.android.systemui.qs.flags.QsInCompose
 import com.android.systemui.qs.footer.data.model.UserSwitcherStatusModel
 import com.android.systemui.qs.footer.domain.interactor.FooterActionsInteractor
 import com.android.systemui.qs.footer.domain.model.SecurityButtonConfig
+import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsButtonViewModel.PowerActionViewModel
+import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsButtonViewModel.SettingsActionViewModel
+import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsButtonViewModel.UserSwitcherViewModel
 import com.android.systemui.qs.panels.domain.interactor.TextFeedbackInteractor
 import com.android.systemui.qs.panels.domain.model.TextFeedbackModel
 import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackContentViewModel.Companion.load
@@ -389,8 +392,7 @@ fun userSwitcherButtonViewModel(
     onUserSwitcherClicked: (Expandable) -> Unit,
 ): FooterActionsButtonViewModel {
     val icon = status.currentUserImage!!
-    return FooterActionsButtonViewModel(
-        id = R.id.multi_user_switch,
+    return UserSwitcherViewModel(
         icon =
             Icon.Loaded(
                 icon,
@@ -398,8 +400,8 @@ fun userSwitcherButtonViewModel(
                     userSwitcherContentDescription(qsThemedContext, status.currentUserName)
                 ),
             ),
-        iconTint = null,
-        backgroundColor = R.attr.shadeInactive,
+        iconTintFallback = null,
+        backgroundColorFallback = R.attr.shadeInactive,
         onClick = onUserSwitcherClicked,
     )
 }
@@ -417,15 +419,11 @@ fun settingsButtonViewModel(
     qsThemedContext: Context,
     onSettingsButtonClicked: (Expandable) -> Unit,
 ): FooterActionsButtonViewModel {
-    return FooterActionsButtonViewModel(
-        id = R.id.settings_button_container,
-        Icon.Resource(
-            R.drawable.ic_settings,
-            ContentDescription.Resource(R.string.accessibility_quick_settings_settings),
-        ),
-        iconTint = Utils.getColorAttrDefaultColor(qsThemedContext, R.attr.onShadeInactiveVariant),
-        backgroundColor = R.attr.shadeInactive,
-        onSettingsButtonClicked,
+    return SettingsActionViewModel(
+        iconTintFallback =
+            Utils.getColorAttrDefaultColor(qsThemedContext, R.attr.onShadeInactiveVariant),
+        backgroundColorFallback = R.attr.shadeInactive,
+        onClick = onSettingsButtonClicked,
     )
 }
 
@@ -445,18 +443,14 @@ fun powerButtonViewModel(
     shadeMode: ShadeMode,
 ): FooterActionsButtonViewModel {
     val isDualShade = shadeMode is ShadeMode.Dual
-    return FooterActionsButtonViewModel(
-        id = R.id.pm_lite,
-        Icon.Resource(
-            android.R.drawable.ic_lock_power_off,
-            ContentDescription.Resource(R.string.accessibility_quick_settings_power_menu),
-        ),
-        iconTint =
+    return PowerActionViewModel(
+        isOnDualShade = isDualShade,
+        iconTintFallback =
             Utils.getColorAttrDefaultColor(
                 qsThemedContext,
                 if (isDualShade) R.attr.onShadeInactiveVariant else R.attr.onShadeActive,
             ),
-        backgroundColor = if (isDualShade) R.attr.shadeInactive else R.attr.shadeActive,
-        onPowerButtonClicked,
+        backgroundColorFallback = if (isDualShade) R.attr.shadeInactive else R.attr.shadeActive,
+        onClick = onPowerButtonClicked,
     )
 }

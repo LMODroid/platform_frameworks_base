@@ -38,7 +38,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -46,6 +45,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,6 +74,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.compose.animation.Expandable
 import com.android.compose.animation.scene.ContentScope
+import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.compose.theme.colorAttr
 import com.android.systemui.Flags.notificationShadeBlur
 import com.android.systemui.animation.Expandable
@@ -322,8 +323,9 @@ fun IconButton(
     useModifierBasedExpandable: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val colors = buttonColorsForModel(model)
     Expandable(
-        color = colorAttr(model.backgroundColor),
+        color = colors.background,
         shape = CircleShape,
         onClick = model.onClick,
         modifier =
@@ -333,8 +335,7 @@ fun IconButton(
             ),
         useModifierBasedImplementation = useModifierBasedExpandable,
     ) {
-        val tint = model.iconTint?.let { Color(it) } ?: Color.Unspecified
-        Icon(model.icon, tint = tint, modifier = Modifier.size(20.dp))
+        Icon(model.icon, tint = colors.icon, modifier = Modifier.size(20.dp))
     }
 }
 
@@ -355,8 +356,9 @@ private fun NumberButton(
     // dot".
     val interactionSource = remember { MutableInteractionSource() }
 
+    val colors = numberButtonColors()
     Expandable(
-        color = colorAttr(R.attr.shadeInactive),
+        color = colors.background,
         shape = CircleShape,
         onClick = onClick,
         interactionSource = interactionSource,
@@ -380,7 +382,7 @@ private fun NumberButton(
                             this.contentDescription = contentDescription
                         },
                     style = MaterialTheme.typography.bodyLarge,
-                    color = colorAttr(R.attr.onShadeInactiveVariant),
+                    color = colors.content,
                     // TODO(b/242040009): This should only use a standard text style instead and
                     // should not override the text size.
                     fontSize = 18.sp,
@@ -406,7 +408,6 @@ private fun NewChangesDot(modifier: Modifier = Modifier) {
 }
 
 /** A larger button with an icon, some text and an optional dot (to indicate new changes). */
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun TextButton(
     icon: Icon,
@@ -416,11 +417,12 @@ private fun TextButton(
     useModifierBasedExpandable: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val colors = textButtonColors()
     Expandable(
         shape = CircleShape,
-        color = colorAttr(R.attr.underSurface),
-        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        borderStroke = BorderStroke(1.dp, colorAttr(R.attr.shadeInactive)),
+        color = colors.background,
+        contentColor = colors.content,
+        borderStroke = colors.border,
         modifier =
             modifier
                 .padding(horizontal = 4.dp)
@@ -432,11 +434,7 @@ private fun TextButton(
             Modifier.padding(horizontal = dimensionResource(R.dimen.qs_footer_padding)),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(
-                icon,
-                Modifier.padding(end = 12.dp).size(20.dp),
-                colorAttr(R.attr.onShadeInactiveVariant),
-            )
+            Icon(icon, Modifier.padding(end = 12.dp).size(20.dp), colors.content)
 
             Text(
                 text,
@@ -448,7 +446,7 @@ private fun TextButton(
                         MaterialTheme.typography.bodyMedium
                     },
                 letterSpacing = if (QsInCompose.isEnabled) 0.em else 0.01.em,
-                color = colorAttr(R.attr.onShadeInactiveVariant),
+                color = colors.content,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -462,9 +460,116 @@ private fun TextButton(
                     painterResource(com.android.internal.R.drawable.ic_chevron_end),
                     contentDescription = null,
                     Modifier.padding(start = 8.dp).size(20.dp),
-                    colorAttr(R.attr.onShadeInactiveVariant),
+                    colors.content,
                 )
             }
         }
     }
+}
+
+@Composable
+@ReadOnlyComposable
+private fun textButtonColors(): TextButtonColors {
+    return if (QsInCompose.isEnabled && notificationShadeBlur()) {
+        FooterActionsDefaults.blurTextButtonColors()
+    } else {
+        FooterActionsDefaults.textButtonColors()
+    }
+}
+
+@Composable
+@ReadOnlyComposable
+private fun numberButtonColors(): TextButtonColors {
+    return if (QsInCompose.isEnabled && notificationShadeBlur()) {
+        FooterActionsDefaults.blurTextButtonColors()
+    } else {
+        FooterActionsDefaults.numberButtonColors()
+    }
+}
+
+@Composable
+@ReadOnlyComposable
+private fun buttonColorsForModel(footerAction: FooterActionsButtonViewModel): ButtonColors {
+    return if (QsInCompose.isEnabled && notificationShadeBlur()) {
+        when (footerAction) {
+            is FooterActionsButtonViewModel.PowerActionViewModel -> {
+                if (footerAction.isOnDualShade) {
+                    FooterActionsDefaults.inactiveButtonColors()
+                } else {
+                    FooterActionsDefaults.activeButtonColors()
+                }
+            }
+            is FooterActionsButtonViewModel.SettingsActionViewModel ->
+                FooterActionsDefaults.inactiveButtonColors()
+            is FooterActionsButtonViewModel.UserSwitcherViewModel ->
+                FooterActionsDefaults.userSwitcherButtonColors()
+        }
+    } else {
+        ButtonColors(
+            icon = footerAction.iconTintFallback?.let { Color(it) } ?: Color.Unspecified,
+            background = colorAttr(footerAction.backgroundColorFallback),
+        )
+    }
+}
+
+private data class ButtonColors(val icon: Color, val background: Color)
+
+private data class TextButtonColors(
+    val content: Color,
+    val background: Color,
+    val border: BorderStroke?,
+)
+
+private object FooterActionsDefaults {
+
+    @Composable
+    @ReadOnlyComposable
+    fun activeButtonColors(): ButtonColors =
+        ButtonColors(
+            icon = MaterialTheme.colorScheme.onPrimary,
+            background = MaterialTheme.colorScheme.primary,
+        )
+
+    @Composable
+    @ReadOnlyComposable
+    fun inactiveButtonColors(): ButtonColors =
+        ButtonColors(
+            icon = MaterialTheme.colorScheme.onSurface,
+            background = LocalAndroidColorScheme.current.surfaceEffect2,
+        )
+
+    @Composable
+    @ReadOnlyComposable
+    fun userSwitcherButtonColors(): ButtonColors =
+        ButtonColors(
+            icon = Color.Unspecified,
+            background = LocalAndroidColorScheme.current.surfaceEffect2,
+        )
+
+    @Composable
+    @ReadOnlyComposable
+    fun blurTextButtonColors(): TextButtonColors =
+        TextButtonColors(
+            content = MaterialTheme.colorScheme.onSurface,
+            background = LocalAndroidColorScheme.current.surfaceEffect2,
+            border = null,
+        )
+
+    @Composable
+    @ReadOnlyComposable
+    fun textButtonColors(): TextButtonColors =
+        TextButtonColors(
+            content = colorAttr(R.attr.onShadeInactiveVariant),
+            background = colorAttr(R.attr.underSurface),
+            border = BorderStroke(1.dp, colorAttr(R.attr.shadeInactive)),
+        )
+
+    @Composable
+    @ReadOnlyComposable
+    fun numberButtonColors(): TextButtonColors =
+        TextButtonColors(
+            content = colorAttr(R.attr.onShadeInactiveVariant),
+            background = colorAttr(R.attr.shadeInactive),
+            border = null,
+        )
 }

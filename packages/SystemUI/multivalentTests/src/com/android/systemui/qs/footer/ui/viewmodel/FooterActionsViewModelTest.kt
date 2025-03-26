@@ -111,8 +111,8 @@ class FooterActionsViewModelTest : SysuiTestCase() {
                     ContentDescription.Resource(R.string.accessibility_quick_settings_settings),
                 )
             )
-        assertThat(settings.backgroundColor).isEqualTo(R.attr.shadeInactive)
-        assertThat(settings.iconTint)
+        assertThat(settings.backgroundColorFallback).isEqualTo(R.attr.shadeInactive)
+        assertThat(settings.iconTintFallback)
             .isEqualTo(Utils.getColorAttrDefaultColor(themedContext, R.attr.onShadeInactiveVariant))
     }
 
@@ -136,8 +136,8 @@ class FooterActionsViewModelTest : SysuiTestCase() {
                     ContentDescription.Resource(R.string.accessibility_quick_settings_power_menu),
                 )
             )
-        assertThat(checkNotNull(power).backgroundColor).isEqualTo(R.attr.shadeActive)
-        assertThat(checkNotNull(power).iconTint)
+        assertThat(checkNotNull(power).backgroundColorFallback).isEqualTo(R.attr.shadeActive)
+        assertThat(checkNotNull(power).iconTintFallback)
             .isEqualTo(Utils.getColorAttrDefaultColor(themedContext, R.attr.onShadeActive))
     }
 
@@ -189,14 +189,14 @@ class FooterActionsViewModelTest : SysuiTestCase() {
         assertThat(userSwitcher).isNotNull()
         assertThat(userSwitcher!!.icon)
             .isEqualTo(Icon.Loaded(picture, ContentDescription.Loaded("Signed in as foo")))
-        assertThat(userSwitcher.backgroundColor).isEqualTo(R.attr.shadeInactive)
+        assertThat(userSwitcher.backgroundColorFallback).isEqualTo(R.attr.shadeInactive)
 
         // Change the current user name.
         userSwitcherControllerWrapper.currentUserName = "bar"
         assertThat(currentUserSwitcher()?.icon?.contentDescription)
             .isEqualTo(ContentDescription.Loaded("Signed in as bar"))
 
-        fun iconTint(): Int? = currentUserSwitcher()!!.iconTint
+        fun iconTint(): Int? = currentUserSwitcher()!!.iconTintFallback
 
         // We tint the icon if the current user is not the guest.
         assertThat(iconTint()).isNull()
