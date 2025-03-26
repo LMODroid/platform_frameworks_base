@@ -142,8 +142,6 @@ interface KairosBuilder : KairosActivatable {
 @OptIn(ExperimentalKairosApi::class)
 private class KairosBuilderImpl @Inject constructor() : KairosBuilder {
 
-    // TODO: atomic?
-    // TODO: are two lists really necessary?
     private var _builds: MutableList<KairosActivatable>? = mutableListOf()
     private var _startables: MutableList<KairosActivatable>? = mutableListOf()
 

@@ -21,6 +21,8 @@ import com.android.systemui.CoreStartable
 import com.android.systemui.Flags
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.kairos.ExperimentalKairosApi
+import com.android.systemui.kairos.KairosNetwork
+import com.android.systemui.kairos.toColdConflatedFlow
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.LogBufferFactory
 import com.android.systemui.log.table.TableLogBuffer
@@ -50,6 +52,7 @@ import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIc
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconsInteractorKairosAdapter
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconsInteractorKairosImpl
 import com.android.systemui.statusbar.pipeline.mobile.ui.MobileUiAdapter
+import com.android.systemui.statusbar.pipeline.mobile.ui.MobileUiAdapterKairos
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsViewModel
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsViewModelKairos
 import com.android.systemui.statusbar.pipeline.mobile.util.MobileMappingsProxy
@@ -101,6 +104,7 @@ import kotlinx.coroutines.flow.Flow
             MobileConnectionRepositoryKairosFactoryImpl.Module::class,
             MobileConnectionsRepositoryKairosAdapter.Module::class,
             MobileIconsInteractorKairosAdapter.Module::class,
+            MobileUiAdapterKairos.Module::class,
         ]
 )
 abstract class StatusBarPipelineModule {
@@ -222,11 +226,19 @@ abstract class StatusBarPipelineModule {
         @SysUISingleton
         @Named(FIRST_MOBILE_SUB_SHOWING_NETWORK_TYPE_ICON)
         fun provideFirstMobileSubShowingNetworkTypeIconProvider(
-            mobileIconsViewModel: MobileIconsViewModel
+            mobileIconsViewModel: Provider<MobileIconsViewModel>,
+            kairosViewModel: Provider<MobileIconsViewModelKairos>,
+            kairosNetwork: KairosNetwork,
         ): Supplier<Flow<Boolean>> {
-            // TODO: kairos-ify
-            return Supplier<Flow<Boolean>> {
-                mobileIconsViewModel.firstMobileSubShowingNetworkTypeIcon
+            return if (Flags.statusBarMobileIconKairos()) {
+                Supplier {
+                    kairosViewModel
+                        .get()
+                        .firstMobileSubShowingNetworkTypeIcon
+                        .toColdConflatedFlow(kairosNetwork)
+                }
+            } else {
+                Supplier { mobileIconsViewModel.get().firstMobileSubShowingNetworkTypeIcon }
             }
         }
 

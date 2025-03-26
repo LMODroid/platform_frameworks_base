@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.pipeline.mobile.ui
 
 import com.android.systemui.Dumpable
+import com.android.systemui.Flags
 import com.android.systemui.KairosActivatable
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dump.DumpManager
@@ -29,8 +30,11 @@ import com.android.systemui.shade.carrier.ShadeCarrierGroupController
 import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconsInteractorKairos
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsViewModelKairos
+import dagger.Provides
+import dagger.multibindings.ElementsIntoSet
 import java.io.PrintWriter
 import javax.inject.Inject
+import javax.inject.Provider
 
 /**
  * This class is intended to provide a context to collect on the
@@ -91,5 +95,15 @@ constructor(
     override fun dump(pw: PrintWriter, args: Array<out String>) {
         pw.println("isCollecting=$isCollecting")
         pw.println("Last values sent to icon controller: $lastValue")
+    }
+
+    @dagger.Module
+    object Module {
+        @Provides
+        @ElementsIntoSet
+        fun kairosActivatable(
+            impl: Provider<MobileUiAdapterKairos>
+        ): Set<@JvmSuppressWildcards KairosActivatable> =
+            if (Flags.statusBarMobileIconKairos()) setOf(impl.get()) else emptySet()
     }
 }
