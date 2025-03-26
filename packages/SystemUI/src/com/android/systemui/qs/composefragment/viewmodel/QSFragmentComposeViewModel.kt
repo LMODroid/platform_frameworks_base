@@ -135,7 +135,7 @@ constructor(
     var isQsVisible by mutableStateOf(false)
 
     val isQsVisibleAndAnyShadeExpanded: Boolean
-        get() = anyShadeExpanded && isQsVisible
+        get() = (anyShadeExpanded || isUserInteracting) && isQsVisible
 
     // This can only be negative if undefined (in which case it will be -1f), else it will be
     // in [0, 1]. In some cases, it could be set back to -1f internally to indicate that it's
@@ -452,6 +452,12 @@ constructor(
         hydrator.hydratedStateOf(
             traceName = "anyShadeExpanded",
             source = shadeInteractor.isAnyExpanded,
+        )
+
+    private val isUserInteracting by
+        hydrator.hydratedStateOf(
+            traceName = "isUserInteracting",
+            source = shadeInteractor.isUserInteracting,
         )
 
     fun applyNewQsScrollerBounds(left: Float, top: Float, right: Float, bottom: Float) {
