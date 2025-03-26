@@ -238,10 +238,6 @@ class UninstallRepository(private val context: Context) {
         val myUserHandle = Process.myUserHandle()
         val isSingleUserOnDevice = isSingleUserOnDevice()
 
-        if (isArchive) {
-            positiveButtonText = context.getString(R.string.button_archive)
-        }
-
         if (isUpdatedSystemApp) {
             dialogTitle = context.getString(R.string.title_uninstall_updates_system_app)
             positiveButtonText = context.getString(R.string.button_uninstall_updates_system_app)
@@ -264,77 +260,70 @@ class UninstallRepository(private val context: Context) {
                 dialogTitle = context.getString(R.string.title_uninstall_all_users)
             }
             messageBuilder.append(messageString)
-        } else if (uninstalledUser != myUserHandle) {
-            // Uninstalling user is issuing uninstall for another user
-            val customUserManager = context.createContextAsUser(uninstalledUser!!, 0)
-                .getSystemService(UserManager::class.java)
-            val userName = customUserManager!!.userName
-
-            var messageString: String
-            if (isArchive) {
-                messageString = context.getString(R.string.message_archive_other_user, userName)
-                dialogTitle = context.getString(R.string.title_archive_other_user)
-            } else {
-                messageString = context.getString(R.string.message_uninstall_other_user, userName)
-                dialogTitle = context.getString(R.string.title_uninstall_other_user)
-            }
-
-            if (userManager!!.isSameProfileGroup(myUserHandle, uninstalledUser!!)) {
-                if (customUserManager.isManagedProfile) {
-                    if (isArchive) {
-                        messageString = context.getString(R.string.message_archive_work_profile)
-                        dialogTitle = context.getString(R.string.title_archive)
-                    } else {
-                        messageString = context.getString(R.string.message_uninstall_work_profile)
-                        dialogTitle = context.getString(R.string.title_uninstall)
-                    }
-                } else if (customUserManager.isCloneProfile) {
-                    isClonedApp = true
-                    messageString = context.getString(
-                            R.string.message_delete_clone_app, targetAppLabel
-                    )
-                    dialogTitle = context.getString(R.string.title_uninstall_clone)
-                } else if (Flags.allowPrivateProfile()
-                        && MultiuserFlags.enablePrivateSpaceFeatures()
-                        && customUserManager.isPrivateProfile
-                ) {
-                    // TODO(b/324244123): Get these Strings from a User Property API.
-                    if (isArchive) {
-                        messageString = context.getString(R.string.message_archive_private_space)
-                        dialogTitle = context.getString(R.string.title_archive)
-                    } else {
-                        messageString = context.getString(R.string.message_uninstall_private_space)
-                        dialogTitle = context.getString(R.string.title_uninstall)
-                    }
-                }
-            }
-            messageBuilder.append(messageString)
-        } else if (isCloneProfile(uninstalledUser!!)) {
-            isClonedApp = true
-            dialogTitle = context.getString(R.string.title_uninstall_clone)
-            messageBuilder.append(
-                context.getString(
-                    R.string.message_delete_clone_app, targetAppLabel
-                )
-            )
-        } else if (isPrivateSpace(uninstalledUser!!)) {
-            var messageString: String
-            if (isArchive) {
-                messageString = context.getString(R.string.message_archive_private_space)
-                dialogTitle = context.getString(R.string.title_archive)
-            } else {
-                messageString = context.getString(R.string.message_uninstall_private_space)
-                dialogTitle = context.getString(R.string.title_uninstall)
-            }
-            messageBuilder.append(messageString)
         } else if (myUserHandle == UserHandle.SYSTEM &&
             hasClonedInstance(targetAppInfo!!.packageName)
         ) {
             dialogTitle = context.getString(R.string.title_uninstall)
             messageBuilder.append(context.getString(R.string.message_uninstall_with_clone_instance))
-        } else if (isArchive) {
-            dialogTitle = context.getString(R.string.title_archive)
-            messageBuilder.append(context.getString(R.string.message_archive))
+        } else {
+            val isCrossUserUninstalledRequest = myUserHandle != uninstalledUser
+            val isSameProfileGroup =
+                userManager!!.isSameProfileGroup(myUserHandle, uninstalledUser!!)
+            val isTargetUserAProfile = isCrossUserUninstalledRequest && isSameProfileGroup
+
+            val userManagerForTargetUser = context.createContextAsUser(uninstalledUser!!, 0)
+                .getSystemService(UserManager::class.java)
+
+            val isPrivateSpaceFeatureEnabled = Flags.allowPrivateProfile()
+                    && MultiuserFlags.enablePrivateSpaceFeatures()
+
+            var messageString = ""
+            if ((isPrivateSpaceFeatureEnabled)
+                && (userManager.isPrivateProfile
+                        || (isTargetUserAProfile && userManagerForTargetUser.isPrivateProfile))) {
+                if (isArchive) {
+                    messageString = context.getString(R.string.message_archive_private_space)
+                    dialogTitle = context.getString(R.string.title_archive)
+                } else {
+                    messageString = context.getString(R.string.message_uninstall_private_space)
+                    dialogTitle = context.getString(R.string.title_uninstall)
+                }
+            } else if (userManager.isManagedProfile
+                    || (isTargetUserAProfile && userManagerForTargetUser.isManagedProfile)) {
+                if (isArchive) {
+                    messageString = context.getString(R.string.message_archive_work_profile)
+                    dialogTitle = context.getString(R.string.title_archive)
+                } else {
+                    messageString = context.getString(R.string.message_uninstall_work_profile)
+                    dialogTitle = context.getString(R.string.title_uninstall)
+                }
+            } else if (userManager.isCloneProfile
+                    || (isTargetUserAProfile && userManagerForTargetUser.isCloneProfile)) {
+                isClonedApp = true
+                messageString = context.getString(R.string.message_delete_clone_app,
+                    targetAppLabel)
+                dialogTitle = context.getString(R.string.title_uninstall_clone)
+            } else if (isCrossUserUninstalledRequest && !isTargetUserAProfile) {
+                // App is being uninstalled from a different, but non-profile user
+                val userName = userManagerForTargetUser!!.userName
+                if (isArchive) {
+                    messageString = context.getString(R.string.message_archive_other_user,
+                        userName)
+                    dialogTitle = context.getString(R.string.title_archive_other_user)
+                } else {
+                    messageString =
+                        context.getString(R.string.message_uninstall_other_user, userName)
+                    dialogTitle = context.getString(R.string.title_uninstall_other_user)
+                }
+            } else if (isArchive) {
+                dialogTitle = context.getString(R.string.title_archive)
+                positiveButtonText = context.getString(R.string.button_archive)
+                messageString = context.getString(R.string.message_archive)
+            }
+
+            if (messageString.isNotEmpty()) {
+                messageBuilder.append(messageString)
+            }
         }
 
         val message = if (messageBuilder.isNotEmpty()) {
@@ -415,12 +404,6 @@ class UninstallRepository(private val context: Context) {
         val customUserManager = context.createContextAsUser(userHandle, 0)
             .getSystemService(UserManager::class.java)
         return customUserManager!!.isUserOfType(UserManager.USER_TYPE_PROFILE_CLONE)
-    }
-
-    private fun isPrivateSpace(userHandle: UserHandle): Boolean {
-        val customUserManager = context.createContextAsUser(userHandle, 0)
-            .getSystemService(UserManager::class.java)
-        return customUserManager!!.isUserOfType(UserManager.USER_TYPE_PROFILE_PRIVATE)
     }
 
     /**
