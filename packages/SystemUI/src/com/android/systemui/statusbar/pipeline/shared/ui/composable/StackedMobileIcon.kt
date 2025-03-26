@@ -19,10 +19,10 @@ package com.android.systemui.statusbar.pipeline.shared.ui.composable
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -75,7 +75,8 @@ fun StackedMobileIcon(viewModel: StackedMobileIconViewModel, modifier: Modifier 
         modifier = modifier.padding(horizontal = padding),
     ) {
         viewModel.networkTypeIcon?.let {
-            Icon(it, tint = contentColor, modifier = Modifier.fillMaxHeight())
+            val height = with(LocalDensity.current) { IconHeightSp.toDp() }
+            Icon(it, tint = contentColor, modifier = Modifier.height(height).wrapContentWidth())
         }
 
         StackedMobileIcon(dualSim, contentColor)
