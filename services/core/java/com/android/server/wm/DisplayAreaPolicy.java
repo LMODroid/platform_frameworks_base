@@ -165,9 +165,10 @@ public abstract class DisplayAreaPolicy {
                         .addFeature(new Feature.Builder(wmService.mPolicy, "AppZoomOut",
                                 FEATURE_APP_ZOOM_OUT)
                                 .all()
+                                .upTo(TYPE_VOLUME_OVERLAY)
                                 .except(TYPE_NAVIGATION_BAR, TYPE_NAVIGATION_BAR_PANEL,
                                         TYPE_STATUS_BAR, TYPE_NOTIFICATION_SHADE,
-                                        TYPE_KEYGUARD_DIALOG, TYPE_WALLPAPER, TYPE_VOLUME_OVERLAY)
+                                        TYPE_KEYGUARD_DIALOG, TYPE_WALLPAPER)
                                 .build());
             }
             if (USE_DISPLAY_AREA_FOR_FULLSCREEN_MAGNIFICATION) {
