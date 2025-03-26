@@ -4553,6 +4553,20 @@ public interface WindowManager extends ViewManager {
         public static final int INPUT_FEATURE_SENSITIVE_FOR_PRIVACY = 1 << 3;
 
         /**
+         * Input feature used to indicate that this window is display topology aware.
+         * <p>
+         * Using this flag will allow window to receive gestures that can cross display boundaries.
+         * Such windows can receive input event stream containing events with varying displayIds
+         * in the corresponding coordinate space when the cursor crosses display boundary.
+         * <p>
+         *
+         * @hide
+         */
+        @RequiresPermission(permission.MANAGE_DISPLAYS)
+        public static final int
+                INPUT_FEATURE_DISPLAY_TOPOLOGY_AWARE = 1 << 4;
+
+        /**
          * An internal annotation for flags that can be specified to {@link #inputFeatures}.
          *
          * NOTE: These are not the same as {@link android.os.InputConfig} flags.
@@ -4564,7 +4578,8 @@ public interface WindowManager extends ViewManager {
                 INPUT_FEATURE_NO_INPUT_CHANNEL,
                 INPUT_FEATURE_DISABLE_USER_ACTIVITY,
                 INPUT_FEATURE_SPY,
-                INPUT_FEATURE_SENSITIVE_FOR_PRIVACY
+                INPUT_FEATURE_SENSITIVE_FOR_PRIVACY,
+                INPUT_FEATURE_DISPLAY_TOPOLOGY_AWARE
         })
         public @interface InputFeatureFlags {
         }
@@ -6253,6 +6268,10 @@ public interface WindowManager extends ViewManager {
             if ((inputFeatures & INPUT_FEATURE_SPY) != 0) {
                 inputFeatures &= ~INPUT_FEATURE_SPY;
                 features.add("INPUT_FEATURE_SPY");
+            }
+            if ((inputFeatures & INPUT_FEATURE_DISPLAY_TOPOLOGY_AWARE) != 0) {
+                inputFeatures &= ~INPUT_FEATURE_DISPLAY_TOPOLOGY_AWARE;
+                features.add("INPUT_FEATURE_DISPLAY_TOPOLOGY_AWARE");
             }
             if (inputFeatures != 0) {
                 features.add(Integer.toHexString(inputFeatures));

@@ -29,6 +29,7 @@ import static android.view.Display.FLAG_OWN_FOCUS;
 import static android.view.Display.INVALID_DISPLAY;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_SECURE;
+import static android.view.WindowManager.LayoutParams.INPUT_FEATURE_DISPLAY_TOPOLOGY_AWARE;
 import static android.view.WindowManager.LayoutParams.INPUT_FEATURE_SENSITIVE_FOR_PRIVACY;
 import static android.view.WindowManager.LayoutParams.INPUT_FEATURE_SPY;
 import static android.view.WindowManager.LayoutParams.INVALID_WINDOW_TYPE;
@@ -1252,6 +1253,24 @@ public class WindowManagerServiceTests extends WindowTestsBase {
         verify(mTransaction).setInputWindowInfo(
                 eq(surfaceControl),
                 argThat(h -> (h.inputConfig & InputConfig.SPY) == InputConfig.SPY));
+    }
+
+    @Test
+    public void testGrantInputChannel_sanitizeDisplayTopologyAwareForManageDisplaysPermission() {
+        final Session session = mock(Session.class);
+        final int callingUid = Process.FIRST_APPLICATION_UID;
+        final int callingPid = 1234;
+        final SurfaceControl surfaceControl = mock(SurfaceControl.class);
+        final IBinder window = new Binder();
+        final InputTransferToken inputTransferToken = mock(InputTransferToken.class);
+
+        final InputChannel inputChannel = new InputChannel();
+        assertThrows(SecurityException.class, () ->
+                mWm.grantInputChannel(session, callingUid, callingPid, DEFAULT_DISPLAY,
+                        surfaceControl, window, null /* hostInputToken */, 0 /* flags */,
+                        PRIVATE_FLAG_TRUSTED_OVERLAY, INPUT_FEATURE_DISPLAY_TOPOLOGY_AWARE,
+                        TYPE_APPLICATION, null /* windowToken */, inputTransferToken,
+                        "TestInputChannel", inputChannel));
     }
 
     @Test

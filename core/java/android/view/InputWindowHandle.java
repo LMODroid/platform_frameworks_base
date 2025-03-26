@@ -68,6 +68,7 @@ public final class InputWindowHandle {
             InputConfig.INTERCEPTS_STYLUS,
             InputConfig.CLONE,
             InputConfig.SENSITIVE_FOR_PRIVACY,
+            InputConfig.DISPLAY_TOPOLOGY_AWARE,
     })
     public @interface InputConfigFlags {}
 
