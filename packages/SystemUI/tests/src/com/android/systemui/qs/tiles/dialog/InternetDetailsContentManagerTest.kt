@@ -797,6 +797,21 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
         }
     }
 
+    @Test
+    fun turnOffProgressBarWhenWifiDisabled() {
+        whenever(internetDetailsContentController.isWifiEnabled).thenReturn(false)
+        internetDetailsContentManager.isProgressBarVisible = true
+
+        internetDetailsContentManager.updateContent(false)
+
+        bgExecutor.runAllReady()
+        internetDetailsContentManager.internetContentData.observe(
+            internetDetailsContentManager.lifecycleOwner!!
+        ) {
+            assertThat(internetDetailsContentManager.isProgressBarVisible).isFalse()
+        }
+    }
+
     companion object {
         private const val TITLE = "Internet"
         private const val MOBILE_NETWORK_TITLE = "Mobile Title"

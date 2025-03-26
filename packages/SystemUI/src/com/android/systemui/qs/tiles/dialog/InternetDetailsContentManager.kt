@@ -351,6 +351,10 @@ constructor(
         title = getTitleText()
         subTitle = getSubtitleText()
 
+        if (!internetContent.isWifiEnabled) {
+            setProgressBarVisible(false)
+        }
+
         airplaneModeButton.visibility =
             if (internetContent.isAirplaneModeEnabled) View.VISIBLE else View.GONE
 
