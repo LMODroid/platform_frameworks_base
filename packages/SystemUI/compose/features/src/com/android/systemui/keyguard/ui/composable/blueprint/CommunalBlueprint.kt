@@ -38,7 +38,10 @@ class CommunalBlueprint @Inject constructor() : ComposableLockscreenSceneBluepri
 
     @Composable
     override fun ContentScope.Content(viewModel: LockscreenContentViewModel, modifier: Modifier) {
-        LockscreenLongPress(viewModel = viewModel.touchHandling, modifier = modifier) { _ ->
+        LockscreenLongPress(
+            viewModelFactory = viewModel.touchHandlingFactory,
+            modifier = modifier,
+        ) { _ ->
             Box(modifier.background(Color.Black)) {
                 Text(
                     text = "TODO(b/316211368): communal blueprint",

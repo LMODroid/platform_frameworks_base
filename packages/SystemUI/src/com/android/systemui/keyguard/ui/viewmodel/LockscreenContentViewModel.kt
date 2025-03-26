@@ -51,7 +51,7 @@ constructor(
     private val clockInteractor: KeyguardClockInteractor,
     interactor: KeyguardBlueprintInteractor,
     private val authController: AuthController,
-    val touchHandling: KeyguardTouchHandlingViewModel,
+    val touchHandlingFactory: KeyguardTouchHandlingViewModel.Factory,
     shadeModeInteractor: ShadeModeInteractor,
     unfoldTransitionInteractor: UnfoldTransitionInteractor,
     deviceEntryInteractor: DeviceEntryInteractor,

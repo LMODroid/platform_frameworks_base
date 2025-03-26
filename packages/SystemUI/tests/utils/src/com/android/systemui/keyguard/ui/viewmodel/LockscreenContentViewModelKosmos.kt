@@ -37,7 +37,7 @@ val Kosmos.lockscreenContentViewModelFactory by Fixture {
                 clockInteractor = keyguardClockInteractor,
                 interactor = keyguardBlueprintInteractor,
                 authController = authController,
-                touchHandling = keyguardTouchHandlingViewModel,
+                touchHandlingFactory = keyguardTouchHandlingViewModelFactory,
                 shadeModeInteractor = shadeModeInteractor,
                 unfoldTransitionInteractor = unfoldTransitionInteractor,
                 deviceEntryInteractor = deviceEntryInteractor,

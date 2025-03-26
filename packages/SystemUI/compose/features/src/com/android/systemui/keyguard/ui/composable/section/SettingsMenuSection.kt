@@ -42,25 +42,19 @@ class SettingsMenuSection
 @Inject
 constructor(
     private val viewModel: KeyguardSettingsMenuViewModel,
-    private val touchHandlingViewModel: KeyguardTouchHandlingViewModel,
+    private val touchHandlingViewModelFactory: KeyguardTouchHandlingViewModel.Factory,
     private val vibratorHelper: VibratorHelper,
     private val activityStarter: ActivityStarter,
 ) {
     @Composable
     @SuppressWarnings("InflateParams") // null is passed into the inflate call, on purpose.
-    fun SettingsMenu(
-        onPlaced: (Rect?) -> Unit,
-        modifier: Modifier = Modifier,
-    ) {
+    fun SettingsMenu(onPlaced: (Rect?) -> Unit, modifier: Modifier = Modifier) {
         val (disposableHandle, setDisposableHandle) =
             remember { mutableStateOf<DisposableHandle?>(null) }
         AndroidView(
             factory = { context ->
                 LayoutInflater.from(context)
-                    .inflate(
-                        R.layout.keyguard_settings_popup_menu,
-                        null,
-                    )
+                    .inflate(R.layout.keyguard_settings_popup_menu, null)
                     .apply {
                         isVisible = false
                         alpha = 0f
@@ -69,7 +63,7 @@ constructor(
                             KeyguardSettingsViewBinder.bind(
                                 view = this,
                                 viewModel = viewModel,
-                                touchHandlingViewModel = touchHandlingViewModel,
+                                touchHandlingViewModelFactory = touchHandlingViewModelFactory,
                                 rootViewModel = null,
                                 vibratorHelper = vibratorHelper,
                                 activityStarter = activityStarter,
@@ -81,11 +75,11 @@ constructor(
             modifier =
                 modifier
                     .padding(
-                        bottom = dimensionResource(R.dimen.keyguard_affordance_vertical_offset),
+                        bottom = dimensionResource(R.dimen.keyguard_affordance_vertical_offset)
                     )
                     .padding(
                         horizontal =
-                            dimensionResource(R.dimen.keyguard_affordance_horizontal_offset),
+                            dimensionResource(R.dimen.keyguard_affordance_horizontal_offset)
                     )
                     .onPlaced { coordinates ->
                         onPlaced(

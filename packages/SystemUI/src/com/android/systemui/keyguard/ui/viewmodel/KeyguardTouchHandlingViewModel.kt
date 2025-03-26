@@ -17,26 +17,43 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
-import com.android.systemui.dagger.SysUISingleton
+import androidx.compose.runtime.getValue
 import com.android.systemui.keyguard.domain.interactor.KeyguardTouchHandlingInteractor
-import javax.inject.Inject
-import kotlinx.coroutines.flow.Flow
+import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.lifecycle.Hydrator
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /** Models UI state to support top-level touch handling in the lock screen. */
-@SysUISingleton
 class KeyguardTouchHandlingViewModel
-@Inject
-constructor(
-    private val interactor: KeyguardTouchHandlingInteractor,
-) {
+@AssistedInject
+constructor(private val interactor: KeyguardTouchHandlingInteractor) : ExclusiveActivatable() {
+
+    private val hydrator = Hydrator("KeyguardTouchHandlingViewModel.hydrator")
 
     /** Whether the long-press handling feature should be enabled. */
-    val isLongPressHandlingEnabled: Flow<Boolean> = interactor.isLongPressHandlingEnabled
+    val isLongPressHandlingEnabled: Boolean by hydrator.hydratedStateOf(
+        traceName = "longPressHandlingEnabled",
+        initialValue = false,
+        source = interactor.isLongPressHandlingEnabled
+    )
 
     /** Whether the double tap handling feature should be enabled. */
-    val isDoubleTapHandlingEnabled: Flow<Boolean> = interactor.isDoubleTapHandlingEnabled
+    val isDoubleTapHandlingEnabled: Boolean by hydrator.hydratedStateOf(
+        traceName = "doubleTapHandlingEnabled",
+        initialValue = false,
+        source = interactor.isDoubleTapHandlingEnabled
+    )
 
-    /** Notifies that the user has long-pressed on the lock screen.
+    override suspend fun onActivated(): Nothing {
+        hydrator.activate()
+    }
+
+    /**
+     * Notifies that the user has long-pressed on the lock screen.
      *
      * @param isA11yAction: Whether the action was performed as an a11y action
      */
@@ -60,5 +77,10 @@ constructor(
     /** Notifies that the lockscreen has been double clicked. */
     fun onDoubleClick() {
         interactor.onDoubleClick()
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(): KeyguardTouchHandlingViewModel
     }
 }

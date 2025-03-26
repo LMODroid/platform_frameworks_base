@@ -22,12 +22,15 @@ import android.view.accessibility.AccessibilityNodeInfo
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.common.ui.view.TouchHandlingView
 import com.android.systemui.keyguard.ui.viewmodel.KeyguardTouchHandlingViewModel
+import com.android.systemui.lifecycle.WindowLifecycleState
 import com.android.systemui.lifecycle.repeatWhenAttached
+import com.android.systemui.lifecycle.setSnapshotBinding
+import com.android.systemui.lifecycle.viewModel
 import com.android.systemui.plugins.FalsingManager
 import com.android.systemui.res.R
+import kotlinx.coroutines.awaitCancellation
 
 object KeyguardTouchViewBinder {
     /**
@@ -42,7 +45,7 @@ object KeyguardTouchViewBinder {
     @JvmStatic
     fun bind(
         view: TouchHandlingView,
-        viewModel: KeyguardTouchHandlingViewModel,
+        viewModelFactory: KeyguardTouchHandlingViewModel.Factory,
         onSingleTap: (x: Int, y: Int) -> Unit,
         falsingManager: FalsingManager,
     ) {
@@ -51,62 +54,54 @@ object KeyguardTouchViewBinder {
                 AccessibilityNodeInfoCompat.ACTION_LONG_CLICK,
                 view.resources.getString(R.string.lock_screen_settings),
             )
-        view.listener =
-            object : TouchHandlingView.Listener {
-                override fun onLongPressDetected(
-                    view: View,
-                    x: Int,
-                    y: Int,
-                    isA11yAction: Boolean,
-                ) {
-                    if (
-                        !isA11yAction && falsingManager.isFalseLongTap(FalsingManager.LOW_PENALTY)
-                    ) {
-                        return
-                    }
-
-                    viewModel.onLongPress(isA11yAction)
-                }
-
-                override fun onSingleTapDetected(view: View, x: Int, y: Int) {
-                    if (falsingManager.isFalseTap(FalsingManager.LOW_PENALTY)) {
-                        return
-                    }
-
-                    onSingleTap(x, y)
-                }
-
-                override fun onDoubleTapDetected(view: View) {
-                    if (falsingManager.isFalseDoubleTap()) {
-                        return
-                    }
-                    viewModel.onDoubleClick()
-                }
-            }
 
         view.repeatWhenAttached {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch("$TAG#viewModel.isLongPressHandlingEnabled") {
-                    viewModel.isLongPressHandlingEnabled.collect { isEnabled ->
-                        view.setLongPressHandlingEnabled(isEnabled)
-                        view.contentDescription =
-                            if (isEnabled) {
-                                view.resources.getString(R.string.accessibility_desc_lock_screen)
-                            } else {
-                                null
-                            }
+                view.viewModel(
+                    traceName = "KeyguardTouchViewBinderViewModel",
+                    minWindowLifecycleState = WindowLifecycleState.ATTACHED,
+                    factory = { viewModelFactory.create() },
+                ) { viewModel ->
+                    view.setSnapshotBinding {
+                        view.setLongPressHandlingEnabled(viewModel.isLongPressHandlingEnabled)
+                        view.setDoublePressHandlingEnabled(viewModel.isDoubleTapHandlingEnabled)
                     }
-                }
-                launch("$TAG#viewModel.isDoubleTapHandlingEnabled") {
-                    viewModel.isDoubleTapHandlingEnabled.collect { isEnabled ->
-                        view.setDoublePressHandlingEnabled(isEnabled)
-                        view.contentDescription =
-                            if (isEnabled) {
-                                view.resources.getString(R.string.accessibility_desc_lock_screen)
-                            } else {
-                                null
+
+                    view.listener =
+                        object : TouchHandlingView.Listener {
+                            override fun onLongPressDetected(
+                                view: View,
+                                x: Int,
+                                y: Int,
+                                isA11yAction: Boolean,
+                            ) {
+                                if (
+                                    !isA11yAction &&
+                                        falsingManager.isFalseLongTap(FalsingManager.LOW_PENALTY)
+                                ) {
+                                    return
+                                }
+
+                                viewModel.onLongPress(isA11yAction)
                             }
-                    }
+
+                            override fun onSingleTapDetected(view: View, x: Int, y: Int) {
+                                if (falsingManager.isFalseTap(FalsingManager.LOW_PENALTY)) {
+                                    return
+                                }
+
+                                onSingleTap(x, y)
+                            }
+
+                            override fun onDoubleTapDetected(view: View) {
+                                if (falsingManager.isFalseDoubleTap()) {
+                                    return
+                                }
+
+                                viewModel.onDoubleClick()
+                            }
+                        }
+                    awaitCancellation()
                 }
             }
         }

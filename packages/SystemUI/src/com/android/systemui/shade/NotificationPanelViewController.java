@@ -661,7 +661,7 @@ public final class NotificationPanelViewController implements
             @Main CoroutineDispatcher mainDispatcher,
             KeyguardTransitionInteractor keyguardTransitionInteractor,
             DumpManager dumpManager,
-            KeyguardTouchHandlingViewModel keyguardTouchHandlingViewModel,
+            KeyguardTouchHandlingViewModel.Factory keyguardTouchHandlingViewModelFactory,
             WallpaperFocalAreaViewModel wallpaperFocalAreaViewModel,
             KeyguardInteractor keyguardInteractor,
             ActivityStarter activityStarter,
@@ -851,7 +851,7 @@ public final class NotificationPanelViewController implements
         mWallpaperFocalAreaViewModel = wallpaperFocalAreaViewModel;
         KeyguardTouchViewBinder.bind(
                 mView.requireViewById(R.id.keyguard_long_press),
-                keyguardTouchHandlingViewModel,
+                keyguardTouchHandlingViewModelFactory,
                 (x, y) -> {
                     onEmptySpaceClick(x, y);
                     return Unit.INSTANCE;

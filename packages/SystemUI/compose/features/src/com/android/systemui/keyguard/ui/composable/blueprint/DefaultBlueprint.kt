@@ -78,8 +78,10 @@ constructor(
             with(notificationSection) { HeadsUpNotifications() }
         }
 
-        LockscreenLongPress(viewModel = viewModel.touchHandling, modifier = modifier) {
-            onSettingsMenuPlaced ->
+        LockscreenLongPress(
+            viewModelFactory = viewModel.touchHandlingFactory,
+            modifier = modifier,
+        ) { onSettingsMenuPlaced ->
             Layout(
                 content = {
                     // Constrained to above the lock icon.
