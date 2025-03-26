@@ -55,7 +55,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -227,16 +226,7 @@ constructor(
         if (SceneContainerFlag.isEnabled) {
             shadeModeInteractor.shadeMode.flatMapLatest { shadeMode ->
                 when (shadeMode) {
-                    ShadeMode.Dual ->
-                        combineTransform(
-                            shadeInteractor.shadeExpansion,
-                            shadeInteractor.qsExpansion,
-                        ) { notificationShadeExpansion, qsExpansion ->
-                            if (notificationShadeExpansion == 0f) {
-                                // Blur out notifications as the QS overlay panel expands
-                                emit(qsExpansion)
-                            }
-                        }
+                    ShadeMode.Dual -> shadeInteractor.qsExpansion
                     else -> flowOf(0f)
                 }
             }
