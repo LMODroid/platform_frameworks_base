@@ -167,8 +167,7 @@ public abstract class DisplayAreaPolicy {
                                 .all()
                                 .except(TYPE_NAVIGATION_BAR, TYPE_NAVIGATION_BAR_PANEL,
                                         TYPE_STATUS_BAR, TYPE_NOTIFICATION_SHADE,
-                                        TYPE_KEYGUARD_DIALOG, TYPE_WALLPAPER)
-                                .upTo(TYPE_VOLUME_OVERLAY)
+                                        TYPE_KEYGUARD_DIALOG, TYPE_WALLPAPER, TYPE_VOLUME_OVERLAY)
                                 .build());
             }
             if (USE_DISPLAY_AREA_FOR_FULLSCREEN_MAGNIFICATION) {
