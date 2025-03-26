@@ -31,8 +31,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -133,67 +135,73 @@ fun VolumeSlider(
                     disabledActiveTickColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                     disabledInactiveTrackColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                 )
-            Slider(
-                value = state.value,
-                valueRange = state.valueRange,
-                onValueChanged = onValueChange,
-                onValueChangeFinished = { onValueChangeFinished?.invoke() },
-                colors = materialSliderColors,
-                isEnabled = state.isEnabled,
-                stepDistance = state.step,
-                accessibilityParams =
-                    AccessibilityParams(
-                        contentDescription = state.a11yContentDescription,
-                        stateDescription = state.a11yStateDescription,
-                    ),
-                track = { sliderState ->
-                    SliderTrack(
-                        sliderState = sliderState,
-                        colors = materialSliderColors,
-                        isEnabled = state.isEnabled,
-                        activeTrackStartIcon =
-                            state.icon?.let { icon ->
-                                { iconsState ->
-                                    SliderIcon(
-                                        icon = {
-                                            Icon(icon = icon, modifier = Modifier.size(24.dp))
-                                        },
-                                        isVisible = iconsState.isActiveTrackStartIconVisible,
-                                    )
-                                }
-                            },
-                        inactiveTrackStartIcon =
-                            state.icon?.let { icon ->
-                                { iconsState ->
-                                    SliderIcon(
-                                        icon = {
-                                            Icon(icon = icon, modifier = Modifier.size(24.dp))
-                                        },
-                                        isVisible = !iconsState.isActiveTrackStartIconVisible,
-                                    )
-                                }
-                            },
-                    )
-                },
-                thumb = { sliderState, interactionSource ->
-                    SliderDefaults.Thumb(
-                        sliderState = sliderState,
-                        interactionSource = interactionSource,
-                        enabled = state.isEnabled,
-                        colors = materialSliderColors,
-                        thumbSize = DpSize(4.dp, 52.dp),
-                    )
-                },
-                haptics =
-                    hapticsViewModelFactory?.let {
-                        Haptics.Enabled(
-                            hapticsViewModelFactory = it,
-                            hapticFilter = state.hapticFilter,
-                            orientation = Orientation.Horizontal,
+            val sliderHeight = 52.dp
+            if (state is SliderState.Empty) {
+                // reserve the space for the slider to avoid excess resizing
+                Spacer(modifier = Modifier.weight(1f).height(sliderHeight))
+            } else {
+                Slider(
+                    value = state.value,
+                    valueRange = state.valueRange,
+                    onValueChanged = onValueChange,
+                    onValueChangeFinished = { onValueChangeFinished?.invoke() },
+                    colors = materialSliderColors,
+                    isEnabled = state.isEnabled,
+                    stepDistance = state.step,
+                    accessibilityParams =
+                        AccessibilityParams(
+                            contentDescription = state.a11yContentDescription,
+                            stateDescription = state.a11yStateDescription,
+                        ),
+                    track = { sliderState ->
+                        SliderTrack(
+                            sliderState = sliderState,
+                            colors = materialSliderColors,
+                            isEnabled = state.isEnabled,
+                            activeTrackStartIcon =
+                                state.icon?.let { icon ->
+                                    { iconsState ->
+                                        SliderIcon(
+                                            icon = {
+                                                Icon(icon = icon, modifier = Modifier.size(24.dp))
+                                            },
+                                            isVisible = iconsState.isActiveTrackStartIconVisible,
+                                        )
+                                    }
+                                },
+                            inactiveTrackStartIcon =
+                                state.icon?.let { icon ->
+                                    { iconsState ->
+                                        SliderIcon(
+                                            icon = {
+                                                Icon(icon = icon, modifier = Modifier.size(24.dp))
+                                            },
+                                            isVisible = !iconsState.isActiveTrackStartIconVisible,
+                                        )
+                                    }
+                                },
                         )
-                    } ?: Haptics.Disabled,
-                modifier = Modifier.weight(1f).sysuiResTag(state.label),
-            )
+                    },
+                    thumb = { sliderState, interactionSource ->
+                        SliderDefaults.Thumb(
+                            sliderState = sliderState,
+                            interactionSource = interactionSource,
+                            enabled = state.isEnabled,
+                            colors = materialSliderColors,
+                            thumbSize = DpSize(4.dp, sliderHeight),
+                        )
+                    },
+                    haptics =
+                        hapticsViewModelFactory?.let {
+                            Haptics.Enabled(
+                                hapticsViewModelFactory = it,
+                                hapticFilter = state.hapticFilter,
+                                orientation = Orientation.Horizontal,
+                            )
+                        } ?: Haptics.Disabled,
+                    modifier = Modifier.weight(1f).height(sliderHeight).sysuiResTag(state.label),
+                )
+            }
             button?.invoke(this)
         }
         state.disabledMessage?.let { disabledMessage ->
