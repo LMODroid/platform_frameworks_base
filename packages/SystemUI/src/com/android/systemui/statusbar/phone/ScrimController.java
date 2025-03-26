@@ -622,8 +622,8 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                 callback.onFinished();
             }
             return;
-        } else if (DEBUG) {
-            Log.d(TAG, "State changed to: " + state);
+        } else {
+            debugLog("State changed to: " + state);
         }
 
         if (state == ScrimState.UNINITIALIZED) {
@@ -698,6 +698,12 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         }
 
         dispatchBackScrimState(mScrimBehind.getViewAlpha());
+    }
+
+    private static void debugLog(String state) {
+        if (DEBUG) {
+            Log.d(TAG, state);
+        }
     }
 
     public ScrimState getState() {
@@ -1013,6 +1019,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     }
 
     private void applyState() {
+        debugLog("Applying state: " + mState.name());
         mInFrontTint = mState.getFrontTint();
         mBehindTint = mState.getBehindTint();
         mNotificationsTint = mState.getNotifTint();
@@ -1625,9 +1632,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
             // Setting power states can happen after we push out the frame. Make sure we
             // stay fully opaque until the power state request reaches the lower levels.
             final int delay = mScreenOn ? 32 : 500;
-            if (DEBUG) {
-                Log.d(TAG, "Fading out scrims with delay: " + delay);
-            }
+            debugLog("Fading out scrims with delay: " + delay);
             mHandler.postDelayed(mBlankingTransitionRunnable, delay);
         };
         doOnTheNextFrame(mPendingFrameCallback);
@@ -1739,9 +1744,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     public void onScreenTurnedOn() {
         mScreenOn = true;
         if (mHandler.hasCallbacks(mBlankingTransitionRunnable)) {
-            if (DEBUG) {
-                Log.d(TAG, "Shorter blanking because screen turned on. All good.");
-            }
+            debugLog("Shorter blanking because screen turned on. All good.");
             mHandler.removeCallbacks(mBlankingTransitionRunnable);
             mBlankingTransitionRunnable.run();
         }
