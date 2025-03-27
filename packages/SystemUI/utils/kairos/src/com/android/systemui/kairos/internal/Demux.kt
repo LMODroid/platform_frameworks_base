@@ -22,7 +22,6 @@ import com.android.systemui.kairos.internal.store.MapK
 import com.android.systemui.kairos.internal.store.MutableMapK
 import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.internal.util.logDuration
-import kotlinx.coroutines.sync.Mutex
 
 internal class DemuxNode<W, K, A>(
     private val branchNodeByKey: MutableMapK<W, K, DemuxNode<W, K, A>.BranchNode>,
@@ -138,7 +137,6 @@ internal class DemuxNode<W, K, A>(
         branchNodeByKey.remove(key)
         val deactivate = branchNodeByKey.isEmpty()
         if (deactivate) {
-            // No need for mutex here; no more concurrent changes to can occur during this phase
             lifecycle.lifecycleState = DemuxLifecycleState.Inactive(spec)
             upstreamConnection.removeDownstreamAndDeactivateIfNeeded(downstream = schedulable)
         }
@@ -259,9 +257,7 @@ internal class DemuxImpl<in K, out A>(private val dmux: DemuxLifecycle<K, A>) {
 }
 
 internal class DemuxLifecycle<K, A>(@Volatile var lifecycleState: DemuxLifecycleState<K, A>) {
-    val mutex = Mutex()
-
-    override fun toString(): String = "EventsDmuxState[$hashString][$lifecycleState][$mutex]"
+    override fun toString(): String = "EventsDmuxState[$hashString][$lifecycleState]"
 
     fun activate(evalScope: EvalScope, key: K): Pair<DemuxNode<*, K, A>.BranchNode, Boolean>? =
         when (val state = lifecycleState) {
