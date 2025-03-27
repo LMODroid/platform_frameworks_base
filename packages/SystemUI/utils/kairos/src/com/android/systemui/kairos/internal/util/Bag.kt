@@ -51,6 +51,10 @@ internal class Bag<T> private constructor(private val intMap: MutableMap<T, Int>
         }
     }
 
+    /**
+     * Adds all [elements], skipping [butNot], and returns the subset of [elements] that were not
+     * already present in this bag.
+     */
     fun addAll(elements: Iterable<T>, butNot: T? = null): Set<T>? {
         val newlyAdded = hashSetOf<T>()
         for (value in elements) {
@@ -67,6 +71,10 @@ internal class Bag<T> private constructor(private val intMap: MutableMap<T, Int>
         intMap.clear()
     }
 
+    /**
+     * Removes all [elements], and returns the subset of [elements] that are no longer present in
+     * this bag.
+     */
     fun removeAll(elements: Collection<T>): Set<T>? {
         val result = hashSetOf<T>()
         for (element in elements) {

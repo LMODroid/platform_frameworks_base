@@ -166,15 +166,17 @@ internal class DepthTracker {
         val addsChanged =
             additions
                 ?.let { dirty_indirectUpstreamRoots.addAll(additions, butNot) }
-                ?.let {
-                    indirectAdditions.addAll(indirectRemovals.applyRemovalDiff(it))
+                ?.let { newlyAdded ->
+                    val remainder = indirectRemovals.applyRemovalDiff(newlyAdded)
+                    indirectAdditions.addAll(remainder)
                     true
                 } ?: false
         val removalsChanged =
             removals
                 ?.let { dirty_indirectUpstreamRoots.removeAll(removals) }
-                ?.let {
-                    indirectRemovals.addAll(indirectAdditions.applyRemovalDiff(it))
+                ?.let { fullyRemoved ->
+                    val remainder = indirectAdditions.applyRemovalDiff(fullyRemoved)
+                    indirectRemovals.addAll(remainder)
                     true
                 } ?: false
         return (!dirty_depthIsDirect && (addsChanged || removalsChanged))
@@ -183,7 +185,7 @@ internal class DepthTracker {
     private fun <T> HashSet<T>.applyRemovalDiff(changeSet: Set<T>): Set<T> {
         val remainder = HashSet<T>()
         for (element in changeSet) {
-            if (!add(element)) {
+            if (!remove(element)) {
                 remainder.add(element)
             }
         }
