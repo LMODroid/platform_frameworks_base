@@ -32,6 +32,10 @@ class FakeCommunalSceneRepository(
         }
     }
 
+    override suspend fun showHubFromPowerButton() {
+        snapToScene(CommunalScenes.Communal)
+    }
+
     private val defaultTransitionState = ObservableTransitionState.Idle(CommunalScenes.Default)
     private val _transitionState = MutableStateFlow<Flow<ObservableTransitionState>?>(null)
     override val transitionState: StateFlow<ObservableTransitionState> =

@@ -17,7 +17,6 @@
 package com.android.systemui.keyguard.domain.interactor
 
 import com.android.systemui.communal.domain.interactor.communalSceneInteractor
-import com.android.systemui.communal.domain.interactor.communalSettingsInteractor
 import com.android.systemui.keyguard.data.repository.keyguardTransitionRepository
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.applicationCoroutineScope
@@ -39,6 +38,5 @@ val Kosmos.fromGoneTransitionInteractor by
             communalSceneInteractor = communalSceneInteractor,
             keyguardOcclusionInteractor = keyguardOcclusionInteractor,
             keyguardShowWhileAwakeInteractor = keyguardShowWhileAwakeInteractor,
-            communalSettingsInteractor = communalSettingsInteractor,
         )
     }

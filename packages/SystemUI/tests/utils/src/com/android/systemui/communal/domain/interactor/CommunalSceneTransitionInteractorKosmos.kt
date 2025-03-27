@@ -22,7 +22,6 @@ import com.android.systemui.keyguard.domain.interactor.keyguardInteractor
 import com.android.systemui.keyguard.domain.interactor.keyguardTransitionInteractor
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.applicationCoroutineScope
-import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.power.domain.interactor.powerInteractor
 
 val Kosmos.communalSceneTransitionInteractor: CommunalSceneTransitionInteractor by
@@ -36,6 +35,5 @@ val Kosmos.communalSceneTransitionInteractor: CommunalSceneTransitionInteractor 
             repository = communalSceneTransitionRepository,
             keyguardInteractor = keyguardInteractor,
             powerInteractor = powerInteractor,
-            mainImmediateDispatcher = testDispatcher,
         )
     }

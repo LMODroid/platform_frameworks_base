@@ -2508,7 +2508,11 @@ public class KeyguardViewMediator implements CoreStartable,
     private void doKeyguardLocked(Bundle options) {
         // If the power button behavior requests to open the glanceable hub.
         if (options != null && options.getBoolean(EXTRA_TRIGGER_HUB)) {
-            if (!mKeyguardInteractor.showGlanceableHub()) {
+            if (mCommunalSettingsInteractor.get().getAutoOpenEnabled().getValue()) {
+                // Set the hub to show immediately when the SysUI window shows, then continue to
+                // lock the device.
+                mCommunalSceneInteractor.get().showHubFromPowerButton();
+            } else {
                 // If the hub is not available, go to sleep instead of locking. This can happen
                 // because the power button behavior does not check all possible reasons the hub
                 // might be disabled.

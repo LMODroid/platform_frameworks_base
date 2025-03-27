@@ -140,8 +140,7 @@ constructor(
                         val shouldTransitionToCommunal =
                             communalSettingsInteractor.isV2FlagEnabled() &&
                                 autoOpenCommunal &&
-                                !detailedWakefulness.isAwakeFromMotionOrLift() &&
-                                !isKeyguardOccludedLegacy
+                                !detailedWakefulness.isAwakeFromMotionOrLift()
 
                         if (shouldTransitionToGone) {
                             // TODO(b/360368320): Adapt for scene framework

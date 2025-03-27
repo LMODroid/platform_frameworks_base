@@ -18,18 +18,15 @@ package com.android.systemui.communal.widgets
 
 import android.appwidget.AppWidgetProviderInfo
 import android.content.pm.UserInfo
-import android.platform.test.annotations.EnableFlags
-import android.platform.test.flag.junit.FlagsParameterization
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.Flags.FLAG_COMMUNAL_HUB
-import com.android.systemui.Flags.FLAG_GLANCEABLE_HUB_V2
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.communal.data.repository.fakeCommunalWidgetRepository
 import com.android.systemui.communal.domain.interactor.CommunalInteractor
 import com.android.systemui.communal.domain.interactor.communalInteractor
 import com.android.systemui.communal.domain.interactor.communalSettingsInteractor
 import com.android.systemui.communal.domain.interactor.setCommunalEnabled
-import com.android.systemui.communal.domain.interactor.setCommunalV2ConfigEnabled
 import com.android.systemui.communal.shared.model.FakeGlanceableHubMultiUserHelper
 import com.android.systemui.communal.shared.model.fakeGlanceableHubMultiUserHelper
 import com.android.systemui.coroutines.collectLastValue
@@ -57,13 +54,10 @@ import org.mockito.Mockito.never
 import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
-import platform.test.runner.parameterized.ParameterizedAndroidJunit4
-import platform.test.runner.parameterized.Parameters
 
 @SmallTest
-@RunWith(ParameterizedAndroidJunit4::class)
-@EnableFlags(FLAG_COMMUNAL_HUB)
-class CommunalAppWidgetHostStartableTest(flags: FlagsParameterization) : SysuiTestCase() {
+@RunWith(AndroidJUnit4::class)
+class CommunalAppWidgetHostStartableTest : SysuiTestCase() {
     private val kosmos = testKosmos()
 
     @Mock private lateinit var appWidgetHost: CommunalAppWidgetHost
@@ -77,27 +71,12 @@ class CommunalAppWidgetHostStartableTest(flags: FlagsParameterization) : SysuiTe
     private lateinit var communalInteractorSpy: CommunalInteractor
     private lateinit var underTest: CommunalAppWidgetHostStartable
 
-    init {
-        mSetFlagsRule.setFlagsParameterization(flags)
-    }
-
-    companion object {
-        private val MAIN_USER_INFO = UserInfo(0, "primary", UserInfo.FLAG_MAIN)
-        private val USER_INFO_WORK = UserInfo(10, "work", UserInfo.FLAG_PROFILE)
-
-        @JvmStatic
-        @Parameters(name = "{0}")
-        fun getParams(): List<FlagsParameterization> {
-            return FlagsParameterization.allCombinationsOf(FLAG_GLANCEABLE_HUB_V2)
-        }
-    }
-
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         kosmos.fakeUserRepository.setUserInfos(listOf(MAIN_USER_INFO, USER_INFO_WORK))
         kosmos.fakeFeatureFlagsClassic.set(Flags.COMMUNAL_SERVICE_ENABLED, true)
-        kosmos.setCommunalV2ConfigEnabled(true)
+        mSetFlagsRule.enableFlags(FLAG_COMMUNAL_HUB)
 
         widgetManager = kosmos.mockGlanceableHubWidgetManager
         helper = kosmos.fakeGlanceableHubMultiUserHelper
@@ -348,4 +327,9 @@ class CommunalAppWidgetHostStartableTest(flags: FlagsParameterization) : SysuiTe
                 fakeKeyguardRepository.setKeyguardShowing(true)
             }
         }
+
+    private companion object {
+        val MAIN_USER_INFO = UserInfo(0, "primary", UserInfo.FLAG_MAIN)
+        val USER_INFO_WORK = UserInfo(10, "work", UserInfo.FLAG_PROFILE)
+    }
 }

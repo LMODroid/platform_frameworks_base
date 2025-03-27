@@ -508,11 +508,6 @@ constructor(
     }
 
     /** Temporary shim, until [KeyguardWmStateRefactor] is enabled */
-    fun showGlanceableHub(): Boolean {
-        return fromGoneTransitionInteractor.get().showGlanceableHub()
-    }
-
-    /** Temporary shim, until [KeyguardWmStateRefactor] is enabled */
     fun dismissKeyguard() {
         when (keyguardTransitionInteractor.transitionState.value.to) {
             LOCKSCREEN -> fromLockscreenTransitionInteractor.get().dismissKeyguard()

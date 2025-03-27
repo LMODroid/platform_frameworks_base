@@ -29,7 +29,6 @@ import com.android.systemui.communal.shared.model.CommunalScenes.toSceneContaine
 import com.android.systemui.communal.shared.model.EditModeState
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
-import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.keyguard.shared.model.KeyguardState
 import com.android.systemui.scene.domain.interactor.SceneInteractor
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
@@ -38,7 +37,6 @@ import com.android.systemui.statusbar.policy.KeyguardStateController
 import com.android.systemui.util.kotlin.BooleanFlowOperators.allOf
 import com.android.systemui.util.kotlin.pairwiseBy
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -59,7 +57,6 @@ class CommunalSceneInteractor
 @Inject
 constructor(
     @Application private val applicationScope: CoroutineScope,
-    @Main private val mainImmediateDispatcher: CoroutineDispatcher,
     private val repository: CommunalSceneRepository,
     private val logger: CommunalSceneLogger,
     private val sceneInteractor: SceneInteractor,
@@ -116,12 +113,6 @@ constructor(
         onSceneAboutToChangeListener.add(processor)
     }
 
-    /** Unregisters a previously registered listener. */
-    fun unregisterSceneStateProcessor(processor: OnSceneAboutToChangeListener) {
-        SceneContainerFlag.assertInLegacyMode()
-        onSceneAboutToChangeListener.remove(processor)
-    }
-
     /**
      * Asks for an asynchronous scene witch to [newScene], which will use the corresponding
      * installed transition or the one specified by [transitionKey], if provided.
@@ -132,7 +123,7 @@ constructor(
         transitionKey: TransitionKey? = null,
         keyguardState: KeyguardState? = null,
     ) {
-        applicationScope.launch("$TAG#changeScene", mainImmediateDispatcher) {
+        applicationScope.launch("$TAG#changeScene") {
             if (SceneContainerFlag.isEnabled) {
                 sceneInteractor.changeScene(
                     toScene = newScene.toSceneContainerSceneKey(),
@@ -181,6 +172,29 @@ constructor(
             )
             notifyListeners(newScene, keyguardState)
             repository.snapToScene(newScene)
+        }
+    }
+
+    fun showHubFromPowerButton() {
+        val loggingReason = "showing hub from power button"
+        applicationScope.launch("$TAG#showHubFromPowerButton") {
+            if (SceneContainerFlag.isEnabled) {
+                sceneInteractor.changeScene(
+                    toScene = CommunalScenes.Communal.toSceneContainerSceneKey(),
+                    loggingReason = loggingReason,
+                )
+                return@launch
+            }
+
+            if (currentScene.value == CommunalScenes.Communal) return@launch
+            logger.logSceneChangeRequested(
+                from = currentScene.value,
+                to = CommunalScenes.Communal,
+                reason = loggingReason,
+                isInstant = true,
+            )
+            notifyListeners(CommunalScenes.Communal, null)
+            repository.showHubFromPowerButton()
         }
     }
 

@@ -36,7 +36,6 @@ import com.android.systemui.Flags.FLAG_COMMUNAL_HUB
 import com.android.systemui.Flags.FLAG_COMMUNAL_RESPONSIVE_GRID
 import com.android.systemui.Flags.FLAG_COMMUNAL_WIDGET_RESIZING
 import com.android.systemui.Flags.FLAG_GLANCEABLE_HUB_V2
-import com.android.systemui.Flags.glanceableHubV2
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.broadcast.broadcastDispatcher
 import com.android.systemui.communal.data.model.CommunalSmartspaceTimer
@@ -91,7 +90,6 @@ import platform.test.runner.parameterized.Parameters
 
 @SmallTest
 @RunWith(ParameterizedAndroidJunit4::class)
-@EnableFlags(FLAG_COMMUNAL_HUB)
 class CommunalInteractorTest(flags: FlagsParameterization) : SysuiTestCase() {
     private val mainUser =
         UserInfo(/* id= */ 0, /* name= */ "primary user", /* flags= */ UserInfo.FLAG_MAIN)
@@ -112,9 +110,7 @@ class CommunalInteractorTest(flags: FlagsParameterization) : SysuiTestCase() {
         kosmos.fakeUserRepository.setUserInfos(listOf(mainUser, secondaryUser))
 
         kosmos.fakeFeatureFlagsClassic.set(Flags.COMMUNAL_SERVICE_ENABLED, true)
-        if (glanceableHubV2()) {
-            kosmos.setCommunalV2ConfigEnabled(true)
-        }
+        mSetFlagsRule.enableFlags(FLAG_COMMUNAL_HUB)
     }
 
     @Test
@@ -124,9 +120,7 @@ class CommunalInteractorTest(flags: FlagsParameterization) : SysuiTestCase() {
             assertThat(underTest.isCommunalEnabled.value).isTrue()
         }
 
-    /** Test not applicable when [FLAG_GLANCEABLE_HUB_V2] enabled */
     @Test
-    @DisableFlags(FLAG_GLANCEABLE_HUB_V2)
     fun isCommunalAvailable_whenKeyguardShowing_true() =
         kosmos.runTest {
             communalSettingsInteractor.setSuppressionReasons(emptyList())
@@ -1218,10 +1212,7 @@ class CommunalInteractorTest(flags: FlagsParameterization) : SysuiTestCase() {
         @JvmStatic
         @Parameters(name = "{0}")
         fun getParams(): List<FlagsParameterization> {
-            return FlagsParameterization.allCombinationsOf(
-                FLAG_COMMUNAL_RESPONSIVE_GRID,
-                FLAG_GLANCEABLE_HUB_V2,
-            )
+            return FlagsParameterization.allCombinationsOf(FLAG_COMMUNAL_RESPONSIVE_GRID)
         }
 
         private val MAIN_USER_INFO = UserInfo(0, "primary", UserInfo.FLAG_MAIN)
