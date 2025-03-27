@@ -1303,7 +1303,7 @@ private fun interactionsConfig() =
         pressedOverlayColor = MaterialTheme.colorScheme.onSurface,
         pressedOverlayAlpha = 0.15f,
         // we are OK using this as our content is clipped and all corner radius are larger than this
-        surfaceCornerRadius = 28.dp,
+        surfaceCornerRadius = 16.dp,
     )
 
 private inline val alwaysCompose
