@@ -2218,7 +2218,8 @@
     <dimen name="volume_dialog_floating_sliders_vertical_padding_negative">
         @dimen/volume_dialog_background_margin_negative
     </dimen>
-    <dimen name="volume_dialog_floating_sliders_padding">4dp</dimen>
+    <dimen name="volume_dialog_floating_sliders_horizontal_padding">4dp</dimen>
+    <dimen name="volume_dialog_floating_sliders_vertical_padding">10dp</dimen>
     <dimen name="volume_dialog_button_size">40dp</dimen>
     <dimen name="volume_dialog_slider_width">52dp</dimen>
     <dimen name="volume_dialog_slider_height">254dp</dimen>
