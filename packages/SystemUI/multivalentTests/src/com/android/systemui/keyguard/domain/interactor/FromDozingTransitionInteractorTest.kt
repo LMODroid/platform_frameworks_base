@@ -49,6 +49,7 @@ import com.android.systemui.keyguard.shared.model.KeyguardState.LOCKSCREEN
 import com.android.systemui.keyguard.shared.model.TransitionState
 import com.android.systemui.keyguard.util.KeyguardTransitionRepositorySpySubject.Companion.assertThat
 import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.kosmos.advanceTimeBy
 import com.android.systemui.kosmos.applicationCoroutineScope
 import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runTest
@@ -61,6 +62,7 @@ import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth
 import junit.framework.Assert.assertEquals
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceTimeBy
@@ -247,6 +249,28 @@ class FromDozingTransitionInteractorTest(flags: FlagsParameterization?) : SysuiT
             // We transition to the lockscreen instead of the hub.
             assertThat(transitionRepository)
                 .startedTransition(from = KeyguardState.DOZING, to = KeyguardState.LOCKSCREEN)
+        }
+
+    @Test
+    @DisableFlags(FLAG_KEYGUARD_WM_STATE_REFACTOR, FLAG_SCENE_CONTAINER)
+    fun testTransitionOccluded_onWakeup_ifGlanceableHubAvailableAndOccluded() =
+        kosmos.runTest {
+            setCommunalAvailable(true)
+            fakeKeyguardRepository.setKeyguardOccluded(true)
+            if (!glanceableHubV2()) {
+                whenever(dreamManager.canStartDreaming(anyBoolean())).thenReturn(true)
+            }
+
+            // Device turns on.
+            powerInteractor.setAwakeForTest()
+            advanceTimeBy(100.milliseconds)
+
+            // We do not transition to the hub.
+            Truth.assertThat(communalSceneRepository.currentScene.value)
+                .isEqualTo(CommunalScenes.Blank)
+            // No transitions are directly started by this interactor.
+            assertThat(transitionRepository)
+                .startedTransition(from = KeyguardState.DOZING, to = KeyguardState.OCCLUDED)
         }
 
     @Test

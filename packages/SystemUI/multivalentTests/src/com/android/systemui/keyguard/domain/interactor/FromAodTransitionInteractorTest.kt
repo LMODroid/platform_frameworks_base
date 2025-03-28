@@ -60,6 +60,7 @@ import com.android.systemui.keyguard.shared.model.KeyguardState.LOCKSCREEN
 import com.android.systemui.keyguard.shared.model.TransitionState
 import com.android.systemui.keyguard.shared.model.TransitionStep
 import com.android.systemui.keyguard.util.KeyguardTransitionRepositorySpySubject.Companion.assertThat
+import com.android.systemui.kosmos.advanceTimeBy
 import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
@@ -72,6 +73,7 @@ import com.android.systemui.statusbar.domain.interactor.keyguardOcclusionInterac
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth
 import junit.framework.Assert.assertEquals
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runCurrent
@@ -467,5 +469,101 @@ class FromAodTransitionInteractorTest : SysuiTestCase() {
             Truth.assertThat(currentScene).isEqualTo(CommunalScenes.Blank)
             assertThat(transitionRepository)
                 .startedTransition(from = KeyguardState.AOD, to = KeyguardState.LOCKSCREEN)
+        }
+
+    @Test
+    @EnableFlags(FLAG_GLANCEABLE_HUB_V2)
+    fun testTransitionToOccluded_onWakeUpFromAod_whenGlanceableHubEnabled() =
+        kosmos.runTest {
+            setCommunalV2Available(true)
+            fakeKeyguardRepository.setKeyguardOccluded(true)
+
+            val currentScene by collectLastValue(communalSceneInteractor.currentScene)
+            fakeCommunalSceneRepository.changeScene(CommunalScenes.Blank)
+
+            // Communal is not showing
+            Truth.assertThat(currentScene).isEqualTo(CommunalScenes.Blank)
+
+            powerInteractor.setAwakeForTest()
+            advanceTimeBy(100.milliseconds) // account for debouncing
+
+            Truth.assertThat(currentScene).isEqualTo(CommunalScenes.Blank)
+            assertThat(transitionRepository)
+                .startedTransition(from = KeyguardState.AOD, to = KeyguardState.OCCLUDED)
+        }
+
+    /** Regression test for b/348583197. */
+    @Test
+    fun testTransitionToAod_ifOccludedDuringTransitingToAod_fromGone() =
+        testScope.runTest {
+            val isGone by
+                collectLastValue(
+                    kosmos.keyguardTransitionInteractor.isFinishedIn(Scenes.Gone, GONE)
+                )
+            powerInteractor.setAwakeForTest()
+            transitionRepository.sendTransitionSteps(
+                from = KeyguardState.AOD,
+                to = KeyguardState.GONE,
+                testScope,
+            )
+            runCurrent()
+
+            // Make sure we're GONE.
+            Truth.assertThat(isGone).isTrue()
+
+            // Get part way to AOD.
+            powerInteractor.onStartedGoingToSleep(PowerManager.GO_TO_SLEEP_REASON_MIN)
+            runCurrent()
+
+            transitionRepository.sendTransitionSteps(
+                from = KeyguardState.GONE,
+                to = KeyguardState.AOD,
+                testScope = testScope,
+                throughTransitionState = TransitionState.RUNNING,
+            )
+
+            // Set occluded.
+            reset(transitionRepository)
+            kosmos.fakeKeyguardRepository.setKeyguardOccluded(true)
+            advanceTimeBy(100) // account for debouncing
+
+            // Make sure stay at AoD.
+            assertThat(transitionRepository).noTransitionsStarted()
+        }
+
+    /** Regression test for b/348583197. */
+    @Test
+    fun testTransitionToAod_ifOccludedAfterTransitingToAod_fromGone() =
+        testScope.runTest {
+            val isGone by
+                collectLastValue(
+                    kosmos.keyguardTransitionInteractor.isFinishedIn(Scenes.Gone, GONE)
+                )
+            powerInteractor.setAwakeForTest()
+            transitionRepository.sendTransitionSteps(
+                from = KeyguardState.AOD,
+                to = KeyguardState.GONE,
+                testScope,
+            )
+            runCurrent()
+
+            // Make sure we're GONE.
+            Truth.assertThat(isGone).isTrue()
+
+            // Get all the way to AOD.
+            powerInteractor.onStartedGoingToSleep(PowerManager.GO_TO_SLEEP_REASON_MIN)
+            transitionRepository.sendTransitionSteps(
+                from = KeyguardState.GONE,
+                to = KeyguardState.AOD,
+                testScope = testScope,
+            )
+
+            // Set occluded.
+            reset(transitionRepository)
+            kosmos.fakeKeyguardRepository.setKeyguardOccluded(true)
+            advanceTimeBy(100) // account for debouncing
+
+            // Make sure stay at AoD.
+            assertThat(transitionRepository).noTransitionsStarted()
         }
 }
