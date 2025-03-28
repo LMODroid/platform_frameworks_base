@@ -79,6 +79,7 @@ import com.android.systemui.scene.shared.model.Scenes;
 import com.android.systemui.scrim.ScrimView;
 import com.android.systemui.shade.ShadeViewController;
 import com.android.systemui.shade.transition.LargeScreenShadeInterpolator;
+import com.android.systemui.shade.ui.ShadeColors;
 import com.android.systemui.statusbar.notification.stack.ViewState;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
@@ -442,8 +443,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
 
         final ScrimState[] states = ScrimState.values();
         for (int i = 0; i < states.length; i++) {
-            states[i].init(mScrimInFront, mScrimBehind, mDozeParameters, mDockManager,
-                    this::isBlurCurrentlySupported);
+            states[i].init(mScrimInFront, mScrimBehind, mDozeParameters, mDockManager);
             states[i].setScrimBehindAlphaKeyguard(mScrimBehindAlphaKeyguard);
             states[i].setDefaultScrimAlpha(getDefaultScrimAlpha());
         }
@@ -549,7 +549,10 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
             }
         }
         if (Flags.notificationShadeBlur()) {
-            mState.prepare(mState);
+            for (ScrimState state : ScrimState.values()) {
+                state.setNotificationScrimColor(getNotificationsScrimColor());
+                state.setShadePanelColor(getShadePanelColor());
+            }
         }
         applyAndDispatchState();
     }
@@ -1654,6 +1657,8 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                 com.android.internal.R.color.materialColorSurface);
         for (ScrimState state : ScrimState.values()) {
             state.setSurfaceColor(surface);
+            state.setShadePanelColor(getShadePanelColor());
+            state.setNotificationScrimColor(getNotificationsScrimColor());
         }
 
         mBehindColors.setMainColor(surfaceBackground);
@@ -1662,6 +1667,14 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                 ColorUtils.calculateContrast(mBehindColors.getMainColor(), Color.WHITE) > 4.5);
 
         mNeedsDrawableColorUpdate = true;
+    }
+
+    private int getNotificationsScrimColor() {
+        return ShadeColors.notificationScrim(mContext, isBlurCurrentlySupported());
+    }
+
+    private int getShadePanelColor() {
+        return ShadeColors.shadePanel(mContext, isBlurCurrentlySupported());
     }
 
     private void onThemeChanged() {

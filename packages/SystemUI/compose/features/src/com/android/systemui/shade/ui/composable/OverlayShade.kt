@@ -44,8 +44,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -195,12 +195,12 @@ object OverlayShade {
         val ScrimBackground: Color
             @Composable
             @ReadOnlyComposable
-            get() = Color(LocalResources.current.notificationScrim(Flags.notificationShadeBlur()))
+            get() = Color(notificationScrim(LocalContext.current, Flags.notificationShadeBlur()))
 
         val PanelBackground: Color
             @Composable
             @ReadOnlyComposable
-            get() = Color(LocalResources.current.shadePanel(Flags.notificationShadeBlur()))
+            get() = Color(shadePanel(LocalContext.current, Flags.notificationShadeBlur()))
     }
 
     object Dimensions {

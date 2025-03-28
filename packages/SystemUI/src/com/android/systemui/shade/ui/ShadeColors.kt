@@ -16,34 +16,34 @@
 
 package com.android.systemui.shade.ui
 
-import android.content.res.Resources
+import android.content.Context
 import android.graphics.Color
 import com.android.internal.graphics.ColorUtils
 import com.android.systemui.res.R
 
 object ShadeColors {
     @JvmStatic
-    fun Resources.shadePanel(blurSupported: Boolean): Int {
+    fun shadePanel(context: Context, blurSupported: Boolean): Int {
         return if (blurSupported) {
-            shadePanelStandard()
+            shadePanelStandard(context)
         } else {
-            shadePanelFallback()
+            shadePanelFallback(context)
         }
     }
 
     @JvmStatic
-    fun Resources.notificationScrim(blurSupported: Boolean): Int {
+    fun notificationScrim(context: Context, blurSupported: Boolean): Int {
         return if (blurSupported) {
-            notificationScrimStandard()
+            notificationScrimStandard(context)
         } else {
-            notificationScrimFallback()
+            notificationScrimFallback(context)
         }
     }
 
     @JvmStatic
-    private fun Resources.shadePanelStandard(): Int {
+    private fun shadePanelStandard(context: Context): Int {
         val layerAbove = ColorUtils.setAlphaComponent(
-            getColor(R.color.shade_panel_base, null),
+            context.getColor(R.color.shade_panel_base),
             (0.4f * 255).toInt()
         )
         val layerBelow = ColorUtils.setAlphaComponent(Color.WHITE, (0.1f * 255).toInt())
@@ -51,20 +51,20 @@ object ShadeColors {
     }
 
     @JvmStatic
-    private fun Resources.shadePanelFallback(): Int {
-        return getColor(R.color.shade_panel_fallback, null)
+    private fun shadePanelFallback(context: Context): Int {
+        return context.getColor(R.color.shade_panel_fallback)
     }
 
     @JvmStatic
-    private fun Resources.notificationScrimStandard(): Int {
+    private fun notificationScrimStandard(context: Context): Int {
         return ColorUtils.setAlphaComponent(
-            getColor(R.color.notification_scrim_base, null),
+            context.getColor(R.color.notification_scrim_base),
             (0.5f * 255).toInt(),
         )
     }
 
     @JvmStatic
-    private fun Resources.notificationScrimFallback(): Int {
-        return getColor(R.color.notification_scrim_fallback, null)
+    private fun notificationScrimFallback(context: Context): Int {
+        return context.getColor(R.color.notification_scrim_fallback)
     }
 }
