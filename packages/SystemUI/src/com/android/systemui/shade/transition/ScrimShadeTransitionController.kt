@@ -45,7 +45,7 @@ constructor(
         shadeExpansionStateManager.addStateListener(this::onPanelStateChanged)
         dumpManager.registerNormalDumpable(
             ScrimShadeTransitionController::class.java.simpleName,
-            this::dump
+            this::dump,
         )
     }
 
@@ -61,13 +61,9 @@ constructor(
 
     private fun onStateChanged() {
         val expansionEvent = lastExpansionEvent ?: return
-        val expansionFraction = calculateScrimExpansionFraction(expansionEvent)
+        val expansionFraction = expansionEvent.fraction
         scrimController.setRawPanelExpansionFraction(expansionFraction)
         lastExpansionFraction = expansionFraction
-    }
-
-    private fun calculateScrimExpansionFraction(expansionEvent: ShadeExpansionChangeEvent): Float {
-        return expansionEvent.fraction
     }
 
     private fun dump(printWriter: PrintWriter, args: Array<String>) {

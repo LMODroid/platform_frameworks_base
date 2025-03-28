@@ -31,8 +31,9 @@ import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.shade.ShadeExpansionStateManager
 import com.android.systemui.shade.TouchLogger.Companion.logTouchesTo
 import com.android.systemui.shade.data.repository.ShadeRepository
-import com.android.systemui.shade.domain.interactor.PanelExpansionInteractor
+import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import com.android.systemui.shade.transition.ScrimShadeTransitionController
+import com.android.systemui.statusbar.NotificationShadeDepthController
 import com.android.systemui.statusbar.PulseExpansionHandler
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController
 import com.android.systemui.statusbar.phone.ScrimController
@@ -53,15 +54,16 @@ constructor(
     @ShadeTouchLog private val touchLog: LogBuffer,
     @ShadeDisplayAware private val configurationRepository: ConfigurationRepository,
     private val shadeRepository: ShadeRepository,
+    private val shadeInteractorProvider: Provider<ShadeInteractor>,
     private val splitShadeStateController: SplitShadeStateController,
     private val scrimShadeTransitionController: ScrimShadeTransitionController,
     private val sceneInteractorProvider: Provider<SceneInteractor>,
-    private val panelExpansionInteractorProvider: Provider<PanelExpansionInteractor>,
     private val shadeExpansionStateManager: ShadeExpansionStateManager,
     private val pulseExpansionHandler: PulseExpansionHandler,
     private val displayStateInteractor: DisplayStateInteractor,
     private val nsslc: NotificationStackScrollLayoutController,
     private val scrimController: ScrimController,
+    private val depthController: NotificationShadeDepthController,
 ) : CoreStartable {
 
     override fun start() {
@@ -75,8 +77,10 @@ constructor(
 
     private fun hydrateShadeExpansionStateManager() {
         if (SceneContainerFlag.isEnabled) {
+            val shadeInteractor = shadeInteractorProvider.get()
+
             combine(
-                    panelExpansionInteractorProvider.get().legacyPanelExpansion,
+                    shadeInteractor.shadeExpansion,
                     sceneInteractorProvider.get().isTransitionUserInputOngoing,
                 ) { panelExpansion, tracking ->
                     shadeExpansionStateManager.onPanelExpansionChanged(
@@ -86,6 +90,16 @@ constructor(
                     )
                 }
                 .launchIn(applicationScope)
+
+            applicationScope.launch {
+                shadeInteractor.qsExpansion.collect { depthController.qsPanelExpansion = it }
+            }
+
+            applicationScope.launch {
+                shadeInteractor.anyExpansion.collect {
+                    depthController.transitionToFullShadeProgress = it
+                }
+            }
         }
     }
 
