@@ -17,6 +17,7 @@
 package com.android.systemui.user.domain.interactor
 
 import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.kosmos.testDispatcher
 
 var Kosmos.headlessSystemUserMode: HeadlessSystemUserMode by
-    Kosmos.Fixture { HeadlessSystemUserModeImpl() }
+    Kosmos.Fixture { HeadlessSystemUserModeImpl(testDispatcher) }
