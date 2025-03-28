@@ -162,7 +162,7 @@ constructor(
         val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
         val largeTiles by iconTilesViewModel.largeTiles.collectAsStateWithLifecycle()
 
-        val (currentTiles, otherTiles) = tiles.partition { it.isCurrent }
+        val currentTiles = tiles.filter { it.isCurrent }
         val listState =
             remember(columns, largeTilesSpan) {
                 EditTileListState(
@@ -176,7 +176,7 @@ constructor(
 
         DefaultEditTileGrid(
             listState = listState,
-            otherTiles = otherTiles,
+            allTiles = tiles,
             modifier = modifier,
             onAddTile = onAddTile,
             onRemoveTile = onRemoveTile,

@@ -52,9 +52,9 @@ class EditModeTest : SysuiTestCase() {
     @get:Rule val composeRule = createComposeRule()
 
     @Composable
-    private fun EditTileGridUnderTest(tiles: List<EditTileViewModel>) {
-        val allTiles = remember { tiles.toMutableStateList() }
-        val (currentTiles, otherTiles) = allTiles.partition { it.isCurrent }
+    private fun EditTileGridUnderTest() {
+        val allTiles = remember { TestEditTiles.toMutableStateList() }
+        val currentTiles = allTiles.filter { it.isCurrent }
         val listState =
             EditTileListState(currentTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
         LaunchedEffect(currentTiles) { listState.updateTiles(currentTiles, TestLargeTilesSpecs) }
@@ -62,7 +62,7 @@ class EditModeTest : SysuiTestCase() {
         PlatformTheme {
             DefaultEditTileGrid(
                 listState = listState,
-                otherTiles = otherTiles,
+                allTiles = allTiles,
                 modifier = Modifier.fillMaxSize(),
                 onAddTile = { spec, _ ->
                     val index = allTiles.indexOfFirst { it.tileSpec == spec }
@@ -82,7 +82,7 @@ class EditModeTest : SysuiTestCase() {
 
     @Test
     fun clickAvailableTile_shouldAdd() {
-        composeRule.setContent { EditTileGridUnderTest(TestEditTiles) }
+        composeRule.setContent { EditTileGridUnderTest() }
         composeRule.waitForIdle()
 
         composeRule.onNodeWithContentDescription("tileF").performClick() // Tap to add
@@ -96,7 +96,7 @@ class EditModeTest : SysuiTestCase() {
 
     @Test
     fun placementMode_shouldRepositionTile() {
-        composeRule.setContent { EditTileGridUnderTest(TestEditTiles) }
+        composeRule.setContent { EditTileGridUnderTest() }
         composeRule.waitForIdle()
 
         // Double tap first "tileA", i.e. the one in the current grid

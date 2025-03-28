@@ -85,7 +85,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -156,7 +155,6 @@ import com.android.systemui.qs.panels.ui.compose.selection.TileState
 import com.android.systemui.qs.panels.ui.compose.selection.rememberResizingState
 import com.android.systemui.qs.panels.ui.compose.selection.rememberSelectionState
 import com.android.systemui.qs.panels.ui.compose.selection.selectableTile
-import com.android.systemui.qs.panels.ui.model.AvailableTileGridCell
 import com.android.systemui.qs.panels.ui.model.GridCell
 import com.android.systemui.qs.panels.ui.model.SpacerGridCell
 import com.android.systemui.qs.panels.ui.model.TileGridCell
@@ -229,7 +227,7 @@ private fun EditModeTopBar(onStopEditing: () -> Unit, onReset: (() -> Unit)?) {
 @Composable
 fun DefaultEditTileGrid(
     listState: EditTileListState,
-    otherTiles: List<EditTileViewModel>,
+    allTiles: List<EditTileViewModel>,
     modifier: Modifier,
     onAddTile: (TileSpec, Int) -> Unit,
     onRemoveTile: (TileSpec) -> Unit,
@@ -331,19 +329,8 @@ fun DefaultEditTileGrid(
                                 spacedBy(dimensionResource(id = R.dimen.qs_label_container_margin)),
                             modifier = modifier.fillMaxSize(),
                         ) {
-                            val availableTiles = remember {
-                                mutableStateListOf<AvailableTileGridCell>().apply {
-                                    addAll(toAvailableTiles(listState.tiles, otherTiles))
-                                }
-                            }
-                            LaunchedEffect(listState.tiles, otherTiles) {
-                                availableTiles.apply {
-                                    clear()
-                                    addAll(toAvailableTiles(listState.tiles, otherTiles))
-                                }
-                            }
                             AvailableTileGrid(
-                                availableTiles,
+                                allTiles,
                                 selectionState,
                                 listState.columns,
                                 { onAddTile(it, listState.tileSpecs().size) }, // Add to the end
@@ -544,17 +531,19 @@ private fun CurrentTilesGrid(
 
 @Composable
 private fun AvailableTileGrid(
-    tiles: List<AvailableTileGridCell>,
+    tiles: List<EditTileViewModel>,
     selectionState: MutableSelectionState,
     columns: Int,
     onAddTile: (TileSpec) -> Unit,
     dragAndDropState: DragAndDropState,
 ) {
-    // Available tiles aren't visible during drag and drop, so the row/col isn't needed
-    val groupedTiles =
-        remember(tiles.fastMap { it.tile.category }, tiles.fastMap { it.tile.label }) {
-            groupAndSort(tiles)
+    // Group and sort to get the proper order tiles should be displayed in
+    val groupedTileSpecs =
+        remember(tiles.fastMap { it.category }, tiles.fastMap { it.label }) {
+            groupAndSort(tiles).mapValues { tiles -> tiles.value.map { it.tileSpec } }
         }
+    // Map of TileSpec to EditTileViewModel to use with the grouped tilespecs
+    val viewModelsMap = remember(tiles) { tiles.associateBy { it.tileSpec } }
 
     // Available tiles
     Column(
@@ -563,7 +552,7 @@ private fun AvailableTileGrid(
         modifier =
             Modifier.fillMaxWidth().wrapContentHeight().testTag(AVAILABLE_TILES_GRID_TEST_TAG),
     ) {
-        groupedTiles.forEach { (category, tiles) ->
+        groupedTileSpecs.forEach { (category, tileSpecs) ->
             key(category) {
                 val surfaceColor = MaterialTheme.colorScheme.surface
                 Column(
@@ -582,15 +571,16 @@ private fun AvailableTileGrid(
                         category,
                         modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
                     )
-                    tiles.chunked(columns).forEach { row ->
+                    tileSpecs.chunked(columns).forEach { row ->
                         Row(
                             horizontalArrangement = spacedBy(TileArrangementPadding),
                             modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Max),
                         ) {
-                            row.forEach { tileGridCell ->
-                                key(tileGridCell.key) {
+                            for (tileSpec in row) {
+                                val viewModel = viewModelsMap[tileSpec] ?: continue
+                                key(tileSpec) {
                                     AvailableTileGridCell(
-                                        cell = tileGridCell,
+                                        cell = viewModel,
                                         dragAndDropState = dragAndDropState,
                                         selectionState = selectionState,
                                         onAddTile = onAddTile,
@@ -855,17 +845,17 @@ private fun CategoryHeader(category: TileCategory, modifier: Modifier = Modifier
 
 @Composable
 private fun AvailableTileGridCell(
-    cell: AvailableTileGridCell,
+    cell: EditTileViewModel,
     dragAndDropState: DragAndDropState,
     selectionState: MutableSelectionState,
     onAddTile: (TileSpec) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val stateDescription: String? =
-        if (cell.isAvailable) null
-        else stringResource(R.string.accessibility_qs_edit_tile_already_added)
+        if (cell.isCurrent) stringResource(R.string.accessibility_qs_edit_tile_already_added)
+        else null
 
-    val alpha by animateFloatAsState(if (cell.isAvailable) 1f else .38f)
+    val alpha by animateFloatAsState(if (cell.isCurrent) .38f else 1f)
     val colors = EditModeTileDefaults.editTileColors()
 
     // Displays the tile as an icon tile with the label underneath
@@ -881,21 +871,21 @@ private fun AvailableTileGridCell(
     ) {
         Box(Modifier.fillMaxWidth().height(TileHeight)) {
             val draggableModifier =
-                if (cell.isAvailable) {
+                if (cell.isCurrent) {
+                    Modifier
+                } else {
                     Modifier.dragAndDropTileSource(
-                        SizedTileImpl(cell.tile, cell.width),
+                        SizedTileImpl(cell, 1), // Available tiles are fixed at a width of 1
                         dragAndDropState,
                         DragType.Add,
                     ) {
                         selectionState.unSelect()
                     }
-                } else {
-                    Modifier
                 }
             Box(draggableModifier.fillMaxSize().tileBackground { colors.background }) {
                 // Icon
                 SmallTileContent(
-                    iconProvider = { cell.tile.icon },
+                    iconProvider = { cell.icon },
                     color = colors.icon,
                     animateToEnd = true,
                     modifier = Modifier.align(Alignment.Center),
@@ -906,15 +896,15 @@ private fun AvailableTileGridCell(
                 icon = Icons.Default.Add,
                 contentDescription =
                     stringResource(id = R.string.accessibility_qs_edit_tile_add_action),
-                enabled = cell.isAvailable,
+                enabled = !cell.isCurrent,
             ) {
-                onAddTile(cell.tile.tileSpec)
-                selectionState.select(cell.tile.tileSpec)
+                onAddTile(cell.tileSpec)
+                selectionState.select(cell.tileSpec)
             }
         }
         Box(Modifier.fillMaxSize()) {
             Text(
-                cell.tile.label.text,
+                cell.label.text,
                 maxLines = 2,
                 color = colors.label,
                 overflow = TextOverflow.Ellipsis,
@@ -996,15 +986,6 @@ fun EditTile(
             modifier = Modifier.weight(1f).graphicsLayer { this.alpha = progress() },
         )
     }
-}
-
-private fun toAvailableTiles(
-    currentTiles: List<GridCell>,
-    otherTiles: List<EditTileViewModel>,
-): List<AvailableTileGridCell> {
-    return currentTiles.filterIsInstance<TileGridCell>().fastMap {
-        AvailableTileGridCell(it.tile, isAvailable = false)
-    } + otherTiles.fastMap { AvailableTileGridCell(it) }
 }
 
 private fun MeasureScope.iconHorizontalCenter(containerSize: Int): Float {

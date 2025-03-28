@@ -54,7 +54,7 @@ class DragAndDropTest : SysuiTestCase() {
         PlatformTheme {
             DefaultEditTileGrid(
                 listState = listState,
-                otherTiles = listOf(),
+                allTiles = listState.tiles.filterIsInstance<TileGridCell>().map { it.tile },
                 modifier = Modifier.fillMaxSize(),
                 onAddTile = { _, _ -> },
                 onRemoveTile = {},
