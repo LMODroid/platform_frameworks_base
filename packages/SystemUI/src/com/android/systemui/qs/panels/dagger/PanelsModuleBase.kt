@@ -20,6 +20,8 @@ import com.android.systemui.CoreStartable
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.LogBufferFactory
+import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.log.table.TableLogBufferFactory
 import com.android.systemui.qs.panels.data.repository.AppIconRepository
 import com.android.systemui.qs.panels.data.repository.AppIconRepositoryImpl
 import com.android.systemui.qs.panels.domain.interactor.EditTilesResetInteractor
@@ -29,6 +31,7 @@ import com.android.systemui.qs.panels.shared.model.GridLayoutType
 import com.android.systemui.qs.panels.shared.model.InfiniteGridLayoutType
 import com.android.systemui.qs.panels.shared.model.PaginatedGridLayoutType
 import com.android.systemui.qs.panels.shared.model.PanelsLog
+import com.android.systemui.qs.panels.shared.model.QSFragmentComposeClippingTableLog
 import com.android.systemui.qs.panels.ui.compose.GridLayout
 import com.android.systemui.qs.panels.ui.compose.PaginatableGridLayout
 import com.android.systemui.qs.panels.ui.compose.PaginatedGridLayout
@@ -73,6 +76,13 @@ interface PanelsModuleBase {
         @PanelsLog
         fun providesPanelsLog(factory: LogBufferFactory): LogBuffer {
             return factory.create("PanelsLog", 50)
+        }
+
+        @Provides
+        @SysUISingleton
+        @QSFragmentComposeClippingTableLog
+        fun providesQSFragmentComposeClippingLog(factory: TableLogBufferFactory): TableLogBuffer {
+            return factory.create("QSFragmentComposeClippingTableLog", 100)
         }
 
         @Provides

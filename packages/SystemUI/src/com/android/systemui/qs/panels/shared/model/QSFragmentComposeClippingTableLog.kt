@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,11 @@
  * limitations under the License.
  */
 
-package com.android.systemui.qs.panels.dagger
+package com.android.systemui.qs.panels.shared.model
 
-import com.android.systemui.qs.panels.data.repository.DefaultLargeTilesRepository
-import com.android.systemui.qs.panels.data.repository.DefaultLargeTilesRepositoryImpl
-import dagger.Binds
-import dagger.Module
+import javax.inject.Qualifier
 
-@Module(includes = [PanelsModuleBase::class])
-interface PanelsModule {
-    @Binds
-    fun bindDefaultLargeTilesSpecsRepository(
-        impl: DefaultLargeTilesRepositoryImpl
-    ): DefaultLargeTilesRepository
-}
+@Qualifier
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
+annotation class QSFragmentComposeClippingTableLog
