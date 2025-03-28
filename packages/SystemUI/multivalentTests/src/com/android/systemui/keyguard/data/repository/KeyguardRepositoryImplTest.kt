@@ -31,7 +31,6 @@ import com.android.systemui.doze.DozeMachine
 import com.android.systemui.doze.DozeTransitionCallback
 import com.android.systemui.doze.DozeTransitionListener
 import com.android.systemui.dreams.DreamOverlayCallbackController
-import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.keyguard.shared.model.BiometricUnlockMode
 import com.android.systemui.keyguard.shared.model.BiometricUnlockSource
 import com.android.systemui.keyguard.shared.model.DozeStateModel
@@ -39,7 +38,6 @@ import com.android.systemui.keyguard.shared.model.DozeTransitionModel
 import com.android.systemui.plugins.statusbar.StatusBarStateController
 import com.android.systemui.settings.UserTracker
 import com.android.systemui.statusbar.policy.KeyguardStateController
-import com.android.systemui.util.mockito.any
 import com.android.systemui.util.mockito.argumentCaptor
 import com.android.systemui.util.mockito.whenever
 import com.android.systemui.util.mockito.withArgCaptor
@@ -263,31 +261,6 @@ class KeyguardRepositoryImplTest : SysuiTestCase() {
             val expectedPoint = Point(100, 200)
             underTest.setLastDozeTapToWakePosition(expectedPoint)
             assertThat(underTest.lastDozeTapToWakePosition.value).isEqualTo(expectedPoint)
-        }
-
-    @Test
-    @DisableSceneContainer
-    fun dozeAmount() =
-        testScope.runTest {
-            val values = mutableListOf<Float>()
-            val job = underTest.linearDozeAmount.onEach(values::add).launchIn(this)
-
-            val captor = argumentCaptor<StatusBarStateController.StateListener>()
-            runCurrent()
-            verify(statusBarStateController, atLeastOnce()).addCallback(captor.capture())
-
-            captor.allValues.forEach { it.onDozeAmountChanged(0.433f, 0.4f) }
-            runCurrent()
-            captor.allValues.forEach { it.onDozeAmountChanged(0.498f, 0.5f) }
-            runCurrent()
-            captor.allValues.forEach { it.onDozeAmountChanged(0.661f, 0.65f) }
-            runCurrent()
-
-            assertThat(values).isEqualTo(listOf(0f, 0.433f, 0.498f, 0.661f))
-
-            job.cancel()
-            runCurrent()
-            verify(statusBarStateController).removeCallback(any())
         }
 
     @Test

@@ -184,7 +184,6 @@ class ClockEventControllerTest : SysuiTestCase() {
             underTest.registerListeners(parentView)
 
             repository.setIsDozing(true)
-            repository.setDozeAmount(1f)
         }
 
         val zenCallbackCaptor = argumentCaptor<ZenModeController.Callback>()

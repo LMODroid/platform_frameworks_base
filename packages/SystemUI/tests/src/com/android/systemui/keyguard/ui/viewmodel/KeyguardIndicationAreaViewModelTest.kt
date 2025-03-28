@@ -127,11 +127,6 @@ class KeyguardIndicationAreaViewModelTest() : SysuiTestCase() {
             assertThat(visible).isFalse()
         }
 
-    private fun setDozeAmountAndCalculateExpectedTranslationY(dozeAmount: Float): Float {
-        keyguardRepository.setDozeAmount(dozeAmount)
-        return dozeAmount * (RETURNED_BURN_IN_OFFSET - DEFAULT_BURN_IN_OFFSET)
-    }
-
     companion object {
         private const val DEFAULT_BURN_IN_OFFSET = 5
         private const val RETURNED_BURN_IN_OFFSET = 3

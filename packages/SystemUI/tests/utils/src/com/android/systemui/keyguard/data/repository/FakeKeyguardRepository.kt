@@ -82,9 +82,6 @@ class FakeKeyguardRepository @Inject constructor() : KeyguardRepository {
     private val _isDreamingWithOverlay = MutableStateFlow(false)
     override val isDreamingWithOverlay: Flow<Boolean> = _isDreamingWithOverlay
 
-    private val _dozeAmount = MutableStateFlow(0f)
-    override val linearDozeAmount: Flow<Float> = _dozeAmount
-
     private val _statusBarState = MutableStateFlow(StatusBarState.SHADE)
     override val statusBarState: StateFlow<StatusBarState> = _statusBarState
 
@@ -211,10 +208,6 @@ class FakeKeyguardRepository @Inject constructor() : KeyguardRepository {
 
     fun setDreamingWithOverlay(isDreaming: Boolean) {
         _isDreamingWithOverlay.value = isDreaming
-    }
-
-    fun setDozeAmount(dozeAmount: Float) {
-        _dozeAmount.value = dozeAmount
     }
 
     override fun setBiometricUnlockState(

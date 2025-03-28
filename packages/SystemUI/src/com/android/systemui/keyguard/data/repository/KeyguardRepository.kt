@@ -24,7 +24,6 @@ import com.android.keyguard.KeyguardUpdateMonitorCallback
 import com.android.systemui.biometrics.AuthController
 import com.android.systemui.biometrics.data.repository.FacePropertyRepository
 import com.android.systemui.common.coroutine.ChannelExt.trySendWithFailureLogging
-import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Main
@@ -46,6 +45,7 @@ import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.settings.UserTracker
 import com.android.systemui.statusbar.policy.KeyguardStateController
 import com.android.systemui.util.time.SystemClock
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -58,7 +58,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
@@ -158,10 +157,6 @@ interface KeyguardRepository {
      *
      * Doze state is the same as "Always on Display" or "AOD". It is the state that the device can
      * enter to conserve battery when the device is locked and inactive.
-     *
-     * Note that it is possible for the system to be transitioning into doze while this flow still
-     * returns `false`. In order to account for that, observers should also use the
-     * [linearDozeAmount] flow to check if it's greater than `0`
      */
     val isDozing: StateFlow<Boolean>
 
@@ -178,18 +173,6 @@ interface KeyguardRepository {
 
     /** Observable for whether the device is dreaming with an overlay, see [DreamOverlayService] */
     val isDreamingWithOverlay: Flow<Boolean>
-
-    /**
-     * Observable for the amount of doze we are currently in.
-     *
-     * While in doze state, this amount can change - driving a cycle of animations designed to avoid
-     * pixel burn-in, etc.
-     *
-     * Also note that the value here may be greater than `0` while [isDozing] is still `false`, this
-     * happens during an animation/transition into doze mode. An observer would be wise to account
-     * for both flows if needed.
-     */
-    val linearDozeAmount: Flow<Float>
 
     /** Doze state information, as it transitions */
     val dozeTransitionModel: Flow<DozeTransitionModel>
@@ -461,35 +444,6 @@ constructor(
             .distinctUntilChanged()
 
     override val isDreaming: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    private val _preSceneLinearDozeAmount: Flow<Float> =
-        if (SceneContainerFlag.isEnabled) {
-            emptyFlow()
-        } else {
-            conflatedCallbackFlow {
-                val callback =
-                    object : StatusBarStateController.StateListener {
-                        override fun onDozeAmountChanged(linear: Float, eased: Float) {
-                            trySendWithFailureLogging(linear, TAG, "updated dozeAmount")
-                        }
-                    }
-
-                statusBarStateController.addCallback(callback)
-                trySendWithFailureLogging(
-                    statusBarStateController.dozeAmount,
-                    TAG,
-                    "initial dozeAmount",
-                )
-
-                awaitClose { statusBarStateController.removeCallback(callback) }
-            }
-        }
-
-    override val linearDozeAmount: Flow<Float>
-        get() {
-            SceneContainerFlag.assertInLegacyMode()
-            return _preSceneLinearDozeAmount
-        }
 
     override val dozeTransitionModel: Flow<DozeTransitionModel> = conflatedCallbackFlow {
         val callback =

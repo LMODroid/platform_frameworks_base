@@ -520,7 +520,6 @@ class KeyguardInteractorTest : SysuiTestCase() {
         }
 
     @Test
-    @EnableSceneContainer
     fun dozeAmount_updatedByAodTransitionWhenAodEnabled() =
         testScope.runTest {
             val dozeAmount by collectLastValue(underTest.dozeAmount)
@@ -547,7 +546,6 @@ class KeyguardInteractorTest : SysuiTestCase() {
         }
 
     @Test
-    @EnableSceneContainer
     fun dozeAmount_updatedByDozeTransitionWhenAodDisabled() =
         testScope.runTest {
             val dozeAmount by collectLastValue(underTest.dozeAmount)

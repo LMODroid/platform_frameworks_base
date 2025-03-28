@@ -154,16 +154,12 @@ constructor(
      * all.
      */
     val dozeAmount: Flow<Float> =
-        if (SceneContainerFlag.isEnabled) {
-            isAodAvailable.flatMapLatest { isAodAvailable ->
-                if (isAodAvailable) {
-                    keyguardTransitionInteractor.transitionValue(AOD)
-                } else {
-                    keyguardTransitionInteractor.transitionValue(DOZING)
-                }
+        isAodAvailable.flatMapLatest { isAodAvailable ->
+            if (isAodAvailable) {
+                keyguardTransitionInteractor.transitionValue(AOD)
+            } else {
+                keyguardTransitionInteractor.transitionValue(DOZING)
             }
-        } else {
-            repository.linearDozeAmount
         }
 
     /** Doze transition information. */
