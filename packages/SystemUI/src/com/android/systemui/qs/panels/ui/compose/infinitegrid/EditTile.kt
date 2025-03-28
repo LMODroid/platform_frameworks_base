@@ -438,7 +438,7 @@ private fun CurrentTilesGridHeader(
                 }
                 EditModeHeaderState.Idle -> {
                     EditGridCenteredText(
-                        text = stringResource(id = R.string.drag_to_rearrange_tiles)
+                        text = stringResource(id = R.string.select_to_rearrange_tiles)
                     )
                 }
             }
