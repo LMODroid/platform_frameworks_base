@@ -1438,6 +1438,13 @@ flag {
 }
 
 flag {
+  name: "media_controls_in_compose"
+  namespace: "systemui"
+  description: "Runs media controls in compose"
+  bug: "397989775"
+}
+
+flag {
   name: "output_switcher_redesign"
   namespace: "systemui"
   description: "Enables visual update for Media Output Switcher"
