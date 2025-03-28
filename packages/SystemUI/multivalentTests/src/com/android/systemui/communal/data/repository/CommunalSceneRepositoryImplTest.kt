@@ -23,7 +23,6 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.keyguard.data.repository.fakeKeyguardRepository
 import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.kosmos.applicationCoroutineScope
 import com.android.systemui.kosmos.backgroundScope
 import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runTest
@@ -49,7 +48,6 @@ class CommunalSceneRepositoryImplTest : SysuiTestCase() {
     private val Kosmos.underTest by
         Kosmos.Fixture {
             CommunalSceneRepositoryImpl(
-                applicationScope = applicationCoroutineScope,
                 backgroundScope = backgroundScope,
                 sceneDataSource = delegator,
                 delegator = delegator,

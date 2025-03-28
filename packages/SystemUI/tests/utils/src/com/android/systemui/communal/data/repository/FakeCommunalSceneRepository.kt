@@ -32,7 +32,7 @@ class FakeCommunalSceneRepository(
         }
     }
 
-    override suspend fun showHubFromPowerButton() {
+    override fun showHubFromPowerButton() {
         snapToScene(CommunalScenes.Communal)
     }
 

@@ -17,7 +17,7 @@
 package com.android.systemui.communal.data.repository
 
 import android.content.res.Configuration
-import com.android.app.tracing.coroutines.launchTraced as launch
+import androidx.annotation.MainThread
 import com.android.compose.animation.scene.ObservableTransitionState
 import com.android.compose.animation.scene.OverlayKey
 import com.android.compose.animation.scene.SceneKey
@@ -25,7 +25,6 @@ import com.android.compose.animation.scene.TransitionKey
 import com.android.systemui.communal.dagger.Communal
 import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.dagger.SysUISingleton
-import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.scene.shared.model.SceneDataSource
 import com.android.systemui.scene.shared.model.SceneDataSourceDelegator
@@ -54,13 +53,13 @@ interface CommunalSceneRepository {
     val communalContainerOrientation: StateFlow<Int>
 
     /** Updates the requested scene. */
-    fun changeScene(toScene: SceneKey, transitionKey: TransitionKey? = null)
+    @MainThread fun changeScene(toScene: SceneKey, transitionKey: TransitionKey? = null)
 
     /** Immediately snaps to the desired scene. */
-    fun snapToScene(toScene: SceneKey)
+    @MainThread fun snapToScene(toScene: SceneKey)
 
     /** Shows the hub from a power button press. */
-    suspend fun showHubFromPowerButton()
+    @MainThread fun showHubFromPowerButton()
 
     /**
      * Updates the transition state of the hub [SceneTransitionLayout].
@@ -77,7 +76,6 @@ interface CommunalSceneRepository {
 class CommunalSceneRepositoryImpl
 @Inject
 constructor(
-    @Application private val applicationScope: CoroutineScope,
     @Background backgroundScope: CoroutineScope,
     @Communal private val sceneDataSource: SceneDataSource,
     @Communal private val delegator: SceneDataSourceDelegator,
@@ -101,27 +99,22 @@ constructor(
     override val communalContainerOrientation: StateFlow<Int> =
         _communalContainerOrientation.asStateFlow()
 
+    @MainThread
     override fun changeScene(toScene: SceneKey, transitionKey: TransitionKey?) {
-        applicationScope.launch {
-            // SceneTransitionLayout state updates must be triggered on the thread the STL was
-            // created on.
-            sceneDataSource.changeScene(toScene, transitionKey)
-        }
+        sceneDataSource.changeScene(toScene, transitionKey)
     }
 
+    @MainThread
     override fun snapToScene(toScene: SceneKey) {
-        applicationScope.launch {
-            // SceneTransitionLayout state updates must be triggered on the thread the STL was
-            // created on.
-            sceneDataSource.snapToScene(toScene)
-        }
+        sceneDataSource.snapToScene(toScene)
     }
 
     override fun setCommunalContainerOrientation(orientation: Int) {
         _communalContainerOrientation.value = orientation
     }
 
-    override suspend fun showHubFromPowerButton() {
+    @MainThread
+    override fun showHubFromPowerButton() {
         // If keyguard is not showing yet, the hub view is not ready and the
         // [SceneDataSourceDelegator] will still be using the default [NoOpSceneDataSource]
         // and initial key, which is Blank. This means that when the hub container loads, it
