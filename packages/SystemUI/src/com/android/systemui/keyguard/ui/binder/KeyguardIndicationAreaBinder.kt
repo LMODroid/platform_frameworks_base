@@ -100,7 +100,7 @@ object KeyguardIndicationAreaBinder {
                     launch("$TAG#viewModel.indicationAreaTranslationY") {
                         configurationBasedDimensions
                             .map {
-                                maxOf(
+                                minOf(
                                     it.indicationAreaBottomMarginPx,
                                     it.defaultBurnInPreventionYOffsetPx
                                 )
