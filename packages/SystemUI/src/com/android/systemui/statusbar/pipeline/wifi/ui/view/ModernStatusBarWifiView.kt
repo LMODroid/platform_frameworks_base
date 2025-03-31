@@ -65,6 +65,7 @@ class ModernStatusBarWifiView(context: Context, attrs: AttributeSet?) :
                         // The newer asset does not embed whitespace around it, and is therefore
                         // rectangular. Use wrap_content for the width in this case
                         val iconView = requireViewById<ImageView>(R.id.wifi_signal)
+                        iconView.adjustViewBounds = true
                         val lp = iconView.layoutParams
                         lp.width = ViewGroup.LayoutParams.WRAP_CONTENT
                         lp.height =
