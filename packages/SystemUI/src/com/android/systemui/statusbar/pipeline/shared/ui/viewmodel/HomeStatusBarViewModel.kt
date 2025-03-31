@@ -427,6 +427,14 @@ constructor(
                 keyguardInteractor.isSecureCameraActive,
                 headsUpNotificationInteractor.statusBarHeadsUpStatus,
             ) { isHomeStatusBarAllowed, isSecureCameraActive, headsUpState ->
+                val showForHeadsUp =
+                    if (StatusBarNoHunBehavior.isEnabled) {
+                        false
+                    } else {
+                        // HUNs can appear on lockscreen if face auth with bypass is enabled, in
+                        // which case we need to show the HUN app name in the status bar
+                        headsUpState.isPinned
+                    }
                 // When launching the camera over the lockscreen, the status icons would typically
                 // become visible momentarily before animating out, since we're not yet aware that
                 // the launching camera activity is fullscreen. Even once the activity finishes
@@ -434,7 +442,7 @@ constructor(
                 // the icons and tells us to hide them. To ensure that this high-visibility
                 // animation is smooth, keep the icons hidden during a camera launch. See
                 // b/257292822.
-                headsUpState.isPinned || (isHomeStatusBarAllowed && !isSecureCameraActive)
+                showForHeadsUp || (isHomeStatusBarAllowed && !isSecureCameraActive)
             }
             .distinctUntilChanged()
             .logDiffsForTable(

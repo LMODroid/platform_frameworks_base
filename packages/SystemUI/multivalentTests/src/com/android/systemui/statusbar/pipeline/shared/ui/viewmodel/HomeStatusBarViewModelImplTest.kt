@@ -36,6 +36,7 @@ import com.android.systemui.display.data.repository.displayRepository
 import com.android.systemui.display.data.repository.fake
 import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.flags.EnableSceneContainer
+import com.android.systemui.keyguard.data.repository.fakeDeviceEntryFaceAuthRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardTransitionRepository
 import com.android.systemui.keyguard.data.repository.keyguardOcclusionRepository
 import com.android.systemui.keyguard.domain.interactor.keyguardInteractor
@@ -1006,6 +1007,108 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
 
             assertIsScreenRecordChip(underTest.ongoingActivityChips.chips.active[0])
             assertIsCallChip(underTest.ongoingActivityChips.chips.active[1], "call", context)
+        }
+
+    @Test
+    @DisableSceneContainer
+    @DisableFlags(StatusBarNoHunBehavior.FLAG_NAME)
+    fun hunOnLockscreenWithBypass_sceneFlagOff_noHunFlagOff_everythingVisible() =
+        kosmos.runTest {
+            val latestNotifs by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val latestSystemInfo by collectLastValue(underTest.systemInfoCombinedVis)
+
+            // WHEN on lockscreen with bypass enabled
+            fakeKeyguardTransitionRepository.transitionTo(
+                KeyguardState.GONE,
+                KeyguardState.LOCKSCREEN,
+            )
+            fakeDeviceEntryFaceAuthRepository.isBypassEnabled.value = true
+            // WHEN there's a HUN
+            headsUpNotificationRepository.setNotifications(
+                UnconfinedFakeHeadsUpRowRepository(
+                    key = "key",
+                    pinnedStatus = MutableStateFlow(PinnedStatus.PinnedBySystem),
+                )
+            )
+
+            // THEN status bar content shows if StatusBarNoHunBehavior is off
+            assertThat(latestNotifs!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(latestSystemInfo!!.baseVisibility.visibility).isEqualTo(View.VISIBLE)
+        }
+
+    @Test
+    @EnableSceneContainer
+    @DisableFlags(StatusBarNoHunBehavior.FLAG_NAME)
+    fun hunOnLockscreenWithBypass_sceneFlagOn_noHunFlagOff_everythingVisible() =
+        kosmos.runTest {
+            val latestNotifs by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val latestSystemInfo by collectLastValue(underTest.systemInfoCombinedVis)
+
+            // WHEN on lockscreen with bypass enabled
+            sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            fakeDeviceEntryFaceAuthRepository.isBypassEnabled.value = true
+            // WHEN there's a HUN
+            headsUpNotificationRepository.setNotifications(
+                UnconfinedFakeHeadsUpRowRepository(
+                    key = "key",
+                    pinnedStatus = MutableStateFlow(PinnedStatus.PinnedBySystem),
+                )
+            )
+
+            // THEN status bar content shows if StatusBarNoHunBehavior is off
+            assertThat(latestNotifs!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(latestSystemInfo!!.baseVisibility.visibility).isEqualTo(View.VISIBLE)
+        }
+
+    @Test
+    @DisableSceneContainer
+    @EnableFlags(StatusBarNoHunBehavior.FLAG_NAME)
+    fun hunOnLockscreenWithBypass_sceneFlagOff_noHunFlagOn_everythingHidden() =
+        kosmos.runTest {
+            val latestNotifs by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val latestSystemInfo by collectLastValue(underTest.systemInfoCombinedVis)
+
+            // WHEN on lockscreen with bypass enabled
+            fakeKeyguardTransitionRepository.transitionTo(
+                KeyguardState.GONE,
+                KeyguardState.LOCKSCREEN,
+            )
+            fakeDeviceEntryFaceAuthRepository.isBypassEnabled.value = true
+            // WHEN there's a HUN
+            headsUpNotificationRepository.setNotifications(
+                UnconfinedFakeHeadsUpRowRepository(
+                    key = "key",
+                    pinnedStatus = MutableStateFlow(PinnedStatus.PinnedBySystem),
+                )
+            )
+
+            // THEN status bar content still hides if StatusBarNoHunBehavior is on
+            assertThat(latestNotifs!!.visibility).isEqualTo(View.GONE)
+            assertThat(latestSystemInfo!!.baseVisibility.visibility).isEqualTo(View.GONE)
+        }
+
+    @Test
+    @EnableSceneContainer
+    @EnableFlags(StatusBarNoHunBehavior.FLAG_NAME)
+    fun hunOnLockscreenWithBypass_sceneFlagOn_noHunFlagOn_everythingHidden() =
+        kosmos.runTest {
+            val latestNotifs by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val latestSystemInfo by collectLastValue(underTest.systemInfoCombinedVis)
+
+            // WHEN on lockscreen with bypass enabled
+            sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            fakeDeviceEntryFaceAuthRepository.isBypassEnabled.value = true
+            // WHEN there's a HUN
+            headsUpNotificationRepository.setNotifications(
+                UnconfinedFakeHeadsUpRowRepository(
+                    key = "key",
+                    pinnedStatus = MutableStateFlow(PinnedStatus.PinnedBySystem),
+                )
+            )
+
+            // THEN status bar content still hides if StatusBarNoHunBehavior is on
+            assertThat(latestNotifs!!.visibility).isEqualTo(View.GONE)
+            assertThat(latestSystemInfo!!.baseVisibility.visibility).isEqualTo(View.GONE)
         }
 
     @Test
