@@ -428,7 +428,7 @@ interface PolicyModule {
                             labelRes = R.string.quick_settings_modes_label,
                         ),
                     instanceId = uiEventLogger.getNewInstanceId(),
-                    category = TileCategory.CONNECTIVITY,
+                    category = TileCategory.UTILITIES,
                 )
             } else {
                 QSTileConfig(
@@ -439,7 +439,7 @@ interface PolicyModule {
                             labelRes = R.string.quick_settings_dnd_label,
                         ),
                     instanceId = uiEventLogger.getNewInstanceId(),
-                    category = TileCategory.CONNECTIVITY,
+                    category = TileCategory.UTILITIES,
                 )
             }
 
@@ -474,7 +474,7 @@ interface PolicyModule {
                         labelRes = R.string.quick_settings_dnd_label,
                     ),
                 instanceId = uiEventLogger.getNewInstanceId(),
-                category = TileCategory.CONNECTIVITY,
+                category = TileCategory.UTILITIES,
             )
 
         @Provides
