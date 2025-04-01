@@ -101,7 +101,6 @@ import com.android.internal.jank.InteractionJankMonitor.CUJ_NOTIFICATION_SHADE_S
 import com.android.systemui.common.ui.compose.windowinsets.LocalScreenCornerRadius
 import com.android.systemui.res.R
 import com.android.systemui.scene.session.ui.composable.SaveableSession
-import com.android.systemui.scene.session.ui.composable.rememberSession
 import com.android.systemui.scene.session.ui.composable.sessionCoroutineScope
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.ui.composable.ShadeHeader
@@ -306,13 +305,13 @@ fun ContentScope.NotificationScrollingStack(
     onEmptySpaceClick: (() -> Unit)? = null,
 ) {
     val composeViewRoot = LocalView.current
-    val coroutineScope = shadeSession.sessionCoroutineScope()
+    val coroutineScope = shadeSession.sessionCoroutineScope(key = "NotificationScrollingStack")
     val density = LocalDensity.current
     val screenCornerRadius = LocalScreenCornerRadius.current
     val scrimCornerRadius = dimensionResource(R.dimen.notification_scrim_corner_radius)
     val scrimBackgroundColor = MaterialTheme.colorScheme.surface
     val scrollState =
-        shadeSession.rememberSaveableSession(saver = ScrollState.Saver, key = null) {
+        shadeSession.rememberSaveableSession(saver = ScrollState.Saver, key = "ScrollState") {
             ScrollState(initial = 0)
         }
     val syntheticScroll = viewModel.syntheticScroll.collectAsStateWithLifecycle(0f)
@@ -327,7 +326,7 @@ fun ContentScope.NotificationScrollingStack(
      * notifications, this can exceed the space available on screen to show notifications, at which
      * point the notification stack should become scrollable.
      */
-    val stackHeight = remember { mutableIntStateOf(0) }
+    val stackHeight = shadeSession.rememberSession(key = "StackHeight") { mutableIntStateOf(0) }
 
     /**
      * Space available for the notification stack on the screen. These bounds don't scroll off the
@@ -344,7 +343,7 @@ fun ContentScope.NotificationScrollingStack(
     // When fully expanded (scrimOffset = minScrimOffset), its top bound is at minScrimStartY,
     // which is equal to the height of the Shade Header. Thus, when the scrim is fully expanded, the
     // entire height of the scrim is visible on screen.
-    val scrimOffset = shadeSession.rememberSession { Animatable(0f) }
+    val scrimOffset = shadeSession.rememberSession(key = "ScrimOffset") { Animatable(0f) }
 
     // set the bounds to null when the scrim disappears
     DisposableEffect(Unit) { onDispose { viewModel.onScrimBoundsChanged(null) } }
@@ -369,17 +368,18 @@ fun ContentScope.NotificationScrollingStack(
     // The top y bound of the IME.
     val imeTop = remember { mutableFloatStateOf(0f) }
 
-    val shadeScrollState by remember {
-        derivedStateOf {
-            ShadeScrollState(
-                // we are not scrolled to the top unless the scroll position is zero,
-                // and the scrim is at its maximum offset
-                isScrolledToTop = scrimOffset.value >= 0f && scrollState.value == 0,
-                scrollPosition = scrollState.value,
-                maxScrollPosition = scrollState.maxValue,
-            )
+    val shadeScrollState by
+        shadeSession.rememberSession(key = "ShadeScrollState") {
+            derivedStateOf {
+                ShadeScrollState(
+                    // we are not scrolled to the top unless the scroll position is zero,
+                    // and the scrim is at its maximum offset
+                    isScrolledToTop = scrimOffset.value >= 0f && scrollState.value == 0,
+                    scrollPosition = scrollState.value,
+                    maxScrollPosition = scrollState.maxValue,
+                )
+            }
         }
-    }
 
     LaunchedEffect(shadeScrollState) { viewModel.setScrollState(shadeScrollState) }
 
@@ -462,6 +462,7 @@ fun ContentScope.NotificationScrollingStack(
 
     val scrimNestedScrollConnection =
         shadeSession.rememberSession(
+            key = "ScrimConnection",
             scrimOffset,
             minScrimTop,
             viewModel.isCurrentGestureOverscroll,
