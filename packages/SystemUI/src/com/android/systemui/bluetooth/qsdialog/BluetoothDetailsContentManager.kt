@@ -32,6 +32,7 @@ import android.widget.ProgressBar
 import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +43,7 @@ import com.android.systemui.bluetooth.ui.viewModel.BluetoothDetailsContentViewMo
 import com.android.systemui.bluetooth.ui.viewModel.BluetoothTileDialogCallback
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.res.R
+import com.android.systemui.util.annotations.DeprecatedSysuiVisibleForTesting
 import com.android.systemui.util.time.SystemClock
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -76,19 +78,27 @@ constructor(
 ) {
 
     private val mutableBluetoothStateToggle: MutableStateFlow<Boolean?> = MutableStateFlow(null)
-    internal val bluetoothStateToggle
+    @DeprecatedSysuiVisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val bluetoothStateToggle
         get() = mutableBluetoothStateToggle.asStateFlow()
 
     private val mutableBluetoothAutoOnToggle: MutableStateFlow<Boolean?> = MutableStateFlow(null)
-    internal val bluetoothAutoOnToggle
+    @DeprecatedSysuiVisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val bluetoothAutoOnToggle
         get() = mutableBluetoothAutoOnToggle.asStateFlow()
 
     private val mutableDeviceItemClick: MutableStateFlow<DeviceItemClick?> = MutableStateFlow(null)
-    internal val deviceItemClick
+    @DeprecatedSysuiVisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val deviceItemClick
         get() = mutableDeviceItemClick.asStateFlow()
 
     private val mutableContentHeight: MutableStateFlow<Int?> = MutableStateFlow(null)
-    internal val contentHeight
+    @DeprecatedSysuiVisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val contentHeight
         get() = mutableContentHeight.asStateFlow()
 
     private val deviceItemAdapter: Adapter = Adapter()
@@ -299,7 +309,9 @@ constructor(
         }
     }
 
-    internal inner class Adapter : RecyclerView.Adapter<Adapter.DeviceItemViewHolder>() {
+    @DeprecatedSysuiVisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    inner class Adapter : RecyclerView.Adapter<Adapter.DeviceItemViewHolder>() {
 
         private val diffUtilCallback =
             object : DiffUtil.ItemCallback<DeviceItem>() {
@@ -349,7 +361,9 @@ constructor(
             asyncListDiffer.submitList(updated, callback)
         }
 
-        internal inner class DeviceItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        @DeprecatedSysuiVisibleForTesting
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        inner class DeviceItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             private val container = view.requireViewById<View>(R.id.bluetooth_device_row)
             private val nameView = view.requireViewById<TextView>(R.id.bluetooth_device_name)
             private val summaryView = view.requireViewById<TextView>(R.id.bluetooth_device_summary)
