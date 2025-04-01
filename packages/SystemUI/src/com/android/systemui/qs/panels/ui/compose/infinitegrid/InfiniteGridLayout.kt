@@ -32,6 +32,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.grid.ui.compose.VerticalSpannedGrid
 import com.android.systemui.haptics.msdl.qs.TileHapticsViewModelFactoryProvider
 import com.android.systemui.lifecycle.rememberViewModel
+import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager.Companion.LOCATION_QS
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.EditTileListState
 import com.android.systemui.qs.panels.ui.compose.PaginatableGridLayout
@@ -42,7 +43,6 @@ import com.android.systemui.qs.panels.ui.viewmodel.DetailsViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.IconTilesViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.InfiniteGridViewModel
-import com.android.systemui.qs.panels.ui.viewmodel.PaginatableGridViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackContentViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.TileViewModel
 import com.android.systemui.qs.pipeline.shared.TileSpec
@@ -54,9 +54,9 @@ import javax.inject.Inject
 class InfiniteGridLayout
 @Inject
 constructor(
-    override val viewModelFactory: InfiniteGridViewModel.Factory,
     private val detailsViewModel: DetailsViewModel,
     private val iconTilesViewModel: IconTilesViewModel,
+    private val viewModelFactory: InfiniteGridViewModel.Factory,
     private val textFeedbackContentViewModelFactory: TextFeedbackContentViewModel.Factory,
     private val tileHapticsViewModelFactoryProvider: TileHapticsViewModelFactoryProvider,
 ) : PaginatableGridLayout {
@@ -67,24 +67,18 @@ constructor(
         modifier: Modifier,
         listening: () -> Boolean,
     ) {
-        TileGridPage(
+        val viewModel =
             rememberViewModel(traceName = "InfiniteGridLayout.TileGrid") {
                 viewModelFactory.create()
-            },
-            tiles,
-            modifier,
-            listening,
-        )
-    }
-
-    @Composable
-    override fun ContentScope.TileGridPage(
-        viewModel: PaginatableGridViewModel,
-        tiles: List<TileViewModel>,
-        modifier: Modifier,
-        listening: () -> Boolean,
-    ) {
-        if (viewModel !is InfiniteGridViewModel) return
+            }
+        val iconTilesViewModel =
+            rememberViewModel(traceName = "InfiniteGridLayout.TileGrid") {
+                viewModel.dynamicIconTilesViewModelFactory.create()
+            }
+        val columnsWithMediaViewModel =
+            rememberViewModel(traceName = "InfiniteGridLAyout.TileGrid") {
+                viewModel.columnsWithMediaViewModelFactory.create(LOCATION_QS)
+            }
 
         val context = LocalContext.current
         val textFeedbackViewModel =
@@ -92,9 +86,9 @@ constructor(
                 textFeedbackContentViewModelFactory.create(context)
             }
 
-        val columns = viewModel.columnsWithMediaViewModel.columns
-        val largeTiles by viewModel.iconTilesViewModel.largeTilesState
-        val largeTilesSpan by viewModel.iconTilesViewModel.largeTilesSpanState
+        val columns = columnsWithMediaViewModel.columns
+        val largeTiles by iconTilesViewModel.largeTilesState
+        val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
         // Tiles or largeTiles may be updated while this is composed, so listen to any changes
         val sizedTiles =
             remember(tiles, largeTiles, largeTilesSpan) {
@@ -120,7 +114,7 @@ constructor(
             Element(it.tile.spec.toElementKey(spanIndex), Modifier) {
                 Tile(
                     tile = it.tile,
-                    iconOnly = !largeTiles.contains(it.tile.spec),
+                    iconOnly = iconTilesViewModel.isIconTile(it.tile.spec),
                     squishiness = { squishiness },
                     tileHapticsViewModelFactoryProvider = tileHapticsViewModelFactoryProvider,
                     coroutineScope = scope,
@@ -156,13 +150,17 @@ constructor(
             rememberViewModel(traceName = "InfiniteGridLayout.EditTileGrid") {
                 viewModelFactory.create()
             }
+        val iconTilesViewModel =
+            rememberViewModel(traceName = "InfiniteGridLayout.EditTileGrid") {
+                viewModel.dynamicIconTilesViewModelFactory.create()
+            }
         val columnsViewModel =
             rememberViewModel(traceName = "InfiniteGridLayout.EditTileGrid") {
                 viewModel.columnsWithMediaViewModelFactory.createWithoutMediaTracking()
             }
         val columns = columnsViewModel.columns
-        val largeTiles by viewModel.iconTilesViewModel.largeTilesState
-        val largeTilesSpan by viewModel.iconTilesViewModel.largeTilesSpanState
+        val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
+        val largeTiles by iconTilesViewModel.largeTiles.collectAsStateWithLifecycle()
 
         val currentTiles = tiles.filter { it.isCurrent }
         val listState =
@@ -187,5 +185,23 @@ constructor(
             onStopEditing = onStopEditing,
             onReset = viewModel::showResetDialog,
         )
+    }
+
+    override fun splitIntoPages(
+        tiles: List<TileViewModel>,
+        rows: Int,
+        columns: Int,
+    ): List<List<TileViewModel>> {
+
+        return PaginatableGridLayout.splitInRows(
+                tiles.map { SizedTileImpl(it, it.spec.width()) },
+                columns,
+            )
+            .chunked(rows)
+            .map { it.flatten().map { it.tile } }
+    }
+
+    private fun TileSpec.width(largeSize: Int = iconTilesViewModel.largeTilesSpan.value): Int {
+        return if (iconTilesViewModel.isIconTile(this)) 1 else largeSize
     }
 }

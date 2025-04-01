@@ -53,7 +53,6 @@ import java.io.PrintWriter
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -80,9 +79,6 @@ interface CurrentTilesInteractor : ProtoDumpable {
 
     /** [Context] corresponding to [userId] */
     val userContext: StateFlow<Context>
-
-    /** Current user with the corresponding tiles. */
-    val userAndTiles: Flow<DataWithUserChange>
 
     /** List of specs corresponding to the last value of [currentTiles] */
     val currentTilesSpecs: List<TileSpec>
@@ -172,7 +168,7 @@ constructor(
     private val _userContext = MutableStateFlow(userTracker.userContext)
     override val userContext = _userContext.asStateFlow()
 
-    override val userAndTiles =
+    private val userAndTiles =
         currentUser
             .flatMapLatest { userId ->
                 val currentTiles = tileSpecRepository.tilesSpecs(userId)
@@ -443,7 +439,7 @@ private data class UserTilesAndComponents(
     val installedComponents: Set<ComponentName>,
 )
 
-data class DataWithUserChange(
+private data class DataWithUserChange(
     val userId: Int,
     val tiles: List<TileSpec>,
     val installedComponents: Set<ComponentName>,

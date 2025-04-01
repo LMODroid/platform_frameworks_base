@@ -75,16 +75,14 @@ constructor(
             rememberViewModel(traceName = "PaginatedGridLayout-TileGrid") {
                 viewModelFactory.create()
             }
-        val delegateGridViewModel =
-            rememberViewModel(traceName = "PaginatedGridLayout-TileGrid") {
-                delegateGridLayout.viewModelFactory.create()
-            }
 
+        val columns = viewModel.columns
         val rows = integerResource(R.integer.quick_settings_paginated_grid_num_rows)
+        val largeTiles by viewModel.largeTilesState
 
         val pages =
-            remember(tiles, rows, *delegateGridViewModel.pageKeys) {
-                delegateGridViewModel.splitIntoPages(tiles, rows = rows)
+            remember(tiles, columns, rows, largeTiles) {
+                delegateGridLayout.splitIntoPages(tiles, rows = rows, columns = columns)
             }
 
         val pagerState = rememberPagerState(0) { pages.size }
@@ -138,14 +136,7 @@ constructor(
             ) {
                 val page = pages[it]
 
-                with(delegateGridLayout) {
-                    TileGridPage(
-                        viewModel = delegateGridViewModel,
-                        tiles = page,
-                        modifier = Modifier,
-                        listening,
-                    )
-                }
+                with(delegateGridLayout) { TileGrid(tiles = page, modifier = Modifier, listening) }
             }
             FooterBar(
                 buildNumberViewModelFactory = viewModel.buildNumberViewModelFactory,

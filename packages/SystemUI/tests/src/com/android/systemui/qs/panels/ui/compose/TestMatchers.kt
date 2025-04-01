@@ -19,7 +19,6 @@ package com.android.systemui.qs.panels.ui.compose
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
-import androidx.compose.ui.test.SemanticsNodeInteractionCollection
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.filter
 import androidx.compose.ui.test.hasContentDescription
@@ -49,20 +48,5 @@ fun SemanticsMatcher.Companion.contentDescriptionStartsWith(prefix: String): Sem
         semanticsNode.config.getOrNull(SemanticsProperties.ContentDescription)?.any {
             it.startsWith(prefix)
         } ?: false
-    }
-}
-
-/** Returns the [SemanticsNodeInteractionCollection] for all nodes with a tag in [testTags]. */
-fun ComposeContentTestRule.onAllNodesWithTestTags(
-    testTags: Set<String>
-): SemanticsNodeInteractionCollection {
-    return onAllNodes(SemanticsMatcher.withTestTagIn(testTags))
-}
-
-/** A [SemanticsMatcher] that matches anything with a test tag from the [testTags] set. */
-fun SemanticsMatcher.Companion.withTestTagIn(testTags: Set<String>): SemanticsMatcher {
-    return SemanticsMatcher("${SemanticsProperties.TestTag.name} is in $testTags") { semanticsNode
-        ->
-        testTags.contains(semanticsNode.config.getOrNull(SemanticsProperties.TestTag))
     }
 }
