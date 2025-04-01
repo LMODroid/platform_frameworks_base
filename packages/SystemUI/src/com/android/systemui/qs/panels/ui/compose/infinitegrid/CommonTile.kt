@@ -69,7 +69,6 @@ import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -90,6 +89,7 @@ import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.common.ui.compose.load
 import com.android.systemui.compose.modifiers.sysuiResTag
+import com.android.systemui.qs.panels.ui.compose.icons.DualTargetArrow
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.ChevronSize
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.SideIconHeight
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.SideIconWidth
@@ -188,9 +188,9 @@ fun LargeTileContent(
             )
         } else if (isDualTarget) {
             Icon(
-                painterResource(R.drawable.ic_qs_dual_target_arrow),
+                DualTargetArrow,
                 contentDescription = null,
-                tint = { colors.label },
+                tint = colors.label,
                 modifier = Modifier.size(ChevronSize),
             )
         }
@@ -382,7 +382,7 @@ object CommonTileDefaults {
     val LargeTileIconSize = 28.dp
     val SideIconWidth = 32.dp
     val SideIconHeight = 20.dp
-    val ChevronSize = 16.dp
+    val ChevronSize = 14.dp
     val ToggleTargetSize = 56.dp
     val TileHeight = 72.dp
     val TileStartPadding = 8.dp
