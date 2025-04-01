@@ -684,6 +684,11 @@ class WindowToken extends WindowContainer<WindowState> {
         return super.prepareSync();
     }
 
+    @Override
+    void updateSurfaceVisibility(SurfaceControl.Transaction t) {
+        // Regular window token doesn't change surface visibility.
+    }
+
     @CallSuper
     @Override
     public void dumpDebug(ProtoOutputStream proto, long fieldId,

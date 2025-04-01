@@ -60,6 +60,10 @@ class WindowManagerFlags {
 
     final boolean mAodTransition = Flags.aodTransition();
 
+    // TODO(b/383241933): Remove isSurfaceShowing(), mLastSurfaceShowing, enforceSurfaceVisible
+    //  with this flag.
+    final boolean mEnsureSurfaceVisibility = Flags.respectHierarchySurfaceVisibility();
+
     /* End Available Flags */
 
     WindowManagerFlags() {

@@ -1274,6 +1274,7 @@ public class ActivityRecordTests extends WindowTestsBase {
     public void testFinishActivityIfPossible_nonVisibleNoAppTransition() {
         registerTestTransitionPlayer();
         spyOn(mRootWindowContainer.mTransitionController);
+        mWm.mAnimator.ready();
         final ActivityRecord bottomActivity = createActivityWithTask();
         bottomActivity.setVisibility(false);
         bottomActivity.setState(STOPPED, "test");
@@ -1292,7 +1293,13 @@ public class ActivityRecordTests extends WindowTestsBase {
         assertTrue(bottomActivity.isVisible());
         verify(mRootWindowContainer.mTransitionController).onVisibleWithoutCollectingTransition(
                 eq(bottomActivity), any());
-        assertTrue(bottomActivity.mLastSurfaceShowing);
+        if (!mWm.mFlags.mEnsureSurfaceVisibility) {
+            assertTrue(bottomActivity.mLastSurfaceShowing);
+            return;
+        }
+        clearInvocations(mTransaction);
+        waitUntilWindowAnimatorIdle();
+        verify(mTransaction).show(bottomActivity.mSurfaceControl);
     }
 
     /**
@@ -3311,6 +3318,18 @@ public class ActivityRecordTests extends WindowTestsBase {
         assertFalse(activity.isVisible());
         assertTrue(activity.isVisibleRequested());
         assertTrue(activity.inTransition());
+
+        if (!mWm.mFlags.mEnsureSurfaceVisibility) {
+            return;
+        }
+        final Transition transition = activity.mTransitionController.getCollectingTransition();
+        assertNotNull(transition);
+        mWm.mAnimator.ready();
+        transition.start();
+        mWm.mSyncEngine.abort(transition.getSyncId());
+        transition.finishTransition(ActionChain.testFinish(transition));
+        waitUntilWindowAnimatorIdle();
+        verify(mTransaction).show(activity.mSurfaceControl);
     }
 
     @Test
@@ -3342,34 +3361,44 @@ public class ActivityRecordTests extends WindowTestsBase {
 
         assertFalse(app.mActivityRecord.isVisibleRequested());
         assertTrue(app.mActivityRecord.isVisible());
-        assertTrue(app.mActivityRecord.isSurfaceShowing());
+        if (!mWm.mFlags.mEnsureSurfaceVisibility) {
+            assertTrue(app.mActivityRecord.isSurfaceShowing());
 
-        // Start transition.
-        app.mActivityRecord.prepareSurfaces();
+            // Start transition.
+            app.mActivityRecord.prepareSurfaces();
 
-        // Because the app is waiting for transition, it should not hide the surface.
-        assertTrue(app.mActivityRecord.isSurfaceShowing());
+            // Because the app is waiting for transition, it should not hide the surface.
+            assertTrue(app.mActivityRecord.isSurfaceShowing());
+            return;
+        }
+        verify(mTransaction, never()).hide(app.mActivityRecord.mSurfaceControl);
     }
 
     @Test
     public void testInClosingAnimation_visibilityCommitted_hideSurface() {
-        final WindowState app = newWindowBuilder("app", TYPE_APPLICATION).build();
-        makeWindowVisibleAndDrawn(app);
-        app.mActivityRecord.prepareSurfaces();
+        final ActivityRecord activity = new ActivityBuilder(mAtm).setCreateTask(true).build();
+        if (mWm.mFlags.mEnsureSurfaceVisibility) {
+            mWm.mAnimator.ready();
+        } else {
+            activity.prepareSurfaces();
+        }
 
-        // Commit visibility before start transition.
-        app.mActivityRecord.commitVisibility(false, false);
+        // Commit visibility without a transition.
+        activity.commitVisibility(false /* visible */, false /* performLayout */);
 
-        assertFalse(app.mActivityRecord.isVisibleRequested());
-        assertFalse(app.mActivityRecord.isVisible());
-        assertTrue(app.mActivityRecord.isSurfaceShowing());
+        assertFalse(activity.isVisibleRequested());
+        assertFalse(activity.isVisible());
+        if (!mWm.mFlags.mEnsureSurfaceVisibility) {
+            assertTrue(activity.isSurfaceShowing());
+            activity.prepareSurfaces();
+            // Because the app visibility has been committed before the transition start, it should
+            // hide the surface.
+            assertFalse(activity.isSurfaceShowing());
+            return;
+        }
 
-        // Start transition.
-        app.mActivityRecord.prepareSurfaces();
-
-        // Because the app visibility has been committed before the transition start, it should hide
-        // the surface.
-        assertFalse(app.mActivityRecord.isSurfaceShowing());
+        waitUntilWindowAnimatorIdle();
+        verify(mTransaction).hide(activity.mSurfaceControl);
     }
 
     @Test // b/162542125

@@ -1052,6 +1052,15 @@ class TransitionController {
             validateStates();
             mAtm.mWindowManager.onAnimationFinished();
         }
+
+        // Make sure the surface visibility respects the hierarchy state (updateAnimatingState
+        // should have scheduled a frame to update).
+        record.ensureParticipantSurfaceVisibility();
+        // The targets added by Transition#tryPromote also need to update.
+        for (int i = record.mTargets.size() - 1; i >= 0; i--) {
+            mAtm.mWindowManager.mAnimator.addSurfaceVisibilityUpdate(
+                    record.mTargets.get(i).mContainer);
+        }
     }
 
     /** Called by {@link Transition#finishTransition} if it committed invisible to any activities */
@@ -1107,6 +1116,9 @@ class TransitionController {
         final boolean isPlaying = !mPlayingTransitions.isEmpty();
         Slog.e(TAG, "Set visible without transition " + wc + " playing=" + isPlaying
                 + " caller=" + caller);
+        if (mAtm.mWindowManager.mFlags.mEnsureSurfaceVisibility) {
+            return;
+        }
         if (!isPlaying) {
             WindowContainer.enforceSurfaceVisible(wc);
             return;

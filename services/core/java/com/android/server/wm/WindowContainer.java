@@ -1312,6 +1312,17 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
         }
     }
 
+    /** Updates this surface visibility. This can only be called from {@link WindowAnimator}. */
+    void updateSurfaceVisibility(Transaction t) {
+        // Only ensure visible case by default. Because the surfaces of ActivityRecord, Task and
+        // WallpaperWindowToken can be hidden according to their visibility. While other container
+        // types such as DisplayArea may not usually be involved in a transition, so skip invisible
+        // case to avoid having no chance of being shown again.
+        if (mVisibleRequested) {
+            t.show(mSurfaceControl);
+        }
+    }
+
     /**
      * Returns true if the container or one of its children is considered visible from the
      * WindowManager perspective which usually means valid surface and some other internal state
@@ -2828,6 +2839,7 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
         }
     }
 
+    /** Updates common surface attributes. This can only be called from {@link WindowAnimator}. */
     void prepareSurfaces() {
         for (int i = 0; i < mChildren.size(); i++) {
             mChildren.get(i).prepareSurfaces();
@@ -3164,6 +3176,9 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
     }
 
     static void enforceSurfaceVisible(@NonNull WindowContainer<?> wc) {
+        if (wc.mWmService.mFlags.mEnsureSurfaceVisibility) {
+            return;
+        }
         if (wc.mSurfaceControl == null) {
             return;
         }

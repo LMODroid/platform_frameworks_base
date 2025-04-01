@@ -5576,6 +5576,7 @@ final class ActivityRecord extends WindowToken {
                 mWmService.mActivityManagerAppTransitionNotifier.onAppTransitionFinishedLocked(
                         token);
             }
+            mWmService.mAnimator.addSurfaceVisibilityUpdateIncludingAnimatableParents(this);
         }
     }
 
@@ -7247,6 +7248,15 @@ final class ActivityRecord extends WindowToken {
 
     @Override
     void prepareSurfaces() {
+        if (mWmService.mFlags.mEnsureSurfaceVisibility) {
+            // Input sink surface is not a part of animation, so apply in a steady state
+            // (non-sync) with pending transaction.
+            if (mVisible && mSyncState == SYNC_STATE_NONE) {
+                mActivityRecordInputSink.applyChangesToSurfaceIfChanged(getPendingTransaction());
+            }
+            super.prepareSurfaces();
+            return;
+        }
         final boolean isDecorSurfaceBoosted =
                 getTask() != null && getTask().isDecorSurfaceBoosted();
         final boolean show = (isVisible()
@@ -7270,6 +7280,15 @@ final class ActivityRecord extends WindowToken {
         }
         mLastSurfaceShowing = show;
         super.prepareSurfaces();
+    }
+
+    @Override
+    void updateSurfaceVisibility(Transaction t) {
+        final boolean visible = mVisible
+                // Ensure that the activity content is hidden when the decor surface is boosted to
+                // prevent UI redressing attack.
+                && (task == null || !task.isDecorSurfaceBoosted());
+        t.setVisibility(mSurfaceControl, visible);
     }
 
     /**
@@ -9522,8 +9541,14 @@ final class ActivityRecord extends WindowToken {
     }
 
     boolean canCaptureSnapshot() {
-        if (!isSurfaceShowing() || findMainWindow() == null) {
-            return false;
+        if (mWmService.mFlags.mEnsureSurfaceVisibility) {
+            if (!mVisible) {
+                return false;
+            }
+        } else {
+            if (!isSurfaceShowing() || findMainWindow() == null) {
+                return false;
+            }
         }
         return forAllWindows(
                 // Ensure at least one window for the top app is visible before attempting to

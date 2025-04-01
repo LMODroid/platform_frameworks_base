@@ -3311,6 +3311,10 @@ class Task extends TaskFragment {
             scheduleAnimation();
         }
 
+        if (mWmService.mFlags.mEnsureSurfaceVisibility) {
+            return;
+        }
+
         // Let organizer manage task visibility for shell transition. So don't change it's
         // visibility during collecting.
         if (mTransitionController.isCollecting() && mCreatedByOrganizer) {
@@ -3332,6 +3336,11 @@ class Task extends TaskFragment {
             mOverlayHost.setVisibility(t, visible);
         }
         mLastSurfaceShowing = show;
+    }
+
+    @Override
+    void updateSurfaceVisibility(SurfaceControl.Transaction t) {
+        t.setVisibility(mSurfaceControl, isVisible());
     }
 
     /**
@@ -3708,8 +3717,9 @@ class Task extends TaskFragment {
         }
         mDecorSurfaceContainer.commitBoostedState();
 
-        // assignChildLayers() calls scheduleAnimation(), which calls prepareSurfaces()
-        // to ensure child surface visibility.
+        forAllActivities(mWmService.mAnimator::addSurfaceVisibilityUpdate,
+                true /* traverseTopToBottom */);
+        // This calls scheduleAnimation(), then WindowAnimator will update surface visibility.
         assignChildLayers();
     }
 
@@ -4772,7 +4782,14 @@ class Task extends TaskFragment {
                     // rotation change) after leaving this scope, the visibility operation will be
                     // put in sync transaction, then it is not synced with reparent.
                     if (lastParentBeforePip.mSyncState == SYNC_STATE_NONE) {
-                        lastParentBeforePip.prepareSurfaces();
+                        if (mWmService.mFlags.mEnsureSurfaceVisibility) {
+                            if (lastParentBeforePip.isVisible()) {
+                                lastParentBeforePip.getPendingTransaction().show(
+                                        lastParentBeforePip.mSurfaceControl);
+                            }
+                        } else {
+                            lastParentBeforePip.prepareSurfaces();
+                        }
                         // If the moveToFront is a part of finishing transition, then make sure
                         // the z-order of tasks are up-to-date.
                         if (topActivity.mTransitionController.inFinishingTransition(topActivity)) {

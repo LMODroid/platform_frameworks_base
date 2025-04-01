@@ -72,6 +72,8 @@ public class WindowAnimator {
     private boolean mAnimationFrameCallbackScheduled;
     boolean mNotifyWhenNoAnimation = false;
 
+    private final ArrayList<WindowContainer<?>> mPendingVisibilityUpdates = new ArrayList<>();
+
     /**
      * A list of runnable that need to be run after {@link WindowContainer#prepareSurfaces} is
      * executed and the corresponding transaction is closed and applied.
@@ -152,6 +154,15 @@ public class WindowAnimator {
                 // exiting/removed apps.
                 dc.updateWindowsForAnimator();
                 dc.prepareSurfaces();
+            }
+
+            if (!mPendingVisibilityUpdates.isEmpty()) {
+                Trace.traceBegin(Trace.TRACE_TAG_WINDOW_MANAGER, "updateSurfaceVisibility");
+                for (int i = mPendingVisibilityUpdates.size() - 1; i >= 0; i--) {
+                    updateSurfaceVisibility(mPendingVisibilityUpdates.get(i));
+                }
+                mPendingVisibilityUpdates.clear();
+                Trace.traceEnd(Trace.TRACE_TAG_WINDOW_MANAGER);
             }
 
             for (int i = 0; i < numDisplays; i++) {
@@ -276,6 +287,44 @@ public class WindowAnimator {
             mTransaction.apply();
         }
         Trace.traceEnd(Trace.TRACE_TAG_WINDOW_MANAGER);
+    }
+
+    /**
+     * Updates surface visibility of the window container according to its hierarchy visibility
+     * if it is not in an active transition.
+     */
+    private void updateSurfaceVisibility(WindowContainer<?> wc) {
+        if (wc.mSurfaceControl == null) {
+            return;
+        }
+        final TransitionController controller = mService.mRoot.mTransitionController;
+        if (controller.isCollecting(wc) || controller.isPlayingTarget(wc)) {
+            // Let the transition handle surface visibility.
+            return;
+        }
+        wc.updateSurfaceVisibility(mTransaction);
+    }
+
+    /**
+     * The surface visibility of the window container will be evaluated on next frame. Assume the
+     * caller has invoked {@link #scheduleAnimation}.
+     */
+    void addSurfaceVisibilityUpdate(WindowContainer<?> wc) {
+        if (!mService.mFlags.mEnsureSurfaceVisibility) {
+            return;
+        }
+        if (!mPendingVisibilityUpdates.contains(wc)) {
+            mPendingVisibilityUpdates.add(wc);
+        }
+    }
+
+    /** Same as {@link #addSurfaceVisibilityUpdate} but including animatable parents. */
+    void addSurfaceVisibilityUpdateIncludingAnimatableParents(WindowContainer<?> wc) {
+        addSurfaceVisibilityUpdate(wc);
+        for (WindowContainer<?> p = Transition.getAnimatableParent(wc);
+                p != null; p = Transition.getAnimatableParent(p)) {
+            addSurfaceVisibilityUpdate(p);
+        }
     }
 
     /**

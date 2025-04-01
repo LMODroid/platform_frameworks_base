@@ -1845,6 +1845,7 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
                 }
                 mConfigAtEndActivities = null;
             }
+            ensureParticipantSurfaceVisibility();
             primaryDisplay.getPendingTransaction().merge(transaction);
             mSyncId = -1;
             mOverrideOptions = null;
@@ -2049,6 +2050,13 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
         if (mLogger.mInfo != null) {
             mLogger.logOnSendAsync(mController.mLoggerHandler);
             mController.mTransitionTracer.logSentTransition(this, mTargets);
+        }
+    }
+
+    void ensureParticipantSurfaceVisibility() {
+        for (int i = mParticipants.size() - 1; i >= 0; i--) {
+            mController.mAtm.mWindowManager.mAnimator.addSurfaceVisibilityUpdate(
+                    mParticipants.valueAt(i));
         }
     }
 
@@ -2537,7 +2545,7 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
     }
 
     /** Returns the parent that the remote animator can animate or control. */
-    private static WindowContainer<?> getAnimatableParent(WindowContainer<?> wc) {
+    static WindowContainer<?> getAnimatableParent(WindowContainer<?> wc) {
         WindowContainer<?> parent = wc.getParent();
         while (parent != null
                 && (!parent.canCreateRemoteAnimationTarget() && !parent.isOrganized())) {
