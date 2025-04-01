@@ -46,7 +46,10 @@ fun Toolbar(viewModel: ToolbarViewModel, modifier: Modifier = Modifier) {
             )
         }
 
-        EditModeButton(viewModel.editModeButtonViewModelFactory)
+        // TODO(b/410843063): Support the tooltip in DualShade
+        val editModeButtonViewModel =
+            rememberViewModel("Toolbar") { viewModel.editModeButtonViewModelFactory.create() }
+        EditModeButton(editModeButtonViewModel, tooltipEnabled = false)
 
         IconButton(
             viewModel.settingsButtonViewModel,

@@ -43,12 +43,14 @@ import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import com.android.compose.animation.scene.ContentScope
+import com.android.compose.animation.scene.content.state.TransitionState
 import com.android.compose.modifiers.padding
 import com.android.systemui.common.ui.compose.PagerDots
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.development.ui.compose.BuildNumber
 import com.android.systemui.development.ui.viewmodel.BuildNumberViewModel
 import com.android.systemui.lifecycle.rememberViewModel
+import com.android.systemui.qs.composefragment.SceneKeys
 import com.android.systemui.qs.panels.dagger.PaginatedBaseLayoutType
 import com.android.systemui.qs.panels.ui.compose.Dimensions.FooterHeight
 import com.android.systemui.qs.panels.ui.compose.Dimensions.InterPageSpacing
@@ -147,6 +149,11 @@ constructor(
                 buildNumberViewModelFactory = viewModel.buildNumberViewModelFactory,
                 pagerState = pagerState,
                 editButtonViewModelFactory = viewModel.editModeButtonViewModelFactory,
+                isVisible = {
+                    with(layoutState.transitionState) {
+                        currentScene == SceneKeys.QuickSettings && this is TransitionState.Idle
+                    }
+                },
             )
         }
     }
@@ -162,6 +169,7 @@ private fun FooterBar(
     buildNumberViewModelFactory: BuildNumberViewModel.Factory,
     pagerState: PagerState,
     editButtonViewModelFactory: EditModeButtonViewModel.Factory,
+    isVisible: () -> Boolean = { true },
 ) {
     val editButtonViewModel =
         rememberViewModel(traceName = "PaginatedGridLayout-editButtonViewModel") {
@@ -202,7 +210,7 @@ private fun FooterBar(
         )
         Row(Modifier.weight(1f)) {
             Spacer(modifier = Modifier.weight(1f))
-            EditModeButton(editButtonViewModelFactory)
+            EditModeButton(viewModel = editButtonViewModel, isVisible = isVisible())
         }
     }
 }

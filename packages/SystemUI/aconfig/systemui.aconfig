@@ -1105,6 +1105,16 @@ flag {
 }
 
 flag {
+    name: "qs_edit_mode_tooltip"
+    namespace: "systemui"
+    description: "Displays an educational tooltip on the edit mode icon from the expanded shade. This flag depends on qs_ui_refactor_compose_fragment flag."
+    bug: "403596182"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
   name: "remove_dream_overlay_hide_on_touch"
   namespace: "systemui"
   description: "Removes logic to hide the dream overlay on user interaction, as it conflicts with various transitions"

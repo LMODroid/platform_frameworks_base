@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
 @SysUISingleton
 class QSPreferencesInteractor @Inject constructor(private val repo: QSPreferencesRepository) {
     val largeTilesSpecs: Flow<Set<TileSpec>> = repo.largeTilesSpecs
+    val editTooltipShown: Flow<Boolean> = repo.editTooltipShown
 
     fun setLargeTilesSpecs(specs: Set<TileSpec>) {
         repo.writeLargeTileSpecs(specs)
@@ -33,6 +34,10 @@ class QSPreferencesInteractor @Inject constructor(private val repo: QSPreference
 
     fun removeLargeTilesSpecs(specs: Set<TileSpec>) {
         repo.removeLargeTileSpecs(specs)
+    }
+
+    fun setEditTooltipShown(value: Boolean) {
+        repo.writeEditTooltipShown(value)
     }
 
     /**

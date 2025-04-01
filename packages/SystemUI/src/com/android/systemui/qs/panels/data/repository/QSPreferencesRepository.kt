@@ -19,6 +19,7 @@ package com.android.systemui.qs.panels.data.repository
 import android.content.Context
 import android.content.IntentFilter
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.android.systemui.backup.BackupHelper
 import com.android.systemui.backup.BackupHelper.Companion.ACTION_RESTORE_FINISHED
 import com.android.systemui.broadcast.BroadcastDispatcher
@@ -26,6 +27,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.core.Logger
+import com.android.systemui.qs.flags.QSEditModeTooltip
 import com.android.systemui.qs.panels.shared.model.PanelsLog
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.pipeline.shared.TilesUpgradePath
@@ -35,6 +37,7 @@ import com.android.systemui.util.kotlin.SharedPreferencesExt.observe
 import com.android.systemui.util.kotlin.emitOnStart
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -43,6 +46,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 /** Repository for QS user preferences. */
+@OptIn(ExperimentalCoroutinesApi::class)
 @SysUISingleton
 class QSPreferencesRepository
 @Inject
@@ -75,6 +79,17 @@ constructor(
             }
             .flowOn(backgroundDispatcher)
 
+    /** Whether or not the edit icon tooltip was shown for the current user. */
+    val editTooltipShown: Flow<Boolean> =
+        combine(backupRestorationEvents, userRepository.selectedUserInfo, ::Pair)
+            .flatMapLatest { (_, userInfo) ->
+                val prefs = getSharedPrefs(userInfo.id)
+                prefs.observe().emitOnStart().map {
+                    prefs.getBoolean(EDIT_TOOLTIP_SHOWN_KEY, false)
+                }
+            }
+            .flowOn(backgroundDispatcher)
+
     /** Sets for the current user the set of [TileSpec] to display as large tiles. */
     fun writeLargeTileSpecs(specs: Set<TileSpec>) {
         with(getSharedPrefs(userRepository.getSelectedUserInfo().id)) {
@@ -89,6 +104,15 @@ constructor(
             val largeSpecs = getLargeTilesSpecs()
             writeLargeTileSpecs(largeSpecs - specs)
             setLargeTilesDefault(false)
+        }
+    }
+
+    /** Sets the value for whether or not the edit icon tooltip was shown for the current user. */
+    fun writeEditTooltipShown(value: Boolean) {
+        if (QSEditModeTooltip.isEnabled) {
+            getSharedPrefs(userRepository.getSelectedUserInfo().id).edit {
+                putBoolean(EDIT_TOOLTIP_SHOWN_KEY, value)
+            }
         }
     }
 
@@ -174,6 +198,7 @@ constructor(
         private const val TAG = "QSPreferencesRepository"
         private const val LARGE_TILES_SPECS_KEY = "large_tiles_specs"
         private const val LARGE_TILES_DEFAULT_KEY = "large_tiles_default"
+        private const val EDIT_TOOLTIP_SHOWN_KEY = "edit_tooltip_shown"
         const val FILE_NAME = "quick_settings_prefs"
     }
 }

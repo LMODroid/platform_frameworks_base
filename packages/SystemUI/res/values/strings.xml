@@ -2578,6 +2578,9 @@
     <!-- Title for QS Edit mode screen [CHAR LIMIT=30] -->
     <string name="qs_edit_tiles">Edit tiles</string>
 
+    <!-- Tooltip for the edit mode button indicating that tiles can be resized [CHAR LIMIT=60] -->
+    <string name="qs_edit_mode_tooltip">Resize Quick Settings tiles</string>
+
     <!-- SysUI Tuner: Options for how clock is displayed [CHAR LIMIT=NONE] -->
     <string name="tuner_time">Time</string>
 
