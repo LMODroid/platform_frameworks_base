@@ -19,6 +19,7 @@ package com.android.systemui.shade.domain.interactor
 import android.provider.Settings
 import androidx.annotation.FloatRange
 import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.logDiffsForTable
 import com.android.systemui.scene.domain.SceneFrameworkTableLog
@@ -27,6 +28,7 @@ import com.android.systemui.shade.data.repository.ShadeRepository
 import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.shared.settings.data.repository.SecureSettingsRepository
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +36,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 
 /**
@@ -85,6 +88,7 @@ class ShadeModeInteractorImpl
 @Inject
 constructor(
     @Application applicationScope: CoroutineScope,
+    @Background backgroundDispatcher: CoroutineDispatcher,
     private val repository: ShadeRepository,
     secureSettingsRepository: SecureSettingsRepository,
     @SceneFrameworkTableLog private val tableLogBuffer: TableLogBuffer,
@@ -92,10 +96,9 @@ constructor(
 
     private val isDualShadeEnabled: Flow<Boolean> =
         if (SceneContainerFlag.isEnabled) {
-            secureSettingsRepository.boolSetting(
-                Settings.Secure.DUAL_SHADE,
-                defaultValue = DUAL_SHADE_ENABLED_DEFAULT,
-            )
+            secureSettingsRepository
+                .boolSetting(Settings.Secure.DUAL_SHADE, defaultValue = DUAL_SHADE_ENABLED_DEFAULT)
+                .flowOn(backgroundDispatcher)
         } else {
             flowOf(false)
         }

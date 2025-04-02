@@ -73,6 +73,7 @@ constructor(
     keyguardInteractor: KeyguardInteractor,
     val burnIn: AodBurnInViewModel,
     val clock: KeyguardClockViewModel,
+    val dualShadeEducationalTooltipsViewModelFactory: DualShadeEducationalTooltipsViewModel.Factory,
     @Assisted view: View,
     @Assisted private val motionEventHandlerReceiver: (MotionEventHandler?) -> Unit,
 ) : ExclusiveActivatable() {

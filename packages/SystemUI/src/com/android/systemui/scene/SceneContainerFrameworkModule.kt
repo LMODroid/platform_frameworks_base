@@ -19,6 +19,7 @@ package com.android.systemui.scene
 import com.android.systemui.CoreStartable
 import com.android.systemui.notifications.ui.composable.NotificationsShadeSessionModule
 import com.android.systemui.scene.domain.SceneDomainModule
+import com.android.systemui.scene.domain.interactor.DualShadeEducationInteractorModule
 import com.android.systemui.scene.domain.interactor.WindowRootViewVisibilityInteractor
 import com.android.systemui.scene.domain.resolver.HomeSceneFamilyResolverModule
 import com.android.systemui.scene.domain.startable.KeyguardStateCallbackStartable
@@ -42,6 +43,7 @@ import dagger.multibindings.IntoMap
             BouncerOverlayModule::class,
             CommunalSceneModule::class,
             DreamSceneModule::class,
+            DualShadeEducationInteractorModule::class,
             EmptySceneModule::class,
             GoneSceneModule::class,
             LockscreenSceneModule::class,
