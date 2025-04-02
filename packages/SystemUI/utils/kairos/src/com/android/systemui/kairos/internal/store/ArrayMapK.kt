@@ -75,10 +75,13 @@ private constructor(private val storage: AtomicReferenceArray<MutableMap.Mutable
             override val size: Int
                 get() = getNumEntries()
 
-            override fun add(element: MutableMap.MutableEntry<Int, V>): Boolean =
-                (storage.get(element.key) is MutableMap.MutableEntry<*, *>).also {
+            override fun add(element: MutableMap.MutableEntry<Int, V>): Boolean {
+                if (storage.get(element.key) != element) {
                     storage.set(element.key, element)
+                    return true
                 }
+                return false
+            }
 
             override fun iterator(): MutableIterator<MutableMap.MutableEntry<Int, V>> =
                 object : MutableIterator<MutableMap.MutableEntry<Int, V>> {
@@ -116,7 +119,9 @@ private constructor(private val storage: AtomicReferenceArray<MutableMap.Mutable
 
     class Factory : MutableMapK.Factory<ArrayMapK.W, Int> {
         override fun <V> create(capacity: Int?) =
-            MutableArrayMapK<V>(checkNotNull(capacity) { "Cannot use ArrayMapK with null capacity." })
+            MutableArrayMapK<V>(
+                checkNotNull(capacity) { "Cannot use ArrayMapK with null capacity." }
+            )
 
         override fun <V> create(input: MapK<ArrayMapK.W, Int, V>): MutableArrayMapK<V> {
             val holder = input.asArrayHolder()
