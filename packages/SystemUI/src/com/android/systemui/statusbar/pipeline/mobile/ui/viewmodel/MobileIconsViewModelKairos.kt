@@ -84,8 +84,8 @@ constructor(
     private val context: Context,
 ) : KairosBuilder by kairosBuilder() {
 
-    val activeSubscriptionId: State<Int?>
-        get() = interactor.activeDataIconInteractor.map { it?.subscriptionId }
+    val activeSubscriptionId: State<Int?> =
+        interactor.activeDataIconInteractor.map { it?.subscriptionId }
 
     val subscriptionIds: KairosState<List<Int>> =
         interactor.filteredSubscriptions.map { subscriptions ->
