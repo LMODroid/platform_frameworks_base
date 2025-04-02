@@ -316,14 +316,9 @@ constructor(
     }
 
     private val shouldBlurBeOpaque: Boolean
-        get() {
-            return if (Flags.notificationShadeBlur()) {
-                // blur should be opaque when blur is not supported.
-                !windowRootViewBlurInteractor.isBlurCurrentlySupported.value
-            } else {
-                scrimsVisible && !areBlursDisabledForAppLaunch
-            }
-        }
+        get() =
+            if (Flags.notificationShadeBlur()) false
+            else scrimsVisible && !areBlursDisabledForAppLaunch
 
     /** Callback that updates the window blur value and is called only once per frame. */
     @VisibleForTesting
