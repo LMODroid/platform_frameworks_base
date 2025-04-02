@@ -69,15 +69,13 @@ constructor(
             .merge()
 
     val blurRadius: Flow<Float> =
-        blurInteractor.isBlurCurrentlySupported
-            .flatMapLatest { blurSupported ->
-                if (blurSupported) {
-                    _blurRadius
-                } else {
-                    flowOf(0f)
-                }
+        blurInteractor.isBlurCurrentlySupported.flatMapLatest { blurSupported ->
+            if (blurSupported) {
+                _blurRadius
+            } else {
+                flowOf(0f)
             }
-            .logIfPossible("blurRadius")
+        }
 
     val isPersistentEarlyWakeupRequired =
         blurInteractor.isBlurCurrentlySupported
@@ -98,19 +96,17 @@ constructor(
             .logIfPossible("isPersistentEarlyWakeupRequired")
 
     val isBlurOpaque =
-        blurInteractor.isBlurCurrentlySupported
-            .flatMapLatest { blurSupported ->
-                if (blurSupported) {
-                    blurInteractor.isBlurOpaque.distinctUntilChanged().logIfPossible("isBlurOpaque")
-                } else {
-                    flowOf(true)
-                }
+        blurInteractor.isBlurCurrentlySupported.flatMapLatest { blurSupported ->
+            if (blurSupported) {
+                blurInteractor.isBlurOpaque.distinctUntilChanged().logIfPossible("isBlurOpaque")
+            } else {
+                flowOf(false)
             }
-            .logIfPossible("isBlurOpaque")
+        }
 
-    fun onBlurApplied(blurRadius: Int, isOpaque: Boolean) {
+    fun onBlurApplied(blurRadius: Int) {
         if (isLoggable) {
-            Log.d(TAG, "blur applied for radius blurRadius: $blurRadius, isOpaque: $isOpaque")
+            Log.d(TAG, "blur applied for radius $blurRadius")
         }
         blurInteractor.onBlurApplied(blurRadius)
     }

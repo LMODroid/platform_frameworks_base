@@ -87,7 +87,7 @@ object WindowRootViewBinder {
                                 "appliedBlurRadius",
                                 blurRadiusToApply,
                             )
-                            viewModel.onBlurApplied(blurRadiusToApply, lastScheduleBlurOpaqueness)
+                            viewModel.onBlurApplied(blurRadiusToApply)
                         }
 
                         combine(viewModel.blurRadius, viewModel.isBlurOpaque, ::Pair)
