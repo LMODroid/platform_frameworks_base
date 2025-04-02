@@ -41,6 +41,7 @@ internal class Output<A>(
 
     fun kill() {
         onDeath()
+        upstream = null
     }
 
     fun schedule(logIndent: Int, evalScope: EvalScope) {
