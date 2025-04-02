@@ -103,15 +103,10 @@ constructor(
         combine(blurInteractor.isBlurCurrentlySupported, shadeInteractor.isAnyFullyExpanded) {
                 blurSupported,
                 anyShadeFullyExpanded ->
-                return@combine if (blurSupported) {
-                    when {
-                        // scrims will be opaque when shade is fully expanded
-                        // Fall back to old behavior when shade blur is not enabled.
-                        anyShadeFullyExpanded && !Flags.notificationShadeBlur() -> true
-                        // surface is never opaque in other scenarios so that the wallpaper/surface
-                        // behind is always visible.
-                        else -> false
-                    }
+                if (blurSupported) {
+                    // scrims will be opaque when shade is fully expanded
+                    // Fall back to old behavior when shade blur is not enabled.
+                    !Flags.notificationShadeBlur() && anyShadeFullyExpanded
                 } else {
                     anyShadeFullyExpanded
                 }
