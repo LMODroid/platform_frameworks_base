@@ -104,6 +104,10 @@ class InstallViewModel(application: Application, val repository: InstallReposito
         repository.initiateInstall()
     }
 
+    fun abortStaging() {
+        repository.abortStaging()
+    }
+
     val stagedSessionId: Int
         get() = repository.stagedSessionId
 }

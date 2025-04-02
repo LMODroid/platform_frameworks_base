@@ -69,6 +69,7 @@ import com.android.packageinstaller.v2.model.PackageUtil.localLogv
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 import java.io.File
@@ -123,6 +124,7 @@ class InstallRepository(private val context: Context) {
     private lateinit var intent: Intent
     private lateinit var appOpRequestInfo: AppOpRequestInfo
     private lateinit var appSnippet: PackageUtil.AppSnippet
+    private lateinit var stagingJob: Job
 
     /**
      * PackageInfo of the app being installed on device.
@@ -352,7 +354,7 @@ class InstallRepository(private val context: Context) {
             }
 
             sessionStager = SessionStager(context, uri, stagedSessionId)
-            GlobalScope.launch(Dispatchers.Main) {
+            stagingJob = GlobalScope.launch(Dispatchers.Main) {
                 val wasFileStaged = sessionStager!!.execute()
 
                 if (wasFileStaged) {
@@ -1022,6 +1024,12 @@ class InstallRepository(private val context: Context) {
      */
     fun forcedSkipSourceCheck(): InstallStage? {
         return maybeDeferUserConfirmation()
+    }
+
+    fun abortStaging() {
+        sessionStager!!.cancel()
+        stagingJob.cancel()
+        cleanupStagingSession()
     }
 
     val stagingProgress: LiveData<Int>

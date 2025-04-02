@@ -301,8 +301,9 @@ class InstallLaunch : FragmentActivity(), InstallActionListener {
         if (localLogv) {
             Log.d(LOG_TAG, "Negative button clicked. StageCode: $stageCode")
         }
-        if (stageCode == InstallStage.STAGE_USER_ACTION_REQUIRED) {
-            installViewModel!!.cleanupInstall()
+        when (stageCode) {
+            InstallStage.STAGE_USER_ACTION_REQUIRED -> installViewModel!!.cleanupInstall()
+            InstallStage.STAGE_STAGING -> installViewModel!!.abortStaging()
         }
         setResult(RESULT_CANCELED, null, true)
     }

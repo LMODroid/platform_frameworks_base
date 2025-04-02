@@ -18,7 +18,7 @@ package com.android.packageinstaller.v2.ui.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,12 +29,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.packageinstaller.R;
+import com.android.packageinstaller.v2.model.InstallStage;
+import com.android.packageinstaller.v2.ui.InstallActionListener;
 
 public class InstallStagingFragment extends DialogFragment {
 
     private static final String LOG_TAG = InstallStagingFragment.class.getSimpleName();
     private ProgressBar mProgressBar;
     private AlertDialog mDialog;
+    @NonNull
+    private InstallActionListener mInstallActionListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mInstallActionListener = (InstallActionListener) context;
+    }
 
     @NonNull
     @Override
@@ -47,7 +57,8 @@ public class InstallStagingFragment extends DialogFragment {
         mDialog = new AlertDialog.Builder(requireContext())
             .setTitle(R.string.title_install_staging)
             .setView(dialogView)
-            .setNegativeButton(R.string.button_cancel, null)
+            .setNegativeButton(R.string.button_cancel, (dialog, which) ->
+                mInstallActionListener.onNegativeResponse(InstallStage.STAGE_STAGING))
             .setCancelable(false)
             .create();
 
@@ -58,7 +69,6 @@ public class InstallStagingFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        mDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(false);
         mProgressBar = mDialog.requireViewById(R.id.progress_bar);
         mProgressBar.setProgress(0);
         mProgressBar.setMax(100);
