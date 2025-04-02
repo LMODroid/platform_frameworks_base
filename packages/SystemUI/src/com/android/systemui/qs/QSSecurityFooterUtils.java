@@ -88,6 +88,7 @@ import com.android.systemui.res.R;
 import com.android.systemui.security.data.model.SecurityModel;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shade.ShadeDisplayAware;
+import com.android.systemui.shade.domain.interactor.ShadeDialogContextInteractor;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 import com.android.systemui.statusbar.policy.SecurityController;
 import com.android.systemui.supervision.shared.DeprecateDpmSupervisionApis;
@@ -114,6 +115,7 @@ public class QSSecurityFooterUtils implements DialogInterface.OnClickListener {
     private final Handler mMainHandler;
     private final UserTracker mUserTracker;
     private final DialogTransitionAnimator mDialogTransitionAnimator;
+    private final ShadeDialogContextInteractor mShadeDialogContextInteractor;
 
     private final AtomicBoolean mShouldUseSettingsButton = new AtomicBoolean(false);
 
@@ -182,7 +184,8 @@ public class QSSecurityFooterUtils implements DialogInterface.OnClickListener {
             @ShadeDisplayAware Context context, DevicePolicyManager devicePolicyManager,
             UserTracker userTracker, @Main Handler mainHandler, ActivityStarter activityStarter,
             SecurityController securityController, @Background Looper bgLooper,
-            DialogTransitionAnimator dialogTransitionAnimator) {
+            DialogTransitionAnimator dialogTransitionAnimator,
+            ShadeDialogContextInteractor shadeDialogContextInteractor) {
         mContext = context;
         mDpm = devicePolicyManager;
         mUserTracker = userTracker;
@@ -191,6 +194,7 @@ public class QSSecurityFooterUtils implements DialogInterface.OnClickListener {
         mSecurityController = securityController;
         mBgHandler = new Handler(bgLooper);
         mDialogTransitionAnimator = dialogTransitionAnimator;
+        mShadeDialogContextInteractor = shadeDialogContextInteractor;
     }
 
     /** Show the device monitoring dialog. */
@@ -451,7 +455,7 @@ public class QSSecurityFooterUtils implements DialogInterface.OnClickListener {
             String settingsButtonText = getSettingsButton();
             final View dialogView = createDialogView(quickSettingsContext);
             mMainHandler.post(() -> {
-                mDialog = new SystemUIDialog(quickSettingsContext, 0);
+                mDialog = new SystemUIDialog(mShadeDialogContextInteractor.getContext(), 0);
                 mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 mDialog.setButton(DialogInterface.BUTTON_POSITIVE, getPositiveButton(), this);
                 mDialog.setButton(DialogInterface.BUTTON_NEGATIVE, mShouldUseSettingsButton.get()

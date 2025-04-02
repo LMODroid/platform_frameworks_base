@@ -65,6 +65,8 @@ import com.android.systemui.qs.footer.domain.model.SecurityButtonConfig;
 import com.android.systemui.res.R;
 import com.android.systemui.security.data.model.SecurityModel;
 import com.android.systemui.settings.UserTracker;
+import com.android.systemui.shade.domain.interactor.FakeShadeDialogContextInteractor;
+import com.android.systemui.shade.domain.interactor.ShadeDialogContextInteractor;
 import com.android.systemui.statusbar.policy.SecurityController;
 
 import org.junit.Before;
@@ -109,6 +111,7 @@ public class QSSecurityFooterTest extends SysuiTestCase {
     private DialogTransitionAnimator mDialogTransitionAnimator;
     @Mock
     private BroadcastDispatcher mBroadcastDispatcher;
+    private ShadeDialogContextInteractor mShadeDialogContextInteractor;
 
     private TestableLooper mTestableLooper;
 
@@ -117,6 +120,7 @@ public class QSSecurityFooterTest extends SysuiTestCase {
         MockitoAnnotations.initMocks(this);
         mTestableLooper = TestableLooper.get(this);
         Looper looper = mTestableLooper.getLooper();
+        mShadeDialogContextInteractor = new FakeShadeDialogContextInteractor(mContext);
         Handler mainHandler = new Handler(looper);
         // TODO(b/259908270): remove
         DeviceConfig.setProperty(DeviceConfig.NAMESPACE_DEVICE_POLICY_MANAGER,
@@ -126,7 +130,7 @@ public class QSSecurityFooterTest extends SysuiTestCase {
         mFooterUtils = new QSSecurityFooterUtils(getContext(),
                 getContext().getSystemService(DevicePolicyManager.class), mUserTracker,
                 mainHandler, mActivityStarter, mSecurityController, looper,
-                mDialogTransitionAnimator);
+                mDialogTransitionAnimator, mShadeDialogContextInteractor);
 
         when(mSecurityController.getDeviceOwnerComponentOnAnyUser())
                 .thenReturn(DEVICE_OWNER_COMPONENT);
