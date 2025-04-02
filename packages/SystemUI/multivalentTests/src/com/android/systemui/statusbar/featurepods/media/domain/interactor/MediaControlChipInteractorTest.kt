@@ -30,7 +30,6 @@ import com.android.systemui.media.controls.domain.pipeline.MediaDataManager
 import com.android.systemui.media.controls.shared.model.MediaAction
 import com.android.systemui.media.controls.shared.model.MediaButton
 import com.android.systemui.media.controls.shared.model.MediaData
-import com.android.systemui.media.controls.shared.model.MediaDataLoadingModel
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
@@ -191,8 +190,7 @@ class MediaControlChipInteractorTest(flags: FlagsParameterization) : SysuiTestCa
     private fun updateMedia(mediaData: MediaData) {
         if (SceneContainerFlag.isEnabled) {
             val instanceId = mediaData.instanceId
-            mediaFilterRepository.addSelectedUserMediaEntry(mediaData)
-            mediaFilterRepository.addMediaDataLoadingState(MediaDataLoadingModel.Loaded(instanceId))
+            mediaFilterRepository.addCurrentUserMediaEntry(mediaData)
         } else {
             kosmos.underTest.updateMediaControlChipModelLegacy(mediaData)
         }
@@ -201,10 +199,7 @@ class MediaControlChipInteractorTest(flags: FlagsParameterization) : SysuiTestCa
     private fun removeMedia(mediaData: MediaData) {
         if (SceneContainerFlag.isEnabled) {
             val instanceId = mediaData.instanceId
-            mediaFilterRepository.removeSelectedUserMediaEntry(instanceId, mediaData)
-            mediaFilterRepository.addMediaDataLoadingState(
-                MediaDataLoadingModel.Removed(instanceId)
-            )
+            mediaFilterRepository.removeCurrentUserMediaEntry(instanceId, mediaData)
         } else {
             kosmos.underTest.updateMediaControlChipModelLegacy(null)
         }

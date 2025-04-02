@@ -63,7 +63,7 @@ constructor(
 ) {
 
     val mediaControl: Flow<MediaControlModel?> =
-        repository.selectedUserEntries
+        repository.currentUserEntries
             .map { entries -> entries[instanceId]?.let { toMediaControlModel(it) } }
             .distinctUntilChanged()
 

@@ -22,39 +22,17 @@ import com.android.systemui.media.controls.data.model.MediaSortKeyModel
 import com.android.systemui.media.controls.shared.model.MediaCommonModel
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.controls.shared.model.MediaDataLoadingModel
+import com.android.systemui.media.remedia.data.repository.MediaPipelineRepository
 import com.android.systemui.util.time.SystemClock
 import java.util.TreeMap
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /** A repository that holds the state of filtered media data on the device. */
 @SysUISingleton
-class MediaFilterRepository @Inject constructor(private val systemClock: SystemClock) {
-
-    private val _selectedUserEntries: MutableStateFlow<Map<InstanceId, MediaData>> =
-        MutableStateFlow(LinkedHashMap())
-    val selectedUserEntries: StateFlow<Map<InstanceId, MediaData>> =
-        _selectedUserEntries.asStateFlow()
-
-    private val _allUserEntries: MutableStateFlow<Map<String, MediaData>> =
-        MutableStateFlow(LinkedHashMap())
-    val allUserEntries: StateFlow<Map<String, MediaData>> = _allUserEntries.asStateFlow()
-
-    private val comparator =
-        compareByDescending<MediaSortKeyModel> {
-                it.isPlaying == true && it.playbackLocation == MediaData.PLAYBACK_LOCAL
-            }
-            .thenByDescending {
-                it.isPlaying == true && it.playbackLocation == MediaData.PLAYBACK_CAST_LOCAL
-            }
-            .thenByDescending { it.active }
-            .thenByDescending { !it.isResume }
-            .thenByDescending { it.playbackLocation != MediaData.PLAYBACK_CAST_REMOTE }
-            .thenByDescending { it.lastActive }
-            .thenByDescending { it.updateTime }
-            .thenByDescending { it.notificationKey }
+class MediaFilterRepository @Inject constructor(private val systemClock: SystemClock) :
+    MediaPipelineRepository() {
 
     private val _currentMedia: MutableStateFlow<List<MediaCommonModel>> =
         MutableStateFlow(mutableListOf())
@@ -62,65 +40,31 @@ class MediaFilterRepository @Inject constructor(private val systemClock: SystemC
 
     private var sortedMedia = TreeMap<MediaSortKeyModel, MediaCommonModel>(comparator)
 
-    fun addMediaEntry(key: String, data: MediaData) {
-        val entries = LinkedHashMap<String, MediaData>(_allUserEntries.value)
-        entries[key] = data
-        _allUserEntries.value = entries
-    }
-
-    /**
-     * Removes the media entry corresponding to the given [key].
-     *
-     * @return media data if an entry is actually removed, `null` otherwise.
-     */
-    fun removeMediaEntry(key: String): MediaData? {
-        val entries = LinkedHashMap<String, MediaData>(_allUserEntries.value)
-        val mediaData = entries.remove(key)
-        _allUserEntries.value = entries
-        return mediaData
-    }
-
-    /** @return whether the added media data already exists. */
-    fun addSelectedUserMediaEntry(data: MediaData): Boolean {
-        val entries = LinkedHashMap<InstanceId, MediaData>(_selectedUserEntries.value)
-        val update = _selectedUserEntries.value.containsKey(data.instanceId)
-        entries[data.instanceId] = data
-        _selectedUserEntries.value = entries
-        return update
-    }
-
-    /**
-     * Removes selected user media entry given the corresponding key.
-     *
-     * @return media data if an entry is actually removed, `null` otherwise.
-     */
-    fun removeSelectedUserMediaEntry(key: InstanceId): MediaData? {
-        val entries = LinkedHashMap<InstanceId, MediaData>(_selectedUserEntries.value)
-        val mediaData = entries.remove(key)
-        _selectedUserEntries.value = entries
-        return mediaData
-    }
-
-    /**
-     * Removes selected user media entry given a key and media data.
-     *
-     * @return true if media data is removed, false otherwise.
-     */
-    fun removeSelectedUserMediaEntry(key: InstanceId, data: MediaData): Boolean {
-        val entries = LinkedHashMap<InstanceId, MediaData>(_selectedUserEntries.value)
-        val succeed = entries.remove(key, data)
-        if (!succeed) {
-            return false
+    override fun addCurrentUserMediaEntry(data: MediaData): Boolean {
+        return super.addCurrentUserMediaEntry(data).also {
+            addMediaDataLoadingState(MediaDataLoadingModel.Loaded(data.instanceId), it)
         }
-        _selectedUserEntries.value = entries
-        return true
     }
 
-    fun clearSelectedUserMedia() {
-        _selectedUserEntries.value = LinkedHashMap()
+    override fun removeCurrentUserMediaEntry(key: InstanceId): MediaData? {
+        return super.removeCurrentUserMediaEntry(key)?.also {
+            addMediaDataLoadingState(MediaDataLoadingModel.Removed(key))
+        }
     }
 
-    fun addMediaDataLoadingState(
+    override fun removeCurrentUserMediaEntry(key: InstanceId, data: MediaData): Boolean {
+        return super.removeCurrentUserMediaEntry(key, data).also {
+            addMediaDataLoadingState(MediaDataLoadingModel.Removed(key))
+        }
+    }
+
+    override fun clearCurrentUserMedia() {
+        val userEntries = LinkedHashMap<InstanceId, MediaData>(mutableUserEntries.value)
+        mutableUserEntries.value = LinkedHashMap()
+        userEntries.forEach { addMediaDataLoadingState(MediaDataLoadingModel.Removed(it.key)) }
+    }
+
+    private fun addMediaDataLoadingState(
         mediaDataLoadingModel: MediaDataLoadingModel,
         isUpdate: Boolean = true,
     ) {
@@ -131,7 +75,7 @@ class MediaFilterRepository @Inject constructor(private val systemClock: SystemC
             }
         )
 
-        _selectedUserEntries.value[mediaDataLoadingModel.instanceId]?.let {
+        mutableUserEntries.value[mediaDataLoadingModel.instanceId]?.let {
             val sortKey =
                 MediaSortKeyModel(
                     it.isPlaying,
@@ -194,11 +138,11 @@ class MediaFilterRepository @Inject constructor(private val systemClock: SystemC
     }
 
     fun hasActiveMedia(): Boolean {
-        return _selectedUserEntries.value.any { it.value.active }
+        return mutableUserEntries.value.any { it.value.active }
     }
 
     fun hasAnyMedia(): Boolean {
-        return _selectedUserEntries.value.entries.isNotEmpty()
+        return mutableUserEntries.value.entries.isNotEmpty()
     }
 
     private fun canBeRemoved(data: MediaData): Boolean {

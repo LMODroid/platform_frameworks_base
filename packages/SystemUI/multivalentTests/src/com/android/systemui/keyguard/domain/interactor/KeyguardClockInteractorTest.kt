@@ -120,7 +120,7 @@ class KeyguardClockInteractorTest : SysuiTestCase() {
             val value by collectLastValue(underTest.clockSize)
             kosmos.shadeRepository.setShadeLayoutWide(false)
             val userMedia = MediaData().copy(active = true)
-            kosmos.mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
+            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
 
             assertThat(value).isEqualTo(ClockSize.SMALL)
         }
@@ -132,7 +132,7 @@ class KeyguardClockInteractorTest : SysuiTestCase() {
             val value by collectLastValue(underTest.clockSize)
             val userMedia = MediaData().copy(active = true)
             kosmos.shadeRepository.setShadeLayoutWide(true)
-            kosmos.mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
+            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
             kosmos.keyguardRepository.setIsDozing(false)
 
             assertThat(value).isEqualTo(ClockSize.SMALL)
@@ -156,7 +156,7 @@ class KeyguardClockInteractorTest : SysuiTestCase() {
             val value by collectLastValue(underTest.clockSize)
             val userMedia = MediaData().copy(active = true)
             kosmos.shadeRepository.setShadeLayoutWide(true)
-            kosmos.mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
+            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
             kosmos.keyguardRepository.setIsDozing(true)
 
             assertThat(value).isEqualTo(ClockSize.LARGE)
@@ -170,7 +170,7 @@ class KeyguardClockInteractorTest : SysuiTestCase() {
             val userMedia = MediaData().copy(active = true)
             kosmos.fakeKeyguardClockRepository.setSelectedClockSize(ClockSizeSetting.SMALL)
             kosmos.shadeRepository.setShadeLayoutWide(true)
-            kosmos.mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
+            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
             kosmos.keyguardRepository.setIsDozing(true)
 
             assertThat(value).isEqualTo(ClockSize.SMALL)

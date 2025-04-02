@@ -51,7 +51,7 @@ constructor(
     private val isEnabled = MutableStateFlow(false)
 
     private val mediaControlChipModelForScene: Flow<MediaControlChipModel?> =
-        combine(mediaFilterRepository.currentMedia, mediaFilterRepository.selectedUserEntries) {
+        combine(mediaFilterRepository.currentMedia, mediaFilterRepository.currentUserEntries) {
             mediaList,
             userEntries ->
             mediaList

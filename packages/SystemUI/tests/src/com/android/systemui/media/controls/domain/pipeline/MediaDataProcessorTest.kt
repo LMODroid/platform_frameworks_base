@@ -1180,7 +1180,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
                 .setState(PlaybackState.STATE_PLAYING, 0, 10f)
                 .setActions(stateActions)
         whenever(controller.playbackState).thenReturn(stateBuilder.build())
-        val userEntries by testScope.collectLastValue(mediaFilterRepository.selectedUserEntries)
+        val userEntries by testScope.collectLastValue(mediaFilterRepository.currentUserEntries)
 
         mediaDataProcessor.addInternalListener(mediaDataFilter)
         mediaDataFilter.mediaDataProcessor = mediaDataProcessor
@@ -1213,7 +1213,7 @@ class MediaDataProcessorTest() : SysuiTestCase() {
                 .setState(PlaybackState.STATE_PLAYING, 0, 10f)
                 .setActions(stateActions)
         whenever(controller.playbackState).thenReturn(stateBuilder.build())
-        val userEntries by testScope.collectLastValue(mediaFilterRepository.selectedUserEntries)
+        val userEntries by testScope.collectLastValue(mediaFilterRepository.currentUserEntries)
 
         mediaDataProcessor.addInternalListener(mediaDataFilter)
         mediaDataFilter.mediaDataProcessor = mediaDataProcessor

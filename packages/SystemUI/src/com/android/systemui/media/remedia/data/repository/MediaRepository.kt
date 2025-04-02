@@ -16,36 +16,164 @@
 
 package com.android.systemui.media.remedia.data.repository
 
+import android.content.Context
+import android.media.session.MediaController
 import com.android.internal.logging.InstanceId
+import com.android.systemui.common.shared.model.ContentDescription
+import com.android.systemui.common.shared.model.Icon
+import com.android.systemui.dagger.SysUISingleton
+import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.media.controls.data.model.MediaSortKeyModel
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.remedia.data.model.MediaDataModel
+import com.android.systemui.util.time.SystemClock
+import java.util.TreeMap
+import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
+/** A repository that holds the state of current media on the device. */
 interface MediaRepository {
     /** Current sorted media sessions. */
     val currentMedia: StateFlow<List<MediaDataModel>>
 
-    fun addMediaEntry(key: String, data: MediaData)
-
-    /**
-     * Removes the media entry corresponding to the given [key].
-     *
-     * @return media data if an entry is actually removed, `null` otherwise.
-     */
-    fun removeMediaEntry(key: String): MediaData?
-
-    /** @return whether the added media data already exists. */
-    fun addCurrentUserMediaEntry(data: MediaData): Boolean
-
-    /**
-     * Removes current user media entry given the corresponding [key].
-     *
-     * @return media data if an entry is actually removed, `null` otherwise.
-     */
-    fun removeCurrentUserMediaEntry(key: InstanceId): MediaData?
-
-    fun clearCurrentUserMedia()
-
     /** Seek to [to], in milliseconds on the media session with the given [sessionKey]. */
     fun seek(sessionKey: InstanceId, to: Long)
+
+    /** Reorders media list when media is not visible to user */
+    fun reorderMedia()
+}
+
+@SysUISingleton
+class MediaRepositoryImpl
+@Inject
+constructor(@Application private val context: Context, private val systemClock: SystemClock) :
+    MediaRepository, MediaPipelineRepository() {
+
+    private val mutableCurrentMedia: MutableStateFlow<List<MediaDataModel>> =
+        MutableStateFlow(mutableListOf())
+    override val currentMedia: StateFlow<List<MediaDataModel>> = mutableCurrentMedia.asStateFlow()
+
+    private var sortedMedia = TreeMap<MediaSortKeyModel, MediaDataModel>(comparator)
+
+    override fun addCurrentUserMediaEntry(data: MediaData): Boolean {
+        return super.addCurrentUserMediaEntry(data).also { addToSortedMedia(data) }
+    }
+
+    override fun removeCurrentUserMediaEntry(key: InstanceId): MediaData? {
+        return super.removeCurrentUserMediaEntry(key)?.also { removeFromSortedMedia(it) }
+    }
+
+    override fun removeCurrentUserMediaEntry(key: InstanceId, data: MediaData): Boolean {
+        return super.removeCurrentUserMediaEntry(key, data).also {
+            if (it) {
+                removeFromSortedMedia(data)
+            }
+        }
+    }
+
+    override fun clearCurrentUserMedia() {
+        val userEntries = LinkedHashMap<InstanceId, MediaData>(mutableUserEntries.value)
+        mutableUserEntries.value = LinkedHashMap()
+        userEntries.forEach { removeFromSortedMedia(it.value) }
+    }
+
+    override fun seek(sessionKey: InstanceId, to: Long) {
+        mutableCurrentMedia.value
+            .first { sessionKey == it.instanceId }
+            .controller
+            .transportControls
+            .seekTo(to)
+    }
+
+    override fun reorderMedia() {
+        mutableCurrentMedia.value = sortedMedia.values.toList()
+    }
+
+    private fun addToSortedMedia(data: MediaData) {
+        val sortedMap = TreeMap<MediaSortKeyModel, MediaDataModel>(comparator)
+        val currentModel = sortedMedia.values.find { it.instanceId == data.instanceId }
+
+        sortedMap.putAll(
+            sortedMedia.filter { (keyModel, _) -> keyModel.instanceId != data.instanceId }
+        )
+
+        mutableUserEntries.value[data.instanceId]?.let { mediaData ->
+            with(mediaData) {
+                val sortKey =
+                    MediaSortKeyModel(
+                        isPlaying,
+                        playbackLocation,
+                        active,
+                        resumption,
+                        lastActive,
+                        notificationKey,
+                        systemClock.currentTimeMillis(),
+                        instanceId,
+                    )
+                val controller =
+                    if (currentModel != null && currentModel.controller.sessionToken == token) {
+                        currentModel.controller
+                    } else {
+                        MediaController(context, token!!)
+                    }
+                val mediaModel = toDataModel(controller)
+                sortedMap[sortKey] = mediaModel
+
+                var isNewToCurrentMedia = true
+                val currentList =
+                    mutableListOf<MediaDataModel>().apply { addAll(mutableCurrentMedia.value) }
+                currentList.forEachIndexed { index, mediaDataModel ->
+                    if (mediaDataModel.instanceId == data.instanceId) {
+                        // When loading an update for an existing media control.
+                        isNewToCurrentMedia = false
+                        if (mediaDataModel != mediaModel) {
+                            // Update media model if changed.
+                            currentList[index] = mediaModel
+                        }
+                    }
+                }
+                if (isNewToCurrentMedia && active) {
+                    mutableCurrentMedia.value = sortedMap.values.toList()
+                } else {
+                    mutableCurrentMedia.value = currentList
+                }
+
+                sortedMedia = sortedMap
+            }
+        }
+    }
+
+    private fun removeFromSortedMedia(data: MediaData) {
+        mutableCurrentMedia.value =
+            mutableCurrentMedia.value.filter { model -> data.instanceId != model.instanceId }
+        sortedMedia =
+            TreeMap(sortedMedia.filter { (keyModel, _) -> keyModel.instanceId != data.instanceId })
+    }
+
+    private fun MediaData.toDataModel(controller: MediaController): MediaDataModel {
+        val icon = appIcon?.loadDrawable(context)
+        val background = artwork?.loadDrawable(context)
+        return MediaDataModel(
+            instanceId = instanceId,
+            appUid = appUid,
+            packageName = packageName,
+            appName = app.toString(),
+            appIcon = icon?.let { Icon.Loaded(it, ContentDescription.Loaded(app)) },
+            background = background?.let { Icon.Loaded(background, null) },
+            title = song.toString(),
+            subtitle = artist.toString(),
+            notificationActions = actions,
+            playbackStateActions = semanticActions,
+            outputDevice = device,
+            clickIntent = clickIntent,
+            controller = controller,
+            canBeDismissed = isClearable,
+            isActive = active,
+            isResume = resumption,
+            resumeAction = resumeAction,
+            isExplicit = isExplicit,
+        )
+    }
 }

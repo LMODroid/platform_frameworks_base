@@ -58,7 +58,7 @@ class KeyguardMediaViewModelTest : SysuiTestCase() {
         kosmos.runTest {
             val userMedia = MediaData(active = true)
 
-            mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
+            mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
             keyguardRepository.setIsDozing(true)
 
             assertThat(underTest.isMediaVisible).isFalse()
@@ -69,7 +69,7 @@ class KeyguardMediaViewModelTest : SysuiTestCase() {
         kosmos.runTest {
             val userMedia = MediaData(active = true)
 
-            mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
+            mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
             keyguardRepository.setIsDozing(false)
 
             assertThat(underTest.isMediaVisible).isTrue()

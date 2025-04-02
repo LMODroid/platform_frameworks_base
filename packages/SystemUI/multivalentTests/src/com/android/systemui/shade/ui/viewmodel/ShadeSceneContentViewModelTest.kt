@@ -122,11 +122,11 @@ class ShadeSceneContentViewModelTest : SysuiTestCase() {
 
             assertThat(isMediaVisible).isFalse()
 
-            kosmos.mediaFilterRepository.addSelectedUserMediaEntry(userMedia)
+            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
 
             assertThat(isMediaVisible).isTrue()
 
-            kosmos.mediaFilterRepository.removeSelectedUserMediaEntry(userMedia.instanceId)
+            kosmos.mediaFilterRepository.removeCurrentUserMediaEntry(userMedia.instanceId)
 
             assertThat(isMediaVisible).isFalse()
         }

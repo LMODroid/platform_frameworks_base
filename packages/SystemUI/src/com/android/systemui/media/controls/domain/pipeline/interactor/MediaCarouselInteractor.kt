@@ -62,7 +62,7 @@ constructor(
 
     /** Are there any media notifications active? */
     val hasActiveMedia: StateFlow<Boolean> =
-        mediaFilterRepository.selectedUserEntries
+        mediaFilterRepository.currentUserEntries
             .map { entries -> entries.any { it.value.active } }
             .stateIn(
                 scope = applicationScope,
@@ -72,7 +72,7 @@ constructor(
 
     /** Are there any media entries, including inactive ones? */
     val hasAnyMedia: StateFlow<Boolean> =
-        mediaFilterRepository.selectedUserEntries
+        mediaFilterRepository.currentUserEntries
             .map { entries -> entries.isNotEmpty() }
             .stateIn(
                 scope = applicationScope,

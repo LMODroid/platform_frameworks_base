@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package com.android.systemui.media.controls.domain.pipeline
+package com.android.systemui.media.remedia.data.repository
 
-import com.android.systemui.concurrency.fakeExecutor
+import com.android.systemui.Flags
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.media.controls.data.repository.mediaFilterRepository
-import com.android.systemui.media.controls.shared.mediaLogger
-import com.android.systemui.settings.userTracker
-import com.android.systemui.statusbar.notificationLockscreenUserManager
 
-val Kosmos.mediaDataFilter by
+val Kosmos.mediaPipelineRepository by
     Kosmos.Fixture {
-        MediaDataFilterImpl(
-            userTracker = userTracker,
-            lockscreenUserManager = notificationLockscreenUserManager,
-            executor = fakeExecutor,
-            mediaFilterRepository = mediaFilterRepository,
-            mediaLogger = mediaLogger,
-        )
+        if (Flags.mediaControlsInCompose()) {
+            mediaRepository
+        } else {
+            mediaFilterRepository
+        }
     }

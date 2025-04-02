@@ -28,7 +28,6 @@ import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.media.controls.data.repository.mediaFilterRepository
 import com.android.systemui.media.controls.domain.pipeline.MediaDataManager
 import com.android.systemui.media.controls.shared.model.MediaData
-import com.android.systemui.media.controls.shared.model.MediaDataLoadingModel
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.statusbar.featurepods.media.domain.interactor.mediaControlChipInteractor
 import com.android.systemui.statusbar.featurepods.popups.shared.model.PopupChipModel
@@ -106,11 +105,7 @@ class MediaControlChipViewModelTest(flags: FlagsParameterization) : SysuiTestCas
 
     private fun updateMedia(mediaData: MediaData) {
         if (SceneContainerFlag.isEnabled) {
-            val instanceId = mediaData.instanceId
-            kosmos.mediaFilterRepository.addSelectedUserMediaEntry(mediaData)
-            kosmos.mediaFilterRepository.addMediaDataLoadingState(
-                MediaDataLoadingModel.Loaded(instanceId)
-            )
+            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(mediaData)
         } else {
             mediaControlChipInteractor.updateMediaControlChipModelLegacy(mediaData)
         }

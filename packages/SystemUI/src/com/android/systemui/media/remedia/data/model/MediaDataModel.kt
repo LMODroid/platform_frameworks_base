@@ -33,7 +33,7 @@ data class MediaDataModel(
     /** Package name of the app that's posting the media, used for logging. */
     val packageName: String,
     val appName: String,
-    val appIcon: Icon,
+    val appIcon: Icon?,
     val background: Icon?,
     val title: String,
     val subtitle: String,
@@ -43,9 +43,9 @@ data class MediaDataModel(
      * Semantic actions buttons, based on the PlaybackState of the media session. If present, these
      * actions will be preferred in the UI over [notificationActions]
      */
-    val playbackStateActions: MediaButton,
+    val playbackStateActions: MediaButton?,
     /** Where the media is playing: phone, headphones, ear buds, remote session. */
-    val outputDevice: MediaDeviceData,
+    val outputDevice: MediaDeviceData?,
     /** Action to perform when the media player is tapped. */
     val clickIntent: PendingIntent?,
     val controller: MediaController,

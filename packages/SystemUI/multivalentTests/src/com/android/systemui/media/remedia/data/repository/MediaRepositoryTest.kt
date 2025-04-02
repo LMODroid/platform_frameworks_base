@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.android.systemui.media.controls.data.repository
+package com.android.systemui.media.remedia.data.repository
 
+import android.media.session.MediaController
+import android.media.session.MediaSession
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.internal.logging.InstanceId
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.kosmos.testScope
-import com.android.systemui.media.controls.shared.model.MediaCommonModel
 import com.android.systemui.media.controls.shared.model.MediaData
-import com.android.systemui.media.controls.shared.model.MediaDataLoadingModel
+import com.android.systemui.media.remedia.data.model.MediaDataModel
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
@@ -33,12 +34,13 @@ import org.junit.runner.RunWith
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
-class MediaFilterRepositoryTest : SysuiTestCase() {
+class MediaRepositoryTest : SysuiTestCase() {
 
     private val kosmos = testKosmos()
     private val testScope = kosmos.testScope
+    private val session = MediaSession(context, "MediaRepositoryTestSession")
 
-    private val underTest: MediaFilterRepository = with(kosmos) { mediaFilterRepository }
+    private val underTest: MediaRepositoryImpl = kosmos.mediaRepository
 
     @Test
     fun addCurrentUserMediaEntry_activeThenInactivate() =
@@ -46,20 +48,18 @@ class MediaFilterRepositoryTest : SysuiTestCase() {
             val currentUserEntries by collectLastValue(underTest.currentUserEntries)
 
             val instanceId = InstanceId.fakeInstanceId(123)
-            val userMedia = MediaData().copy(active = true, instanceId = instanceId)
+            val userMedia =
+                MediaData()
+                    .copy(token = session.sessionToken, active = true, instanceId = instanceId)
 
             underTest.addCurrentUserMediaEntry(userMedia)
 
             assertThat(currentUserEntries?.get(instanceId)).isEqualTo(userMedia)
-            assertThat(underTest.hasActiveMedia()).isTrue()
-            assertThat(underTest.hasAnyMedia()).isTrue()
 
             underTest.addCurrentUserMediaEntry(userMedia.copy(active = false))
 
             assertThat(currentUserEntries?.get(instanceId)).isNotEqualTo(userMedia)
             assertThat(currentUserEntries?.get(instanceId)?.active).isFalse()
-            assertThat(underTest.hasActiveMedia()).isFalse()
-            assertThat(underTest.hasAnyMedia()).isTrue()
         }
 
     @Test
@@ -68,17 +68,12 @@ class MediaFilterRepositoryTest : SysuiTestCase() {
             val currentUserEntries by collectLastValue(underTest.currentUserEntries)
 
             val instanceId = InstanceId.fakeInstanceId(123)
-            val userMedia = MediaData().copy(instanceId = instanceId)
+            val userMedia = MediaData().copy(token = session.sessionToken, instanceId = instanceId)
 
             underTest.addCurrentUserMediaEntry(userMedia)
 
             assertThat(currentUserEntries?.get(instanceId)).isEqualTo(userMedia)
-            assertThat(underTest.hasActiveMedia()).isTrue()
-            assertThat(underTest.hasAnyMedia()).isTrue()
-
             assertThat(underTest.removeCurrentUserMediaEntry(instanceId, userMedia)).isTrue()
-            assertThat(underTest.hasActiveMedia()).isFalse()
-            assertThat(underTest.hasAnyMedia()).isFalse()
         }
 
     @Test
@@ -87,7 +82,7 @@ class MediaFilterRepositoryTest : SysuiTestCase() {
             val currentUserEntries by collectLastValue(underTest.currentUserEntries)
 
             val instanceId = InstanceId.fakeInstanceId(123)
-            val userMedia = MediaData().copy(instanceId = instanceId)
+            val userMedia = MediaData().copy(token = session.sessionToken, instanceId = instanceId)
 
             underTest.addCurrentUserMediaEntry(userMedia)
 
@@ -143,8 +138,8 @@ class MediaFilterRepositoryTest : SysuiTestCase() {
             assertThat(currentMedia?.size).isEqualTo(2)
             assertThat(currentMedia)
                 .containsExactly(
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(playingInstanceId)),
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(remoteInstanceId)),
+                    playingData.toDataModel(currentMedia!![0].controller),
+                    remoteData.toDataModel(currentMedia!![1].controller),
                 )
                 .inOrder()
         }
@@ -164,8 +159,8 @@ class MediaFilterRepositoryTest : SysuiTestCase() {
             assertThat(currentMedia?.size).isEqualTo(2)
             assertThat(currentMedia)
                 .containsExactly(
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(playingInstanceId1)),
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(playingInstanceId2)),
+                    playingData1.toDataModel(currentMedia!![0].controller),
+                    playingData2.toDataModel(currentMedia!![1].controller),
                 )
                 .inOrder()
 
@@ -178,18 +173,18 @@ class MediaFilterRepositoryTest : SysuiTestCase() {
             assertThat(currentMedia?.size).isEqualTo(2)
             assertThat(currentMedia)
                 .containsExactly(
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(playingInstanceId1)),
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(playingInstanceId2)),
+                    playingData1.toDataModel(currentMedia!![0].controller),
+                    playingData2.toDataModel(currentMedia!![1].controller),
                 )
                 .inOrder()
 
-            underTest.setOrderedMedia()
+            underTest.reorderMedia()
 
             assertThat(currentMedia?.size).isEqualTo(2)
             assertThat(currentMedia)
                 .containsExactly(
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(playingInstanceId2)),
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(playingInstanceId1)),
+                    playingData2.toDataModel(currentMedia!![0].controller),
+                    playingData1.toDataModel(currentMedia!![1].controller),
                 )
                 .inOrder()
         }
@@ -219,27 +214,19 @@ class MediaFilterRepositoryTest : SysuiTestCase() {
 
             underTest.addCurrentUserMediaEntry(playingAndRemoteData)
 
-            underTest.setOrderedMedia()
+            underTest.reorderMedia()
 
             assertThat(currentMedia?.size).isEqualTo(5)
             assertThat(currentMedia)
                 .containsExactly(
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(instanceId1)),
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(instanceId2)),
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(instanceId4)),
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(instanceId3)),
-                    MediaCommonModel(MediaDataLoadingModel.Loaded(instanceId5)),
+                    playingAndLocalData.toDataModel(currentMedia!![0].controller),
+                    playingAndRemoteData.toDataModel(currentMedia!![1].controller),
+                    stoppedAndRemoteData.toDataModel(currentMedia!![2].controller),
+                    stoppedAndLocalData.toDataModel(currentMedia!![3].controller),
+                    canResumeData.toDataModel(currentMedia!![4].controller),
                 )
                 .inOrder()
         }
-
-    @Test
-    fun hasAnyMedia_noMediaSet_returnsFalse() =
-        testScope.runTest { assertThat(underTest.hasAnyMedia()).isFalse() }
-
-    @Test
-    fun hasActiveMedia_noMediaSet_returnsFalse() =
-        testScope.runTest { assertThat(underTest.hasActiveMedia()).isFalse() }
 
     private fun createMediaData(
         app: String,
@@ -249,11 +236,35 @@ class MediaFilterRepositoryTest : SysuiTestCase() {
         instanceId: InstanceId,
     ): MediaData {
         return MediaData(
+            token = session.sessionToken,
             playbackLocation = playbackLocation,
             resumption = isResume,
             notificationKey = "key: $app",
             isPlaying = playing,
             instanceId = instanceId,
+        )
+    }
+
+    private fun MediaData.toDataModel(mediaController: MediaController): MediaDataModel {
+        return MediaDataModel(
+            instanceId = instanceId,
+            appUid = appUid,
+            packageName = packageName,
+            appName = app.toString(),
+            appIcon = null,
+            background = null,
+            title = song.toString(),
+            subtitle = artist.toString(),
+            notificationActions = actions,
+            playbackStateActions = semanticActions,
+            outputDevice = device,
+            clickIntent = clickIntent,
+            controller = mediaController,
+            canBeDismissed = isClearable,
+            isActive = active,
+            isResume = resumption,
+            resumeAction = resumeAction,
+            isExplicit = isExplicit,
         )
     }
 
