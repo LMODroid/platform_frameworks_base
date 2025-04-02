@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
@@ -89,24 +88,6 @@ constructor(
     /** Radius of blur to be applied on the window root view. */
     val blurRadiusRequestedByShade: StateFlow<Int> = repository.blurRequestedByShade.asStateFlow()
 
-    /** Whether the blur applied is opaque or transparent. */
-    val isBlurOpaque: Flow<Boolean> =
-        combine(
-            if (Flags.bouncerUiRevamp()) {
-                keyguardInteractor.primaryBouncerShowing.or(isBouncerTransitionInProgress)
-            } else {
-                flowOf(false)
-            },
-            if (Flags.glanceableHubBlurredBackground()) {
-                communalInteractor.isCommunalBlurring
-            } else {
-                flowOf(false)
-            },
-            repository.isBlurOpaque,
-        ) { bouncerActive, ghActive, shadeBlurOpaque ->
-            if (bouncerActive || ghActive) false else shadeBlurOpaque
-        }
-
     /**
      * Method that requests blur to be applied on window root view. It is applied only when other
      * blurs are not applied.
@@ -117,7 +98,7 @@ constructor(
      *
      * @return whether the request for blur was processed or not.
      */
-    fun requestBlurForShade(blurRadius: Int, opaque: Boolean): Boolean {
+    fun requestBlurForShade(blurRadius: Int): Boolean {
         // We need to check either of these because they are two different sources of truth,
         // primaryBouncerShowing changes early to true/false, but blur is
         // coordinated by transition value.
@@ -127,9 +108,8 @@ constructor(
         if (isGlanceableHubActive()) {
             return false
         }
-        Log.d(TAG, "requestingBlurForShade for $blurRadius $opaque")
+        Log.d(TAG, "requestingBlurForShade for $blurRadius")
         repository.blurRequestedByShade.value = blurRadius
-        repository.isBlurOpaque.value = opaque
         return true
     }
 

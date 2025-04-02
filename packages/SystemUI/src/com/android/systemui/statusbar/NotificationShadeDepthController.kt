@@ -639,8 +639,7 @@ constructor(
         zoomOutCalculatedFromShadeRadius = zoomOutFromShadeRadius
         if (Flags.bouncerUiRevamp() || Flags.glanceableHubBlurredBackground()) {
             if (windowRootViewBlurInteractor.isBlurCurrentlySupported.value) {
-                updateScheduled =
-                    windowRootViewBlurInteractor.requestBlurForShade(blur, shouldBlurBeOpaque)
+                updateScheduled = windowRootViewBlurInteractor.requestBlurForShade(blur)
                 return
             }
             // When blur is not supported, zoom out still needs to happen when scheduleUpdate

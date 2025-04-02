@@ -71,7 +71,7 @@ object WindowRootViewBinder {
                     launchTraced("WindowBlur") {
                         var wasUpdateScheduledForThisFrame = false
                         var lastScheduledBlurRadius = 0
-                        var lastScheduleBlurOpaqueness = false
+                        var lastScheduleSurfaceOpaqueness = false
 
                         // Creating the callback once and not for every coroutine invocation
                         val newFrameCallback = FrameCallback {
@@ -80,17 +80,20 @@ object WindowRootViewBinder {
                             blurUtils.applyBlur(
                                 view.rootView?.viewRootImpl,
                                 blurRadiusToApply,
-                                lastScheduleBlurOpaqueness,
+                                lastScheduleSurfaceOpaqueness,
                             )
                             TrackTracer.instantForGroup(
                                 "windowBlur",
                                 "appliedBlurRadius",
                                 blurRadiusToApply,
                             )
-                            viewModel.onBlurApplied(blurRadiusToApply)
+                            viewModel.onBlurApplied(
+                                blurRadiusToApply,
+                                lastScheduleSurfaceOpaqueness,
+                            )
                         }
 
-                        combine(viewModel.blurRadius, viewModel.isBlurOpaque, ::Pair)
+                        combine(viewModel.blurRadius, viewModel.isSurfaceOpaque, ::Pair)
                             .filter { it.first >= 0 }
                             .collect { (blurRadius, isOpaque) ->
                                 val newBlurRadius = blurRadius.toInt()
@@ -102,7 +105,7 @@ object WindowRootViewBinder {
                                         Log.w(TAG, "Multiple blur values emitted in the same frame")
                                     }
                                     lastScheduledBlurRadius = newBlurRadius
-                                    lastScheduleBlurOpaqueness = isOpaque
+                                    lastScheduleSurfaceOpaqueness = isOpaque
                                     return@collect
                                 }
                                 TrackTracer.instantForGroup(
@@ -111,7 +114,7 @@ object WindowRootViewBinder {
                                     blurRadius,
                                 )
                                 lastScheduledBlurRadius = newBlurRadius
-                                lastScheduleBlurOpaqueness = isOpaque
+                                lastScheduleSurfaceOpaqueness = isOpaque
                                 wasUpdateScheduledForThisFrame = true
                                 blurUtils.prepareBlur(
                                     view.rootView?.viewRootImpl,

@@ -54,7 +54,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.floatThat
 import org.mockito.Captor
@@ -429,7 +428,7 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
     @EnableFlags(Flags.FLAG_BOUNCER_UI_REVAMP)
     fun ignoreShadeBlurUntilHidden_requestsBlur_windowBlurFlag() {
         notificationShadeDepthController.blursDisabledForAppLaunch = true
-        verify(windowRootViewBlurInteractor).requestBlurForShade(anyInt(), anyBoolean())
+        verify(windowRootViewBlurInteractor).requestBlurForShade(anyInt())
     }
 
     @Test
@@ -510,7 +509,7 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
         notificationShadeDepthController.updateBlurCallback.doFrame(0)
         verify(notificationShadeWindowController).setBackgroundBlurRadius(eq(0))
         verify(wallpaperController).setNotificationShadeZoom(eq(1f))
-        verify(windowRootViewBlurInteractor).requestBlurForShade(0, false)
+        verify(windowRootViewBlurInteractor).requestBlurForShade(0)
     }
 
     @Test
