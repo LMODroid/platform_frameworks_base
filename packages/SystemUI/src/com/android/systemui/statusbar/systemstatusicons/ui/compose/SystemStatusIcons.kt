@@ -1,0 +1,42 @@
+/*
+ * Copyright (C) 2025 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.systemui.statusbar.systemstatusicons.ui.compose
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.android.systemui.common.ui.compose.Icon
+import com.android.systemui.lifecycle.rememberViewModel
+import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
+import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconsViewModel
+
+/**
+ * Composable that displays the system status icons. This does not handle any spacing or alignment.
+ * That is expected to be done in a container composable like a Row.
+ */
+@Composable
+fun SystemStatusIcons(viewModelFactory: SystemStatusIconsViewModel.Factory, isDark: IsAreaDark) {
+    val viewModel = rememberViewModel(traceName = "SystemStatusIcons") { viewModelFactory.create() }
+
+    for (icon in viewModel.icons) {
+        // TODO(407622922): Use isDark to color the icon.
+        Icon(icon = icon, modifier = Modifier.size(20.dp).padding(1.dp), tint = Color.Red)
+    }
+}

@@ -34,6 +34,7 @@ import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewM
 import com.android.systemui.statusbar.pipeline.shared.ui.model.ChipsVisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.SystemInfoCombinedVisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.VisibilityModel
+import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconsViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,6 +72,11 @@ class FakeHomeStatusBarViewModel(
     override val batteryViewModelFactory: BatteryViewModel.Factory =
         object : BatteryViewModel.Factory {
             override fun create(): BatteryViewModel = mock(BatteryViewModel::class.java)
+        }
+    override val systemStatusIconsViewModelFactory: SystemStatusIconsViewModel.Factory =
+        object : SystemStatusIconsViewModel.Factory {
+            override fun create(): SystemStatusIconsViewModel =
+                mock(SystemStatusIconsViewModel::class.java)
         }
 
     override val shouldShowOperatorNameView = MutableStateFlow(false)

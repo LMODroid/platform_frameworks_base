@@ -667,6 +667,7 @@ private fun ContentScope.StatusIcons(
 
     val chipHighlight = viewModel.quickSettingsChipHighlight
 
+    // TODO(408001821): Use composable system status icons here instead.
     AndroidView(
         factory = { context ->
             iconManager.setTint(primaryColor, inverseColor)

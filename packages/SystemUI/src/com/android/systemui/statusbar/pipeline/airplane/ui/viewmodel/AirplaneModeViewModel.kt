@@ -42,6 +42,10 @@ interface AirplaneModeViewModel {
     val isAirplaneModeIconVisible: StateFlow<Boolean>
 }
 
+@Deprecated(
+    message = "This view model will not be used once SystemStatusIconsInCompose is launched",
+    replaceWith = ReplaceWith("AirplaneModeIconViewModel"),
+)
 @SysUISingleton
 class AirplaneModeViewModelImpl
 @Inject

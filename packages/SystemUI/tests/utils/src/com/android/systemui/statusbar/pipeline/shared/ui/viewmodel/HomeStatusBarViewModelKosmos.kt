@@ -40,6 +40,7 @@ import com.android.systemui.statusbar.phone.domain.interactor.lightsOutInteracto
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.batteryViewModelFactory
 import com.android.systemui.statusbar.pipeline.shared.domain.interactor.homeStatusBarIconBlockListInteractor
 import com.android.systemui.statusbar.pipeline.shared.domain.interactor.homeStatusBarInteractor
+import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.systemStatusIconsViewModelFactory
 
 var Kosmos.homeStatusBarViewModel: HomeStatusBarViewModel by
     Kosmos.Fixture { homeStatusBarViewModelFactory.invoke(testableContext.displayId) }
@@ -49,6 +50,7 @@ var Kosmos.homeStatusBarViewModelFactory: (Int) -> HomeStatusBarViewModel by
             HomeStatusBarViewModelImpl(
                 displayId,
                 batteryViewModelFactory,
+                systemStatusIconsViewModelFactory,
                 tableLogBufferFactory,
                 homeStatusBarInteractor,
                 homeStatusBarIconBlockListInteractor,

@@ -76,6 +76,7 @@ import com.android.systemui.statusbar.pipeline.shared.domain.interactor.HomeStat
 import com.android.systemui.statusbar.pipeline.shared.ui.model.ChipsVisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.SystemInfoCombinedVisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.VisibilityModel
+import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconsViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -110,6 +111,9 @@ import kotlinx.coroutines.flow.stateIn
 interface HomeStatusBarViewModel : Activatable {
     /** Factory to create the view model for the battery icon */
     val batteryViewModelFactory: BatteryViewModel.Factory
+
+    /** Factory to create the view model for system status icons */
+    val systemStatusIconsViewModelFactory: SystemStatusIconsViewModel.Factory
 
     /**
      * True if the device is currently transitioning from lockscreen to occluded and false
@@ -208,6 +212,7 @@ class HomeStatusBarViewModelImpl
 constructor(
     @Assisted thisDisplayId: Int,
     override val batteryViewModelFactory: BatteryViewModel.Factory,
+    override val systemStatusIconsViewModelFactory: SystemStatusIconsViewModel.Factory,
     tableLoggerFactory: TableLogBufferFactory,
     homeStatusBarInteractor: HomeStatusBarInteractor,
     homeStatusBarIconBlockListInteractor: HomeStatusBarIconBlockListInteractor,

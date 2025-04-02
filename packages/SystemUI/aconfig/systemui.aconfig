@@ -488,6 +488,13 @@ flag {
 }
 
 flag {
+  name: "status_bar_system_status_icons_in_compose"
+  namespace: "systemui"
+  description: "Use compose for displaying icons in the status bar system status area"
+  bug: "406922954"
+}
+
+flag {
     name: "status_bar_swipe_over_chip"
     namespace: "systemui"
     description: "Allow users to swipe over the status bar chip to open the shade"
