@@ -252,6 +252,7 @@ constructor(
     override val mobileConnectionsBySubId: Incremental<Int, MobileConnectionRepositoryKairos> =
         buildIncremental {
             subscriptionsById
+                .map { it.mapValues {} } // only base diffs off of keys
                 .asIncremental()
                 .mapValues { (subId, sub) -> mobileRepoFactory.get().create(subId) }
                 .applyLatestSpecForKey()
