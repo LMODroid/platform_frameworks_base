@@ -50,6 +50,7 @@ internal class EvalScopeImpl(networkScope: NetworkScope, deferScope: DeferScope)
 
     override val now: Events<Unit> by lazy {
         var result by EventsLoop<Unit>()
+        val switchOff = result.mapCheap { emptyEvents }
         result =
             StateInit(
                     constInit(
@@ -58,7 +59,7 @@ internal class EvalScopeImpl(networkScope: NetworkScope, deferScope: DeferScope)
                             "now",
                             "now",
                             this,
-                            { result.mapCheap { emptyEvents }.init.connect(evalScope = this) },
+                            { switchOff.init.connect(evalScope = this) },
                             CompletableLazy(
                                 EventsInit(
                                     constInit(
