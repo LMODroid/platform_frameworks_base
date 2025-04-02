@@ -318,6 +318,10 @@ private fun EvalScope.reenterBuildScope(
 ) =
     BuildScopeImpl(
         stateScope =
-            StateScopeImpl(evalScope = this, endSignalLazy = outerScope.stateScope.endSignalLazy),
+            StateScopeImpl(
+                evalScope = this,
+                endSignalLazy = outerScope.stateScope.endSignalLazy,
+                endSignalOnceLazy = outerScope.stateScope.endSignalOnceLazy,
+            ),
         coroutineScope,
     )

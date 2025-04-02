@@ -31,19 +31,23 @@ import com.android.systemui.kairos.emptyEvents
 import com.android.systemui.kairos.groupByKey
 import com.android.systemui.kairos.init
 import com.android.systemui.kairos.mapCheap
-import com.android.systemui.kairos.merge
+import com.android.systemui.kairos.mergeLeft
 import com.android.systemui.kairos.switchEvents
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.map
 
-internal class StateScopeImpl(val evalScope: EvalScope, val endSignalLazy: Lazy<Events<Any>>) :
-    InternalStateScope, EvalScope by evalScope {
+internal class StateScopeImpl(
+    val evalScope: EvalScope,
+    val endSignalLazy: Lazy<Events<Any>>,
+    endSignalOnceLazy: Lazy<Events<Any>>? = null,
+) : InternalStateScope, EvalScope by evalScope {
 
     override val endSignal: Events<Any> by endSignalLazy
 
-    override val endSignalOnce: Events<Any> by lazy {
-        endSignal.nextOnlyInternal("StateScope.endSignal")
-    }
+    val endSignalOnceLazy: Lazy<Events<Any>> =
+        endSignalOnceLazy ?: lazy { endSignal.nextOnlyInternal("StateScope.endSignal") }
+
+    override val endSignalOnce: Events<Any> by this.endSignalOnceLazy
 
     override fun <A> deferredStateScope(block: StateScope.() -> A): DeferredValue<A> =
         DeferredValue(deferAsync { block() })
@@ -123,7 +127,7 @@ internal class StateScopeImpl(val evalScope: EvalScope, val endSignalLazy: Lazy<
     }
 
     override fun childStateScope(newEnd: Events<Any>) =
-        StateScopeImpl(evalScope, lazy { merge(newEnd, endSignal) })
+        StateScopeImpl(evalScope, lazy { mergeLeft(newEnd, endSignal) })
 
     private fun <A> Events<A>.truncateToScope(operatorName: String): Events<A> =
         if (endSignalOnce === emptyEvents) {
@@ -169,4 +173,8 @@ internal class StateScopeImpl(val evalScope: EvalScope, val endSignalLazy: Lazy<
 }
 
 private fun EvalScope.reenterStateScope(outerScope: StateScopeImpl) =
-    StateScopeImpl(evalScope = this, endSignalLazy = outerScope.endSignalLazy)
+    StateScopeImpl(
+        evalScope = this,
+        endSignalLazy = outerScope.endSignalLazy,
+        endSignalOnceLazy = outerScope.endSignalOnceLazy,
+    )
