@@ -320,14 +320,12 @@ internal inline fun <A> switchPromptImplSingle(
     crossinline getStorage: EvalScope.() -> EventsImpl<A>,
     crossinline getPatches: EvalScope.() -> EventsImpl<EventsImpl<A>>,
 ): EventsImpl<A> {
+    val patches =
+        mapImpl(getPatches) { newEvents, _ -> singleOf(Maybe.present(newEvents)).asIterable() }
     val switchPromptImpl =
         switchPromptImpl(
             getStorage = { singleOf(getStorage()).asIterable() },
-            getPatches = {
-                mapImpl(getPatches) { newEvents, _ ->
-                    singleOf(Maybe.present(newEvents)).asIterable()
-                }
-            },
+            getPatches = { patches },
             storeFactory = SingletonMapK.Factory(),
         )
     return mapImpl({ switchPromptImpl }) { map, logIndent ->
