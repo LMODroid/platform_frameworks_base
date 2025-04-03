@@ -198,6 +198,9 @@
     </style>
 
     <style name="Bouncer.UserSwitcher.Spinner.Item">
-        <item name="android:textSize">@dimen/bouncer_user_switcher_item_text_size</item>
+      <item name="android:fontFamily" android:featureFlag="com.android.systemui.lockscreen_font">
+        variable-title-medium
+      </item>
+      <item name="android:textSize">@dimen/bouncer_user_switcher_item_text_size</item>
     </style>
 </resources>

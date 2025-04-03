@@ -63,6 +63,21 @@
 
     <TextView
         android:id="@+id/cancel"
+        android:featureFlag="!com.android.systemui.lockscreen_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:paddingHorizontal="@dimen/user_switcher_fullscreen_button_padding"
+        android:textSize="@dimen/user_switcher_fullscreen_button_text_size"
+        android:textColor="?androidprv:attr/colorAccentPrimary"
+        android:text="@string/cancel" />
+
+    <TextView
+        android:id="@+id/cancel"
+        android:featureFlag="com.android.systemui.lockscreen_font"
+        android:fontFamily="variable-title-small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -80,6 +95,23 @@
 
     <TextView
         android:id="@+id/add"
+        android:featureFlag="!com.android.systemui.lockscreen_font"
+        android:background="@drawable/user_switcher_fullscreen_button_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/user_switcher_fullscreen_button_padding"
+        android:text="@string/add"
+        android:textColor="?androidprv:attr/colorAccentPrimary"
+        android:textSize="@dimen/user_switcher_fullscreen_button_text_size"
+        android:visibility="gone"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:id="@+id/add"
+        android:featureFlag="com.android.systemui.lockscreen_font"
+        android:fontFamily="variable-title-small"
         android:background="@drawable/user_switcher_fullscreen_button_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

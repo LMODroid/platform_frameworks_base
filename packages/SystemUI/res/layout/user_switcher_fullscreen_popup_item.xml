@@ -39,6 +39,17 @@
 
     <TextView
         android:id="@+id/text"
+        android:featureFlag="!com.android.systemui.lockscreen_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/user_switcher_fullscreen_popup_item_tint"
+        android:textSize="14sp"
+        android:layout_gravity="start" />
+
+    <TextView
+        android:id="@+id/text"
+        android:featureFlag="com.android.systemui.lockscreen_font"
+        android:fontFamily="variable-title-small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/user_switcher_fullscreen_popup_item_tint"
