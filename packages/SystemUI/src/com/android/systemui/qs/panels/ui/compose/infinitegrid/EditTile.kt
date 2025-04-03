@@ -243,10 +243,11 @@ sealed interface EditAction {
 fun DefaultEditTileGrid(
     listState: EditTileListState,
     allTiles: List<EditTileViewModel>,
-    modifier: Modifier,
     snapshotViewModel: InfiniteGridSnapshotViewModel,
-    onStopEditing: () -> Unit,
-    onEditAction: (EditAction) -> Unit,
+    modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
+    onStopEditing: () -> Unit = {},
+    onEditAction: (EditAction) -> Unit = {},
 ) {
     val selectionState = rememberSelectionState()
 
@@ -293,8 +294,6 @@ fun DefaultEditTileGrid(
         CompositionLocalProvider(
             LocalOverscrollFactory provides rememberOffsetOverscrollEffectFactory()
         ) {
-            val scrollState = rememberScrollState()
-
             AutoScrollGrid(listState, scrollState, innerPadding)
 
             LaunchedEffect(listState.dragType) {

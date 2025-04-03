@@ -16,6 +16,7 @@
 
 package com.android.systemui.qs.panels.ui.compose.infinitegrid
 
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -49,6 +50,7 @@ import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.ui.ElementKeys.toElementKey
 import com.android.systemui.res.R
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @SysUISingleton
 class InfiniteGridLayout
@@ -162,11 +164,16 @@ constructor(
             rememberViewModel("InfiniteGridLayout.EditTileGrid") {
                 viewModel.snapshotViewModelFactory.create()
             }
+        val scrollState = rememberScrollState()
+        val coroutineScope = rememberCoroutineScope()
         val dialogDelegate =
             rememberViewModel("InfiniteGridLayout.EditTileGrid") {
                 viewModel.resetDialogDelegateFactory.create {
                     // Clear the stack of snapshots on reset
                     snapshotViewModel.clearStack()
+
+                    // Automatically scroll to the top on reset
+                    coroutineScope.launch { scrollState.animateScrollTo(0) }
                 }
             }
         val columns = columnsViewModel.columns
@@ -189,6 +196,7 @@ constructor(
             listState = listState,
             allTiles = tiles,
             modifier = modifier,
+            scrollState = scrollState,
             snapshotViewModel = snapshotViewModel,
             onStopEditing = onStopEditing,
         ) { action ->
