@@ -998,6 +998,13 @@ flag {
 }
 
 flag {
+    name: "enable_independent_back_in_projected"
+    namespace: "lse_desktop_experience"
+    description: "Enables the system to have independent back per-display in projected mode."
+    bug: "401530192"
+}
+
+flag {
     name: "enable_desktop_ime_bugfix"
     namespace: "lse_desktop_experience"
     description: "Enables bugfix to handle IME interactions in desktop windowing."
