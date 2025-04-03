@@ -113,96 +113,88 @@ constructor(
     fun viewModelForSub(
         subId: Int,
         location: StatusBarLocation,
-    ): BuildSpec<LocationBasedMobileViewModelKairos> = buildSpec {
-        val iconInteractorState: State<MobileIconInteractorKairos?> =
-            interactor.icons.map { it[subId] }
-        val iconInteractor =
-            object : MobileIconInteractorKairos {
-                fun <T> latest(
-                    default: T,
-                    block: MobileIconInteractorKairos.() -> State<T>,
-                ): State<T> = iconInteractorState.flatMap { it?.block() ?: stateOf(default) }
-
-                override val tableLogBuffer: TableLogBuffer =
-                    logFactory.getOrCreate(tableBufferLogName(subId), MOBILE_CONNECTION_BUFFER_SIZE)
-                override val subscriptionId: Int = subId
-                override val activity: State<DataActivityModel> =
-                    latest(DataActivityModel(hasActivityIn = false, hasActivityOut = false)) {
-                        activity
-                    }
-                override val mobileIsDefault: State<Boolean> = latest(false) { mobileIsDefault }
-                override val isDataConnected: State<Boolean> = latest(false) { isDataConnected }
-                override val isInService: State<Boolean> = latest(false) { isInService }
-                override val isEmergencyOnly: State<Boolean> = latest(false) { isEmergencyOnly }
-                override val isDataEnabled: State<Boolean> = latest(false) { isDataEnabled }
-                override val alwaysShowDataRatIcon: State<Boolean> =
-                    latest(false) { alwaysShowDataRatIcon }
-                override val signalLevelIcon: State<SignalIconModel> =
-                    latest(SignalIconModel.DEFAULT) { signalLevelIcon }
-                override val networkTypeIconGroup: State<NetworkTypeIconModel> =
-                    latest(NetworkTypeIconModel.DefaultIcon(TelephonyIcons.G)) {
-                        networkTypeIconGroup
-                    }
-                override val showSliceAttribution: State<Boolean> =
-                    latest(false) { showSliceAttribution }
-                override val isNonTerrestrial: State<Boolean> = latest(false) { isNonTerrestrial }
-                val defaultName =
-                    context.getString(com.android.internal.R.string.lockscreen_carrier_default)
-                override val networkName: State<NetworkNameModel> =
-                    latest(NetworkNameModel.Default(defaultName)) { networkName }
-                override val carrierName: State<String> = latest(defaultName) { carrierName }
-                override val isSingleCarrier: State<Boolean> = latest(true) { isSingleCarrier }
-                override val isRoaming: State<Boolean> = latest(false) { isRoaming }
-                override val isForceHidden: State<Boolean> = latest(false) { isForceHidden }
-                override val isAllowedDuringAirplaneMode: State<Boolean> =
-                    latest(false) { isAllowedDuringAirplaneMode }
-                override val carrierNetworkChangeActive: State<Boolean> =
-                    latest(false) { carrierNetworkChangeActive }
-            }
-
-        val commonViewModelState: State<MobileIconViewModelKairos?> = icons.map { it[subId] }
-        val commonViewModel =
-            object : MobileIconViewModelKairosCommon {
-                fun <T> latest(
-                    default: T,
-                    block: MobileIconViewModelKairosCommon.() -> State<T>,
-                ): State<T> = commonViewModelState.flatMap { it?.block() ?: stateOf(default) }
-
-                override val subscriptionId: Int = subId
-                override val iconInteractor: MobileIconInteractorKairos = iconInteractor
-                override val isVisible: State<Boolean> = latest(false) { isVisible }
-                override val icon: State<SignalIconModel> = latest(SignalIconModel.DEFAULT) { icon }
-                override val contentDescription: State<MobileContentDescription?> =
-                    latest(null) { contentDescription }
-                override val roaming: State<Boolean> = latest(false) { roaming }
-                override val networkTypeIcon: State<Icon.Resource?> =
-                    latest(null) { networkTypeIcon }
-                override val networkTypeBackground: State<Icon.Resource?> =
-                    latest(null) { networkTypeBackground }
-                override val activityInVisible: State<Boolean> = latest(false) { activityInVisible }
-                override val activityOutVisible: State<Boolean> =
-                    latest(false) { activityOutVisible }
-                override val activityContainerVisible: State<Boolean> =
-                    latest(false) { activityContainerVisible }
-            }
-
-        LocationBasedMobileViewModelKairos.viewModelForLocation(
-            commonViewModel,
-            iconInteractor,
+    ): LocationBasedMobileViewModelKairos {
+        val commonImpl = trackedCommonViewModel(subId)
+        return LocationBasedMobileViewModelKairos.viewModelForLocation(
+            commonImpl,
+            commonImpl.iconInteractor,
             verboseLogger,
             location,
         )
     }
 
-    fun shadeCarrierGroupIcon(subId: Int): BuildSpec<ShadeCarrierGroupMobileIconViewModelKairos> =
-        buildSpec {
-            val iconInteractor =
-                interactor.icons.sample().getOrElse(subId) {
-                    error("Unknown subscription id: $subId")
+    @Deprecated("Access view-models directly from \"icons\" property instead.")
+    fun shadeCarrierGroupIcon(subId: Int): ShadeCarrierGroupMobileIconViewModelKairos {
+        val commonImpl = trackedCommonViewModel(subId)
+        return ShadeCarrierGroupMobileIconViewModelKairos(commonImpl, commonImpl.iconInteractor)
+    }
+
+    private fun trackedInteractor(subId: Int): MobileIconInteractorKairos =
+        object : MobileIconInteractorKairos {
+            val iconInteractorState: State<MobileIconInteractorKairos?> =
+                interactor.icons.map { it[subId] }
+
+            fun <T> latest(default: T, block: MobileIconInteractorKairos.() -> State<T>): State<T> =
+                iconInteractorState.flatMap { it?.block() ?: stateOf(default) }
+
+            override val tableLogBuffer: TableLogBuffer =
+                logFactory.getOrCreate(tableBufferLogName(subId), MOBILE_CONNECTION_BUFFER_SIZE)
+            override val subscriptionId: Int = subId
+            override val activity: State<DataActivityModel> =
+                latest(DataActivityModel(hasActivityIn = false, hasActivityOut = false)) {
+                    activity
                 }
-            val commonViewModel =
-                icons.sample().getOrElse(subId) { error("Unknown subscription id: $subId") }
-            ShadeCarrierGroupMobileIconViewModelKairos(commonViewModel, iconInteractor)
+            override val mobileIsDefault: State<Boolean> = latest(false) { mobileIsDefault }
+            override val isDataConnected: State<Boolean> = latest(false) { isDataConnected }
+            override val isInService: State<Boolean> = latest(false) { isInService }
+            override val isEmergencyOnly: State<Boolean> = latest(false) { isEmergencyOnly }
+            override val isDataEnabled: State<Boolean> = latest(false) { isDataEnabled }
+            override val alwaysShowDataRatIcon: State<Boolean> =
+                latest(false) { alwaysShowDataRatIcon }
+            override val signalLevelIcon: State<SignalIconModel> =
+                latest(SignalIconModel.DEFAULT) { signalLevelIcon }
+            override val networkTypeIconGroup: State<NetworkTypeIconModel> =
+                latest(NetworkTypeIconModel.DefaultIcon(TelephonyIcons.G)) { networkTypeIconGroup }
+            override val showSliceAttribution: State<Boolean> =
+                latest(false) { showSliceAttribution }
+            override val isNonTerrestrial: State<Boolean> = latest(false) { isNonTerrestrial }
+            val defaultName =
+                context.getString(com.android.internal.R.string.lockscreen_carrier_default)
+            override val networkName: State<NetworkNameModel> =
+                latest(NetworkNameModel.Default(defaultName)) { networkName }
+            override val carrierName: State<String> = latest(defaultName) { carrierName }
+            override val isSingleCarrier: State<Boolean> = latest(true) { isSingleCarrier }
+            override val isRoaming: State<Boolean> = latest(false) { isRoaming }
+            override val isForceHidden: State<Boolean> = latest(false) { isForceHidden }
+            override val isAllowedDuringAirplaneMode: State<Boolean> =
+                latest(false) { isAllowedDuringAirplaneMode }
+            override val carrierNetworkChangeActive: State<Boolean> =
+                latest(false) { carrierNetworkChangeActive }
+        }
+
+    private fun trackedCommonViewModel(subId: Int) =
+        object : MobileIconViewModelKairosCommon {
+            override val iconInteractor: MobileIconInteractorKairos = trackedInteractor(subId)
+            val commonViewModelState: State<MobileIconViewModelKairos?> = icons.map { it[subId] }
+
+            fun <T> latest(
+                default: T,
+                block: MobileIconViewModelKairosCommon.() -> State<T>,
+            ): State<T> = commonViewModelState.flatMap { it?.block() ?: stateOf(default) }
+
+            override val subscriptionId: Int = subId
+            override val isVisible: State<Boolean> = latest(false) { isVisible }
+            override val icon: State<SignalIconModel> = latest(SignalIconModel.DEFAULT) { icon }
+            override val contentDescription: State<MobileContentDescription?> =
+                latest(null) { contentDescription }
+            override val roaming: State<Boolean> = latest(false) { roaming }
+            override val networkTypeIcon: State<Icon.Resource?> = latest(null) { networkTypeIcon }
+            override val networkTypeBackground: State<Icon.Resource?> =
+                latest(null) { networkTypeBackground }
+            override val activityInVisible: State<Boolean> = latest(false) { activityInVisible }
+            override val activityOutVisible: State<Boolean> = latest(false) { activityOutVisible }
+            override val activityContainerVisible: State<Boolean> =
+                latest(false) { activityContainerVisible }
         }
 
     private fun BuildScope.commonViewModel(subId: Int, iconInteractor: MobileIconInteractorKairos) =

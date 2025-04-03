@@ -22,9 +22,9 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.android.keyguard.AlphaOptimizedLinearLayout
-import com.android.systemui.kairos.BuildSpec
 import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.KairosNetwork
+import com.android.systemui.kairos.buildSpec
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.StatusBarIconView.getVisibleStateString
 import com.android.systemui.statusbar.core.NewStatusBarIcons
@@ -157,7 +157,7 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
             context: Context,
             logger: MobileViewLogger,
             slot: String,
-            viewModel: BuildSpec<LocationBasedMobileViewModelKairos>,
+            viewModel: LocationBasedMobileViewModelKairos,
             scope: CoroutineScope,
             subscriptionId: Int,
             location: StatusBarLocation,
@@ -181,7 +181,7 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
                 val (binding, job) =
                     MobileIconBinderKairos.bind(
                         view = view,
-                        viewModel = viewModel,
+                        viewModel = buildSpec { viewModel },
                         logger = logger,
                         scope = scope,
                         kairosNetwork = kairosNetwork,

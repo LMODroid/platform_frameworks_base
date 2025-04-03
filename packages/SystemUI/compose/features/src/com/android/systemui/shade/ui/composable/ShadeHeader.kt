@@ -647,12 +647,10 @@ private fun ShadeCarrierGroupKairos(
                                 logger = iconsViewModel.logger,
                                 slot = "mobile_carrier_shade_group",
                                 viewModel =
-                                    buildSpec {
-                                        ShadeCarrierGroupMobileIconViewModelKairos(
-                                            icon,
-                                            icon.iconInteractor,
-                                        )
-                                    },
+                                    ShadeCarrierGroupMobileIconViewModelKairos(
+                                        icon,
+                                        icon.iconInteractor,
+                                    ),
                                 scope = scope,
                                 subscriptionId = subId,
                                 location = StatusBarLocation.SHADE_CARRIER_GROUP,
