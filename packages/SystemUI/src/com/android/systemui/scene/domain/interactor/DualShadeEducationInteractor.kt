@@ -27,7 +27,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.scene.data.repository.DualShadeEducationRepository
-import com.android.systemui.scene.domain.model.DualShadeEducationalTooltipModel
+import com.android.systemui.scene.domain.model.DualShadeEducationModel
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
@@ -39,6 +39,7 @@ import dagger.Module
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 import javax.inject.Inject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
@@ -59,9 +60,8 @@ constructor(
     private val repository: DualShadeEducationRepository,
 ) : ExclusiveActivatable(), CoreStartable {
 
-    /** The tooltip that needs to be shown, if any. */
-    var tooltip: DualShadeEducationalTooltipModel by
-        mutableStateOf(DualShadeEducationalTooltipModel.None)
+    /** The education that's still needed, regardless of the tooltip that needs to be shown. */
+    var education: DualShadeEducationModel by mutableStateOf(DualShadeEducationModel.None)
         private set
 
     override fun start() {
@@ -93,8 +93,8 @@ constructor(
     fun dismissNotificationsShadeTooltip() {
         logD(TAG) { "marking notification shade tooltip as dismissed" }
         backgroundScope.launch {
-            if (tooltip == DualShadeEducationalTooltipModel.ForNotificationsShade) {
-                tooltip = DualShadeEducationalTooltipModel.None
+            if (education == DualShadeEducationModel.TooltipForNotificationsShade) {
+                education = DualShadeEducationModel.None
             }
         }
     }
@@ -102,8 +102,8 @@ constructor(
     fun dismissQuickSettingsShadeTooltip() {
         logD(TAG) { "marking quick settings shade tooltip as dismissed" }
         backgroundScope.launch {
-            if (tooltip == DualShadeEducationalTooltipModel.ForQuickSettingsShade) {
-                tooltip = DualShadeEducationalTooltipModel.None
+            if (education == DualShadeEducationModel.TooltipForQuickSettingsShade) {
+                education = DualShadeEducationModel.None
             }
         }
     }
@@ -132,18 +132,11 @@ constructor(
                 launch {
                     repeatWhenTooltipStillNeedsToBeShown(forOverlay = Overlays.NotificationsShade) {
                         repeatWhenOverlayShown(Overlays.QuickSettingsShade) {
-                            logD(TAG) {
-                                "${Overlays.QuickSettingsShade.debugName} shown, waiting ${TOOLTIP_APPEARANCE_DELAY_MS}ms"
-                            }
                             repository.setEverShownQuickSettingsShade(true)
-                            delay(TOOLTIP_APPEARANCE_DELAY_MS)
-                            logD(TAG) {
-                                "Done waiting ${TOOLTIP_APPEARANCE_DELAY_MS}ms after ${Overlays.QuickSettingsShade.debugName} was shown"
-                            }
-                            logD(TAG) {
-                                "Showing tooltip for ${Overlays.NotificationsShade.debugName}"
-                            }
-                            tooltip = DualShadeEducationalTooltipModel.ForNotificationsShade
+                            showEducationAndTooltip(
+                                shownOverlay = Overlays.QuickSettingsShade,
+                                overlayToEducateAbout = Overlays.NotificationsShade,
+                            )
                         }
                     }
                 }
@@ -151,18 +144,11 @@ constructor(
                 launch {
                     repeatWhenTooltipStillNeedsToBeShown(forOverlay = Overlays.QuickSettingsShade) {
                         repeatWhenOverlayShown(Overlays.NotificationsShade) {
-                            logD(TAG) {
-                                "${Overlays.NotificationsShade.debugName} shown, waiting ${TOOLTIP_APPEARANCE_DELAY_MS}ms"
-                            }
                             repository.setEverShownNotificationsShade(true)
-                            delay(TOOLTIP_APPEARANCE_DELAY_MS)
-                            logD(TAG) {
-                                "Done waiting ${TOOLTIP_APPEARANCE_DELAY_MS}ms after ${Overlays.NotificationsShade.debugName} was shown"
-                            }
-                            logD(TAG) {
-                                "Showing tooltip for ${Overlays.QuickSettingsShade.debugName}"
-                            }
-                            tooltip = DualShadeEducationalTooltipModel.ForQuickSettingsShade
+                            showEducationAndTooltip(
+                                shownOverlay = Overlays.NotificationsShade,
+                                overlayToEducateAbout = Overlays.QuickSettingsShade,
+                            )
                         }
                     }
                 }
@@ -260,8 +246,53 @@ constructor(
             }
     }
 
+    private suspend fun showEducationAndTooltip(
+        shownOverlay: OverlayKey,
+        overlayToEducateAbout: OverlayKey,
+    ) {
+        try {
+            logD(TAG) {
+                "${shownOverlay.debugName} shown, waiting ${HINT_APPEARANCE_DELAY_MS}ms before starting to educate about ${overlayToEducateAbout.debugName}"
+            }
+
+            delay(HINT_APPEARANCE_DELAY_MS)
+            logD(TAG) {
+                "Done waiting ${HINT_APPEARANCE_DELAY_MS}ms after ${shownOverlay.debugName} was shown, showing hint for ${overlayToEducateAbout.debugName}"
+            }
+            education =
+                when (overlayToEducateAbout) {
+                    Overlays.NotificationsShade -> DualShadeEducationModel.HintForNotificationsShade
+                    Overlays.QuickSettingsShade -> DualShadeEducationModel.HintForQuickSettingsShade
+                    else -> DualShadeEducationModel.None
+                }
+            logD(TAG) {
+                "Hint shown for ${overlayToEducateAbout.debugName} shown, waiting ${TOOLTIP_APPEARANCE_DELAY_MS}ms before escalation to tooltip"
+            }
+
+            delay(TOOLTIP_APPEARANCE_DELAY_MS)
+            logD(TAG) {
+                "Done waiting ${TOOLTIP_APPEARANCE_DELAY_MS}ms after hint was shown, escalating to tooltip for ${overlayToEducateAbout.debugName}"
+            }
+            education = DualShadeEducationModel.None
+            education =
+                when (overlayToEducateAbout) {
+                    Overlays.NotificationsShade ->
+                        DualShadeEducationModel.TooltipForNotificationsShade
+                    Overlays.QuickSettingsShade ->
+                        DualShadeEducationModel.TooltipForQuickSettingsShade
+                    else -> DualShadeEducationModel.None
+                }
+        } catch (e: CancellationException) {
+            logD(TAG) {
+                "Canceled education for ${overlayToEducateAbout.debugName}, resetting state"
+            }
+            education = DualShadeEducationModel.None
+        }
+    }
+
     companion object {
         private const val TAG = "DualShadeEducation"
+        @VisibleForTesting const val HINT_APPEARANCE_DELAY_MS = 5000L
         @VisibleForTesting const val TOOLTIP_APPEARANCE_DELAY_MS = 5000L
     }
 }

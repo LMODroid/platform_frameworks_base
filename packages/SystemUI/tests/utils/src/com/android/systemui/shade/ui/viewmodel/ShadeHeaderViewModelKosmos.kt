@@ -24,6 +24,7 @@ import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.kairos
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.plugins.activityStarter
+import com.android.systemui.scene.domain.interactor.dualShadeEducationInteractor
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.shade.domain.interactor.privacyChipInteractor
 import com.android.systemui.shade.domain.interactor.shadeHeaderClockInteractor
@@ -52,6 +53,7 @@ val Kosmos.shadeHeaderViewModel: ShadeHeaderViewModel by
             statusBarIconController = mock<StatusBarIconController>(),
             kairosNetwork = kairos,
             mobileIconsViewModelKairos = mock(),
+            dualShadeEducationInteractor = dualShadeEducationInteractor,
         )
     }
 

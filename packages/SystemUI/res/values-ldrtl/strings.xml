@@ -24,7 +24,7 @@
     Content of user education tooltip shown to teach the user that they can swipe down from the top
     right edge of the display to expand the notification shade panel.
     -->
-    <string name="dual_shade_educational_tooltip_notifs">Swipe from the top right to open Notifications</string>
+    <string name="dual_shade_educational_tooltip_notifs">Swipe from the top right to open notifications</string>
 
     <!--
     Content of user education tooltip shown to teach the user that they can swipe down from the top

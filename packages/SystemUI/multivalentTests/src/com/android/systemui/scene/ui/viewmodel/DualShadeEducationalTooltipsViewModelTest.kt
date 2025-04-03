@@ -82,7 +82,7 @@ class DualShadeEducationalTooltipsViewModelTest(
             showOverlay(otherOverlay)
             // No tooltip before the delay.
             assertNoTooltip()
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS - 1)
+            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS * 2 - 1)
             // No tooltip because didn't wait quite long enough yet.
             assertNoTooltip()
             advanceTimeBy(1)
@@ -99,7 +99,7 @@ class DualShadeEducationalTooltipsViewModelTest(
             hideOverlay(otherOverlay)
             assertNoTooltip()
             showOverlay(otherOverlay)
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
+            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS * 2)
             // The tooltip should still be gone as it was already shown to the user.
             assertNoTooltip()
         }
@@ -112,7 +112,7 @@ class DualShadeEducationalTooltipsViewModelTest(
             // No tooltip before the delay.
             assertNoTooltip()
 
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS - 1)
+            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS * 2 - 1)
             // No tooltip because didn't wait quite long enough yet.
             assertNoTooltip()
 
@@ -130,7 +130,7 @@ class DualShadeEducationalTooltipsViewModelTest(
         kosmos.runTest {
             disableDualShade()
             showOverlay(otherOverlay(forOverlay))
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
+            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS * 2)
             assertNoTooltip()
         }
 
@@ -139,7 +139,7 @@ class DualShadeEducationalTooltipsViewModelTest(
         kosmos.runTest {
             val otherOverlay = otherOverlay(forOverlay)
             showOverlay(otherOverlay)
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
+            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS * 2)
             val tooltip = assertVisibleTooltip(tooltipText)
             tooltip.onShown()
             tooltip.onDismissed()
@@ -149,7 +149,7 @@ class DualShadeEducationalTooltipsViewModelTest(
             selectUser(USER_INFOS[1])
 
             showOverlay(otherOverlay)
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
+            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS * 2)
             // New user, tooltip shown again.
             assertVisibleTooltip(tooltipText)
         }

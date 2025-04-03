@@ -22,7 +22,7 @@ import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.res.R
 import com.android.systemui.scene.domain.interactor.DualShadeEducationInteractor
-import com.android.systemui.scene.domain.model.DualShadeEducationalTooltipModel
+import com.android.systemui.scene.domain.model.DualShadeEducationModel
 import com.android.systemui.statusbar.ui.SystemBarUtilsState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -57,12 +57,12 @@ constructor(
      */
     val visibleTooltip: DualShadeEducationalTooltipViewModel?
         get() =
-            when (interactor.tooltip) {
-                DualShadeEducationalTooltipModel.ForNotificationsShade ->
+            when (interactor.education) {
+                DualShadeEducationModel.TooltipForNotificationsShade ->
                     notificationsTooltip(statusBarHeight)
-                DualShadeEducationalTooltipModel.ForQuickSettingsShade ->
+                DualShadeEducationModel.TooltipForQuickSettingsShade ->
                     quickSettingsTooltip(statusBarHeight)
-                DualShadeEducationalTooltipModel.None -> null
+                else -> null
             }
 
     override suspend fun onActivated(): Nothing = coroutineScope {
