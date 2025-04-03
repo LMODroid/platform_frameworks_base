@@ -377,11 +377,6 @@ interface IActivityTaskManager {
             in RemoteCallback navigationObserver, in BackAnimationAdapter adaptor);
 
     /**
-     * Registers a callback to be invoked when the system server requests a back gesture.
-     */
-    void registerBackGestureDelegate(in RemoteCallback monitor);
-
-    /**
      * registers a callback to be invoked when a background activity launch is aborted.
      *
      * @param observer callback to be registered.

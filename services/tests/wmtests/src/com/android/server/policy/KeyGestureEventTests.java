@@ -490,12 +490,15 @@ public class KeyGestureEventTests extends ShortcutKeyTestBase {
     }
 
     @Test
-    public void testKeyGestureBack() {
-        mPhoneWindowManager.overrideDelegateBackGestureRemote(true);
+    @EnableFlags(com.android.window.flags.Flags.FLAG_DELEGATE_BACK_GESTURE_TO_SHELL)
+    public void testKeyGestureBack_notHandled() {
         sendKeyGestureEventComplete(KeyGestureEvent.KEY_GESTURE_TYPE_BACK);
-        mPhoneWindowManager.assertBackEventInjected();
+        mPhoneWindowManager.assertBackEventNotInjected();
+    }
 
-        mPhoneWindowManager.overrideDelegateBackGestureRemote(false);
+    @Test
+    @DisableFlags(com.android.window.flags.Flags.FLAG_DELEGATE_BACK_GESTURE_TO_SHELL)
+    public void testKeyGestureBackHandled() {
         sendKeyGestureEventComplete(KeyGestureEvent.KEY_GESTURE_TYPE_BACK);
         mPhoneWindowManager.assertBackEventInjected();
     }

@@ -45,6 +45,7 @@ import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.input.InputManager;
+import android.hardware.input.KeyGestureEvent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -95,6 +96,7 @@ import com.android.wm.shell.transition.Transitions;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -141,6 +143,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
     private final ShellExecutor mShellExecutor;
     private final WindowManager mWindowManager;
     private final Transitions mTransitions;
+    private final InputManager mInputManager;
     @VisibleForTesting
     final BackTransitionHandler mBackTransitionHandler;
     @VisibleForTesting
@@ -274,6 +277,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         mLatencyTracker = LatencyTracker.getInstance(mContext);
         mShellCommandHandler = shellCommandHandler;
         mWindowManager = context.getSystemService(WindowManager.class);
+        mInputManager = context.getSystemService(InputManager.class);
         mTransitions = transitions;
         mBackTransitionHandler = new BackTransitionHandler(mTransitions);
         mTransitions.addHandler(mBackTransitionHandler);
@@ -1194,26 +1198,22 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         if (!Flags.delegateBackGestureToShell()) {
             return;
         }
-        final RemoteCallback requestBackMonitor = new RemoteCallback(
-                new RemoteCallback.OnResultListener() {
-                    @Override
-                    public void onResult(@Nullable Bundle result) {
-                            mShellExecutor.execute(() -> {
-                                if (mBackGestureStarted) {
-                                    Log.w(TAG, "Back gesture is running, ignore request");
-                                    return;
-                                }
-                                onMotionEvent(0, 0, KeyEvent.ACTION_DOWN, EDGE_NONE);
-                                setTriggerBack(true);
-                                onMotionEvent(0, 0, KeyEvent.ACTION_UP, EDGE_NONE);
-                            });
+        mInputManager.registerKeyGestureEventHandler(List.of(KeyGestureEvent.KEY_GESTURE_TYPE_BACK),
+                (event, focussedToken) -> {
+                    if (event.getKeyGestureType() == KeyGestureEvent.KEY_GESTURE_TYPE_BACK) {
+                        mShellExecutor.execute(() -> {
+                            if (mBackGestureStarted) {
+                                Log.w(TAG, "Back gesture is running, ignore request");
+                                return;
+                            }
+                            onMotionEvent(0, 0, KeyEvent.ACTION_DOWN, EDGE_NONE);
+                            setTriggerBack(true);
+                            onMotionEvent(0, 0, KeyEvent.ACTION_UP, EDGE_NONE);
+                        });
+                    } else {
+                        Log.w(TAG, "Unsupported gesture " + event + " received!");
                     }
                 });
-        try {
-            mActivityTaskManager.registerBackGestureDelegate(requestBackMonitor);
-        } catch (RemoteException remoteException) {
-            Log.w(TAG, "Failed register back gesture request ", remoteException);
-        }
     }
 
     /**
