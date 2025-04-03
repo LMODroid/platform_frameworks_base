@@ -20,8 +20,12 @@ import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.AirplaneModeIconViewModel
+import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.EthernetIconViewModel
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel for managing and displaying a list of system status icons.
@@ -31,21 +35,30 @@ import dagger.assisted.AssistedInject
  */
 class SystemStatusIconsViewModel
 @AssistedInject
-constructor(airplaneModeIconViewModelFactory: AirplaneModeIconViewModel.Factory) :
-    ExclusiveActivatable() {
+constructor(
+    airplaneModeIconViewModelFactory: AirplaneModeIconViewModel.Factory,
+    ethernetIconViewModelFactory: EthernetIconViewModel.Factory,
+) : ExclusiveActivatable() {
 
     init {
         /* check if */ SystemStatusIconsInCompose.isUnexpectedlyInLegacyMode()
     }
 
     private val airplaneModeIcon by lazy { airplaneModeIconViewModelFactory.create() }
-    private val iconViewModels by lazy { listOf(airplaneModeIcon) }
+    private val ethernetIcon by lazy { ethernetIconViewModelFactory.create() }
+    private val iconViewModels: List<SystemStatusIconViewModel> by lazy {
+        listOf(ethernetIcon, airplaneModeIcon)
+    }
 
     val icons: List<Icon>
         get() = iconViewModels.mapNotNull { viewModel -> viewModel.icon }
 
     override suspend fun onActivated(): Nothing {
-        airplaneModeIcon.activate()
+        coroutineScope {
+            launch { ethernetIcon.activate() }
+            launch { airplaneModeIcon.activate() }
+        }
+        awaitCancellation()
     }
 
     @AssistedFactory
