@@ -173,10 +173,10 @@ internal fun Modifier.element(
     // we can ensure that SceneTransitionLayoutImpl will compose new contents first.
     val currentTransitionStates = getAllNestedTransitionStates(layoutImpl)
 
-    return thenIf(layoutImpl.state.isElevationPossible(content.key, key)) {
+    return then(ElementModifier(layoutImpl, currentTransitionStates, content, key))
+        .thenIf(layoutImpl.state.isElevationPossible(content.key, key)) {
             Modifier.maybeElevateInContent(layoutImpl, content, key, currentTransitionStates)
         }
-        .then(ElementModifier(layoutImpl, currentTransitionStates, content, key))
         .thenIf(layoutImpl.implicitTestTags) { Modifier.testTag(key.testTag) }
 }
 
