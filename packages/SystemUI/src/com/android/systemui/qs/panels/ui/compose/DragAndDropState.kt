@@ -92,12 +92,6 @@ fun Modifier.dragAndDropRemoveZone(
                         true
                     } ?: false
                 }
-
-                override fun onEntered(event: DragAndDropEvent) {
-                    if (!dragAndDropState.isDraggedCellRemovable) return
-
-                    dragAndDropState.movedOutOfBounds()
-                }
             }
         }
     return dragAndDropTarget(
@@ -129,6 +123,11 @@ fun Modifier.dragAndDropTileList(
             object : DragAndDropTarget {
                 override fun onEnded(event: DragAndDropEvent) {
                     dragAndDropState.onDrop()
+                }
+
+                override fun onExited(event: DragAndDropEvent) {
+                    if (!dragAndDropState.isDraggedCellRemovable) return
+                    dragAndDropState.movedOutOfBounds()
                 }
 
                 override fun onMoved(event: DragAndDropEvent) {

@@ -186,17 +186,6 @@ class EditTileListState(
         }
     }
 
-    private fun List<TileGridCell>.updateLargeWidth(
-        previousWidth: Int,
-        newWidth: Int,
-    ): List<TileGridCell> {
-        return if (previousWidth != newWidth) {
-            map { if (!it.isIcon) it.copy(width = newWidth) else it }
-        } else {
-            this
-        }
-    }
-
     private fun List<EditTileViewModel>.toGridCells(largeTiles: Set<TileSpec>): List<GridCell> {
         return map {
                 SizedTileImpl(it, if (largeTiles.contains(it.tileSpec)) largeTilesSpan else 1)
