@@ -16,6 +16,8 @@
 
 package com.android.systemui.statusbar.phone;
 
+import static com.android.systemui.Flags.spatialModelAppPushback;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -290,6 +292,14 @@ public class SystemUIDialog extends AlertDialog implements ViewRootImpl.ConfigCh
                 /* backAnimationSpec= */mDelegate.getBackAnimationSpec(
                         () -> targetView.getResources().getDisplayMetrics())
         );
+
+        if (spatialModelAppPushback()) {
+            // Elevation doesn't seem to be useful anymore (there are no more shadows below
+            // dialogs), and it creates a weird flickering behavior due to some obscure Window
+            // Manager treatment. See b/404508609#comment3 for more details.
+            // Note: can be moved to styles.xml once the flag is fully rolled out.
+            getWindow().setElevation(0);
+        }
     }
 
     private void updateWindowSize() {
