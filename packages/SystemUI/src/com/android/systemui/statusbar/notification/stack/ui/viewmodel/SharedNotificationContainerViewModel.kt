@@ -74,6 +74,8 @@ import com.android.systemui.keyguard.ui.viewmodel.OffToLockscreenTransitionViewM
 import com.android.systemui.keyguard.ui.viewmodel.PrimaryBouncerToGoneTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.PrimaryBouncerToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.ViewStateAccessor
+import com.android.systemui.media.controls.domain.pipeline.MediaDataManager
+import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.scene.shared.model.Overlays
@@ -96,10 +98,12 @@ import com.android.systemui.util.kotlin.BooleanFlowOperators.not
 import com.android.systemui.util.kotlin.FlowDumperImpl
 import com.android.systemui.util.kotlin.Utils.Companion.sample as sampleCombine
 import com.android.systemui.util.kotlin.sample
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import dagger.Lazy
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -181,6 +185,7 @@ constructor(
     private val largeScreenHeaderHelperLazy: Lazy<LargeScreenHeaderHelper>,
     unfoldTransitionInteractor: UnfoldTransitionInteractor,
     val activeNotificationsInteractor: ActiveNotificationsInteractor,
+    private val mediaDataManager: MediaDataManager,
 ) : FlowDumperImpl(dumpManager) {
 
     /**
@@ -789,6 +794,38 @@ constructor(
             )
             .dumpWhileCollecting("translationX")
 
+    val hasActiveMedia: Flow<Boolean>
+        get() {
+            SceneContainerFlag.assertInLegacyMode()
+            return conflatedCallbackFlow {
+                val listener =
+                    object : MediaDataManager.Listener {
+                        override fun onMediaDataLoaded(
+                            key: String,
+                            oldKey: String?,
+                            data: MediaData,
+                            immediately: Boolean,
+                        ) {
+                            trySend(mediaDataManager.hasActiveMedia())
+                        }
+
+                        override fun onMediaDataRemoved(key: String, userInitiated: Boolean) {
+                            trySend(mediaDataManager.hasActiveMedia())
+                        }
+
+                        override fun onCurrentActiveMediaChanged(key: String?, data: MediaData?) {
+                            trySend(mediaDataManager.hasActiveMedia())
+                        }
+                    }
+
+                mediaDataManager.addListener(listener)
+
+                trySend(mediaDataManager.hasActiveMedia())
+
+                awaitClose { mediaDataManager.removeListener(listener) }
+            }
+        }
+
     private val availableHeight: Flow<Float> =
         if (SceneContainerFlag.isEnabled) {
                 notificationStackAppearanceInteractor.constrainedAvailableSpace.map { it.toFloat() }
@@ -879,10 +916,11 @@ constructor(
         return combine(
                 activeNotificationsInteractor.areAnyNotificationsPresent,
                 isOnLockscreen,
-                ::Pair,
+                hasActiveMedia,
+                ::Triple,
             )
-            .flatMapLatest { (hasNotifications, isOnLockscreen) ->
-                if (hasNotifications && isOnLockscreen) {
+            .flatMapLatest { (hasNotifications, isOnLockscreen, hasActiveMedia) ->
+                if ((hasNotifications || hasActiveMedia) && isOnLockscreen) {
                     combine(
                             getLockscreenDisplayConfig(calculateMaxNotifications).map {
                                 (_, maxNotifications) ->

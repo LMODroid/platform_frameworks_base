@@ -58,6 +58,7 @@ import com.android.systemui.keyguard.ui.viewmodel.keyguardRootViewModel
 import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
+import com.android.systemui.media.controls.domain.pipeline.legacyMediaDataManagerImpl
 import com.android.systemui.res.R
 import com.android.systemui.scene.data.repository.Idle
 import com.android.systemui.scene.data.repository.Transition
@@ -80,6 +81,7 @@ import com.android.systemui.window.ui.viewmodel.fakeBouncerTransitions
 import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.assertIs
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestScope
@@ -1509,6 +1511,33 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
             )
             advanceTimeBy(50L)
             assertThat(stackAbsoluteBottom).isEqualTo(150F)
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    @DisableSceneContainer
+    fun notificationAbsoluteBottom_onlyMediaInNotifications() =
+        testScope.runTest {
+            val notificationCount = 0
+            val calculateSpace = { _: Float, _: Boolean -> notificationCount }
+            val mediaHeight = 100F
+            val calculateHeight = { _: Int -> mediaHeight }
+            whenever(kosmos.legacyMediaDataManagerImpl.hasActiveMedia()).thenReturn(true)
+            val stackAbsoluteBottom by
+                collectLastValue(
+                    underTest.getNotificationStackAbsoluteBottomOnLockscreen(
+                        calculateSpace,
+                        calculateHeight,
+                    )
+                )
+            showLockscreen()
+            shadeTestUtil.setSplitShade(false)
+            kosmos.activeNotificationListRepository.setActiveNotifs(notificationCount)
+            keyguardInteractor.setNotificationContainerBounds(
+                NotificationContainerBounds(top = 100F, bottom = 100F)
+            )
+            advanceTimeBy(50L)
+            assertThat(stackAbsoluteBottom).isEqualTo(200F)
         }
 
     @Test
