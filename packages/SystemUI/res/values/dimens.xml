@@ -2258,4 +2258,10 @@
     <dimen name="aux_spacing_overlay_panel_shape_radius">46dp</dimen>
     <!-- Spacing attributes to overwrite end -->
 
+    <!-- Tile Details start-->
+    <dimen name="internet_details_toggle_row_height">48dp</dimen>
+    <dimen name="tile_details_switch_container_width">52dp</dimen>
+    <dimen name="tile_details_switch_track_height">24dp</dimen>
+    <!-- Tile Details end -->
+
 </resources>

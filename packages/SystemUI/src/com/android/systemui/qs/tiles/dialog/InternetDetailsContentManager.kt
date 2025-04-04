@@ -65,6 +65,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.phone.SystemUIDialog
 import com.android.systemui.statusbar.policy.KeyguardStateController
 import com.android.wifitrackerlib.WifiEntry
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.common.annotations.VisibleForTesting
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -96,7 +97,6 @@ constructor(
 
     // UI Components
     private lateinit var contentView: View
-    private lateinit var divider: View
     private lateinit var progressBar: ProgressBar
     private lateinit var ethernetLayout: LinearLayout
     private lateinit var mobileNetworkLayout: LinearLayout
@@ -116,9 +116,8 @@ constructor(
     private lateinit var mobileTitleTextView: TextView
     private lateinit var mobileSummaryTextView: TextView
     private lateinit var airplaneModeSummaryTextView: TextView
-    private lateinit var mobileDataToggle: Switch
-    private lateinit var mobileToggleDivider: View
-    private lateinit var wifiToggle: Switch
+    private lateinit var mobileDataToggle: MaterialSwitch
+    private lateinit var wifiToggle: MaterialSwitch
     private lateinit var shareWifiButton: Button
     private lateinit var airplaneModeButton: Button
     private var alertDialog: AlertDialog? = null
@@ -204,7 +203,6 @@ constructor(
         }
 
         // Network layouts
-        divider = contentView.requireViewById(R.id.divider)
         progressBar = contentView.requireViewById(R.id.wifi_searching_progress)
 
         // Set wifi, mobile and ethernet layouts
@@ -235,17 +233,6 @@ constructor(
         // Background drawables
         backgroundOn = context.getDrawable(R.drawable.settingslib_switch_bar_bg_on)
         backgroundOff = context.getDrawable(R.drawable.internet_dialog_selected_effect)
-
-        // Done button is only visible for the dialog view
-        contentView.findViewById<Button>(R.id.done_button).apply { visibility = View.GONE }
-
-        // Title and subtitle will be added in the `TileDetails`
-        contentView.findViewById<TextView>(R.id.internet_dialog_title).apply {
-            visibility = View.GONE
-        }
-        contentView.findViewById<TextView>(R.id.internet_dialog_subtitle).apply {
-            visibility = View.GONE
-        }
     }
 
     private fun setWifiLayout() {
@@ -283,7 +270,6 @@ constructor(
         mobileTitleTextView = contentView.requireViewById(R.id.mobile_title)
         mobileSummaryTextView = contentView.requireViewById(R.id.mobile_summary)
         mobileDataToggle = contentView.requireViewById(R.id.mobile_toggle)
-        mobileToggleDivider = contentView.requireViewById(R.id.mobile_toggle_divider)
 
         // Set click listeners for mobile data related views
         mobileNetworkLayout.setOnClickListener {
@@ -390,7 +376,6 @@ constructor(
         isProgressBarVisible = visible
         progressBar.visibility = if (visible) View.VISIBLE else View.GONE
         progressBar.isIndeterminate = visible
-        divider.visibility = if (visible) View.GONE else View.VISIBLE
     }
 
     private fun showTurnOffAutoDataSwitchDialog(subId: Int) {
@@ -557,11 +542,6 @@ constructor(
         }
 
         mobileDataToggle.visibility = if (canConfigMobileData) View.VISIBLE else View.INVISIBLE
-        mobileToggleDivider.visibility = if (canConfigMobileData) View.VISIBLE else View.INVISIBLE
-        val primaryColor =
-            if (isNetworkConnected) R.color.connected_network_primary_color
-            else R.color.disconnected_network_primary_color
-        mobileToggleDivider.setBackgroundColor(context.getColor(primaryColor))
 
         // Display the info for the non-DDS if it's actively being used
         val autoSwitchNonDdsSubId: Int = internetContent.activeAutoSwitchNonDdsSubId
@@ -571,16 +551,16 @@ constructor(
             else View.GONE
 
         val secondaryRes =
-            if (isNetworkConnected) R.style.TextAppearance_InternetDialog_Secondary_Active
-            else R.style.TextAppearance_InternetDialog_Secondary
+            if (isNetworkConnected) R.style.TextAppearance_TileDetailsEntrySubTitle_Active
+            else R.style.TextAppearance_TileDetailsEntrySubTitle
         if (nonDdsVisibility == View.VISIBLE) {
             // non DDS is the currently active sub, set primary visual for it
             setNonDDSActive(autoSwitchNonDdsSubId)
         } else {
             mobileNetworkLayout.background = if (isNetworkConnected) backgroundOn else backgroundOff
             mobileTitleTextView.setTextAppearance(
-                if (isNetworkConnected) R.style.TextAppearance_InternetDialog_Active
-                else R.style.TextAppearance_InternetDialog
+                if (isNetworkConnected) R.style.TextAppearance_TileDetailsEntryTitle_Active
+                else R.style.TextAppearance_TileDetailsEntryTitle
             )
             mobileSummaryTextView.setTextAppearance(secondaryRes)
         }
@@ -611,7 +591,7 @@ constructor(
 
         contentView.requireViewById<TextView>(R.id.secondary_mobile_title).apply {
             text = getMobileNetworkTitle(autoSwitchNonDdsSubId)
-            setTextAppearance(R.style.TextAppearance_InternetDialog_Active)
+            setTextAppearance(R.style.TextAppearance_TileDetailsEntryTitle_Active)
         }
 
         val summary = getMobileNetworkSummary(autoSwitchNonDdsSubId)
@@ -619,7 +599,7 @@ constructor(
             if (!TextUtils.isEmpty(summary)) {
                 text = Html.fromHtml(summary, Html.FROM_HTML_MODE_LEGACY)
                 breakStrategy = Layout.BREAK_STRATEGY_SIMPLE
-                setTextAppearance(R.style.TextAppearance_InternetDialog_Active)
+                setTextAppearance(R.style.TextAppearance_TileDetailsEntryTitle_Active)
             }
         }
 
@@ -635,8 +615,8 @@ constructor(
 
         // set secondary visual for default data sub
         mobileNetworkLayout.background = backgroundOff
-        mobileTitleTextView.setTextAppearance(R.style.TextAppearance_InternetDialog)
-        mobileSummaryTextView.setTextAppearance(R.style.TextAppearance_InternetDialog_Secondary)
+        mobileTitleTextView.setTextAppearance(R.style.TextAppearance_TileDetailsEntryTitle)
+        mobileSummaryTextView.setTextAppearance(R.style.TextAppearance_TileDetailsEntrySubTitle)
         signalIcon.setColorFilter(context.getColor(R.color.connected_network_secondary_color))
     }
 
@@ -647,8 +627,9 @@ constructor(
         }
         if (internetContent.isDeviceLocked) {
             wifiToggleTitleTextView.setTextAppearance(
-                if ((connectedWifiEntry != null)) R.style.TextAppearance_InternetDialog_Active
-                else R.style.TextAppearance_InternetDialog
+                if ((connectedWifiEntry != null))
+                    R.style.TextAppearance_TileDetailsEntryTitle_Active
+                else R.style.TextAppearance_TileDetailsEntryTitle
             )
         }
         turnWifiOnLayout.background =

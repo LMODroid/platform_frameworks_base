@@ -1700,4 +1700,59 @@
     <style name="Theme.SystemUI.Dialog.StickyKeys" parent="@style/Theme.SystemUI.Dialog">
         <item name="android:colorBackground">@color/transparent</item>
     </style>
+
+    <!-- Tile Details -->
+    <style name="TextAppearance.TileDetailsEntryTitle">
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textColor">@androidprv:color/materialColorOnSurface</item>
+        <item name="android:textDirection">locale</item>
+    </style>
+
+    <style name="TextAppearance.TileDetailsEntrySubTitle">
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textColor">@androidprv:color/materialColorOnSurfaceVariant</item>
+        <item name="android:textDirection">locale</item>
+    </style>
+
+    <style name="InternetDetails">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical|start</item>
+        <item name="android:layout_marginStart">@dimen/internet_dialog_network_layout_margin</item>
+    </style>
+
+    <style name="InternetDetails.EntryTitle">
+        <item name="android:layout_marginEnd">7dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textAppearance">@style/TextAppearance.TileDetailsEntryTitle</item>
+    </style>
+
+    <style name="TextAppearance.TileDetailsEntryTitle.Active">
+        <item name="android:textColor">@androidprv:color/materialColorOnPrimary</item>
+    </style>
+
+    <style name="InternetDetails.EntryTitle.Active">
+        <item name="android:textAppearance">@style/TextAppearance.TileDetailsEntryTitle.Active</item>
+        <item name="android:textColor">@androidprv:color/materialColorOnPrimary</item>
+    </style>
+
+    <style name="InternetDetails.EntrySubTitle">
+        <item name="android:layout_marginEnd">7dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textAppearance">@style/TextAppearance.TileDetailsEntrySubTitle</item>
+    </style>
+
+    <style name="TextAppearance.TileDetailsEntrySubTitle.Active">
+        <item name="android:textColor">@androidprv:color/materialColorOnPrimary</item>
+    </style>
+
+    <style name="InternetDetails.EntrySubTitle.Active">
+        <item name="android:textAppearance">@style/TextAppearance.TileDetailsEntrySubTitle.Active</item>
+        <item name="android:textColor">@androidprv:color/materialColorOnPrimary</item>
+    </style>
 </resources>

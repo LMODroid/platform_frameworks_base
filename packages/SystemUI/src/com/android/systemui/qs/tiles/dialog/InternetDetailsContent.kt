@@ -33,7 +33,7 @@ fun InternetDetailsContent(viewModel: InternetDetailsViewModel) {
         factory = { context ->
             // Inflate with the existing dialog xml layout and bind it with the manager
             val view =
-                LayoutInflater.from(context).inflate(R.layout.internet_connectivity_dialog, null)
+                LayoutInflater.from(context).inflate(R.layout.internet_connectivity_details, null)
             viewModel.internetDetailsContentManager.bind(view, coroutineScope)
 
             view
