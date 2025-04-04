@@ -19,6 +19,7 @@ package com.android.systemui.qs.tiles.dialog
 import android.content.Intent
 import android.os.Handler
 import android.os.fakeExecutorHandler
+import android.platform.test.annotations.DisableFlags
 import android.platform.test.annotations.EnableFlags
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
@@ -90,6 +91,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
     private var airplaneModeSummaryText: TextView? = null
     private var mockitoSession: MockitoSession? = null
     private var sharedWifiButton: LinearLayout? = null
+    private var addNetworkButton: LinearLayout? = null
     private lateinit var contentView: View
 
     @Before
@@ -152,6 +154,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
         wifiScanNotify = contentView.requireViewById(R.id.wifi_scan_notify_layout)
         airplaneModeSummaryText = contentView.requireViewById(R.id.airplane_mode_summary)
         sharedWifiButton = contentView.requireViewById(R.id.share_wifi_button)
+        addNetworkButton = contentView.requireViewById(R.id.add_network_button)
     }
 
     @After
@@ -406,6 +409,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             val secondaryLayout =
                 contentView.requireViewById<LinearLayout>(R.id.secondary_mobile_network_layout)
             assertThat(secondaryLayout.visibility).isEqualTo(View.GONE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 
@@ -422,6 +426,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             internetDetailsContentManager.lifecycleOwner!!
         ) {
             assertThat(connectedWifi!!.visibility).isEqualTo(View.GONE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 
@@ -441,6 +446,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             assertThat(wifiList!!.visibility).isEqualTo(View.VISIBLE)
             verify(internetAdapter).setMaxEntriesCount(3)
             assertThat(seeAll!!.visibility).isEqualTo(View.INVISIBLE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 
@@ -460,6 +466,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             assertThat(wifiList!!.visibility).isEqualTo(View.VISIBLE)
             verify(internetAdapter).setMaxEntriesCount(3)
             assertThat(seeAll!!.visibility).isEqualTo(View.INVISIBLE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 
@@ -478,6 +485,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             assertThat(wifiList!!.visibility).isEqualTo(View.VISIBLE)
             verify(internetAdapter).setMaxEntriesCount(2)
             assertThat(seeAll!!.visibility).isEqualTo(View.INVISIBLE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 
@@ -498,6 +506,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             assertThat(wifiList!!.visibility).isEqualTo(View.VISIBLE)
             verify(internetAdapter).setMaxEntriesCount(3)
             assertThat(seeAll!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 
@@ -517,10 +526,12 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             assertThat(wifiList!!.visibility).isEqualTo(View.VISIBLE)
             verify(internetAdapter).setMaxEntriesCount(2)
             assertThat(seeAll!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 
     @Test
+    @EnableFlags(Flags.FLAG_QS_WIFI_CONFIG)
     fun updateContent_deviceLockedAndNoConnectedWifi_showWifiToggle() {
         // The preconditions WiFi entries are already in setUp()
         whenever(internetDetailsContentController.isDeviceLocked).thenReturn(true)
@@ -537,10 +548,12 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             assertThat(connectedWifi!!.visibility).isEqualTo(View.GONE)
             assertThat(wifiList!!.visibility).isEqualTo(View.GONE)
             assertThat(seeAll!!.visibility).isEqualTo(View.GONE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 
     @Test
+    @EnableFlags(Flags.FLAG_QS_WIFI_CONFIG)
     fun updateContent_deviceLockedAndHasConnectedWifi_showWifiToggleWithBackground() {
         // The preconditions WiFi ON and WiFi entries are already in setUp()
         whenever(internetDetailsContentController.isDeviceLocked).thenReturn(true)
@@ -556,6 +569,41 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             assertThat(connectedWifi!!.visibility).isEqualTo(View.GONE)
             assertThat(wifiList!!.visibility).isEqualTo(View.GONE)
             assertThat(seeAll!!.visibility).isEqualTo(View.GONE)
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
+        }
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_QS_WIFI_CONFIG)
+    fun updateContent_showAddNetworkButton() {
+        // The preconditions WiFi ON and WiFi entries are already in setUp()
+        internetDetailsContentManager.wifiEntriesCount =
+            InternetDetailsContentController.MAX_WIFI_ENTRY_COUNT - 1
+        internetDetailsContentManager.hasMoreWifiEntries = true
+        internetDetailsContentManager.updateContent(false)
+        bgExecutor.runAllReady()
+
+        internetDetailsContentManager.internetContentData.observe(
+            internetDetailsContentManager.lifecycleOwner!!
+        ) {
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.VISIBLE)
+        }
+    }
+
+    @Test
+    @DisableFlags(Flags.FLAG_QS_WIFI_CONFIG)
+    fun updateContent_notShowAddNetworkButtonWhenFlagDisabled() {
+        // The preconditions WiFi ON and WiFi entries are already in setUp()
+        internetDetailsContentManager.wifiEntriesCount =
+            InternetDetailsContentController.MAX_WIFI_ENTRY_COUNT - 1
+        internetDetailsContentManager.hasMoreWifiEntries = true
+        internetDetailsContentManager.updateContent(false)
+        bgExecutor.runAllReady()
+
+        internetDetailsContentManager.internetContentData.observe(
+            internetDetailsContentManager.lifecycleOwner!!
+        ) {
+            assertThat(addNetworkButton!!.visibility).isEqualTo(View.GONE)
         }
     }
 

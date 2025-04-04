@@ -168,6 +168,9 @@
     <!-- Button label to share wifi [CHAR_LIMIT=20] -->
     <string name="share_wifi_button_text">Share Wi\u2011Fi</string>
 
+    <!-- Button label to add a new network [CHAR_LIMIT=20] -->
+    <string name="add_network_button_text">Add network</string>
+
     <!-- Title of confirmation dialog for wireless debugging [CHAR LIMIT=NONE] -->
     <string name="wifi_debugging_title">Allow wireless debugging on this network?</string>
 

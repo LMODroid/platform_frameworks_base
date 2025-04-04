@@ -19,6 +19,7 @@ package com.android.systemui.qs.tiles.dialog
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -58,10 +59,12 @@ import com.android.internal.logging.UiEventLogger
 import com.android.settingslib.satellite.SatelliteDialogUtils.TYPE_IS_WIFI
 import com.android.settingslib.satellite.SatelliteDialogUtils.mayStartSatelliteWarningDialog
 import com.android.settingslib.wifi.WifiEnterpriseRestrictionUtils
+import com.android.settingslib.wifi.WifiUtils
 import com.android.systemui.Prefs
 import com.android.systemui.accessibility.floatingmenu.AnnotationLinkSpan
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.qs.flags.QsWifiConfig
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.phone.SystemUIDialog
 import com.android.systemui.statusbar.policy.KeyguardStateController
@@ -122,6 +125,7 @@ constructor(
     private lateinit var mobileDataToggle: MaterialSwitch
     private lateinit var wifiToggle: MaterialSwitch
     private lateinit var shareWifiButton: LinearLayout
+    private lateinit var addNetworkButton: LinearLayout
     private lateinit var airplaneModeButton: Button
     private var alertDialog: AlertDialog? = null
     private var canChangeWifiState = false
@@ -238,6 +242,19 @@ constructor(
                 )
             ) {
                 uiEventLogger.log(InternetDetailsEvent.SHARE_WIFI_QS_BUTTON_CLICKED)
+            }
+        }
+
+        // Add network
+        addNetworkButton = contentView.requireViewById(R.id.add_network_button)
+        if (QsWifiConfig.isEnabled) {
+            addNetworkButton.setOnClickListener {
+                val intent =
+                    WifiUtils.getWifiDialogIntent(null, true /* connectForCaller */).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    }
+                internetDetailsContentController.startActivityForDialog(intent)
             }
         }
 
@@ -430,6 +447,7 @@ constructor(
         wifiRecyclerView.visibility = View.GONE
         seeAllLayout.visibility = View.GONE
         shareWifiButton.visibility = View.GONE
+        addNetworkButton.visibility = View.GONE
     }
 
     private fun setProgressBarVisible(visible: Boolean) {
@@ -732,7 +750,11 @@ constructor(
         if (!internetContent.isWifiEnabled || internetContent.isDeviceLocked) {
             wifiRecyclerView.visibility = View.GONE
             seeAllLayout.visibility = View.GONE
+            addNetworkButton.visibility = View.GONE
             return
+        }
+        if (QsWifiConfig.isEnabled) {
+            addNetworkButton.visibility = View.VISIBLE
         }
         val wifiListMaxCount = getWifiListMaxCount()
         if (adapter.itemCount > wifiListMaxCount) {
@@ -828,6 +850,7 @@ constructor(
         wifiToggle.setOnCheckedChangeListener(null)
         mobileDataToggle.setOnCheckedChangeListener(null)
         shareWifiButton.setOnClickListener(null)
+        addNetworkButton.setOnClickListener(null)
         airplaneModeButton.setOnClickListener(null)
         internetDetailsContentController.onStop()
     }
