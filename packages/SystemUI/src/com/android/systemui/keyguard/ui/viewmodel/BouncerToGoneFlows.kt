@@ -16,9 +16,15 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
+import android.annotation.ColorInt
+import android.content.Context
+import android.util.Log
+import androidx.core.graphics.alpha
 import com.android.app.animation.Interpolators.EMPHASIZED_ACCELERATE
+import com.android.systemui.Flags
 import com.android.systemui.bouncer.domain.interactor.PrimaryBouncerInteractor
 import com.android.systemui.bouncer.shared.flag.ComposeBouncerFlags
+import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.keyguard.domain.interactor.KeyguardDismissActionInteractor
 import com.android.systemui.keyguard.shared.model.Edge
 import com.android.systemui.keyguard.shared.model.KeyguardState
@@ -28,7 +34,11 @@ import com.android.systemui.keyguard.shared.model.ScrimAlpha
 import com.android.systemui.keyguard.ui.KeyguardTransitionAnimationFlow
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
+import com.android.systemui.shade.ui.ShadeColors.notificationScrim
+import com.android.systemui.shade.ui.ShadeColors.shadePanel
 import com.android.systemui.statusbar.SysuiStatusBarStateController
+import com.android.systemui.statusbar.phone.ScrimController
+import com.android.systemui.window.domain.interactor.WindowRootViewBlurInteractor
 import dagger.Lazy
 import javax.inject.Inject
 import kotlin.time.Duration
@@ -41,11 +51,13 @@ import kotlinx.coroutines.flow.map
 class BouncerToGoneFlows
 @Inject
 constructor(
+    @Application private val context: Context,
     private val statusBarStateController: SysuiStatusBarStateController,
     private val primaryBouncerInteractor: PrimaryBouncerInteractor,
     private val keyguardDismissActionInteractor: Lazy<KeyguardDismissActionInteractor>,
     private val shadeInteractor: ShadeInteractor,
     private val animationFlow: KeyguardTransitionAnimationFlow,
+    private val windowRootViewBlurInteractor: WindowRootViewBlurInteractor,
 ) {
     /** Common fade for scrim alpha values during *BOUNCER->GONE */
     fun scrimAlpha(duration: Duration, fromState: KeyguardState): Flow<ScrimAlpha> {
@@ -98,9 +110,7 @@ constructor(
         fromState: KeyguardState,
         willRunAnimationOnKeyguard: () -> Boolean,
     ): Flow<ScrimAlpha> {
-        var isShadeExpanded = false
-        var leaveShadeOpen: Boolean = false
-        var willRunDismissFromKeyguard: Boolean = false
+        var startState = StartState()
         val transitionAnimation =
             animationFlow
                 .setup(
@@ -123,29 +133,97 @@ constructor(
                         duration = duration,
                         interpolator = EMPHASIZED_ACCELERATE,
                         onStart = {
-                            leaveShadeOpen = statusBarStateController.leaveOpenOnKeyguardHide()
-                            willRunDismissFromKeyguard = willRunAnimationOnKeyguard()
-                            isShadeExpanded = isAnyExpanded
+                            startState =
+                                toStartState(
+                                    leaveShadeOpen =
+                                        statusBarStateController.leaveOpenOnKeyguardHide(),
+                                    willRunDismissFromKeyguard = willRunAnimationOnKeyguard(),
+                                    isShadeExpanded = isAnyExpanded,
+                                )
+                            Log.d(TAG, "onStart BouncerToGone with $startState")
                         },
                         onStep = { it },
                     )
                     .map {
-                        mapToScrimAlphas(
-                            it,
-                            willRunDismissFromKeyguard,
-                            isShadeExpanded,
-                            leaveShadeOpen
-                        )
+                        if (Flags.bouncerUiRevamp() || Flags.notificationShadeBlur()) {
+                            mapToScrimAlphasWithCustomMaxAlphas(
+                                transitionProgress = it,
+                                startState = startState,
+                            )
+                        } else {
+                            mapToScrimAlphas(transitionProgress = it, startState = startState)
+                        }
                     }
             }
     }
 
-    private fun mapToScrimAlphas(
+    private fun mapToScrimAlphasWithCustomMaxAlphas(
         transitionProgress: Float,
+        startState: StartState,
+    ): ScrimAlpha {
+        // convert to a value that goes from 1 -> 0 and scale down the max allowed alpha with it.
+        val invertedTransitionProgress = 1 - transitionProgress
+        return with(startState) {
+            when {
+                willRunDismissFromKeyguard && isShadeExpanded ->
+                    ScrimAlpha(
+                        behindAlpha = shadeBehindAlpha * invertedTransitionProgress,
+                        notificationsAlpha = shadeNotifAlpha * invertedTransitionProgress,
+                    )
+                willRunDismissFromKeyguard && !isShadeExpanded -> ScrimAlpha()
+                leaveShadeOpen ->
+                    ScrimAlpha(behindAlpha = shadeBehindAlpha, notificationsAlpha = shadeNotifAlpha)
+                else -> ScrimAlpha(behindAlpha = bouncerBehindAlpha * invertedTransitionProgress)
+            }
+        }
+    }
+
+    private fun toStartState(
         willRunDismissFromKeyguard: Boolean,
         isShadeExpanded: Boolean,
         leaveShadeOpen: Boolean,
-    ): ScrimAlpha {
+    ): StartState {
+        val isBlurCurrentlySupported = windowRootViewBlurInteractor.isBlurCurrentlySupported.value
+        val defaultValue =
+            StartState(
+                willRunDismissFromKeyguard = willRunDismissFromKeyguard,
+                isShadeExpanded = isShadeExpanded,
+                leaveShadeOpen = leaveShadeOpen,
+                shadeNotifAlpha = 1.0f,
+                shadeBehindAlpha = 1.0f,
+                bouncerBehindAlpha = 1.0f,
+            )
+        val shadeNotifAlpha = colorAlpha(notificationScrim(context, isBlurCurrentlySupported))
+        val shadeBehindAlpha = colorAlpha(shadePanel(context, isBlurCurrentlySupported))
+        val bouncerBehindAlpha =
+            if (isBlurCurrentlySupported) ScrimController.TRANSPARENT_BOUNCER_SCRIM_ALPHA else 1.0f
+        return when {
+            Flags.bouncerUiRevamp() && Flags.notificationShadeBlur() -> {
+                defaultValue.copy(
+                    shadeBehindAlpha = shadeBehindAlpha,
+                    shadeNotifAlpha = shadeNotifAlpha,
+                    bouncerBehindAlpha = bouncerBehindAlpha,
+                )
+            }
+            Flags.bouncerUiRevamp() && !Flags.notificationShadeBlur() -> {
+                defaultValue.copy(bouncerBehindAlpha = bouncerBehindAlpha)
+            }
+            !Flags.bouncerUiRevamp() && Flags.notificationShadeBlur() -> {
+                defaultValue.copy(
+                    shadeBehindAlpha = shadeBehindAlpha,
+                    shadeNotifAlpha = shadeNotifAlpha,
+                )
+            }
+            else -> defaultValue
+        }
+    }
+
+    private fun colorAlpha(@ColorInt colorInt: Int): Float = colorInt.alpha / 255.0f
+
+    private fun mapToScrimAlphas(transitionProgress: Float, startState: StartState): ScrimAlpha {
+        val willRunDismissFromKeyguard = startState.willRunDismissFromKeyguard
+        val isShadeExpanded: Boolean = startState.isShadeExpanded
+        val leaveShadeOpen: Boolean = startState.leaveShadeOpen
         val invertedTransitionProgress = 1 - transitionProgress
         return if (willRunDismissFromKeyguard) {
             if (isShadeExpanded) {
@@ -161,5 +239,19 @@ constructor(
         } else {
             ScrimAlpha(behindAlpha = invertedTransitionProgress)
         }
+    }
+
+    private data class StartState(
+        val isShadeExpanded: Boolean = false,
+        val leaveShadeOpen: Boolean = false,
+        val willRunDismissFromKeyguard: Boolean = false,
+        val isBlurCurrentlySupported: Boolean = false,
+        val shadeNotifAlpha: Float = 1.0f,
+        val shadeBehindAlpha: Float = 1.0f,
+        val bouncerBehindAlpha: Float = 1.0f,
+    )
+
+    private companion object {
+        const val TAG = "BouncerToGoneFlows"
     }
 }
