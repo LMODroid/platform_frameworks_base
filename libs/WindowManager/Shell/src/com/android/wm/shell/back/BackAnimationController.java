@@ -17,11 +17,13 @@
 package com.android.wm.shell.back;
 
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
+import static android.view.Display.INVALID_DISPLAY;
 import static android.view.RemoteAnimationTarget.MODE_CLOSING;
 import static android.view.RemoteAnimationTarget.MODE_OPENING;
 import static android.view.WindowManager.TRANSIT_CHANGE;
 import static android.view.WindowManager.TRANSIT_CLOSE_PREPARE_BACK_NAVIGATION;
 import static android.window.BackEvent.EDGE_NONE;
+import static android.window.DesktopExperienceFlags.ENABLE_INDEPENDENT_BACK_IN_PROJECTED;
 import static android.window.TransitionInfo.FLAG_BACK_GESTURE_ANIMATED;
 import static android.window.TransitionInfo.FLAG_IS_WALLPAPER;
 import static android.window.TransitionInfo.FLAG_MOVED_TO_TOP;
@@ -332,10 +334,11 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
                 float touchX,
                 float touchY,
                 int keyAction,
-                @BackEvent.SwipeEdge int swipeEdge
+                @BackEvent.SwipeEdge int swipeEdge,
+                int displayId
         ) {
             mShellExecutor.execute(
-                    () -> onMotionEvent(touchX, touchY, keyAction, swipeEdge));
+                    () -> onMotionEvent(touchX, touchY, keyAction, swipeEdge, displayId));
         }
 
         @Override
@@ -488,7 +491,12 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
             float touchX,
             float touchY,
             int keyAction,
-            @BackEvent.SwipeEdge int swipeEdge) {
+            @BackEvent.SwipeEdge int swipeEdge,
+            int displayId) {
+
+        if (ENABLE_INDEPENDENT_BACK_IN_PROJECTED.isTrue()) {
+            mBackAnimationAdapter.mOriginDisplayId = displayId;
+        }
 
         BackTouchTracker activeTouchTracker = getActiveTracker();
         if (activeTouchTracker != null) {
@@ -649,21 +657,23 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         dispatchOnBackProgressed(mActiveCallback, backEvent);
     }
 
-    private void injectBackKey() {
+    private void injectBackKey(int displayId) {
         ProtoLog.d(WM_SHELL_BACK_PREVIEW, "injectBackKey");
-        sendBackEvent(KeyEvent.ACTION_DOWN);
-        sendBackEvent(KeyEvent.ACTION_UP);
+        sendBackEvent(KeyEvent.ACTION_DOWN, displayId);
+        sendBackEvent(KeyEvent.ACTION_UP, displayId);
     }
 
     @SuppressLint("MissingPermission")
-    private void sendBackEvent(int action) {
+    private void sendBackEvent(int action, int displayId) {
         final long when = SystemClock.uptimeMillis();
         final KeyEvent ev = new KeyEvent(when, when, action, KeyEvent.KEYCODE_BACK, 0 /* repeat */,
                 0 /* metaState */, KeyCharacterMap.VIRTUAL_KEYBOARD, 0 /* scancode */,
                 KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
                 InputDevice.SOURCE_KEYBOARD);
+        if (ENABLE_INDEPENDENT_BACK_IN_PROJECTED.isTrue()) {
+            ev.setDisplayId(displayId);
+        }
 
-        ev.setDisplayId(mContext.getDisplay().getDisplayId());
         if (!mContext.getSystemService(InputManager.class)
                 .injectInputEvent(ev, InputManager.INJECT_INPUT_EVENT_MODE_ASYNC)) {
             ProtoLog.e(WM_SHELL_BACK_PREVIEW, "Inject input event fail");
@@ -868,7 +878,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
             }
             mCurrentTracker.reset();
             if (triggerBack) {
-                injectBackKey();
+                injectBackKey(mBackAnimationAdapter.mOriginDisplayId);
             }
             finishBackNavigation(triggerBack);
             return;
@@ -1009,7 +1019,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         if (mCurrentTracker.isFinished() && mCurrentTracker.getTriggerBack()) {
             ProtoLog.d(WM_SHELL_BACK_PREVIEW, "resetTouchTracker -> start queued back navigation "
                     + "AND post commit animation");
-            injectBackKey();
+            injectBackKey(mBackAnimationAdapter.mOriginDisplayId);
             finishBackNavigation(true);
             mCurrentTracker.reset();
         } else if (!mCurrentTracker.isFinished()) {
@@ -1206,9 +1216,9 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
                                 Log.w(TAG, "Back gesture is running, ignore request");
                                 return;
                             }
-                            onMotionEvent(0, 0, KeyEvent.ACTION_DOWN, EDGE_NONE);
+                            onMotionEvent(0, 0, KeyEvent.ACTION_DOWN, EDGE_NONE, INVALID_DISPLAY);
                             setTriggerBack(true);
-                            onMotionEvent(0, 0, KeyEvent.ACTION_UP, EDGE_NONE);
+                            onMotionEvent(0, 0, KeyEvent.ACTION_UP, EDGE_NONE, INVALID_DISPLAY);
                         });
                     } else {
                         Log.w(TAG, "Unsupported gesture " + event + " received!");

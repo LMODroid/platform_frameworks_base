@@ -20,6 +20,7 @@ import static android.app.Flags.keyguardPrivateNotifications;
 import static android.content.Intent.ACTION_PACKAGE_ADDED;
 import static android.content.Intent.EXTRA_CHANGED_COMPONENT_NAME_LIST;
 import static android.content.pm.PackageManager.MATCH_SYSTEM_ONLY;
+import static android.view.Display.INVALID_DISPLAY;
 import static android.view.MotionEvent.ACTION_CANCEL;
 import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_UP;
@@ -308,7 +309,7 @@ public class LauncherProxyService implements CallbackController<LauncherProxyLis
                     && mBackAnimation != null && keyEvent != null) {
                 mBackAnimation.setTriggerBack(!keyEvent.isCanceled());
                 mBackAnimation.onBackMotion(/* touchX */ 0, /* touchY */ 0, keyEvent.getAction(),
-                        EDGE_NONE);
+                        EDGE_NONE, displayId);
             } else {
                 onKeyEvent(KeyEvent.KEYCODE_BACK, displayId);
             }
@@ -398,7 +399,6 @@ public class LauncherProxyService implements CallbackController<LauncherProxyLis
                     0 /* metaState */, KeyCharacterMap.VIRTUAL_KEYBOARD, 0 /* scancode */,
                     flags | KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
                     InputDevice.SOURCE_KEYBOARD);
-
             ev.setDisplayId(displayId);
             return InputManagerGlobal.getInstance()
                     .injectInputEvent(ev, InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);

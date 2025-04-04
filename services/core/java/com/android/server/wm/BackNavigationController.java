@@ -17,6 +17,8 @@
 package com.android.server.wm;
 
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
+import static android.view.Display.INVALID_DISPLAY;
+import static android.view.Display.TYPE_INTERNAL;
 import static android.view.RemoteAnimationTarget.MODE_CLOSING;
 import static android.view.RemoteAnimationTarget.MODE_OPENING;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_APP_PROGRESS_GENERATION_ALLOWED;
@@ -24,6 +26,7 @@ import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 import static android.view.WindowManager.TRANSIT_CHANGE;
 import static android.view.WindowManager.TRANSIT_OLD_NONE;
 import static android.view.WindowManager.TRANSIT_PREPARE_BACK_NAVIGATION;
+import static android.window.DesktopExperienceFlags.ENABLE_INDEPENDENT_BACK_IN_PROJECTED;
 import static android.window.SystemOverrideOnBackInvokedCallback.OVERRIDE_FINISH_AND_REMOVE_TASK;
 import static android.window.SystemOverrideOnBackInvokedCallback.OVERRIDE_UNDEFINED;
 
@@ -35,6 +38,7 @@ import static com.android.server.wm.BackNavigationProto.MAIN_OPEN_ACTIVITY;
 import static com.android.server.wm.BackNavigationProto.SHOW_WALLPAPER;
 import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_PREDICT_BACK;
 import static com.android.server.wm.WindowContainer.SYNC_STATE_NONE;
+import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_NORMAL;
 
 import android.annotation.BinderThread;
 import android.annotation.NonNull;
@@ -53,6 +57,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
+import android.view.Display;
 import android.view.RemoteAnimationTarget;
 import android.view.SurfaceControl;
 import android.view.WindowInsets;
@@ -133,12 +138,14 @@ class BackNavigationController {
         }
     }
 
-    boolean requestBackGesture() {
+    boolean requestBackGesture(int displayId) {
         synchronized (mWindowManagerService.mGlobalLock) {
             if (mGestureRequest == null) {
                 return false;
             }
-            mGestureRequest.sendResult(null);
+            final Bundle result = new Bundle();
+            result.putInt(BackNavigationInfo.KEY_DISPLAY_ID, displayId);
+            mGestureRequest.sendResult(result);
             return true;
         }
     }
@@ -183,7 +190,30 @@ class BackNavigationController {
                 return null;
             }
 
-            window = wmService.getFocusedWindowLocked();
+            // In projected mode, main device remains unchanged when connected to external display.
+            // System back should act independently per display instead of the top focused display.
+            final boolean inProjectedMode = isInProjectedMode(adapter.mOriginDisplayId);
+            if (inProjectedMode) {
+                // Updates current focus to null if not top focused display.
+                wmService.updateFocusedWindowLocked(UPDATE_FOCUS_NORMAL,
+                        false /* updateInputWindows */);
+                final DisplayContent dc = wmService.mRoot.getDisplayContent(
+                        adapter.mOriginDisplayId);
+                window = dc.findFocusedWindow();
+                if (window == null) {
+                    ProtoLog.w(WM_DEBUG_BACK_PREVIEW,
+                            "No focused window on display %d, default to top current task's window",
+                            adapter.mOriginDisplayId);
+                    currentTask = dc.getFocusedRootTask();
+                    if (currentTask != null) {
+                        final ActivityRecord activity = currentTask.getTopVisibleActivity();
+                        window = activity != null
+                                ? activity.findMainWindow(false /*includeStartingApp*/) : null;
+                    }
+                }
+            } else {
+                window = wmService.getFocusedWindowLocked();
+            }
 
             if (window == null) {
                 // We don't have any focused window, fallback ont the top currentTask of the focused
@@ -716,6 +746,39 @@ class BackNavigationController {
 
     boolean isStartingSurfaceShown(ActivityRecord openActivity) {
         return mAnimationHandler.isStartingSurfaceDrawn(openActivity);
+    }
+
+    /**
+     * Whether there is a connected display that supports a desktop windowing session with
+     * the main internal display unchanged.
+     */
+    @VisibleForTesting
+    boolean isInProjectedMode(int originDisplayId) {
+        if (!ENABLE_INDEPENDENT_BACK_IN_PROJECTED.isTrue() || originDisplayId == INVALID_DISPLAY) {
+            return false;
+        }
+
+        boolean internalDisplaySupportsDesktop = false;
+        boolean externalDisplaySupportsDesktop = false;
+
+        final Display[] displays = mWindowManagerService.mDisplayManager.getDisplays();
+        for (final Display display : displays) {
+            final int displayId = display.getDisplayId();
+            final DisplayContent dc = mWindowManagerService.mRoot.getDisplayContent(displayId);
+            // Display where back navigation started is null, use default system back behaviour.
+            if (dc == null && originDisplayId == displayId) {
+                return false;
+            }
+            final TaskDisplayArea tda = dc != null ? dc.getDefaultTaskDisplayArea() : null;
+            if (tda != null) {
+                if (display.getType() == TYPE_INTERNAL) {
+                    internalDisplaySupportsDesktop |= tda.inFreeformWindowingMode();
+                } else {
+                    externalDisplaySupportsDesktop |= tda.inFreeformWindowingMode();
+                }
+            }
+        }
+        return !internalDisplaySupportsDesktop && externalDisplaySupportsDesktop;
     }
 
     @VisibleForTesting

@@ -17,6 +17,7 @@
 package com.android.wm.shell.back;
 
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
+import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.WindowManager.TRANSIT_CLOSE;
 import static android.view.WindowManager.TRANSIT_CLOSE_PREPARE_BACK_NAVIGATION;
 import static android.view.WindowManager.TRANSIT_OPEN;
@@ -881,7 +882,8 @@ public class BackAnimationControllerTest extends ShellTestCase {
                 /* touchX */ coordinate,
                 /* touchY */ coordinate,
                 /* keyAction */ actionDown,
-                /* swipeEdge */ BackEvent.EDGE_LEFT);
+                /* swipeEdge */ BackEvent.EDGE_LEFT,
+                /* displayId */ DEFAULT_DISPLAY);
     }
 
     /**

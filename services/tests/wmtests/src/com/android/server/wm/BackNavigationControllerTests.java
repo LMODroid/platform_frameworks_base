@@ -57,6 +57,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.RemoteCallback;
 import android.os.RemoteException;
+import android.platform.test.annotations.EnableFlags;
 import android.platform.test.annotations.Presubmit;
 import android.view.WindowManager;
 import android.window.BackAnimationAdapter;
@@ -72,6 +73,7 @@ import android.window.TaskSnapshot;
 import android.window.WindowOnBackInvokedDispatcher;
 
 import com.android.server.LocalServices;
+import com.android.window.flags.Flags;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -671,6 +673,28 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         assertThat(mostRecentUsedWindow).isEqualTo(secondaryWindow);
     }
 
+    @Test
+    @EnableFlags(Flags.FLAG_ENABLE_INDEPENDENT_BACK_IN_PROJECTED)
+    public void testBackIsInProjectedMode_returnsWindowOnUnfocusedDisplay() {
+        final DisplayContent secondDc = createNewDisplay();
+        doReturn(true).when(mBackNavigationController).isInProjectedMode(secondDc.mDisplayId);
+
+        final Task taskOnSecondDisplay = createTopTaskWithActivity(secondDc);
+        final Task taskOnDefaultDisplay = createTopTaskWithActivity();
+        withSystemCallback(taskOnSecondDisplay);
+        withSystemCallback(taskOnDefaultDisplay);
+        mBackAnimationAdapter.mOriginDisplayId = secondDc.mDisplayId;
+
+        // Top focused task on top focused display is on default display.
+        assertEquals(taskOnDefaultDisplay.getTopVisibleAppMainWindow(),
+                mWm.getFocusedWindowLocked());
+
+        final BackNavigationInfo backNavigationInfo = startBackNavigation();
+        assertWithMessage("BackNavigationInfo").that(backNavigationInfo).isNotNull();
+        // Returns task on unfocused display (second display) if projected mode.
+        assertEquals(taskOnSecondDisplay.mTaskId, backNavigationInfo.getFocusedTaskId());
+    }
+
     /**
      * Test with
      * config_predictShowStartingSurface = true
@@ -859,7 +883,12 @@ public class BackNavigationControllerTests extends WindowTestsBase {
 
     @NonNull
     private Task createTopTaskWithActivity() {
-        Task task = createTask(mDefaultDisplay);
+        return createTopTaskWithActivity(mDefaultDisplay);
+    }
+
+    @NonNull
+    private Task createTopTaskWithActivity(@NonNull DisplayContent dc) {
+        Task task = createTask(dc);
         ActivityRecord record = createActivityRecord(task);
         // enable OnBackInvokedCallbacks
         record.info.applicationInfo.privateFlagsExt |=

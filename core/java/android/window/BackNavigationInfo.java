@@ -94,6 +94,13 @@ public final class BackNavigationInfo implements Parcelable {
      */
     public static final String KEY_TOUCH_GESTURE_TRANSFERRED = "TouchGestureTransferred";
 
+    /**
+     * Key to access the displayId passed in result bundle that represents on which display
+     * the back gesture has been triggered.
+     * @hide
+     */
+    public static final String KEY_DISPLAY_ID = "DisplayId";
+
 
     /**
      * Defines the type of back destinations a back even can lead to. This is used to define the
