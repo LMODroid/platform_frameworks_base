@@ -450,7 +450,7 @@ object BrightnessSliderMotionTestKeys {
 private fun colors(): SliderColors {
     return SliderDefaults.colors()
         .copy(
-            inactiveTrackColor = LocalAndroidColorScheme.current.surfaceEffect2,
+            inactiveTrackColor = LocalAndroidColorScheme.current.surfaceEffect1,
             activeTickColor = MaterialTheme.colorScheme.onPrimary,
             inactiveTickColor = MaterialTheme.colorScheme.onSurface,
         )
