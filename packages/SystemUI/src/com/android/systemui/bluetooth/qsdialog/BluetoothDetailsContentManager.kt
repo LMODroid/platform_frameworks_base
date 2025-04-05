@@ -47,6 +47,7 @@ import com.android.systemui.animation.DialogTransitionAnimator
 import com.android.systemui.bluetooth.ui.viewModel.BluetoothDetailsContentViewModel
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.plugins.ActivityStarter
+import com.android.systemui.qs.flags.QsDetailedView
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.phone.SystemUIDialog
 import com.android.systemui.util.annotations.DeprecatedSysuiVisibleForTesting
@@ -127,10 +128,7 @@ constructor(
 
     // UI Components
     private lateinit var contentView: View
-    private lateinit var doneButton: Button
     private lateinit var bluetoothToggle: Switch
-    private lateinit var titleTextView: TextView
-    private lateinit var subtitleTextView: TextView
     private lateinit var seeAllButton: View
     private lateinit var pairNewDeviceButton: View
     private lateinit var deviceListView: RecyclerView
@@ -141,6 +139,11 @@ constructor(
     private lateinit var progressBarAnimation: ProgressBar
     private lateinit var progressBarBackground: View
     private lateinit var scrollViewContent: View
+
+    // UI Components that only exist in dialog, but not tile details view.
+    private var doneButton: Button? = null
+    private var titleTextView: TextView? = null
+    private var subtitleTextView: TextView? = null
 
     @AssistedFactory
     interface Factory {
@@ -162,10 +165,7 @@ constructor(
         this.contentView = contentView
         this.coroutineScope = coroutineScope
 
-        doneButton = contentView.requireViewById(R.id.done_button)
         bluetoothToggle = contentView.requireViewById(R.id.bluetooth_toggle)
-        titleTextView = contentView.requireViewById(R.id.bluetooth_tile_dialog_title)
-        subtitleTextView = contentView.requireViewById(R.id.bluetooth_tile_dialog_subtitle)
         seeAllButton = contentView.requireViewById(R.id.see_all_button)
         pairNewDeviceButton = contentView.requireViewById(R.id.pair_new_device_button)
         deviceListView = contentView.requireViewById(R.id.device_list)
@@ -180,19 +180,23 @@ constructor(
             contentView.requireViewById(R.id.bluetooth_tile_dialog_progress_background)
         scrollViewContent = contentView.requireViewById(R.id.scroll_view)
 
-        setupToggle()
-        setupRecyclerView()
-        setupDoneButton()
-
         if (isInDialog) {
-            subtitleTextView.text = contentView.context.getString(initialUiProperties.subTitleResId)
-        } else {
+            // If `QsDetailedView` is enabled, it should show the details view.
+            QsDetailedView.assertInLegacyMode()
+
             // If rendering with tile details view, the title and subtitle will be added in the
             // `TileDetails`
-            titleTextView.visibility = GONE
-            subtitleTextView.visibility = GONE
+            titleTextView = contentView.requireViewById(R.id.bluetooth_tile_dialog_title)
+            subtitleTextView = contentView.requireViewById(R.id.bluetooth_tile_dialog_subtitle)
+            // If rendering with tile details view, done button shouldn't exist.
+            doneButton = contentView.requireViewById(R.id.done_button)
         }
 
+        setupToggle()
+        setupRecyclerView()
+
+        doneButton?.setOnClickListener { doneButtonCallback() }
+        subtitleTextView?.text = contentView.context.getString(initialUiProperties.subTitleResId)
         seeAllButton.setOnClickListener { onSeeAllClicked(it) }
         pairNewDeviceButton.setOnClickListener { onPairNewDeviceClicked(it) }
         audioSharingButton.apply {
@@ -342,9 +346,7 @@ constructor(
             setEnabled(true)
             alpha = ENABLED_ALPHA
         }
-        if (isInDialog) {
-            subtitleTextView.text = contentView.context.getString(uiProperties.subTitleResId)
-        }
+        subtitleTextView?.text = contentView.context.getString(uiProperties.subTitleResId)
         autoOnToggleLayout.visibility = uiProperties.autoOnToggleVisibility
     }
 
@@ -389,14 +391,6 @@ constructor(
         autoOnToggle.setOnCheckedChangeListener { _, isChecked ->
             mutableBluetoothAutoOnToggle.value = isChecked
             uiEventLogger.log(BluetoothTileDialogUiEvent.BLUETOOTH_AUTO_ON_TOGGLE_CLICKED)
-        }
-    }
-
-    private fun setupDoneButton() {
-        if (isInDialog) {
-            doneButton.setOnClickListener { doneButtonCallback() }
-        } else {
-            doneButton.visibility = GONE
         }
     }
 

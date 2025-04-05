@@ -32,7 +32,7 @@ fun BluetoothDetailsContent(detailsContentViewModel: BluetoothDetailsContentView
             // Inflate with the existing dialog xml layout
             val view =
                 LayoutInflater.from(context)
-                    .inflate(R.layout.bluetooth_tile_dialog, /* root= */ null)
+                    .inflate(R.layout.bluetooth_tile_details, /* root= */ null)
             detailsContentViewModel.bindDetailsView(view)
             view
         },
