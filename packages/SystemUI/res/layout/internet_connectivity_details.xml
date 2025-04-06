@@ -63,6 +63,7 @@
                 <LinearLayout
                     android:id="@+id/ethernet_layout"
                     android:baselineAligned="false"
+                    android:layout_height="@dimen/internet_details_toggle_row_height"
                     style="@style/InternetDialog.Network"
                     android:background="@drawable/settingslib_switch_bar_bg_on"
                     android:visibility="gone">
@@ -441,29 +442,44 @@
                     android:text="@string/turn_off_airplane_mode"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/share_wifi_button"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
-                    android:id="@+id/share_wifi_button"
-                    style="?android:attr/buttonBarNeutralButtonStyle"
+            <LinearLayout
+                android:id="@+id/share_wifi_button"
+                style="@style/InternetDialog.Network"
+                android:layout_height="@dimen/tile_details_button_row_height"
+                android:background="@drawable/settingslib_entry_bg_off"
+                android:gravity="center">
+
+                <FrameLayout
+                    android:layout_width="@dimen/tile_details_button_size"
+                    android:layout_height="@dimen/tile_details_button_size"
+                    android:clickable="false">
+
+                    <ImageView
+                        android:contentDescription="@string/share_wifi_button_text"
+                        android:src="@drawable/ic_screenshot_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@androidprv:color/materialColorOnSurface" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:clickable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:clickable="true"
-                    android:ellipsize="end"
-                    android:focusable="true"
-                    android:maxLines="1"
-                    android:text="@string/share_wifi_button_text"
-                    android:visibility="gone"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toEndOf="@id/apm_button"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginStart="@dimen/internet_dialog_network_layout_margin">
+
+                    <TextView
+                        android:text="@string/share_wifi_button_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.TileDetailsEntryTitle" />
+                </FrameLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

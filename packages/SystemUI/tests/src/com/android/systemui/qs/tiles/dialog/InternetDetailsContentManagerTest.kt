@@ -26,7 +26,6 @@ import android.telephony.telephonyManager
 import android.testing.TestableLooper.RunWithLooper
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -90,7 +89,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
     private var wifiScanNotify: LinearLayout? = null
     private var airplaneModeSummaryText: TextView? = null
     private var mockitoSession: MockitoSession? = null
-    private var sharedWifiButton: Button? = null
+    private var sharedWifiButton: LinearLayout? = null
     private lateinit var contentView: View
 
     @Before
