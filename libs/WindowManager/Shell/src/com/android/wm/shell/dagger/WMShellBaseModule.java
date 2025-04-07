@@ -933,9 +933,11 @@ public abstract class WMShellBaseModule {
             ShellTaskOrganizer shellTaskOrganizer,
             @ShellSplashscreenThread ShellExecutor splashScreenExecutor,
             StartingWindowTypeAlgorithm startingWindowTypeAlgorithm, IconProvider iconProvider,
-            TransactionPool pool) {
+            TransactionPool pool, @ShellMainThread ShellExecutor mainExecutor,
+            Transitions transitions) {
         return new StartingWindowController(context, shellInit, shellController, shellTaskOrganizer,
-                splashScreenExecutor, startingWindowTypeAlgorithm, iconProvider, pool);
+                splashScreenExecutor, startingWindowTypeAlgorithm, iconProvider, pool, mainExecutor,
+                transitions);
     }
 
     // Workaround for dynamic overriding with a default implementation, see {@link DynamicOverride}

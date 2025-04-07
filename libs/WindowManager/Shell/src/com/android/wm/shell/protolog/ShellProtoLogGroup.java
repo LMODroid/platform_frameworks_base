@@ -42,6 +42,8 @@ public enum ShellProtoLogGroup implements IProtoLogGroup {
             "ShellDragAndDrop"),
     WM_SHELL_STARTING_WINDOW(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,
             Consts.TAG_WM_STARTING_WINDOW),
+    WM_SHELL_REMOVE_STARTING_TRACKER(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, true,
+            Consts.TAG_WM_STARTING_WINDOW),
     WM_SHELL_BACK_PREVIEW(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, true,
             "ShellBackPreview"),
     WM_SHELL_RECENT_TASKS(Consts.ENABLE_DEBUG, Consts.ENABLE_LOG_TO_PROTO_DEBUG, false,

@@ -95,6 +95,12 @@ public class StartingSurfaceDrawer {
         mWindowlessSplashWindowCreator.setSysuiProxy(sysuiProxy);
     }
 
+    boolean hasStartingWindow(int taskId, boolean windowless) {
+        if (windowless) {
+            return mWindowlessRecords.getRecord(taskId) != null;
+        }
+        return mWindowRecords.getRecord(taskId) != null;
+    }
     /**
      * Called when a task need a splash screen starting window.
      *

@@ -636,6 +636,12 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
         }
         info.taskSnapshot = taskSnapshot;
         info.appToken = activity.token;
+        final Transition collecting = activity.mTransitionController.getCollectingTransition();
+        if (collecting != null) {
+            info.transitionToken = collecting.getToken();
+        } else {
+            Slog.w(TAG, "The starting window is created without transition?");
+        }
         // make this happen prior than prepare surface
         try {
             lastOrganizer.addStartingWindow(info);
@@ -725,6 +731,12 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
         info.taskSnapshot = taskSnapshot;
         info.windowlessStartingSurfaceCallback = callback;
         info.rootSurface = root;
+        final Transition collecting = activity.mTransitionController.getCollectingTransition();
+        if (collecting != null) {
+            info.transitionToken = collecting.getToken();
+        } else {
+            Slog.w(TAG, "The windowless starting window is created without transition?");
+        }
         try {
             lastOrganizer.addStartingWindow(info);
         } catch (RemoteException e) {

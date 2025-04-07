@@ -1344,10 +1344,12 @@ class BackNavigationController {
                 }
                 allWindowDrawn &= next.mAppWindowDrawn;
             }
-            // Do not remove windowless surfaces if the transaction has not been applied.
-            if (activity.getSyncTransactionCommitCallbackDepth() > 0
-                    || activity.mSyncState != SYNC_STATE_NONE) {
-                return;
+            if (!Flags.removeStartingInTransition()) {
+                // Do not remove windowless surfaces if the transaction has not been applied.
+                if (activity.getSyncTransactionCommitCallbackDepth() > 0
+                        || activity.mSyncState != SYNC_STATE_NONE) {
+                    return;
+                }
             }
             if (allWindowDrawn) {
                 mOpenAnimAdaptor.cleanUpWindowlessSurface(true);

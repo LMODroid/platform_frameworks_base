@@ -543,3 +543,15 @@ flag {
     description: "Adds support for trackpad back gestures on connected displays"
     bug: "382774299"
 }
+
+flag {
+    name: "remove_starting_in_transition"
+    namespace: "windowing_frontend"
+    description: "Allows the starting window to be removed while a transition is in progress."
+    bug: "397353053"
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
