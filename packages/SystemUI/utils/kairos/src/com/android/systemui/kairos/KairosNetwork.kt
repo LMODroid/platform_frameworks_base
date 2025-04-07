@@ -143,8 +143,9 @@ suspend fun <R> KairosNetwork.activateSpec(
 internal class LocalNetwork(
     private val network: Network,
     private val scope: CoroutineScope,
-    private val endSignal: Events<Any>,
+    private val endSignalLazy: Lazy<Events<Any>>,
 ) : KairosNetwork {
+
     override suspend fun <R> transact(block: TransactionScope.() -> R): R =
         network.transaction("KairosNetwork.transact") { block() }.awaitOrCancel()
 
@@ -160,7 +161,8 @@ internal class LocalNetwork(
                                 stateScope =
                                     StateScopeImpl(
                                         evalScope = this,
-                                        endSignalLazy = lazy { mergeLeft(stopEmitter, endSignal) },
+                                        endSignalLazy =
+                                            lazy { mergeLeft(stopEmitter, endSignalLazy.value) },
                                     ),
                                 coroutineScope = this@coroutineScope,
                             )
@@ -225,7 +227,7 @@ internal class LocalNetwork(
 @ExperimentalKairosApi
 class RootKairosNetwork
 internal constructor(private val network: Network, private val scope: CoroutineScope, job: Job) :
-    Job by job, KairosNetwork by LocalNetwork(network, scope, emptyEvents)
+    Job by job, KairosNetwork by LocalNetwork(network, scope, lazyOf(emptyEvents))
 
 /** Constructs a new [RootKairosNetwork] in the given [CoroutineScope]. */
 @ExperimentalKairosApi

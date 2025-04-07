@@ -61,8 +61,8 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
     private val job: Job
         get() = coroutineScope.coroutineContext.job
 
-    override val kairosNetwork: KairosNetwork by lazy {
-        LocalNetwork(network, coroutineScope, endSignal)
+    override val kairosNetwork: LocalNetwork by lazy {
+        LocalNetwork(network, coroutineScope, stateScope.endSignalLazy)
     }
 
     override fun <T> events(builder: suspend EventProducerScope<T>.() -> Unit): Events<T> =
@@ -129,7 +129,7 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         }
         // When our scope is cancelled, deactivate this observer.
         cancelHandle = childScope.coroutineContext.job.invokeOnCompletion { handle.dispose() }
-        val localNetwork = LocalNetwork(network, childScope, endSignal)
+        val localNetwork = LocalNetwork(network, childScope, stateScope.endSignalLazy)
         val outputNode =
             Output<A>(
                 interceptor =
