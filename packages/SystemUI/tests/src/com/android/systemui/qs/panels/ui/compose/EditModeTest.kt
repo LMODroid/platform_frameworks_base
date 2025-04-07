@@ -25,8 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.doubleClick
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onAllNodesWithText
-import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -105,7 +103,7 @@ class EditModeTest : SysuiTestCase() {
         composeRule.setContent { EditTileGridUnderTest() }
         composeRule.waitForIdle()
 
-        composeRule.onNodeWithContentDescription("tileF").performClick() // Tap to add
+        composeRule.onNodeWithText("tileF").performClick() // Tap to add
 
         composeRule.assertCurrentTilesGridContainsExactly(
             listOf("tileA", "tileB", "tileC", "tileD_large", "tileE", "tileF")
@@ -119,10 +117,10 @@ class EditModeTest : SysuiTestCase() {
         composeRule.waitForIdle()
 
         // Double tap first "tileA", i.e. the one in the current grid
-        composeRule.onAllNodesWithText("tileA").onFirst().performTouchInput { doubleClick() }
+        composeRule.onNodeWithContentDescription("tileA").performTouchInput { doubleClick() }
 
         // Tap on tileE to position tileA in its spot
-        composeRule.onAllNodesWithText("tileE").onFirst().performClick()
+        composeRule.onNodeWithContentDescription("tileE").performClick()
 
         // Assert tileA moved to tileE's position
         composeRule.assertCurrentTilesGridContainsExactly(
@@ -135,7 +133,7 @@ class EditModeTest : SysuiTestCase() {
         composeRule.setContent { EditTileGridUnderTest() }
         composeRule.waitForIdle()
 
-        composeRule.onNodeWithContentDescription("tileF").performClick() // Tap to add
+        composeRule.onNodeWithText("tileF").performClick() // Tap to add
         composeRule.waitForIdle()
 
         composeRule.onNodeWithText("Undo").assertExists()

@@ -120,6 +120,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
@@ -834,7 +835,7 @@ private fun TileGridCell(
                 coroutineScope.launch { resizingState.toggleCurrentValue() }
             }
         },
-        onClickLabel = decorationClickLabel,
+        contentDescription = decorationClickLabel,
     ) {
         val placeableColor = MaterialTheme.colorScheme.primary.copy(alpha = .4f)
         val backgroundColor by
@@ -857,7 +858,7 @@ private fun TileGridCell(
 
         Box(
             Modifier.fillMaxSize()
-                .semantics(mergeDescendants = true) {
+                .clearAndSetSemantics {
                     this.stateDescription = stateDescription
                     contentDescription = cell.tile.label.text
                     customActions =
@@ -922,6 +923,10 @@ private fun AvailableTileGridCell(
 
     val alpha by animateFloatAsState(if (cell.isCurrent) .38f else 1f)
     val colors = EditModeTileDefaults.editTileColors()
+    val onClick: () -> Unit = {
+        onAddTile(cell.tileSpec)
+        selectionState.select(cell.tileSpec)
+    }
 
     // Displays the tile as an icon tile with the label underneath
     Column(
@@ -930,9 +935,8 @@ private fun AvailableTileGridCell(
         modifier =
             modifier
                 .graphicsLayer { this.alpha = alpha }
-                .semantics(mergeDescendants = true) {
-                    stateDescription?.let { this.stateDescription = it }
-                },
+                .clickable(enabled = !cell.isCurrent, onClick = onClick)
+                .semantics { stateDescription?.let { this.stateDescription = it } },
     ) {
         Box(Modifier.fillMaxWidth().height(TileHeight)) {
             val draggableModifier =
@@ -947,22 +951,13 @@ private fun AvailableTileGridCell(
                         selectionState.unSelect()
                     }
                 }
-            val onClick: () -> Unit = {
-                onAddTile(cell.tileSpec)
-                selectionState.select(cell.tileSpec)
-            }
-            Box(
-                draggableModifier
-                    .fillMaxSize()
-                    .clickable(enabled = !cell.isCurrent, onClick = onClick)
-                    .tileBackground { colors.background }
-            ) {
+            Box(draggableModifier.fillMaxSize().tileBackground { colors.background }) {
                 // Icon
                 SmallTileContent(
                     iconProvider = { cell.icon },
                     color = colors.icon,
                     animateToEnd = true,
-                    modifier = Modifier.align(Alignment.Center),
+                    modifier = Modifier.align(Alignment.Center).clearAndSetSemantics {},
                 )
             }
 

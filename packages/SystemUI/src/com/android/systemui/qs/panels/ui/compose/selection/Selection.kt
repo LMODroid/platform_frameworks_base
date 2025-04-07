@@ -106,7 +106,7 @@ fun InteractiveTileContainer(
     resizingState: ResizingState,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-    onClickLabel: String? = null,
+    contentDescription: String? = null,
     content: @Composable BoxScope.() -> Unit = {},
 ) {
     val transition: Transition<TileState> = updateTransition(tileState)
@@ -150,18 +150,12 @@ fun InteractiveTileContainer(
                         state = resizingState.anchoredDraggableState,
                         orientation = Orientation.Horizontal,
                     )
-                    .clickable(
-                        enabled = tileState != None,
-                        interactionSource = null,
-                        indication = null,
-                        onClickLabel = onClickLabel,
-                        onClick = onClick,
-                    )
+                    .clickable(enabled = tileState != None, onClick = onClick)
             ) {
                 val size = with(LocalDensity.current) { BadgeIconSize.toDp() }
                 Icon(
                     Icons.Default.Remove,
-                    contentDescription = null,
+                    contentDescription = contentDescription,
                     tint = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier =
                         Modifier.size(size).align(Alignment.Center).graphicsLayer {
@@ -217,14 +211,7 @@ fun StaticTileBadge(
         Box(
             Modifier.fillMaxSize()
                 .graphicsLayer { this.alpha = alpha }
-                .thenIf(enabled) {
-                    Modifier.clickable(
-                        interactionSource = null,
-                        indication = null,
-                        onClickLabel = contentDescription,
-                        onClick = onClick,
-                    )
-                }
+                .thenIf(enabled) { Modifier.clickable(onClick = onClick) }
         ) {
             val size = with(LocalDensity.current) { BadgeIconSize.toDp() }
             val primaryColor = MaterialTheme.colorScheme.primary
