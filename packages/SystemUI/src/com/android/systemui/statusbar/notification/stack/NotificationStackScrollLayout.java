@@ -3637,19 +3637,10 @@ public class NotificationStackScrollLayout
     public boolean onTouchEvent(MotionEvent ev) {
         if (mTouchHandler != null) {
             boolean touchHandled = mTouchHandler.onTouchEvent(ev);
-            if (SceneContainerFlag.isEnabled()) {
-                if (getChildAtPosition(
-                        mInitialTouchX, mInitialTouchY, true, true, false) == null) {
-                    // If scene container is enabled, any touch that we are handling that is not on
-                    // a child view should be handled by scene container instead.
-                    return false;
-                } else {
-                    // If scene container is enabled, any touch that we are handling that is not on
-                    // a child view should be handled by scene container instead.
-                    return touchHandled;
-                }
-            } else if (touchHandled) {
-                return true;
+            if (SceneContainerFlag.isEnabled() || touchHandled) {
+                // If scene container is enabled, let the TouchHandlers decide if this event is
+                // handled by the NSSL.
+                return touchHandled;
             }
         }
 
@@ -3690,13 +3681,10 @@ public class NotificationStackScrollLayout
                     mScrollViewFields.sendCurrentGestureInGuts(false);
                     mScrollViewFields.sendCurrentGestureOverscroll(false);
                     setIsBeingDragged(false);
-                    // dispatch to touchHandlers, so they can still finalize a previously started
-                    // motion, while the shade is being dragged
-                    return super.dispatchTouchEvent(ev);
                 }
-                return false;
             }
         }
+        // dispatch all touches to TouchHandlers, so they can decide whether they want to handle it.
         return TouchLogger.logDispatchTouch(TAG, ev, super.dispatchTouchEvent(ev));
     }
 

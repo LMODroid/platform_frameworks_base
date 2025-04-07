@@ -2047,20 +2047,23 @@ public class NotificationStackScrollLayoutController implements Dumpable {
             mView.initDownStates(ev);
             mView.handleEmptySpaceClick(ev);
 
+            boolean skipForDragging = SceneContainerFlag.isEnabled() && mView.isBeingDragged()
+                    && ev.getAction() == MotionEvent.ACTION_MOVE;
+
             NotificationGuts guts = mNotificationGutsManager.getExposedGuts();
 
             boolean longPressWantsIt = false;
-            if (mLongPressedView != null) {
+            if (mLongPressedView != null && !skipForDragging) {
                 longPressWantsIt = mSwipeHelper.onInterceptTouchEvent(ev);
             }
             boolean expandWantsIt = false;
             if (mLongPressedView == null && !mSwipeHelper.isSwiping()
-                    && !mView.getOnlyScrollingInThisMotion() && guts == null) {
+                    && !mView.getOnlyScrollingInThisMotion() && guts == null && !skipForDragging) {
                 expandWantsIt = mView.getExpandHelper().onInterceptTouchEvent(ev);
             }
             boolean scrollWantsIt = false;
             if (mLongPressedView == null && !mSwipeHelper.isSwiping()
-                    && !mView.isExpandingNotification()) {
+                    && !mView.isExpandingNotification() && !skipForDragging) {
                 scrollWantsIt = mView.onInterceptTouchEventScroll(ev);
             }
             boolean hunWantsIt = false;
@@ -2072,7 +2075,8 @@ public class NotificationStackScrollLayoutController implements Dumpable {
                     && !mView.isExpandingNotification()
                     && !mView.getExpandedInThisMotion()
                     && !mView.getOnlyScrollingInThisMotion()
-                    && !mView.getDisallowDismissInThisMotion()) {
+                    && !mView.getDisallowDismissInThisMotion()
+                    && !skipForDragging) {
                 swipeWantsIt = mSwipeHelper.onInterceptTouchEvent(ev);
             }
             // Check if we need to clear any snooze leavebehinds
