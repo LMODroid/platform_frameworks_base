@@ -49,14 +49,15 @@ fun DualShadeEducationalTooltips(
             viewModelFactory.create(context)
         }
 
-    val visibleTooltip = viewModel.visibleTooltip ?: return
+    val visibleTooltip = viewModel.visibleTooltip
 
     Layout(
         content = {
             AnchoredTooltip(
-                text = visibleTooltip.text,
-                onShown = visibleTooltip.onShown,
-                onDismissed = visibleTooltip.onDismissed,
+                isVisible = visibleTooltip != null,
+                text = visibleTooltip?.text,
+                onShown = visibleTooltip?.onShown,
+                onDismissed = visibleTooltip?.onDismissed,
             )
         },
         modifier = modifier.fillMaxSize(),
@@ -65,14 +66,14 @@ fun DualShadeEducationalTooltips(
         val placeable =
             measurables[0].measure(
                 Constraints.fixed(
-                    width = visibleTooltip.anchorBounds.width,
-                    height = visibleTooltip.anchorBounds.height,
+                    width = visibleTooltip?.anchorBounds?.width ?: 0,
+                    height = visibleTooltip?.anchorBounds?.height ?: 0,
                 )
             )
         layout(constraints.maxWidth, constraints.maxHeight) {
             placeable.place(
-                x = visibleTooltip.anchorBounds.left,
-                y = visibleTooltip.anchorBounds.top,
+                x = visibleTooltip?.anchorBounds?.left ?: 0,
+                y = visibleTooltip?.anchorBounds?.top ?: 0,
             )
         }
     }
@@ -80,14 +81,22 @@ fun DualShadeEducationalTooltips(
 
 @Composable
 private fun AnchoredTooltip(
-    text: String,
-    onShown: () -> Unit,
-    onDismissed: () -> Unit,
+    isVisible: Boolean,
+    text: String?,
+    onShown: (() -> Unit)?,
+    onDismissed: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
-    val tooltipState = rememberTooltipState(initialIsVisible = true, isPersistent = true)
+    val tooltipState = rememberTooltipState(initialIsVisible = false, isPersistent = true)
 
-    LaunchedEffect(Unit) { onShown() }
+    LaunchedEffect(isVisible) {
+        if (isVisible) {
+            tooltipState.show()
+            onShown?.invoke()
+        } else {
+            tooltipState.dismiss()
+        }
+    }
 
     TooltipBox(
         positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
@@ -101,7 +110,7 @@ private fun AnchoredTooltip(
                 caretSize = TooltipDefaults.caretSize,
                 shadowElevation = 2.dp,
             ) {
-                Text(text = text, modifier = Modifier.padding(8.dp))
+                Text(text = text ?: "", modifier = Modifier.padding(8.dp))
             }
         },
         state = tooltipState,
