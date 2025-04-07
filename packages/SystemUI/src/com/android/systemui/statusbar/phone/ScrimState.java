@@ -443,7 +443,7 @@ public enum ScrimState {
                 // Scrim parameters should match KEYGUARD as we're showing on top of keyguard.
                 mBehindTint = mBackgroundColor;
                 mNotifTint = mNotificationScrimColor;
-                mBehindAlpha = mScrimBehindAlphaKeyguard;
+                mBehindAlpha = 0.0f;
                 mNotifAlpha = 0.0f;
                 mFrontAlpha = 0.0f;
             } else {
