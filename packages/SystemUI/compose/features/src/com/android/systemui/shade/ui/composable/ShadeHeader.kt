@@ -55,12 +55,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
@@ -87,6 +90,7 @@ import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.buildSpec
 import com.android.systemui.privacy.OngoingPrivacyChip
 import com.android.systemui.res.R
+import com.android.systemui.scene.shared.model.DualShadeEducationElement
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.ui.composable.ShadeHeader.Colors.onScrimDim
 import com.android.systemui.shade.ui.composable.ShadeHeader.Dimensions.ChipPaddingHorizontal
@@ -351,7 +355,16 @@ fun ContentScope.OverlayShadeHeaderPartialStateless(
                 NotificationsChip(
                     onClick = viewModel::onNotificationIconChipClicked,
                     backgroundColor = chipHighlight.backgroundColor(MaterialTheme.colorScheme),
-                    modifier = Modifier.bouncy(isEnabled = viewModel.animateNotificationsChipBounce),
+                    modifier =
+                        Modifier.bouncy(
+                            isEnabled = viewModel.animateNotificationsChipBounce,
+                            onBoundsChange = { bounds ->
+                                viewModel.onDualShadeEducationElementBoundsChange(
+                                    element = DualShadeEducationElement.Notifications,
+                                    bounds = bounds,
+                                )
+                            },
+                        ),
                 ) {
                     VariableDayDate(
                         longerDateText = viewModel.longerDateText,
@@ -371,7 +384,16 @@ fun ContentScope.OverlayShadeHeaderPartialStateless(
                 SystemIconChip(
                     backgroundColor = chipHighlight.backgroundColor(MaterialTheme.colorScheme),
                     onClick = viewModel::onSystemIconChipClicked,
-                    modifier = Modifier.bouncy(isEnabled = viewModel.animateSystemIconChipBounce),
+                    modifier =
+                        Modifier.bouncy(
+                            isEnabled = viewModel.animateSystemIconChipBounce,
+                            onBoundsChange = { bounds ->
+                                viewModel.onDualShadeEducationElementBoundsChange(
+                                    element = DualShadeEducationElement.QuickSettings,
+                                    bounds = bounds,
+                                )
+                            },
+                        ),
                 ) {
                     val paddingEnd =
                         with(LocalDensity.current) {
@@ -805,7 +827,10 @@ private fun ContentScope.PrivacyChip(
 
 /** Modifies the given [Modifier] such that it shows a looping vertical bounce animation. */
 @Composable
-private fun Modifier.bouncy(isEnabled: Boolean): Modifier {
+private fun Modifier.bouncy(
+    isEnabled: Boolean,
+    onBoundsChange: (bounds: IntRect) -> Unit,
+): Modifier {
     val density = LocalDensity.current
     val animatable = remember { Animatable(0f) }
     LaunchedEffect(isEnabled) {
@@ -855,7 +880,18 @@ private fun Modifier.bouncy(isEnabled: Boolean): Modifier {
         }
     }
 
-    return this.offset { IntOffset(x = 0, y = animatable.value.roundToInt()) }
+    return this.thenIf(isEnabled) {
+        Modifier.offset { IntOffset(x = 0, y = animatable.value.roundToInt()) }
+            .onGloballyPositioned { coordinates ->
+                val offset = coordinates.positionInWindow()
+                onBoundsChange(
+                    IntRect(
+                        offset = IntOffset(x = offset.x.roundToInt(), y = offset.y.roundToInt()),
+                        size = coordinates.size,
+                    )
+                )
+            }
+    }
 }
 
 private fun shouldUseExpandedFormat(state: TransitionState): Boolean {

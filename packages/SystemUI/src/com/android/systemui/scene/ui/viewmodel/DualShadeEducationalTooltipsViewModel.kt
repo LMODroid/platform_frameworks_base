@@ -17,36 +17,24 @@
 package com.android.systemui.scene.ui.viewmodel
 
 import android.content.Context
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.IntRect
 import com.android.systemui.lifecycle.ExclusiveActivatable
-import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.res.R
 import com.android.systemui.scene.domain.interactor.DualShadeEducationInteractor
 import com.android.systemui.scene.domain.model.DualShadeEducationModel
-import com.android.systemui.statusbar.ui.SystemBarUtilsState
+import com.android.systemui.scene.shared.model.DualShadeEducationElement
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 class DualShadeEducationalTooltipsViewModel
 @AssistedInject
 constructor(
-    systemBarUtilsState: SystemBarUtilsState,
     private val interactor: DualShadeEducationInteractor,
     @Assisted private val context: Context,
 ) : ExclusiveActivatable() {
-
-    private val hydrator = Hydrator("DualShadeEducationalTooltipsViewModel.hydrator")
-
-    private val statusBarHeight: Int by
-        hydrator.hydratedStateOf(
-            traceName = "statusBarHeight",
-            source = systemBarUtilsState.statusBarHeight,
-            initialValue = 0,
-        )
 
     /**
      * The tooltip to show, or `null` if none should be shown.
@@ -58,26 +46,22 @@ constructor(
     val visibleTooltip: DualShadeEducationalTooltipViewModel?
         get() =
             when (interactor.education) {
-                DualShadeEducationModel.TooltipForNotificationsShade ->
-                    notificationsTooltip(statusBarHeight)
-                DualShadeEducationModel.TooltipForQuickSettingsShade ->
-                    quickSettingsTooltip(statusBarHeight)
+                DualShadeEducationModel.TooltipForNotificationsShade -> notificationsTooltip()
+                DualShadeEducationModel.TooltipForQuickSettingsShade -> quickSettingsTooltip()
                 else -> null
             }
 
-    override suspend fun onActivated(): Nothing = coroutineScope {
-        launch { hydrator.activate() }
-        awaitCancellation()
-    }
+    override suspend fun onActivated(): Nothing = coroutineScope { awaitCancellation() }
 
-    private fun notificationsTooltip(statusBarHeight: Int): DualShadeEducationalTooltipViewModel {
+    private fun notificationsTooltip(): DualShadeEducationalTooltipViewModel? {
+        val bounds =
+            interactor.elementBounds[DualShadeEducationElement.Notifications] ?: return null
+
         return object : DualShadeEducationalTooltipViewModel {
             override val text: String =
                 context.getString(R.string.dual_shade_educational_tooltip_notifs)
 
-            override val isAlignedToStart: Boolean = true
-
-            override val anchorBottomY: Int = statusBarHeight
+            override val anchorBounds: IntRect = bounds
 
             override val onShown: () -> Unit = interactor::recordNotificationsShadeTooltipImpression
 
@@ -85,14 +69,15 @@ constructor(
         }
     }
 
-    private fun quickSettingsTooltip(statusBarHeight: Int): DualShadeEducationalTooltipViewModel {
+    private fun quickSettingsTooltip(): DualShadeEducationalTooltipViewModel? {
+        val bounds =
+            interactor.elementBounds[DualShadeEducationElement.QuickSettings] ?: return null
+
         return object : DualShadeEducationalTooltipViewModel {
             override val text: String =
                 context.getString(R.string.dual_shade_educational_tooltip_qs)
 
-            override val isAlignedToStart: Boolean = false
-
-            override val anchorBottomY: Int = statusBarHeight
+            override val anchorBounds: IntRect = bounds
 
             override val onShown: () -> Unit = interactor::recordQuickSettingsShadeTooltipImpression
 

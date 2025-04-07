@@ -27,6 +27,7 @@ import android.view.ViewGroup
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.IntRect
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.compose.animation.scene.OverlayKey
 import com.android.systemui.battery.BatteryMeterViewController
@@ -41,6 +42,7 @@ import com.android.systemui.res.R
 import com.android.systemui.scene.domain.interactor.DualShadeEducationInteractor
 import com.android.systemui.scene.domain.interactor.SceneInteractor
 import com.android.systemui.scene.domain.model.DualShadeEducationModel
+import com.android.systemui.scene.shared.model.DualShadeEducationElement
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.TransitionKeys.SlightlyFasterShadeCollapse
 import com.android.systemui.shade.ShadeDisplayAware
@@ -272,6 +274,13 @@ constructor(
             Intent(Settings.ACTION_WIRELESS_SETTINGS),
             0,
         )
+    }
+
+    fun onDualShadeEducationElementBoundsChange(
+        element: DualShadeEducationElement,
+        bounds: IntRect,
+    ) {
+        dualShadeEducationInteractor.onDualShadeEducationElementBoundsChange(element, bounds)
     }
 
     /** Represents the background highlight of a header icons chip. */

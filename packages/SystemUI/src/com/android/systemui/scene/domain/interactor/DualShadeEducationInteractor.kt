@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.unit.IntRect
 import com.android.compose.animation.scene.OverlayKey
 import com.android.systemui.CoreStartable
 import com.android.systemui.dagger.SysUISingleton
@@ -29,6 +30,7 @@ import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.scene.data.repository.DualShadeEducationRepository
 import com.android.systemui.scene.domain.model.DualShadeEducationModel
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
+import com.android.systemui.scene.shared.model.DualShadeEducationElement
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
 import com.android.systemui.shade.shared.model.ShadeMode
@@ -63,6 +65,9 @@ constructor(
     /** The education that's still needed, regardless of the tooltip that needs to be shown. */
     var education: DualShadeEducationModel by mutableStateOf(DualShadeEducationModel.None)
         private set
+
+    val elementBounds: Map<DualShadeEducationElement, IntRect>
+        get() = repository.elementBounds
 
     override fun start() {
         if (!SceneContainerFlag.isEnabled) {
@@ -106,6 +111,13 @@ constructor(
                 education = DualShadeEducationModel.None
             }
         }
+    }
+
+    fun onDualShadeEducationElementBoundsChange(
+        element: DualShadeEducationElement,
+        bounds: IntRect,
+    ) {
+        repository.setElementBounds(element, bounds)
     }
 
     /** Keeps the repository data fresh for the selected user. */

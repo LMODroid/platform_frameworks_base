@@ -14,18 +14,9 @@
  * limitations under the License.
  */
 
-package com.android.systemui.scene.ui.viewmodel
+package com.android.systemui.scene.shared.model
 
-import androidx.compose.runtime.Stable
-import androidx.compose.ui.unit.IntRect
-
-@Stable
-interface DualShadeEducationalTooltipViewModel {
-    val text: String
-    /** Bounds of the UI element underneath which the tooltip should be anchored. */
-    val anchorBounds: IntRect
-    /** Notifies that the tooltip has been shown to the user. The UI should call this. */
-    val onShown: () -> Unit
-    /** Notifies that the tooltip has been dismissed by the user. The UI should call this. */
-    val onDismissed: () -> Unit
+enum class DualShadeEducationElement {
+    Notifications,
+    QuickSettings,
 }

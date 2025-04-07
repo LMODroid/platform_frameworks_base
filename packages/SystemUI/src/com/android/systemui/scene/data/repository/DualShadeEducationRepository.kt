@@ -18,8 +18,11 @@ package com.android.systemui.scene.data.repository
 
 import android.annotation.UserIdInt
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateMap
+import androidx.compose.ui.unit.IntRect
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.android.systemui.common.data.datastore.DataStoreWrapper
@@ -27,6 +30,7 @@ import com.android.systemui.common.data.datastore.DataStoreWrapperFactory
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.scene.data.model.DualShadeEducationImpressionModel
+import com.android.systemui.scene.shared.model.DualShadeEducationElement
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -53,6 +57,14 @@ constructor(
     var impressions: DualShadeEducationImpressionModel by
         mutableStateOf(DualShadeEducationImpressionModel())
         private set
+
+    private val _elementBounds: SnapshotStateMap<DualShadeEducationElement, IntRect> =
+        mutableStateMapOf(
+            DualShadeEducationElement.Notifications to IntRect.Zero,
+            DualShadeEducationElement.QuickSettings to IntRect.Zero,
+        )
+    val elementBounds: Map<DualShadeEducationElement, IntRect>
+        get() = _elementBounds
 
     private var dataStore: DataStoreWrapper? = null
     private var hydrationJob: Job? = null
@@ -104,6 +116,10 @@ constructor(
 
     suspend fun setEverShownQuickSettingsTooltip(value: Boolean) {
         persist(Keys.EverShownQuickSettingsTooltip, value)
+    }
+
+    fun setElementBounds(element: DualShadeEducationElement, bounds: IntRect) {
+        _elementBounds[element] = bounds
     }
 
     /** Each time data store data changes, passes it to the given [receiver]. */

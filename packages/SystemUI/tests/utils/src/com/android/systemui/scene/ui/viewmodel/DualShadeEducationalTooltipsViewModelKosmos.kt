@@ -20,13 +20,11 @@ import android.content.Context
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.scene.domain.interactor.dualShadeEducationInteractor
-import com.android.systemui.statusbar.ui.systemBarUtilsState
 
 val Kosmos.dualShadeEducationalTooltipsViewModelFactory by Fixture {
     object : DualShadeEducationalTooltipsViewModel.Factory {
         override fun create(context: Context): DualShadeEducationalTooltipsViewModel {
             return DualShadeEducationalTooltipsViewModel(
-                systemBarUtilsState = systemBarUtilsState,
                 interactor = dualShadeEducationInteractor,
                 context = context,
             )
