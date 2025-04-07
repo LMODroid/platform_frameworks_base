@@ -16,6 +16,7 @@
 
 package com.android.systemui.kairos.internal
 
+import com.android.systemui.kairos.CoalescingPolicy
 import com.android.systemui.kairos.State
 import com.android.systemui.kairos.internal.util.HeteroMap
 import com.android.systemui.kairos.internal.util.logDuration
@@ -40,7 +41,8 @@ import kotlinx.coroutines.yield
 
 private val nextNetworkId = AtomicLong()
 
-internal class Network(val coroutineScope: CoroutineScope) : NetworkScope {
+internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy: CoalescingPolicy) :
+    NetworkScope {
 
     override val networkId: Any = nextNetworkId.getAndIncrement()
 
@@ -103,10 +105,21 @@ internal class Network(val coroutineScope: CoroutineScope) : NetworkScope {
         for (first in inputScheduleChan) {
             // Drain and conflate all transaction requests into a single transaction
             actions.add(first)
-            while (true) {
-                yield()
-                val func = inputScheduleChan.tryReceive().getOrNull() ?: break
-                actions.add(func)
+            when (coalescingPolicy) {
+                CoalescingPolicy.None -> {}
+                CoalescingPolicy.Normal -> {
+                    while (true) {
+                        val func = inputScheduleChan.tryReceive().getOrNull() ?: break
+                        actions.add(func)
+                    }
+                }
+                CoalescingPolicy.Eager -> {
+                    while (true) {
+                        yield()
+                        val func = inputScheduleChan.tryReceive().getOrNull() ?: break
+                        actions.add(func)
+                    }
+                }
             }
             transactionMutex.withLock {
                 val e = epoch

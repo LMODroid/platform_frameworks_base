@@ -229,15 +229,49 @@ class RootKairosNetwork
 internal constructor(private val network: Network, private val scope: CoroutineScope, job: Job) :
     Job by job, KairosNetwork by LocalNetwork(network, scope, lazyOf(emptyEvents))
 
-/** Constructs a new [RootKairosNetwork] in the given [CoroutineScope]. */
+/** Constructs a new [RootKairosNetwork] in the given [CoroutineScope] and [CoalescingPolicy]. */
 @ExperimentalKairosApi
 fun CoroutineScope.launchKairosNetwork(
-    context: CoroutineContext = EmptyCoroutineContext
+    context: CoroutineContext = EmptyCoroutineContext,
+    coalescingPolicy: CoalescingPolicy = CoalescingPolicy.Normal,
 ): RootKairosNetwork {
     val scope = childScope(context)
-    val network = Network(scope)
+    val network = Network(scope, coalescingPolicy)
     scope.launch(CoroutineName("launchKairosNetwork scheduler")) { network.runInputScheduler() }
     return RootKairosNetwork(network, scope, scope.coroutineContext.job)
+}
+
+/** Constructs a new [RootKairosNetwork] in the given [CoroutineScope] and [CoalescingPolicy]. */
+fun KairosNetwork(
+    scope: CoroutineScope,
+    coalescingPolicy: CoalescingPolicy = CoalescingPolicy.Normal,
+): RootKairosNetwork = scope.launchKairosNetwork(coalescingPolicy = coalescingPolicy)
+
+/** Configures how multiple input events are processed by the network. */
+enum class CoalescingPolicy {
+    /**
+     * Each input event is processed in its own transaction. This policy has the least overhead but
+     * can cause backpressure if the network becomes flooded with inputs.
+     */
+    None,
+    /**
+     * Input events are processed as they appear. Compared to [Eager], this policy will not
+     * internally [yield][kotlinx.coroutines.yield] to allow more inputs to be processed before
+     * starting a transaction. This means that if there is a race between an input and a transaction
+     * occurring, it is beholden to the
+     * [CoroutineDispatcher][kotlinx.coroutines.CoroutineDispatcher] to determine the ordering.
+     *
+     * Note that any input events which miss being included in a transaction will be immediately
+     * scheduled for a subsequent transaction.
+     */
+    Normal,
+    /**
+     * Input events are processed eagerly. Compared to [Normal], this policy will internally
+     * [yield][kotlinx.coroutines.yield] to allow for as many input events to be processed as
+     * possible. This can be useful for noisy networks where many inputs can be handled
+     * simultaneously, potentially improving throughput.
+     */
+    Eager,
 }
 
 @ExperimentalKairosApi
