@@ -18,12 +18,12 @@ package com.android.systemui.kairos
 
 import com.android.systemui.kairos.internal.BuildScopeImpl
 import com.android.systemui.kairos.internal.Network
+import com.android.systemui.kairos.internal.NoScope
 import com.android.systemui.kairos.internal.StateScopeImpl
 import com.android.systemui.kairos.internal.util.awaitCancellationAndThen
 import com.android.systemui.kairos.internal.util.childScope
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +34,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 
 /** Marks APIs that are still **experimental** and shouldn't be used in general production code. */
 @RequiresOptIn(
@@ -68,7 +67,7 @@ interface KairosNetwork {
     /** Returns a [CoalescingMutableEvents] that can emit values into this [KairosNetwork]. */
     fun <In, Out> coalescingMutableEvents(
         coalesce: (old: Out, new: In) -> Out,
-        getInitialValue: () -> Out,
+        getInitialValue: KairosScope.() -> Out,
     ): CoalescingMutableEvents<In, Out>
 
     /** Returns a [MutableState] that can emit values into this [KairosNetwork]. */
@@ -116,7 +115,7 @@ fun <In, Out> CoalescingMutableEvents(
 fun <In, Out> CoalescingMutableEvents(
     network: KairosNetwork,
     coalesce: (old: Out, new: In) -> Out,
-    getInitialValue: () -> Out,
+    getInitialValue: KairosScope.() -> Out,
 ): CoalescingMutableEvents<In, Out> = network.coalescingMutableEvents(coalesce, getInitialValue)
 
 /** Returns a [CoalescingMutableEvents] that can emit values into this [KairosNetwork]. */
@@ -197,13 +196,13 @@ internal class LocalNetwork(
 
     override fun <In, Out> coalescingMutableEvents(
         coalesce: (old: Out, new: In) -> Out,
-        getInitialValue: () -> Out,
+        getInitialValue: KairosScope.() -> Out,
     ): CoalescingMutableEvents<In, Out> =
         CoalescingMutableEvents(
             null,
             coalesce = { old, new -> coalesce(old.value, new) },
             network,
-            getInitialValue,
+            { NoScope.getInitialValue() },
         )
 
     override fun <T> conflatedMutableEvents(): CoalescingMutableEvents<T, T> =
@@ -307,7 +306,7 @@ fun <In, Out> HasNetwork.CoalescingMutableEvents(
 @ExperimentalKairosApi
 fun <In, Out> HasNetwork.CoalescingMutableEvents(
     coalesce: (old: Out, new: In) -> Out,
-    getInitialValue: () -> Out,
+    getInitialValue: KairosScope.() -> Out,
 ): CoalescingMutableEvents<In, Out> =
     CoalescingMutableEvents(kairosNetwork, coalesce, getInitialValue)
 

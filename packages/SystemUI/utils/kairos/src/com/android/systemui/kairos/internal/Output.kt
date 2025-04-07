@@ -16,13 +16,7 @@
 
 package com.android.systemui.kairos.internal
 
-import kotlin.coroutines.ContinuationInterceptor
-
-internal class Output<A>(
-    val interceptor: ContinuationInterceptor? = null,
-    val onDeath: () -> Unit = {},
-    val onEmit: EvalScope.(A) -> Unit,
-) {
+internal class Output<A>(val onDeath: () -> Unit = {}, val onEmit: EvalScope.(A) -> Unit) {
 
     val schedulable = Schedulable.O(this)
 

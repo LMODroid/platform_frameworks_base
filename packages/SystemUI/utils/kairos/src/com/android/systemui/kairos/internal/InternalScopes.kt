@@ -20,6 +20,7 @@ import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.Events
 import com.android.systemui.kairos.StateScope
 import com.android.systemui.kairos.TransactionScope
+import kotlin.coroutines.ContinuationInterceptor
 
 internal interface InitScope {
     val networkId: Any
@@ -47,6 +48,8 @@ internal interface NetworkScope : InitScope {
     val transactionStore: TransactionStore
 
     fun scheduleOutput(output: Output<*>)
+
+    fun scheduleDispatchedOutput(interceptor: ContinuationInterceptor?, block: suspend () -> Unit)
 
     fun scheduleMuxMover(muxMover: MuxDeferredNode<*, *, *>)
 

@@ -27,9 +27,11 @@ import com.android.systemui.kairos.Events
 import com.android.systemui.kairos.EventsInit
 import com.android.systemui.kairos.KairosCoroutineScope
 import com.android.systemui.kairos.KairosNetwork
+import com.android.systemui.kairos.KairosScope
 import com.android.systemui.kairos.KeyedEvents
 import com.android.systemui.kairos.LocalNetwork
 import com.android.systemui.kairos.MutableEvents
+import com.android.systemui.kairos.TransactionEffectScope
 import com.android.systemui.kairos.TransactionScope
 import com.android.systemui.kairos.groupByKey
 import com.android.systemui.kairos.init
@@ -45,6 +47,7 @@ import com.android.systemui.kairos.util.map
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
@@ -75,7 +78,7 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         )
 
     override fun <In, Out> coalescingEvents(
-        getInitialValue: () -> Out,
+        getInitialValue: KairosScope.() -> Out,
         coalesce: (old: Out, new: In) -> Out,
         builder: suspend CoalescingEventProducerScope<In>.() -> Unit,
     ): Events<Out> =
@@ -83,11 +86,11 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
             constructEvents = { inputNode ->
                 val events =
                     CoalescingMutableEvents(
-                        null,
+                        name = null,
                         coalesce = { old, new: In -> coalesce(old.value, new) },
-                        network,
-                        getInitialValue,
-                        inputNode,
+                        network = network,
+                        getInitialValue = { NoScope.getInitialValue() },
+                        impl = inputNode,
                     )
                 events to CoalescingEventProducerScope<In> { value -> events.emit(value) }
             },
@@ -111,76 +114,25 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
 
     override fun <A> Events<A>.observe(
         coroutineContext: CoroutineContext,
-        block: EffectScope.(A) -> Unit,
+        block: suspend EffectScope.(A) -> Unit,
     ): DisposableHandle {
-        val subRef = AtomicReference<Maybe<Output<A>>?>(null)
-        val childScope = coroutineScope.childScope()
-        var cancelHandle: DisposableHandle? = null
-        val handle = DisposableHandle {
-            cancelHandle?.dispose()
-            subRef.getAndSet(Absent)?.let { output ->
-                if (output is Present) {
-                    @Suppress("DeferredResultUnused")
-                    network.transaction("observeEffect cancelled") {
-                        scheduleDeactivation(output.value)
-                    }
-                }
-            }
+        val interceptor = coroutineContext[ContinuationInterceptor]
+        return observeInternal(coroutineContext) { effectScope, output ->
+            scheduleDispatchedOutput(interceptor = interceptor) { effectScope.block(output) }
         }
-        // When our scope is cancelled, deactivate this observer.
-        cancelHandle = childScope.coroutineContext.job.invokeOnCompletion { handle.dispose() }
-        val localNetwork = LocalNetwork(network, childScope, stateScope.endSignalLazy)
-        val outputNode =
-            Output<A>(
-                interceptor =
-                    coroutineContext[ContinuationInterceptor]
-                        ?: coroutineScope.coroutineContext[ContinuationInterceptor],
-                onDeath = { subRef.set(Absent) },
-                onEmit = { output ->
-                    if (subRef.get() is Present) {
-                        // Not cancelled, safe to emit
-                        val scope =
-                            object : EffectScope, TransactionScope by this {
-                                override fun <R> async(
-                                    context: CoroutineContext,
-                                    start: CoroutineStart,
-                                    block: suspend KairosCoroutineScope.() -> R,
-                                ): Deferred<R> =
-                                    childScope.async(context, start) {
-                                        object : KairosCoroutineScope, CoroutineScope by this {
-                                                override val kairosNetwork: KairosNetwork
-                                                    get() = localNetwork
-                                            }
-                                            .block()
-                                    }
-
-                                override val kairosNetwork: KairosNetwork
-                                    get() = localNetwork
-                            }
-                        scope.block(output)
-                    }
-                },
-            )
-        // Defer, in case any EventsLoops / StateLoops still need to be set
-        deferAction {
-            // Check for immediate cancellation
-            if (subRef.get() != null) return@deferAction
-            this@observe.takeUntil(endSignal)
-                .init
-                .connect(evalScope = stateScope.evalScope)
-                .activate(evalScope = stateScope.evalScope, outputNode.schedulable)
-                ?.let { (conn, needsEval) ->
-                    outputNode.upstream = conn
-                    if (!subRef.compareAndSet(null, Maybe.present(outputNode))) {
-                        // Job's already been cancelled, schedule deactivation
-                        scheduleDeactivation(outputNode)
-                    } else if (needsEval) {
-                        outputNode.schedule(0, evalScope = stateScope.evalScope)
-                    }
-                } ?: run { childScope.cancel() }
-        }
-        return handle
     }
+
+    override fun <A> Events<A>.observeSync(
+        block: TransactionEffectScope.(A) -> Unit
+    ): DisposableHandle =
+        observeInternal(EmptyCoroutineContext) { effectScope, output ->
+            val scope =
+                object :
+                    TransactionEffectScope,
+                    TransactionScope by this@observeInternal,
+                    EffectScope by effectScope {}
+            scope.block(output)
+        }
 
     override fun <A, B> Events<A>.mapBuild(transform: BuildScope.(A) -> B): Events<B> {
         val childScope = coroutineScope.childScope()
@@ -226,9 +178,94 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         val changes: Events<Map<K, Maybe<A>>> =
             EventsInit(constInit("applyLatestForKey", changesNode.cached()))
         // Ensure effects are observed; otherwise init will stay alive longer than expected
-        changes.observe()
+        changes.observeSync()
         return changes to DeferredValue(initOut)
     }
+
+    private fun <A> Events<A>.observeInternal(
+        context: CoroutineContext,
+        block: EvalScope.(EffectScope, A) -> Unit,
+    ): DisposableHandle {
+        val subRef = AtomicReference<Maybe<Output<A>>?>(null)
+        val childScope: CoroutineScope = coroutineScope.childScope(context)
+        var cancelHandle: DisposableHandle? = null
+        val handle = DisposableHandle {
+            cancelHandle?.dispose()
+            subRef.getAndSet(Absent)?.let { output ->
+                if (output is Present) {
+                    @Suppress("DeferredResultUnused")
+                    network.transaction("observeEffect cancelled") {
+                        scheduleDeactivation(output.value)
+                    }
+                }
+            }
+        }
+        // When our scope is cancelled, deactivate this observer.
+        cancelHandle = childScope.coroutineContext.job.invokeOnCompletion { handle.dispose() }
+        val effectScope: EffectScope = effectScope(childScope)
+        val outputNode =
+            Output<A>(
+                onDeath = { subRef.set(Absent) },
+                onEmit = onEmit@{ output ->
+                        if (subRef.get() !is Present) return@onEmit
+                        // Not cancelled, safe to emit]
+                        block(effectScope, output)
+                    },
+            )
+        // Defer, in case any EventsLoops / StateLoops still need to be set
+        deferAction {
+            // Check for immediate cancellation
+            if (subRef.get() != null) return@deferAction
+            this@observeInternal.takeUntil(endSignal)
+                .init
+                .connect(evalScope = stateScope.evalScope)
+                .activate(evalScope = stateScope.evalScope, outputNode.schedulable)
+                ?.let { (conn, needsEval) ->
+                    outputNode.upstream = conn
+                    if (!subRef.compareAndSet(null, Maybe.present(outputNode))) {
+                        // Job's already been cancelled, schedule deactivation
+                        scheduleDeactivation(outputNode)
+                    } else if (needsEval) {
+                        outputNode.schedule(0, evalScope = stateScope.evalScope)
+                    }
+                } ?: run { childScope.cancel() }
+        }
+        return handle
+    }
+
+    private fun effectScope(childScope: CoroutineScope) =
+        object : EffectScope {
+            override fun <R> async(
+                context: CoroutineContext,
+                start: CoroutineStart,
+                block: suspend KairosCoroutineScope.() -> R,
+            ): Deferred<R> =
+                childScope.async(context, start) newScope@{
+                    val newEndSignal: Events<Unit> =
+                        this@BuildScopeImpl.newStopEmitter("EffectScope.async").apply {
+                            this@newScope.invokeOnCancel { emit(Unit) }
+                        }
+                    val localNetwork =
+                        LocalNetwork(
+                            network = this@BuildScopeImpl.network,
+                            scope = this@newScope,
+                            endSignalLazy =
+                                lazy { mergeLeft(this@BuildScopeImpl.endSignal, newEndSignal) },
+                        )
+                    val scope =
+                        object : KairosCoroutineScope, CoroutineScope by this@newScope {
+                            override val kairosNetwork: KairosNetwork = localNetwork
+                        }
+                    scope.block()
+                }
+
+            override val kairosNetwork: KairosNetwork =
+                LocalNetwork(
+                    network = this@BuildScopeImpl.network,
+                    scope = childScope,
+                    endSignalLazy = this@BuildScopeImpl.stateScope.endSignalLazy,
+                )
+        }
 
     private fun <A, T : Events<A>, S> buildEvents(
         name: String? = null,
@@ -293,7 +330,7 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
                         (newCoroutineScope.coroutineContext.job as CompletableJob).complete()
                     }
                 )
-                endSignalOnce.observe { newCoroutineScope.cancel() }
+                endSignalOnce.observeSync { newCoroutineScope.cancel() }
             }
     }
 

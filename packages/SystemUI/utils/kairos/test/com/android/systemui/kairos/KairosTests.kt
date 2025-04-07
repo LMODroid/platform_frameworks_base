@@ -43,7 +43,7 @@ class KairosTests {
     fun basic() = runFrpTest { network ->
         val emitter = network.mutableEvents<Int>()
         var result: Int? = null
-        activateSpec(network) { emitter.observe { result = it } }
+        activateSpec(network) { emitter.observeSync { result = it } }
         runCurrent()
         emitter.emit(3)
         runCurrent()
@@ -246,8 +246,8 @@ class KairosTests {
 
             val amts = eAmt.filter { amt -> amt >= 0 }
 
-            amts.observe { currentAmt = it }
-            eSold.observe { wasSold = true }
+            amts.observeSync { currentAmt = it }
+            eSold.observeSync { wasSold = true }
 
             eSold.nextDeferred()
         }
@@ -479,7 +479,7 @@ class KairosTests {
     fun switchIndirect() = runFrpTest { network ->
         val emitter = network.mutableEvents<Unit>()
         activateSpec(network) {
-            emptyEvents.map { emitter.map { 1 } }.flatten().map { "$it" }.observe()
+            emptyEvents.map { emitter.map { 1 } }.flatten().map { "$it" }.observeSync()
         }
         runCurrent()
     }
@@ -884,7 +884,7 @@ class KairosTests {
         val state =
             activateSpecWithResult(network) {
                 val state = combine(a.holdState(0), b.holdState(0)) { a, b -> Pair(a, b) }
-                state.changes.observe { observed = it }
+                state.changes.observeSync { observed = it }
                 state
             }
         assertEquals(0 to 0, network.transact { state.sample() })
@@ -953,7 +953,7 @@ class KairosTests {
             activateSpecWithResult(network) {
                 val tres =
                     merge(e2.map { 1 }, e2.map { 2 }, transformCoincidence = { a, b -> a + b })
-                tres.observeBuild()
+                tres.observeSync()
                 val switch = emitter.map { tres }.flatten()
                 merge(switch, e2.map { null }, transformCoincidence = { a, _ -> a })
                     .filterNotNull()
@@ -1084,7 +1084,7 @@ class KairosTests {
     fun inputEventsCompleted() = runFrpTest { network ->
         val results = mutableListOf<Int>()
         val e = network.mutableEvents<Int>()
-        activateSpec(network) { e.nextOnly().observe { results.add(it) } }
+        activateSpec(network) { e.nextOnly().observeSync { results.add(it) } }
         runCurrent()
 
         e.emit(10)
@@ -1317,7 +1317,7 @@ class KairosTests {
         var observedCount: Int? = null
         activateSpec(network) {
             val (c, j) = asyncScope { input.foldState(0) { _, x -> x + 1 } }
-            deferredBuildScopeAction { c.value.observe { observedCount = it } }
+            deferredBuildScopeAction { c.value.observeSync { observedCount = it } }
         }
         runCurrent()
         assertEquals(0, observedCount)
@@ -1345,7 +1345,7 @@ class KairosTests {
                     effectRunning = false
                 }
             }
-            merge(emptyEvents, input.nextOnly()).observe {
+            merge(emptyEvents, input.nextOnly()).observeSync {
                 count++
                 j.cancel()
             }
@@ -1375,13 +1375,13 @@ class KairosTests {
         val specJob =
             activateSpec(network) {
                 val handle =
-                    input.observe {
+                    input.observeSync {
                         launch {
                             runningCount++
                             awaitClose { runningCount-- }
                         }
                     }
-                stopper.nextOnly().observe { handle.dispose() }
+                stopper.nextOnly().observeSync { handle.dispose() }
             }
         runCurrent()
         assertEquals(0, runningCount)
@@ -1410,7 +1410,7 @@ class KairosTests {
         var runningCount = 0
         val specJob =
             activateSpec(network) {
-                input.takeUntil(stopper).observe {
+                input.takeUntil(stopper).observeSync {
                     launch {
                         runningCount++
                         awaitClose { runningCount-- }

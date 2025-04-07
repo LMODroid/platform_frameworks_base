@@ -137,7 +137,7 @@ fun <K, V, U> Incremental<K, V>.mapValues(
  * [loopback] is unset before it is [observed][BuildScope.observe] or
  * [sampled][TransactionScope.sample]. Note that it is safe to invoke
  * [TransactionScope.sampleDeferred] before [loopback] is set, provided the [DeferredValue] is not
- * [queried][KairosScope.get].
+ * [queried][DeferredValue.value].
  */
 @ExperimentalKairosApi
 class IncrementalLoop<K, V>(private val name: String? = null) : Incremental<K, V>() {

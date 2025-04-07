@@ -280,7 +280,7 @@ class MutableState<T> internal constructor(internal val network: Network, initia
  * unset before it is [observed][BuildScope.observe] or [sampled][TransactionScope.sample].
  *
  * Note that it is safe to invoke [TransactionScope.sampleDeferred] before [loopback] is set,
- * provided the returned [DeferredValue] is not [queried][KairosScope.get].
+ * provided the returned [DeferredValue] is not [queried][DeferredValue.value].
  *
  * @sample com.android.systemui.kairos.KairosSamples.stateLoop
  */

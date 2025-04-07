@@ -136,8 +136,9 @@ object MobileIconBinderKairos {
         val roamingSpace = view.requireViewById<Space>(R.id.mobile_roaming_space)
         val dotView = view.requireViewById<StatusBarIconView>(R.id.status_bar_dot)
 
+        val isVisible = viewModel.isVisible.sample()
         effect {
-            view.isVisible = viewModel.isVisible.sample()
+            view.isVisible = isVisible
             iconView.isVisible = true
             launch {
                 view.repeatWhenAttachedToWindow {
@@ -182,6 +183,7 @@ object MobileIconBinderKairos {
                                     oldIcon is SignalIconModel.Cellular &&
                                         newIcon is SignalIconModel.Cellular ->
                                         oldIcon.numberOfLevels != newIcon.numberOfLevels
+
                                     else -> false
                                 }
                             viewModel.verboseLogger?.logBinderReceivedSignalIcon(
@@ -222,20 +224,23 @@ object MobileIconBinderKairos {
                         }
 
                         // Set the network type background
-                        viewModel.networkTypeBackground.observe { background ->
-                            networkTypeContainer.setBackgroundResource(background?.res ?: 0)
 
-                            // Tint will invert when this bit changes
-                            if (background?.res != null) {
-                                networkTypeContainer.backgroundTintList =
-                                    ColorStateList.valueOf(binding.iconTint.sample().tint)
-                                networkTypeView.imageTintList =
-                                    ColorStateList.valueOf(binding.iconTint.sample().contrast)
-                            } else {
-                                networkTypeView.imageTintList =
-                                    ColorStateList.valueOf(binding.iconTint.sample().tint)
+                        viewModel.networkTypeIcon
+                            .mapTransactionally { it to binding.iconTint.sample() }
+                            .observe { (background, iconTintColors) ->
+                                networkTypeContainer.setBackgroundResource(background?.res ?: 0)
+
+                                // Tint will invert when this bit changes
+                                if (background?.res != null) {
+                                    networkTypeContainer.backgroundTintList =
+                                        ColorStateList.valueOf(iconTintColors.tint)
+                                    networkTypeView.imageTintList =
+                                        ColorStateList.valueOf(iconTintColors.contrast)
+                                } else {
+                                    networkTypeView.imageTintList =
+                                        ColorStateList.valueOf(iconTintColors.tint)
+                                }
                             }
-                        }
 
                         // Set the roaming indicator
                         viewModel.roaming.observe { isRoaming ->
@@ -266,25 +271,27 @@ object MobileIconBinderKairos {
                         }
 
                         // Set the tint
-                        binding.iconTint.observe { colors ->
-                            val tint = ColorStateList.valueOf(colors.tint)
-                            val contrast = ColorStateList.valueOf(colors.contrast)
+                        binding.iconTint
+                            .mapTransactionally { it to viewModel.networkTypeBackground.sample() }
+                            .observe { (colors, networkTypeBackground) ->
+                                val tint = ColorStateList.valueOf(colors.tint)
+                                val contrast = ColorStateList.valueOf(colors.contrast)
 
-                            iconView.imageTintList = tint
+                                iconView.imageTintList = tint
 
-                            // If the bg is visible, tint it and use the contrast for the fg
-                            if (viewModel.networkTypeBackground.sample() != null) {
-                                networkTypeContainer.backgroundTintList = tint
-                                networkTypeView.imageTintList = contrast
-                            } else {
-                                networkTypeView.imageTintList = tint
+                                // If the bg is visible, tint it and use the contrast for the fg
+                                if (networkTypeBackground != null) {
+                                    networkTypeContainer.backgroundTintList = tint
+                                    networkTypeView.imageTintList = contrast
+                                } else {
+                                    networkTypeView.imageTintList = tint
+                                }
+
+                                roamingView.imageTintList = tint
+                                activityIn.imageTintList = tint
+                                activityOut.imageTintList = tint
+                                dotView.setDecorColor(colors.tint)
                             }
-
-                            roamingView.imageTintList = tint
-                            activityIn.imageTintList = tint
-                            activityOut.imageTintList = tint
-                            dotView.setDecorColor(colors.tint)
-                        }
 
                         binding.decorTint.observe { tint -> dotView.setDecorColor(tint) }
                     }

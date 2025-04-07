@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.conflate
  */
 @ExperimentalKairosApi
 fun <A> Events<A>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
-    channelFlow { network.activateSpec { observe { trySend(it) } } }.conflate()
+    channelFlow { network.activateSpec { observeSync { trySend(it) } } }.conflate()
 
 /**
  * Returns a cold [Flow] that, when collected, emits from this [State]. [network] is needed to
@@ -34,7 +34,7 @@ fun <A> Events<A>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
  */
 @ExperimentalKairosApi
 fun <A> State<A>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
-    channelFlow { network.activateSpec { observe { trySend(it) } } }.conflate()
+    channelFlow { network.activateSpec { observeSync { trySend(it) } } }.conflate()
 
 /**
  * Returns a cold [Flow] that, when collected, applies this [BuildSpec] in a new transaction in this
@@ -45,7 +45,7 @@ fun <A> State<A>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
 @ExperimentalKairosApi
 @JvmName("eventsSpecToColdConflatedFlow")
 fun <A> BuildSpec<Events<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
-    channelFlow { network.activateSpec { applySpec().observe { trySend(it) } } }.conflate()
+    channelFlow { network.activateSpec { applySpec().observeSync { trySend(it) } } }.conflate()
 
 /**
  * Returns a cold [Flow] that, when collected, applies this [BuildSpec] in a new transaction in this
@@ -56,7 +56,7 @@ fun <A> BuildSpec<Events<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A
 @ExperimentalKairosApi
 @JvmName("stateSpecToColdConflatedFlow")
 fun <A> BuildSpec<State<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
-    channelFlow { network.activateSpec { applySpec().observe { trySend(it) } } }.conflate()
+    channelFlow { network.activateSpec { applySpec().observeSync { trySend(it) } } }.conflate()
 
 /**
  * Returns a cold [Flow] that, when collected, applies this [Transactional] in a new transaction in
@@ -65,7 +65,7 @@ fun <A> BuildSpec<State<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A>
 @ExperimentalKairosApi
 @JvmName("transactionalFlowToColdConflatedFlow")
 fun <A> Transactional<Events<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
-    channelFlow { network.activateSpec { sample().observe { trySend(it) } } }.conflate()
+    channelFlow { network.activateSpec { sample().observeSync { trySend(it) } } }.conflate()
 
 /**
  * Returns a cold [Flow] that, when collected, applies this [Transactional] in a new transaction in
@@ -74,7 +74,7 @@ fun <A> Transactional<Events<A>>.toColdConflatedFlow(network: KairosNetwork): Fl
 @ExperimentalKairosApi
 @JvmName("transactionalStateToColdConflatedFlow")
 fun <A> Transactional<State<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
-    channelFlow { network.activateSpec { sample().observe { trySend(it) } } }.conflate()
+    channelFlow { network.activateSpec { sample().observeSync { trySend(it) } } }.conflate()
 
 /**
  * Returns a cold [Flow] that, when collected, applies this [Stateful] in a new transaction in this
@@ -85,7 +85,7 @@ fun <A> Transactional<State<A>>.toColdConflatedFlow(network: KairosNetwork): Flo
 @ExperimentalKairosApi
 @JvmName("statefulFlowToColdConflatedFlow")
 fun <A> Stateful<Events<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
-    channelFlow { network.activateSpec { applyStateful().observe { trySend(it) } } }.conflate()
+    channelFlow { network.activateSpec { applyStateful().observeSync { trySend(it) } } }.conflate()
 
 /**
  * Returns a cold [Flow] that, when collected, applies this [Transactional] in a new transaction in
@@ -96,4 +96,4 @@ fun <A> Stateful<Events<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A>
 @ExperimentalKairosApi
 @JvmName("statefulStateToColdConflatedFlow")
 fun <A> Stateful<State<A>>.toColdConflatedFlow(network: KairosNetwork): Flow<A> =
-    channelFlow { network.activateSpec { applyStateful().observe { trySend(it) } } }.conflate()
+    channelFlow { network.activateSpec { applyStateful().observeSync { trySend(it) } } }.conflate()

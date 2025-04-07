@@ -20,7 +20,7 @@ import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.State
 import com.android.systemui.kairos.changes
-import com.android.systemui.kairos.effect
+import com.android.systemui.kairos.effectSync
 import com.android.systemui.util.kotlin.pairwiseBy
 import kotlinx.coroutines.flow.Flow
 
@@ -221,13 +221,13 @@ fun <T : Diffable<T>> BuildScope.logDiffsForTable(
     columnPrefix: String = "",
 ) {
     val initialValue = diffableState.sampleDeferred()
-    effect {
+    effectSync {
         // Fully log the initial value to the table.
         tableLogBuffer.logChange(columnPrefix, isInitial = true) { row ->
             initialValue.value.logFull(row)
         }
     }
-    diffableState.changes.observe { newState ->
+    diffableState.changes.observeSync { newState ->
         val prevState = diffableState.sample()
         tableLogBuffer.logDiffs(columnPrefix, prevVal = prevState, newVal = newState)
     }
