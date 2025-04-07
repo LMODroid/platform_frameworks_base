@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.activity.setViewTreeOnBackPressedDispatcherOwner
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.Lifecycle
 import com.android.app.tracing.coroutines.launchTraced as launch
@@ -12,6 +13,7 @@ import com.android.systemui.bouncer.ui.BouncerDialogFactory
 import com.android.systemui.bouncer.ui.composable.BouncerContainer
 import com.android.systemui.bouncer.ui.viewmodel.BouncerContainerViewModel
 import com.android.systemui.bouncer.ui.viewmodel.BouncerOverlayContentViewModel
+import com.android.systemui.compose.modifiers.sysUiResTagContainer
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.lifecycle.WindowLifecycleState
 import com.android.systemui.lifecycle.repeatWhenAttached
@@ -81,7 +83,13 @@ object ComposeBouncerViewBinder {
 
                     view.addView(
                         ComposeView(view.context).apply {
-                            setContent { BouncerContainer(viewModelFactory, dialogFactory) }
+                            setContent {
+                                BouncerContainer(
+                                    viewModelFactory,
+                                    dialogFactory,
+                                    Modifier.sysUiResTagContainer(),
+                                )
+                            }
                         }
                     )
                     awaitCancellation()

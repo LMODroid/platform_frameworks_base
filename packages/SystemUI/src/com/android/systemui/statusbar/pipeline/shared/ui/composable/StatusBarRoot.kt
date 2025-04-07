@@ -39,6 +39,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.theme.PlatformTheme
 import com.android.keyguard.AlphaOptimizedLinearLayout
+import com.android.systemui.compose.modifiers.sysUiResTagContainer
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager
 import com.android.systemui.media.controls.ui.view.MediaHost
@@ -115,6 +116,7 @@ constructor(
                     mediaHierarchyManager = mediaHierarchyManager,
                     mediaHost = mediaHost,
                     onViewCreated = andThen,
+                    modifier = Modifier.sysUiResTagContainer(),
                 )
             }
         }
@@ -148,6 +150,7 @@ fun StatusBarRoot(
     mediaHierarchyManager: MediaHierarchyManager,
     mediaHost: MediaHost,
     onViewCreated: (ViewGroup) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val displayId = parent.context.displayId
     val statusBarViewModel =
@@ -161,7 +164,7 @@ fun StatusBarRoot(
             null
         }
 
-    Box(Modifier.fillMaxSize()) {
+    Box(modifier.fillMaxSize()) {
         // TODO(b/364360986): remove this before rolling the flag forward
         if (StatusBarRootModernization.SHOW_DISAMBIGUATION) {
             Disambiguation(viewModel = statusBarViewModel)

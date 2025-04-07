@@ -33,12 +33,13 @@ import com.android.systemui.lifecycle.rememberViewModel
 fun BouncerContainer(
     viewModelFactory: BouncerOverlayContentViewModel.Factory,
     dialogFactory: BouncerDialogFactory,
+    modifier: Modifier = Modifier,
 ) {
     PlatformTheme {
         val backgroundColor = MaterialTheme.colorScheme.surface
 
         val bouncerViewModel = rememberViewModel("BouncerContainer") { viewModelFactory.create() }
-        Box {
+        Box(modifier) {
             Canvas(Modifier.fillMaxSize()) { drawRect(color = backgroundColor) }
 
             // Separate the bouncer content into a reusable composable that doesn't have any
