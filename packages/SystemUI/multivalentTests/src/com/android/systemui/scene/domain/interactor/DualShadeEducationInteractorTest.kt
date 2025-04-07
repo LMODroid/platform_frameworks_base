@@ -66,21 +66,13 @@ class DualShadeEducationInteractorTest(private val forOverlay: OverlayKey) : Sys
             // No education before the delay.
             assertEducation(DualShadeEducationModel.None)
 
-            // SHOW THE HINT
-            advanceTimeBy(DualShadeEducationInteractor.HINT_APPEARANCE_DELAY_MS - 1)
+            // SHOW EDUCATION
+            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS - 1)
             // No education because didn't wait quite long enough yet.
             assertEducation(DualShadeEducationModel.None)
             advanceTimeBy(1)
-            // Expected hint after the full delay.
-            assertEducation(expectedHint(forOverlay))
-
-            // SHOW THE TOOLTIP
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS - 1)
-            // Still showing the hint because didn't wait quite long enough yet.
-            assertEducation(expectedHint(forOverlay))
-            advanceTimeBy(1)
-            // Expected tooltip after the full delay.
-            assertEducation(expectedTooltip(forOverlay))
+            // Expected education after the full delay.
+            assertEducation(expectedEducation(forOverlay))
 
             // UI reports impression and dismissal of the tooltip.
             when (forOverlay) {
@@ -100,55 +92,24 @@ class DualShadeEducationInteractorTest(private val forOverlay: OverlayKey) : Sys
             hideOverlay(otherOverlay)
             assertEducation(DualShadeEducationModel.None)
             showOverlay(otherOverlay)
-            advanceTimeBy(DualShadeEducationInteractor.HINT_APPEARANCE_DELAY_MS)
-            // No hint as it was already shown to the user.
-            assertEducation(DualShadeEducationModel.None)
             advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
-            // No hint or tooltip as it was already shown to the user.
+            // No education as it was already shown to the user.
             assertEducation(DualShadeEducationModel.None)
         }
 
     @Test
-    fun otherOverlayHiddenBeforeHint_noEducation() =
+    fun otherOverlayHiddenBeforeEducation_noEducation() =
         kosmos.runTest {
             val otherOverlay = otherOverlay(forOverlay)
             showOverlay(otherOverlay)
             // No tooltip before the delay.
             assertEducation(DualShadeEducationModel.None)
 
-            advanceTimeBy(DualShadeEducationInteractor.HINT_APPEARANCE_DELAY_MS - 1)
-            // No hint because didn't wait quite long enough yet.
+            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS - 1)
+            // No education because didn't wait quite long enough yet.
             assertEducation(DualShadeEducationModel.None)
 
             // Overlay hidden before the delay elapses.
-            hideOverlay(otherOverlay)
-            assertEducation(DualShadeEducationModel.None)
-
-            advanceTimeBy(1)
-            // Waited the entire delay, but the overlay was already hidden.
-            assertEducation(DualShadeEducationModel.None)
-            // Even waiting for the tooltip doesn't show anything.
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
-            assertEducation(DualShadeEducationModel.None)
-        }
-
-    @Test
-    fun otherOverlayHiddenBeforeTooltipDelay_noEducation() =
-        kosmos.runTest {
-            val otherOverlay = otherOverlay(forOverlay)
-            showOverlay(otherOverlay)
-            // No tooltip before the delay.
-            assertEducation(DualShadeEducationModel.None)
-
-            advanceTimeBy(DualShadeEducationInteractor.HINT_APPEARANCE_DELAY_MS)
-            // Showing hint.
-            assertEducation(expectedHint(forOverlay))
-
-            advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS - 1)
-            // Still showing hint as the tooltip delay isn't over.
-            assertEducation(expectedHint(forOverlay))
-
-            // Overlay hidden before the tooltip delay elapses.
             hideOverlay(otherOverlay)
             assertEducation(DualShadeEducationModel.None)
 
@@ -162,8 +123,6 @@ class DualShadeEducationInteractorTest(private val forOverlay: OverlayKey) : Sys
         kosmos.runTest {
             disableDualShade()
             showOverlay(otherOverlay(forOverlay))
-            advanceTimeBy(DualShadeEducationInteractor.HINT_APPEARANCE_DELAY_MS)
-            assertEducation(DualShadeEducationModel.None)
             advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
             assertEducation(DualShadeEducationModel.None)
         }
@@ -173,10 +132,8 @@ class DualShadeEducationInteractorTest(private val forOverlay: OverlayKey) : Sys
         kosmos.runTest {
             val otherOverlay = otherOverlay(forOverlay)
             showOverlay(otherOverlay)
-            advanceTimeBy(DualShadeEducationInteractor.HINT_APPEARANCE_DELAY_MS)
-            assertEducation(expectedHint(forOverlay))
             advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
-            assertEducation(expectedTooltip(forOverlay))
+            assertEducation(expectedEducation(forOverlay))
             when (forOverlay) {
                 Overlays.NotificationsShade -> {
                     underTest.recordNotificationsShadeTooltipImpression()
@@ -193,12 +150,9 @@ class DualShadeEducationInteractorTest(private val forOverlay: OverlayKey) : Sys
             selectUser(USER_INFOS[1])
 
             showOverlay(otherOverlay)
-            advanceTimeBy(DualShadeEducationInteractor.HINT_APPEARANCE_DELAY_MS)
-            // New user, hint shown again.
-            assertEducation(expectedHint(forOverlay))
             advanceTimeBy(DualShadeEducationInteractor.TOOLTIP_APPEARANCE_DELAY_MS)
-            // New user, tooltip shown again.
-            assertEducation(expectedTooltip(forOverlay))
+            // New user, education shown again.
+            assertEducation(expectedEducation(forOverlay))
         }
 
     /**
@@ -218,18 +172,10 @@ class DualShadeEducationInteractorTest(private val forOverlay: OverlayKey) : Sys
         assertThat(underTest.education).isEqualTo(expected)
     }
 
-    private fun expectedHint(forOverlay: OverlayKey): DualShadeEducationModel {
+    private fun expectedEducation(forOverlay: OverlayKey): DualShadeEducationModel {
         return when (forOverlay) {
-            Overlays.NotificationsShade -> DualShadeEducationModel.HintForNotificationsShade
-            Overlays.QuickSettingsShade -> DualShadeEducationModel.HintForQuickSettingsShade
-            else -> DualShadeEducationModel.None
-        }
-    }
-
-    private fun expectedTooltip(forOverlay: OverlayKey): DualShadeEducationModel {
-        return when (forOverlay) {
-            Overlays.NotificationsShade -> DualShadeEducationModel.TooltipForNotificationsShade
-            Overlays.QuickSettingsShade -> DualShadeEducationModel.TooltipForQuickSettingsShade
+            Overlays.NotificationsShade -> DualShadeEducationModel.ForNotificationsShade
+            Overlays.QuickSettingsShade -> DualShadeEducationModel.ForQuickSettingsShade
             else -> DualShadeEducationModel.None
         }
     }

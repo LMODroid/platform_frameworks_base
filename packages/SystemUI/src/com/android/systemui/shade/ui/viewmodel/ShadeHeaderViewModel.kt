@@ -176,13 +176,11 @@ constructor(
 
     val animateNotificationsChipBounce: Boolean
         get() =
-            dualShadeEducationInteractor.education ==
-                DualShadeEducationModel.HintForNotificationsShade
+            dualShadeEducationInteractor.education == DualShadeEducationModel.ForNotificationsShade
 
     val animateSystemIconChipBounce: Boolean
         get() =
-            dualShadeEducationInteractor.education ==
-                DualShadeEducationModel.HintForQuickSettingsShade
+            dualShadeEducationInteractor.education == DualShadeEducationModel.ForQuickSettingsShade
 
     private val longerPattern = context.getString(R.string.abbrev_wday_month_day_no_year_alarm)
     private val shorterPattern = context.getString(R.string.abbrev_month_day_no_year)

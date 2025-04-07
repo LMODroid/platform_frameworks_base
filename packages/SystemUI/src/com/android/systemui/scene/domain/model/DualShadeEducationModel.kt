@@ -18,22 +18,7 @@ package com.android.systemui.scene.domain.model
 
 /** Enumerates the type of education still needed. */
 enum class DualShadeEducationModel {
-    /** Education isn't needed for either shade overlay. */
     None,
-    /**
-     * A hint is needed for the notifications shade overlay.
-     *
-     * A "hint" is something less intrusive than a tooltip; for example, a bounce animation.
-     */
-    HintForNotificationsShade,
-    /**
-     * A hint is needed for the quick settings shade overlay.
-     *
-     * A "hint" is something less intrusive than a tooltip; for example, a bounce animation.
-     */
-    HintForQuickSettingsShade,
-    /** A tooltip is needed for the notifications shade overlay. */
-    TooltipForNotificationsShade,
-    /** A tooltip is needed for the quick settings shade overlay. */
-    TooltipForQuickSettingsShade,
+    ForNotificationsShade,
+    ForQuickSettingsShade,
 }

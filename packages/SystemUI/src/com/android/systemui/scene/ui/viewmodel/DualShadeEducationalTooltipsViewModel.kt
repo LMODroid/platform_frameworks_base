@@ -46,8 +46,8 @@ constructor(
     val visibleTooltip: DualShadeEducationalTooltipViewModel?
         get() =
             when (interactor.education) {
-                DualShadeEducationModel.TooltipForNotificationsShade -> notificationsTooltip()
-                DualShadeEducationModel.TooltipForQuickSettingsShade -> quickSettingsTooltip()
+                DualShadeEducationModel.ForNotificationsShade -> notificationsTooltip()
+                DualShadeEducationModel.ForQuickSettingsShade -> quickSettingsTooltip()
                 else -> null
             }
 
