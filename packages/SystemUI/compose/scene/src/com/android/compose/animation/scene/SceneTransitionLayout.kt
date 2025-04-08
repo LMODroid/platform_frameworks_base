@@ -160,6 +160,17 @@ interface ElementStateScope {
     fun ElementKey.targetSize(content: ContentKey): IntSize?
 
     /**
+     * Return the *last known size* of [this] element in the given [content], i.e. the size of the
+     * element, or `null` if the element is not composed and measured in that content (yet).
+     *
+     * Note: Usually updated **after** the measurement pass and after processing children. However,
+     * if the target size is known **in advance** (like during transitions involving transformations
+     * or shared elements), the update happens **before** measurement pass. This earlier update
+     * allows children to potentially use this predetermined size during their own measurement.
+     */
+    fun ElementKey.lastSize(content: ContentKey): IntSize?
+
+    /**
      * Return the *target* offset of [this] element in the given [content], i.e. the size of the
      * element when idle, or `null` if the element is not composed and placed in that content (yet).
      */

@@ -51,6 +51,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEqualTo
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertPositionInRootIsEqualTo
 import androidx.compose.ui.test.assertTopPositionInRootIsEqualTo
@@ -2311,5 +2312,100 @@ class ElementTest {
         rule.waitForIdle()
 
         assertThat(compositions).isEqualTo(1)
+    }
+
+    @Test
+    fun measureElementApproachSizeBeforeChildren() {
+        val state =
+            rule.runOnUiThread {
+                MutableSceneTransitionLayoutStateForTests(SceneA, SceneTransitions.Empty)
+            }
+
+        lateinit var lastFooHeight: () -> Dp?
+        var firstFooHeightBeforeMeasuringChild: Dp? = null
+
+        val scope =
+            rule.setContentAndCreateMainScope {
+                val density = LocalDensity.current
+                SceneTransitionLayoutForTesting(state) {
+                    scene(SceneA) {
+                        SideEffect {
+                            lastFooHeight = {
+                                with(density) { TestElements.Foo.lastSize(SceneA)?.height?.toDp() }
+                            }
+                        }
+                        Box(Modifier.element(TestElements.Foo).size(200.dp)) {
+                            Box(
+                                Modifier.approachLayout(
+                                    isMeasurementApproachInProgress = { false },
+                                    approachMeasure = { measurable, constraints ->
+                                        if (firstFooHeightBeforeMeasuringChild == null) {
+                                            firstFooHeightBeforeMeasuringChild = lastFooHeight()
+                                        }
+
+                                        measurable.measure(constraints).run {
+                                            layout(width, height) {}
+                                        }
+                                    },
+                                )
+                            )
+                        }
+                    }
+                    scene(SceneB) { Box(Modifier.element(TestElements.Foo).size(100.dp)) }
+                }
+            }
+
+        var progress by mutableFloatStateOf(0f)
+        val transition = transition(from = SceneA, to = SceneB, progress = { progress })
+
+        fun assertDp(actual: Dp?, expected: Dp, subject: String) {
+            assertThat(actual).isNotNull()
+            actual!!.assertIsEqualTo(expected, subject, tolerance = 0.5.dp)
+        }
+
+        // Idle state: Scene A.
+        assertThat(state.isTransitioning()).isFalse()
+        assertDp(actual = lastFooHeight(), expected = 200.dp, subject = "lastFooHeight")
+
+        // Start transition: Scene A -> Scene B (progress 0%).
+        firstFooHeightBeforeMeasuringChild = null
+        scope.launch { state.startTransition(transition) }
+        rule.waitForIdle()
+        assertThat(state.isTransitioning()).isTrue()
+        assertDp(
+            actual = firstFooHeightBeforeMeasuringChild,
+            expected = 200.dp,
+            subject = "firstFooHeightBeforeMeasuringChild",
+        )
+        assertDp(actual = lastFooHeight(), expected = 200.dp, subject = "lastFooHeight")
+
+        // progress 50%: height is going from 200dp to 100dp, so 150dp is expected now.
+        firstFooHeightBeforeMeasuringChild = null
+        progress = 0.5f
+        rule.waitForIdle()
+        assertDp(
+            actual = firstFooHeightBeforeMeasuringChild,
+            expected = 150.dp,
+            subject = "firstFooHeightBeforeMeasuringChild",
+        )
+        assertDp(actual = lastFooHeight(), expected = 150.dp, subject = "lastFooHeight")
+
+        firstFooHeightBeforeMeasuringChild = null
+        progress = 1f
+        rule.waitForIdle()
+        assertDp(
+            actual = firstFooHeightBeforeMeasuringChild,
+            expected = 100.dp,
+            subject = "firstFooHeightBeforeMeasuringChild",
+        )
+        assertDp(actual = lastFooHeight(), expected = 100.dp, subject = "lastFooHeight")
+
+        firstFooHeightBeforeMeasuringChild = null
+        transition.finish()
+        rule.waitForIdle()
+        assertThat(state.isTransitioning()).isFalse()
+        assertThat(firstFooHeightBeforeMeasuringChild).isNull()
+        // null because SceneA does not exist anymore.
+        assertThat(lastFooHeight()).isNull()
     }
 }
