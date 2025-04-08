@@ -96,7 +96,7 @@ fun PagerDots(
             .pagerDotsSemantics(pagerState, coroutineScope)
     ) {
         val rtl = layoutDirection == LayoutDirection.Rtl
-        scale(if (rtl) -1f else 1f, 1f, Offset(0f, center.y)) {
+        scale(if (rtl) -1f else 1f, 1f) {
             // The impacted index is the neighbor of the active index, in the direction dictated
             // from the page offset. The impacted dot will have its width modified
             val impactedIndex =
