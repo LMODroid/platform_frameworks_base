@@ -77,6 +77,7 @@ import com.android.systemui.statusbar.data.repository.StatusBarContentInsetsProv
 import com.android.systemui.statusbar.phone.StatusBarLocation
 import com.android.systemui.statusbar.phone.StatusIconContainer
 import com.android.systemui.statusbar.phone.StatusOverlayHoverListenerFactory
+import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.phone.ui.TintedIconManager
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryWithEstimate
@@ -397,7 +398,7 @@ constructor(
                         BatteryWithEstimate(
                             modifier = Modifier.wrapContentSize(),
                             viewModelFactory = batteryViewModelFactory,
-                            isDark = { true },
+                            isDarkProvider = { IsAreaDark { true } },
                             showEstimate = showBatteryEstimate,
                         )
                     }

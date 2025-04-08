@@ -341,7 +341,7 @@ private fun addBatteryComposable(
                 UnifiedBattery(
                     modifier = Modifier.height(height).aspectRatio(BatteryViewModel.ASPECT_RATIO),
                     viewModelFactory = statusBarViewModel.batteryViewModelFactory,
-                    isDark = statusBarViewModel.areaDark,
+                    isDarkProvider = { statusBarViewModel.areaDark },
                 )
             }
         }
@@ -374,7 +374,7 @@ private fun addSystemStatusIconsComposable(
                         modifier =
                             Modifier.height(height).aspectRatio(BatteryViewModel.ASPECT_RATIO),
                         viewModelFactory = statusBarViewModel.batteryViewModelFactory,
-                        isDark = statusBarViewModel.areaDark,
+                        isDarkProvider = { statusBarViewModel.areaDark },
                     )
                 }
             }

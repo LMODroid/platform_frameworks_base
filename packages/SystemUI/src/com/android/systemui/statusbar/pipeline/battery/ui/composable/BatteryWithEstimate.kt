@@ -38,7 +38,7 @@ import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewM
 @Composable
 fun BatteryWithEstimate(
     viewModelFactory: BatteryViewModel.Factory,
-    isDark: IsAreaDark,
+    isDarkProvider: () -> IsAreaDark,
     showEstimate: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -51,7 +51,7 @@ fun BatteryWithEstimate(
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         UnifiedBattery(
             viewModelFactory = viewModelFactory,
-            isDark = isDark,
+            isDarkProvider = isDarkProvider,
             modifier =
                 Modifier.height(batteryHeight)
                     .align(Alignment.CenterVertically)

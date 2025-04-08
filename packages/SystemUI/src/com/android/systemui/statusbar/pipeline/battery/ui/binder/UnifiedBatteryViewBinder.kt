@@ -57,7 +57,7 @@ object UnifiedBatteryViewBinder {
                             modifier =
                                 Modifier.height(height).aspectRatio(BatteryViewModel.ASPECT_RATIO),
                             viewModelFactory = viewModelFactory,
-                            isDark = isDark,
+                            isDarkProvider = { isDark },
                         )
                     }
                 }

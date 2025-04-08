@@ -127,7 +127,7 @@ private const val INTER_GLYPH_PADDING_PX = 0.8f
 @Composable
 fun UnifiedBattery(
     viewModelFactory: BatteryViewModel.Factory,
-    isDark: IsAreaDark,
+    isDarkProvider: () -> IsAreaDark,
     modifier: Modifier = Modifier,
 ) {
     val viewModel = rememberViewModel(traceName = "UnifiedBattery") { viewModelFactory.create() }
@@ -136,7 +136,7 @@ fun UnifiedBattery(
     var bounds by remember { mutableStateOf(Rect()) }
 
     val colorProvider = {
-        if (isDark.isDark(bounds)) {
+        if (isDarkProvider().isDark(bounds)) {
             viewModel.colorProfile.dark
         } else {
             viewModel.colorProfile.light
