@@ -241,6 +241,19 @@ constructor(
                 }
             }
 
+        val canScrollQs =
+            object : CanScrollQs {
+                override fun forward(): Boolean {
+                    return (scrollState.canScrollForward && viewModel.isQsFullyExpanded) ||
+                        isCustomizing
+                }
+
+                override fun backward(): Boolean {
+                    return (scrollState.canScrollBackward && viewModel.isQsFullyExpanded) ||
+                        isCustomizing
+                }
+            }
+
         val frame =
             FrameLayoutTouchPassthrough(
                 context,
@@ -248,7 +261,7 @@ constructor(
                 snapshotFlow { notificationScrimClippingParams.params },
                 // Only allow scrolling when we are fully expanded. That way, we don't intercept
                 // swipes in lockscreen (when somehow QS is receiving touches).
-                { (scrollState.canScrollForward && viewModel.isQsFullyExpanded) || isCustomizing },
+                canScrollQs,
                 viewModel::emitMotionEventForFalsingSwipeNested,
             )
         frame.addView(
@@ -1076,7 +1089,7 @@ private class FrameLayoutTouchPassthrough(
     context: Context,
     private val clippingEnabledProvider: () -> Boolean,
     private val clippingParams: Flow<NotificationScrimClipParams>,
-    private val canScrollForwardQs: () -> Boolean,
+    private val canScrollQs: CanScrollQs,
     private val emitMotionEventForFalsing: () -> Unit,
 ) : FrameLayout(context) {
 
@@ -1152,6 +1165,7 @@ private class FrameLayoutTouchPassthrough(
 
     val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
     var downY = 0f
+    var downX = 0f
     var preventingIntercept = false
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -1159,11 +1173,11 @@ private class FrameLayoutTouchPassthrough(
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 preventingIntercept = false
-                if (canScrollVertically(1)) {
+                if (canScrollQs.forward()) {
                     // If we can scroll down, make sure we're not intercepted by the parent
                     preventingIntercept = true
                     parent?.requestDisallowInterceptTouchEvent(true)
-                } else if (!canScrollVertically(-1)) {
+                } else if (!canScrollQs.backward()) {
                     // Don't pass on the touch to the view, because scrolling will unconditionally
                     // disallow interception even if we can't scroll.
                     // if a user can't scroll at all, we should never listen to the touch.
@@ -1187,24 +1201,34 @@ private class FrameLayoutTouchPassthrough(
             MotionEvent.ACTION_DOWN -> {
                 preventingIntercept = false
                 // If we can scroll down, make sure none of our parents intercepts us.
-                if (canScrollForwardQs()) {
+                if (canScrollQs.forward()) {
                     preventingIntercept = true
                     parent?.requestDisallowInterceptTouchEvent(true)
                 }
                 downY = ev.y
+                downX = ev.x
             }
 
             MotionEvent.ACTION_MOVE -> {
-                val y = ev.y.toInt()
-                val yDiff: Float = y - downY
-                if (yDiff < -touchSlop && !canScrollForwardQs()) {
-                    // Intercept touches that are overscrolling.
+                val y = ev.y
+                val x = ev.x
+                val yDiff = y - downY
+                val xDiff = x - downX
+                val collapsing = yDiff < -touchSlop && !canScrollQs.forward()
+                val vertical = Math.abs(xDiff) < Math.abs(yDiff)
+                if (collapsing && vertical) {
                     return true
                 }
             }
         }
         return super.onInterceptTouchEvent(ev)
     }
+}
+
+private interface CanScrollQs {
+    fun forward(): Boolean
+
+    fun backward(): Boolean
 }
 
 private fun Modifier.gesturesDisabled(disabled: Boolean) =
