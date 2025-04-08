@@ -25,7 +25,6 @@ import android.os.Handler;
 import android.util.ArraySet;
 import android.util.Log;
 
-import com.android.settingslib.mobile.TelephonyIcons;
 import com.android.systemui.CoreStartable;
 import com.android.systemui.common.shared.model.Icon;
 import com.android.systemui.dagger.SysUISingleton;
@@ -262,7 +261,7 @@ public class StatusBarSignalPolicy
         if (isAirplaneMode) {
             mIconController.setIcon(
                     mSlotAirplane,
-                    TelephonyIcons.FLIGHT_MODE_ICON,
+                    R.drawable.stat_sys_airplane_mode,
                     mContext.getString(R.string.accessibility_airplane_mode));
         }
     }

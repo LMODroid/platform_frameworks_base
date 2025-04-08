@@ -21,13 +21,13 @@ import android.platform.test.annotations.EnableFlags
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.internal.R
-import com.android.settingslib.mobile.TelephonyIcons
 import com.android.systemui.Flags.FLAG_STATUS_BAR_SIGNAL_POLICY_REFACTOR
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
+import com.android.systemui.res.R.drawable.stat_sys_airplane_mode
 import com.android.systemui.statusbar.connectivity.IconState
 import com.android.systemui.statusbar.connectivity.NetworkController
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy
@@ -108,10 +108,10 @@ class StatusBarSignalPolicyTest : SysuiTestCase() {
 
             // Make sure the legacy code path does not change airplane mode when the refactor
             // flag is enabled.
-            underTest.setIsAirplaneMode(IconState(true, TelephonyIcons.FLIGHT_MODE_ICON, ""))
+            underTest.setIsAirplaneMode(IconState(true, stat_sys_airplane_mode, ""))
             verify(statusBarIconController, never()).setIconVisibility(eq(slotAirplane), any())
 
-            underTest.setIsAirplaneMode(IconState(false, TelephonyIcons.FLIGHT_MODE_ICON, ""))
+            underTest.setIsAirplaneMode(IconState(false, stat_sys_airplane_mode, ""))
             verify(statusBarIconController, never()).setIconVisibility(eq(slotAirplane), any())
         }
 
@@ -131,10 +131,10 @@ class StatusBarSignalPolicyTest : SysuiTestCase() {
         kosmos.runTest {
             underTest.init()
 
-            underTest.setIsAirplaneMode(IconState(true, TelephonyIcons.FLIGHT_MODE_ICON, ""))
+            underTest.setIsAirplaneMode(IconState(true, stat_sys_airplane_mode, ""))
             verify(statusBarIconController).setIconVisibility(slotAirplane, true)
 
-            underTest.setIsAirplaneMode(IconState(false, TelephonyIcons.FLIGHT_MODE_ICON, ""))
+            underTest.setIsAirplaneMode(IconState(false, stat_sys_airplane_mode, ""))
             verify(statusBarIconController).setIconVisibility(slotAirplane, false)
         }
 
