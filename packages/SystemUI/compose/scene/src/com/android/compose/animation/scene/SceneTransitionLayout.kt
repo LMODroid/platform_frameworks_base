@@ -160,13 +160,6 @@ interface ElementStateScope {
     fun ElementKey.targetSize(content: ContentKey): IntSize?
 
     /**
-     * Return the *approaching* size of [this] element in the given [content], i.e. thethe size the
-     * element when is transitioning, or `null` if the element is not composed and measured in that
-     * content (yet).
-     */
-    fun ElementKey.approachSize(content: ContentKey): IntSize?
-
-    /**
      * Return the *target* offset of [this] element in the given [content], i.e. the size of the
      * element when idle, or `null` if the element is not composed and placed in that content (yet).
      */
