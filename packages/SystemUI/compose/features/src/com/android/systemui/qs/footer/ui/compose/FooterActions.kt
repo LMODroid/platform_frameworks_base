@@ -54,6 +54,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
@@ -68,6 +69,7 @@ import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -80,6 +82,7 @@ import com.android.systemui.Flags.notificationShadeBlur
 import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.Icon
+import com.android.systemui.common.ui.compose.load
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.qs.flags.QSComposeFragment
 import com.android.systemui.qs.flags.QsInCompose
@@ -335,7 +338,19 @@ fun IconButton(
             ),
         useModifierBasedImplementation = useModifierBasedExpandable,
     ) {
-        Icon(model.icon, tint = colors.icon, modifier = Modifier.size(20.dp))
+        FooterIcon(model.icon, Modifier.size(20.dp), colors.icon)
+    }
+}
+
+// TODO(b/394738023): Use com.android.systemui.common.ui.compose.Icon instead
+@Composable
+private fun FooterIcon(icon: Icon, modifier: Modifier = Modifier, tint: Color) {
+    val contentDescription = icon.contentDescription?.load()
+    when (icon) {
+        is Icon.Loaded -> {
+            Icon(icon.drawable.toBitmap().asImageBitmap(), contentDescription, modifier, tint)
+        }
+        is Icon.Resource -> Icon(painterResource(icon.res), contentDescription, modifier, tint)
     }
 }
 
