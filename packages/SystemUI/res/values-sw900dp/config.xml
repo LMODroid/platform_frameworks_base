@@ -21,4 +21,7 @@
     <!-- Nav bar button default ordering/layout -->
     <string name="config_navBarLayout" translatable="false">back,home,left;space;right,recent</string>
 
+    <!-- The number of columns in the Split Shade QuickSettings -->
+    <integer name="quick_settings_split_shade_num_columns">6</integer>
+
 </resources>
