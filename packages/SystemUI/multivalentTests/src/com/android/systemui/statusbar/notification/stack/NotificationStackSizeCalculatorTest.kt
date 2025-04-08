@@ -23,6 +23,7 @@ import android.view.View.VISIBLE
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.media.controls.domain.pipeline.MediaDataManager
 import com.android.systemui.res.R
@@ -379,6 +380,35 @@ class NotificationStackSizeCalculatorTest : SysuiTestCase() {
                 onLockscreen = true,
             )
         assertThat(space.whenSavingSpace).isEqualTo(5)
+    }
+
+    @Test
+    @EnableSceneContainer
+    fun getSpaceNeeded_onLockscreenAndUserLocked_intrinsicHeight() {
+        // GIVEN: No divider height since we're testing one element where index = 0
+        setGapHeight(0f)
+
+        // AND: the row has its max height
+        val expandableView = createMockRow(rowHeight)
+
+        // AND: the user is dragging down on the Notification
+        whenever(expandableView.isUserLocked).thenReturn(true)
+
+        // AND: the row has a smaller min height, that we won't use here
+        whenever(expandableView.getMinHeight(any())).thenReturn(1)
+
+        // WHEN: we calculate the space for the Lockscreen
+        val space =
+            sizeCalculator.getSpaceNeeded(
+                expandableView,
+                visibleIndex = 0,
+                previousView = null,
+                stack = stackLayout,
+                onLockscreen = true,
+            )
+
+        // THEN: the row gets its unrestricted height (if there's enough space)
+        assertThat(space.whenEnoughSpace).isEqualTo(rowHeight)
     }
 
     @Test

@@ -24,6 +24,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.media.controls.domain.pipeline.MediaDataManager
 import com.android.systemui.res.R
+import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.statusbar.LockscreenShadeTransitionController
 import com.android.systemui.statusbar.StatusBarState.KEYGUARD
@@ -421,6 +422,7 @@ constructor(
                 "\tcomputeHeightPerNotificationLimit i=$i notifs=$notifications " +
                     "notifsHeightSavingSpace=$notifsWithCollapsedHun" +
                     " shelfWithSpaceBefore=$shelfWithSpaceBefore" +
+                    " isOnLockScreen=$onLockscreen" +
                     " limitLockScreenToOneImportant: $limitLockScreenToOneImportant"
             }
             yield(
@@ -475,7 +477,9 @@ constructor(
             if (onLockscreen) {
                 if (
                     view is ExpandableNotificationRow &&
-                        (canPeek || view.isPromotedOngoing)
+                        (canPeek ||
+                            view.isPromotedOngoing ||
+                            (SceneContainerFlag.isEnabled && view.isUserLocked))
                 ) {
                     height
                 } else {
