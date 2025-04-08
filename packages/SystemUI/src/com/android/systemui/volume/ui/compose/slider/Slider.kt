@@ -36,7 +36,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
@@ -46,14 +45,10 @@ import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.setProgress
 import androidx.compose.ui.semantics.stateDescription
-import com.android.systemui.haptics.slider.SliderHapticFeedbackFilter
 import com.android.systemui.haptics.slider.compose.ui.SliderHapticsViewModel
 import com.android.systemui.lifecycle.rememberViewModel
-import com.android.systemui.volume.haptics.ui.VolumeHapticsConfigsProvider
+import com.android.systemui.volume.haptics.ui.VolumeHapticsConfigs
 import kotlin.math.round
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
 
 @Composable
 fun Slider(
@@ -95,7 +90,7 @@ fun Slider(
     val sliderState =
         remember(valueRange) { SliderState(value = animatedValue, valueRange = valueRange) }
     val valueChange: (Float) -> Unit = { newValue ->
-        hapticsViewModel?.onValueChange(newValue)
+        hapticsViewModel?.addVelocityDataPoint(newValue)
         onValueChanged(newValue)
     }
     val semantics =
@@ -193,24 +188,23 @@ private fun Haptics.createViewModel(
                             interactionSource,
                             valueRange,
                             orientation,
-                            VolumeHapticsConfigsProvider.sliderHapticFeedbackConfig(
-                                valueRange,
-                                hapticFilter,
-                            ),
-                            VolumeHapticsConfigsProvider.seekableSliderTrackerConfig,
+                            hapticConfigs.hapticFeedbackConfig,
+                            hapticConfigs.sliderTrackerConfig,
                         )
                     }
                     .also { hapticsViewModel ->
-                        var lastDiscreteStep by remember { mutableFloatStateOf(value) }
+                        var lastValue by remember { mutableFloatStateOf(value) }
                         LaunchedEffect(value) {
-                            snapshotFlow { value }
-                                .map { round(it) }
-                                .filter { it != lastDiscreteStep }
-                                .distinctUntilChanged()
-                                .collect { discreteStep ->
-                                    lastDiscreteStep = discreteStep
-                                    hapticsViewModel.onValueChange(discreteStep)
+                            val roundedValue =
+                                if (hapticConfigs.hapticFeedbackConfig.sliderStepSize != 0f) {
+                                    round(value)
+                                } else {
+                                    value
                                 }
+                            if (roundedValue != lastValue) {
+                                lastValue = roundedValue
+                                hapticsViewModel.onValueChange(roundedValue)
+                            }
                         }
                     }
             }
@@ -228,7 +222,7 @@ sealed interface Haptics {
 
     data class Enabled(
         val hapticsViewModelFactory: SliderHapticsViewModel.Factory,
-        val hapticFilter: SliderHapticFeedbackFilter,
+        val hapticConfigs: VolumeHapticsConfigs,
         val orientation: Orientation,
     ) : Haptics
 }

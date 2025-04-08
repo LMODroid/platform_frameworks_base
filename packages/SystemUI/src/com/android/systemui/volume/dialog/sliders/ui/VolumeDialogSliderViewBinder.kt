@@ -44,6 +44,7 @@ import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderScope
 import com.android.systemui.volume.dialog.sliders.ui.compose.SliderTrack
 import com.android.systemui.volume.dialog.sliders.ui.viewmodel.VolumeDialogOverscrollViewModel
 import com.android.systemui.volume.dialog.sliders.ui.viewmodel.VolumeDialogSliderViewModel
+import com.android.systemui.volume.haptics.ui.VolumeHapticsConfigsProvider
 import com.android.systemui.volume.ui.compose.slider.AccessibilityParams
 import com.android.systemui.volume.ui.compose.slider.Haptics
 import com.android.systemui.volume.ui.compose.slider.Slider
@@ -130,7 +131,10 @@ private fun VolumeDialogSlider(
             hapticsViewModelFactory?.let {
                 Haptics.Enabled(
                     hapticsViewModelFactory = it,
-                    hapticFilter = SliderHapticFeedbackFilter(),
+                    hapticConfigs =
+                        VolumeHapticsConfigsProvider.continuousConfigs(
+                            SliderHapticFeedbackFilter()
+                        ),
                     orientation = Orientation.Vertical,
                 )
             } ?: Haptics.Disabled,
