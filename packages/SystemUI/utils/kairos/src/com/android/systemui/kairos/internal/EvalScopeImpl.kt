@@ -60,7 +60,7 @@ internal class EvalScopeImpl(networkScope: NetworkScope, deferScope: DeferScope)
                             "now",
                             this,
                             { switchOff.init.connect(evalScope = this) },
-                            CompletableLazy(
+                            lazyOf(
                                 EventsInit(
                                     constInit(
                                         "now",

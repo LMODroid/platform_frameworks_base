@@ -90,7 +90,7 @@ internal sealed class StateStore<out S> {
 }
 
 internal class StateSource<S>(init: Lazy<S>) : StateStore<S>() {
-    constructor(init: S) : this(CompletableLazy(init))
+    constructor(init: S) : this(lazyOf(init))
 
     lateinit var upstreamConnection: NodeConnection<S>
 
@@ -109,7 +109,7 @@ internal class StateSource<S>(init: Lazy<S>) : StateStore<S>() {
     /** called by network after eval phase has completed */
     fun updateState(logIndent: Int, evalScope: EvalScope) {
         // write the latch
-        _current = CompletableLazy(upstreamConnection.getPushEvent(logIndent, evalScope))
+        _current = lazyOf(upstreamConnection.getPushEvent(logIndent, evalScope))
         writeEpoch = evalScope.epoch + 1
     }
 

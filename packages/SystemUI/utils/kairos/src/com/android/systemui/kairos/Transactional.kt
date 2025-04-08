@@ -16,7 +16,6 @@
 
 package com.android.systemui.kairos
 
-import com.android.systemui.kairos.internal.CompletableLazy
 import com.android.systemui.kairos.internal.InitScope
 import com.android.systemui.kairos.internal.NoScope
 import com.android.systemui.kairos.internal.TransactionalImpl
@@ -40,7 +39,7 @@ class Transactional<out A> internal constructor(internal val impl: State<Transac
 /** A constant [Transactional] that produces [value] whenever it is sampled. */
 @ExperimentalKairosApi
 fun <A> transactionalOf(value: A): Transactional<A> =
-    Transactional(stateOf(TransactionalImpl.Const(CompletableLazy(value))))
+    Transactional(stateOf(TransactionalImpl.Const(lazyOf(value))))
 
 /**
  * Returns a [Transactional] that acts as a deferred-reference to the [Transactional] produced by
@@ -106,4 +105,4 @@ fun <A> transactionally(block: TransactionScope.() -> A): Transactional<A> =
 
 /** Returns a [Transactional] that, when queried, samples this [State]. */
 fun <A> State<A>.asTransactional(): Transactional<A> =
-    Transactional(map { TransactionalImpl.Const(CompletableLazy(it)) })
+    Transactional(map { TransactionalImpl.Const(lazyOf(it)) })

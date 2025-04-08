@@ -264,7 +264,7 @@ internal constructor(
      */
     fun emit(value: In) {
         val (scheduled, _) =
-            storage.getAndUpdate { (_, batch) -> true to CompletableLazy(coalesce(batch, value)) }
+            storage.getAndUpdate { (_, batch) -> true to lazyOf(coalesce(batch, value)) }
         if (!scheduled) {
             @Suppress("DeferredResultUnused")
             network.transaction(

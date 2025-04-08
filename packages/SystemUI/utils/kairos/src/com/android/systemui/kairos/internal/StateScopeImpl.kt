@@ -28,26 +28,20 @@ import com.android.systemui.kairos.StateInit
 import com.android.systemui.kairos.StateScope
 import com.android.systemui.kairos.Stateful
 import com.android.systemui.kairos.emptyEvents
+import com.android.systemui.kairos.flatMap
 import com.android.systemui.kairos.groupByKey
 import com.android.systemui.kairos.init
 import com.android.systemui.kairos.mapCheap
-import com.android.systemui.kairos.mergeLeft
+import com.android.systemui.kairos.mapCheapUnsafe
+import com.android.systemui.kairos.stateOf
 import com.android.systemui.kairos.switchEvents
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.map
 
-internal class StateScopeImpl(
-    val evalScope: EvalScope,
-    val endSignalLazy: Lazy<Events<Any>>,
-    endSignalOnceLazy: Lazy<Events<Any>>? = null,
-) : InternalStateScope, EvalScope by evalScope {
+internal class StateScopeImpl(val evalScope: EvalScope, val aliveLazy: Lazy<State<Boolean>>) :
+    InternalStateScope, EvalScope by evalScope {
 
-    override val endSignal: Events<Any> by endSignalLazy
-
-    val endSignalOnceLazy: Lazy<Events<Any>> =
-        endSignalOnceLazy ?: lazy { endSignal.nextOnlyInternal("StateScope.endSignal") }
-
-    override val endSignalOnce: Events<Any> by this.endSignalOnceLazy
+    override val alive: State<Boolean> by aliveLazy
 
     override fun <A> deferredStateScope(block: StateScope.() -> A): DeferredValue<A> =
         DeferredValue(deferAsync { block() })
@@ -55,7 +49,7 @@ internal class StateScopeImpl(
     override fun <A> Events<A>.holdStateDeferred(initialValue: DeferredValue<A>): State<A> {
         val operatorName = "holdStateDeferred"
         // Ensure state is only collected until the end of this scope
-        return truncateToScope(operatorName)
+        return truncateToScope(this@holdStateDeferred)
             .holdStateInternalDeferred(operatorName, initialValue.unwrapped)
     }
 
@@ -79,12 +73,12 @@ internal class StateScopeImpl(
     }
 
     override fun <K, A, B> Events<Map<K, Maybe<Stateful<A>>>>.applyLatestStatefulForKey(
-        init: DeferredValue<Map<K, Stateful<B>>>,
+        initialValues: DeferredValue<Map<K, Stateful<B>>>,
         numKeys: Int?,
     ): Pair<Events<Map<K, Maybe<A>>>, DeferredValue<Map<K, B>>> {
         val eventsByKey: KeyedEvents<K, Maybe<Stateful<A>>> = groupByKey(numKeys)
         val initOut: Lazy<Map<K, B>> = deferAsync {
-            init.unwrapped.value.mapValues { (k, stateful) ->
+            initialValues.unwrapped.value.mapValues { (k, stateful) ->
                 val newEnd = eventsByKey[k]
                 val newScope = childStateScope(newEnd)
                 newScope.stateful()
@@ -126,18 +120,22 @@ internal class StateScopeImpl(
         )
     }
 
-    override fun childStateScope(newEnd: Events<Any>) =
-        StateScopeImpl(evalScope, lazy { mergeLeft(newEnd, endSignal) })
+    fun childStateScope(childEndSignal: Events<Any>) =
+        StateScopeImpl(
+            evalScope,
+            aliveLazy =
+                lazy {
+                    val isChildAlive: State<Boolean> =
+                        childEndSignal
+                            .nextOnlyInternal("childStateScope.endSignalOnce")
+                            .mapCheap { false }
+                            .holdState(true)
+                    alive.flatMap { isAlive -> if (isAlive) isChildAlive else stateOf(false) }
+                },
+        )
 
-    private fun <A> Events<A>.truncateToScope(operatorName: String): Events<A> =
-        if (endSignalOnce === emptyEvents) {
-            this
-        } else {
-            endSignalOnce
-                .mapCheap { emptyEvents }
-                .holdStateInternal(operatorName, this)
-                .switchEvents()
-        }
+    override fun <A> truncateToScope(events: Events<A>): Events<A> =
+        alive.mapCheapUnsafe { if (it) events else emptyEvents }.switchEvents()
 
     private fun <A> Events<A>.nextOnlyInternal(operatorName: String): Events<A> =
         if (this === emptyEvents) {
@@ -151,12 +149,12 @@ internal class StateScopeImpl(
             }
         }
 
-    private fun <A> Events<A>.holdStateInternal(operatorName: String, init: A): State<A> =
-        holdStateInternalDeferred(operatorName, CompletableLazy(init))
+    private fun <A> Events<A>.holdStateInternal(operatorName: String, initialValue: A): State<A> =
+        holdStateInternalDeferred(operatorName, lazyOf(initialValue))
 
     private fun <A> Events<A>.holdStateInternalDeferred(
         operatorName: String,
-        init: Lazy<A>,
+        initialValue: Lazy<A>,
     ): State<A> {
         val changes = this@holdStateInternalDeferred
         val name = operatorName
@@ -166,15 +164,11 @@ internal class StateScopeImpl(
                 operatorName,
                 evalScope,
                 { changes.init.connect(evalScope = this) },
-                init,
+                initialValue,
             )
         return StateInit(constInit(name, impl))
     }
 }
 
 private fun EvalScope.reenterStateScope(outerScope: StateScopeImpl) =
-    StateScopeImpl(
-        evalScope = this,
-        endSignalLazy = outerScope.endSignalLazy,
-        endSignalOnceLazy = outerScope.endSignalOnceLazy,
-    )
+    StateScopeImpl(evalScope = this, aliveLazy = outerScope.aliveLazy)

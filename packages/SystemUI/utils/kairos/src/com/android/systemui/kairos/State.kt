@@ -257,7 +257,7 @@ class MutableState<T> internal constructor(internal val network: Network, initia
      * Multiple invocations of [setValue] that occur before a transaction are conflated; only the
      * most recent value is used.
      */
-    fun setValue(value: T) = input.emit(CompletableLazy(value))
+    fun setValue(value: T) = input.emit(lazyOf(value))
 
     /**
      * Sets the value held by this [State]. The [DeferredValue] will not be queried until this

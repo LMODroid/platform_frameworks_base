@@ -93,7 +93,7 @@ interface StateScope : TransactionScope {
 
     /**
      * Returns an [Events] containing the results of applying each [Stateful] emitted from the
-     * original [Events], and a [DeferredValue] containing the result of applying [init]
+     * original [Events], and a [DeferredValue] containing the result of applying [initialValues]
      * immediately.
      *
      * If the [Maybe] contained within the value for an associated key is [absent][Maybe.absent],
@@ -105,7 +105,7 @@ interface StateScope : TransactionScope {
      * The optional [numKeys] argument is an optimization used to initialize the internal storage.
      */
     fun <K, A, B> Events<MapPatch<K, Stateful<A>>>.applyLatestStatefulForKey(
-        init: DeferredValue<Map<K, Stateful<B>>>,
+        initialValues: DeferredValue<Map<K, Stateful<B>>>,
         numKeys: Int? = null,
     ): Pair<Events<MapPatch<K, A>>, DeferredValue<Map<K, B>>>
 

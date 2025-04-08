@@ -17,11 +17,12 @@
 package com.android.systemui.kairos
 
 import com.android.systemui.kairos.internal.BuildScopeImpl
+import com.android.systemui.kairos.internal.EvalScope
 import com.android.systemui.kairos.internal.Network
 import com.android.systemui.kairos.internal.NoScope
 import com.android.systemui.kairos.internal.StateScopeImpl
-import com.android.systemui.kairos.internal.util.awaitCancellationAndThen
 import com.android.systemui.kairos.internal.util.childScope
+import com.android.systemui.kairos.internal.util.invokeOnCancel
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.CancellationException
@@ -142,32 +143,21 @@ suspend fun <R> KairosNetwork.activateSpec(
 internal class LocalNetwork(
     private val network: Network,
     private val scope: CoroutineScope,
-    private val endSignalLazy: Lazy<Events<Any>>,
+    private val aliveLazy: Lazy<State<Boolean>>,
 ) : KairosNetwork {
 
     override suspend fun <R> transact(block: TransactionScope.() -> R): R =
         network.transaction("KairosNetwork.transact") { block() }.awaitOrCancel()
 
     override suspend fun activateSpec(spec: BuildSpec<*>): Unit = coroutineScope {
-        val stopEmitter = conflatedMutableEvents<Unit>()
         lateinit var completionHandle: DisposableHandle
+        val childEndSignal = conflatedMutableEvents<Unit>().apply { invokeOnCancel { emit(Unit) } }
         val job =
             launch(start = CoroutineStart.LAZY) {
                 network
                     .transaction("KairosNetwork.activateSpec") {
-                        val buildScope =
-                            BuildScopeImpl(
-                                stateScope =
-                                    StateScopeImpl(
-                                        evalScope = this,
-                                        endSignalLazy =
-                                            lazy { mergeLeft(stopEmitter, endSignalLazy.value) },
-                                    ),
-                                coroutineScope = this@coroutineScope,
-                            )
-                        buildScope.launchScope {
-                            spec.applySpec()
-                            launchEffect { awaitCancellationAndThen { stopEmitter.emit(Unit) } }
+                        reenterBuildScope(this@coroutineScope).childBuildScope(childEndSignal).run {
+                            launchScope { spec.applySpec() }
                         }
                     }
                     .awaitOrCancel()
@@ -177,6 +167,12 @@ internal class LocalNetwork(
         completionHandle = scope.coroutineContext.job.invokeOnCompletion { job.cancel() }
         job.start()
     }
+
+    private fun EvalScope.reenterBuildScope(coroutineScope: CoroutineScope) =
+        BuildScopeImpl(
+            stateScope = StateScopeImpl(evalScope = this, aliveLazy = aliveLazy),
+            coroutineScope = coroutineScope,
+        )
 
     private suspend fun <T> Deferred<T>.awaitOrCancel(): T =
         try {
@@ -226,7 +222,7 @@ internal class LocalNetwork(
 @ExperimentalKairosApi
 class RootKairosNetwork
 internal constructor(private val network: Network, private val scope: CoroutineScope, job: Job) :
-    Job by job, KairosNetwork by LocalNetwork(network, scope, lazyOf(emptyEvents))
+    Job by job, KairosNetwork by LocalNetwork(network, scope, lazyOf(stateOf(true)))
 
 /** Constructs a new [RootKairosNetwork] in the given [CoroutineScope] and [CoalescingPolicy]. */
 @ExperimentalKairosApi
