@@ -236,7 +236,10 @@ private fun Modifier.maybeElevateInContent(
                     content.key,
                     layoutImpl.elements.getValue(key),
                     state,
-                )
+                ) &&
+                // Always draw in the original content when overscrolling.
+                state.progress > 0f &&
+                state.progress < 1f
         },
     )
 }
