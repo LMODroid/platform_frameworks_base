@@ -344,11 +344,25 @@ constructor(
             )
 
         LaunchedEffect(Unit) {
-            synchronizeQsState(
-                sceneState,
-                viewModel.containerViewModel.editModeViewModel.isEditing,
-                snapshotFlow { viewModel.expansionState }.map { it.progress },
-            )
+            launch {
+                synchronizeQsState(
+                    sceneState,
+                    viewModel.containerViewModel.editModeViewModel.isEditing,
+                    snapshotFlow { viewModel.expansionState }.map { it.progress },
+                )
+            }
+            if (alwaysCompose) {
+                // Normally, the Edit mode will stop if the composable leaves, but if the shade
+                // is closed, because we are always composed, we don't stop edit mode.
+                launch {
+                    snapshotFlow { viewModel.isQsVisibleAndAnyShadeExpanded }
+                        .collect {
+                            if (!it) {
+                                viewModel.containerViewModel.editModeViewModel.stopEditing()
+                            }
+                        }
+                }
+            }
         }
 
         SceneTransitionLayout(state = sceneState, modifier = Modifier.fillMaxSize()) {
