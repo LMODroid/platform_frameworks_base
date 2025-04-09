@@ -38,7 +38,6 @@ import com.android.systemui.biometrics.shared.model.LottieCallback
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.keyguard.domain.interactor.DeviceEntrySideFpsOverlayInteractor
 import com.android.systemui.res.R
-import com.android.systemui.util.kotlin.sample
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -153,7 +152,7 @@ constructor(
 
     /** List of LottieCallbacks use for adding dynamic color to the overlayView */
     val lottieCallbacks: Flow<List<LottieCallback>> =
-        _lottieBounds.sample(deviceEntrySideFpsOverlayInteractor.showIndicatorForDeviceEntry) {
+        combine(_lottieBounds, deviceEntrySideFpsOverlayInteractor.showIndicatorForDeviceEntry) {
             _,
             showIndicatorForDeviceEntry: Boolean ->
             val callbacks = mutableListOf<LottieCallback>()
