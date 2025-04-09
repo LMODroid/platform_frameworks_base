@@ -18,8 +18,6 @@ package com.android.systemui.qs.tiles;
 
 import static android.platform.test.flag.junit.FlagsParameterization.allCombinationsOf;
 
-import static com.android.systemui.Flags.FLAG_QS_CUSTOM_TILE_CLICK_GUARANTEED_BUG_FIX;
-
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -43,6 +41,7 @@ import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.QsEventLogger;
+import com.android.systemui.qs.flags.QSComposeFragment;
 import com.android.systemui.qs.flags.QsInCompose;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.shared.QSSettingsPackageRepository;
@@ -75,7 +74,7 @@ public class ColorInversionTileTest extends SysuiTestCase {
 
     @Parameters(name = "{0}")
     public static List<FlagsParameterization> getParams() {
-        return allCombinationsOf(FLAG_QS_CUSTOM_TILE_CLICK_GUARANTEED_BUG_FIX);
+        return allCombinationsOf(QSComposeFragment.FLAG_NAME);
     }
 
     @Mock

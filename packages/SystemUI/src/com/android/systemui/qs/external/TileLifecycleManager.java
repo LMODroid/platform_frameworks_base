@@ -19,8 +19,6 @@ import static android.os.PowerWhitelistManager.REASON_TILE_ONCLICK;
 import static android.provider.DeviceConfig.NAMESPACE_SYSTEMUI;
 import static android.service.quicksettings.TileService.START_ACTIVITY_NEEDS_PENDING_INTENT;
 
-import static com.android.systemui.Flags.qsCustomTileClickGuaranteedBugFix;
-
 import android.app.ActivityManager;
 import android.app.compat.CompatChanges;
 import android.content.BroadcastReceiver;
@@ -380,14 +378,12 @@ public class TileLifecycleManager extends BroadcastReceiver implements
                 onUnlockComplete();
             }
         }
-        if (qsCustomTileClickGuaranteedBugFix()) {
-            if (queue.contains(MSG_ON_STOP_LISTENING)) {
-                if (mDebug) Log.d(TAG, "Handling pending onStopListening " + getComponent());
-                if (mListening) {
-                    onStopListening();
-                } else {
-                    Log.w(TAG, "Trying to stop listening when not listening " + getComponent());
-                }
+        if (queue.contains(MSG_ON_STOP_LISTENING)) {
+            if (mDebug) Log.d(TAG, "Handling pending onStopListening " + getComponent());
+            if (mListening) {
+                onStopListening();
+            } else {
+                Log.w(TAG, "Trying to stop listening when not listening " + getComponent());
             }
         }
         if (queue.contains(MSG_ON_REMOVED)) {
@@ -627,7 +623,7 @@ public class TileLifecycleManager extends BroadcastReceiver implements
 
     @Override
     public void onStopListening() {
-        if (qsCustomTileClickGuaranteedBugFix() && hasPendingClick()) {
+        if (hasPendingClick()) {
             Log.d(TAG, "Enqueue stop listening");
             queueMessage(MSG_ON_STOP_LISTENING);
         } else {

@@ -21,7 +21,6 @@ import static android.service.quicksettings.TileService.START_ACTIVITY_NEEDS_PEN
 
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.mockitoSession;
-import static com.android.systemui.Flags.FLAG_QS_CUSTOM_TILE_CLICK_GUARANTEED_BUG_FIX;
 import static com.android.systemui.Flags.FLAG_QS_QUICK_REBIND_ACTIVE_TILES;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -87,10 +86,10 @@ import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.MockitoSession;
 
-import java.util.List;
-
 import platform.test.runner.parameterized.ParameterizedAndroidJunit4;
 import platform.test.runner.parameterized.Parameters;
+
+import java.util.List;
 
 @SmallTest
 @RunWith(ParameterizedAndroidJunit4.class)
@@ -98,8 +97,7 @@ public class TileLifecycleManagerTest extends SysuiTestCase {
 
     @Parameters(name = "{0}")
     public static List<FlagsParameterization> getParams() {
-        return allCombinationsOf(FLAG_QS_CUSTOM_TILE_CLICK_GUARANTEED_BUG_FIX,
-                FLAG_QS_QUICK_REBIND_ACTIVE_TILES);
+        return allCombinationsOf(FLAG_QS_QUICK_REBIND_ACTIVE_TILES);
     }
 
     private final PackageManagerAdapter mMockPackageManagerAdapter =
@@ -330,24 +328,6 @@ public class TileLifecycleManagerTest extends SysuiTestCase {
     }
 
     @Test
-    @DisableFlags(FLAG_QS_CUSTOM_TILE_CLICK_GUARANTEED_BUG_FIX)
-    public void testNoClickIfNotListeningAnymore() throws Exception {
-        mStateManager.onTileAdded();
-        mStateManager.onStartListening();
-        mStateManager.onClick(null);
-        mStateManager.onStopListening();
-        mStateManager.executeSetBindService(true);
-        mExecutor.runAllReady();
-
-        verifyBind(1);
-        mStateManager.executeSetBindService(false);
-        mExecutor.runAllReady();
-        assertFalse(mContext.isBound(mTileServiceComponentName));
-        verify(mMockTileService, never()).onClick(null);
-    }
-
-    @Test
-    @EnableFlags(FLAG_QS_CUSTOM_TILE_CLICK_GUARANTEED_BUG_FIX)
     public void testNoClickIfNotListeningBeforeClick() throws Exception {
         mStateManager.onTileAdded();
         mStateManager.onStartListening();
@@ -364,7 +344,6 @@ public class TileLifecycleManagerTest extends SysuiTestCase {
     }
 
     @Test
-    @EnableFlags(FLAG_QS_CUSTOM_TILE_CLICK_GUARANTEED_BUG_FIX)
     public void testClickIfStopListeningBeforeProcessedClick() throws Exception {
         mStateManager.onTileAdded();
         mStateManager.onStartListening();
