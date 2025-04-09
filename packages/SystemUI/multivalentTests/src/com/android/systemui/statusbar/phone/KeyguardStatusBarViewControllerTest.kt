@@ -57,7 +57,8 @@ import com.android.systemui.statusbar.events.SystemStatusAnimationScheduler
 import com.android.systemui.statusbar.layout.mockStatusBarContentInsetsProvider
 import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.phone.ui.TintedIconManager
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.batteryViewModelFactory
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.batteryWithPercentViewModelFactory
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.unifiedBatteryViewModelFactory
 import com.android.systemui.statusbar.policy.BatteryController
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.KeyguardStateController
@@ -195,7 +196,8 @@ class KeyguardStatusBarViewControllerTest : SysuiTestCase() {
             statusBarIconController,
             iconManagerFactory,
             batteryMeterViewController,
-            kosmos.batteryViewModelFactory,
+            kosmos.batteryWithPercentViewModelFactory,
+            kosmos.unifiedBatteryViewModelFactory,
             shadeViewStateProvider,
             keyguardStateController,
             keyguardBypassController,

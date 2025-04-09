@@ -34,18 +34,16 @@ import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryGlyph
 import com.android.systemui.statusbar.pipeline.battery.ui.model.AttributionGlyph
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import java.text.NumberFormat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-/** View-model for the unified, compose-based battery icon. */
-@OptIn(ExperimentalCoroutinesApi::class)
-class BatteryViewModel
-@AssistedInject
-constructor(interactor: BatteryInteractor, @Application context: Context) : ExclusiveActivatable() {
-    private val hydrator: Hydrator = Hydrator("BatteryViewModel.hydrator")
+sealed class BatteryViewModel(val interactor: BatteryInteractor, @Application context: Context) :
+    ExclusiveActivatable() {
+    protected val hydrator: Hydrator = Hydrator("BatteryViewModel.hydrator")
 
     val batteryFrame = BatteryFrame.pathSpec
     val innerWidth = BatteryFrame.innerWidth
@@ -61,8 +59,22 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
             source = interactor.isFull,
         )
 
+    val isCharging: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isCharging",
+            initialValue = false,
+            source = interactor.isCharging,
+        )
+
+    val isBatteryPercentSettingEnabled: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isBatteryPercentSettingEnabled",
+            initialValue = interactor.isBatteryPercentSettingEnabled.value,
+            source = interactor.isBatteryPercentSettingEnabled,
+        )
+
     /** The current attribution, if any */
-    private val attributionGlyph: Flow<AttributionGlyph?> =
+    protected val attributionGlyph: Flow<AttributionGlyph?> =
         interactor.batteryAttributionType.map {
             when (it) {
                 Charging ->
@@ -87,45 +99,6 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
             }
         }
 
-    /** A [List<BatteryGlyph>] representation of the current [level] */
-    private val levelGlyphs: Flow<List<BatteryGlyph>> =
-        interactor.level.map { it.glyphRepresentation() }
-
-    private val _glyphList: Flow<List<BatteryGlyph>> =
-        interactor.isBatteryPercentSettingEnabled.flatMapLatest {
-            if (it) {
-                combine(interactor.isFull, levelGlyphs, attributionGlyph) {
-                    isFull,
-                    levelGlyphs,
-                    attr ->
-                    // Don't ever show "100<attr>", since it won't fit. Just show the attr
-                    if (isFull && attr != null) {
-                        listOf(attr.standalone)
-                    } else if (attr != null) {
-                        levelGlyphs + attr.inline
-                    } else {
-                        levelGlyphs
-                    }
-                }
-            } else {
-                attributionGlyph.map { attr ->
-                    if (attr == null) {
-                        emptyList()
-                    } else {
-                        listOf(attr.standalone)
-                    }
-                }
-            }
-        }
-
-    /** For the status bar battery, this is the complete set of glyphs to show */
-    val glyphList: List<BatteryGlyph> by
-        hydrator.hydratedStateOf(
-            traceName = "glyphList",
-            initialValue = emptyList(),
-            source = _glyphList,
-        )
-
     private val _colorProfile: Flow<ColorProfile> =
         combine(interactor.batteryAttributionType, interactor.isCritical) { attr, isCritical ->
             when (attr) {
@@ -135,11 +108,13 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
                         dark = BatteryColors.DarkTheme.Charging,
                         light = BatteryColors.LightTheme.Charging,
                     )
+
                 PowerSave ->
                     ColorProfile(
                         dark = BatteryColors.DarkTheme.PowerSave,
                         light = BatteryColors.LightTheme.PowerSave,
                     )
+
                 else ->
                     if (isCritical) {
                         ColorProfile(
@@ -180,6 +155,7 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
                     when {
                         isUnknown ->
                             ContentDescription.Resource(R.string.accessibility_battery_unknown)
+
                         attr == Defend -> {
                             val descr =
                                 context.getString(
@@ -189,6 +165,7 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
 
                             ContentDescription.Loaded(descr)
                         }
+
                         attr == Charging -> {
                             val descr =
                                 context.getString(
@@ -197,6 +174,7 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
                                 )
                             ContentDescription.Loaded(descr)
                         }
+
                         else -> {
                             val descr =
                                 context.getString(R.string.accessibility_battery_level, level)
@@ -206,6 +184,7 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
                 },
         )
 
+    /** For use in the shade, where we might need to show an estimate */
     val batteryTimeRemainingEstimate: String? by
         hydrator.hydratedStateOf(
             traceName = "timeRemainingEstimate",
@@ -213,13 +192,11 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
             source = interactor.batteryTimeRemainingEstimate,
         )
 
+    /** TODO: This can be simplified if we get rid of UnifiedBatteryViewModel */
+    abstract val glyphList: List<BatteryGlyph>
+
     override suspend fun onActivated(): Nothing {
         hydrator.activate()
-    }
-
-    @AssistedFactory
-    interface Factory {
-        fun create(): BatteryViewModel
     }
 
     companion object {
@@ -228,6 +205,7 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
          * properly scales when the font size changes (consistent with other status bar icons)
          */
         val STATUS_BAR_BATTERY_HEIGHT = 12.sp
+
         /**
          * Status bar battery width, based on a 21x12 base canvas. Defined in [sp] so that the icon
          * properly scales when the font size changes (consistent with other status bar icons)
@@ -238,7 +216,60 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
 
         /** Resource id used to identify battery composable view in SysUI tests */
         const val TEST_TAG = "battery"
+    }
+}
 
+/** View-model for the battery composable with the percentage inside */
+@OptIn(ExperimentalCoroutinesApi::class)
+class UnifiedBatteryViewModel
+@AssistedInject
+constructor(interactor: BatteryInteractor, @Application context: Context) :
+    BatteryViewModel(interactor, context) {
+    /** A [List<BatteryGlyph>] representation of the current [level] */
+    private val levelGlyphs: Flow<List<BatteryGlyph>> =
+        interactor.level.map { it.glyphRepresentation() }
+
+    private val _glyphList: Flow<List<BatteryGlyph>> =
+        interactor.isBatteryPercentSettingEnabled.flatMapLatest {
+            if (it) {
+                combine(interactor.isFull, levelGlyphs, attributionGlyph) {
+                    isFull,
+                    levelGlyphs,
+                    attr ->
+                    // Don't ever show "100<attr>", since it won't fit. Just show the attr
+                    if (isFull && attr != null) {
+                        listOf(attr.standalone)
+                    } else if (attr != null) {
+                        levelGlyphs + attr.inline
+                    } else {
+                        levelGlyphs
+                    }
+                }
+            } else {
+                attributionGlyph.map { attr ->
+                    if (attr == null) {
+                        emptyList()
+                    } else {
+                        listOf(attr.standalone)
+                    }
+                }
+            }
+        }
+
+    /** For the status bar battery, this is the complete set of glyphs to show */
+    override val glyphList: List<BatteryGlyph> by
+        hydrator.hydratedStateOf(
+            traceName = "glyphList",
+            initialValue = emptyList(),
+            source = _glyphList,
+        )
+
+    @AssistedFactory
+    interface Factory {
+        fun create(): UnifiedBatteryViewModel
+    }
+
+    companion object {
         fun Int.glyphRepresentation(): List<BatteryGlyph> = toString().map { it.toGlyph() }
 
         private fun Char.toGlyph(): BatteryGlyph =
@@ -255,6 +286,33 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
                 '9' -> BatteryGlyph.Nine
                 else -> throw IllegalArgumentException("cannot make glyph from char ($this)")
             }
+    }
+}
+
+class BatteryNextToPercentViewModel
+@AssistedInject
+constructor(interactor: BatteryInteractor, @Application context: Context) :
+    BatteryViewModel(interactor, context) {
+    val batteryPercent: String? by
+        hydrator.hydratedStateOf(
+            traceName = "batteryPercent",
+            initialValue = null,
+            source = interactor.level.map { NumberFormat.getPercentInstance().format(it / 100f) },
+        )
+
+    private val _attributionAsList: Flow<List<BatteryGlyph>> =
+        attributionGlyph.map { it?.let { listOf(it.standalone) } ?: emptyList() }
+
+    override val glyphList: List<BatteryGlyph> by
+        hydrator.hydratedStateOf(
+            traceName = "glyphList",
+            initialValue = emptyList(),
+            source = _attributionAsList,
+        )
+
+    @AssistedFactory
+    interface Factory {
+        fun create(): BatteryNextToPercentViewModel
     }
 }
 

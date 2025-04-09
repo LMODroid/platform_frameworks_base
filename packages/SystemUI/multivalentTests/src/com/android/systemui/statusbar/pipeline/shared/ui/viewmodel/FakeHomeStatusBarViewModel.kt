@@ -31,7 +31,8 @@ import com.android.systemui.statusbar.chips.ui.model.OngoingActivityChipModel
 import com.android.systemui.statusbar.events.shared.model.SystemEventAnimationState.Idle
 import com.android.systemui.statusbar.featurepods.popups.shared.model.PopupChipModel
 import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryNextToPercentViewModel
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.ChipsVisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.SystemInfoCombinedVisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.VisibilityModel
@@ -72,9 +73,16 @@ class FakeHomeStatusBarViewModel(
 
     override val canShowOngoingActivityChips: Flow<Boolean> = MutableStateFlow(false)
 
-    override val batteryViewModelFactory: BatteryViewModel.Factory =
-        object : BatteryViewModel.Factory {
-            override fun create(): BatteryViewModel = mock(BatteryViewModel::class.java)
+    override val batteryNextToPercentViewModel: BatteryNextToPercentViewModel.Factory =
+        object : BatteryNextToPercentViewModel.Factory {
+            override fun create(): BatteryNextToPercentViewModel =
+                mock(BatteryNextToPercentViewModel::class.java)
+        }
+
+    override val unifiedBatteryViewModel: UnifiedBatteryViewModel.Factory =
+        object : UnifiedBatteryViewModel.Factory {
+            override fun create(): UnifiedBatteryViewModel =
+                mock(UnifiedBatteryViewModel::class.java)
         }
     override val systemStatusIconsViewModelFactory: SystemStatusIconsViewModel.Factory =
         object : SystemStatusIconsViewModel.Factory {

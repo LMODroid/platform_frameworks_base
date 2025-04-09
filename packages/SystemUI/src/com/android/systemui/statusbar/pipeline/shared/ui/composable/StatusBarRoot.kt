@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +50,7 @@ import com.android.systemui.plugins.DarkIconDispatcher
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.chips.ui.compose.OngoingActivityChips
 import com.android.systemui.statusbar.core.NewStatusBarIcons
+import com.android.systemui.statusbar.core.RudimentaryBattery
 import com.android.systemui.statusbar.core.StatusBarConnectedDisplays
 import com.android.systemui.statusbar.core.StatusBarRootModernization
 import com.android.systemui.statusbar.data.repository.DarkIconDispatcherStore
@@ -66,6 +68,8 @@ import com.android.systemui.statusbar.phone.ongoingcall.OngoingCallController
 import com.android.systemui.statusbar.phone.ongoingcall.StatusBarChipsModernization
 import com.android.systemui.statusbar.phone.ui.DarkIconManager
 import com.android.systemui.statusbar.phone.ui.StatusBarIconController
+import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryWithChargeStatus
+import com.android.systemui.statusbar.pipeline.battery.ui.composable.ShowPercentMode
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.UnifiedBattery
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel.Companion.STATUS_BAR_BATTERY_HEIGHT
@@ -102,22 +106,24 @@ constructor(
             darkIconDispatcherStore.forDisplay(root.context.displayId) ?: return composeView
         composeView.apply {
             setContent {
-                StatusBarRoot(
-                    parent = root,
-                    statusBarViewModelFactory = homeStatusBarViewModelFactory,
-                    statusBarViewBinder = homeStatusBarViewBinder,
-                    notificationIconsBinder = notificationIconsBinder,
-                    iconViewStoreFactory = iconViewStoreFactory,
-                    darkIconManagerFactory = darkIconManagerFactory,
-                    iconController = iconController,
-                    ongoingCallController = ongoingCallController,
-                    darkIconDispatcher = darkIconDispatcher,
-                    eventAnimationInteractor = eventAnimationInteractor,
-                    mediaHierarchyManager = mediaHierarchyManager,
-                    mediaHost = mediaHost,
-                    onViewCreated = andThen,
-                    modifier = Modifier.sysUiResTagContainer(),
-                )
+                PlatformTheme {
+                    StatusBarRoot(
+                        parent = root,
+                        statusBarViewModelFactory = homeStatusBarViewModelFactory,
+                        statusBarViewBinder = homeStatusBarViewBinder,
+                        notificationIconsBinder = notificationIconsBinder,
+                        iconViewStoreFactory = iconViewStoreFactory,
+                        darkIconManagerFactory = darkIconManagerFactory,
+                        iconController = iconController,
+                        ongoingCallController = ongoingCallController,
+                        darkIconDispatcher = darkIconDispatcher,
+                        eventAnimationInteractor = eventAnimationInteractor,
+                        mediaHierarchyManager = mediaHierarchyManager,
+                        mediaHost = mediaHost,
+                        onViewCreated = andThen,
+                        modifier = Modifier.sysUiResTagContainer(),
+                    )
+                }
             }
         }
 
@@ -204,17 +210,15 @@ fun StatusBarRoot(
                                     )
 
                                 setContent {
-                                    PlatformTheme {
-                                        val chipsVisibilityModel =
-                                            statusBarViewModel.ongoingActivityChips
-                                        if (chipsVisibilityModel.areChipsAllowed) {
-                                            OngoingActivityChips(
-                                                chips = chipsVisibilityModel.chips,
-                                                iconViewStore = iconViewStore,
-                                                onChipBoundsChanged =
-                                                    statusBarViewModel::onChipBoundsChanged,
-                                            )
-                                        }
+                                    val chipsVisibilityModel =
+                                        statusBarViewModel.ongoingActivityChips
+                                    if (chipsVisibilityModel.areChipsAllowed) {
+                                        OngoingActivityChips(
+                                            chips = chipsVisibilityModel.chips,
+                                            iconViewStore = iconViewStore,
+                                            onChipBoundsChanged =
+                                                statusBarViewModel::onChipBoundsChanged,
+                                        )
                                     }
                                 }
                             }
@@ -342,15 +346,24 @@ private fun addBatteryComposable(
     val batteryComposeView =
         ComposeView(phoneStatusBarView.context).apply {
             setContent {
-                val height = with(LocalDensity.current) { STATUS_BAR_BATTERY_HEIGHT.toDp() }
-                UnifiedBattery(
-                    modifier =
-                        Modifier.sysUiResTagContainer()
-                            .height(height)
-                            .aspectRatio(BatteryViewModel.ASPECT_RATIO),
-                    viewModelFactory = statusBarViewModel.batteryViewModelFactory,
-                    isDarkProvider = { statusBarViewModel.areaDark },
-                )
+                if (RudimentaryBattery.isEnabled) {
+                    BatteryWithChargeStatus(
+                        viewModelFactory = statusBarViewModel.batteryNextToPercentViewModel,
+                        isDarkProvider = { statusBarViewModel.areaDark },
+                        showPercentMode = ShowPercentMode.FollowSetting,
+                        modifier = Modifier.sysUiResTagContainer().wrapContentSize(),
+                    )
+                } else {
+                    val height = with(LocalDensity.current) { STATUS_BAR_BATTERY_HEIGHT.toDp() }
+                    UnifiedBattery(
+                        modifier =
+                            Modifier.sysUiResTagContainer()
+                                .height(height)
+                                .aspectRatio(BatteryViewModel.ASPECT_RATIO),
+                        viewModelFactory = statusBarViewModel.unifiedBatteryViewModel,
+                        isDarkProvider = { statusBarViewModel.areaDark },
+                    )
+                }
             }
         }
     phoneStatusBarView.findViewById<ViewGroup>(R.id.system_icons).apply {
@@ -377,15 +390,24 @@ private fun addSystemStatusIconsComposable(
 
                     Spacer(modifier = Modifier.width(6.dp))
 
-                    val height = with(LocalDensity.current) { STATUS_BAR_BATTERY_HEIGHT.toDp() }
-                    UnifiedBattery(
-                        modifier =
-                            Modifier.sysUiResTagContainer()
-                                .height(height)
-                                .aspectRatio(BatteryViewModel.ASPECT_RATIO),
-                        viewModelFactory = statusBarViewModel.batteryViewModelFactory,
-                        isDarkProvider = { statusBarViewModel.areaDark },
-                    )
+                    if (RudimentaryBattery.isEnabled) {
+                        BatteryWithChargeStatus(
+                            viewModelFactory = statusBarViewModel.batteryNextToPercentViewModel,
+                            isDarkProvider = { statusBarViewModel.areaDark },
+                            showPercentMode = ShowPercentMode.FollowSetting,
+                            modifier = Modifier.sysUiResTagContainer().wrapContentSize(),
+                        )
+                    } else {
+                        val height = with(LocalDensity.current) { STATUS_BAR_BATTERY_HEIGHT.toDp() }
+                        UnifiedBattery(
+                            viewModelFactory = statusBarViewModel.unifiedBatteryViewModel,
+                            isDarkProvider = { statusBarViewModel.areaDark },
+                            modifier =
+                                Modifier.sysUiResTagContainer()
+                                    .height(height)
+                                    .aspectRatio(BatteryViewModel.ASPECT_RATIO),
+                        )
+                    }
                 }
             }
         }

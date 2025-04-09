@@ -42,6 +42,7 @@ import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryFrame
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryGlyph
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.PathSpec
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel
 import kotlin.math.ceil
 
 /**
@@ -130,7 +131,7 @@ private const val INTER_GLYPH_PADDING_PX = 0.8f
 
 @Composable
 fun UnifiedBattery(
-    viewModelFactory: BatteryViewModel.Factory,
+    viewModelFactory: UnifiedBatteryViewModel.Factory,
     isDarkProvider: () -> IsAreaDark,
     modifier: Modifier = Modifier,
 ) {

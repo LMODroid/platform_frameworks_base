@@ -39,7 +39,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class BatteryViewModelTest : SysuiTestCase() {
     val kosmos = testKosmos()
-    val Kosmos.underTest by Kosmos.Fixture { batteryViewModel }
+    val Kosmos.underTest by Kosmos.Fixture { unifiedBatteryViewModel }
 
     @Before
     fun setUp() {

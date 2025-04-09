@@ -725,6 +725,16 @@ flag {
 }
 
 flag {
+    name: "status_bar_rudimentary_battery"
+    namespace: "systemui"
+    description: "Bugfix flag to control the percentage-outside-battery behavior"
+    bug: "408730362"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "new_volume_panel"
     namespace: "systemui"
     description: "Switches to the new volume panel (without Slices)."

@@ -67,6 +67,7 @@ import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
 import com.android.systemui.statusbar.core.NewStatusBarIcons;
+import com.android.systemui.statusbar.core.RudimentaryBattery;
 import com.android.systemui.statusbar.data.repository.StatusBarContentInsetsProviderStore;
 import com.android.systemui.statusbar.disableflags.DisableStateTracker;
 import com.android.systemui.statusbar.events.SystemStatusAnimationCallback;
@@ -81,8 +82,11 @@ import com.android.systemui.statusbar.phone.fragment.StatusBarIconBlocklistKt;
 import com.android.systemui.statusbar.phone.fragment.StatusBarSystemEventDefaultAnimator;
 import com.android.systemui.statusbar.phone.ui.StatusBarIconController;
 import com.android.systemui.statusbar.phone.ui.TintedIconManager;
+import com.android.systemui.statusbar.pipeline.battery.ui.binder.BatteryWithPercentViewBinder;
 import com.android.systemui.statusbar.pipeline.battery.ui.binder.UnifiedBatteryViewBinder;
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel;
+import com.android.systemui.statusbar.pipeline.battery.ui.composable.ShowPercentMode;
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryNextToPercentViewModel;
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel;
 import com.android.systemui.statusbar.pipeline.shared.ui.view.SystemStatusIconsLayoutHelper;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -134,7 +138,8 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
     private final StatusBarIconController mStatusBarIconController;
     private final TintedIconManager.Factory mTintedIconManagerFactory;
     private final BatteryMeterViewController mBatteryMeterViewController;
-    private final BatteryViewModel.Factory mBatteryViewModelFactory;
+    private final BatteryNextToPercentViewModel.Factory mTandemBatteryViewModelFactory;
+    private final UnifiedBatteryViewModel.Factory mUnifiedBatteryViewModelFactory;
     private final ShadeViewStateProvider mShadeViewStateProvider;
     private final KeyguardStateController mKeyguardStateController;
     private final KeyguardBypassController mKeyguardBypassController;
@@ -337,7 +342,8 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
             StatusBarIconController statusBarIconController,
             TintedIconManager.Factory tintedIconManagerFactory,
             BatteryMeterViewController batteryMeterViewController,
-            BatteryViewModel.Factory batteryViewModelFactory,
+            BatteryNextToPercentViewModel.Factory tandemBatteryViewModelFactory,
+            UnifiedBatteryViewModel.Factory unifiedBatteryViewModelFactory,
             ShadeViewStateProvider shadeViewStateProvider,
             KeyguardStateController keyguardStateController,
             KeyguardBypassController bypassController,
@@ -371,7 +377,8 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
         mStatusBarIconController = statusBarIconController;
         mTintedIconManagerFactory = tintedIconManagerFactory;
         mBatteryMeterViewController = batteryMeterViewController;
-        mBatteryViewModelFactory = batteryViewModelFactory;
+        mTandemBatteryViewModelFactory = tandemBatteryViewModelFactory;
+        mUnifiedBatteryViewModelFactory = unifiedBatteryViewModelFactory;
         mShadeViewStateProvider = shadeViewStateProvider;
         mKeyguardStateController = keyguardStateController;
         mKeyguardBypassController = bypassController;
@@ -487,11 +494,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
                     mFromGlanceableHubStatusBarAlphaConsumer, mCoroutineDispatcher);
         }
         if (NewStatusBarIcons.isEnabled()) {
-            ComposeView batteryComposeView = new ComposeView(mContext);
-            UnifiedBatteryViewBinder.bind(
-                    batteryComposeView,
-                    mBatteryViewModelFactory,
-                    DarkIconInteractor.toIsAreaDark(mView.darkChangeFlow()));
+            ComposeView batteryComposeView = createAndBindComposeBattery();
 
             mSystemIconsContainer.addView(batteryComposeView, -1);
             // Set the margins for the system icons appropriately
@@ -499,6 +502,25 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
                     mSystemIconsContainer.findViewById(R.id.statusIcons);
             SystemStatusIconsLayoutHelper.configurePaddingForNewStatusBarIcons(systemIcons);
         }
+    }
+
+    private ComposeView createAndBindComposeBattery() {
+        ComposeView batteryComposeView = new ComposeView(mContext);
+        if (RudimentaryBattery.isEnabled()) {
+            BatteryWithPercentViewBinder.bind(
+                    batteryComposeView,
+                    mTandemBatteryViewModelFactory,
+                    ShowPercentMode.WhenCharging,
+                    DarkIconInteractor.toIsAreaDark(mView.darkChangeFlow()));
+
+        } else {
+            UnifiedBatteryViewBinder.bind(
+                    batteryComposeView,
+                    mUnifiedBatteryViewModelFactory,
+                    DarkIconInteractor.toIsAreaDark(mView.darkChangeFlow()));
+        }
+
+        return batteryComposeView;
     }
 
     @Override
