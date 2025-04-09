@@ -16,6 +16,7 @@
 
 package com.android.systemui.keyguard.data.repository
 
+import android.annotation.SuppressLint
 import android.graphics.Point
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.internal.widget.LockPatternUtils
@@ -49,6 +50,7 @@ import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -108,7 +110,7 @@ interface KeyguardRepository {
             "away' is isInTransitionToState(GONE), but consider using more specific flows " +
             "whenever possible."
     )
-    val isKeyguardGoingAway: MutableStateFlow<Boolean>
+    val isKeyguardGoingAway: MutableSharedFlow<Boolean>
 
     /**
      * Whether the keyguard is enabled, per [KeyguardService]. If the keyguard is not enabled, the
@@ -373,8 +375,12 @@ constructor(
     override val isKeyguardDismissible: MutableStateFlow<Boolean> =
         MutableStateFlow(keyguardStateController.isUnlocked)
 
-    override val isKeyguardGoingAway: MutableStateFlow<Boolean> =
-        MutableStateFlow(keyguardStateController.isKeyguardGoingAway)
+    @SuppressLint("SharedFlowCreation")
+    override val isKeyguardGoingAway: MutableSharedFlow<Boolean> =
+        MutableSharedFlow<Boolean>(
+            extraBufferCapacity = 3,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        )
 
     private val _isKeyguardEnabled =
         MutableStateFlow(!lockPatternUtils.isLockScreenDisabled(userTracker.userId))

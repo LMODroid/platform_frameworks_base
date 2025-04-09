@@ -162,7 +162,6 @@ constructor(
                 .collect { (detailedWakefulness, isCommunalAvailable, shouldShowCommunal) ->
                     val isKeyguardOccludedLegacy = keyguardInteractor.isKeyguardOccluded.value
                     val primaryBouncerShowing = keyguardInteractor.primaryBouncerShowing.value
-                    val isKeyguardGoingAway = keyguardInteractor.isKeyguardGoingAway.value
 
                     if (!deviceEntryInteractor.isLockscreenEnabled()) {
                         if (!SceneContainerFlag.isEnabled) {
@@ -171,16 +170,11 @@ constructor(
                                 ownerReason = "lockscreen not enabled",
                             )
                         }
-                    } else if (canDismissLockscreen() || isKeyguardGoingAway) {
+                    } else if (canDismissLockscreen()) {
                         if (!SceneContainerFlag.isEnabled) {
                             startTransitionTo(
                                 KeyguardState.GONE,
-                                ownerReason =
-                                    if (canDismissLockscreen()) {
-                                        "canDismissLockscreen()"
-                                    } else {
-                                        "isKeyguardGoingAway"
-                                    },
+                                ownerReason = "canDismissLockscreen()",
                             )
                         }
                     } else if (primaryBouncerShowing) {
