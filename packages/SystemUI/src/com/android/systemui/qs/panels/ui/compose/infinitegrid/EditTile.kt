@@ -180,7 +180,6 @@ import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -573,10 +572,14 @@ private fun CurrentTilesGrid(
                     currentListState.resizeTile(resizingOperation.spec, resizingOperation.toIcon)
                 }
                 is FinalResizeOperation -> {
-                    // Commit the new size of the tile
-                    onEditAction(
-                        EditAction.ResizeTile(resizingOperation.spec, resizingOperation.toIcon)
-                    )
+                    with(resizingOperation) {
+                        // Commit the new size of the tile IF the size changed. Do this check before
+                        // a snapshot is taken to avoid saving an unnecessary snapshot
+                        val isIcon = spec !in listState.largeTilesSpecs
+                        if (isIcon != toIcon) {
+                            onEditAction(EditAction.ResizeTile(spec, toIcon))
+                        }
+                    }
                 }
             }
         }
@@ -789,11 +792,9 @@ private fun TileGridCell(
         // the tile's size
         LaunchedEffect(resizingState) {
             snapshotFlow { resizingState.temporaryResizeOperation }
-                .drop(1) // Drop the initial state
                 .onEach { onResize(it) }
                 .launchIn(this)
             snapshotFlow { resizingState.finalResizeOperation }
-                .drop(1) // Drop the initial state
                 .onEach { onResize(it) }
                 .launchIn(this)
         }

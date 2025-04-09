@@ -62,8 +62,12 @@ class EditTileListState(
         initialTiles.toGridCells(initialLargeTiles).toMutableStateList()
     val tiles: List<GridCell> = _tiles
 
+    var largeTilesSpecs: Set<TileSpec> = initialLargeTiles
+        private set
+
     /** Update the grid with this new list of tiles and new set of large tileSpecs. */
     fun updateTiles(tiles: List<EditTileViewModel>, largeTiles: Set<TileSpec>) {
+        largeTilesSpecs = largeTiles
         tiles.toGridCells(largeTiles).let {
             _tiles.apply {
                 clear()
