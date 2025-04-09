@@ -23,6 +23,7 @@ import android.content.res.Resources
 import android.os.Trace
 import android.service.quicksettings.Tile.STATE_ACTIVE
 import android.service.quicksettings.Tile.STATE_INACTIVE
+import android.service.quicksettings.Tile.STATE_UNAVAILABLE
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -154,6 +155,7 @@ fun Tile(
             produceState(tile.currentState.toUiState(resources), tile, resources) {
                 tile.state.collect { value = it.toUiState(resources) }
             }
+        val isClickable = uiState.state != STATE_UNAVAILABLE
 
         val icon by
             produceState(tile.currentState.toIconProvider(), tile) {
@@ -170,6 +172,7 @@ fun Tile(
         val tileShape by TileDefaults.animateTileShapeAsState(uiState.state)
         val animatedColor by animateColorAsState(colors.background, label = "QSTileBackgroundColor")
         val animatedAlpha by animateFloatAsState(colors.alpha, label = "QSTileAlpha")
+        val isDualTarget = uiState.handlesSecondaryClick
 
         TileExpandable(
             color = { animatedColor },
@@ -197,32 +200,43 @@ fun Tile(
                         tile.onLongClick(expandable)
                     }
                     .takeIf { uiState.handlesLongClick }
+
             TileContainer(
-                onClick = {
-                    var hasDetails = false
-                    if (QsDetailedView.isEnabled) {
-                        hasDetails = detailsViewModel?.onTileClicked(tile.spec) == true
-                    }
-                    if (!hasDetails) {
-                        // For those tile's who doesn't have a detailed view, process with their
-                        // `onClick` behavior.
-                        tile.onClick(expandable)
+                onClick = onClick@{
+                        if (!isClickable) return@onClick
+
+                        val hasDetails =
+                            QsDetailedView.isEnabled &&
+                                detailsViewModel?.onTileClicked(tile.spec) == true
+                        if (hasDetails) return@onClick
+
+                        // For those tile's who doesn't have a detailed view, process with
+                        // their `onClick` behavior.
+                        if (iconOnly && isDualTarget) {
+                            tile.onSecondaryClick()
+                        } else {
+                            tile.onClick(expandable)
+                        }
+
+                        // Side effects of the click
                         hapticsViewModel?.setTileInteractionState(
                             TileHapticsViewModel.TileInteractionState.CLICKED
                         )
                         if (uiState.accessibilityUiState.toggleableState != null) {
+                            // Bounce
                             coroutineScope.launch {
                                 currentBounceableInfo.bounceable.animateBounce()
                             }
+                            // And show footer text feedback for icons
+                            if (iconOnly) {
+                                requestToggleTextFeedback(tile.spec)
+                            }
                         }
-                        if (uiState.accessibilityUiState.toggleableState != null && iconOnly) {
-                            requestToggleTextFeedback(tile.spec)
-                        }
-                    }
-                },
+                    },
                 onLongClick = longClick,
                 accessibilityUiState = uiState.accessibilityUiState,
                 iconOnly = iconOnly,
+                isDualTarget = isDualTarget,
             ) {
                 val iconProvider: Context.() -> Icon = { getTileIcon(icon = icon) }
                 if (iconOnly) {
@@ -240,7 +254,7 @@ fun Tile(
                                 )
                                 tile.onSecondaryClick()
                             }
-                            .takeIf { uiState.handlesSecondaryClick }
+                            .takeIf { isDualTarget }
                     LargeTileContent(
                         label = uiState.label,
                         secondaryLabel = uiState.secondaryLabel,
@@ -282,10 +296,11 @@ private fun TileExpandable(
 
 @Composable
 fun TileContainer(
-    onClick: () -> Unit,
+    onClick: (() -> Unit)?,
     onLongClick: (() -> Unit)?,
     accessibilityUiState: AccessibilityUiState,
     iconOnly: Boolean,
+    isDualTarget: Boolean,
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
@@ -293,10 +308,11 @@ fun TileContainer(
             Modifier.height(TileHeight)
                 .fillMaxWidth()
                 .tileCombinedClickable(
-                    onClick = onClick,
+                    onClick = onClick ?: {},
                     onLongClick = onLongClick,
                     accessibilityUiState = accessibilityUiState,
                     iconOnly = iconOnly,
+                    isDualTarget = isDualTarget,
                 )
                 .sysuiResTag(if (iconOnly) TEST_TAG_SMALL else TEST_TAG_LARGE),
         content = content,
@@ -349,6 +365,7 @@ fun Modifier.tileCombinedClickable(
     onLongClick: (() -> Unit)?,
     accessibilityUiState: AccessibilityUiState,
     iconOnly: Boolean,
+    isDualTarget: Boolean,
 ): Modifier {
     val longPressLabel = longPressLabel()
     return combinedClickable(
@@ -359,10 +376,16 @@ fun Modifier.tileCombinedClickable(
             hapticFeedbackEnabled = !Flags.msdlFeedback(),
         )
         .semantics {
-            role = accessibilityUiState.accessibilityRole
-            if (accessibilityUiState.accessibilityRole == Role.Switch) {
+            val accessibilityRole =
+                if (iconOnly && isDualTarget) {
+                    Role.Switch
+                } else {
+                    accessibilityUiState.accessibilityRole
+                }
+            if (accessibilityRole == Role.Switch) {
                 accessibilityUiState.toggleableState?.let { toggleableState = it }
             }
+            role = accessibilityRole
             stateDescription = accessibilityUiState.stateDescription
         }
         .thenIf(iconOnly) {
