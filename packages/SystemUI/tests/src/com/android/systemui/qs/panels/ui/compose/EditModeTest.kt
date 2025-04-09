@@ -167,6 +167,7 @@ class EditModeTest : SysuiTestCase() {
                 label = AnnotatedString(tileSpec),
                 appName = null,
                 isCurrent = isCurrent,
+                isDualTarget = false,
                 availableEditActions =
                     if (isRemovable) setOf(AvailableEditActions.REMOVE) else emptySet(),
                 category = TileCategory.UNKNOWN,

@@ -1002,7 +1002,7 @@ fun EditTile(
     colors: TileColors = EditModeTileDefaults.editTileColors(),
 ) {
     val iconSizeDiff = CommonTileDefaults.IconSize - CommonTileDefaults.LargeTileIconSize
-    val alpha by animateFloatAsState(if (tileState == TileState.GreyedOut) .4f else 1f)
+    val containerAlpha by animateFloatAsState(if (tileState == TileState.GreyedOut) .4f else 1f)
     Row(
         horizontalArrangement = spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -1036,10 +1036,14 @@ fun EditTile(
                     }
                 }
                 .largeTilePadding()
-                .graphicsLayer { this.alpha = alpha },
+                .graphicsLayer { this.alpha = containerAlpha },
     ) {
         // Icon
-        Box(Modifier.size(ToggleTargetSize)) {
+        Box(
+            Modifier.size(ToggleTargetSize).thenIf(tile.isDualTarget) {
+                Modifier.drawBehind { drawCircle(colors.iconBackground, alpha = progress()) }
+            }
+        ) {
             SmallTileContent(
                 iconProvider = { tile.icon },
                 color = colors.icon,
@@ -1082,7 +1086,7 @@ private object EditModeTileDefaults {
     fun editTileColors(): TileColors =
         TileColors(
             background = LocalAndroidColorScheme.current.surfaceEffect1,
-            iconBackground = Color.Transparent,
+            iconBackground = LocalAndroidColorScheme.current.surfaceEffect2,
             label = MaterialTheme.colorScheme.onSurface,
             secondaryLabel = MaterialTheme.colorScheme.onSurface,
             icon = MaterialTheme.colorScheme.onSurface,

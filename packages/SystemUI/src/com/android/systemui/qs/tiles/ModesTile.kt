@@ -108,6 +108,7 @@ constructor(
             label = mContext.getString(R.string.quick_settings_modes_label)
             icon = ResourceIcon.get(ICON_RES_ID)
             state = Tile.STATE_INACTIVE
+            handlesSecondaryClick = true
         }
     }
 

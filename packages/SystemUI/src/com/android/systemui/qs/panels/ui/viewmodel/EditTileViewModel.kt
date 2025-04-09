@@ -38,6 +38,7 @@ data class UnloadedEditTileViewModel(
     val label: Text,
     val appName: Text?,
     val isCurrent: Boolean,
+    val isDualTarget: Boolean,
     val availableEditActions: Set<AvailableEditActions>,
     val category: TileCategory,
 ) {
@@ -48,6 +49,7 @@ data class UnloadedEditTileViewModel(
             label = label.toAnnotatedString(context) ?: AnnotatedString(tileSpec.spec),
             appName = appName?.toAnnotatedString(context),
             isCurrent = isCurrent,
+            isDualTarget = isDualTarget,
             availableEditActions = availableEditActions,
             category = category,
         )
@@ -61,6 +63,7 @@ data class EditTileViewModel(
     val label: AnnotatedString,
     val appName: AnnotatedString?,
     val isCurrent: Boolean,
+    val isDualTarget: Boolean,
     val availableEditActions: Set<AvailableEditActions>,
     override val category: TileCategory,
 ) : CategoryAndName {
