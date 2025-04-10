@@ -609,7 +609,7 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
             internetDetailsContentManager.lifecycleOwner!!
         ) {
             val primaryLayout =
-                contentView.requireViewById<LinearLayout>(R.id.mobile_network_layout)
+                contentView.requireViewById<LinearLayout>(R.id.mobile_connected_layout)
             val secondaryLayout =
                 contentView.requireViewById<LinearLayout>(R.id.secondary_mobile_network_layout)
 

@@ -114,6 +114,8 @@ constructor(
     private lateinit var wifiRecyclerView: RecyclerView
     private lateinit var seeAllLayout: LinearLayout
     private lateinit var signalIcon: ImageView
+    private lateinit var turnMobileOnLayout: LinearLayout
+    private lateinit var connectedMobileLayout: LinearLayout
     private lateinit var mobileTitleTextView: TextView
     private lateinit var mobileSummaryTextView: TextView
     private lateinit var airplaneModeSummaryTextView: TextView
@@ -125,7 +127,8 @@ constructor(
     private var canChangeWifiState = false
     private var wifiNetworkHeight = 0
     private var backgroundOn: Drawable? = null
-    private var backgroundOff: Drawable? = null
+    private var entryBackgroundActive: Drawable? = null
+    private var entryBackgroundInactive: Drawable? = null
     private var entryBackgroundStart: Drawable? = null
     private var entryBackgroundEnd: Drawable? = null
     private var entryBackgroundMiddle: Drawable? = null
@@ -216,7 +219,8 @@ constructor(
 
         // Background drawables
         backgroundOn = context.getDrawable(R.drawable.settingslib_switch_bar_bg_on)
-        backgroundOff = context.getDrawable(R.drawable.internet_dialog_selected_effect)
+        entryBackgroundActive = context.getDrawable(R.drawable.settingslib_entry_bg_on)
+        entryBackgroundInactive = context.getDrawable(R.drawable.settingslib_entry_bg_off)
         entryBackgroundStart = context.getDrawable(R.drawable.settingslib_entry_bg_off_start)
         entryBackgroundEnd = context.getDrawable(R.drawable.settingslib_entry_bg_off_end)
         entryBackgroundMiddle = context.getDrawable(R.drawable.settingslib_entry_bg_off_middle)
@@ -328,13 +332,15 @@ constructor(
     private fun setMobileLayout() {
         // Initialize mobile data related views
         mobileNetworkLayout = contentView.requireViewById(R.id.mobile_network_layout)
+        turnMobileOnLayout = contentView.requireViewById(R.id.turn_on_mobile_layout)
+        connectedMobileLayout = contentView.requireViewById(R.id.mobile_connected_layout)
         signalIcon = contentView.requireViewById(R.id.signal_icon)
         mobileTitleTextView = contentView.requireViewById(R.id.mobile_title)
         mobileSummaryTextView = contentView.requireViewById(R.id.mobile_summary)
         mobileDataToggle = contentView.requireViewById(R.id.mobile_toggle)
 
         // Set click listeners for mobile data related views
-        mobileNetworkLayout.setOnClickListener {
+        connectedMobileLayout.setOnClickListener {
             val autoSwitchNonDdsSubId: Int =
                 internetDetailsContentController.getActiveAutoSwitchNonDdsSubId()
             if (autoSwitchNonDdsSubId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
@@ -615,7 +621,8 @@ constructor(
             // non DDS is the currently active sub, set primary visual for it
             setNonDDSActive(autoSwitchNonDdsSubId)
         } else {
-            mobileNetworkLayout.background = if (isNetworkConnected) backgroundOn else backgroundOff
+            connectedMobileLayout.background =
+                if (isNetworkConnected) entryBackgroundActive else entryBackgroundInactive
             mobileTitleTextView.setTextAppearance(
                 if (isNetworkConnected) R.style.TextAppearance_TileDetailsEntryTitle_Active
                 else R.style.TextAppearance_TileDetailsEntryTitle
@@ -645,7 +652,7 @@ constructor(
         secondaryMobileNetworkLayout?.setOnClickListener { view: View? ->
             this.onClickConnectedSecondarySub(view)
         }
-        secondaryMobileNetworkLayout?.background = backgroundOn
+        secondaryMobileNetworkLayout?.background = entryBackgroundActive
 
         contentView.requireViewById<TextView>(R.id.secondary_mobile_title).apply {
             text = getMobileNetworkTitle(autoSwitchNonDdsSubId)
@@ -672,7 +679,7 @@ constructor(
         }
 
         // set secondary visual for default data sub
-        mobileNetworkLayout.background = backgroundOff
+        connectedMobileLayout.background = entryBackgroundInactive
         mobileTitleTextView.setTextAppearance(R.style.TextAppearance_TileDetailsEntryTitle)
         mobileSummaryTextView.setTextAppearance(R.style.TextAppearance_TileDetailsEntrySubTitle)
         signalIcon.setColorFilter(context.getColor(R.color.connected_network_secondary_color))
@@ -826,11 +833,12 @@ constructor(
             Log.d(TAG, "unBind")
         }
         lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
-        mobileNetworkLayout.setOnClickListener(null)
+        connectedMobileLayout.setOnClickListener(null)
         connectedWifiListLayout.setOnClickListener(null)
         secondaryMobileNetworkLayout?.setOnClickListener(null)
         seeAllLayout.setOnClickListener(null)
         wifiToggle.setOnCheckedChangeListener(null)
+        mobileDataToggle.setOnCheckedChangeListener(null)
         shareWifiButton.setOnClickListener(null)
         airplaneModeButton.setOnClickListener(null)
         internetDetailsContentController.onStop()
