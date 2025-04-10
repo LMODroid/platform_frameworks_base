@@ -2229,3 +2229,10 @@ flag {
         purpose: PURPOSE_BUGFIX
     }
 }
+
+flag {
+    name: "hsu_behavior_changes"
+    namespace: "systemui"
+    description: "Overall changes on Sytem UI when current user is the Headless System User"
+    bug: "408066623"
+}
