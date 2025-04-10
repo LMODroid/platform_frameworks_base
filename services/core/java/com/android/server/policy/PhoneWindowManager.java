@@ -662,7 +662,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private ActivityTaskManagerInternal.SleepTokenAcquirer mScreenOffSleepTokenAcquirer;
     boolean mMenuPressed;
-    boolean mAssistPressed;
+    boolean mAssistPressed, mAssistLongPressed;
     boolean mAppSwitchLongPressed;
     Intent mHomeIntent;
     Intent mCarDockIntent;
@@ -4105,19 +4105,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             || mAssistLongPressAction == Action.APP_SWITCH) {
                         preloadRecentApps();
                     }
-                    if (repeatCount == 0) {
-                        mAssistPressed = true;
-                    } else if (longPress) {
-                        if (mAssistLongPressAction != Action.NOTHING) {
-                            if (mAssistLongPressAction != Action.APP_SWITCH) {
-                                cancelPreloadRecentApps();
-                            }
-                            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
-                                    "Assist - Long Press");
-                            performKeyAction(mAssistLongPressAction, event,
-                                    AssistUtils.INVOCATION_TYPE_ASSIST_BUTTON);
-                            mAssistPressed = false;
+                    mAssistPressed = firstDown;
+                    if (firstDown) {
+                        mAssistLongPressed = false;
+                    } else if (!mAssistLongPressed && mAssistLongPressAction != Action.NOTHING) {
+                        if (mAssistLongPressAction != Action.APP_SWITCH) {
+                            cancelPreloadRecentApps();
                         }
+                        mAssistLongPressed = true;
+                        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
+                                "Assist - Long Press");
+                        performKeyAction(mAssistLongPressAction, event,
+                                AssistUtils.INVOCATION_TYPE_ASSIST_BUTTON);
                     }
                 } else {
                     if (mAssistPressed) {
@@ -4130,6 +4129,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                     AssistUtils.INVOCATION_TYPE_ASSIST_BUTTON);
                         }
                     }
+                    mAssistLongPressed = false;
                 }
                 return true;
             case KeyEvent.KEYCODE_VOICE_ASSIST:
@@ -4923,6 +4923,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void preloadRecentApps() {
+        if (mPreloadedRecentApps) return;
         mPreloadedRecentApps = true;
         StatusBarManagerInternal statusbar = getStatusBarManagerInternal();
         if (statusbar != null) {
