@@ -767,6 +767,7 @@ class EditModeViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
                 icon = Icon.Resource(R.drawable.star_on, ContentDescription.Loaded(spec)),
                 label = Text.Loaded(spec),
                 appName = null,
+                appIcon = null,
                 category = TileCategory.UNKNOWN,
             )
         }
@@ -778,6 +779,7 @@ class EditModeViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
                     Icon.Resource(uiConfig.iconRes, ContentDescription.Resource(uiConfig.labelRes)),
                 label = Text.Resource(uiConfig.labelRes),
                 appName = null,
+                appIcon = null,
                 category = category,
             )
         }

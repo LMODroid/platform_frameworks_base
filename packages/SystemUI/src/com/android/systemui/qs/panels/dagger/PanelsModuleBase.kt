@@ -20,6 +20,8 @@ import com.android.systemui.CoreStartable
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.LogBufferFactory
+import com.android.systemui.qs.panels.data.repository.AppIconRepository
+import com.android.systemui.qs.panels.data.repository.AppIconRepositoryImpl
 import com.android.systemui.qs.panels.domain.interactor.EditTilesResetInteractor
 import com.android.systemui.qs.panels.domain.interactor.SizedTilesResetInteractor
 import com.android.systemui.qs.panels.domain.startable.QSPanelsCoreStartable
@@ -59,6 +61,11 @@ interface PanelsModuleBase {
     @IntoMap
     @ClassKey(QSPanelsCoreStartable::class)
     fun bindQSPanelsCoreStartable(impl: QSPanelsCoreStartable): CoreStartable
+
+    @Binds
+    fun bindsAppIconRepositoryFactory(
+        impl: AppIconRepositoryImpl.Factory
+    ): AppIconRepository.Factory
 
     companion object {
         @Provides

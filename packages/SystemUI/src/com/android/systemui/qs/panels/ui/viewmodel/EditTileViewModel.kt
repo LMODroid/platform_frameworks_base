@@ -17,11 +17,14 @@
 package com.android.systemui.qs.panels.ui.viewmodel
 
 import android.content.Context
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.shared.model.Text
 import com.android.systemui.common.ui.compose.toAnnotatedString
+import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModelConstants.APP_ICON_INLINE_CONTENT_ID
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.model.CategoryAndName
 import com.android.systemui.qs.shared.model.TileCategory
@@ -37,17 +40,30 @@ data class UnloadedEditTileViewModel(
     val icon: Icon,
     val label: Text,
     val appName: Text?,
+    val appIcon: Icon?,
     val isCurrent: Boolean,
     val isDualTarget: Boolean,
     val availableEditActions: Set<AvailableEditActions>,
     val category: TileCategory,
 ) {
     fun load(context: Context): EditTileViewModel {
+        val loadedLabel = label.toAnnotatedString(context) ?: AnnotatedString(tileSpec.spec)
+        val inlinedLabel =
+            if (appIcon != null) {
+                buildAnnotatedString {
+                    appendInlineContent(APP_ICON_INLINE_CONTENT_ID)
+                    append(' ')
+                    append(loadedLabel)
+                }
+            } else {
+                loadedLabel
+            }
         return EditTileViewModel(
             tileSpec = tileSpec,
             icon = icon,
-            label = label.toAnnotatedString(context) ?: AnnotatedString(tileSpec.spec),
+            label = inlinedLabel,
             appName = appName?.toAnnotatedString(context),
+            appIcon = appIcon,
             isCurrent = isCurrent,
             isDualTarget = isDualTarget,
             availableEditActions = availableEditActions,
@@ -62,6 +78,7 @@ data class EditTileViewModel(
     val icon: Icon,
     val label: AnnotatedString,
     val appName: AnnotatedString?,
+    val appIcon: Icon?,
     val isCurrent: Boolean,
     val isDualTarget: Boolean,
     val availableEditActions: Set<AvailableEditActions>,
@@ -78,4 +95,8 @@ enum class AvailableEditActions {
     ADD,
     REMOVE,
     MOVE,
+}
+
+object EditTileViewModelConstants {
+    const val APP_ICON_INLINE_CONTENT_ID = "appIcon"
 }

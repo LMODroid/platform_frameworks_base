@@ -260,6 +260,7 @@ class ResizingTest : SysuiTestCase() {
                 isCurrent = true,
                 isDualTarget = false,
                 availableEditActions = emptySet(),
+                appIcon = null,
                 category = TileCategory.UNKNOWN,
             )
         }

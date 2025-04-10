@@ -764,6 +764,9 @@
     <dimen name="qs_panel_padding_bottom">@dimen/footer_actions_height</dimen>
     <dimen name="qs_panel_padding_top">80dp</dimen>
 
+    <!-- Size is in sp because the icon is inlined in text -->
+    <dimen name="qs_edit_mode_app_icon">14sp</dimen>
+
     <dimen name="qs_data_usage_text_size">14sp</dimen>
     <dimen name="qs_data_usage_usage_text_size">36sp</dimen>
 

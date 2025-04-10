@@ -41,6 +41,10 @@ enum class TileCategory(val label: Text, val iconId: Int) {
         Text.Resource(R.string.qs_edit_mode_category_accessibility),
         R.drawable.ic_qs_category_accessibility,
     ),
+    PROVIDED_BY_SYSTEM_APP(
+        Text.Resource(R.string.qs_edit_mode_category_providedBySystemApps),
+        R.drawable.ic_qs_category_system_apps,
+    ),
     PROVIDED_BY_APP(
         Text.Resource(R.string.qs_edit_mode_category_providedByApps),
         R.drawable.ic_qs_category_provided_by_apps,

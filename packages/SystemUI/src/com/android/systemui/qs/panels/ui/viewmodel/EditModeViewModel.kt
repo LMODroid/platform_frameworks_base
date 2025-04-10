@@ -146,6 +146,7 @@ constructor(
                                     it.icon,
                                     it.label,
                                     it.appName,
+                                    it.appIcon,
                                     current,
                                     isDualTarget,
                                     availableActions,

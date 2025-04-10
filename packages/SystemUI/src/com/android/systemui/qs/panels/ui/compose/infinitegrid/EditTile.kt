@@ -32,6 +32,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalOverscrollFactory
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -69,6 +70,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -126,17 +128,24 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastMap
 import com.android.compose.gesture.effect.rememberOffsetOverscrollEffectFactory
 import com.android.compose.modifiers.height
 import com.android.compose.modifiers.thenIf
 import com.android.compose.theme.LocalAndroidColorScheme
+import com.android.compose.ui.graphics.painter.rememberDrawablePainter
+import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.load
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.DragAndDropState
@@ -171,6 +180,7 @@ import com.android.systemui.qs.panels.ui.model.GridCell
 import com.android.systemui.qs.panels.ui.model.SpacerGridCell
 import com.android.systemui.qs.panels.ui.model.TileGridCell
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
+import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModelConstants.APP_ICON_INLINE_CONTENT_ID
 import com.android.systemui.qs.panels.ui.viewmodel.InfiniteGridSnapshotViewModel
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.model.TileCategory
@@ -974,17 +984,63 @@ private fun AvailableTileGridCell(
             )
         }
         Box(Modifier.fillMaxSize()) {
-            Text(
-                cell.label.text,
-                maxLines = 2,
-                color = colors.label,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium.copy(hyphens = Hyphens.Auto),
-                modifier = Modifier.align(Alignment.TopCenter),
-            )
+            val icon = cell.appIcon
+            if (icon != null && icon is Icon.Loaded) {
+                AppIconText(icon, cell.label, colors.label)
+            } else {
+                Text(
+                    cell.label.text,
+                    maxLines = 2,
+                    color = colors.label,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.labelMedium.copy(hyphens = Hyphens.Auto),
+                    modifier = Modifier.align(Alignment.TopCenter),
+                )
+            }
         }
     }
+}
+
+@Composable
+private fun BoxScope.AppIconText(
+    icon: Icon.Loaded,
+    label: AnnotatedString,
+    color: Color,
+    modifier: Modifier = Modifier,
+) {
+    val iconSize: TextUnit = dimensionResource(R.dimen.qs_edit_mode_app_icon).value.sp
+    val inlineContent =
+        remember(icon) {
+            mapOf(
+                Pair(
+                    APP_ICON_INLINE_CONTENT_ID,
+                    InlineTextContent(
+                        Placeholder(
+                            width = iconSize,
+                            height = iconSize,
+                            placeholderVerticalAlign = PlaceholderVerticalAlign.Center,
+                        )
+                    ) {
+                        Image(
+                            rememberDrawablePainter(icon.drawable),
+                            contentDescription = null,
+                            Modifier.fillMaxSize(),
+                        )
+                    },
+                )
+            )
+        }
+    Text(
+        label,
+        maxLines = 2,
+        color = color,
+        overflow = TextOverflow.Ellipsis,
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.labelMedium.copy(hyphens = Hyphens.Auto),
+        inlineContent = inlineContent,
+        modifier = modifier.align(Alignment.TopCenter),
+    )
 }
 
 @Composable

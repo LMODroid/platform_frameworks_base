@@ -37,6 +37,7 @@ constructor(
     private val installedTilesComponentRepository: InstalledTilesComponentRepository,
     private val userTracker: UserTracker,
     @Background private val backgroundContext: CoroutineContext,
+    private val appIconRepositoryFactory: AppIconRepository.Factory,
 ) {
     /**
      * Returns a list of the icon/labels for all available (installed and enabled) tile services.
@@ -48,19 +49,33 @@ constructor(
             val installedTiles =
                 installedTilesComponentRepository.getInstalledTilesServiceInfos(userTracker.userId)
             val packageManager = userTracker.userContext.packageManager
+            val appIconRepository = appIconRepositoryFactory.create()
             installedTiles
                 .map {
                     val tileSpec = TileSpec.create(it.componentName)
                     val label = it.loadLabel(packageManager)
                     val icon = it.loadIcon(packageManager)
                     val appName = it.applicationInfo.loadLabel(packageManager)
+                    val category =
+                        if (it.applicationInfo.isSystemApp) {
+                            TileCategory.PROVIDED_BY_SYSTEM_APP
+                        } else {
+                            TileCategory.PROVIDED_BY_APP
+                        }
+                    val appIcon =
+                        if (it.applicationInfo.isSystemApp) {
+                            null
+                        } else {
+                            appIconRepository.loadIcon(it.applicationInfo)
+                        }
                     if (icon != null) {
                         EditTileData(
                             tileSpec,
                             Icon.Loaded(icon, ContentDescription.Loaded(label.toString())),
                             Text.Loaded(label.toString()),
                             Text.Loaded(appName.toString()),
-                            TileCategory.PROVIDED_BY_APP,
+                            appIcon,
+                            category,
                         )
                     } else {
                         null

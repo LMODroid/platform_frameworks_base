@@ -170,6 +170,7 @@ class EditModeTest : SysuiTestCase() {
                 isDualTarget = false,
                 availableEditActions =
                     if (isRemovable) setOf(AvailableEditActions.REMOVE) else emptySet(),
+                appIcon = null,
                 category = TileCategory.UNKNOWN,
             )
         }

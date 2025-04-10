@@ -62,6 +62,7 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
             tileService1,
             drawable1,
             appName1,
+            appIcon1,
         )
 
     private val service2 =
@@ -70,6 +71,7 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
             tileService2,
             drawable2,
             appName2,
+            appIcon2,
         )
 
     private val underTest =
@@ -78,6 +80,7 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
                 installedTilesRepository,
                 userTracker,
                 mainCoroutineContext,
+                appIconRepositoryFactory,
             )
         }
 
@@ -85,7 +88,7 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
     fun setUp() {
         kosmos.fakeInstalledTilesRepository.setInstalledServicesForUser(
             userTracker.userId,
-            listOf(service1, service2)
+            listOf(service1, service2),
         )
     }
 
@@ -100,6 +103,7 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
                         Icon.Loaded(drawable1, ContentDescription.Loaded(tileService1)),
                         Text.Loaded(tileService1),
                         Text.Loaded(appName1),
+                        Icon.Loaded(appIcon1, ContentDescription.Loaded(null)),
                         TileCategory.PROVIDED_BY_APP,
                     )
                 val expectedData2 =
@@ -108,6 +112,7 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
                         Icon.Loaded(drawable2, ContentDescription.Loaded(tileService2)),
                         Text.Loaded(tileService2),
                         Text.Loaded(appName2),
+                        Icon.Loaded(appIcon2, ContentDescription.Loaded(null)),
                         TileCategory.PROVIDED_BY_APP,
                     )
 
@@ -131,13 +136,10 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
         with(kosmos) {
             testScope.runTest {
                 val serviceNullIcon =
-                    FakeInstalledTilesComponentRepository.ServiceInfo(
-                        component2,
-                        tileService2,
-                    )
+                    FakeInstalledTilesComponentRepository.ServiceInfo(component2, tileService2)
                 fakeInstalledTilesRepository.setInstalledServicesForUser(
                     userTracker.userId,
-                    listOf(service1, serviceNullIcon)
+                    listOf(service1, serviceNullIcon),
                 )
 
                 val expectedData1 =
@@ -146,6 +148,7 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
                         Icon.Loaded(drawable1, ContentDescription.Loaded(tileService1)),
                         Text.Loaded(tileService1),
                         Text.Loaded(appName1),
+                        Icon.Loaded(appIcon1, ContentDescription.Loaded(null)),
                         TileCategory.PROVIDED_BY_APP,
                     )
 
@@ -156,11 +159,13 @@ class IconAndNameCustomRepositoryTest : SysuiTestCase() {
 
     private companion object {
         val drawable1 = TestStubDrawable("drawable1")
+        val appIcon1 = TestStubDrawable("appIcon1")
         val appName1 = "App1"
         val tileService1 = "Tile Service 1"
         val component1 = ComponentName("pkg1", "srv1")
 
         val drawable2 = TestStubDrawable("drawable2")
+        val appIcon2 = TestStubDrawable("appIcon2")
         val appName2 = "App2"
         val tileService2 = "Tile Service 2"
         val component2 = ComponentName("pkg2", "srv2")

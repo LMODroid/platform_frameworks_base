@@ -4208,9 +4208,13 @@
     <string name="qs_edit_mode_category_privacy">
         Privacy
     </string>
-    <!-- Label for category in QS Edit mode list of tiles, for tiles that are provided by an app, e.g. Calculator. [CHAR LIMIT=NONE] -->
+    <!-- Label for category in QS Edit mode list of tiles, for tiles that are provided by a system app, e.g. Calculator. [CHAR LIMIT=NONE] -->
+    <string name="qs_edit_mode_category_providedBySystemApps">
+        From system apps
+    </string>
+    <!-- Label for category in QS Edit mode list of tiles, for tiles that are provided by a third party app. [CHAR LIMIT=NONE] -->
     <string name="qs_edit_mode_category_providedByApps">
-        Provided by apps
+        From apps you installed
     </string>
     <!-- Label for category in QS Edit mode list of tiles, for tiles that are related to the display, e.g. Dark theme. [CHAR LIMIT=NONE] -->
     <string name="qs_edit_mode_category_display">
