@@ -21,17 +21,16 @@ import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.database.ContentObserver
 import android.os.LocaleList
-import android.platform.test.flag.junit.FlagsParameterization
 import android.provider.Settings
 import android.testing.TestableLooper
 import android.util.MathUtils.abs
 import android.view.View
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.compose.animation.scene.ObservableTransitionState
 import com.android.compose.animation.scene.SceneKey
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.keyguard.KeyguardUpdateMonitorCallback
-import com.android.systemui.Flags.mediaControlsUmoInflationInBackground
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
 import com.android.systemui.dump.DumpManager
@@ -99,8 +98,6 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
 import org.mockito.kotlin.capture
 import org.mockito.kotlin.eq
-import platform.test.runner.parameterized.ParameterizedAndroidJunit4
-import platform.test.runner.parameterized.Parameters
 
 private val DATA = MediaTestUtils.emptyMediaData
 
@@ -109,8 +106,8 @@ private const val PLAYING_LOCAL = "playing local"
 
 @SmallTest
 @TestableLooper.RunWithLooper(setAsMainLooper = true)
-@RunWith(ParameterizedAndroidJunit4::class)
-class MediaCarouselControllerTest(flags: FlagsParameterization) : SysuiTestCase() {
+@RunWith(AndroidJUnit4::class)
+class MediaCarouselControllerTest : SysuiTestCase() {
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
     private val testDispatcher = kosmos.testDispatcher
     private val secureSettings = kosmos.fakeSettings
@@ -149,20 +146,6 @@ class MediaCarouselControllerTest(flags: FlagsParameterization) : SysuiTestCase(
 
     private var originalResumeSetting =
         Settings.Secure.getInt(context.contentResolver, Settings.Secure.MEDIA_CONTROLS_RESUME, 1)
-
-    companion object {
-        @JvmStatic
-        @Parameters(name = "{0}")
-        fun getParams(): List<FlagsParameterization> {
-            return FlagsParameterization.progressionOf(
-                com.android.systemui.Flags.FLAG_MEDIA_CONTROLS_UMO_INFLATION_IN_BACKGROUND
-            )
-        }
-    }
-
-    init {
-        mSetFlagsRule.setFlagsParameterization(flags)
-    }
 
     @Before
     fun setup() {
@@ -1000,9 +983,7 @@ class MediaCarouselControllerTest(flags: FlagsParameterization) : SysuiTestCase(
     }
 
     private fun runAllReady() {
-        if (mediaControlsUmoInflationInBackground()) {
-            bgExecutor.runAllReady()
-            uiExecutor.runAllReady()
-        }
+        bgExecutor.runAllReady()
+        uiExecutor.runAllReady()
     }
 }

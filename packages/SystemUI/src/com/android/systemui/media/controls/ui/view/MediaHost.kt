@@ -20,9 +20,7 @@ import android.graphics.Rect
 import android.util.ArraySet
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
-import com.android.systemui.Flags.mediaControlsUmoInflationInBackground
 import com.android.systemui.media.controls.domain.pipeline.MediaDataManager
-import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.controls.ui.controller.MediaCarouselController
 import com.android.systemui.media.controls.ui.controller.MediaCarouselControllerLogger
 import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager
@@ -87,19 +85,6 @@ class MediaHost(
 
     private val listener =
         object : MediaDataManager.Listener {
-            override fun onMediaDataLoaded(
-                key: String,
-                oldKey: String?,
-                data: MediaData,
-                immediately: Boolean,
-            ) {
-                if (mediaControlsUmoInflationInBackground()) return
-
-                if (immediately) {
-                    updateViewVisibility()
-                }
-            }
-
             override fun onMediaDataRemoved(key: String, userInitiated: Boolean) {
                 updateViewVisibility()
             }

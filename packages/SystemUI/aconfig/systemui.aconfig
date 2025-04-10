@@ -1398,16 +1398,6 @@ flag {
 }
 
 flag {
-  name: "media_controls_umo_inflation_in_background"
-  namespace: "systemui"
-  description: "Inflate UMO in background thread"
-  bug: "368514198"
-  metadata {
-    purpose: PURPOSE_BUGFIX
-  }
-}
-
-flag {
   name: "media_controls_ui_update"
   namespace: "systemui"
   description: "Enables media visuals update"

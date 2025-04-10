@@ -44,7 +44,6 @@ import com.android.internal.logging.InstanceId
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.keyguard.KeyguardUpdateMonitorCallback
 import com.android.systemui.Dumpable
-import com.android.systemui.Flags.mediaControlsUmoInflationInBackground
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
@@ -451,16 +450,11 @@ constructor(
                     immediately: Boolean,
                 ) {
                     debugLogger.logMediaLoaded(key, data.active)
-                    val onUiExecutionEnd =
-                        if (mediaControlsUmoInflationInBackground()) {
-                            Runnable {
-                                if (immediately) {
-                                    updateHostVisibility()
-                                }
-                            }
-                        } else {
-                            null
+                    val onUiExecutionEnd = Runnable {
+                        if (immediately) {
+                            updateHostVisibility()
                         }
+                    }
                     addOrUpdatePlayer(key, oldKey, data, onUiExecutionEnd)
 
                     val canRemove = data.isPlaying?.let { !it } ?: data.isClearable && !data.active
@@ -756,7 +750,7 @@ constructor(
         key: String,
         oldKey: String?,
         data: MediaData,
-        onUiExecutionEnd: Runnable? = null,
+        onUiExecutionEnd: Runnable,
     ): Boolean =
         traceSection("MediaCarouselController#addOrUpdatePlayer") {
             MediaPlayerData.moveIfExists(oldKey, key)
@@ -764,47 +758,30 @@ constructor(
             val curVisibleMediaKey =
                 MediaPlayerData.visiblePlayerKeys()
                     .elementAtOrNull(mediaCarouselScrollHandler.visibleMediaIndex)
-            if (mediaControlsUmoInflationInBackground()) {
-                if (existingPlayer == null) {
-                    bgExecutor.execute {
-                        val mediaViewHolder = createMediaViewHolderInBg()
-                        // Add the new player in the main thread.
-                        uiExecutor.execute {
-                            setupNewPlayer(key, data, curVisibleMediaKey, mediaViewHolder)
-                            updatePageIndicator()
-                            mediaCarouselScrollHandler.onPlayersChanged()
-                            mediaControlChipInteractor.updateMediaControlChipModelLegacy(
-                                MediaPlayerData.getFirstActiveMediaData()
-                            )
-                            mediaFrame.requiresRemeasuring = true
-                            onUiExecutionEnd?.run()
-                        }
+            if (existingPlayer == null) {
+                bgExecutor.execute {
+                    val mediaViewHolder = createMediaViewHolderInBg()
+                    // Add the new player in the main thread.
+                    uiExecutor.execute {
+                        setupNewPlayer(key, data, curVisibleMediaKey, mediaViewHolder)
+                        updatePageIndicator()
+                        mediaCarouselScrollHandler.onPlayersChanged()
+                        mediaControlChipInteractor.updateMediaControlChipModelLegacy(
+                            MediaPlayerData.getFirstActiveMediaData()
+                        )
+                        mediaFrame.requiresRemeasuring = true
+                        onUiExecutionEnd.run()
                     }
-                } else {
-                    updatePlayer(key, data, curVisibleMediaKey, existingPlayer)
-                    updatePageIndicator()
-                    mediaCarouselScrollHandler.onPlayersChanged()
-                    mediaControlChipInteractor.updateMediaControlChipModelLegacy(
-                        MediaPlayerData.getFirstActiveMediaData()
-                    )
-                    mediaFrame.requiresRemeasuring = true
-                    onUiExecutionEnd?.run()
                 }
             } else {
-                if (existingPlayer == null) {
-                    val mediaViewHolder =
-                        MediaViewHolder.create(LayoutInflater.from(context), mediaContent)
-                    setupNewPlayer(key, data, curVisibleMediaKey, mediaViewHolder)
-                } else {
-                    updatePlayer(key, data, curVisibleMediaKey, existingPlayer)
-                }
+                updatePlayer(key, data, curVisibleMediaKey, existingPlayer)
                 updatePageIndicator()
                 mediaCarouselScrollHandler.onPlayersChanged()
                 mediaControlChipInteractor.updateMediaControlChipModelLegacy(
                     MediaPlayerData.getFirstActiveMediaData()
                 )
                 mediaFrame.requiresRemeasuring = true
-                onUiExecutionEnd?.run()
+                onUiExecutionEnd.run()
             }
             return existingPlayer == null
         }
