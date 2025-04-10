@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.layout.onLayoutRectChanged
 import com.android.systemui.common.ui.compose.load
+import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryColors
@@ -74,7 +75,10 @@ fun BatteryCanvas(
             )
         }
 
-    Canvas(modifier = modifier.fillMaxSize(), contentDescription = contentDescription) {
+    Canvas(
+        modifier = modifier.fillMaxSize().sysuiResTag(BatteryViewModel.TEST_TAG),
+        contentDescription = contentDescription,
+    ) {
         val scale = path.scaleTo(size.width, size.height)
         val colors = colorsProvider()
 
@@ -152,7 +156,8 @@ fun UnifiedBattery(
         isFull = viewModel.isFull,
         colorsProvider = colorProvider,
         modifier =
-            modifier.onLayoutRectChanged { relativeLayoutBounds ->
+            modifier.sysuiResTag(BatteryViewModel.TEST_TAG).onLayoutRectChanged {
+                relativeLayoutBounds ->
                 bounds =
                     with(relativeLayoutBounds.boundsInScreen) { Rect(left, top, right, bottom) }
             },

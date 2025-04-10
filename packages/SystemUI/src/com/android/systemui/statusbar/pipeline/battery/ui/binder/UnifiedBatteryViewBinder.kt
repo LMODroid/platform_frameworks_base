@@ -27,6 +27,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.UnifiedBattery
@@ -55,7 +56,9 @@ object UnifiedBatteryViewBinder {
                         val height = with(LocalDensity.current) { STATUS_BAR_BATTERY_HEIGHT.toDp() }
                         UnifiedBattery(
                             modifier =
-                                Modifier.height(height).aspectRatio(BatteryViewModel.ASPECT_RATIO),
+                                Modifier.height(height)
+                                    .aspectRatio(BatteryViewModel.ASPECT_RATIO)
+                                    .sysuiResTag(BatteryViewModel.TEST_TAG),
                             viewModelFactory = viewModelFactory,
                             isDarkProvider = { isDark },
                         )

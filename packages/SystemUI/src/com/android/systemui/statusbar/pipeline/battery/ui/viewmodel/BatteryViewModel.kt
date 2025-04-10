@@ -236,6 +236,9 @@ constructor(interactor: BatteryInteractor, @Application context: Context) : Excl
 
         val ASPECT_RATIO = STATUS_BAR_BATTERY_WIDTH.value / STATUS_BAR_BATTERY_HEIGHT.value
 
+        /** Resource id used to identify battery composable view in SysUI tests */
+        const val TEST_TAG = "battery"
+
         fun Int.glyphRepresentation(): List<BatteryGlyph> = toString().map { it.toGlyph() }
 
         private fun Char.toGlyph(): BatteryGlyph =
