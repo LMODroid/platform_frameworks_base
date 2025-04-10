@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.chips.ui.viewmodel
 
 import android.content.res.Configuration
+import android.graphics.RectF
 import com.android.systemui.biometrics.domain.interactor.DisplayStateInteractor
 import com.android.systemui.common.ui.domain.interactor.ConfigurationInteractor
 import com.android.systemui.dagger.SysUISingleton
@@ -24,6 +25,7 @@ import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.core.LogLevel
 import com.android.systemui.statusbar.chips.StatusBarChipLogTags.pad
+import com.android.systemui.statusbar.chips.StatusBarChipToHunAnimation
 import com.android.systemui.statusbar.chips.StatusBarChipsLog
 import com.android.systemui.statusbar.chips.call.ui.viewmodel.CallChipViewModel
 import com.android.systemui.statusbar.chips.casttootherdevice.ui.viewmodel.CastToOtherDeviceChipViewModel
@@ -35,6 +37,7 @@ import com.android.systemui.statusbar.chips.ui.model.MultipleOngoingActivityChip
 import com.android.systemui.statusbar.chips.ui.model.MultipleOngoingActivityChipsModelLegacy
 import com.android.systemui.statusbar.chips.ui.model.OngoingActivityChipModel
 import com.android.systemui.statusbar.phone.ongoingcall.StatusBarChipsModernization
+import com.android.systemui.util.kotlin.filterValuesNotNull
 import com.android.systemui.util.kotlin.pairwise
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -369,9 +372,52 @@ constructor(
             }
         }
 
+    /** Stores the latest on-screen bounds for each of the chips. */
+    // Note: This will also store bounds for chips that have been removed. We may want to clear the
+    // value for removed chips.
+    private val chipBounds = MutableStateFlow<Map<String, RectF>>(emptyMap())
+
+    /** Invoked each time a chip's on-screen bounds have changed. */
+    fun onChipBoundsChanged(key: String, newBounds: RectF) {
+        if (!StatusBarChipToHunAnimation.isEnabled) {
+            return
+        }
+        val map = chipBounds.value.toMutableMap()
+        val currentValue = map[key]
+        if (currentValue != null) {
+            currentValue.set(newBounds)
+        } else {
+            map[key] = newBounds
+        }
+        chipBounds.value = map
+    }
+
     /** A flow modeling just the keys for the currently visible chips. */
-    val visibleChipKeys: Flow<List<String>> =
+    private val visibleChipKeys: Flow<List<String>> =
         activeChips.map { chips -> chips.filter { !it.isHidden }.map { it.key } }
+
+    /** Placeholder chip bounds to use if {@link StatusBarChipToHunAnimation} is disabled. */
+    private val placeholderChipBounds = RectF()
+
+    /** A flow modeling the keys and on-screen bounds for the currently visible chips. */
+    val visibleChipsWithBounds: Flow<Map<String, RectF>> =
+        if (StatusBarChipToHunAnimation.isEnabled) {
+            combine(visibleChipKeys, chipBounds) { keys, chipBounds ->
+                    // TODO: Test chip w/o bounds isn't returned
+                    // TODO(b/393369891): Should we provide the placeholder bounds as a backup and
+                    // make those bounds public so that [NotificationStackScrollLayout] can do a
+                    // good default animation for chips even if we couldn't fetch the bounds for
+                    // some reason?
+                    keys.associateWith { chipBounds[it] }.filterValuesNotNull()
+                }
+                .distinctUntilChanged()
+        } else {
+            // If the custom chip-to-HUN animation isn't enabled, just provide any non-null
+            // chip bounds so that [NotificationStackScrollLayout] knows there's a status bar chip.
+            visibleChipKeys
+                .map { keys -> keys.associateWith { placeholderChipBounds } }
+                .distinctUntilChanged()
+        }
 
     /**
      * Sort the given chip [bundle] in order of priority, and divide the chips between active,

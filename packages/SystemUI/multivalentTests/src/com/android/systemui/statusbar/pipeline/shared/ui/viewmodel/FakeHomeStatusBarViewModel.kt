@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.pipeline.shared.ui.viewmodel
 
 import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.RectF
 import android.view.View
 import androidx.compose.runtime.getValue
 import com.android.systemui.lifecycle.ExclusiveActivatable
@@ -56,6 +57,8 @@ class FakeHomeStatusBarViewModel(
 
     override val ongoingActivityChips =
         ChipsVisibilityModel(MultipleOngoingActivityChipsModel(), areChipsAllowed = false)
+
+    override fun onChipBoundsChanged(key: String, bounds: RectF) {}
 
     override val ongoingActivityChipsLegacy =
         MutableStateFlow(MultipleOngoingActivityChipsModelLegacy())

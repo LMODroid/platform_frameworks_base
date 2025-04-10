@@ -35,6 +35,7 @@ import static com.android.systemui.statusbar.notification.stack.StackStateAnimat
 import android.animation.ObjectAnimator;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
 import android.os.Trace;
@@ -140,7 +141,9 @@ import com.android.systemui.wallpapers.domain.interactor.WallpaperInteractor;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -329,12 +332,12 @@ public class NotificationStackScrollLayoutController implements Dumpable {
     private float mMaxAlphaForGlanceableHub = 1.0f;
 
     /**
-     * A list of keys for the visible status bar chips.
+     * A list of visible status bar chips with their key and their absolute on-screen bounds.
      *
      * Note that this list can contain both notification keys, as well as keys for other types of
      * chips like screen recording.
      */
-    private List<String> mVisibleStatusBarChipKeys = new ArrayList<>();
+    private Map<String, RectF> mVisibleStatusBarChips = new HashMap<>();
 
     private final NotificationListViewBinder mViewBinder;
 
@@ -1613,16 +1616,20 @@ public class NotificationStackScrollLayoutController implements Dumpable {
         return mView.getFirstChildNotGone();
     }
 
-    /** Sets the list of keys that have currently visible status bar chips. */
-    public void updateStatusBarChipKeys(List<String> visibleStatusBarChipKeys) {
-        mVisibleStatusBarChipKeys = visibleStatusBarChipKeys;
+    /** Sets the list of visible status bar chips. */
+    public void updateVisibleStatusBarChips(Map<String, RectF> visibleStatusBarChips) {
+        mVisibleStatusBarChips = visibleStatusBarChips;
     }
 
     public void generateHeadsUpAnimation(NotificationEntry entry, boolean isHeadsUp) {
-        boolean hasStatusBarChip =
-                StatusBarNotifChips.isEnabled()
-                        && mVisibleStatusBarChipKeys.contains(entry.getKey());
-        mView.generateHeadsUpAnimation(entry, isHeadsUp, hasStatusBarChip);
+        RectF chipBounds;
+        if (StatusBarNotifChips.isEnabled()) {
+            chipBounds = mVisibleStatusBarChips.getOrDefault(entry.getKey(), null);
+        } else {
+            chipBounds = null;
+        }
+
+        mView.generateHeadsUpAnimation(entry, isHeadsUp, chipBounds);
     }
 
     public void setMaxTopPadding(int padding) {

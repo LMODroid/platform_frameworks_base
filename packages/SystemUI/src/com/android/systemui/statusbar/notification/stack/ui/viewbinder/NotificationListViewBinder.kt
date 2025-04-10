@@ -136,8 +136,8 @@ constructor(
 
                 if (StatusBarNotifChips.isEnabled) {
                     launch {
-                        viewModel.visibleStatusBarChipKeys.collect { keys ->
-                            viewController.updateStatusBarChipKeys(keys)
+                        viewModel.visibleStatusBarChips.collect { chips ->
+                            viewController.updateVisibleStatusBarChips(chips)
                         }
                     }
                 }

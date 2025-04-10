@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.notification.ui.viewbinder
 
+import android.graphics.RectF
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.statusbar.chips.ui.viewmodel.OngoingActivityChipsViewModel
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow
@@ -43,14 +44,14 @@ constructor(
                 combine(
                         viewModel.pinnedHeadsUpRowKeys,
                         viewModel.activeHeadsUpRowKeys,
-                        ongoingActivityChipsViewModel.visibleChipKeys,
+                        ongoingActivityChipsViewModel.visibleChipsWithBounds,
                         ::Triple,
                     )
                     .sample(viewModel.headsUpAnimationsEnabled, ::Pair)
                     .collect { (newKeys, animationsEnabled) ->
                         val pinned = newKeys.first
                         val all = newKeys.second
-                        val statusBarChips: List<String> = newKeys.third
+                        val statusBarChips: Map<String, RectF> = newKeys.third
 
                         val added = all.union(pinned) - previousKeys
                         val removed = previousKeys - pinned
@@ -60,21 +61,21 @@ constructor(
                         if (animationsEnabled) {
                             added.forEach { key ->
                                 val row = obtainView(key)
-                                val hasStatusBarChip = statusBarChips.contains(row.key)
+                                val statusBarChipBounds: RectF? = statusBarChips[row.key]
                                 parentView.generateHeadsUpAnimation(
                                     row,
                                     /* isHeadsUp = */ true,
-                                    hasStatusBarChip,
+                                    statusBarChipBounds,
                                 )
                             }
                             removed.forEach { key ->
                                 val row = obtainView(key)
-                                val hasStatusBarChip = statusBarChips.contains(row.key)
+                                val statusBarChipBounds: RectF? = statusBarChips[row.key]
                                 if (!parentView.isBeingDragged()) {
                                     parentView.generateHeadsUpAnimation(
                                         row,
                                         /* isHeadsUp= */ false,
-                                        hasStatusBarChip,
+                                        statusBarChipBounds,
                                     )
                                 }
                                 row.markHeadsUpSeen()

@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.chips.ui.compose
 
+import android.graphics.RectF
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -25,16 +26,26 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toAndroidRectF
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.statusbar.chips.StatusBarChipsReturnAnimations
 import com.android.systemui.statusbar.chips.ui.model.MultipleOngoingActivityChipsModel
 import com.android.systemui.statusbar.notification.icon.ui.viewbinder.NotificationIconContainerViewBinder
 
+/**
+ * Composable for all ongoing activity chips shown in the status bar.
+ *
+ * @param onChipBoundsChanged should be invoked each time any chip has their on-screen bounds
+ *   changed.
+ */
 @Composable
 fun OngoingActivityChips(
     chips: MultipleOngoingActivityChipsModel,
     iconViewStore: NotificationIconContainerViewBinder.IconViewStore?,
+    onChipBoundsChanged: (String, RectF) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (StatusBarChipsReturnAnimations.isEnabled) {
@@ -63,7 +74,13 @@ fun OngoingActivityChips(
                     OngoingActivityChip(
                         model = it,
                         iconViewStore = iconViewStore,
-                        modifier = Modifier.sysuiResTag(it.key),
+                        modifier =
+                            Modifier.sysuiResTag(it.key).onGloballyPositioned { coordinates ->
+                                onChipBoundsChanged.invoke(
+                                    it.key,
+                                    coordinates.boundsInWindow().toAndroidRectF(),
+                                )
+                            },
                     )
                 }
             }

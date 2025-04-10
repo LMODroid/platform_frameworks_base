@@ -21,7 +21,9 @@ import android.content.packageManager
 import android.content.res.Configuration
 import android.content.res.mainResources
 import android.graphics.Bitmap
+import android.graphics.RectF
 import android.graphics.drawable.BitmapDrawable
+import android.platform.test.annotations.DisableFlags
 import android.platform.test.annotations.EnableFlags
 import android.view.View
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -42,6 +44,7 @@ import com.android.systemui.mediaprojection.taskswitcher.FakeActivityTaskManager
 import com.android.systemui.res.R
 import com.android.systemui.screenrecord.data.model.ScreenRecordModel
 import com.android.systemui.screenrecord.data.repository.screenRecordRepository
+import com.android.systemui.statusbar.chips.StatusBarChipToHunAnimation
 import com.android.systemui.statusbar.chips.call.ui.viewmodel.CallChipViewModel
 import com.android.systemui.statusbar.chips.call.ui.viewmodel.CallChipViewModelTest.Companion.createStatusBarIconViewOrNull
 import com.android.systemui.statusbar.chips.mediaprojection.domain.interactor.MediaProjectionChipInteractorTest.Companion.NORMAL_PACKAGE
@@ -175,9 +178,9 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun visibleChipKeys_allInactive() =
+    fun visibleChipsWithBounds_allInactive() =
         kosmos.runTest {
-            val latest by collectLastValue(underTest.visibleChipKeys)
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
 
             screenRecordState.value = ScreenRecordModel.DoingNothing
             mediaProjectionState.value = MediaProjectionState.NotProjecting
@@ -261,20 +264,86 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun visibleChipKeys_screenRecordShowAndCallShow_hasBothKeys() =
+    @DisableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_screenRecordShowAndCallShow_animFlagOff_hasBothKeys() =
         kosmos.runTest {
-            val latest by collectLastValue(underTest.visibleChipKeys)
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
 
             val callNotificationKey = "call"
             screenRecordState.value = ScreenRecordModel.Recording
             addOngoingCallState(callNotificationKey)
 
-            assertThat(latest)
+            assertThat(latest!!.map { it.key })
                 .containsExactly(
                     ScreenRecordChipViewModel.KEY,
                     "${CallChipViewModel.KEY_PREFIX}$callNotificationKey",
                 )
                 .inOrder()
+        }
+
+    @Test
+    @EnableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_screenRecordShowAndCallShow_animFlagOn_noBoundsSet_isEmpty() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
+
+            val callNotificationKey = "call"
+            screenRecordState.value = ScreenRecordModel.Recording
+            addOngoingCallState(callNotificationKey)
+
+            assertThat(latest).isEmpty()
+        }
+
+    @Test
+    @EnableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_screenRecordShowAndCallShow_animFlagOn_boundsSetForOneChip_hasOnlyOneKey() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
+
+            val callNotificationKey = "call"
+            val callKeyForChip = "${CallChipViewModel.KEY_PREFIX}$callNotificationKey"
+            screenRecordState.value = ScreenRecordModel.Recording
+            addOngoingCallState(callNotificationKey)
+
+            underTest.onChipBoundsChanged(callKeyForChip, RectF(1f, 2f, 3f, 4f))
+
+            assertThat(latest!![callKeyForChip]).isEqualTo(RectF(1f, 2f, 3f, 4f))
+            assertThat(latest).doesNotContainKey(ScreenRecordChipViewModel.KEY)
+        }
+
+    @Test
+    @EnableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_screenRecordShowAndCallShow_animFlagOn_boundsUpdated_hasUpdatedBounds() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
+
+            val callNotificationKey = "call"
+            val callKeyForChip = "${CallChipViewModel.KEY_PREFIX}$callNotificationKey"
+            addOngoingCallState(callNotificationKey)
+
+            underTest.onChipBoundsChanged(callKeyForChip, RectF(1f, 2f, 3f, 4f))
+            assertThat(latest!![callKeyForChip]).isEqualTo(RectF(1f, 2f, 3f, 4f))
+
+            underTest.onChipBoundsChanged(callKeyForChip, RectF(10f, 20f, 30f, 40f))
+            assertThat(latest!![callKeyForChip]).isEqualTo(RectF(10f, 20f, 30f, 40f))
+        }
+
+    @Test
+    @EnableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_screenRecordShowAndCallShow_animFlagOn_boundsSet_hasBothKeysAndBounds() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
+
+            val callNotificationKey = "call"
+            val callKeyForChip = "${CallChipViewModel.KEY_PREFIX}$callNotificationKey"
+            screenRecordState.value = ScreenRecordModel.Recording
+            addOngoingCallState(callNotificationKey)
+
+            underTest.onChipBoundsChanged(callKeyForChip, RectF(1f, 2f, 3f, 4f))
+            underTest.onChipBoundsChanged(ScreenRecordChipViewModel.KEY, RectF(5f, 6f, 7f, 8f))
+
+            assertThat(latest!![callKeyForChip]).isEqualTo(RectF(1f, 2f, 3f, 4f))
+            assertThat(latest!![ScreenRecordChipViewModel.KEY]).isEqualTo(RectF(5f, 6f, 7f, 8f))
         }
 
     @EnableChipsModernization
@@ -925,9 +994,10 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
 
     @Test
     @DisableChipsModernization
-    fun visibleChipKeys_chipsModOff_threePromotedNotifs_topTwoInList() =
+    @DisableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_chipsModOff_animFlagOff_threePromotedNotifs_topTwoInList() =
         kosmos.runTest {
-            val latest by collectLastValue(underTest.visibleChipKeys)
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
 
             setNotifs(
                 listOf(
@@ -949,14 +1019,15 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
                 )
             )
 
-            assertThat(latest).containsExactly("firstNotif", "secondNotif").inOrder()
+            assertThat(latest!!.keys).containsExactly("firstNotif", "secondNotif")
         }
 
     @Test
     @EnableChipsModernization
-    fun visibleChipKeys_chipsModOn_fourPromotedNotifs_topThreeInList() =
+    @DisableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_chipsModOn_animFlagOff_fourPromotedNotifs_topThreeInList() =
         kosmos.runTest {
-            val latest by collectLastValue(underTest.visibleChipKeys)
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
 
             setNotifs(
                 listOf(
@@ -983,7 +1054,50 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
                 )
             )
 
-            assertThat(latest).containsExactly("firstNotif", "secondNotif", "thirdNotif").inOrder()
+            assertThat(latest!!.keys).containsExactly("firstNotif", "secondNotif", "thirdNotif")
+        }
+
+    @Test
+    @EnableChipsModernization
+    @EnableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_chipsModOn_animFlagOn_fourPromotedNotifs_topThreeInListWithBounds() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
+
+            setNotifs(
+                listOf(
+                    activeNotificationModel(
+                        key = "firstNotif",
+                        statusBarChipIcon = createStatusBarIconViewOrNull(),
+                        promotedContent = PromotedNotificationContentBuilder("firstNotif").build(),
+                    ),
+                    activeNotificationModel(
+                        key = "secondNotif",
+                        statusBarChipIcon = createStatusBarIconViewOrNull(),
+                        promotedContent = PromotedNotificationContentBuilder("secondNotif").build(),
+                    ),
+                    activeNotificationModel(
+                        key = "thirdNotif",
+                        statusBarChipIcon = createStatusBarIconViewOrNull(),
+                        promotedContent = PromotedNotificationContentBuilder("thirdNotif").build(),
+                    ),
+                    activeNotificationModel(
+                        key = "fourthNotif",
+                        statusBarChipIcon = createStatusBarIconViewOrNull(),
+                        promotedContent = PromotedNotificationContentBuilder("fourthNotif").build(),
+                    ),
+                )
+            )
+
+            underTest.onChipBoundsChanged("firstNotif", RectF(1f, 1f, 1f, 1f))
+            underTest.onChipBoundsChanged("secondNotif", RectF(2f, 2f, 2f, 2f))
+            underTest.onChipBoundsChanged("thirdNotif", RectF(3f, 3f, 3f, 3f))
+            underTest.onChipBoundsChanged("fourthNotif", RectF(4f, 4f, 4f, 4f))
+
+            assertThat(latest!!["firstNotif"]).isEqualTo(RectF(1f, 1f, 1f, 1f))
+            assertThat(latest!!["secondNotif"]).isEqualTo(RectF(2f, 2f, 2f, 2f))
+            assertThat(latest!!["thirdNotif"]).isEqualTo(RectF(3f, 3f, 3f, 3f))
+            assertThat(latest).doesNotContainKey("fourthNotif")
         }
 
     @DisableChipsModernization
@@ -1084,9 +1198,10 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
 
     @Test
     @DisableChipsModernization
-    fun visibleChipKeys_chipsModOff_screenRecordAndCallAndPromotedNotifs_topTwoInList() =
+    @DisableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_chipsModOff_animFlagOff_screenRecordAndCallAndPromotedNotifs_topTwoInList() =
         kosmos.runTest {
-            val latest by collectLastValue(underTest.visibleChipKeys)
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
 
             val callNotificationKey = "call"
             addOngoingCallState(callNotificationKey)
@@ -1106,7 +1221,7 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
                 )
             )
 
-            assertThat(latest)
+            assertThat(latest!!.map { it.key })
                 .containsExactly(
                     ScreenRecordChipViewModel.KEY,
                     "${CallChipViewModel.KEY_PREFIX}$callNotificationKey",
@@ -1116,9 +1231,10 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
 
     @Test
     @EnableChipsModernization
-    fun visibleChipKeys_chipsModOn_screenRecordAndCallAndPromotedNotifs_topThreeInList() =
+    @DisableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_chipsModOn_animFlagOff_screenRecordAndCallAndPromotedNotifs_topThreeInList() =
         kosmos.runTest {
-            val latest by collectLastValue(underTest.visibleChipKeys)
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
 
             val callNotificationKey = "call"
             addOngoingCallState(callNotificationKey)
@@ -1138,13 +1254,50 @@ class OngoingActivityChipsWithNotifsViewModelTest : SysuiTestCase() {
                 )
             )
 
-            assertThat(latest)
+            assertThat(latest!!.map { it.key })
                 .containsExactly(
                     ScreenRecordChipViewModel.KEY,
                     "${CallChipViewModel.KEY_PREFIX}$callNotificationKey",
                     "notif1",
                 )
                 .inOrder()
+        }
+
+    @Test
+    @EnableChipsModernization
+    @EnableFlags(StatusBarChipToHunAnimation.FLAG_NAME)
+    fun visibleChipsWithBounds_chipsModOn_animFlagOn_screenRecordAndCallAndPromotedNotifs_topThreeInListWithBounds() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.visibleChipsWithBounds)
+
+            val callNotificationKey = "call"
+            val callKeyForChip = "${CallChipViewModel.KEY_PREFIX}$callNotificationKey"
+            addOngoingCallState(callNotificationKey)
+            screenRecordState.value = ScreenRecordModel.Recording
+            activeNotificationListRepository.addNotif(
+                activeNotificationModel(
+                    key = "notif1",
+                    statusBarChipIcon = createStatusBarIconViewOrNull(),
+                    promotedContent = PromotedNotificationContentBuilder("notif1").build(),
+                )
+            )
+            activeNotificationListRepository.addNotif(
+                activeNotificationModel(
+                    key = "notif2",
+                    statusBarChipIcon = createStatusBarIconViewOrNull(),
+                    promotedContent = PromotedNotificationContentBuilder("notif2").build(),
+                )
+            )
+
+            underTest.onChipBoundsChanged(ScreenRecordChipViewModel.KEY, RectF(1f, 1f, 1f, 1f))
+            underTest.onChipBoundsChanged(callKeyForChip, RectF(2f, 2f, 2f, 2f))
+            underTest.onChipBoundsChanged("notif1", RectF(3f, 3f, 3f, 3f))
+            underTest.onChipBoundsChanged("notif2", RectF(4f, 4f, 4f, 4f))
+
+            assertThat(latest!![ScreenRecordChipViewModel.KEY]).isEqualTo(RectF(1f, 1f, 1f, 1f))
+            assertThat(latest!![callKeyForChip]).isEqualTo(RectF(2f, 2f, 2f, 2f))
+            assertThat(latest!!["notif1"]).isEqualTo(RectF(3f, 3f, 3f, 3f))
+            assertThat(latest).doesNotContainKey("notif2")
         }
 
     // The ranking between different chips should stay consistent between

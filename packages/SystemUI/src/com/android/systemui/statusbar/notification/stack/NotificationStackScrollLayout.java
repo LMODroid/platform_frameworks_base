@@ -53,6 +53,7 @@ import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.RenderEffect;
 import android.graphics.RenderNode;
 import android.graphics.Shader;
@@ -5069,10 +5070,10 @@ public class NotificationStackScrollLayout
     }
 
     public void generateHeadsUpAnimation(
-            NotificationEntry entry, boolean isHeadsUp, boolean hasStatusBarChip) {
+            NotificationEntry entry, boolean isHeadsUp, @Nullable RectF statusBarChipBounds) {
         SceneContainerFlag.assertInLegacyMode();
         ExpandableNotificationRow row = entry.getHeadsUpAnimationView();
-        generateHeadsUpAnimation(row, isHeadsUp, hasStatusBarChip);
+        generateHeadsUpAnimation(row, isHeadsUp, statusBarChipBounds);
     }
 
     /**
@@ -5081,11 +5082,15 @@ public class NotificationStackScrollLayout
      *
      * @param row to animate
      * @param isHeadsUp true for appear, false for disappear animations
-     * @param hasStatusBarChip true if the status bar is currently displaying a chip for the given
-     *                         notification
+     * @param statusBarChipBounds the on-screen bounds of the status bar chip currently displayed
+     *                            for the given notification, or null if there is no status bar chip
      */
     public void generateHeadsUpAnimation(
-            ExpandableNotificationRow row, boolean isHeadsUp, boolean hasStatusBarChip) {
+            ExpandableNotificationRow row,
+            boolean isHeadsUp,
+            @Nullable RectF statusBarChipBounds) {
+        // TODO(b/393369891): Use the chip bounds to animate the heads up animation from the chip.
+        boolean hasStatusBarChip = statusBarChipBounds != null;
         boolean addAnimation =
                 mAnimationsEnabled && (isHeadsUp || mHeadsUpGoingAwayAnimationsAllowed);
         if (NotificationThrottleHun.isEnabled()) {

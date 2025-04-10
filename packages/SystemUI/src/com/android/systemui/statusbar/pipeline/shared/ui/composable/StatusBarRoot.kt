@@ -211,6 +211,8 @@ fun StatusBarRoot(
                                             OngoingActivityChips(
                                                 chips = chipsVisibilityModel.chips,
                                                 iconViewStore = iconViewStore,
+                                                onChipBoundsChanged =
+                                                    statusBarViewModel::onChipBoundsChanged,
                                             )
                                         }
                                     }

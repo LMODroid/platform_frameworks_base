@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.notification.stack.ui.viewmodel
 
+import android.graphics.RectF
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
@@ -374,12 +375,13 @@ constructor(
     }
 
     /**
-     * A list of keys for the visible status bar chips.
+     * A list of keys and on-screen bounds for the visible status bar chips.
      *
      * Note that this list can contain both notification keys, as well as keys for other types of
      * chips like screen recording.
      */
-    val visibleStatusBarChipKeys = ongoingActivityChipsViewModel.visibleChipKeys
+    val visibleStatusBarChips: Flow<Map<String, RectF>> =
+        ongoingActivityChipsViewModel.visibleChipsWithBounds
 
     // TODO(b/325936094) use it for the text displayed in the StatusBar
     fun headsUpRow(key: HeadsUpRowKey): HeadsUpRowViewModel =

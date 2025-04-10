@@ -540,6 +540,16 @@ flag {
 }
 
 flag {
+    name: "status_bar_chip_to_hun_animation"
+    namespace: "systemui"
+    description: "Implement a bespoke tap-chip-to-show-HUN animation for SB notification chips"
+    bug: "393369891"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "status_bar_window_no_custom_touch"
     namespace: "systemui"
     description: "Don't have any custom touch handling in StatusBarWindowView"

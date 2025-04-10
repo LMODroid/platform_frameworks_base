@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.pipeline.shared.ui.viewmodel
 
 import android.annotation.ColorInt
 import android.graphics.Rect
+import android.graphics.RectF
 import android.view.Display
 import android.view.View
 import androidx.compose.runtime.getValue
@@ -139,6 +140,9 @@ interface HomeStatusBarViewModel : Activatable {
     /** All supported activity chips, whether they are currently active or not. */
     val ongoingActivityChips: ChipsVisibilityModel
 
+    /** Invoked each time a chip's on-screen bounds have changed. */
+    fun onChipBoundsChanged(key: String, bounds: RectF)
+
     /**
      * The multiple ongoing activity chips that should be shown on the left-hand side of the status
      * bar.
@@ -227,7 +231,7 @@ constructor(
     sceneContainerOcclusionInteractor: SceneContainerOcclusionInteractor,
     shadeInteractor: ShadeInteractor,
     shareToAppChipViewModel: ShareToAppChipViewModel,
-    ongoingActivityChipsViewModel: OngoingActivityChipsViewModel,
+    private val ongoingActivityChipsViewModel: OngoingActivityChipsViewModel,
     statusBarPopupChipsViewModelFactory: StatusBarPopupChipsViewModel.Factory,
     animations: SystemStatusEventAnimationInteractor,
     statusBarContentInsetsViewModelStore: StatusBarContentInsetsViewModelStore,
@@ -487,6 +491,10 @@ constructor(
                 ),
             source = chipsVisibilityModel,
         )
+
+    override fun onChipBoundsChanged(key: String, bounds: RectF) {
+        ongoingActivityChipsViewModel.onChipBoundsChanged(key, bounds)
+    }
 
     private val hasOngoingActivityChips =
         if (StatusBarChipsModernization.isEnabled) {
