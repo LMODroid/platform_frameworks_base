@@ -117,7 +117,10 @@ constructor(
         launchTraced("VDVB#insets") {
             root
                 .onApplyWindowInsets { v, newInsets ->
-                    val insetsValues = newInsets.getInsets(WindowInsets.Type.displayCutout())
+                    val insetsValues =
+                        newInsets.getInsets(
+                            WindowInsets.Type.displayCutout() or WindowInsets.Type.navigationBars()
+                        )
                     v.updatePadding(
                         left = insetsValues.left,
                         top = insetsValues.top,
