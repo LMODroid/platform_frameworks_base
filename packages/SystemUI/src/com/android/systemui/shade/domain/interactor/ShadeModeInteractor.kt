@@ -17,7 +17,6 @@
 package com.android.systemui.shade.domain.interactor
 
 import android.provider.Settings
-import androidx.annotation.FloatRange
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.log.table.TableLogBuffer
@@ -68,20 +67,6 @@ interface ShadeModeInteractor {
     /** Convenience shortcut for querying whether the current [shadeMode] is [ShadeMode.Split]. */
     val isSplitShade: Boolean
         get() = shadeMode.value is ShadeMode.Split
-
-    /**
-     * The fraction between [0..1] (i.e., percentage) of screen width to consider the threshold
-     * between "top-left" and "top-right" for the purposes of dual-shade invocation.
-     *
-     * When the dual-shade is not wide, this always returns 0.5 (the top edge is evenly split). On
-     * wide layouts however, a larger fraction is returned because only the area of the system
-     * status icons is considered top-right.
-     *
-     * Note that this fraction only determines the split between the absolute left and right
-     * directions. In RTL layouts, the "top-start" edge will resolve to "top-right", and "top-end"
-     * will resolve to "top-left".
-     */
-    @FloatRange(from = 0.0, to = 1.0) fun getTopEdgeSplitFraction(): Float
 }
 
 class ShadeModeInteractorImpl
@@ -117,8 +102,6 @@ constructor(
             .logDiffsForTable(tableLogBuffer = tableLogBuffer, initialValue = shadeModeInitialValue)
             .stateIn(applicationScope, SharingStarted.Eagerly, initialValue = shadeModeInitialValue)
 
-    @FloatRange(from = 0.0, to = 1.0) override fun getTopEdgeSplitFraction(): Float = 0.5f
-
     private fun determineShadeMode(
         isDualShadeEnabled: Boolean,
         isShadeLayoutWide: Boolean,
@@ -141,6 +124,4 @@ class ShadeModeInteractorEmptyImpl @Inject constructor() : ShadeModeInteractor {
     override val shadeMode: StateFlow<ShadeMode> = MutableStateFlow(ShadeMode.Single)
 
     override val isShadeLayoutWide: StateFlow<Boolean> = MutableStateFlow(false)
-
-    override fun getTopEdgeSplitFraction(): Float = 0.5f
 }

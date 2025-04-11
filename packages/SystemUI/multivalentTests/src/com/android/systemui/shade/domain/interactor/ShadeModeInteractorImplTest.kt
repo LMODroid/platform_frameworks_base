@@ -101,24 +101,4 @@ class ShadeModeInteractorImplTest : SysuiTestCase() {
             assertThat(shadeMode).isNotEqualTo(ShadeMode.Dual)
             assertThat(underTest.isDualShade).isFalse()
         }
-
-    @Test
-    fun getTopEdgeSplitFraction_narrowScreen_splitInHalf() =
-        testScope.runTest {
-            val shadeMode by collectLastValue(underTest.shadeMode)
-            kosmos.enableDualShade(wideLayout = false)
-
-            assertThat(shadeMode).isEqualTo(ShadeMode.Dual)
-            assertThat(underTest.getTopEdgeSplitFraction()).isEqualTo(0.5f)
-        }
-
-    @Test
-    fun getTopEdgeSplitFraction_wideScreen_splitInHalf() =
-        testScope.runTest {
-            val shadeMode by collectLastValue(underTest.shadeMode)
-            kosmos.enableDualShade(wideLayout = true)
-
-            assertThat(shadeMode).isEqualTo(ShadeMode.Dual)
-            assertThat(underTest.getTopEdgeSplitFraction()).isEqualTo(0.5f)
-        }
 }
