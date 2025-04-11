@@ -201,9 +201,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         reloadDimens();
         maybeUpdateIconScaleDimens();
 
-        if (Flags.statusBarMonochromeIconsFix()) {
-            setCropToPadding(true);
-        }
+        setCropToPadding(true);
     }
 
     /** Should always be preceded by {@link #reloadDimens()} */
