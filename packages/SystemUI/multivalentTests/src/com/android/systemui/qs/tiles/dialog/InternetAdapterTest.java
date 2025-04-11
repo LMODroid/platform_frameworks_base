@@ -18,14 +18,18 @@ import android.testing.TestableResources;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.res.R;
 import com.android.wifitrackerlib.WifiEntry;
 
+import com.google.common.collect.ImmutableList;
+
 import kotlinx.coroutines.CoroutineScope;
+import platform.test.runner.parameterized.Parameter;
+import platform.test.runner.parameterized.ParameterizedAndroidJunit4;
+import platform.test.runner.parameterized.Parameters;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,10 +41,11 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @SmallTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(ParameterizedAndroidJunit4.class)
 public class InternetAdapterTest extends SysuiTestCase {
 
     private static final String WIFI_KEY = "Wi-Fi_Key";
@@ -75,6 +80,14 @@ public class InternetAdapterTest extends SysuiTestCase {
     private InternetAdapter mInternetAdapter;
     private InternetAdapter.InternetViewHolder mViewHolder;
 
+    @Parameters(name = "isInDetailsView = {0}")
+    public static Collection<Boolean> data() {
+        return ImmutableList.of(true, false);
+    }
+
+    @Parameter
+    public boolean isInDetailsView;
+
     @Before
     public void setUp() {
         mTestableResources = mContext.getOrCreateTestableResources();
@@ -86,7 +99,8 @@ public class InternetAdapterTest extends SysuiTestCase {
         when(mWifiEntry.getTitle()).thenReturn(WIFI_TITLE);
         when(mWifiEntry.getSummary(false)).thenReturn(WIFI_SUMMARY);
 
-        mInternetAdapter = new InternetAdapter(mInternetDetailsContentController, mScope);
+        mInternetAdapter = new InternetAdapter(mInternetDetailsContentController, mScope,
+                isInDetailsView);
         mViewHolder = mInternetAdapter.onCreateViewHolder(new LinearLayout(mContext), 0);
         mInternetAdapter.setWifiEntries(Arrays.asList(mWifiEntry), 1 /* wifiEntriesCount */);
     }

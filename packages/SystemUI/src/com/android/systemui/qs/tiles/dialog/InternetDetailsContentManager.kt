@@ -19,6 +19,8 @@ package com.android.systemui.qs.tiles.dialog
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Canvas
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -124,6 +126,9 @@ constructor(
     private var wifiNetworkHeight = 0
     private var backgroundOn: Drawable? = null
     private var backgroundOff: Drawable? = null
+    private var entryBackgroundStart: Drawable? = null
+    private var entryBackgroundEnd: Drawable? = null
+    private var entryBackgroundMiddle: Drawable? = null
     private var clickJob: Job? = null
     private var defaultDataSubId = internetDetailsContentController.defaultDataSubscriptionId
     @VisibleForTesting internal lateinit var adapter: InternetAdapter
@@ -162,7 +167,12 @@ constructor(
         this.contentView = contentView
         context = contentView.context
         this.coroutineScope = coroutineScope
-        adapter = InternetAdapter(internetDetailsContentController, coroutineScope)
+        adapter =
+            InternetAdapter(
+                internetDetailsContentController,
+                coroutineScope,
+                /* isInDetailsView= */ true,
+            )
         canChangeWifiState = WifiEnterpriseRestrictionUtils.isChangeWifiStateAllowed(context)
 
         initializeLifecycle()
@@ -204,6 +214,13 @@ constructor(
         // Network layouts
         progressBar = contentView.requireViewById(R.id.wifi_searching_progress)
 
+        // Background drawables
+        backgroundOn = context.getDrawable(R.drawable.settingslib_switch_bar_bg_on)
+        backgroundOff = context.getDrawable(R.drawable.internet_dialog_selected_effect)
+        entryBackgroundStart = context.getDrawable(R.drawable.settingslib_entry_bg_off_start)
+        entryBackgroundEnd = context.getDrawable(R.drawable.settingslib_entry_bg_off_end)
+        entryBackgroundMiddle = context.getDrawable(R.drawable.settingslib_entry_bg_off_middle)
+
         // Set wifi, mobile and ethernet layouts
         setWifiLayout()
         setMobileLayout()
@@ -228,10 +245,6 @@ constructor(
             internetDetailsContentController.setAirplaneModeDisabled()
         }
         airplaneModeSummaryTextView = contentView.requireViewById(R.id.airplane_mode_summary)
-
-        // Background drawables
-        backgroundOn = context.getDrawable(R.drawable.settingslib_switch_bar_bg_on)
-        backgroundOff = context.getDrawable(R.drawable.internet_dialog_selected_effect)
     }
 
     private fun setWifiLayout() {
@@ -251,6 +264,54 @@ constructor(
                 layoutManager = LinearLayoutManager(context)
                 adapter = this@InternetDetailsContentManager.adapter
             }
+
+        // Add backgrounds for each entry and also add a gap between each item.
+        val verticalSpacing =
+            context.resources.getDimensionPixelSize(R.dimen.tile_details_entry_gap)
+        wifiRecyclerView.addItemDecoration(
+            object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State,
+                ) {
+                    outRect.top = verticalSpacing
+                }
+
+                override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                    // `itemCount` represents the total number of items in your adapter's data set,
+                    // regardless of what's visible.
+                    val adapter = parent.adapter ?: return
+                    val itemCount = adapter.itemCount
+
+                    // `parent.childCount` is the number of child views currently visible on screen.
+                    // Often less than itemCount since RecyclerView recycles views that scroll
+                    // off-screen.
+                    for (i in 0 until parent.childCount) {
+                        val child = parent.getChildAt(i) ?: continue
+                        val adapterPosition = parent.getChildAdapterPosition(child)
+                        if (adapterPosition == RecyclerView.NO_POSITION) continue
+                        val entryView = child.requireViewById<LinearLayout>(R.id.wifi_list)
+                        val background =
+                            when {
+                                adapterPosition == 0 -> entryBackgroundStart
+                                adapterPosition == itemCount - 1 && !hasMoreWifiEntries ->
+                                    entryBackgroundEnd
+                                else -> entryBackgroundMiddle
+                            }
+
+                        val left = child.left + entryView.left
+                        val top = child.top + entryView.top
+                        val right = child.left + entryView.right
+                        val bottom = child.top + entryView.bottom
+                        background?.setBounds(left, top, right, bottom)
+                        background?.draw(c)
+                    }
+                }
+            }
+        )
+
         seeAllLayout = contentView.requireViewById(R.id.see_all_layout)
 
         // Set click listeners for Wi-Fi related views
@@ -258,7 +319,9 @@ constructor(
             val isChecked = wifiToggle.isChecked
             handleWifiToggleClicked(isChecked)
         }
+
         connectedWifiListLayout.setOnClickListener(this::onClickConnectedWifi)
+        connectedWifiListLayout.background = context.getDrawable(R.drawable.settingslib_entry_bg_on)
         seeAllLayout.setOnClickListener(this::onClickSeeMoreButton)
     }
 
@@ -384,9 +447,7 @@ constructor(
         }
         alertDialog =
             AlertDialog.Builder(context)
-                .setTitle(
-                    context.getString(R.string.auto_data_switch_disable_title, carrierName)
-                )
+                .setTitle(context.getString(R.string.auto_data_switch_disable_title, carrierName))
                 .setMessage(R.string.auto_data_switch_disable_message)
                 .setNegativeButton(R.string.auto_data_switch_dialog_negative_button) { _, _ -> }
                 .setPositiveButton(R.string.auto_data_switch_dialog_positive_button) { _, _ ->
@@ -424,9 +485,7 @@ constructor(
         alertDialog =
             AlertDialog.Builder(context)
                 .setTitle(R.string.mobile_data_disable_title)
-                .setMessage(
-                    context.getString(R.string.mobile_data_disable_message, carrierName)
-                )
+                .setMessage(context.getString(R.string.mobile_data_disable_message, carrierName))
                 .setNegativeButton(android.R.string.cancel) { _: DialogInterface?, _: Int -> }
                 .setPositiveButton(
                     com.android.internal.R.string.alert_windows_notification_turn_off_action
@@ -689,6 +748,8 @@ constructor(
         if (wifiRecyclerView.minimumHeight != wifiListMinHeight) {
             wifiRecyclerView.minimumHeight = wifiListMinHeight
         }
+
+        wifiRecyclerView.invalidateItemDecorations()
         wifiRecyclerView.visibility = View.VISIBLE
         seeAllLayout.visibility = if (hasMoreWifiEntries) View.VISIBLE else View.INVISIBLE
     }

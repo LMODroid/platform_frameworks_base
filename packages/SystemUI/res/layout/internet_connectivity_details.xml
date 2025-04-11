@@ -339,6 +339,8 @@
             <LinearLayout
                 android:id="@+id/see_all_layout"
                 style="@style/InternetDialog.Network"
+                android:background="@drawable/settingslib_entry_bg_off_end"
+                android:layout_marginTop="@dimen/tile_details_entry_gap"
                 android:layout_height="64dp"
                 android:paddingStart="20dp">
 

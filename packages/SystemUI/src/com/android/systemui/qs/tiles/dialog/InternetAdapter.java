@@ -56,6 +56,7 @@ public class InternetAdapter extends RecyclerView.Adapter<InternetAdapter.Intern
 
     private final InternetDetailsContentController mInternetDetailsContentController;
     private final CoroutineScope mCoroutineScope;
+    private final Boolean mIsInDetailsView;
     @Nullable
     private List<WifiEntry> mWifiEntries;
     @VisibleForTesting
@@ -68,8 +69,15 @@ public class InternetAdapter extends RecyclerView.Adapter<InternetAdapter.Intern
 
     public InternetAdapter(InternetDetailsContentController controller,
             CoroutineScope coroutineScope) {
+        this(controller, coroutineScope,
+                false);
+    }
+
+    public InternetAdapter(InternetDetailsContentController controller,
+            CoroutineScope coroutineScope, boolean isInDetailsView) {
         mInternetDetailsContentController = controller;
         mCoroutineScope = coroutineScope;
+        mIsInDetailsView = isInDetailsView;
     }
 
     @Override
@@ -79,7 +87,7 @@ public class InternetAdapter extends RecyclerView.Adapter<InternetAdapter.Intern
         mHolderView = LayoutInflater.from(mContext).inflate(R.layout.internet_list_item,
                 viewGroup, false);
         return new InternetViewHolder(mHolderView, mInternetDetailsContentController,
-                mCoroutineScope);
+                mCoroutineScope, mIsInDetailsView);
     }
 
     @Override
@@ -141,16 +149,18 @@ public class InternetAdapter extends RecyclerView.Adapter<InternetAdapter.Intern
         final Context mContext;
         final InternetDetailsContentController mInternetDetailsContentController;
         final CoroutineScope mCoroutineScope;
+        final Boolean mIsInDetailsView;
         @Nullable
         private Job mJob;
 
         InternetViewHolder(View view,
                 InternetDetailsContentController internetDetailsContentController,
-                CoroutineScope coroutineScope) {
+                CoroutineScope coroutineScope, Boolean isInDetailsView) {
             super(view);
             mContext = view.getContext();
             mInternetDetailsContentController = internetDetailsContentController;
             mCoroutineScope = coroutineScope;
+            mIsInDetailsView = isInDetailsView;
             mContainerLayout = view.requireViewById(R.id.internet_container);
             mWifiListLayout = view.requireViewById(R.id.wifi_list);
             mWifiNetworkLayout = view.requireViewById(R.id.wifi_network_layout);
@@ -158,6 +168,22 @@ public class InternetAdapter extends RecyclerView.Adapter<InternetAdapter.Intern
             mWifiTitleText = view.requireViewById(R.id.wifi_title);
             mWifiSummaryText = view.requireViewById(R.id.wifi_summary);
             mWifiEndIcon = view.requireViewById(R.id.wifi_end_icon);
+
+            if (!isInDetailsView){
+                return;
+            }
+
+            // Set the UI styles for details view only.
+            mWifiTitleText.setTextAppearance(R.style.TextAppearance_TileDetailsEntryTitle);
+            mWifiSummaryText.setTextAppearance(R.style.TextAppearance_TileDetailsEntrySubTitle);
+            if (mWifiIcon.getDrawable() != null) {
+                mWifiIcon.setColorFilter(
+                        mContext.getColor(com.android.internal.R.color.materialColorOnSurface));
+            }
+            if (mWifiEndIcon.getDrawable() != null){
+                mWifiEndIcon.setColorFilter(
+                        mContext.getColor(com.android.internal.R.color.materialColorOnSurface));
+            }
         }
 
         void onBind(@NonNull WifiEntry wifiEntry) {
