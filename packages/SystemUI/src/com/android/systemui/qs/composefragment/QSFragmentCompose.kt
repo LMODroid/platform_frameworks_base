@@ -738,9 +738,21 @@ constructor(
         ) {
             if (viewModel.isQsEnabled) {
                 Element(ElementKeys.QuickSettingsContent, modifier = Modifier.weight(1f)) {
-                    DisposableEffect(Unit) {
-                        lifecycleScope.launch { scrollState.scrollTo(0) }
-                        onDispose { lifecycleScope.launch { scrollState.scrollTo(0) } }
+                    if (alwaysCompose) {
+                        // scrollState never changes
+                        LaunchedEffect(Unit) {
+                            snapshotFlow { viewModel.isQsFullyCollapsed }
+                                .collect { collapsed ->
+                                    if (collapsed) {
+                                        scrollState.scrollTo(0)
+                                    }
+                                }
+                        }
+                    } else {
+                        DisposableEffect(Unit) {
+                            lifecycleScope.launch { scrollState.scrollTo(0) }
+                            onDispose { lifecycleScope.launch { scrollState.scrollTo(0) } }
+                        }
                     }
                     Column(
                         modifier =
