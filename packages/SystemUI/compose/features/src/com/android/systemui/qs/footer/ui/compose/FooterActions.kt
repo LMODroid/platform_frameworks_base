@@ -535,7 +535,7 @@ private object FooterActionsDefaults {
     fun inactiveButtonColors(): ButtonColors =
         ButtonColors(
             icon = MaterialTheme.colorScheme.onSurface,
-            background = LocalAndroidColorScheme.current.surfaceEffect2,
+            background = LocalAndroidColorScheme.current.surfaceEffect1,
         )
 
     @Composable
@@ -543,7 +543,7 @@ private object FooterActionsDefaults {
     fun userSwitcherButtonColors(): ButtonColors =
         ButtonColors(
             icon = Color.Unspecified,
-            background = LocalAndroidColorScheme.current.surfaceEffect2,
+            background = LocalAndroidColorScheme.current.surfaceEffect1,
         )
 
     @Composable
@@ -551,7 +551,7 @@ private object FooterActionsDefaults {
     fun blurTextButtonColors(): TextButtonColors =
         TextButtonColors(
             content = MaterialTheme.colorScheme.onSurface,
-            background = LocalAndroidColorScheme.current.surfaceEffect2,
+            background = LocalAndroidColorScheme.current.surfaceEffect1,
             border = null,
         )
 
