@@ -20,6 +20,7 @@ import static android.service.trust.GrantTrustResult.STATUS_UNLOCKED_BY_GRANT;
 import static android.service.trust.TrustAgentService.FLAG_GRANT_TRUST_TEMPORARY_AND_RENEWABLE;
 
 import android.Manifest;
+import android.annotation.EnforcePermission;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
@@ -1880,8 +1881,11 @@ public class TrustManagerService extends SystemService {
             }
         }
 
+        @EnforcePermission(Manifest.permission.ACCESS_FINE_LOCATION)
         @Override
         public boolean isInSignificantPlace() {
+            super.isInSignificantPlace_enforcePermission();
+
             if (android.security.Flags.significantPlaces()) {
                 mSignificantPlaceServiceWatcher.runOnBinder(
                         binder -> ISignificantPlaceProvider.Stub.asInterface(binder)

@@ -72,6 +72,7 @@ import android.app.ActivityManagerInternal;
 import android.app.admin.DevicePolicyManagerInternal;
 import android.companion.virtual.VirtualDeviceManager;
 import android.content.ComponentName;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -676,11 +677,11 @@ public class ComputerEngine implements Computer {
             int userId, int callingUid, int callingPid,
             boolean includeInstantApps, boolean resolveForStart) {
         if (!mUserManager.exists(userId)) return Collections.emptyList();
-        enforceCrossUserOrProfilePermission(callingUid,
+        enforceCrossUserOrProfilePermission(Binder.getCallingUid(),
                 userId,
                 false /*requireFullPermission*/,
                 false /*checkShell*/,
-                "query intent receivers");
+                "query intent services");
         final String instantAppPkgName = getInstantAppPackageName(callingUid);
         flags = updateFlagsForResolve(flags, userId, callingUid, includeInstantApps,
                 false /* isImplicitImageCaptureIntentAndNotSetByDpc */);
@@ -2279,17 +2280,11 @@ public class ComputerEngine implements Computer {
         if (PackageManagerServiceUtils.isSystemOrRoot(callingUid)) {
             return true;
         }
-        boolean permissionGranted = requireFullPermission ? hasPermission(
-                Manifest.permission.INTERACT_ACROSS_USERS_FULL)
-                : (hasPermission(
-                        android.Manifest.permission.INTERACT_ACROSS_USERS_FULL)
-                        || hasPermission(Manifest.permission.INTERACT_ACROSS_USERS));
-        if (!permissionGranted) {
-            if (Process.isIsolatedUid(callingUid) && isKnownIsolatedComputeApp(callingUid)) {
-                return checkIsolatedOwnerHasPermission(callingUid, requireFullPermission);
-            }
+        if (requireFullPermission) {
+            return hasPermission(Manifest.permission.INTERACT_ACROSS_USERS_FULL, callingUid);
         }
-        return permissionGranted;
+        return hasPermission(android.Manifest.permission.INTERACT_ACROSS_USERS_FULL, callingUid)
+            || hasPermission(Manifest.permission.INTERACT_ACROSS_USERS, callingUid);
     }
 
     /**
@@ -2306,21 +2301,8 @@ public class ComputerEngine implements Computer {
     }
 
     private boolean hasPermission(String permission, int uid) {
-        return mContext.checkPermission(permission, Process.INVALID_PID, uid)
+        return mContext.checkPermission(permission, /* pid= */ -1, uid)
                 == PackageManager.PERMISSION_GRANTED;
-    }
-
-    /**
-     * Since isolated process cannot hold permissions, we check the permissions on the owner app
-     * for known isolated_compute_app cases because they belong to the same package.
-     */
-    private boolean checkIsolatedOwnerHasPermission(int callingUid, boolean requireFullPermission) {
-        int ownerUid = getIsolatedOwner(callingUid);
-        if (requireFullPermission) {
-            return hasPermission(Manifest.permission.INTERACT_ACROSS_USERS_FULL, ownerUid);
-        }
-        return hasPermission(Manifest.permission.INTERACT_ACROSS_USERS_FULL, ownerUid)
-                || hasPermission(Manifest.permission.INTERACT_ACROSS_USERS, ownerUid);
     }
 
     public final boolean isCallerSameApp(String packageName, int uid) {
@@ -4741,7 +4723,7 @@ public class ComputerEngine implements Computer {
 
         if (!forceAllowCrossUser) {
             enforceCrossUserPermission(
-                    callingUid,
+                    Binder.getCallingUid(),
                     userId,
                     false /* requireFullPermission */,
                     false /* checkShell */,
@@ -4824,8 +4806,14 @@ public class ComputerEngine implements Computer {
             int callingUid) {
         if (!mUserManager.exists(userId)) return null;
         flags = updateFlagsForComponent(flags, userId);
-        final ProviderInfo providerInfo = mComponentResolver.queryProvider(this, name, flags,
-                userId);
+
+        // Callers of this API may not always separate the userID and authority. Let's parse it
+        // before resolving
+        String authorityWithoutUserId = ContentProvider.getAuthorityWithoutUserId(name);
+        userId = ContentProvider.getUserIdFromAuthority(name, userId);
+
+        final ProviderInfo providerInfo = mComponentResolver.queryProvider(this,
+                authorityWithoutUserId, flags, userId);
         boolean checkedGrants = false;
         if (providerInfo != null) {
             // Looking for cross-user grants before enforcing the typical cross-users permissions
@@ -4839,7 +4827,7 @@ public class ComputerEngine implements Computer {
         if (!checkedGrants) {
             boolean enforceCrossUser = true;
 
-            if (isAuthorityRedirectedForCloneProfile(name)) {
+            if (isAuthorityRedirectedForCloneProfile(authorityWithoutUserId)) {
                 final UserManagerInternal umInternal = mInjector.getUserManagerInternal();
 
                 UserInfo userInfo = umInternal.getUserInfo(UserHandle.getUserId(callingUid));
@@ -5320,7 +5308,7 @@ public class ComputerEngine implements Computer {
     @Override
     public int getComponentEnabledSetting(@NonNull ComponentName component, int callingUid,
             @UserIdInt int userId) {
-        enforceCrossUserPermission(callingUid, userId, false /*requireFullPermission*/,
+        enforceCrossUserPermission(Binder.getCallingUid(), userId, false /*requireFullPermission*/,
                 false /*checkShell*/, "getComponentEnabled");
         return getComponentEnabledSettingInternal(component, callingUid, userId);
     }

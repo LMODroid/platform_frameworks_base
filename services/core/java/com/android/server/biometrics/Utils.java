@@ -575,6 +575,8 @@ public class Utils {
         }
     }
 
+    // LINT.IfChange
+
     /**
      * Checks if a client package is running in the background.
      *
@@ -607,4 +609,6 @@ public class Utils {
 
         return true;
     }
+    // LINT.ThenChange(frameworks/base/packages/SystemUI/shared/biometrics/src/com/android
+    // /systemui/biometrics/Utils.kt)
 }
