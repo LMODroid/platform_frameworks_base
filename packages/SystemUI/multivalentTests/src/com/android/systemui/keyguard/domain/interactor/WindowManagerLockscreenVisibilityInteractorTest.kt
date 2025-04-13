@@ -45,6 +45,7 @@ import com.android.systemui.scene.domain.interactor.sceneBackInteractor
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
+import com.android.systemui.statusbar.policy.data.repository.fakeDeviceProvisioningRepository
 import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.whenever
@@ -340,14 +341,14 @@ class WindowManagerLockscreenVisibilityInteractorTest : SysuiTestCase() {
 
     @Test
     @EnableSceneContainer
-    fun surfaceBehindVisibility_whileSceneContainerNotVisible_alwaysTrue() =
+    fun surfaceBehindVisibility_whileDeviceNotProvisioned_alwaysTrue() =
         testScope.runTest {
             val isSurfaceBehindVisible by collectLastValue(underTest.value.surfaceBehindVisibility)
             val currentScene by collectLastValue(kosmos.sceneInteractor.currentScene)
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
             assertThat(isSurfaceBehindVisible).isFalse()
 
-            kosmos.sceneInteractor.setVisible(false, "test")
+            kosmos.fakeDeviceProvisioningRepository.setDeviceProvisioned(false)
             runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)

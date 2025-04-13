@@ -31,6 +31,7 @@ import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.statusbar.notification.domain.interactor.NotificationLaunchAnimationInteractor
+import com.android.systemui.statusbar.policy.domain.interactor.DeviceProvisioningInteractor
 import com.android.systemui.util.kotlin.Utils.Companion.toQuad
 import com.android.systemui.utils.coroutines.flow.flatMapLatestConflated
 import dagger.Lazy
@@ -57,6 +58,7 @@ constructor(
     sceneInteractor: Lazy<SceneInteractor>,
     deviceEntryInteractor: Lazy<DeviceEntryInteractor>,
     wakeToGoneInteractor: KeyguardWakeDirectlyToGoneInteractor,
+    deviceProvisioningInteractor: Lazy<DeviceProvisioningInteractor>,
 ) {
     private val defaultSurfaceBehindVisibility =
         combine(
@@ -197,10 +199,9 @@ constructor(
         }
 
     private val lockscreenVisibilityWithScenes: Flow<Boolean> =
-        // The scene container visibility into account as that will be forced to false when the
-        // device isn't yet provisioned (e.g. still in the setup wizard).
-        sceneInteractor.get().isVisible.flatMapLatestConflated { isVisible ->
-            if (isVisible) {
+        deviceProvisioningInteractor.get().isDeviceProvisioned.flatMapLatestConflated {
+            isProvisioned ->
+            if (isProvisioned) {
                 combine(
                         sceneInteractor.get().transitionState.flatMapLatestConflated {
                             when (it) {
@@ -236,7 +237,7 @@ constructor(
                         lockscreenVisibilityByTransitionState && !canWakeDirectlyToGone
                     }
             } else {
-                // Lockscreen is never visible when the scene container is invisible.
+                // Lockscreen is never visible when the device isn't provisioned.
                 flowOf(false)
             }
         }
