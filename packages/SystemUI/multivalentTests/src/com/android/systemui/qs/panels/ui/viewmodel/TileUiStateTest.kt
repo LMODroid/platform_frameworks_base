@@ -168,7 +168,7 @@ class TileUiStateTest : SysuiTestCase() {
     }
 
     @Test
-    fun switchInactive_emptySecondaryLabel_defaultOff() {
+    fun switchInactive_emptySecondaryLabel_defaultOff_onlyOnStateDescription() {
         val state =
             QSTile.State().apply {
                 expandedAccessibilityClassName = Switch::class.java.name
@@ -178,11 +178,13 @@ class TileUiStateTest : SysuiTestCase() {
 
         val uiState = state.toUiState()
 
-        assertThat(uiState.secondaryLabel).isEqualTo(resources.getString(R.string.switch_bar_off))
+        assertThat(uiState.secondaryLabel).isEmpty()
+        assertThat(uiState.accessibilityUiState.stateDescription)
+            .isEqualTo(resources.getString(R.string.switch_bar_off))
     }
 
     @Test
-    fun switchActive_emptySecondaryLabel_defaultOn() {
+    fun switchActive_emptySecondaryLabel_defaultOn_onlyOnStateDescription() {
         val state =
             QSTile.State().apply {
                 expandedAccessibilityClassName = Switch::class.java.name
@@ -192,7 +194,9 @@ class TileUiStateTest : SysuiTestCase() {
 
         val uiState = state.toUiState()
 
-        assertThat(uiState.secondaryLabel).isEqualTo(resources.getString(R.string.switch_bar_on))
+        assertThat(uiState.secondaryLabel).isEmpty()
+        assertThat(uiState.accessibilityUiState.stateDescription)
+            .isEqualTo(resources.getString(R.string.switch_bar_on))
     }
 
     @Test

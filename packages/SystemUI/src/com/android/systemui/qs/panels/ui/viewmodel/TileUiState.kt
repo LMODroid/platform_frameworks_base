@@ -68,7 +68,7 @@ fun QSTile.State.toUiState(resources: Resources): TileUiState {
         } else {
             ""
         }
-    val secondaryLabel = getSecondaryLabel(stateText)
+    val secondaryLabel = getSecondaryLabel(if (state == Tile.STATE_UNAVAILABLE) stateText else "")
     if (!TextUtils.isEmpty(stateText)) {
         stateDescription.append(stateText)
     }
