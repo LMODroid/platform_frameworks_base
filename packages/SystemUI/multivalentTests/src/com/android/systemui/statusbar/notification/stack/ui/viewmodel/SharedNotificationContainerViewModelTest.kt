@@ -1129,6 +1129,31 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
         }
 
     @Test
+    fun shadeCollapseFadeIn_doesNotRunIfTransitioningToDream() =
+        testScope.runTest {
+            val fadeIn by collectValues(underTest.shadeCollapseFadeIn)
+
+            // Start on lockscreen without the shade
+            showLockscreen()
+            assertThat(fadeIn[0]).isEqualTo(false)
+
+            // ... then the shade expands
+            showLockscreenWithShadeExpanded()
+            assertThat(fadeIn[0]).isEqualTo(false)
+
+            // ... then user hits power to go to dream
+            keyguardTransitionRepository.sendTransitionSteps(
+                from = LOCKSCREEN,
+                to = DREAMING,
+                testScope,
+            )
+            // ... followed by a shade collapse
+            showLockscreen()
+            // ... does not trigger a fade in
+            assertThat(fadeIn[0]).isEqualTo(false)
+        }
+
+    @Test
     @BrokenWithSceneContainer(330311871)
     fun alpha_isZero_fromPrimaryBouncerToGoneWhileCommunalSceneVisible() =
         testScope.runTest {

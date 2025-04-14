@@ -419,8 +419,8 @@ constructor(
             .dumpValue("isDreamingWithoutShade")
 
     /**
-     * Fade in if the user swipes the shade back up, not if collapsed by going to AOD. This is
-     * needed due to the lack of a SHADE state with existing keyguard transitions.
+     * Fade in if the user swipes the shade back up, not if collapsed by going to AOD or DREAMING.
+     * This is needed due to the lack of a SHADE state with existing keyguard transitions.
      */
     private fun awaitCollapse(): Flow<Boolean> {
         var aodTransitionIsComplete = true
@@ -429,9 +429,13 @@ constructor(
                 keyguardTransitionInteractor.isInTransition(
                     edge = Edge.create(from = LOCKSCREEN, to = AOD)
                 ),
-                ::Pair,
+                keyguardTransitionInteractor.isInTransition(
+                    edge = Edge.create(from = LOCKSCREEN, to = DREAMING)
+                ),
+                ::Triple,
             )
-            .transformWhile { (isOnLockscreenWithoutShade, aodTransitionIsRunning) ->
+            .transformWhile {
+                (isOnLockscreenWithoutShade, aodTransitionIsRunning, dreamTransitionIsRunning) ->
                 // Wait until the AOD transition is complete before terminating
                 if (!aodTransitionIsComplete && !aodTransitionIsRunning) {
                     aodTransitionIsComplete = true
@@ -443,6 +447,9 @@ constructor(
                 } else if (isOnLockscreenWithoutShade) {
                     // Shade is closed, fade in and terminate
                     emit(true)
+                    false
+                } else if (dreamTransitionIsRunning) {
+                    emit(false)
                     false
                 } else {
                     true
@@ -459,8 +466,9 @@ constructor(
                     emit(false)
                     // Wait for shade to be fully expanded
                     isShadeLocked.first { it }
-                    // ... and then for it to be collapsed OR a transition to AOD begins.
-                    // If AOD, do not fade in (a fade out occurs instead).
+                    // ... and then for it to be collapsed OR a transition to AOD or DREAMING
+                    // begins.
+                    // If AOD or DREAMING, do not fade in (a fade out occurs instead).
                     awaitCollapse().collect { doFadeIn ->
                         if (doFadeIn) {
                             emit(true)
