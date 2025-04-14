@@ -187,6 +187,7 @@ fun ContentScope.QuickSettingsContainer(
         if (QsDetailedView.isEnabled) viewModel.detailsViewModel.activeTileDetails else null
 
     AnimatedContent(
+        modifier = Modifier.sysuiResTag("quick_settings_container"),
         targetState =
             when {
                 isEditing -> ShadeBodyState.Editing

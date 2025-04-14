@@ -99,6 +99,7 @@ import com.android.compose.modifiers.thenIf
 import com.android.internal.jank.InteractionJankMonitor
 import com.android.internal.jank.InteractionJankMonitor.CUJ_NOTIFICATION_SHADE_SCROLL_FLING
 import com.android.systemui.common.ui.compose.windowinsets.LocalScreenCornerRadius
+import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.res.R
 import com.android.systemui.scene.session.ui.composable.SaveableSession
 import com.android.systemui.scene.session.ui.composable.sessionCoroutineScope
@@ -503,6 +504,7 @@ fun ContentScope.NotificationScrollingStack(
     Box(
         modifier =
             modifier
+                .sysuiResTag("notification_stack_scroller")
                 .element(Notifications.Elements.NotificationScrim)
                 .overscroll(verticalOverscrollEffect)
                 .offset {
