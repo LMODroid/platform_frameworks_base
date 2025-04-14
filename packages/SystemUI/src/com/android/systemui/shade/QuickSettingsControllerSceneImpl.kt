@@ -49,11 +49,14 @@ constructor(
         // Do nothing
     }
 
+    @Deprecated("specific to legacy shade expansion")
+    override fun setPanelExpanded(panelExpanded: Boolean) {}
+
     @Deprecated("specific to legacy DebugDrawable")
     override fun calculateNotificationsTopPadding(
         isShadeExpanding: Boolean,
         keyguardNotificationStaticPadding: Int,
-        expandedFraction: Float
+        expandedFraction: Float,
     ): Float {
         throw UnsupportedOperationException()
     }

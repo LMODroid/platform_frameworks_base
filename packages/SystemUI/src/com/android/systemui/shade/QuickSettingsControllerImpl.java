@@ -635,6 +635,13 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
         return mShadeRepository.getLegacyIsQsExpanded().getValue();
     }
 
+    @Override
+    public void setPanelExpanded(boolean panelExpanded) {
+        if (mQs != null) {
+            mQs.setPanelExpanded(panelExpanded);
+        }
+    }
+
     @VisibleForTesting
     boolean isTracking() {
         return mShadeRepository.getLegacyQsTracking().getValue();
