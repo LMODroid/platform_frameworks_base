@@ -195,7 +195,12 @@ object OverlayShade {
         val ScrimBackground: Color
             @Composable
             @ReadOnlyComposable
-            get() = Color(notificationScrim(LocalContext.current, Flags.notificationShadeBlur()))
+            get() =
+                if (Flags.notificationShadeBlur()) {
+                    Color(notificationScrim(LocalContext.current, /* blurSupported= */ true))
+                } else {
+                    Color.Transparent
+                }
 
         val PanelBackground: Color
             @Composable
