@@ -23,6 +23,8 @@ import static com.android.systemui.statusbar.StatusBarState.SHADE;
 import static com.android.systemui.statusbar.notification.row.NotificationRowContentBinder.FLAG_CONTENT_VIEW_ALL;
 import static com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout.ROWS_ALL;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import static kotlinx.coroutines.flow.FlowKt.emptyFlow;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -744,6 +746,54 @@ public class NotificationStackScrollLayoutControllerTest extends SysuiTestCase {
             0,
             /* metaState= */ 0
         ));
+    }
+
+    @Test
+    @EnableSceneContainer
+    public void onTouchEvent_lockScreenExpandSwallowsIt() {
+        initController(/* viewIsAttached= */ true);
+        when(mNotificationStackScrollLayout.getExpandHelper()).thenReturn(mExpandHelper);
+        when(mNotificationStackScrollLayout.isExpanded()).thenReturn(true);
+        NotificationStackScrollLayoutController.TouchHandler touchHandler =
+                mController.getTouchHandler();
+
+        MotionEvent event = MotionEvent.obtain(
+                /* downTime= */ 0,
+                /* eventTime= */ 0,
+                MotionEvent.ACTION_DOWN,
+                0,
+                0,
+                /* metaState= */ 0
+        );
+        when(mDragDownHelper.onTouchEvent(event)).thenReturn(true);
+        boolean touchHandled = touchHandler.onTouchEvent(event);
+
+        assertThat(touchHandled).isTrue();
+        verify(mNotificationStackScrollLayout, never()).onScrollTouch(any());
+    }
+
+    @Test
+    @EnableSceneContainer
+    public void onInterceptTouchEvent_lockScreenExpandSwallowsIt() {
+        initController(/* viewIsAttached= */ true);
+        when(mNotificationStackScrollLayout.getExpandHelper()).thenReturn(mExpandHelper);
+        when(mNotificationStackScrollLayout.isExpanded()).thenReturn(true);
+        NotificationStackScrollLayoutController.TouchHandler touchHandler =
+                mController.getTouchHandler();
+
+        MotionEvent event = MotionEvent.obtain(
+                /* downTime= */ 0,
+                /* eventTime= */ 0,
+                MotionEvent.ACTION_DOWN,
+                0,
+                0,
+                /* metaState= */ 0
+        );
+        when(mDragDownHelper.onInterceptTouchEvent(event)).thenReturn(true);
+        boolean touchIntercepted = touchHandler.onInterceptTouchEvent(event);
+
+        assertThat(touchIntercepted).isTrue();
+        verify(mNotificationStackScrollLayout, never()).onInterceptTouchEventScroll(event);
     }
 
     private LogMaker logMatcher(int category, int type) {

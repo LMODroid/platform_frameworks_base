@@ -2062,15 +2062,18 @@ public class NotificationStackScrollLayoutController implements Dumpable {
                     && !mView.getOnlyScrollingInThisMotion() && guts == null && !skipForDragging) {
                 expandWantsIt = mView.getExpandHelper().onInterceptTouchEvent(ev);
             }
-            boolean scrollWantsIt = false;
-            if (mLongPressedView == null && !mSwipeHelper.isSwiping()
-                    && !mView.isExpandingNotification() && !skipForDragging) {
-                scrollWantsIt = mView.onInterceptTouchEventScroll(ev);
-            }
             boolean lockscreenExpandWantsIt = false;
             if (shouldLockscreenExpandHandleTouch()) {
                 lockscreenExpandWantsIt =
                         getLockscreenExpandTouchHelper().onInterceptTouchEvent(ev);
+            }
+            boolean scrollWantsIt = false;
+            if (mLongPressedView == null
+                    && !mSwipeHelper.isSwiping() // horizontal swipe to dismiss
+                    && !mView.isExpandingNotification() // vertical swipe to expand
+                    && !lockscreenExpandWantsIt // vertical swipe to expand over lockscreen
+                    && !skipForDragging) {
+                scrollWantsIt = mView.onInterceptTouchEventScroll(ev);
             }
             boolean hunWantsIt = false;
             if (shouldHeadsUpHandleTouch()) {
@@ -2080,6 +2083,7 @@ public class NotificationStackScrollLayoutController implements Dumpable {
             if (mLongPressedView == null && !mView.isBeingDragged()
                     && !mView.isExpandingNotification()
                     && !mView.getExpandedInThisMotion()
+                    && !lockscreenExpandWantsIt
                     && !mView.getOnlyScrollingInThisMotion()
                     && !mView.getDisallowDismissInThisMotion()
                     && !skipForDragging) {
@@ -2143,25 +2147,27 @@ public class NotificationStackScrollLayoutController implements Dumpable {
                     }
                 }
             }
+            // true when a notification is being dragged to expand over the lockscreen
+            boolean lockscreenExpandWantsIt = false;
+            if (shouldLockscreenExpandHandleTouch()) {
+                lockscreenExpandWantsIt = getLockscreenExpandTouchHelper().onTouchEvent(ev);
+            }
             boolean horizontalSwipeWantsIt = false;
             boolean scrollerWantsIt = false;
             // NOTE: the order of these is important. If reversed, onScrollTouch will reset on an
             // UP event, causing horizontalSwipeWantsIt to be set to true on vertical swipes.
             if (mLongPressedView == null && !mView.isBeingDragged()
                     && !expandingNotification
+                    && !lockscreenExpandWantsIt
                     && !mView.getExpandedInThisMotion()
                     && !onlyScrollingInThisMotion
                     && !mView.getDisallowDismissInThisMotion()) {
                 horizontalSwipeWantsIt = mSwipeHelper.onTouchEvent(ev);
             }
             if (mLongPressedView == null && mView.isExpanded() && !mSwipeHelper.isSwiping()
-                    && !expandingNotification && !mView.getDisallowScrollingInThisMotion()) {
+                    && !expandingNotification && !lockscreenExpandWantsIt
+                    && !mView.getDisallowScrollingInThisMotion()) {
                 scrollerWantsIt = mView.onScrollTouch(ev);
-            }
-            boolean lockscreenExpandWantsIt = false;
-            if (shouldLockscreenExpandHandleTouch()) {
-                lockscreenExpandWantsIt =
-                        getLockscreenExpandTouchHelper().onTouchEvent(ev);
             }
             boolean hunWantsIt = false;
             if (shouldHeadsUpHandleTouch()) {
