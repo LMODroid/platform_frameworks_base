@@ -108,7 +108,7 @@ constructor(
             snapshotFlow { pagerState.currentPage == 0 }.collect { viewModel.inFirstPage = it }
         }
 
-        Column {
+        Column(modifier) {
             val contentPaddingValue =
                 if (pages.size > 1) {
                     InterPageSpacing

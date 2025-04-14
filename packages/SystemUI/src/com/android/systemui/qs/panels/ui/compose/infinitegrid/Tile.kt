@@ -314,11 +314,13 @@ fun TileContainer(
     accessibilityUiState: AccessibilityUiState,
     iconOnly: Boolean,
     isDualTarget: Boolean,
+    modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
         modifier =
-            Modifier.height(TileHeight)
+            modifier
+                .height(TileHeight)
                 .fillMaxWidth()
                 .tileCombinedClickable(
                     onClick = onClick ?: {},
