@@ -274,7 +274,7 @@ fun ContentScope.ExpandedShadeHeader(
                     )
                 }
             }
-            Spacer(modifier = Modifier.width(5.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.element(ShadeHeader.Elements.ExpandedContent),
