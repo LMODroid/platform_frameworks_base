@@ -30,6 +30,7 @@ import com.android.systemui.communal.domain.interactor.setCommunalV2Available
 import com.android.systemui.communal.domain.interactor.setCommunalV2ConfigEnabled
 import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.coroutines.collectValues
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.keyguard.data.repository.fakeKeyguardTransitionRepositorySpy
 import com.android.systemui.keyguard.data.repository.keyguardOcclusionRepository
 import com.android.systemui.keyguard.data.repository.keyguardTransitionRepository
@@ -76,7 +77,7 @@ class FromPrimaryBouncerTransitionInteractorTest(flags: FlagsParameterization) :
         testKosmos().apply {
             this.keyguardTransitionRepository = fakeKeyguardTransitionRepositorySpy
         }
-    val underTest = kosmos.fromPrimaryBouncerTransitionInteractor
+    val underTest by lazy { kosmos.fromPrimaryBouncerTransitionInteractor }
     val testScope = kosmos.testScope
     val transitionRepository = kosmos.fakeKeyguardTransitionRepositorySpy
     val bouncerRepository = kosmos.fakeKeyguardBouncerRepository
@@ -164,6 +165,7 @@ class FromPrimaryBouncerTransitionInteractorTest(flags: FlagsParameterization) :
 
     @Test
     @EnableFlags(FLAG_KEYGUARD_WM_STATE_REFACTOR)
+    @DisableSceneContainer // PRIMARY_BOUNCER is not used in flexi.
     fun testReturnToLockscreen_whenBouncerHides() =
         testScope.runTest {
             underTest.start()
@@ -188,6 +190,7 @@ class FromPrimaryBouncerTransitionInteractorTest(flags: FlagsParameterization) :
 
     @Test
     @EnableFlags(FLAG_KEYGUARD_WM_STATE_REFACTOR)
+    @DisableSceneContainer
     fun testReturnToGlanceableHub_whenBouncerHides_ifIdleOnCommunal() =
         testScope.runTest {
             underTest.start()
@@ -215,6 +218,7 @@ class FromPrimaryBouncerTransitionInteractorTest(flags: FlagsParameterization) :
 
     @Test
     @EnableFlags(FLAG_KEYGUARD_WM_STATE_REFACTOR)
+    @DisableSceneContainer
     fun testTransitionToOccluded_bouncerHide_occludingActivityOnTop() =
         testScope.runTest {
             underTest.start()

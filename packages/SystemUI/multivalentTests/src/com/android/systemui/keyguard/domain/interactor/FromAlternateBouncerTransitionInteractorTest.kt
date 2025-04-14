@@ -45,6 +45,7 @@ import com.android.systemui.communal.domain.interactor.communalInteractor
 import com.android.systemui.communal.domain.interactor.communalSceneInteractor
 import com.android.systemui.communal.domain.interactor.setCommunalV2ConfigEnabled
 import com.android.systemui.communal.shared.model.CommunalScenes
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.keyguard.data.repository.FakeKeyguardTransitionRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardTransitionRepositorySpy
@@ -129,6 +130,7 @@ class FromAlternateBouncerTransitionInteractorTest(flags: FlagsParameterization)
 
     @Test
     @EnableFlags(Flags.FLAG_KEYGUARD_WM_STATE_REFACTOR)
+    @DisableSceneContainer // KeyguardDismissTransitionInteractor is not used in flexi.
     fun transitionToGone_keyguardOccludedThenAltBouncer_authed_wmStateRefactor() =
         testScope.runTest {
             transitionRepository.sendTransitionSteps(

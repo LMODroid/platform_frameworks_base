@@ -25,6 +25,7 @@ import androidx.test.filters.SmallTest
 import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectValues
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.keyguard.data.repository.FakeKeyguardTransitionRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardTransitionRepository
@@ -58,7 +59,7 @@ class FromLockscreenTransitionInteractorTest : SysuiTestCase() {
         }
 
     private val testScope = kosmos.testScope
-    private val underTest = kosmos.fromLockscreenTransitionInteractor
+    private val underTest by lazy { kosmos.fromLockscreenTransitionInteractor }
     private lateinit var transitionRepository: FakeKeyguardTransitionRepository
     private val shadeRepository = kosmos.fakeShadeRepository
     private val keyguardRepository = kosmos.fakeKeyguardRepository
@@ -173,6 +174,7 @@ class FromLockscreenTransitionInteractorTest : SysuiTestCase() {
 
     @Test
     @EnableFlags(Flags.FLAG_KEYGUARD_WM_STATE_REFACTOR)
+    @DisableSceneContainer
     fun testTransitionsToGone_whenDismissFlingWhileDismissable_flagEnabled() =
         testScope.runTest {
             underTest.start()

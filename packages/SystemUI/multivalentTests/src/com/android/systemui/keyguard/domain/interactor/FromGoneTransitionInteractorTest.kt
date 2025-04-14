@@ -27,6 +27,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.communal.data.repository.communalSceneRepository
 import com.android.systemui.communal.domain.interactor.setCommunalV2Enabled
 import com.android.systemui.communal.shared.model.CommunalScenes
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.keyguard.data.repository.fakeBiometricSettingsRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardTransitionRepositorySpy
@@ -55,7 +56,13 @@ class FromGoneTransitionInteractorTest : SysuiTestCase() {
         testKosmos().useUnconfinedTestDispatcher().apply {
             this.keyguardTransitionRepository = fakeKeyguardTransitionRepositorySpy
         }
+<<<<<<< HEAD
     private val underTest = kosmos.fromGoneTransitionInteractor
+=======
+    private val testScope = kosmos.testScope
+    private val underTest by lazy { kosmos.fromGoneTransitionInteractor }
+    private val keyguardTransitionRepository = kosmos.fakeKeyguardTransitionRepositorySpy
+>>>>>>> 3a5ddf879cfb (Disable flexi for tests that test GONE/PRIMARY_BOUNCER KTF states, which are deprecated in Flexi.)
 
     @Before
     fun setUp() {
@@ -106,7 +113,12 @@ class FromGoneTransitionInteractorTest : SysuiTestCase() {
         }
 
     @Test
+<<<<<<< HEAD
     @EnableFlags(FLAG_KEYGUARD_WM_STATE_REFACTOR)
+=======
+    @EnableFlags(Flags.FLAG_KEYGUARD_WM_STATE_REFACTOR)
+    @DisableSceneContainer
+>>>>>>> 3a5ddf879cfb (Disable flexi for tests that test GONE/PRIMARY_BOUNCER KTF states, which are deprecated in Flexi.)
     fun testTransitionsToLockscreen_ifFinishedInGone_wmRefactor() =
         kosmos.runTest {
             fakeKeyguardTransitionRepositorySpy.sendTransitionSteps(
