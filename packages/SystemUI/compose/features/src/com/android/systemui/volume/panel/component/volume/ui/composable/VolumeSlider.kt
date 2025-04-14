@@ -97,6 +97,7 @@ fun VolumeSlider(
     hapticsViewModelFactory: SliderHapticsViewModel.Factory?,
     onValueChangeFinished: (() -> Unit)? = null,
     button: (@Composable RowScope.() -> Unit)? = null,
+    showLabel: Boolean = true,
 ) {
     if (!Flags.volumeRedesign()) {
         LegacyVolumeSlider(
@@ -112,12 +113,14 @@ fun VolumeSlider(
     }
 
     Column(modifier = modifier.animateContentSize()) {
-        Text(
-            text = state.label,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.fillMaxWidth().clearAndSetSemantics {},
-        )
+        if (showLabel) {
+            Text(
+                text = state.label,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.fillMaxWidth().clearAndSetSemantics {},
+            )
+        }
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),

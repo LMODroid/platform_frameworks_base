@@ -16,6 +16,7 @@
 
 package com.android.systemui.qs.ui.viewmodel
 
+import android.content.applicationContext
 import com.android.systemui.brightness.ui.viewmodel.brightnessSliderViewModelFactory
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.media.controls.domain.pipeline.interactor.mediaCarouselInteractor
@@ -26,6 +27,7 @@ import com.android.systemui.qs.panels.ui.viewmodel.editModeViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.tileGridViewModelFactory
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.toolbarViewModelFactory
 import com.android.systemui.shade.ui.viewmodel.shadeHeaderViewModelFactory
+import com.android.systemui.volume.panel.component.volume.slider.ui.viewmodel.audioStreamSliderViewModelFactory
 import org.mockito.kotlin.mock
 
 val Kosmos.quickSettingsContainerViewModelFactory by
@@ -36,7 +38,9 @@ val Kosmos.quickSettingsContainerViewModelFactory by
                 expansion: Float?,
             ): QuickSettingsContainerViewModel {
                 return QuickSettingsContainerViewModel(
+                    shadeContext = applicationContext,
                     brightnessSliderViewModelFactory = brightnessSliderViewModelFactory,
+                    audioStreamSliderViewModelFactory = audioStreamSliderViewModelFactory,
                     shadeHeaderViewModelFactory = shadeHeaderViewModelFactory,
                     tileGridViewModelFactory = tileGridViewModelFactory,
                     supportsBrightnessMirroring = supportsBrightnessMirroring,
