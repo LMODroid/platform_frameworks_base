@@ -91,8 +91,8 @@ private fun AnchoredTooltip(
 
     LaunchedEffect(isVisible) {
         if (isVisible) {
-            tooltipState.show()
             onShown?.invoke()
+            tooltipState.show()
         } else {
             tooltipState.dismiss()
         }
