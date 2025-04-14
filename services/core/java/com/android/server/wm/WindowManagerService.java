@@ -320,6 +320,7 @@ import android.window.ScreenCapture;
 import android.window.ScreenCapture.ScreenshotHardwareBuffer;
 import android.window.SystemPerformanceHinter;
 import android.window.TaskSnapshot;
+import android.window.TaskSnapshotManager;
 import android.window.TrustedPresentationThresholds;
 import android.window.WindowContainerToken;
 import android.window.WindowContextInfo;
@@ -10070,8 +10071,14 @@ public class WindowManagerService extends IWindowManager.Stub
                     && imeTargetWindow.mActivityRecord.mLastImeShown) {
                 return true;
             }
-            final TaskSnapshot snapshot = mTaskSnapshotController.getSnapshot(
-                    imeTargetWindowTask.mTaskId, false /* isLowResolution */);
+            final TaskSnapshot snapshot;
+            if (Flags.reduceTaskSnapshotMemoryUsage()) {
+                snapshot = mTaskSnapshotController.getSnapshot(imeTargetWindowTask.mTaskId,
+                        TaskSnapshotManager.RESOLUTION_ANY);
+            } else {
+                snapshot = mTaskSnapshotController.getSnapshot(imeTargetWindowTask.mTaskId,
+                        false /* isLowResolution */);
+            }
             return snapshot != null && snapshot.hasImeSurface();
         }
     }

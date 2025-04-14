@@ -72,6 +72,7 @@ import android.view.IRemoteAnimationRunner;
 import android.view.RemoteAnimationDefinition;
 import android.view.RemoteAnimationAdapter;
 import android.window.IWindowOrganizerController;
+import android.window.ITaskSnapshotManager;
 import android.window.BackAnimationAdapter;
 import android.window.BackNavigationInfo;
 import android.window.SplashScreenView;
@@ -247,6 +248,10 @@ interface IActivityTaskManager {
 
     /** Returns an interface enabling the management of window organizers. */
     IWindowOrganizerController getWindowOrganizerController();
+
+    /** Returns an interface enabling the access of task snapshots. */
+    @EnforcePermission(allOf={"MANAGE_ACTIVITY_TASKS", "READ_FRAME_BUFFER"})
+    ITaskSnapshotManager getTaskSnapshotManager();
 
     boolean supportsLocalVoiceInteraction();
 

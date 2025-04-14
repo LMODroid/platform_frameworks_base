@@ -26,16 +26,25 @@ import static android.view.WindowManager.TRANSIT_PREPARE_BACK_NAVIGATION;
 import static android.view.WindowManager.TRANSIT_TO_BACK;
 import static android.view.WindowManager.TRANSIT_TO_FRONT;
 
+import static com.android.server.wm.RootWindowContainer.MATCH_ATTACHED_TASK_OR_RECENT_TASKS;
+
 import android.hardware.HardwareBuffer;
+import android.os.Binder;
 import android.os.Trace;
 import android.util.ArrayMap;
+import android.util.Slog;
 import android.view.WindowManager;
+import android.window.ITaskSnapshotManager;
 import android.window.TaskSnapshot;
+import android.window.TaskSnapshotManager;
+
+import com.android.window.flags.Flags;
 
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Integrates common functionality from TaskSnapshotController and ActivitySnapshotController.
@@ -46,7 +55,9 @@ class SnapshotController {
     final ActivitySnapshotController mActivitySnapshotController;
     private final WindowManagerService mService;
     private final ArrayList<WeakReference<HardwareBuffer>> mObsoleteSnapshots = new ArrayList<>();
+    final ITaskSnapshotManager mSnapshotManagerService = new SnapshotManagerService();
 
+    private static final String TAG = AbsAppSnapshotController.TAG;
     SnapshotController(WindowManagerService wms) {
         mService = wms;
         mSnapshotPersistQueue = new SnapshotPersistQueue();
@@ -211,8 +222,14 @@ class SnapshotController {
             final WindowContainer wc = changeInfos.get(i).mContainer;
             final Task task = wc.asTask();
             if (task != null && wc.isVisibleRequested() && !task.inPinnedWindowingMode()) {
-                final TaskSnapshot snapshot = mTaskSnapshotController.getSnapshot(task.mTaskId,
-                        false /* isLowResolution */);
+                final TaskSnapshot snapshot;
+                if (Flags.reduceTaskSnapshotMemoryUsage()) {
+                    snapshot = mTaskSnapshotController.getSnapshot(task.mTaskId,
+                            TaskSnapshotManager.RESOLUTION_ANY);
+                } else {
+                    snapshot = mTaskSnapshotController.getSnapshot(task.mTaskId,
+                            false /* isLowResolution */);
+                }
                 if (snapshot != null) {
                     mTaskSnapshotController.removeAndDeleteSnapshot(task.mTaskId, task.mUserId);
                 }
@@ -247,5 +264,83 @@ class SnapshotController {
         mTaskSnapshotController.dump(pw, prefix);
         mActivitySnapshotController.dump(pw, prefix);
         mSnapshotPersistQueue.dump(pw, prefix);
+    }
+
+    /**
+     * Util method, validate requested resolution.
+     */
+    private static void validateResolution(int resolution) {
+        switch (resolution) {
+            case TaskSnapshotManager.RESOLUTION_ANY:
+            case TaskSnapshotManager.RESOLUTION_HIGH:
+            case TaskSnapshotManager.RESOLUTION_LOW:
+                return;
+            default:
+                throw new IllegalArgumentException("Invalidate resolution=" + resolution);
+        }
+    }
+
+    class SnapshotManagerService extends ITaskSnapshotManager.Stub {
+
+        @Override
+        public TaskSnapshot getTaskSnapshot(int taskId,
+                @TaskSnapshotManager.Resolution int retrieveResolution) {
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                validateResolution(retrieveResolution);
+                final Task task;
+                synchronized (mService.mGlobalLock) {
+                    task = mService.mRoot.anyTaskForId(taskId,
+                            MATCH_ATTACHED_TASK_OR_RECENT_TASKS);
+                    if (task == null) {
+                        Slog.w(TAG, "getTaskSnapshot: taskId=" + taskId + " not found");
+                        return null;
+                    }
+                    final TaskSnapshot snapshot = mTaskSnapshotController.getSnapshot(
+                                taskId, retrieveResolution, TaskSnapshot.REFERENCE_WRITE_TO_PARCEL);
+                    if (snapshot != null) {
+                        return snapshot;
+                    }
+                }
+                final boolean isLowResolution =
+                        retrieveResolution == TaskSnapshotManager.RESOLUTION_LOW;
+                // Don't call this while holding the lock as this operation might hit the disk.
+                return mTaskSnapshotController.getSnapshotFromDisk(taskId,
+                        task.mUserId, isLowResolution, TaskSnapshot.REFERENCE_WRITE_TO_PARCEL);
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
+
+        @Override
+        public TaskSnapshot takeTaskSnapshot(int taskId, boolean updateCache) {
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                final Supplier<TaskSnapshot> supplier;
+                synchronized (mService.mGlobalLock) {
+                    final Task task = mService.mRoot.anyTaskForId(taskId,
+                            MATCH_ATTACHED_TASK_OR_RECENT_TASKS);
+                    if (task == null || !task.isVisible()) {
+                        Slog.w(TAG, "takeTaskSnapshot: taskId=" + taskId
+                                + " not found or not visible");
+                        return null;
+                    }
+                    // Note that if updateCache is true, ActivityRecord#shouldUseAppThemeSnapshot
+                    // will be used to decide whether the task is allowed to be captured because
+                    // that may be retrieved by recents. While if updateCache is false, the real
+                    // snapshot will always be taken and the snapshot won't be put into
+                    // SnapshotPersister.
+                    if (updateCache) {
+                        supplier = mTaskSnapshotController.getRecordSnapshotSupplier(task,
+                                TaskSnapshot.REFERENCE_WRITE_TO_PARCEL);
+                    } else {
+                        return mTaskSnapshotController.snapshot(task);
+                    }
+                }
+                return supplier != null ? supplier.get() : null;
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
     }
 }

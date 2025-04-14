@@ -129,6 +129,7 @@ import static com.android.server.wm.WindowManagerService.MY_PID;
 import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_NORMAL;
 
 import android.Manifest;
+import android.annotation.EnforcePermission;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -238,9 +239,11 @@ import android.view.RemoteAnimationDefinition;
 import android.view.WindowManager;
 import android.window.BackAnimationAdapter;
 import android.window.BackNavigationInfo;
+import android.window.ITaskSnapshotManager;
 import android.window.IWindowOrganizerController;
 import android.window.SplashScreenView.SplashScreenViewParcelable;
 import android.window.TaskSnapshot;
+import android.window.TaskSnapshotManager;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -3965,6 +3968,13 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         return mWindowOrganizerController;
     }
 
+    @EnforcePermission(allOf = {MANAGE_ACTIVITY_TASKS, READ_FRAME_BUFFER})
+    @Override
+    public ITaskSnapshotManager getTaskSnapshotManager() {
+        getTaskSnapshotManager_enforcePermission();
+        return mWindowManager.mSnapshotController.mSnapshotManagerService;
+    }
+
     /**
      * Check that we have the features required for VR-related API calls, and throw an exception if
      * not.
@@ -4054,8 +4064,15 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 return null;
             }
             // Try to load snapshot from cache first, and add reference if the snapshot is in cache.
-            final TaskSnapshot snapshot = mWindowManager.mTaskSnapshotController.getSnapshot(taskId,
-                    isLowResolution, usage);
+            final TaskSnapshot snapshot;
+            if (com.android.window.flags.Flags.reduceTaskSnapshotMemoryUsage()) {
+                final int retrieveFlag = TaskSnapshotManager.convertRetrieveFlag(isLowResolution);
+                snapshot = mWindowManager.mTaskSnapshotController.getSnapshot(
+                        taskId, retrieveFlag, usage);
+            } else {
+                snapshot = mWindowManager.mTaskSnapshotController.getSnapshot(taskId,
+                        isLowResolution, usage);
+            }
             if (snapshot != null) {
                 return snapshot;
             }
@@ -4078,8 +4095,16 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                     Slog.w(TAG, "getTaskSnapshot: taskId=" + taskId + " not found");
                     return null;
                 }
-                final TaskSnapshot snapshot = mWindowManager.mTaskSnapshotController.getSnapshot(
-                        taskId, isLowResolution, TaskSnapshot.REFERENCE_WRITE_TO_PARCEL);
+                final TaskSnapshot snapshot;
+                if (com.android.window.flags.Flags.reduceTaskSnapshotMemoryUsage()) {
+                    final int retrieveFlag = TaskSnapshotManager.convertRetrieveFlag(
+                            isLowResolution);
+                    snapshot = mWindowManager.mTaskSnapshotController.getSnapshot(
+                                    taskId, retrieveFlag, TaskSnapshot.REFERENCE_WRITE_TO_PARCEL);
+                } else {
+                    snapshot = mWindowManager.mTaskSnapshotController.getSnapshot(
+                            taskId, isLowResolution, TaskSnapshot.REFERENCE_WRITE_TO_PARCEL);
+                }
                 if (snapshot != null) {
                     return snapshot;
                 }

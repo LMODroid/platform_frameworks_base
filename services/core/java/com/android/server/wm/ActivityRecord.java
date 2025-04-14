@@ -333,6 +333,7 @@ import android.window.SplashScreen;
 import android.window.SplashScreenView;
 import android.window.SplashScreenView.SplashScreenViewParcelable;
 import android.window.TaskSnapshot;
+import android.window.TaskSnapshotManager;
 import android.window.TransitionInfo.AnimationOptions;
 import android.window.WindowContainerToken;
 import android.window.WindowOnBackInvokedDispatcher;
@@ -2285,8 +2286,14 @@ final class ActivityRecord extends WindowToken {
             return false;
         }
 
-        final TaskSnapshot snapshot = mWmService.mTaskSnapshotController.getSnapshot(task.mTaskId,
-                false /* isLowResolution */);
+        final TaskSnapshot snapshot;
+        if (Flags.reduceTaskSnapshotMemoryUsage()) {
+            snapshot = mWmService.mTaskSnapshotController.getSnapshot(task.mTaskId,
+                    TaskSnapshotManager.RESOLUTION_HIGH);
+        } else {
+            snapshot = mWmService.mTaskSnapshotController.getSnapshot(task.mTaskId,
+                    false /* isLowResolution */);
+        }
         final int type = getStartingWindowType(newTask, taskSwitch, processRunning,
                 allowTaskSnapshot, activityCreated, activityAllDrawn, snapshot);
 

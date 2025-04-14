@@ -68,6 +68,7 @@ import android.window.IWindowlessStartingSurfaceCallback;
 import android.window.OnBackInvokedCallbackInfo;
 import android.window.SystemOverrideOnBackInvokedCallback;
 import android.window.TaskSnapshot;
+import android.window.TaskSnapshotManager;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.policy.TransitionAnimation;
@@ -2262,8 +2263,13 @@ class BackNavigationController {
         TaskSnapshot snapshot = null;
         if (w.asTask() != null) {
             final Task task = w.asTask();
-            snapshot = task.mRootWindowContainer.mWindowManager.mTaskSnapshotController.getSnapshot(
-                    task.mTaskId, false /* isLowResolution */);
+            if (Flags.reduceTaskSnapshotMemoryUsage()) {
+                snapshot = task.mRootWindowContainer.mWindowManager.mTaskSnapshotController
+                        .getSnapshot(task.mTaskId, TaskSnapshotManager.RESOLUTION_ANY);
+            } else {
+                snapshot = task.mRootWindowContainer.mWindowManager.mTaskSnapshotController
+                        .getSnapshot(task.mTaskId, false /* isLowResolution */);
+            }
         } else {
             ActivityRecord ar = w.asActivityRecord();
             if (ar == null && w.asTaskFragment() != null) {
