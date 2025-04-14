@@ -2049,8 +2049,6 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                     // We don't need to schedule another stop, we only need to let it happen.
                     prev.setState(STOPPING, "completePausedLocked");
                 } else if (!prev.isVisibleRequested() || shouldSleepOrShutDownActivities()) {
-                    // Clear out any deferred client hide we might currently have.
-                    prev.clearDeferHidingClient();
                     // If we were visible then resumeTopActivities will release resources before
                     // stopping.
                     prev.addToStopping(true /* scheduleIdle */, false /* idleDelayed */,

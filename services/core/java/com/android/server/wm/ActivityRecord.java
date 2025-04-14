@@ -145,7 +145,6 @@ import static com.android.server.wm.ActivityRecord.State.STOPPING;
 import static com.android.server.wm.ActivityRecordProto.ALL_DRAWN;
 import static com.android.server.wm.ActivityRecordProto.APP_STOPPED;
 import static com.android.server.wm.ActivityRecordProto.CLIENT_VISIBLE;
-import static com.android.server.wm.ActivityRecordProto.DEFER_HIDING_CLIENT;
 import static com.android.server.wm.ActivityRecordProto.ENABLE_RECENTS_SCREENSHOT;
 import static com.android.server.wm.ActivityRecordProto.FILLS_PARENT;
 import static com.android.server.wm.ActivityRecordProto.FRONT_OF_TASK;
@@ -530,11 +529,6 @@ final class ActivityRecord extends WindowToken {
     // True if the visible state of this token was forced to true due to a transferred starting
     // window.
     private boolean mVisibleSetFromTransferredStartingWindow;
-    // TODO: figure out how to consolidate with the same variable in ActivityRecord.
-    private boolean mDeferHidingClient; // If true we told WM to defer reporting to the client
-                                        // process that it is hidden.
-    private boolean mLastDeferHidingClient; // If true we will defer setting mClientVisible to false
-                                           // and reporting to the client that it is hidden.
     boolean nowVisible;     // is this activity's window visible?
     boolean mClientVisibilityDeferred;// was the visibility change message to client deferred?
     boolean idle;           // has the activity gone idle?
@@ -1135,7 +1129,6 @@ final class ActivityRecord extends WindowToken {
         pw.println(ActivityInfo.screenOrientationToString(super.getOverrideOrientation()));
         pw.println(prefix + "mVisibleRequested=" + mVisibleRequested
                 + " mVisible=" + mVisible + " mClientVisible=" + isClientVisible()
-                + ((mDeferHidingClient) ? " mDeferHidingClient=" + mDeferHidingClient : "")
                 + " reportedDrawn=" + mReportedDrawn + " reportedVisible=" + reportedVisible);
         if (paused) {
             pw.print(prefix); pw.print("paused="); pw.println(paused);
@@ -1175,9 +1168,6 @@ final class ActivityRecord extends WindowToken {
                     if (lastVisibleTime == 0) pw.print("0");
                     else TimeUtils.formatDuration(lastVisibleTime, now, pw);
                     pw.println();
-        }
-        if (mDeferHidingClient) {
-            pw.println(prefix + "mDeferHidingClient=" + mDeferHidingClient);
         }
         if (mServiceConnectionsHolder != null) {
             pw.print(prefix); pw.print("connections="); pw.println(mServiceConnectionsHolder);
@@ -5269,30 +5259,6 @@ final class ActivityRecord extends WindowToken {
         task.lastDescription = description;
     }
 
-    void setDeferHidingClient() {
-        if (Flags.removeDeferHidingClient()) {
-            return;
-        }
-        mDeferHidingClient = true;
-    }
-
-    void clearDeferHidingClient() {
-        if (Flags.removeDeferHidingClient()) {
-            return;
-        }
-        if (!mDeferHidingClient) return;
-        mDeferHidingClient = false;
-        if (!mVisibleRequested) {
-            // Hiding the client is no longer deferred and the app isn't visible still, go ahead and
-            // update the visibility.
-            setVisibility(false);
-        }
-    }
-
-    boolean getDeferHidingClient() {
-        return mDeferHidingClient;
-    }
-
     boolean canAffectSystemUiFlags() {
         final TaskFragment taskFragment = getTaskFragment();
         return taskFragment != null && taskFragment.canAffectSystemUiFlags()
@@ -5368,17 +5334,14 @@ final class ActivityRecord extends WindowToken {
             // For shell transition, it is no-op if there is no state change.
             return;
         }
-        if (visible) {
-            mDeferHidingClient = false;
-        }
-        setVisibility(visible, mDeferHidingClient);
+        setVisibilityInner(visible);
         mAtmService.addWindowLayoutReasons(
                 ActivityTaskManagerService.LAYOUT_REASON_VISIBILITY_CHANGED);
         mTaskSupervisor.getActivityMetricsLogger().notifyVisibilityChanged(this);
         mTaskSupervisor.mAppVisibilitiesChangedSinceLastPause = true;
     }
 
-    private void setVisibility(boolean visible, boolean deferHidingClient) {
+    private void setVisibilityInner(boolean visible) {
         // Don't set visibility to false if we were already not visible. This prevents WM from
         // adding the app to the closing app list which doesn't make sense for something that is
         // already not visible. However, set visibility to true even if we are already visible.
@@ -5387,13 +5350,6 @@ final class ActivityRecord extends WindowToken {
         // TODO: Probably a good idea to separate the concept of opening/closing apps from the
         // concept of setting visibility...
         if (!visible && !mVisibleRequested) {
-
-            if (!deferHidingClient && mLastDeferHidingClient) {
-                // We previously deferred telling the client to hide itself when visibility was
-                // initially set to false. Now we would like it to hide, so go ahead and set it.
-                mLastDeferHidingClient = deferHidingClient;
-                setClientVisible(false);
-            }
             return;
         }
 
@@ -5431,7 +5387,6 @@ final class ActivityRecord extends WindowToken {
         mAtmService.mBackNavigationController.onAppVisibilityChanged(this, visible);
 
         setVisibleRequested(visible);
-        mLastDeferHidingClient = deferHidingClient;
 
         if (!visible) {
             // Because starting window was transferred, this activity may be a trampoline which has
@@ -6017,15 +5972,6 @@ final class ActivityRecord extends WindowToken {
         try {
             final boolean canEnterPictureInPicture = checkEnterPictureInPictureState(
                     "makeInvisible", true /* beforeStopping */);
-            // Defer telling the client it is hidden if it can enter Pip and isn't current paused,
-            // stopped or stopping. This gives it a chance to enter Pip in onPause().
-            final boolean deferHidingClient = canEnterPictureInPicture
-                    && !isState(STARTED, STOPPING, STOPPED, PAUSED);
-            if (deferHidingClient) {
-                setDeferHidingClient();
-            } else {
-                clearDeferHidingClient();
-            }
             setVisibility(false);
 
             switch (mState) {
@@ -6668,16 +6614,6 @@ final class ActivityRecord extends WindowToken {
 
     boolean isReportedDrawn() {
         return mReportedDrawn;
-    }
-
-    @Override
-    void setClientVisible(boolean clientVisible) {
-        if (!Flags.removeDeferHidingClient()) {
-            // TODO(shell-transitions): Remove mDeferHidingClient once everything is
-            //  shell-transitions. pip activities should just remain in clientVisible.
-            if (!clientVisible && mDeferHidingClient) return;
-        }
-        super.setClientVisible(clientVisible);
     }
 
     /**
@@ -9271,7 +9207,6 @@ final class ActivityRecord extends WindowToken {
         proto.write(VISIBLE, mVisible);
         proto.write(VISIBLE_REQUESTED, mVisibleRequested);
         proto.write(CLIENT_VISIBLE, isClientVisible());
-        proto.write(DEFER_HIDING_CLIENT, mDeferHidingClient);
         proto.write(REPORTED_DRAWN, mReportedDrawn);
         proto.write(REPORTED_VISIBLE, reportedVisible);
         proto.write(NUM_INTERESTING_WINDOWS, mNumInterestingWindows);
