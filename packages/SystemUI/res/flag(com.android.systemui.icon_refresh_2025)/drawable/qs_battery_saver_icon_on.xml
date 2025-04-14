@@ -16,17 +16,25 @@
 -->
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:drawable="@drawable/vd_flashlight">
-    <target android:name="body">
+    android:drawable="@drawable/vd_battery_saver">
+    <target android:name="icon">
         <aapt:attr name="android:animation">
-            <set>
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="200"
+                    android:interpolator="@anim/ease_out"
+                    android:propertyName="pathData"
+                    android:startOffset="0"
+                    android:valueFrom="@string/path_battery_saver_on"
+                    android:valueTo="@string/path_battery_saver_large"
+                    android:valueType="pathType" />
                 <objectAnimator
                     android:duration="500"
                     android:interpolator="@anim/overshoot"
                     android:propertyName="pathData"
                     android:startOffset="0"
-                    android:valueTo="@string/path_flashlight_on"
-                    android:valueFrom="@string/path_flashlight_off"
+                    android:valueFrom="@string/path_battery_saver_large"
+                    android:valueTo="@string/path_battery_saver_on"
                     android:valueType="pathType" />
             </set>
         </aapt:attr>

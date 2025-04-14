@@ -16,8 +16,8 @@
 -->
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:drawable="@drawable/vd_flashlight">
-    <target android:name="body">
+    android:drawable="@drawable/vd_theme">
+    <target android:name="mask">
         <aapt:attr name="android:animation">
             <set>
                 <objectAnimator
@@ -25,8 +25,8 @@
                     android:interpolator="@anim/overshoot"
                     android:propertyName="pathData"
                     android:startOffset="0"
-                    android:valueTo="@string/path_flashlight_on"
-                    android:valueFrom="@string/path_flashlight_off"
+                    android:valueFrom="@string/path_theme_mask_off"
+                    android:valueTo="@string/path_theme_mask_on"
                     android:valueType="pathType" />
             </set>
         </aapt:attr>
