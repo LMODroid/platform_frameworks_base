@@ -91,11 +91,7 @@ constructor(
 
             launch { viewModel.maxAlpha.collectTraced { view.setMaxAlpha(it) } }
             launch { viewModel.shadeScrollState.collect { view.setScrollState(it) } }
-            launch {
-                viewModel.expandFraction.collectTraced {
-                    view.setExpandFraction(it.coerceIn(0f, 1f))
-                }
-            }
+            launch { viewModel.expandFraction.collectTraced { view.setExpandFraction(it) } }
             launch { viewModel.qsExpandFraction.collectTraced { view.setQsExpandFraction(it) } }
             if (Flags.notificationShadeBlur()) {
                 launch { viewModel.blurRadius(maxBlurRadius).collect(view::setBlurRadius) }
