@@ -235,7 +235,9 @@ fun createFooterActionsViewModel(
             return
         }
 
-        footerActionsInteractor.showPowerMenuDialog(globalActionsDialogLite, expandable)
+        activityStarter.postQSRunnableDismissingKeyguard {
+            footerActionsInteractor.showPowerMenuDialog(globalActionsDialogLite, expandable)
+        }
     }
 
     val qsThemedContext = ContextThemeWrapper(appContext, R.style.Theme_SystemUI_QuickSettings)
