@@ -230,9 +230,12 @@ fun Tile(
                             TileHapticsViewModel.TileInteractionState.CLICKED
                         )
                         if (uiState.accessibilityUiState.toggleableState != null) {
-                            // Bounce
-                            coroutineScope.launch {
-                                currentBounceableInfo.bounceable.animateBounce()
+                            // Bounce unless we're a large dual target tile. These don't toggle on
+                            // main click.
+                            if (iconOnly || !isDualTarget) {
+                                coroutineScope.launch {
+                                    currentBounceableInfo.bounceable.animateBounce()
+                                }
                             }
                             // And show footer text feedback for icons
                             if (iconOnly) {
