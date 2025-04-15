@@ -21,6 +21,7 @@
     android:id="@+id/internet_connectivity_details"
     android:layout_width="@dimen/large_dialog_width"
     android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/tile_details_bottom_padding"
     android:orientation="vertical">
 
     <LinearLayout
