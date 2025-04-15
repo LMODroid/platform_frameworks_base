@@ -40,7 +40,6 @@ import android.util.EventLog
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.android.packageinstaller.R
 import com.android.packageinstaller.common.EventResultPersister
 import com.android.packageinstaller.common.EventResultPersister.OutOfIdsException
 import com.android.packageinstaller.common.InstallEventReceiver
@@ -79,6 +78,7 @@ class InstallRepository(private val context: Context) {
     private val appOpsManager: AppOpsManager? = context.getSystemService(AppOpsManager::class.java)
     private var isSessionInstall = false
     private var isTrustedSource = false
+    private var isAppUpdating = false
     private val _stagingResult = MutableLiveData<InstallStage>()
     val stagingResult: LiveData<InstallStage>
         get() = _stagingResult
@@ -655,7 +655,7 @@ class InstallRepository(private val context: Context) {
                 return InstallAborted(ABORT_REASON_INTERNAL_ERROR)
             }
         }
-        val isAppUpdating = isAppUpdating(newPackageInfo)
+        isAppUpdating = isAppUpdating(newPackageInfo)
         val (existingUpdateOwner, requestedUpdateOwner) =
             getUpdateOwners(newPackageInfo, userActionReason, isAppUpdating)
 
@@ -672,7 +672,7 @@ class InstallRepository(private val context: Context) {
     private fun processSessionInfo(sessionInfo: SessionInfo, userActionReason: Int): InstallStage {
         newPackageInfo = generateStubPackageInfo(sessionInfo.getAppPackageName())
         appSnippet = getAppSnippet(context, sessionInfo)
-        val isAppUpdating = isAppUpdating(newPackageInfo)
+        isAppUpdating = isAppUpdating(newPackageInfo)
         val (existingUpdateOwner, requestedUpdateOwner) =
             getUpdateOwners(newPackageInfo, userActionReason, isAppUpdating)
 
@@ -888,7 +888,7 @@ class InstallRepository(private val context: Context) {
         }
         val installId: Int
         try {
-            _installResult.value = InstallInstalling(appSnippet)
+            _installResult.value = InstallInstalling(appSnippet, isAppUpdating)
             installId = InstallEventReceiver.addObserver(
                 context, EventResultPersister.GENERATE_NEW_ID
             ) { statusCode: Int, legacyStatus: Int, message: String?, serviceId: Int ->
@@ -942,7 +942,14 @@ class InstallRepository(private val context: Context) {
                 val intent = packageManager.getLaunchIntentForPackage(newPackageInfo!!.packageName)
                 if (isLauncherActivityEnabled(intent)) intent else null
             }
-            _installResult.setValue(InstallSuccess(appSnippet, shouldReturnResult, resultIntent))
+            _installResult.setValue(
+                InstallSuccess(
+                    appSnippet,
+                    shouldReturnResult,
+                    isAppUpdating,
+                    resultIntent
+                )
+            )
         } else {
             // TODO (b/346655018): Use INSTALL_FAILED_ABORTED legacyCode in the condition
             // statusCode can be STATUS_FAILURE_ABORTED if:

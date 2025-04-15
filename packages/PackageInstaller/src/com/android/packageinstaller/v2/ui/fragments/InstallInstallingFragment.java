@@ -17,6 +17,7 @@
 package com.android.packageinstaller.v2.ui.fragments;
 
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
+import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_IS_UPDATING;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -58,6 +59,7 @@ public class InstallInstallingFragment extends DialogFragment {
     public static InstallInstallingFragment newInstance(@NonNull InstallInstalling dialogData) {
         Bundle args = new Bundle();
         args.putParcelable(ARGS_APP_SNIPPET, dialogData.getAppSnippet());
+        args.putBoolean(ARGS_IS_UPDATING, dialogData.isAppUpdating());
 
         InstallInstallingFragment fragment = new InstallInstallingFragment();
         fragment.setArguments(args);
@@ -79,7 +81,8 @@ public class InstallInstallingFragment extends DialogFragment {
         ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
 
         mDialog = new AlertDialog.Builder(requireContext())
-            .setTitle(R.string.title_installing)
+            .setTitle(
+                mDialogData.isAppUpdating() ? R.string.title_updating : R.string.title_installing)
             .setView(dialogView)
             .create();
 
@@ -96,6 +99,7 @@ public class InstallInstallingFragment extends DialogFragment {
 
     private void setDialogData(Bundle args) {
         AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET, AppSnippet.class);
-        mDialogData = new InstallInstalling(appSnippet);
+        boolean isAppUpdating = args.getBoolean(ARGS_IS_UPDATING);
+        mDialogData = new InstallInstalling(appSnippet, isAppUpdating);
     }
 }

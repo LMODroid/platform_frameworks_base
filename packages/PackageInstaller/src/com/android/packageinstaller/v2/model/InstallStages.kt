@@ -62,7 +62,9 @@ data class InstallUserActionRequired(
     }
 }
 
-data class InstallInstalling(val appSnippet: PackageUtil.AppSnippet) :
+data class InstallInstalling(
+    val appSnippet: PackageUtil.AppSnippet,
+    val isAppUpdating: Boolean = false) :
     InstallStage(STAGE_INSTALLING) {
 
     val appIcon: Drawable?
@@ -75,6 +77,7 @@ data class InstallInstalling(val appSnippet: PackageUtil.AppSnippet) :
 data class InstallSuccess(
     val appSnippet: PackageUtil.AppSnippet,
     val shouldReturnResult: Boolean = false,
+    val isAppUpdating: Boolean = false,
     /**
      *
      * * If the caller is requesting a result back, this will hold an Intent with

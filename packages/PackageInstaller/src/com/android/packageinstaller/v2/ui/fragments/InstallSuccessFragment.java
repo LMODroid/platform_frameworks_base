@@ -17,6 +17,7 @@
 package com.android.packageinstaller.v2.ui.fragments;
 
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
+import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_IS_UPDATING;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_RESULT_INTENT;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_SHOULD_RETURN_RESULT;
 
@@ -72,6 +73,7 @@ public class InstallSuccessFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putParcelable(ARGS_APP_SNIPPET, dialogData.getAppSnippet());
         args.putBoolean(ARGS_SHOULD_RETURN_RESULT, dialogData.getShouldReturnResult());
+        args.putBoolean(ARGS_IS_UPDATING, dialogData.isAppUpdating());
         args.putParcelable(ARGS_RESULT_INTENT, dialogData.getResultIntent());
 
         InstallSuccessFragment fragment = new InstallSuccessFragment();
@@ -100,7 +102,8 @@ public class InstallSuccessFragment extends DialogFragment {
         ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
 
         mDialog = new AlertDialog.Builder(requireContext())
-            .setTitle(R.string.title_installed)
+            .setTitle(
+                mDialogData.isAppUpdating() ? R.string.title_updated : R.string.title_installed)
             .setView(dialogView)
             .setNegativeButton(R.string.button_done,
                 (dialog, which) -> mInstallActionListener.onNegativeResponse(
@@ -143,8 +146,10 @@ public class InstallSuccessFragment extends DialogFragment {
     private void setDialogData(Bundle args) {
         AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET, AppSnippet.class);
         boolean shouldReturnResult = args.getBoolean(ARGS_SHOULD_RETURN_RESULT);
+        boolean isAppUpdating = args.getBoolean(ARGS_IS_UPDATING);
         Intent resultIntent = args.getParcelable(ARGS_RESULT_INTENT, Intent.class);
 
-        mDialogData = new InstallSuccess(appSnippet, shouldReturnResult, resultIntent);
+        mDialogData = new InstallSuccess(appSnippet, shouldReturnResult, isAppUpdating,
+            resultIntent);
     }
 }
