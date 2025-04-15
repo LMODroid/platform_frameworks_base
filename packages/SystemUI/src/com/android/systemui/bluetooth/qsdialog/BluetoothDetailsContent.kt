@@ -17,7 +17,7 @@
 package com.android.systemui.bluetooth.qsdialog
 
 import android.view.LayoutInflater
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -27,7 +27,7 @@ import com.android.systemui.res.R
 @Composable
 fun BluetoothDetailsContent(detailsContentViewModel: BluetoothDetailsContentViewModel) {
     AndroidView(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         factory = { context ->
             // Inflate with the existing dialog xml layout
             val view =

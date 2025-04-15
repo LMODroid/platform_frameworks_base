@@ -20,11 +20,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
@@ -74,33 +76,32 @@ fun TileDetails(modifier: Modifier = Modifier, detailsViewModel: DetailsViewMode
         modifier =
             modifier
                 .fillMaxWidth()
-                // The height of the details view is TBD.
-                .fillMaxHeight()
+                .heightIn(
+                    min = TileDetailsDefaults.DetailsMinHeight,
+                    max = TileDetailsDefaults.DetailsMaxHeight,
+                )
                 .background(color = colors.onPrimary)
     ) {
         CompositionLocalProvider(
             value = LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = TileDetailsDefaults.TitleRowStart,
-                        top = TileDetailsDefaults.TitleRowTop,
-                        end = TileDetailsDefaults.TitleRowEnd,
-                        bottom = TileDetailsDefaults.TitleRowBottom
-                    ),
+                modifier =
+                    Modifier.fillMaxWidth()
+                        .padding(
+                            start = TileDetailsDefaults.TitleRowStart,
+                            top = TileDetailsDefaults.TitleRowTop,
+                            end = TileDetailsDefaults.TitleRowEnd,
+                            bottom = TileDetailsDefaults.TitleRowBottom,
+                        ),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
                     onClick = { detailsViewModel.closeDetailedView() },
-                    colors = IconButtonDefaults.iconButtonColors(
-                        contentColor = colors.onSurface
-                    ),
+                    colors = IconButtonDefaults.iconButtonColors(contentColor = colors.onSurface),
                     modifier =
-                        Modifier
-                            .align(Alignment.CenterVertically)
+                        Modifier.align(Alignment.CenterVertically)
                             .height(TileDetailsDefaults.IconHeight)
                             .width(TileDetailsDefaults.IconWidth)
                             .padding(start = TileDetailsDefaults.IconPadding),
@@ -120,12 +121,9 @@ fun TileDetails(modifier: Modifier = Modifier, detailsViewModel: DetailsViewMode
                 )
                 IconButton(
                     onClick = { tileDetailedViewModel.clickOnSettingsButton() },
-                    colors = IconButtonDefaults.iconButtonColors(
-                        contentColor = colors.onSurface
-                    ),
+                    colors = IconButtonDefaults.iconButtonColors(contentColor = colors.onSurface),
                     modifier =
-                        Modifier
-                            .align(Alignment.CenterVertically)
+                        Modifier.align(Alignment.CenterVertically)
                             .height(TileDetailsDefaults.IconHeight)
                             .width(TileDetailsDefaults.IconWidth)
                             .padding(end = TileDetailsDefaults.IconPadding),
@@ -145,7 +143,10 @@ fun TileDetails(modifier: Modifier = Modifier, detailsViewModel: DetailsViewMode
                 color = colors.onSurfaceVariant,
             )
         }
-        MapTileDetailsContent(tileDetailedViewModel)
+
+        Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+            MapTileDetailsContent(tileDetailedViewModel)
+        }
     }
 }
 
@@ -169,4 +170,6 @@ private object TileDetailsDefaults {
     val TitleRowTop = 22.dp
     val TitleRowEnd = 20.dp
     val TitleRowBottom = 8.dp
+    val DetailsMaxHeight = 600.dp
+    val DetailsMinHeight = 300.dp
 }
