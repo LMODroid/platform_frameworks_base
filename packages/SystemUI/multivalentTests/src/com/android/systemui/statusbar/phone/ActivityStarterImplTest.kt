@@ -28,6 +28,7 @@ import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.shared.Flags as SharedFlags
 import com.android.systemui.statusbar.SysuiStatusBarStateController
+import com.android.systemui.statusbar.policy.KeyguardStateController
 import com.android.systemui.testKosmos
 import com.android.systemui.util.concurrency.FakeExecutor
 import com.android.systemui.util.time.FakeSystemClock
@@ -50,6 +51,7 @@ class ActivityStarterImplTest : SysuiTestCase() {
     @Mock private lateinit var legacyActivityStarterInternal: LegacyActivityStarterInternalImpl
     @Mock private lateinit var activityStarterInternal: ActivityStarterInternalImpl
     @Mock private lateinit var statusBarStateController: SysuiStatusBarStateController
+    @Mock private lateinit var keyguardStateController: KeyguardStateController
     private lateinit var underTest: ActivityStarterImpl
     private val kosmos = testKosmos()
     private val mainExecutor = FakeExecutor(FakeSystemClock())
@@ -60,6 +62,7 @@ class ActivityStarterImplTest : SysuiTestCase() {
         underTest =
             ActivityStarterImpl(
                 statusBarStateController = statusBarStateController,
+                keyguardStateController = keyguardStateController,
                 mainExecutor = mainExecutor,
                 legacyActivityStarter = { legacyActivityStarterInternal },
                 activityStarterInternal = { activityStarterInternal },
