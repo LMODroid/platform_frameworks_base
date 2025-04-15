@@ -451,7 +451,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/wifi_buttons_container"
                 android:layout_width="match_parent"
@@ -509,7 +508,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:background="@drawable/settingslib_entry_bg_off"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_marginBottom="@dimen/dialog_bottom_padding">
 
                     <FrameLayout
                         android:layout_width="@dimen/tile_details_button_size"

@@ -89,6 +89,7 @@ import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.flags.Flags;
 import com.android.systemui.plugins.ActivityStarter;
+import com.android.systemui.qs.flags.QsWifiConfig;
 import com.android.systemui.res.R;
 import com.android.systemui.shade.ShadeDisplayAware;
 import com.android.systemui.statusbar.connectivity.AccessPointController;
@@ -1246,7 +1247,8 @@ public class InternetDetailsContentController implements AccessPointController.A
         final boolean hasMoreWifiEntries = (accessPointsSize > MAX_WIFI_ENTRY_COUNT);
         if (accessPointsSize > 0) {
             wifiEntries = new ArrayList<>();
-            final int count = hasMoreWifiEntries ? MAX_WIFI_ENTRY_COUNT : accessPointsSize;
+            final int count = QsWifiConfig.isEnabled() ? accessPointsSize
+                    : hasMoreWifiEntries ? MAX_WIFI_ENTRY_COUNT : accessPointsSize;
             mConnectedWifiInternetMonitor.unregisterCallback();
             for (int i = 0; i < count; i++) {
                 WifiEntry entry = accessPoints.get(i);

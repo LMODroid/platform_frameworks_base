@@ -769,6 +769,21 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
     }
 
     @Test
+    @EnableFlags(Flags.FLAG_QS_WIFI_CONFIG)
+    fun onClickSeeMoreButton_clickSeeAll_verifExpandWifiList() {
+        internetDetailsContentManager.hasSeeAllClicked = true
+        internetDetailsContentManager.updateContent(false)
+        bgExecutor.runAllReady()
+
+        internetDetailsContentManager.internetContentData.observe(
+            internetDetailsContentManager.lifecycleOwner!!
+        ) {
+            assertThat(seeAll!!.visibility).isEqualTo(View.GONE)
+            verify(internetAdapter).setShowAllWifi()
+        }
+    }
+
+    @Test
     fun onWifiScan_isScanTrue_setProgressBarVisibleTrue() {
         internetDetailsContentManager.isProgressBarVisible = false
 
