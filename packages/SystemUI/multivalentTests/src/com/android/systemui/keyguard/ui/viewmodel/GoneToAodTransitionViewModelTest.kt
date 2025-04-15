@@ -21,6 +21,7 @@ import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.biometrics.data.repository.fingerprintPropertyRepository
 import com.android.systemui.coroutines.collectLastValue
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.keyguard.data.repository.biometricSettingsRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardTransitionRepository
 import com.android.systemui.keyguard.shared.model.KeyguardState
@@ -41,6 +42,7 @@ import org.junit.runner.RunWith
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
+@DisableSceneContainer
 class GoneToAodTransitionViewModelTest : SysuiTestCase() {
     private val kosmos = testKosmos()
     private val testScope = kosmos.testScope
@@ -57,7 +59,7 @@ class GoneToAodTransitionViewModelTest : SysuiTestCase() {
                 rawState = WakefulnessState.STARTING_TO_SLEEP,
                 lastWakeReason = WakeSleepReason.POWER_BUTTON,
                 lastSleepReason = WakeSleepReason.POWER_BUTTON,
-                powerButtonLaunchGestureTriggered = false
+                powerButtonLaunchGestureTriggered = false,
             )
 
             val pixels = -100f
@@ -73,7 +75,7 @@ class GoneToAodTransitionViewModelTest : SysuiTestCase() {
                         from = KeyguardState.GONE,
                         to = KeyguardState.AOD,
                         transitionState = TransitionState.STARTED,
-                        value = pixels
+                        value = pixels,
                     )
                 )
 
@@ -91,7 +93,7 @@ class GoneToAodTransitionViewModelTest : SysuiTestCase() {
                         from = KeyguardState.GONE,
                         to = KeyguardState.AOD,
                         transitionState = TransitionState.RUNNING,
-                        value = 0f
+                        value = 0f,
                     )
                 )
         }
@@ -103,7 +105,7 @@ class GoneToAodTransitionViewModelTest : SysuiTestCase() {
                 rawState = WakefulnessState.STARTING_TO_SLEEP,
                 lastWakeReason = WakeSleepReason.POWER_BUTTON,
                 lastSleepReason = WakeSleepReason.FOLD,
-                powerButtonLaunchGestureTriggered = false
+                powerButtonLaunchGestureTriggered = false,
             )
 
             val pixels = -100f
@@ -131,7 +133,7 @@ class GoneToAodTransitionViewModelTest : SysuiTestCase() {
                 rawState = WakefulnessState.STARTING_TO_SLEEP,
                 lastWakeReason = WakeSleepReason.POWER_BUTTON,
                 lastSleepReason = WakeSleepReason.FOLD,
-                powerButtonLaunchGestureTriggered = false
+                powerButtonLaunchGestureTriggered = false,
             )
 
             val pixels = -100f
@@ -147,7 +149,7 @@ class GoneToAodTransitionViewModelTest : SysuiTestCase() {
                         from = KeyguardState.GONE,
                         to = KeyguardState.AOD,
                         transitionState = TransitionState.STARTED,
-                        value = pixels
+                        value = pixels,
                     )
                 )
 
@@ -165,7 +167,7 @@ class GoneToAodTransitionViewModelTest : SysuiTestCase() {
                         from = KeyguardState.GONE,
                         to = KeyguardState.AOD,
                         transitionState = TransitionState.RUNNING,
-                        value = 0f
+                        value = 0f,
                     )
                 )
         }
@@ -288,14 +290,14 @@ class GoneToAodTransitionViewModelTest : SysuiTestCase() {
 
     private fun step(
         value: Float,
-        state: TransitionState = TransitionState.RUNNING
+        state: TransitionState = TransitionState.RUNNING,
     ): TransitionStep {
         return TransitionStep(
             from = KeyguardState.GONE,
             to = KeyguardState.AOD,
             value = value,
             transitionState = state,
-            ownerName = "GoneToAodTransitionViewModelTest"
+            ownerName = "GoneToAodTransitionViewModelTest",
         )
     }
 }
