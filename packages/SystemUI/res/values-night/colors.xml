@@ -125,7 +125,6 @@
 
     <!-- Dark theme base colors for notification shade/scrim, the alpha component is adjusted
      programmatically to match the spec -->
-    <color name="shade_panel_base">@android:color/system_accent1_800</color>
     <color name="notification_scrim_base">@android:color/system_accent1_800</color>
 
     <!-- Keyboard shortcut helper dialog -->

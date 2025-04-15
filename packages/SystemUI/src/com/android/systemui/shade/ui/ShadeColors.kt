@@ -17,7 +17,6 @@
 package com.android.systemui.shade.ui
 
 import android.content.Context
-import android.graphics.Color
 import com.android.internal.graphics.ColorUtils
 import com.android.systemui.res.R
 
@@ -25,7 +24,9 @@ object ShadeColors {
     @JvmStatic
     fun shadePanel(context: Context, blurSupported: Boolean): Int {
         return if (blurSupported) {
-            shadePanelStandard(context)
+            ColorUtils.compositeColors(
+                shadePanelStandard(context),
+                shadePanelScrimBehind(context))
         } else {
             shadePanelFallback(context)
         }
@@ -42,12 +43,17 @@ object ShadeColors {
 
     @JvmStatic
     private fun shadePanelStandard(context: Context): Int {
-        val layerAbove = ColorUtils.setAlphaComponent(
-            context.getColor(R.color.shade_panel_base),
-            (0.4f * 255).toInt()
-        )
-        val layerBelow = ColorUtils.setAlphaComponent(Color.WHITE, (0.1f * 255).toInt())
+        val layerAbove = context.resources.getColor(
+            com.android.internal.R.color.shade_panel_fg, context.theme)
+        val layerBelow = context.resources.getColor(
+            com.android.internal.R.color.shade_panel_bg, context.theme)
         return ColorUtils.compositeColors(layerAbove, layerBelow)
+    }
+
+    @JvmStatic
+    private fun shadePanelScrimBehind(context: Context): Int {
+        return context.resources.getColor(
+            com.android.internal.R.color.shade_panel_scrim, context.theme)
     }
 
     @JvmStatic

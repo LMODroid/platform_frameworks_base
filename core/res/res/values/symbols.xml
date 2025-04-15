@@ -533,6 +533,9 @@
   <java-symbol type="bool" name="config_enableUdcSysfsUsbStateUpdate"/>
   <java-symbol type="bool" name="config_enableSearchTileHideIllustrationInPrivateSpace"/>
 
+  <java-symbol type="color" name="shade_panel_fg" />
+  <java-symbol type="color" name="shade_panel_bg" />
+  <java-symbol type="color" name="shade_panel_scrim" />
   <java-symbol type="color" name="surface_effect_0" />
   <java-symbol type="color" name="surface_effect_1" />
   <java-symbol type="color" name="surface_effect_2" />
