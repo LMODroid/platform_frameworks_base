@@ -30,6 +30,7 @@ import com.android.systemui.Flags.FLAG_COMMUNAL_HUB
 import com.android.systemui.Flags.FLAG_COMMUNAL_RESPONSIVE_GRID
 import com.android.systemui.Flags.FLAG_GLANCEABLE_HUB_DIRECT_EDIT_MODE
 import com.android.systemui.Flags.FLAG_GLANCEABLE_HUB_V2
+import com.android.systemui.Flags.FLAG_NOTIFICATION_SHADE_BLUR
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.bouncer.data.repository.fakeKeyguardBouncerRepository
 import com.android.systemui.communal.data.model.CommunalSmartspaceTimer
@@ -942,6 +943,40 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             assertThat(isUiBlurred).isTrue()
 
             kosmos.fakeKeyguardBouncerRepository.setPrimaryShow(false)
+            assertThat(isUiBlurred).isFalse()
+        }
+
+    @Test
+    @EnableFlags(FLAG_NOTIFICATION_SHADE_BLUR)
+    fun uiIsBlurred_whenShadeIsExpanded() =
+        kosmos.runTest {
+            val viewModel = createViewModel()
+            val isUiBlurred by collectLastValue(viewModel.isUiBlurred)
+
+            shadeTestUtil.setShadeExpansion(1.0f)
+            assertThat(isUiBlurred).isTrue()
+
+            shadeTestUtil.setShadeExpansion(0.5f)
+            assertThat(isUiBlurred).isTrue()
+
+            shadeTestUtil.setShadeExpansion(0.0f)
+            assertThat(isUiBlurred).isFalse()
+        }
+
+    @Test
+    @EnableFlags(FLAG_NOTIFICATION_SHADE_BLUR)
+    fun uiIsBlurred_whenQsIsExpanded() =
+        kosmos.runTest {
+            val viewModel = createViewModel()
+            val isUiBlurred by collectLastValue(viewModel.isUiBlurred)
+
+            shadeTestUtil.setQsExpansion(1.0f)
+            assertThat(isUiBlurred).isTrue()
+
+            shadeTestUtil.setQsExpansion(0.5f)
+            assertThat(isUiBlurred).isTrue()
+
+            shadeTestUtil.setQsExpansion(0.0f)
             assertThat(isUiBlurred).isFalse()
         }
 

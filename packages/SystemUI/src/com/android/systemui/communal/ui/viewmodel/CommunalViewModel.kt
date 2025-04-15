@@ -222,12 +222,25 @@ constructor(
     val isEnableWorkProfileDialogShowing: Flow<Boolean> =
         _isEnableWorkProfileDialogShowing.asStateFlow()
 
-    val isUiBlurred: StateFlow<Boolean> =
+    private val isUiBlurredByBouncer =
         if (Flags.bouncerUiRevamp()) {
             keyguardInteractor.primaryBouncerShowing
         } else {
-            MutableStateFlow(false)
+            flowOf(false)
         }
+
+    private val isUiBlurredByShade =
+        if (Flags.notificationShadeBlur()) {
+            shadeInteractor.anyExpansion.map { it > 0 }
+        } else {
+            flowOf(false)
+        }
+
+    // Signal for whether the hub should be manually blurred. This turns true when the shade or
+    // bouncer is showing.
+    val isUiBlurred: StateFlow<Boolean> =
+        combine(isUiBlurredByBouncer, isUiBlurredByShade) { values -> values.any { it } }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), initialValue = false)
 
     val blurRadiusPx: Float = blurConfig.maxBlurRadiusPx
 
