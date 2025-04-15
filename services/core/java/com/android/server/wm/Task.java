@@ -4717,7 +4717,7 @@ class Task extends TaskFragment {
                         // If the moveToFront is a part of finishing transition, then make sure
                         // the z-order of tasks are up-to-date.
                         if (topActivity.mTransitionController.inFinishingTransition(topActivity)) {
-                            Transition.assignLayers(taskDisplayArea,
+                            Transition.assignLayersForStartTransaction(taskDisplayArea,
                                     taskDisplayArea.getPendingTransaction());
                         }
                     }

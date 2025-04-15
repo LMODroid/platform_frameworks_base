@@ -1251,27 +1251,68 @@ public class WindowContainerTests extends WindowTestsBase {
     }
 
     @Test
+    public void testAssignLayer() {
+        final WindowContainer container = new WindowContainer(mWm);
+        container.mSurfaceControl = mock(SurfaceControl.class);
+
+        // Trigger layer call with a pending transaction, verify layer set
+        container.assignLayer(mTransaction, 1 /* layer */);
+        verify(mTransaction).setLayer(container.mSurfaceControl, 1 /* layer */);
+
+        // Trigger layer call with a pending transaction, verify layer not set
+        clearInvocations(mTransaction);
+        container.assignLayer(mTransaction, 1 /* layer */);
+        verify(mTransaction, never()).setLayer(container.mSurfaceControl, 1 /* layer */);
+
+        // Trigger layer call while building a (non-finish) transition transaction, verify layer
+        // not set
+        container.mTransitionController.mBuildingTransitionLayers = true;
+        clearInvocations(mTransaction);
+        container.assignLayer(mTransaction, 1 /* layer */);
+        verify(mTransaction, never()).setLayer(container.mSurfaceControl, 1 /* layer */);
+        container.mTransitionController.mBuildingTransitionLayers = false;
+
+        // Trigger layer call while building a finish transition transaction, verify layer set
+        container.mTransitionController.mBuildingTransitionLayers = true;
+        container.mTransitionController.mBuildingFinishLayers = true;
+        clearInvocations(mTransaction);
+        container.assignLayer(mTransaction, 1 /* layer */);
+        verify(mTransaction).setLayer(container.mSurfaceControl, 1 /* layer */);
+        container.mTransitionController.mBuildingTransitionLayers = false;
+        container.mTransitionController.mBuildingFinishLayers = false;
+
+        // Trigger another layer call while building a finish transition transaction, verify layer
+        // set
+        container.mTransitionController.mBuildingTransitionLayers = true;
+        container.mTransitionController.mBuildingFinishLayers = true;
+        clearInvocations(mTransaction);
+        container.assignLayer(mTransaction, 1 /* layer */);
+        verify(mTransaction).setLayer(container.mSurfaceControl, 1 /* layer */);
+        container.mTransitionController.mBuildingTransitionLayers = false;
+        container.mTransitionController.mBuildingFinishLayers = false;
+    }
+
+    @Test
     public void testAssignRelativeLayer() {
         final WindowContainer container = new WindowContainer(mWm);
         container.mSurfaceControl = mock(SurfaceControl.class);
+        spyOn(container);
+        doReturn(mTransaction).when(container).getPendingTransaction();
+        doReturn(mTransaction).when(container).getSyncTransaction();
         final SurfaceAnimator surfaceAnimator = container.mSurfaceAnimator;
         final SurfaceControl relativeParent = mock(SurfaceControl.class);
-        final SurfaceControl.Transaction t = mock(SurfaceControl.Transaction.class);
-        spyOn(container);
+        final SurfaceControl.Transaction otherTx = mock(SurfaceControl.Transaction.class);
         spyOn(surfaceAnimator);
 
         // Trigger for first relative layer call.
-        container.assignRelativeLayer(t, relativeParent, 1 /* layer */);
-        verify(surfaceAnimator).setRelativeLayer(t, relativeParent, 1 /* layer */);
+        container.assignRelativeLayer(mTransaction, relativeParent, 1 /* layer */);
+        verify(surfaceAnimator).setRelativeLayer(mTransaction, relativeParent, 1 /* layer */);
 
         // Not trigger for the same relative layer call.
         clearInvocations(surfaceAnimator);
-        container.assignRelativeLayer(t, relativeParent, 1 /* layer */);
-        verify(surfaceAnimator, never()).setRelativeLayer(t, relativeParent, 1 /* layer */);
-
-        // Trigger for the same relative layer call if forceUpdate=true
-        container.assignRelativeLayer(t, relativeParent, 1 /* layer */, true /* forceUpdate */);
-        verify(surfaceAnimator).setRelativeLayer(t, relativeParent, 1 /* layer */);
+        container.assignRelativeLayer(mTransaction, relativeParent, 1 /* layer */);
+        verify(surfaceAnimator, never()).setRelativeLayer(mTransaction, relativeParent,
+                1 /* layer */);
     }
 
     @Test
