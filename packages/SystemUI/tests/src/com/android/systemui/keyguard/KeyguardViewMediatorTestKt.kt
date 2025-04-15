@@ -49,6 +49,7 @@ import com.android.systemui.concurrency.fakeExecutor
 import com.android.systemui.dreams.DreamOverlayStateController
 import com.android.systemui.dreams.ui.viewmodel.dreamViewModel
 import com.android.systemui.dump.dumpManager
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.flags.featureFlagsClassic
 import com.android.systemui.flags.systemPropertiesHelper
 import com.android.systemui.jank.interactionJankMonitor
@@ -99,6 +100,7 @@ import org.mockito.kotlin.verify
 @SmallTest
 @RunWithLooper(setAsMainLooper = true)
 @RunWith(AndroidTestingRunner::class)
+@DisableSceneContainer // Class is deprecated in flexi.
 class KeyguardViewMediatorTestKt : SysuiTestCase() {
     private val kosmos =
         testKosmos().useUnconfinedTestDispatcher().also {

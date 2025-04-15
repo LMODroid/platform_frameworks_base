@@ -20,6 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectValues
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.keyguard.data.repository.FakeKeyguardTransitionRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardTransitionRepository
 import com.android.systemui.keyguard.data.repository.inWindowLauncherUnlockAnimationRepository
@@ -46,7 +47,7 @@ import org.mockito.MockitoAnnotations
 @RunWith(AndroidJUnit4::class)
 class InWindowLauncherUnlockAnimationInteractorTest : SysuiTestCase() {
     private val kosmos = testKosmos()
-    private val underTest =
+    private val underTest by lazy {
         InWindowLauncherUnlockAnimationInteractor(
             kosmos.inWindowLauncherUnlockAnimationRepository,
             kosmos.applicationCoroutineScope,
@@ -54,6 +55,7 @@ class InWindowLauncherUnlockAnimationInteractorTest : SysuiTestCase() {
             { kosmos.keyguardSurfaceBehindRepository },
             kosmos.activityManagerWrapper,
         )
+    }
     private val testScope = kosmos.testScope
     private lateinit var transitionRepository: FakeKeyguardTransitionRepository
     @Mock private lateinit var activityManagerWrapper: ActivityManagerWrapper
@@ -71,6 +73,7 @@ class InWindowLauncherUnlockAnimationInteractorTest : SysuiTestCase() {
     }
 
     @Test
+    @DisableSceneContainer
     fun testTransitioningToGoneWithInWindowAnimation_trueIfTopActivityIsLauncher_andTransitioningToGone() =
         testScope.runTest {
             val values by collectValues(underTest.transitioningToGoneWithInWindowAnimation)
@@ -275,6 +278,7 @@ class InWindowLauncherUnlockAnimationInteractorTest : SysuiTestCase() {
         }
 
     @Test
+    @DisableSceneContainer
     fun testShouldStartInWindowAnimation_trueOnceSurfaceAvailable_falseWhenTransitionEnds() =
         testScope.runTest {
             val values by collectValues(underTest.shouldStartInWindowAnimation)

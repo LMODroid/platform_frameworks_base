@@ -22,6 +22,7 @@ import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.defaultDeviceState
 import com.android.systemui.deviceStateManager
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.shared.system.smartspace.ILauncherUnlockAnimationController
 import com.android.systemui.statusbar.NotificationShadeWindowController
@@ -54,6 +55,7 @@ import org.mockito.kotlin.whenever
 @RunWith(AndroidJUnit4::class)
 @RunWithLooper
 @SmallTest
+@DisableSceneContainer // Class is unused in flexi.
 class KeyguardUnlockAnimationControllerTest : SysuiTestCase() {
     private lateinit var keyguardUnlockAnimationController: KeyguardUnlockAnimationController
 
