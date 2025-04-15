@@ -154,7 +154,7 @@ import javax.inject.Provider;
 @SysUISingleton
 public class NotificationStackScrollLayoutController implements Dumpable {
     private static final String TAG = "StackScrollerController";
-    private static final boolean DEBUG = Compile.IS_DEBUG && Log.isLoggable(TAG, Log.DEBUG);
+    private static final boolean DEBUG = Compile.IS_DEBUG || Log.isLoggable(TAG, Log.DEBUG);
     private static final String HIGH_PRIORITY = "high_priority";
     /** Delay in milli-seconds before shade closes for clear all. */
     private static final int DELAY_BEFORE_SHADE_CLOSE = 200;

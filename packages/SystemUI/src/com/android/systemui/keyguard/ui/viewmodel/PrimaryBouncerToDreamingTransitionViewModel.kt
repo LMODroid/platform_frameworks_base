@@ -16,6 +16,7 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
+import com.android.systemui.Flags
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.keyguard.domain.interactor.FromPrimaryBouncerTransitionInteractor
 import com.android.systemui.keyguard.shared.model.Edge
@@ -27,7 +28,6 @@ import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition
 import com.android.systemui.scene.shared.model.Overlays
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 
 @SysUISingleton
 class PrimaryBouncerToDreamingTransitionViewModel
@@ -43,17 +43,27 @@ constructor(blurConfig: BlurConfig, animationFlow: KeyguardTransitionAnimationFl
             .setupWithoutSceneContainer(edge = Edge.create(from = PRIMARY_BOUNCER, to = DREAMING))
 
     override val windowBlurRadius: Flow<Float> =
-        transitionAnimation.sharedFlow(
-            onStart = { blurConfig.maxBlurRadiusPx },
-            onStep = {
-                transitionProgressToBlurRadius(
-                    blurConfig.maxBlurRadiusPx,
-                    endBlurRadius = blurConfig.minBlurRadiusPx,
-                    transitionProgress = it,
-                )
+        transitionAnimation.sharedFlowWithShade(
+            onStep = { progress, isShadeExpanded ->
+                if (isShadeExpanded && Flags.notificationShadeBlur()) {
+                    blurConfig.maxBlurRadiusPx
+                } else {
+                    transitionProgressToBlurRadius(
+                        blurConfig.maxBlurRadiusPx,
+                        endBlurRadius = blurConfig.minBlurRadiusPx,
+                        transitionProgress = progress,
+                    )
+                }
             },
-            onFinish = { blurConfig.minBlurRadiusPx },
+            onFinish = { isShadeExpanded ->
+                if (isShadeExpanded && Flags.notificationShadeBlur()) {
+                    blurConfig.maxBlurRadiusPx
+                } else {
+                    blurConfig.minBlurRadiusPx
+                }
+            },
         )
 
-    override val notificationBlurRadius: Flow<Float> = emptyFlow()
+    override val notificationBlurRadius: Flow<Float> =
+        transitionAnimation.immediatelyTransitionTo(blurConfig.minBlurRadiusPx)
 }

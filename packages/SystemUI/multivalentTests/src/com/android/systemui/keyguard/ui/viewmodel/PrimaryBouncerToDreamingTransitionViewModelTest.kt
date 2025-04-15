@@ -16,8 +16,10 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
+import android.platform.test.annotations.EnableFlags
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectValues
 import com.android.systemui.keyguard.data.repository.FakeKeyguardTransitionRepository
@@ -52,6 +54,7 @@ class PrimaryBouncerToDreamingTransitionViewModelTest : SysuiTestCase() {
     fun blurRadiusGoesToMinImmediately() =
         testScope.runTest {
             val values by collectValues(underTest.windowBlurRadius)
+            kosmos.keyguardWindowBlurTestUtil.shadeExpanded(false)
 
             kosmos.keyguardWindowBlurTestUtil.assertTransitionToBlurRadius(
                 transitionProgress = listOf(0.0f, 0.2f, 0.3f, 0.65f, 0.7f, 1.0f),
@@ -59,6 +62,38 @@ class PrimaryBouncerToDreamingTransitionViewModelTest : SysuiTestCase() {
                 endValue = kosmos.blurConfig.minBlurRadiusPx,
                 actualValuesProvider = { values },
                 transitionFactory = ::step,
+            )
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_NOTIFICATION_SHADE_BLUR)
+    fun blurRadiusRemainsAtMaxIfShadeIsExpandedAndShadeBlurIsEnabled() =
+        testScope.runTest {
+            val values by collectValues(underTest.windowBlurRadius)
+            kosmos.keyguardWindowBlurTestUtil.shadeExpanded(true)
+
+            kosmos.keyguardWindowBlurTestUtil.assertTransitionToBlurRadius(
+                transitionProgress = listOf(0.0f, 0.2f, 0.3f, 0.65f, 0.7f, 1.0f),
+                startValue = kosmos.blurConfig.maxBlurRadiusPx,
+                endValue = kosmos.blurConfig.maxBlurRadiusPx,
+                actualValuesProvider = { values },
+                transitionFactory = ::step,
+                checkInterpolatedValues = false,
+            )
+        }
+
+    @Test
+    fun notificationBlurDropsToMinWhenGoingBackFromPrimaryBouncerToDreaming() =
+        testScope.runTest {
+            val values by collectValues(underTest.notificationBlurRadius)
+
+            kosmos.keyguardWindowBlurTestUtil.assertTransitionToBlurRadius(
+                transitionProgress = listOf(0.0f, 0.2f, 0.3f, 0.65f, 0.7f, 1.0f),
+                startValue = kosmos.blurConfig.minBlurRadiusPx,
+                endValue = kosmos.blurConfig.minBlurRadiusPx,
+                actualValuesProvider = { values },
+                transitionFactory = ::step,
+                checkInterpolatedValues = false,
             )
         }
 
