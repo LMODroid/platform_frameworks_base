@@ -45,19 +45,19 @@
     <string name="title_install_failed_less_storage">Not enough storage</string>
     <string name="title_install_failed_not_installed">App not installed</string>
 
-    <!-- TODO: These strings are placeholders, until UX finalizes strings for Uninstall flow. -->
     <string name="title_uninstall">Uninstall this app?</string>
-    <string name="title_uninstall_clone">Uninstall this app clone?</string>
-    <string name="title_uninstall_updates_system_app">Uninstall updates?</string>
+    <string name="title_uninstall_clone">Delete this app clone?</string>
+    <string name="title_uninstall_updates_system_app">Uninstall app updates?</string>
+    <string name="title_uninstall_updates_system_app_all_users">Uninstall app updates for all users?</string>
     <string name="title_uninstall_all_users">Uninstall this app for all users?</string>
-    <string name="title_uninstall_other_user">Uninstall this app for another user?</string>
+    <string name="title_uninstall_other_user">Uninstall this app for user \'<xliff:g id="user_name">%1$s</xliff:g>\'?</string>
     <string name="title_uninstall_app_not_found">App not found</string>
     <string name="title_uninstall_user_not_allowed">Can\'t uninstall this app</string>
     <string name="title_uninstall_failed">App not uninstalled</string>
 
     <string name="title_archive">Archive this app?</string>
-    <string name="title_archive_other_user">Archive this app for another user?</string>
-    <!-- End of placeholder strings -->
+    <string name="title_archive_all_users">Archive this app for all users?</string>
+    <string name="title_archive_other_user">Archive this app for user \'<xliff:g id="user_name">%1$s</xliff:g>\'?</string>
     <!-- Dialog Titles end -->
 
     <!-- Dialog Messages -->
@@ -69,33 +69,32 @@
     <string name="message_install_failed_conflict">This app conflicts with an app already on your device</string>
     <string name="message_install_failed_incompatible">This app is not compatible with your device</string>
     <string name="message_install_failed_invalid">There\'s a problem with this app\'s installation file</string>
-    <string name="message_install_failed_less_storage">To install this app, free up &lt;b><xliff:g id="required_space" example="100MB">%1$s</xliff:g>&lt;/b>, then try again</string>
+    <string name="message_install_failed_less_storage">To install this app, free up some space and try again</string>
 
     <string name="message_parse_failed">There is a problem with the app file</string>
 
     <string name="message_no_install_apps_restriction">Installing apps has been restricted</string>
     <string name="message_no_install_unknown_apps_restriction">Installing unknown apps has been restricted</string>
 
-    <!-- TODO: These strings are placeholders, until UX finalizes strings for Uninstall flow. -->
-    <string name="message_uninstall_keep_data">Keep <xliff:g id="size" example="1.5MB">%1$s</xliff:g> of app data.</string>
-    <string name="message_uninstall_with_clone_instance">A clone of this app exists and will also be deleted</string>
+    <string name="message_uninstall_with_clone_instance">A clone of this app also exists and will be deleted</string>
     <string name="message_delete_clone_app">This app is a clone of <xliff:g id="app_label" example="Example App">%1$s</xliff:g></string>
-    <string name="message_uninstall_activity"><xliff:g id="activity_name">%1$s</xliff:g> is part of the following app: <xliff:g id="app_name">%2$s</xliff:g></string>
-    <string name="message_uninstall_updates_system_app">This app will be replaced with the factory version and all app data will be removed</string>
-    <string name="message_uninstall_updates_system_app_all_users">This app will be replaced with the factory version and all app data will be removed. This will affect all users on the device, including those with work profiles.</string>
-    <string name="message_uninstall_all_users">This app and its data will be removed for all users on this device</string>
-    <string name="message_uninstall_other_user">This app will be uninstalled for user named \'<xliff:g id="user_name">%1$s</xliff:g>\'</string>
+    <string name="message_uninstall_updates_system_app">This app will be replaced with the factory version. All app data will be removed.</string>
+    <string name="message_uninstall_updates_system_app_all_users">This app will be replaced with the factory version for all users on the device. All app data will be removed.</string>
     <string name="message_uninstall_work_profile">This app will be uninstalled from your work profile</string>
     <string name="message_uninstall_private_space">This app will be uninstalled from your private space</string>
     <string name="message_uninstall_app_not_found">This app wasn\'t found in the list of installed apps, or has been already uninstalled</string>
     <string name="message_uninstall_user_not_allowed">The current user is not allowed to perform this uninstallation</string>
     <string name="message_uninstall_failed">This app could not be uninstalled</string>
+    <string name="message_uninstall_keep_data">Keep app data</string>
 
     <string name="message_archive">Your app data will be saved</string>
-    <string name="message_archive_all_users">This app will be archived for all users. App data will be saved</string>
-    <string name="message_archive_other_user">This app will be archived for user named \'<xliff:g id="user_name">%1$s</xliff:g>\'. App data will be saved</string>
-    <string name="message_archive_work_profile">This app will be archived from your work profile. App data will be saved</string>
-    <string name="message_archive_private_space">This app will be archived from your private space. App data will be saved</string>
+    <string name="message_archive_all_users">All app data will be saved</string>
+    <string name="message_archive_other_user">App data will be saved</string>
+    <string name="message_archive_work_profile">This app will be archived from your work profile. Your app data will be saved.</string>
+    <string name="message_archive_private_space">This app will be archived from your private space. Your app data will be saved.</string>
+
+    <!-- TODO: These strings are placeholders, until UX finalizes strings for Uninstall flow. -->
+    <string name="message_uninstall_activity"><xliff:g id="activity_name">%1$s</xliff:g> is part of the following app: <xliff:g id="app_name">%2$s</xliff:g></string>
     <!-- End of placeholder strings -->
     <!-- Dialog Messages end -->
 
@@ -109,6 +108,7 @@
     <string name="button_continue">Continue</string>
     <string name="button_close">Close</string>
     <string name="button_uninstall">Uninstall</string>
+    <string name="button_delete">Delete</string>
     <string name="button_reinstall">Reinstall</string>
     <string name="button_manage_apps">Manage apps</string>
     <string name="button_archive">Archive</string>

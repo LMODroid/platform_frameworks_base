@@ -106,10 +106,13 @@ public class UninstallConfirmationFragment extends DialogFragment {
 
         long appDataSize = mDialogData.getAppDataSize();
         if (appDataSize != 0) {
-            mKeepData = dialogView.requireViewById(R.id.keep_data);
-            mKeepData.setVisibility(View.VISIBLE);
-            mKeepData.setText(getString(R.string.message_uninstall_keep_data,
-                formatFileSize(getContext(), appDataSize)));
+            View keepDataLayout = dialogView.requireViewById(R.id.keep_data_layout);
+            keepDataLayout.setVisibility(View.VISIBLE);
+
+            TextView keepDataBytes = keepDataLayout.requireViewById(R.id.keep_data_bytes);
+            keepDataBytes.setText(formatFileSize(getContext(), appDataSize));
+
+            mKeepData = keepDataLayout.requireViewById(R.id.keep_data_checkbox);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())

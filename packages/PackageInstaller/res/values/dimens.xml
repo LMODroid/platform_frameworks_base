@@ -62,4 +62,6 @@
     <dimen name="dialog_inter_element_margin">16dp</dimen>
     <dimen name="alert_dialog_inner_padding">24dp</dimen>
     <dimen name="button_min_height">40dp</dimen>
+    <dimen name="checkbox_margin">4dp</dimen>
+    <dimen name="dialog_inter_element_vertical_margin">12dp</dimen>
 </resources>

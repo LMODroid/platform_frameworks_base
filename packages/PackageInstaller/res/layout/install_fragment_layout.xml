@@ -38,11 +38,6 @@
         android:layout_width="match_parent"
         android:visibility="gone" />
 
-    <CheckBox
-        style="@style/Widget.PackageInstaller.TextView.CustomMessage"
-        android:id="@+id/keep_data"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:visibility="gone" />
+    <include layout="@layout/keep_data_option_layout" />
 
 </LinearLayout>

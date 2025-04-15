@@ -30,7 +30,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInstaller;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -140,10 +139,7 @@ public class InstallFailedFragment extends DialogFragment {
                 builder.setTitle(R.string.title_cant_install_app);
             }
             case PackageInstaller.STATUS_FAILURE_STORAGE -> {
-                customMessage.setText(
-                        Html.fromHtml(
-                            getString(R.string.message_install_failed_less_storage, 0),
-                            Html.FROM_HTML_MODE_LEGACY));
+                customMessage.setText(R.string.message_install_failed_less_storage);
                 builder.setTitle(R.string.title_install_failed_less_storage)
                         .setPositiveButton(R.string.button_manage_apps, (dialog, which) ->
                             mInstallActionListener.sendManageAppsIntent());
