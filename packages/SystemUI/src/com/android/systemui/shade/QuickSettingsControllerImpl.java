@@ -39,6 +39,7 @@ import android.graphics.Insets;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.MathUtils;
@@ -104,6 +105,7 @@ import com.android.systemui.statusbar.phone.ShadeTouchableRegionManager;
 import com.android.systemui.statusbar.policy.CastController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.SplitShadeStateController;
+import com.android.systemui.user.domain.interactor.SelectedUserInteractor;
 import com.android.systemui.util.LargeScreenUtils;
 import com.android.systemui.util.kotlin.JavaAdapter;
 
@@ -349,7 +351,8 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
             CastController castController,
             SplitShadeStateController splitShadeStateController,
             Lazy<CommunalTransitionViewModel> communalTransitionViewModelLazy,
-            Lazy<LargeScreenHeaderHelper> largeScreenHeaderHelperLazy
+            Lazy<LargeScreenHeaderHelper> largeScreenHeaderHelperLazy,
+            SelectedUserInteractor selectedUserInteractor
     ) {
         SceneContainerFlag.assertInLegacyMode();
         mPanelViewControllerLazy = panelViewControllerLazy;
@@ -403,9 +406,10 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
         mOneFingerQuickSettingsInterceptObserver = new ContentObserver(null) {
             @Override
             public void onChange(boolean selfChange) {
-                mOneFingerQuickSettingsIntercept = Settings.System.getInt(
+                mOneFingerQuickSettingsIntercept = Settings.System.getIntForUser(
                         mPanelView.getContext().getContentResolver(),
-                        LMOSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 0);
+                        LMOSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 0,
+                        selectedUserInteractor.getSelectedUserId());
             }
         };
 
@@ -2287,7 +2291,8 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
             mPanelView.getContext().getContentResolver().registerContentObserver(
                     Settings.System.getUriFor(
                             LMOSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN),
-                    false, mOneFingerQuickSettingsInterceptObserver);
+                    false, mOneFingerQuickSettingsInterceptObserver,
+                    UserHandle.USER_ALL);
             mOneFingerQuickSettingsInterceptObserver.onChange(true);
             updateExpansion();
         }
