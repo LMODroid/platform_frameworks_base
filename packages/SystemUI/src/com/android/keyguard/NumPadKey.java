@@ -41,9 +41,6 @@ import com.android.settingslib.Utils;
 import com.android.systemui.bouncer.ui.helper.BouncerHapticPlayer;
 import com.android.systemui.res.R;
 
-import android.provider.Settings;
-import com.libremobileos.providers.LMOSettings;
-
 /**
  * Viewgroup for the bouncer numpad button, specifically for digits.
  */
@@ -141,8 +138,6 @@ public class NumPadKey extends ViewGroup implements NumPadAnimationListener {
     }
 
     private void updateText() {
-        boolean scramblePin = (Settings.System.getInt(getContext().getContentResolver(),
-                LMOSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0) == 1);
         if (mDigit >= 0) {
             mDigitText.setText(Integer.toString(mDigit));
             if (sKlondike == null) {
@@ -151,7 +146,7 @@ public class NumPadKey extends ViewGroup implements NumPadAnimationListener {
             if (sKlondike != null && sKlondike.length > mDigit) {
                 String klondike = sKlondike[mDigit];
                 final int len = klondike.length();
-                if (len > 0 || scramblePin) {
+                if (len > 0) {
                     mKlondikeText.setText(klondike);
                 } else if (mKlondikeText.getVisibility() != View.GONE) {
                     mKlondikeText.setVisibility(View.INVISIBLE);

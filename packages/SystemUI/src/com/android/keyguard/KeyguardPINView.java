@@ -44,9 +44,6 @@ import com.android.settingslib.animation.DisappearAnimationUtils;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.policy.DevicePostureController.DevicePostureInt;
 
-import android.provider.Settings;
-import com.libremobileos.providers.LMOSettings;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -279,12 +276,9 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
                 new View[]{
                         null, mEcaView, null
                 }};
-        updatePinScrambling();
     }
 
-    private void updatePinScrambling() {
-        final boolean scramblePin = Settings.System.getInt(getContext().getContentResolver(),
-                LMOSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0) == 1;
+    protected void updatePinScrambling(boolean scramblePin) {
         if (scramblePin || scramblePin != mScramblePin) {
             mScramblePin = scramblePin;
             if (scramblePin) {
@@ -321,7 +315,6 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
 
     @Override
     public void startAppearAnimation() {
-        updatePinScrambling();
         setAlpha(1f);
         setTranslationY(0);
         if (mAppearAnimator.isRunning()) {
