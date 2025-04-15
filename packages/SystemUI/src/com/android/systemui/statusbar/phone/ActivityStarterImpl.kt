@@ -26,6 +26,7 @@ import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.plugins.ActivityStarter.OnDismissAction
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.statusbar.SysuiStatusBarStateController
+import com.android.systemui.statusbar.policy.KeyguardStateController
 import com.android.systemui.util.concurrency.DelayableExecutor
 import dagger.Lazy
 import javax.inject.Inject
@@ -36,6 +37,7 @@ class ActivityStarterImpl
 @Inject
 constructor(
     private val statusBarStateController: SysuiStatusBarStateController,
+    private val keyguardStateController: KeyguardStateController,
     @Main private val mainExecutor: DelayableExecutor,
     activityStarterInternal: Lazy<ActivityStarterInternalImpl>,
     legacyActivityStarter: Lazy<LegacyActivityStarterInternalImpl>
@@ -378,10 +380,11 @@ constructor(
     }
 
     override fun postQSRunnableDismissingKeyguard(runnable: Runnable?) {
+        val delay = if (keyguardStateController.isShowing()) 500 else 0
         postOnUiThread {
             statusBarStateController.setLeaveOpenOnKeyguardHide(true)
             activityStarterInternal.executeRunnableDismissingKeyguard(
-                runnable = { runnable?.let { postOnUiThread(delay = 500, runnable = it) } },
+                runnable = { runnable?.let { postOnUiThread(delay = delay, runnable = it) } },
             )
         }
     }
