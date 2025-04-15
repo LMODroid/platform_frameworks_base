@@ -17,10 +17,6 @@
 package com.android.packageinstaller.v2.ui.fragments;
 
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
-import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_INSTALL_TYPE;
-import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_NEW;
-import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_REINSTALL;
-import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_UPDATE;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -62,7 +58,6 @@ public class InstallInstallingFragment extends DialogFragment {
     public static InstallInstallingFragment newInstance(@NonNull InstallInstalling dialogData) {
         Bundle args = new Bundle();
         args.putParcelable(ARGS_APP_SNIPPET, dialogData.getAppSnippet());
-        args.putInt(ARGS_INSTALL_TYPE, dialogData.getInstallType());
 
         InstallInstallingFragment fragment = new InstallInstallingFragment();
         fragment.setArguments(args);
@@ -83,15 +78,8 @@ public class InstallInstallingFragment extends DialogFragment {
             .setImageDrawable(mDialogData.getAppIcon());
         ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
 
-        int titleRes = 0;
-        switch (mDialogData.getInstallType()) {
-            case INSTALL_TYPE_NEW -> titleRes = R.string.title_installing;
-            case INSTALL_TYPE_UPDATE -> titleRes = R.string.title_updating;
-            case INSTALL_TYPE_REINSTALL -> titleRes = R.string.title_reinstalling;
-        }
-
         mDialog = new AlertDialog.Builder(requireContext())
-            .setTitle(titleRes)
+            .setTitle(R.string.title_installing)
             .setView(dialogView)
             .create();
 
@@ -108,7 +96,6 @@ public class InstallInstallingFragment extends DialogFragment {
 
     private void setDialogData(Bundle args) {
         AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET, AppSnippet.class);
-        int installType = args.getInt(ARGS_INSTALL_TYPE);
-        mDialogData = new InstallInstalling(appSnippet, installType);
+        mDialogData = new InstallInstalling(appSnippet);
     }
 }

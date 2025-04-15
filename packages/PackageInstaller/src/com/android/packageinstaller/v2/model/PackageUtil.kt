@@ -38,15 +38,11 @@ import android.os.Process
 import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
-
-import androidx.annotation.IntDef
-
 import com.android.packageinstaller.v2.model.PackageUtil.getAppSnippet
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
-
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 
@@ -68,9 +64,11 @@ object PackageUtil {
     const val ARGS_EXISTING_OWNER: String = "existing_owner"
     const val ARGS_INSTALLER_LABEL: String = "installer_label"
     const val ARGS_INSTALLER_PACKAGE: String = "installer_pkg"
+    const val ARGS_IS_ARCHIVE: String = "is_archive"
+    const val ARGS_IS_CLONE_USER: String = "clone_user"
+    const val ARGS_IS_UPDATING: String = "is_updating"
     const val ARGS_LEGACY_CODE: String = "legacy_code"
     const val ARGS_MESSAGE: String = "message"
-    const val ARGS_INSTALL_TYPE: String = "new_app_state"
     const val ARGS_NEW_OWNER: String = "new_owner"
     const val ARGS_PENDING_INTENT: String = "pending_intent"
     const val ARGS_REQUIRED_BYTES: String = "required_bytes"
@@ -80,18 +78,6 @@ object PackageUtil {
     const val ARGS_STATUS_CODE: String = "status_code"
     const val ARGS_TITLE: String = "title"
     const val ARGS_UNARCHIVAL_STATUS: String = "unarchival_status"
-
-    @IntDef(
-        value = [
-            INSTALL_TYPE_NEW,
-            INSTALL_TYPE_UPDATE,
-            INSTALL_TYPE_REINSTALL,
-        ])
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class InstallType
-    const val INSTALL_TYPE_NEW = 0
-    const val INSTALL_TYPE_UPDATE = 1
-    const val INSTALL_TYPE_REINSTALL = 2
 
     /**
      * Determines if the UID belongs to the system downloads provider and returns the

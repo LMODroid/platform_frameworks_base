@@ -19,7 +19,6 @@ package com.android.packageinstaller.v2.ui.fragments;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_ACTION_REASON;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_SOURCE_PKG;
-import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_NEW;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -145,7 +144,7 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
         AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET, AppSnippet.class);
         String sourcePkg = args.getString(ARGS_SOURCE_PKG);
 
-        mDialogData = new InstallUserActionRequired(actionReason, appSnippet, INSTALL_TYPE_NEW,
-            null, null, sourcePkg);
+        mDialogData = new InstallUserActionRequired(actionReason, appSnippet, false, null, null,
+            sourcePkg);
     }
 }

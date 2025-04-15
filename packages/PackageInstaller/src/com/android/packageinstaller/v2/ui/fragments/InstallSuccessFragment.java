@@ -17,12 +17,8 @@
 package com.android.packageinstaller.v2.ui.fragments;
 
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
-import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_INSTALL_TYPE;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_RESULT_INTENT;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_SHOULD_RETURN_RESULT;
-import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_NEW;
-import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_REINSTALL;
-import static com.android.packageinstaller.v2.model.PackageUtil.INSTALL_TYPE_UPDATE;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -77,7 +73,6 @@ public class InstallSuccessFragment extends DialogFragment {
         args.putParcelable(ARGS_APP_SNIPPET, dialogData.getAppSnippet());
         args.putBoolean(ARGS_SHOULD_RETURN_RESULT, dialogData.getShouldReturnResult());
         args.putParcelable(ARGS_RESULT_INTENT, dialogData.getResultIntent());
-        args.putInt(ARGS_INSTALL_TYPE, dialogData.getInstallType());
 
         InstallSuccessFragment fragment = new InstallSuccessFragment();
         fragment.setArguments(args);
@@ -104,15 +99,8 @@ public class InstallSuccessFragment extends DialogFragment {
             .setImageDrawable(mDialogData.getAppIcon());
         ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
 
-        int titleRes = 0;
-        switch (mDialogData.getInstallType()) {
-            case INSTALL_TYPE_NEW -> titleRes = R.string.title_installed;
-            case INSTALL_TYPE_UPDATE -> titleRes = R.string.title_updated;
-            case INSTALL_TYPE_REINSTALL -> titleRes = R.string.title_reinstalled;
-        }
-
         mDialog = new AlertDialog.Builder(requireContext())
-            .setTitle(titleRes)
+            .setTitle(R.string.title_installed)
             .setView(dialogView)
             .setNegativeButton(R.string.button_done,
                 (dialog, which) -> mInstallActionListener.onNegativeResponse(
@@ -156,9 +144,7 @@ public class InstallSuccessFragment extends DialogFragment {
         AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET, AppSnippet.class);
         boolean shouldReturnResult = args.getBoolean(ARGS_SHOULD_RETURN_RESULT);
         Intent resultIntent = args.getParcelable(ARGS_RESULT_INTENT, Intent.class);
-        int installType = args.getInt(ARGS_INSTALL_TYPE);
 
-
-        mDialogData = new InstallSuccess(appSnippet, shouldReturnResult, resultIntent, installType);
+        mDialogData = new InstallSuccess(appSnippet, shouldReturnResult, resultIntent);
     }
 }
