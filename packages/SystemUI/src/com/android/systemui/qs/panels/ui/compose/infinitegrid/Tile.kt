@@ -197,7 +197,14 @@ fun Tile(
                         hapticsViewModel?.setTileInteractionState(
                             TileHapticsViewModel.TileInteractionState.LONG_CLICKED
                         )
-                        tile.onLongClick(expandable)
+
+                        // User main click on long press for small dual target tiles
+                        if (iconOnly && isDualTarget) {
+                            tile.mainClick(expandable)
+                        } else {
+                            // Settings click otherwise
+                            tile.settingsClick(expandable)
+                        }
                     }
                     .takeIf { uiState.handlesLongClick }
 
@@ -213,9 +220,9 @@ fun Tile(
                         // For those tile's who doesn't have a detailed view, process with
                         // their `onClick` behavior.
                         if (iconOnly && isDualTarget) {
-                            tile.onSecondaryClick()
+                            tile.toggleClick()
                         } else {
-                            tile.onClick(expandable)
+                            tile.mainClick(expandable)
                         }
 
                         // Side effects of the click
@@ -252,7 +259,7 @@ fun Tile(
                                 hapticsViewModel?.setTileInteractionState(
                                     TileHapticsViewModel.TileInteractionState.CLICKED
                                 )
-                                tile.onSecondaryClick()
+                                tile.toggleClick()
                             }
                             .takeIf { isDualTarget }
                     LargeTileContent(
