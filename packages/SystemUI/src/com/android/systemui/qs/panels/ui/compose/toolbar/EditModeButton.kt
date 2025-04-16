@@ -29,7 +29,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.android.systemui.Flags
 import com.android.systemui.lifecycle.rememberViewModel
+import com.android.systemui.qs.panels.ui.compose.icons.Edit
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.EditModeButtonViewModel
 import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
@@ -56,7 +58,7 @@ fun EditModeButton(
                 ),
         ) {
             Icon(
-                imageVector = Icons.Default.Edit,
+                imageVector = if (Flags.iconRefresh2025()) Edit else Icons.Default.Edit,
                 contentDescription = stringResource(id = R.string.accessibility_quick_settings_edit),
             )
         }

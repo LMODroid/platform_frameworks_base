@@ -96,7 +96,7 @@ public class QSSecurityFooterTest extends SysuiTestCase {
     private static final String PARENTAL_CONTROLS_LABEL = "Parental Control App";
     private static final ComponentName DEVICE_OWNER_COMPONENT =
             new ComponentName("TestDPC", "Test");
-    private static final int DEFAULT_ICON_ID = R.drawable.ic_info_outline;
+    private static final int DEFAULT_ICON_ID = R.drawable.ic_qs_footer_info;
 
     private QSSecurityFooterUtils mFooterUtils;
     @Mock

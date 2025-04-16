@@ -53,7 +53,7 @@ sealed interface FooterActionsButtonViewModel {
         override val id: Int = R.id.settings_button_container
         override val icon: Icon =
             Icon.Resource(
-                R.drawable.ic_settings,
+                R.drawable.ic_qs_footer_settings,
                 ContentDescription.Resource(R.string.accessibility_quick_settings_settings),
             )
     }
@@ -67,7 +67,7 @@ sealed interface FooterActionsButtonViewModel {
         override val id: Int = R.id.pm_lite
         override val icon: Icon =
             Icon.Resource(
-                android.R.drawable.ic_lock_power_off,
+                R.drawable.ic_qs_footer_power,
                 ContentDescription.Resource(R.string.accessibility_quick_settings_power_menu),
             )
     }

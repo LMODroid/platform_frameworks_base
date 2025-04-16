@@ -290,7 +290,7 @@ private fun RowScope.ForegroundServicesButton(
     val model = model() ?: return
     if (model.displayText) {
         TextButton(
-            Icon.Resource(R.drawable.ic_info_outline, contentDescription = null),
+            Icon.Resource(R.drawable.ic_qs_footer_info, contentDescription = null),
             model.text,
             showNewDot = model.hasNewChanges,
             onClick = model.onClick,

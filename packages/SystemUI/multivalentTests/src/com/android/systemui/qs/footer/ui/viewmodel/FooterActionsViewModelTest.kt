@@ -107,7 +107,7 @@ class FooterActionsViewModelTest : SysuiTestCase() {
         assertThat(settings.icon)
             .isEqualTo(
                 Icon.Resource(
-                    R.drawable.ic_settings,
+                    R.drawable.ic_qs_footer_settings,
                     ContentDescription.Resource(R.string.accessibility_quick_settings_settings),
                 )
             )
@@ -132,7 +132,7 @@ class FooterActionsViewModelTest : SysuiTestCase() {
         assertThat(checkNotNull(power).icon)
             .isEqualTo(
                 Icon.Resource(
-                    android.R.drawable.ic_lock_power_off,
+                    R.drawable.ic_qs_footer_power,
                     ContentDescription.Resource(R.string.accessibility_quick_settings_power_menu),
                 )
             )

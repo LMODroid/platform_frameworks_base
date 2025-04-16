@@ -259,7 +259,7 @@ public class QSSecurityFooterUtils implements DialogInterface.OnClickListener {
                 icon = new Icon.Resource(R.drawable.stat_sys_vpn_ic, contentDescription);
             }
         } else {
-            icon = new Icon.Resource(R.drawable.ic_info_outline, contentDescription);
+            icon = new Icon.Resource(R.drawable.ic_qs_footer_info, contentDescription);
         }
 
         return new SecurityButtonConfig(icon, text, isClickable);
