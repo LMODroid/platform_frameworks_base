@@ -27,6 +27,7 @@ import com.android.systemui.volume.dialog.dagger.scope.VolumeDialog
 import com.android.systemui.volume.dialog.domain.interactor.VolumeDialogVisibilityInteractor
 import com.android.systemui.volume.dialog.shared.VolumeDialogLogger
 import com.android.systemui.volume.dialog.shared.model.VolumeDialogStreamModel
+import com.android.systemui.volume.dialog.shared.model.streamLabel
 import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderScope
 import com.android.systemui.volume.dialog.sliders.domain.interactor.VolumeDialogSliderInputEventsInteractor
 import com.android.systemui.volume.dialog.sliders.domain.interactor.VolumeDialogSliderInteractor
@@ -76,20 +77,7 @@ constructor(
 ) {
 
     private val userVolumeUpdates = MutableStateFlow<VolumeUpdate?>(null)
-    private val model: Flow<VolumeDialogStreamModel> =
-        combine(interactor.slider, userVolumeUpdates) { model, currentVolumeUpdate ->
-                currentVolumeUpdate ?: return@combine model
-                val lastVolumeUpdateTime = currentVolumeUpdate.timestampMillis
-                val shouldIgnoreUpdates =
-                    getTimestampMillis() - lastVolumeUpdateTime < VOLUME_UPDATE_GRACE_PERIOD
-                if (shouldIgnoreUpdates) {
-                    model.copy(level = currentVolumeUpdate.newVolumeLevel)
-                } else {
-                    model
-                }
-            }
-            .stateIn(coroutineScope, SharingStarted.Eagerly, null)
-            .filterNotNull()
+    private val model: Flow<VolumeDialogStreamModel> = interactor.slider
 
     val state: Flow<VolumeDialogSliderStateModel> =
         combine(
@@ -117,8 +105,24 @@ constructor(
                         }
                     }
                 },
-            ) { isDisabledByZenMode, model, icon ->
-                model.toStateModel(context = context, icon = icon, isDisabled = isDisabledByZenMode)
+                userVolumeUpdates,
+            ) { isDisabledByZenMode, model, icon, currentVolumeUpdate ->
+                val shouldIgnoreUpdates =
+                    currentVolumeUpdate != null &&
+                        getTimestampMillis() - currentVolumeUpdate.timestampMillis <
+                            VOLUME_UPDATE_GRACE_PERIOD
+                VolumeDialogSliderStateModel(
+                    value =
+                        if (currentVolumeUpdate != null && shouldIgnoreUpdates) {
+                            currentVolumeUpdate.newVolumeLevel
+                        } else {
+                            model.level.toFloat()
+                        },
+                    isDisabled = isDisabledByZenMode,
+                    valueRange = model.levelMin.toFloat()..model.levelMax.toFloat(),
+                    icon = icon,
+                    label = model.streamLabel(context),
+                )
             }
             .stateIn(coroutineScope, SharingStarted.Eagerly, null)
             .filterNotNull()
@@ -127,7 +131,7 @@ constructor(
         userVolumeUpdates
             .filterNotNull()
             .mapLatest { volume ->
-                interactor.setStreamVolume(volume.newVolumeLevel)
+                interactor.setStreamVolume(volume.newVolumeLevel.roundToInt())
                 Events.writeEvent(Events.EVENT_TOUCH_LEVEL_CHANGED, model.first().stream, volume)
             }
             .launchIn(coroutineScope)
@@ -137,10 +141,7 @@ constructor(
         if (fromUser) {
             visibilityInteractor.resetDismissTimeout()
             userVolumeUpdates.value =
-                VolumeUpdate(
-                    newVolumeLevel = volume.roundToInt(),
-                    timestampMillis = getTimestampMillis(),
-                )
+                VolumeUpdate(newVolumeLevel = volume, timestampMillis = getTimestampMillis())
         }
     }
 
@@ -186,5 +187,5 @@ constructor(
 
     private fun getTimestampMillis(): Long = systemClock.uptimeMillis()
 
-    private data class VolumeUpdate(val newVolumeLevel: Int, val timestampMillis: Long)
+    private data class VolumeUpdate(val newVolumeLevel: Float, val timestampMillis: Long)
 }
