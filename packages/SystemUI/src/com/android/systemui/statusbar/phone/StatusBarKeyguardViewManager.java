@@ -1207,11 +1207,9 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     @Override
     public void hide(long startTime, long fadeoutDuration) {
         Trace.beginSection("StatusBarKeyguardViewManager#hide");
-        if (Flags.checkLockscreenGoneTransition()) {
-            DejankUtils.notifyRendererOfExpensiveFrame(
-                    mNotificationShadeWindowController.getWindowRootView(),
-                    "StatusBarKeyguardViewManager#hide");
-        }
+        DejankUtils.notifyRendererOfExpensiveFrame(
+                mNotificationShadeWindowController.getWindowRootView(),
+                "StatusBarKeyguardViewManager#hide");
         mKeyguardStateController.notifyKeyguardState(false,
                 mKeyguardStateController.isOccluded());
         launchPendingWakeupAction();
