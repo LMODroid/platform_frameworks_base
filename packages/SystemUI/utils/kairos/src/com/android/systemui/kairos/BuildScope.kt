@@ -638,13 +638,8 @@ interface BuildScope : HasNetwork, StateScope {
      *
      * With each invocation of [block], running effects from the previous invocation are cancelled.
      */
-    fun <A> Events<A>.observeLatest(block: suspend EffectScope.(A) -> Unit): DisposableHandle {
-        var innerJob: Job? = null
-        return observeBuild {
-            innerJob?.cancel()
-            innerJob = effect { block(it) }
-        }
-    }
+    fun <A> Events<A>.observeLatest(block: suspend EffectScope.(A) -> Unit): DisposableHandle =
+        mapLatestBuild { effect { block(it) } }.observeSync()
 
     /**
      * Invokes [block] with the value held by this [State], allowing side-effects to be safely
@@ -652,13 +647,9 @@ interface BuildScope : HasNetwork, StateScope {
      *
      * With each invocation of [block], running effects from the previous invocation are cancelled.
      */
-    fun <A> State<A>.observeLatest(block: TransactionEffectScope.(A) -> Unit): Job = launchScope {
-        var innerJob = effectSync { block(sample()) }
-        changes.observeBuild {
-            innerJob.cancel()
-            innerJob = effectSync { block(it) }
-        }
-    }
+    fun <A> State<A>.observeLatestSync(
+        block: TransactionEffectScope.(A) -> Unit
+    ): DisposableHandle = mapLatestBuild { effectSync { block(it) } }.observeSync()
 
     /**
      * Applies [block] to the value held by this [State]. [block] receives an [BuildScope] that can
@@ -669,13 +660,8 @@ interface BuildScope : HasNetwork, StateScope {
      * each invocation of [block], changes from the previous invocation are undone (any registered
      * [observers][observe] are unregistered, and any pending [side-effects][effect] are cancelled).
      */
-    fun <A> State<A>.observeLatestBuild(block: BuildScope.(A) -> Unit): Job = launchScope {
-        var innerJob: Job = launchScope { block(sample()) }
-        changes.observeBuild {
-            innerJob.cancel()
-            innerJob = launchScope { block(it) }
-        }
-    }
+    fun <A> State<A>.observeLatestBuild(block: BuildScope.(A) -> Unit): DisposableHandle =
+        mapLatestBuild(block).observeSync()
 
     /** Applies the [BuildSpec] within this [BuildScope]. */
     fun <A> BuildSpec<A>.applySpec(): A = this()
@@ -691,15 +677,15 @@ interface BuildScope : HasNetwork, StateScope {
      * [effect].
      *
      * ```
-     *     fun <A> State<A>.observeBuild(block: BuildScope.(A) -> Unit): Job = launchScope {
+     *     fun <A> State<A>.observeBuild(block: BuildScope.(A) -> Unit): DisposableHandle {
      *         block(sample())
-     *         changes.observeBuild(block)
+     *         return changes.observeBuild(block)
      *     }
      * ```
      */
-    fun <A> State<A>.observeBuild(block: BuildScope.(A) -> Unit): Job = launchScope {
+    fun <A> State<A>.observeBuild(block: BuildScope.(A) -> Unit): DisposableHandle {
         block(sample())
-        changes.observeBuild(block)
+        return changes.observeBuild(block)
     }
 
     /**
