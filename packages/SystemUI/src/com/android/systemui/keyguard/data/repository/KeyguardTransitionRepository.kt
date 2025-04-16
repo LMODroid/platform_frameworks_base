@@ -26,6 +26,7 @@ import android.util.Log
 import com.android.app.animation.Interpolators
 import com.android.app.tracing.coroutines.flow.traceAs
 import com.android.app.tracing.coroutines.withContextTraced as withContext
+import com.android.systemui.Flags.transitionRaceConditionPart2
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.keyguard.shared.model.KeyguardState
@@ -192,9 +193,14 @@ constructor(
 
         // Animators must be started on the main thread.
         return withContext("$TAG#startTransition", mainDispatcher) {
-            withContextMutex.unlock()
+            if (!transitionRaceConditionPart2()) {
+                withContextMutex.unlock()
+            }
             if (lastStep.from == info.from && lastStep.to == info.to) {
                 Log.i(TAG, "Duplicate call to start the transition, rejecting: $info")
+                if (transitionRaceConditionPart2()) {
+                    withContextMutex.unlock()
+                }
                 return@withContext null
             }
             val isAnimatorRunning = lastAnimator?.isRunning() ?: false
@@ -264,6 +270,9 @@ constructor(
                 animator.addListener(animatorListener)
                 animator.addUpdateListener(updateListener)
                 animator.start()
+                if (transitionRaceConditionPart2()) {
+                    withContextMutex.unlock()
+                }
                 return@withContext null
             }
                 ?: run {
@@ -274,6 +283,9 @@ constructor(
 
                     // No animator, so it's manual. Provide a mechanism to callback
                     updateTransitionId = UUID.randomUUID()
+                    if (transitionRaceConditionPart2()) {
+                        withContextMutex.unlock()
+                    }
                     return@withContext updateTransitionId
                 }
         }
@@ -289,9 +301,15 @@ constructor(
         // requires the same lock
         withContextMutex.lock()
         withContext("$TAG#updateTransition", mainDispatcher) {
-            withContextMutex.unlock()
+            if (!transitionRaceConditionPart2()) {
+                withContextMutex.unlock()
+            }
 
             updateTransitionInternal(transitionId, value, state)
+
+            if (transitionRaceConditionPart2()) {
+                withContextMutex.unlock()
+            }
         }
     }
 
@@ -303,7 +321,9 @@ constructor(
         withContextMutex.lock()
 
         return withContext("$TAG#forceFinishCurrentTransition", mainDispatcher) {
-            withContextMutex.unlock()
+            if (!transitionRaceConditionPart2()) {
+                withContextMutex.unlock()
+            }
 
             Log.d(TAG, "forceFinishCurrentTransition() - emitting FINISHED early.")
 
@@ -318,6 +338,10 @@ constructor(
 
                 // Ask the listener to emit FINISHED and clean up its state.
                 animatorListener?.onAnimationEnd(this)
+            }
+
+            if (transitionRaceConditionPart2()) {
+                withContextMutex.unlock()
             }
         }
     }

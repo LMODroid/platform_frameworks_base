@@ -1746,6 +1746,16 @@ flag {
 }
 
 flag {
+  name: "transition_race_condition_part2"
+  namespace: "systemui"
+  description: "Thread-safe keyguard transitions"
+  bug: "409585200"
+  metadata {
+       purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
    name: "media_projection_request_attribution_fix"
    namespace: "systemui"
    description: "Ensure MediaProjection consent requests are properly attributed"
