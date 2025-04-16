@@ -18,7 +18,6 @@ package com.android.systemui.keyguard.domain.interactor
 
 import com.android.compose.animation.scene.ObservableTransitionState.Idle
 import com.android.compose.animation.scene.ObservableTransitionState.Transition
-import com.android.systemui.Flags.transitionRaceCondition
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.deviceentry.domain.interactor.DeviceEntryInteractor
 import com.android.systemui.keyguard.data.repository.KeyguardTransitionRepository
@@ -258,12 +257,7 @@ constructor(
                         startedFromStep.transitionState == TransitionState.CANCELED &&
                         startedFromStep.from == KeyguardState.GONE
 
-                val transitionInfo =
-                    if (transitionRaceCondition()) {
-                        transitionRepository.currentTransitionInfo
-                    } else {
-                        transitionRepository.currentTransitionInfoInternal.value
-                    }
+                val transitionInfo = transitionRepository.currentTransitionInfo
                 val wakingDirectlyToGone =
                     deviceIsAsleepInState(transitionInfo.from) &&
                         transitionInfo.to == KeyguardState.GONE
