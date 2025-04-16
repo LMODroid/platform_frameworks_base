@@ -30,6 +30,7 @@ import android.graphics.Path.FillType;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.DrawableWrapper;
 import android.os.Handler;
 import android.telephony.CellSignalStrength;
@@ -271,6 +272,11 @@ public class SignalDrawable extends DrawableWrapper {
             // Adjust mScaledRoamingPath
             Path adjustedRoamingPath = new Path(mScaledRoamingPath);
             Matrix matrix = new Matrix();
+            // Flip the path horizontally to cancel canvas mirror
+            // as we don't want to flip the roaming icon in RTL
+            if (isRtl) {
+                matrix.set(flipHorizontally(adjustedRoamingPath));
+            }
             matrix.postTranslate(rIconOffset, 0);
             adjustedRoamingPath.transform(matrix);
             canvas.drawPath(adjustedRoamingPath, mForegroundPaint);
@@ -300,13 +306,31 @@ public class SignalDrawable extends DrawableWrapper {
             mCutoutPath.rLineTo(cutX, 0);
             mCutoutPath.rLineTo(0, cutY);
             canvas.drawPath(mCutoutPath, mTransparentPaint);
-            canvas.drawPath(isRoaming ? mScaledRoamingPath : mScaledAttributionPath,
+            // Adjust mScaledRoamingPath
+            Path adjustedRoamingPath = new Path(mScaledRoamingPath);
+            // Flip the path horizontally to cancel canvas mirror
+            // as we don't want to flip the roaming icon in RTL
+            if (isRtl) {
+                Matrix matrix = flipHorizontally(adjustedRoamingPath);
+                adjustedRoamingPath.transform(matrix);
+            }
+            canvas.drawPath(isRoaming ? adjustedRoamingPath : mScaledAttributionPath,
                     mForegroundPaint);
         }
         if (isRtl) {
             canvas.restore();
         }
         canvas.restore();
+    }
+
+    private Matrix flipHorizontally(Path path) {
+        RectF pathBounds = new RectF();
+        path.computeBounds(pathBounds, true);
+        float centerX = pathBounds.centerX();
+        float centerY = pathBounds.centerY();
+        Matrix matrix = new Matrix();
+        matrix.postScale(-1f, 1f, centerX, centerY);
+        return matrix;
     }
 
     private void drawDotAndPadding(float x, float y,
