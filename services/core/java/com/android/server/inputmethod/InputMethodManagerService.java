@@ -3090,8 +3090,10 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
         if (!mLineageHardware.isSupported(LineageHardwareManager.FEATURE_HIGH_TOUCH_SENSITIVITY)) {
             return;
         }
-        final boolean enabled = Settings.System.getInt(mContext.getContentResolver(),
-                LMOSettings.System.HIGH_TOUCH_SENSITIVITY_ENABLE, 0) == 1;
+        // If user is a profile, use preference of its parent profile.
+        final int profileParentUserId = mUserManagerInternal.getProfileParentId(mCurrentImeUserId);
+        final boolean enabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                LMOSettings.System.HIGH_TOUCH_SENSITIVITY_ENABLE, 0, profileParentUserId) == 1;
         mLineageHardware.set(LineageHardwareManager.FEATURE_HIGH_TOUCH_SENSITIVITY, enabled);
     }
 
@@ -3099,8 +3101,10 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
         if (!mLineageHardware.isSupported(LineageHardwareManager.FEATURE_TOUCH_HOVERING)) {
             return;
         }
-        final boolean enabled = Settings.Secure.getInt(mContext.getContentResolver(),
-                LMOSettings.Secure.FEATURE_TOUCH_HOVERING, 0) == 1;
+        // If user is a profile, use preference of its parent profile.
+        final int profileParentUserId = mUserManagerInternal.getProfileParentId(mCurrentImeUserId);
+        final boolean enabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                LMOSettings.Secure.FEATURE_TOUCH_HOVERING, 0, profileParentUserId) == 1;
         mLineageHardware.set(LineageHardwareManager.FEATURE_TOUCH_HOVERING, enabled);
     }
 
