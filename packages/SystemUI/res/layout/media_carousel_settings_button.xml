@@ -40,7 +40,7 @@
         android:paddingEnd="30dp"
         android:paddingBottom="20dp"
         android:paddingTop="20dp"
-        android:src="@drawable/ic_settings"
+        android:src="@drawable/ic_media_settings"
         android:tint="@androidprv:color/materialColorOnSurface" />
 
 </FrameLayout>
