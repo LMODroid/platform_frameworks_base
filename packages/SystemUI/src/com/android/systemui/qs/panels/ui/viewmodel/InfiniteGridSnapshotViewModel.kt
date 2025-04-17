@@ -20,6 +20,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.toMutableStateList
 import com.android.systemui.qs.panels.domain.interactor.IconTilesInteractor
+import com.android.systemui.qs.panels.ui.viewmodel.InfiniteGridSnapshotViewModel.InfiniteGridSnapshot
 import com.android.systemui.qs.pipeline.domain.interactor.CurrentTilesInteractor
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import dagger.assisted.AssistedFactory

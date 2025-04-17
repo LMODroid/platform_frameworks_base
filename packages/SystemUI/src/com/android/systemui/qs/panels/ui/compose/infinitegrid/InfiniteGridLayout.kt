@@ -23,6 +23,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -178,9 +179,9 @@ constructor(
             }
         val columns = columnsViewModel.columns
         val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
-        val largeTiles by iconTilesViewModel.largeTiles.collectAsStateWithLifecycle()
+        val largeTiles by iconTilesViewModel.largeTilesState
 
-        val currentTiles = tiles.filter { it.isCurrent }
+        val currentTiles by rememberUpdatedState(tiles.filter { it.isCurrent })
         val listState =
             remember(columns, largeTilesSpan) {
                 EditTileListState(
