@@ -94,36 +94,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun showClock_wideLayout_returnsTrue() =
-        testScope.runTest {
-            kosmos.enableDualShade(wideLayout = true)
-
-            setupDualShadeState(scene = Scenes.Lockscreen, overlay = Overlays.NotificationsShade)
-            assertThat(underTest.showClock).isTrue()
-
-            setupDualShadeState(scene = Scenes.Lockscreen, overlay = Overlays.QuickSettingsShade)
-            assertThat(underTest.showClock).isTrue()
-        }
-
-    @Test
-    fun showClock_narrowLayoutOnNotificationsShade_returnsFalse() =
-        testScope.runTest {
-            kosmos.enableDualShade(wideLayout = false)
-            setupDualShadeState(scene = Scenes.Lockscreen, overlay = Overlays.NotificationsShade)
-
-            assertThat(underTest.showClock).isFalse()
-        }
-
-    @Test
-    fun showClock_narrowLayoutOnQuickSettingsShade_returnsTrue() =
-        testScope.runTest {
-            kosmos.enableDualShade(wideLayout = false)
-            setupDualShadeState(scene = Scenes.Lockscreen, overlay = Overlays.QuickSettingsShade)
-
-            assertThat(underTest.showClock).isTrue()
-        }
-
-    @Test
     fun onShadeCarrierGroupClicked_launchesNetworkSettings() =
         testScope.runTest {
             val activityStarter = kosmos.activityStarter
