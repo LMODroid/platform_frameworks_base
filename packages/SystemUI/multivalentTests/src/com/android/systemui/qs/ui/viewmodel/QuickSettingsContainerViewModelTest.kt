@@ -20,7 +20,6 @@ import android.testing.TestableLooper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
-import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.lifecycle.activateIn
@@ -29,7 +28,6 @@ import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.qs.composefragment.dagger.usingMediaInComposeFragment
 import com.android.systemui.scene.domain.startable.sceneContainerStartable
 import com.android.systemui.shade.domain.interactor.enableDualShade
-import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -52,8 +50,6 @@ class QuickSettingsContainerViewModelTest : SysuiTestCase() {
         }
     private val testScope = kosmos.testScope
 
-    private val shadeModeInteractor = kosmos.shadeModeInteractor
-
     private val underTest by lazy {
         kosmos.quickSettingsContainerViewModelFactory.create(supportsBrightnessMirroring = false)
     }
@@ -64,26 +60,6 @@ class QuickSettingsContainerViewModelTest : SysuiTestCase() {
         kosmos.enableDualShade()
         underTest.activateIn(testScope)
     }
-
-    @Test
-    fun showHeader_showsOnNarrowScreen() =
-        testScope.runTest {
-            kosmos.enableDualShade(wideLayout = false)
-            val isShadeLayoutWide by collectLastValue(shadeModeInteractor.isShadeLayoutWide)
-            assertThat(isShadeLayoutWide).isFalse()
-
-            assertThat(underTest.showHeader).isTrue()
-        }
-
-    @Test
-    fun showHeader_hidesOnWideScreen() =
-        testScope.runTest {
-            kosmos.enableDualShade(wideLayout = true)
-            val isShadeLayoutWide by collectLastValue(shadeModeInteractor.isShadeLayoutWide)
-            assertThat(isShadeLayoutWide).isTrue()
-
-            assertThat(underTest.showHeader).isFalse()
-        }
 
     @Test
     fun showMedia_activeMedia_true() =

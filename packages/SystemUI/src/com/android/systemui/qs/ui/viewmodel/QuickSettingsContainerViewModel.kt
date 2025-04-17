@@ -28,7 +28,6 @@ import com.android.systemui.qs.panels.ui.viewmodel.DetailsViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.EditModeViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.TileGridViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.ToolbarViewModel
-import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
 import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -36,7 +35,6 @@ import dagger.assisted.AssistedInject
 import javax.inject.Named
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class QuickSettingsContainerViewModel
@@ -50,7 +48,6 @@ constructor(
     val editModeViewModel: EditModeViewModel,
     val detailsViewModel: DetailsViewModel,
     toolbarViewModelFactory: ToolbarViewModel.Factory,
-    shadeModeInteractor: ShadeModeInteractor,
     mediaCarouselInteractor: MediaCarouselInteractor,
     val mediaCarouselController: MediaCarouselController,
     @Named(MediaModule.QS_PANEL) val mediaHost: MediaHost,
@@ -66,13 +63,6 @@ constructor(
     val shadeHeaderViewModel = shadeHeaderViewModelFactory.create()
 
     val tileGridViewModel = tileGridViewModelFactory.create()
-
-    val showHeader: Boolean by
-        hydrator.hydratedStateOf(
-            traceName = "showHeader",
-            initialValue = !shadeModeInteractor.isShadeLayoutWide.value,
-            source = shadeModeInteractor.isShadeLayoutWide.map { !it },
-        )
 
     val showMedia: Boolean by
         hydrator.hydratedStateOf(

@@ -25,7 +25,6 @@ import com.android.systemui.qs.panels.ui.viewmodel.detailsViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.editModeViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.tileGridViewModelFactory
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.toolbarViewModelFactory
-import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.shade.ui.viewmodel.shadeHeaderViewModelFactory
 import org.mockito.kotlin.mock
 
@@ -45,7 +44,6 @@ val Kosmos.quickSettingsContainerViewModelFactory by
                     editModeViewModel = editModeViewModel,
                     detailsViewModel = detailsViewModel,
                     toolbarViewModelFactory = toolbarViewModelFactory,
-                    shadeModeInteractor = shadeModeInteractor,
                     mediaCarouselInteractor = mediaCarouselInteractor,
                     mediaCarouselController = mediaCarouselController,
                     mediaHost = mock<MediaHost>(),
