@@ -160,7 +160,7 @@ public class QSImplTest extends SysuiTestCase {
 
     @Test
     public void transitionToFullShade_smallScreen_alphaAlways1() {
-        setIsSmallScreen();
+        mUnderTest.setIsNotificationPanelFullWidth(true);
         setStatusBarCurrentAndUpcomingState(StatusBarState.SHADE);
         boolean isTransitioningToFullShade = true;
         float transitionProgress = 0.5f;
@@ -174,7 +174,7 @@ public class QSImplTest extends SysuiTestCase {
 
     @Test
     public void transitionToFullShade_largeScreen_alphaLargeScreenShadeInterpolator() {
-        setIsLargeScreen();
+        mUnderTest.setIsNotificationPanelFullWidth(false);
         setStatusBarCurrentAndUpcomingState(StatusBarState.SHADE);
         boolean isTransitioningToFullShade = true;
         float transitionProgress = 0.5f;
@@ -689,14 +689,6 @@ public class QSImplTest extends SysuiTestCase {
             locationOnScreen[1] = top;
             return null;
         }).when(view).getLocationOnScreen(any(int[].class));
-    }
-
-    private void setIsLargeScreen() {
-        mUnderTest.setIsNotificationPanelFullWidth(false);
-    }
-
-    private void setIsSmallScreen() {
-        mUnderTest.setIsNotificationPanelFullWidth(true);
     }
 
     private void setHeaderBounds(int left, int top, int right, int bottom) {

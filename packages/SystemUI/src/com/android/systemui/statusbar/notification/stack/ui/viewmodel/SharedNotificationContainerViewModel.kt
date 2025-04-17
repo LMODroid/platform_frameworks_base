@@ -557,9 +557,7 @@ constructor(
                                 shadeExpansion,
                                 qsExpansion,
                                 bouncerExpansion ->
-                                if (bouncerExpansion == 1f) {
-                                    emit(0f)
-                                } else if (bouncerExpansion > 0f) {
+                                if (bouncerExpansion > 0f) {
                                     emit(1 - bouncerExpansion)
                                 } else if (isShadeLayoutWide) {
                                     if (shadeExpansion > 0f) {

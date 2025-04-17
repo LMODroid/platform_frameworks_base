@@ -21,12 +21,12 @@ import android.content.res.Configuration
 import com.android.systemui.biometrics.data.repository.DisplayStateRepository
 import com.android.systemui.biometrics.shared.model.DisplayRotation
 import com.android.systemui.common.coroutine.ChannelExt.trySendWithFailureLogging
-import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.display.data.repository.DisplayRepository
 import com.android.systemui.unfold.compat.ScreenSizeFoldProvider
 import com.android.systemui.unfold.updates.FoldProvider
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import java.util.concurrent.Executor
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
 /** Aggregates display state information. */
+// TODO(b/411335091): Move to com.android.systemui.display.domain.interactor.
 interface DisplayStateInteractor {
     /** Whether the default display is currently off. */
     val isDefaultDisplayOff: Flow<Boolean>
@@ -65,8 +66,19 @@ interface DisplayStateInteractor {
     /** Called on configuration changes, used to keep the display state in sync */
     fun onConfigurationChanged(newConfig: Configuration)
 
-    /** Provides whether the current display is large screen */
+    /**
+     * Provides whether the current display is a large screen (i.e. all edges are >= 600dp). This is
+     * agnostic of display rotation.
+     */
     val isLargeScreen: StateFlow<Boolean>
+
+    /**
+     * Provides whether the display's current horizontal width is large (>= 600dp).
+     *
+     * Note: Unlike [isLargeScreen], which checks whether either one of the screen's width or height
+     * is large, this flow's state is sensitive to the current display's rotation.
+     */
+    val isWideScreen: StateFlow<Boolean>
 }
 
 /** Encapsulates logic for interacting with the display state. */
@@ -81,10 +93,6 @@ constructor(
 ) : DisplayStateInteractor {
     private var screenSizeFoldProvider: ScreenSizeFoldProvider = ScreenSizeFoldProvider(context)
 
-    fun setScreenSizeFoldProvider(foldProvider: ScreenSizeFoldProvider) {
-        screenSizeFoldProvider = foldProvider
-    }
-
     override val displayChanges = displayRepository.displayChangeEvent
 
     override val isFolded: Flow<Boolean> =
@@ -93,7 +101,7 @@ constructor(
                     trySendWithFailureLogging(
                         state,
                         TAG,
-                        "Error sending fold state update to $state"
+                        "Error sending fold state update to $state",
                     )
                 }
 
@@ -108,11 +116,7 @@ constructor(
                 screenSizeFoldProvider.registerCallback(callback, mainExecutor)
                 awaitClose { screenSizeFoldProvider.unregisterCallback(callback) }
             }
-            .stateIn(
-                applicationScope,
-                started = SharingStarted.Eagerly,
-                initialValue = false,
-            )
+            .stateIn(applicationScope, started = SharingStarted.Eagerly, initialValue = false)
 
     override val isInRearDisplayMode: StateFlow<Boolean> =
         displayStateRepository.isInRearDisplayMode
@@ -122,13 +126,19 @@ constructor(
 
     override val isReverseDefaultRotation: Boolean = displayStateRepository.isReverseDefaultRotation
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        screenSizeFoldProvider.onConfigurationChange(newConfig)
-    }
-
     override val isDefaultDisplayOff = displayRepository.defaultDisplayOff
 
     override val isLargeScreen: StateFlow<Boolean> = displayStateRepository.isLargeScreen
+
+    override val isWideScreen: StateFlow<Boolean> = displayStateRepository.isWideScreen
+
+    fun setScreenSizeFoldProvider(foldProvider: ScreenSizeFoldProvider) {
+        screenSizeFoldProvider = foldProvider
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        screenSizeFoldProvider.onConfigurationChange(newConfig)
+    }
 
     companion object {
         private const val TAG = "DisplayStateInteractor"

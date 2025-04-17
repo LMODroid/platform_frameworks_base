@@ -113,6 +113,11 @@ interface ShadeRepository {
      * In a wide layout, notifications and quick settings each take up only half the screen width
      * (whether they are shown at the same time or not). In a narrow layout, they can each be as
      * wide as the entire screen.
+     *
+     * Note: When scene container is disabled, this returns `false` in some exceptional cases when
+     * the screen would otherwise be considered wide. This is defined by the
+     * `config_use_split_notification_shade` config value. In scene container such overrides are
+     * deprecated, and this flow returns the same values as [DisplayStateInteractor.isWideScreen].
      */
     val isShadeLayoutWide: StateFlow<Boolean>
 

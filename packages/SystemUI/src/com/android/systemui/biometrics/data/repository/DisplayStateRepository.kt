@@ -56,8 +56,19 @@ interface DisplayStateRepository {
     /** Provides the current display size */
     val currentDisplaySize: StateFlow<Size>
 
-    /** Provides whether the current display is large screen */
+    /**
+     * Provides whether the current display is a large screen (i.e. all edges are >= 600dp). This is
+     * agnostic of display rotation.
+     */
     val isLargeScreen: StateFlow<Boolean>
+
+    /**
+     * Provides whether the display's current horizontal width is large (>= 600dp).
+     *
+     * Note that unlike [isLargeScreen], which checks whether either one of the screen's width or
+     * height is large, this flow's state is sensitive to the current display's orientation.
+     */
+    val isWideScreen: StateFlow<Boolean>
 }
 
 @SysUISingleton
@@ -75,17 +86,7 @@ constructor(
     override val isInRearDisplayMode: StateFlow<Boolean> =
         deviceStateRepository.state
             .map { it == REAR_DISPLAY }
-            .stateIn(
-                backgroundScope,
-                started = SharingStarted.Eagerly,
-                initialValue = false,
-            )
-
-    private fun getDisplayInfo(): DisplayInfo {
-        val cachedDisplayInfo = DisplayInfo()
-        context.display?.getDisplayInfo(cachedDisplayInfo)
-        return cachedDisplayInfo
-    }
+            .stateIn(backgroundScope, started = SharingStarted.Eagerly, initialValue = false)
 
     private val currentDisplayInfo: StateFlow<DisplayInfo> =
         displayRepository.displayChangeEvent
@@ -96,21 +97,13 @@ constructor(
                 initialValue = getDisplayInfo(),
             )
 
-    private fun rotationToDisplayRotation(rotation: Int): DisplayRotation {
-        var adjustedRotation = rotation
-        if (isReverseDefaultRotation) {
-            adjustedRotation = (rotation + 1) % 4
-        }
-        return adjustedRotation.toDisplayRotation()
-    }
-
     override val currentRotation: StateFlow<DisplayRotation> =
         currentDisplayInfo
             .map { rotationToDisplayRotation(it.rotation) }
             .stateIn(
                 backgroundScope,
                 started = SharingStarted.WhileSubscribed(),
-                initialValue = rotationToDisplayRotation(currentDisplayInfo.value.rotation)
+                initialValue = rotationToDisplayRotation(currentDisplayInfo.value.rotation),
             )
 
     override val currentDisplaySize: StateFlow<Size> =
@@ -122,7 +115,7 @@ constructor(
                 initialValue =
                     Size(
                         currentDisplayInfo.value.naturalWidth,
-                        currentDisplayInfo.value.naturalHeight
+                        currentDisplayInfo.value.naturalHeight,
                     ),
             )
 
@@ -130,22 +123,35 @@ constructor(
         currentDisplayInfo
             .map {
                 // copied from systemui/shared/...Utilities.java
-                val smallestWidth =
-                    dpiFromPx(
-                        min(it.logicalWidth, it.logicalHeight).toFloat(),
-                        context.resources.configuration.densityDpi
-                    )
+                val smallestWidth = min(it.logicalWidth, it.logicalHeight).toDpi()
                 smallestWidth >= LARGE_SCREEN_MIN_DPS
             }
-            .stateIn(
-                backgroundScope,
-                started = SharingStarted.Eagerly,
-                initialValue = false,
-            )
+            .stateIn(backgroundScope, started = SharingStarted.Eagerly, initialValue = false)
 
-    private fun dpiFromPx(size: Float, densityDpi: Int): Float {
+    override val isWideScreen: StateFlow<Boolean> =
+        currentDisplayInfo
+            .map { it.logicalWidth.toDpi() >= LARGE_SCREEN_MIN_DPS }
+            .stateIn(backgroundScope, started = SharingStarted.Eagerly, initialValue = false)
+
+    private fun getDisplayInfo(): DisplayInfo {
+        val cachedDisplayInfo = DisplayInfo()
+        context.display.getDisplayInfo(cachedDisplayInfo)
+        return cachedDisplayInfo
+    }
+
+    private fun rotationToDisplayRotation(rotation: Int): DisplayRotation {
+        return if (isReverseDefaultRotation) {
+                (rotation + 1) % 4
+            } else {
+                rotation
+            }
+            .toDisplayRotation()
+    }
+
+    private fun Int.toDpi(): Float {
+        val densityDpi = context.resources.configuration.densityDpi
         val densityRatio = densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT
-        return size / densityRatio
+        return this / densityRatio
     }
 
     companion object {

@@ -28,7 +28,6 @@ import com.android.systemui.biometrics.domain.interactor.displayStateInteractor
 import com.android.systemui.common.ui.data.repository.FakeConfigurationRepository
 import com.android.systemui.common.ui.domain.interactor.ConfigurationInteractorImpl
 import com.android.systemui.coroutines.collectLastValue
-import com.android.systemui.display.data.repository.displayStateRepository
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.kosmos.testCase
 import com.android.systemui.kosmos.testDispatcher
@@ -37,7 +36,9 @@ import com.android.systemui.qs.QSImpl
 import com.android.systemui.qs.dagger.QSComponent
 import com.android.systemui.qs.dagger.QSSceneComponent
 import com.android.systemui.settings.brightness.MirrorController
-import com.android.systemui.shade.data.repository.fakeShadeRepository
+import com.android.systemui.shade.domain.interactor.enableDualShade
+import com.android.systemui.shade.domain.interactor.enableSingleShade
+import com.android.systemui.shade.domain.interactor.enableSplitShade
 import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.any
@@ -50,6 +51,7 @@ import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
 import java.util.Locale
 import javax.inject.Provider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -61,6 +63,7 @@ import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class QSSceneAdapterImplTest : SysuiTestCase() {
@@ -550,16 +553,17 @@ class QSSceneAdapterImplTest : SysuiTestCase() {
     @Test
     fun dispatchSplitShade() =
         testScope.runTest {
-            val shadeRepository = kosmos.fakeShadeRepository
-            shadeRepository.setShadeLayoutWide(false)
             val qsImpl by collectLastValue(underTest.qsImpl)
+
+            kosmos.enableSingleShade()
+            runCurrent()
 
             underTest.inflate(context)
             runCurrent()
 
             verify(qsImpl!!).setInSplitShade(false)
 
-            shadeRepository.setShadeLayoutWide(true)
+            kosmos.enableSplitShade()
             runCurrent()
             verify(qsImpl!!).setInSplitShade(true)
         }
@@ -581,11 +585,10 @@ class QSSceneAdapterImplTest : SysuiTestCase() {
         testScope.runTest {
             val qsImpl by collectLastValue(underTest.qsImpl)
 
-            underTest.inflate(context)
+            kosmos.enableDualShade(wideLayout = true)
             runCurrent()
 
-            kosmos.displayStateRepository.setIsLargeScreen(true)
-            runCurrent()
+            underTest.inflate(context)
 
             verify(qsImpl!!).setIsNotificationPanelFullWidth(false)
 

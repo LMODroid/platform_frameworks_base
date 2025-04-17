@@ -19,6 +19,7 @@ package com.android.systemui.shade.domain.interactor
 import android.content.testableContext
 import android.provider.Settings
 import com.android.systemui.common.ui.data.repository.fakeConfigurationRepository
+import com.android.systemui.display.data.repository.displayStateRepository
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.kosmos.applicationCoroutineScope
@@ -55,6 +56,7 @@ fun Kosmos.enableDualShade(wideLayout: Boolean? = null) {
     if (wideLayout != null) {
         overrideLargeScreenResources(isLargeScreen = wideLayout)
         fakeShadeRepository.setShadeLayoutWide(wideLayout)
+        displayStateRepository.setIsWideScreen(wideLayout)
     }
 }
 
@@ -67,12 +69,14 @@ fun Kosmos.enableSingleShade() {
     disableDualShade()
     overrideLargeScreenResources(isLargeScreen = false)
     fakeShadeRepository.setShadeLayoutWide(false)
+    displayStateRepository.setIsWideScreen(false)
 }
 
 fun Kosmos.enableSplitShade() {
     disableDualShade()
     overrideLargeScreenResources(isLargeScreen = true)
     fakeShadeRepository.setShadeLayoutWide(true)
+    displayStateRepository.setIsWideScreen(true)
 }
 
 private fun Kosmos.overrideLargeScreenResources(isLargeScreen: Boolean) {

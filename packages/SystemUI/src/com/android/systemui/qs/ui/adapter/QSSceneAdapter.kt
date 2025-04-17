@@ -48,12 +48,14 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -196,6 +198,7 @@ interface QSSceneAdapter {
     }
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SysUISingleton
 class QSSceneAdapterImpl
 @VisibleForTesting
@@ -331,13 +334,17 @@ constructor(
                 }
             }
             launch {
-                shadeModeInteractor.shadeMode.collect {
-                    qsImpl.value?.setInSplitShade(it is ShadeMode.Split)
-                }
-            }
-            launch {
-                combine(displayStateInteractor.isLargeScreen, qsImpl.filterNotNull(), ::Pair)
-                    .collect { it.second.setIsNotificationPanelFullWidth(!it.first) }
+                combine(
+                        qsImpl.filterNotNull(),
+                        shadeModeInteractor.shadeMode,
+                        displayStateInteractor.isWideScreen,
+                    ) { qsImpl, shadeMode, isWideScreen ->
+                        qsImpl.setInSplitShade(shadeMode is ShadeMode.Split)
+                        qsImpl.setIsNotificationPanelFullWidth(
+                            shadeMode is ShadeMode.Single || !isWideScreen
+                        )
+                    }
+                    .collect()
             }
         }
     }

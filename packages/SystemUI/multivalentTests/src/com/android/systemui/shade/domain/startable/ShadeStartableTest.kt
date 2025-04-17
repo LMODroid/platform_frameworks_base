@@ -214,7 +214,7 @@ class ShadeStartableTest(flags: FlagsParameterization) : SysuiTestCase() {
         testScope.runTest {
             underTest.start()
 
-            kosmos.displayStateRepository.setIsLargeScreen(true)
+            kosmos.displayStateRepository.setIsWideScreen(true)
             runCurrent()
             verify(kosmos.notificationStackScrollLayoutController).setIsFullWidth(false)
             assertThat(kosmos.scrimController.clipQsScrim).isFalse()
