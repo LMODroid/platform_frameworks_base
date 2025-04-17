@@ -168,22 +168,6 @@ public class InternetAdapter extends RecyclerView.Adapter<InternetAdapter.Intern
             mWifiTitleText = view.requireViewById(R.id.wifi_title);
             mWifiSummaryText = view.requireViewById(R.id.wifi_summary);
             mWifiEndIcon = view.requireViewById(R.id.wifi_end_icon);
-
-            if (!isInDetailsView){
-                return;
-            }
-
-            // Set the UI styles for details view only.
-            mWifiTitleText.setTextAppearance(R.style.TextAppearance_TileDetailsEntryTitle);
-            mWifiSummaryText.setTextAppearance(R.style.TextAppearance_TileDetailsEntrySubTitle);
-            if (mWifiIcon.getDrawable() != null) {
-                mWifiIcon.setColorFilter(
-                        mContext.getColor(com.android.internal.R.color.materialColorOnSurface));
-            }
-            if (mWifiEndIcon.getDrawable() != null){
-                mWifiEndIcon.setColorFilter(
-                        mContext.getColor(com.android.internal.R.color.materialColorOnSurface));
-            }
         }
 
         void onBind(@NonNull WifiEntry wifiEntry) {
@@ -196,6 +180,21 @@ public class InternetAdapter extends RecyclerView.Adapter<InternetAdapter.Intern
             updateEndIcon(connectedState, security);
 
             mWifiListLayout.setEnabled(shouldEnabled(wifiEntry));
+
+            // Set the UI styles for details view only.
+            if (mIsInDetailsView) {
+                mWifiTitleText.setTextAppearance(R.style.TextAppearance_TileDetailsEntryTitle);
+                mWifiSummaryText.setTextAppearance(R.style.TextAppearance_TileDetailsEntrySubTitle);
+                if (mWifiIcon.getDrawable() != null) {
+                    mWifiIcon.setColorFilter(
+                            mContext.getColor(com.android.internal.R.color.materialColorOnSurface));
+                }
+                if (mWifiEndIcon.getDrawable() != null) {
+                    mWifiEndIcon.setColorFilter(
+                            mContext.getColor(com.android.internal.R.color.materialColorOnSurface));
+                }
+            }
+
             if (connectedState != WifiEntry.CONNECTED_STATE_DISCONNECTED) {
                 mWifiListLayout.setOnClickListener(
                         v -> mInternetDetailsContentController.launchWifiDetailsSetting(
