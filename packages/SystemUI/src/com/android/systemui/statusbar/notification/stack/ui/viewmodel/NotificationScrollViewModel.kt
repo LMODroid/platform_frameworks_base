@@ -256,7 +256,7 @@ constructor(
         combine(shadeModeInteractor.shadeMode, shadeInteractor.qsExpansion) { shadeMode, qsExpansion
                 ->
                 when (shadeMode) {
-                    is ShadeMode.Dual,
+                    is ShadeMode.Dual -> false
                     is ShadeMode.Split -> true
                     is ShadeMode.Single -> qsExpansion < 0.5f
                 }

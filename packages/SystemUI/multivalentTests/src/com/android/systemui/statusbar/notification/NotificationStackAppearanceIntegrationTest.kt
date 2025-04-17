@@ -121,7 +121,7 @@ class NotificationStackAppearanceIntegrationTest : SysuiTestCase() {
 
             // Same scenario on Dual Shade, shape should have clipping bounds
             kosmos.enableDualShade()
-            assertThat(shape).isNotNull()
+            assertThat(shape).isNull()
         }
 
     @Test
