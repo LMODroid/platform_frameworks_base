@@ -108,6 +108,8 @@ constructor(
     ): ShadeMode {
         return when {
             isDualShadeEnabled -> ShadeMode.Dual
+            // TODO(b/376411622): Once Dual Shade is enabled by default in SceneContainer, replace
+            //  Split below with Dual. This will effectively remove Split mode from SceneContainer.
             isShadeLayoutWide -> ShadeMode.Split
             else -> ShadeMode.Single
         }
