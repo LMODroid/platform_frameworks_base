@@ -21,10 +21,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -100,16 +98,13 @@ fun TileDetails(modifier: Modifier = Modifier, detailsViewModel: DetailsViewMode
                 IconButton(
                     onClick = { detailsViewModel.closeDetailedView() },
                     colors = IconButtonDefaults.iconButtonColors(contentColor = colors.onSurface),
-                    modifier =
-                        Modifier.align(Alignment.CenterVertically)
-                            .height(TileDetailsDefaults.IconHeight)
-                            .width(TileDetailsDefaults.IconWidth)
-                            .padding(start = TileDetailsDefaults.IconPadding),
+                    modifier = Modifier.align(Alignment.CenterVertically),
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         // Description is TBD
                         contentDescription = "Back to QS panel",
+                        tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
                 Text(
@@ -122,16 +117,13 @@ fun TileDetails(modifier: Modifier = Modifier, detailsViewModel: DetailsViewMode
                 IconButton(
                     onClick = { tileDetailedViewModel.clickOnSettingsButton() },
                     colors = IconButtonDefaults.iconButtonColors(contentColor = colors.onSurface),
-                    modifier =
-                        Modifier.align(Alignment.CenterVertically)
-                            .height(TileDetailsDefaults.IconHeight)
-                            .width(TileDetailsDefaults.IconWidth)
-                            .padding(end = TileDetailsDefaults.IconPadding),
+                    modifier = Modifier.align(Alignment.CenterVertically),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Settings,
                         // Description is TBD
                         contentDescription = "Go to Settings",
+                        tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }
@@ -163,13 +155,10 @@ private fun MapTileDetailsContent(tileDetailsViewModel: TileDetailsViewModel) {
 }
 
 private object TileDetailsDefaults {
-    val IconHeight = 24.dp
-    val IconWidth = 24.dp
-    val IconPadding = 4.dp
-    val TitleRowStart = 14.dp
-    val TitleRowTop = 22.dp
-    val TitleRowEnd = 20.dp
-    val TitleRowBottom = 8.dp
+    val TitleRowStart = 2.dp
+    val TitleRowTop = 14.dp
+    val TitleRowEnd = 8.dp
+    val TitleRowBottom = 2.dp
     val DetailsMaxHeight = 600.dp
     val DetailsMinHeight = 300.dp
 }
