@@ -16,7 +16,7 @@
 
 package com.android.packageinstaller.v2.ui.fragments;
 
-import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_LABEL;
+import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_INSTALLER_LABEL;
 
 import android.app.AlertDialog;
@@ -25,12 +25,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.packageinstaller.R;
+import com.android.packageinstaller.v2.model.PackageUtil;
 import com.android.packageinstaller.v2.model.UnarchiveUserActionRequired;
 import com.android.packageinstaller.v2.ui.UnarchiveActionListener;
 
@@ -57,7 +61,7 @@ public class UnarchiveConfirmationFragment extends DialogFragment {
     public static UnarchiveConfirmationFragment newInstance(
             @NonNull UnarchiveUserActionRequired dialogData) {
         Bundle args = new Bundle();
-        args.putString(ARGS_APP_LABEL, dialogData.getAppTitle());
+        args.putParcelable(ARGS_APP_SNIPPET, dialogData.getAppSnippet());
         args.putString(ARGS_INSTALLER_LABEL, dialogData.getInstallerTitle());
 
         UnarchiveConfirmationFragment dialog = new UnarchiveConfirmationFragment();
@@ -78,14 +82,22 @@ public class UnarchiveConfirmationFragment extends DialogFragment {
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
 
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
+        ((ImageView) dialogView.requireViewById(R.id.app_icon))
+            .setImageDrawable(mDialogData.getAppIcon());
+        ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
+
+        TextView customMessage = dialogView.requireViewById(R.id.custom_message);
+        customMessage.setVisibility(View.VISIBLE);
+        customMessage.setText(getString(R.string.message_restore, mDialogData.getInstallerTitle()));
+
         mDialog = new AlertDialog.Builder(requireActivity())
-                .setTitle(
-                        String.format(getContext().getString(R.string.unarchive_application_title),
-                                mDialogData.getAppTitle(), mDialogData.getInstallerTitle()))
-                .setMessage(R.string.unarchive_body_text)
-                .setPositiveButton(R.string.restore,
+                .setTitle(getContext().getString(R.string.title_restore))
+                .setView(dialogView)
+                .setPositiveButton(R.string.button_restore,
                         (dialog, which) -> mUnarchiveActionListener.beginUnarchive())
-                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                .setNegativeButton(R.string.button_cancel, (dialog, which) -> {
                 })
                 .create();
         return mDialog;
@@ -124,9 +136,10 @@ public class UnarchiveConfirmationFragment extends DialogFragment {
     }
 
     private void setDialogData(Bundle args) {
-        String appTitle = args.getString(ARGS_APP_LABEL);
+        PackageUtil.AppSnippet appSnippet = args.getParcelable(ARGS_APP_SNIPPET,
+                PackageUtil.AppSnippet.class);
         String installerTitle = args.getString(ARGS_INSTALLER_LABEL);
 
-        mDialogData = new UnarchiveUserActionRequired(appTitle, installerTitle);
+        mDialogData = new UnarchiveUserActionRequired(appSnippet, installerTitle);
     }
 }

@@ -58,6 +58,14 @@
     <string name="title_archive">Archive this app?</string>
     <string name="title_archive_all_users">Archive this app for all users?</string>
     <string name="title_archive_other_user">Archive this app for user \'<xliff:g id="user_name">%1$s</xliff:g>\'?</string>
+    <string name="title_restore">Restore this app?</string>
+    <string name="title_restore_error_user_action_needed">Action required</string>
+    <string name="title_restore_error_less_storage">Not enough storage</string>
+    <string name="title_restore_error_offline">You\'re offline</string>
+    <string name="title_restore_error_installer_disabled"><xliff:g id="installer_name">%1$s</xliff:g> is disabled</string>
+    <string name="title_restore_error_installer_absent"><xliff:g id="installer_name">%1$s</xliff:g> is uninstalled</string>
+    <string name="title_restore_error_generic">Something went wrong</string>
+
     <!-- Dialog Titles end -->
 
     <!-- Dialog Messages -->
@@ -93,6 +101,14 @@
     <string name="message_archive_work_profile">This app will be archived from your work profile. Your app data will be saved.</string>
     <string name="message_archive_private_space">This app will be archived from your private space. Your app data will be saved.</string>
 
+    <string name="message_restore">This app download from <xliff:g id="installer_name">%1$s</xliff:g> in the background</string>
+    <string name="message_restore_error_user_action_needed"><xliff:g id="installer_name">%1$s</xliff:g> needs more information before you can restore this app</string>
+    <string name="message_restore_error_less_storage">To restore this app, free up &lt;b><xliff:g id="bytes">%1$s</xliff:g>&lt;/b> and try again </string>
+    <string name="message_restore_error_offline">To restore this app, check your internet connection and try again</string>
+    <string name="message_restore_error_installer_disabled">To restore this app, enable <xliff:g id="installername" example="App Store">%1$s</xliff:g> in Settings</string>
+    <string name="message_restore_error_installer_absent">To restore this app, you\'ll need to install <xliff:g id="installer_name">%1$s</xliff:g></string>
+    <string name="message_restore_error_generic">There was a problem trying to restore this app</string>
+
     <!-- TODO: These strings are placeholders, until UX finalizes strings for Uninstall flow. -->
     <string name="message_uninstall_activity"><xliff:g id="activity_name">%1$s</xliff:g> is part of the following app: <xliff:g id="app_name">%2$s</xliff:g></string>
     <!-- End of placeholder strings -->
@@ -112,7 +128,9 @@
     <string name="button_reinstall">Reinstall</string>
     <string name="button_manage_apps">Manage apps</string>
     <string name="button_archive">Archive</string>
+    <string name="button_restore">Restore</string>
     <string name="button_uninstall_updates_system_app">Uninstall updates</string>
+    <string name="button_settings">Settings</string>
     <!-- Dialog Buttons end -->
 
     <!-- Miscellaneous -->

@@ -28,11 +28,10 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Process
 import android.util.Log
-
+import com.android.packageinstaller.v2.model.PackageUtil.getAppSnippet
 import com.android.packageinstaller.v2.model.PackageUtil.getPackageNameForUid
 import com.android.packageinstaller.v2.model.PackageUtil.isPermissionGranted
 import com.android.packageinstaller.v2.model.PackageUtil.isUidRequestingPermission
-
 import java.io.IOException
 
 class UnarchiveRepository(private val context: Context) {
@@ -85,9 +84,11 @@ class UnarchiveRepository(private val context: Context) {
     }
 
     fun showUnarchivalConfirmation(): UnarchiveStage {
-        var appTitle: String
+        var appSnippet: PackageUtil.AppSnippet
         try {
-            appTitle = getAppTitle(targetPackageName, PackageManager.MATCH_ARCHIVED_PACKAGES)
+            val applicationInfo = packageManager.getApplicationInfo(targetPackageName,
+                PackageManager.ApplicationInfoFlags.of(PackageManager.MATCH_ARCHIVED_PACKAGES))
+            appSnippet = getAppSnippet(context, applicationInfo)
         } catch (e: NameNotFoundException) {
             Log.e(LOG_TAG, "Invalid packageName $targetPackageName: ", e)
             return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
@@ -108,7 +109,7 @@ class UnarchiveRepository(private val context: Context) {
             return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
         }
 
-        return UnarchiveUserActionRequired(appTitle, installerTitle)
+        return UnarchiveUserActionRequired(appSnippet, installerTitle)
     }
 
     @Throws(NameNotFoundException::class)
@@ -146,7 +147,7 @@ class UnarchiveRepository(private val context: Context) {
             PendingIntent::class.java
         )
         when (unarchivalStatus) {
-            PackageInstaller.UNARCHIVAL_ERROR_USER_ACTION_NEEDED ->
+            PackageInstaller.UNARCHIVAL_ERROR_USER_ACTION_NEEDED -> {
                 if (pendingIntent == null) {
                     Log.e(
                         LOG_TAG,
@@ -155,6 +156,17 @@ class UnarchiveRepository(private val context: Context) {
                     )
                     return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
                 }
+
+                if (installerAppTitle == null) {
+                    Log.e(
+                        LOG_TAG,
+                        "Installer app title is required for unarchive error code " +
+                                "${PackageInstaller.UNARCHIVAL_ERROR_USER_ACTION_NEEDED}"
+                    )
+                    return UnarchiveAborted(UnarchiveAborted.ABORT_REASON_GENERIC_ERROR)
+                }
+            }
+
 
             PackageInstaller.UNARCHIVAL_ERROR_INSUFFICIENT_STORAGE -> {
                 if (requiredBytes == 0L) {

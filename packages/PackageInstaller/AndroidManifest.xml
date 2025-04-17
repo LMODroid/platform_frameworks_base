@@ -180,7 +180,7 @@
 
         <activity android:name=".v2.ui.UnarchiveLaunch"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/Theme.AlertDialogActivity"
+            android:theme="@style/Theme.PackageInstaller"
             android:exported="false"/>
     </application>
 

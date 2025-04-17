@@ -29,8 +29,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInstaller;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -81,8 +84,11 @@ public class UnarchiveErrorFragment extends DialogFragment implements
         setDialogData(requireArguments());
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireActivity());
-        setDialogContent(dialogBuilder, mDialogData.getUnarchivalStatus(),
+        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireActivity())
+                .setView(dialogView);
+        setDialogContent(dialogBuilder, dialogView, mDialogData.getUnarchivalStatus(),
                 mDialogData.getInstallerAppTitle(), mDialogData.getRequiredBytes());
         return dialogBuilder.create();
     }
@@ -99,50 +105,64 @@ public class UnarchiveErrorFragment extends DialogFragment implements
         );
     }
 
-    private void setDialogContent(AlertDialog.Builder builder, int status, String installerAppTitle,
-                                  long requiredBytes) {
+    private void setDialogContent(AlertDialog.Builder builder, View dialogView, int status,
+                                  String installerAppTitle, long requiredBytes) {
+
+        TextView customMessage = dialogView.requireViewById(R.id.custom_message);
+        customMessage.setVisibility(View.VISIBLE);
+
         switch (status) {
-            case PackageInstaller.UNARCHIVAL_ERROR_USER_ACTION_NEEDED ->
-                builder.setTitle(getString(R.string.unarchive_action_required_title))
-                    .setMessage(getString(R.string.unarchive_action_required_body))
-                    .setPositiveButton(R.string.unarchive_action_required_continue, this)
-                    .setNegativeButton(R.string.close, this);
+            case PackageInstaller.UNARCHIVAL_ERROR_USER_ACTION_NEEDED -> {
+                builder.setTitle(getString(R.string.title_restore_error_user_action_needed))
+                        .setPositiveButton(R.string.button_continue, this)
+                        .setNegativeButton(R.string.button_cancel, this);
+                customMessage.setText(
+                        getString(R.string.message_restore_error_user_action_needed,
+                            installerAppTitle));
+            }
 
-            case PackageInstaller.UNARCHIVAL_ERROR_INSUFFICIENT_STORAGE ->
-                builder.setTitle(getString(R.string.unarchive_error_storage_title))
-                    .setMessage(String.format(getString(R.string.unarchive_error_storage_body),
-                        Formatter.formatShortFileSize(getActivity(), requiredBytes)))
-                    .setPositiveButton(R.string.unarchive_clear_storage_button, this)
-                    .setNegativeButton(R.string.close, this);
+            case PackageInstaller.UNARCHIVAL_ERROR_INSUFFICIENT_STORAGE -> {
+                builder.setTitle(getString(R.string.title_restore_error_less_storage))
+                        .setPositiveButton(R.string.button_manage_apps, this)
+                        .setNegativeButton(R.string.button_cancel, this);
+                String message = String.format(
+                        getString(R.string.message_restore_error_less_storage),
+                            Formatter.formatShortFileSize(getActivity(), requiredBytes));
+                customMessage.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
+            }
 
-            case PackageInstaller.UNARCHIVAL_ERROR_NO_CONNECTIVITY ->
-                builder.setTitle(getString(R.string.unarchive_error_offline_title))
-                    .setMessage(getString(R.string.unarchive_error_offline_body))
-                    .setPositiveButton(android.R.string.ok, this);
+            case PackageInstaller.UNARCHIVAL_ERROR_NO_CONNECTIVITY -> {
+                builder.setTitle(getString(R.string.title_restore_error_offline))
+                        .setNegativeButton(R.string.button_close, this);
+                customMessage.setText(getString(R.string.message_restore_error_offline));
+            }
 
-            case PackageInstaller.UNARCHIVAL_ERROR_INSTALLER_DISABLED ->
+            case PackageInstaller.UNARCHIVAL_ERROR_INSTALLER_DISABLED -> {
                 builder.setTitle(String.format(
-                        getString(R.string.unarchive_error_installer_disabled_title),
-                        installerAppTitle))
-                    .setMessage(String.format(
-                        getString(R.string.unarchive_error_installer_disabled_body),
-                        installerAppTitle))
-                    .setPositiveButton(R.string.external_sources_settings, this)
-                    .setNegativeButton(R.string.close, this);
+                        getString(R.string.title_restore_error_installer_disabled),
+                            installerAppTitle))
+                        .setPositiveButton(R.string.button_settings, this)
+                        .setNegativeButton(R.string.button_cancel, this);
+                customMessage.setText(String.format(
+                        getString(R.string.message_restore_error_installer_disabled),
+                            installerAppTitle));
+            }
 
-            case PackageInstaller.UNARCHIVAL_ERROR_INSTALLER_UNINSTALLED ->
+            case PackageInstaller.UNARCHIVAL_ERROR_INSTALLER_UNINSTALLED -> {
                 builder.setTitle(String.format(
-                        getString(R.string.unarchive_error_installer_uninstalled_title),
-                        installerAppTitle))
-                    .setMessage(String.format(
-                        getString(R.string.unarchive_error_installer_uninstalled_body),
-                        installerAppTitle))
-                    .setPositiveButton(android.R.string.ok, this);
+                        getString(R.string.title_restore_error_installer_absent),
+                            installerAppTitle))
+                        .setNegativeButton(R.string.button_close, this);
+                customMessage.setText(String.format(
+                        getString(R.string.message_restore_error_installer_absent),
+                            installerAppTitle));
+            }
 
-            case PackageInstaller.UNARCHIVAL_GENERIC_ERROR ->
-                builder.setTitle(getString(R.string.unarchive_error_generic_title))
-                    .setMessage(getString(R.string.unarchive_error_generic_body))
-                    .setPositiveButton(android.R.string.ok, this);
+            case PackageInstaller.UNARCHIVAL_GENERIC_ERROR -> {
+                builder.setTitle(getString(R.string.title_restore_error_generic))
+                        .setNegativeButton(R.string.button_close, this);
+                customMessage.setText(getString(R.string.message_restore_error_generic));
+            }
 
             default ->
                 // This should never happen through normal API usage.
