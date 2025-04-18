@@ -26,7 +26,7 @@ import com.android.systemui.statusbar.policy.batteryController
 /** Use [Kosmos.batteryController.fake] to make the repo have the state you want */
 val Kosmos.batteryRepository by
     Kosmos.Fixture {
-        BatteryRepository(
+        BatteryRepositoryImpl(
             testableContext,
             testScope.backgroundScope,
             testDispatcher,

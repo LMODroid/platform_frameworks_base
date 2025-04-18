@@ -234,7 +234,7 @@ constructor(interactor: BatteryInteractor, @Application context: Context) :
         )
 
     @AssistedFactory
-    interface Factory {
+    fun interface Factory {
         fun create(): UnifiedBatteryViewModel
     }
 

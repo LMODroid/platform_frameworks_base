@@ -47,7 +47,7 @@ class BatteryRepositoryTest : SysuiTestCase() {
 
     val Kosmos.underTest by
         Kosmos.Fixture {
-            BatteryRepository(
+            BatteryRepositoryImpl(
                 testableContext,
                 backgroundScope,
                 testDispatcher,
