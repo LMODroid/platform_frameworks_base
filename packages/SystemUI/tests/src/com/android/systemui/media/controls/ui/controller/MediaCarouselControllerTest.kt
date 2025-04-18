@@ -399,6 +399,7 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         )
     }
 
+    @DisableSceneContainer
     @Test
     fun testSwipeDismiss_logged() {
         mediaCarouselController.mediaCarouselScrollHandler.dismissCallback.invoke()
@@ -521,11 +522,13 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         verify(pageIndicator).alpha = floatThat { abs(it - 1.0F) < delta }
     }
 
+    @DisableSceneContainer
     @Test
     fun testOnConfigChanged_playersAreAddedBack() {
         testConfigurationChange { configListener.value.onConfigChanged(Configuration()) }
     }
 
+    @DisableSceneContainer
     @Test
     fun testOnUiModeChanged_playersAreAddedBack() {
         testConfigurationChange(configListener.value::onUiModeChanged)
@@ -535,6 +538,7 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         verify(pageIndicator, times(2)).setNumPages(any())
     }
 
+    @DisableSceneContainer
     @Test
     fun testOnDensityOrFontScaleChanged_playersAreAddedBack() {
         testConfigurationChange(configListener.value::onDensityOrFontScaleChanged)
@@ -545,6 +549,7 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         verify(pageIndicator, times(4)).setNumPages(any())
     }
 
+    @DisableSceneContainer
     @Test
     fun testOnThemeChanged_playersAreAddedBack() {
         testConfigurationChange(configListener.value::onThemeChanged)
@@ -554,6 +559,7 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         verify(pageIndicator, times(2)).setNumPages(any())
     }
 
+    @DisableSceneContainer
     @Test
     fun testOnLocaleListChanged_playersAreAddedBack() {
         context.resources.configuration.setLocales(LocaleList(Locale.US, Locale.UK, Locale.CANADA))
@@ -790,6 +796,7 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         }
     }
 
+    @DisableSceneContainer
     @Test
     fun testInvisibleToUserAndExpanded_playersNotListening() {
         // Add players to carousel.
@@ -811,6 +818,7 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         verify(panel, times(MediaPlayerData.players().size)).listening = false
     }
 
+    @DisableSceneContainer
     @Test
     fun testVisibleToUserAndExpanded_playersListening() {
         // Add players to carousel.
@@ -825,6 +833,7 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         verify(panel, times(MediaPlayerData.players().size)).listening = true
     }
 
+    @DisableSceneContainer
     @Test
     fun testUMOCollapsed_playersNotListening() {
         // Add players to carousel.
@@ -857,6 +866,7 @@ class MediaCarouselControllerTest : SysuiTestCase() {
         assertTrue(stateUpdated)
     }
 
+    @DisableSceneContainer
     @Test
     fun testAnimationScaleChanged_mediaControlPanelsNotified() {
         MediaPlayerData.addMediaPlayer("key", DATA, panel, clock)

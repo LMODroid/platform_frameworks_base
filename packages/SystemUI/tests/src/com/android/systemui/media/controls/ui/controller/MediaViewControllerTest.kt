@@ -39,6 +39,7 @@ import androidx.test.filters.SmallTest
 import com.android.internal.widget.CachingIconView
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.dump.DumpManager
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.media.controls.ui.view.GutsViewHolder
 import com.android.systemui.media.controls.ui.view.MediaHost
@@ -174,6 +175,7 @@ class MediaViewControllerTest : SysuiTestCase() {
         }
     }
 
+    @DisableSceneContainer
     @Test
     fun testObtainViewState_applySquishFraction_toPlayerTransitionViewState_height() {
         mediaViewController.attach(player)
