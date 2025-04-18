@@ -44,8 +44,6 @@ import com.android.systemui.keyguard.shared.model.BiometricUnlockMode
 import com.android.systemui.keyguard.shared.model.DozeStateModel
 import com.android.systemui.keyguard.shared.model.DozeTransitionModel
 import com.android.systemui.keyguard.shared.model.KeyguardState
-import com.android.systemui.keyguard.shared.model.KeyguardState.GONE
-import com.android.systemui.keyguard.shared.model.KeyguardState.LOCKSCREEN
 import com.android.systemui.keyguard.shared.model.TransitionState
 import com.android.systemui.keyguard.util.KeyguardTransitionRepositorySpySubject.Companion.assertThat
 import com.android.systemui.kosmos.Kosmos
@@ -63,6 +61,7 @@ import com.android.systemui.testKosmos
 import com.google.common.truth.Truth
 import junit.framework.Assert.assertEquals
 import kotlin.time.Duration.Companion.milliseconds
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceTimeBy
@@ -78,6 +77,7 @@ import org.mockito.kotlin.whenever
 import platform.test.runner.parameterized.ParameterizedAndroidJunit4
 import platform.test.runner.parameterized.Parameters
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(ParameterizedAndroidJunit4::class)
 @EnableFlags(FLAG_COMMUNAL_HUB)
@@ -166,7 +166,8 @@ class FromDozingTransitionInteractorTest(flags: FlagsParameterization?) : SysuiT
 
             // If dreaming is possible and communal is available, then we should transition to
             // GLANCEABLE_HUB when waking up due to power button press.
-            verify(fakeCommunalSceneRepository).snapToScene(CommunalScenes.Communal)
+            verify(fakeCommunalSceneRepository)
+                .instantlyTransitionTo(CommunalScenes.Communal, emptySet())
         }
 
     @Test
@@ -321,7 +322,9 @@ class FromDozingTransitionInteractorTest(flags: FlagsParameterization?) : SysuiT
     fun testTransitionToGone_onWakeUp_ifPowerButtonGestureDetected_fromGone() =
         kosmos.runTest {
             val isGone by
-                collectLastValue(keyguardTransitionInteractor.isFinishedIn(Scenes.Gone, GONE))
+                collectLastValue(
+                    keyguardTransitionInteractor.isFinishedIn(Scenes.Gone, KeyguardState.GONE)
+                )
             powerInteractor.setAwakeForTest()
             transitionRepository.sendTransitionSteps(
                 from = KeyguardState.DOZING,
@@ -361,7 +364,10 @@ class FromDozingTransitionInteractorTest(flags: FlagsParameterization?) : SysuiT
         kosmos.runTest {
             val isGone by
                 collectLastValue(
-                    kosmos.keyguardTransitionInteractor.isFinishedIn(Scenes.Gone, GONE)
+                    kosmos.keyguardTransitionInteractor.isFinishedIn(
+                        Scenes.Gone,
+                        KeyguardState.GONE,
+                    )
                 )
             powerInteractor.setAwakeForTest()
             transitionRepository.sendTransitionSteps(
@@ -398,7 +404,10 @@ class FromDozingTransitionInteractorTest(flags: FlagsParameterization?) : SysuiT
         kosmos.runTest {
             val isLockscreen by
                 collectLastValue(
-                    kosmos.keyguardTransitionInteractor.isFinishedIn(Scenes.Lockscreen, LOCKSCREEN)
+                    kosmos.keyguardTransitionInteractor.isFinishedIn(
+                        Scenes.Lockscreen,
+                        KeyguardState.LOCKSCREEN,
+                    )
                 )
             powerInteractor.setAwakeForTest()
             transitionRepository.sendTransitionSteps(

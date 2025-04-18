@@ -300,7 +300,7 @@ constructor(
         )
 
         if (bouncerShowing) {
-            repository.snapToScene(resolvedScene)
+            repository.instantlyTransitionTo(resolvedScene)
             hideOverlay(Overlays.Bouncer, "Hiding on changeScene for: ($loggingReason)")
         } else {
             repository.changeScene(resolvedScene, transitionKey)
@@ -342,7 +342,7 @@ constructor(
             isInstant = true,
         )
 
-        repository.snapToScene(resolvedScene)
+        repository.instantlyTransitionTo(resolvedScene)
         instantlyHideOverlay(Overlays.Bouncer, "Hiding on snapToScene for: ($loggingReason)")
     }
 
@@ -411,7 +411,7 @@ constructor(
 
         logger.logOverlayChangeRequested(to = overlay, reason = loggingReason)
 
-        repository.instantlyShowOverlay(overlay)
+        repository.instantlyTransitionTo(overlays = currentOverlays.value + overlay)
     }
 
     /**
@@ -427,7 +427,7 @@ constructor(
 
         logger.logOverlayChangeRequested(from = overlay, reason = loggingReason)
 
-        repository.instantlyHideOverlay(overlay)
+        repository.instantlyTransitionTo(overlays = currentOverlays.value - overlay)
     }
 
     /**

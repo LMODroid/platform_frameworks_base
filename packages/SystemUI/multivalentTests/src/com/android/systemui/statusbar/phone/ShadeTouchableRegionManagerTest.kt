@@ -31,12 +31,14 @@ import com.android.systemui.testKosmos
 import com.android.systemui.util.kotlin.getValue
 import com.google.common.truth.Truth.assertThat
 import dagger.Lazy
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class ShadeTouchableRegionManagerTest : SysuiTestCase() {
@@ -120,12 +122,12 @@ class ShadeTouchableRegionManagerTest : SysuiTestCase() {
         testScope.runTest {
             assertThat(underTest.shouldMakeEntireScreenTouchable()).isFalse()
 
-            kosmos.fakeCommunalSceneRepository.snapToScene(CommunalScenes.Communal)
+            kosmos.fakeCommunalSceneRepository.instantlyTransitionTo(CommunalScenes.Communal)
             runCurrent()
 
             assertThat(underTest.shouldMakeEntireScreenTouchable()).isTrue()
 
-            kosmos.fakeCommunalSceneRepository.snapToScene(CommunalScenes.Blank)
+            kosmos.fakeCommunalSceneRepository.instantlyTransitionTo(CommunalScenes.Blank)
             runCurrent()
 
             assertThat(underTest.shouldMakeEntireScreenTouchable()).isFalse()

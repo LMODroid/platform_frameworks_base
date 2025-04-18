@@ -511,7 +511,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.keyguardOcclusionRepository.setShowWhenLockedActivityInfo(false, taskInfo = null)
 
             assertThat(latest).isFalse()
@@ -523,7 +523,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.keyguardOcclusionRepository.setShowWhenLockedActivityInfo(true, taskInfo = null)
 
             assertThat(latest).isTrue()
@@ -535,7 +535,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.sceneContainerRepository.showOverlay(Overlays.Bouncer)
 
             assertThat(latest).isFalse()
@@ -547,7 +547,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Communal)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Communal)
 
             assertThat(latest).isFalse()
         }
@@ -558,7 +558,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Shade)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Shade)
 
             assertThat(latest).isFalse()
         }
@@ -569,7 +569,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Gone)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
 
             assertThat(latest).isTrue()
         }
@@ -580,7 +580,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Gone)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
             kosmos.sceneContainerRepository.showOverlay(Overlays.NotificationsShade)
             runCurrent()
 
@@ -594,7 +594,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Gone)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
             kosmos.sceneContainerRepository.showOverlay(Overlays.QuickSettingsShade)
             kosmos.fakeShadeDisplaysRepository.setDisplayId(EXTERNAL_DISPLAY)
             runCurrent()
@@ -609,7 +609,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Gone)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
             kosmos.sceneContainerRepository.showOverlay(Overlays.QuickSettingsShade)
             kosmos.fakeShadeDisplaysRepository.setDisplayId(EXTERNAL_DISPLAY)
             runCurrent()
@@ -625,7 +625,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Gone)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
             kosmos.sceneContainerRepository.showOverlay(Overlays.QuickSettingsShade)
             kosmos.fakeShadeDisplaysRepository.setDisplayId(DEFAULT_DISPLAY)
             runCurrent()
@@ -640,7 +640,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val underTest = homeStatusBarViewModelFactory(EXTERNAL_DISPLAY)
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Gone)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
             kosmos.sceneContainerRepository.showOverlay(Overlays.QuickSettingsShade)
             runCurrent()
 
@@ -653,7 +653,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         kosmos.runTest {
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             runCurrent()
 
             assertThat(latest).isFalse()
@@ -662,12 +662,12 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
     @Test
     @EnableSceneContainer
     @EnableFlags(Flags.FLAG_SHADE_WINDOW_GOES_AROUND)
-    fun isHomeStatusBarAllowed_onExternalDispalyWithLocksceren_invisible() =
+    fun isHomeStatusBarAllowed_onExternalDisplayWithLocksceren_invisible() =
         kosmos.runTest {
             val underTest = homeStatusBarViewModelFactory(EXTERNAL_DISPLAY)
             val latest by collectLastValue(underTest.isHomeStatusBarAllowed)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             runCurrent()
 
             assertThat(latest).isFalse()
@@ -787,7 +787,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val latest by collectLastValue(underTest.canShowOngoingActivityChips)
 
             // home status bar not allowed
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.keyguardOcclusionRepository.setShowWhenLockedActivityInfo(false, taskInfo = null)
 
             assertThat(latest).isFalse()
@@ -895,7 +895,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
     fun ongoingActivityChips_statusBarHidden_noSecureCamera_noHun_notAllowed() =
         kosmos.runTest {
             // home status bar not allowed
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.keyguardOcclusionRepository.setShowWhenLockedActivityInfo(false, taskInfo = null)
 
             assertThat(underTest.ongoingActivityChips.areChipsAllowed).isFalse()
@@ -1045,7 +1045,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val latestSystemInfo by collectLastValue(underTest.systemInfoCombinedVis)
 
             // WHEN on lockscreen with bypass enabled
-            sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             fakeDeviceEntryFaceAuthRepository.isBypassEnabled.value = true
             // WHEN there's a HUN
             headsUpNotificationRepository.setNotifications(
@@ -1096,7 +1096,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val latestSystemInfo by collectLastValue(underTest.systemInfoCombinedVis)
 
             // WHEN on lockscreen with bypass enabled
-            sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             fakeDeviceEntryFaceAuthRepository.isBypassEnabled.value = true
             // WHEN there's a HUN
             headsUpNotificationRepository.setNotifications(
@@ -1478,7 +1478,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
             val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
 
             assertThat(clockVisible!!.visibility).isEqualTo(View.INVISIBLE)
             assertThat(notifIconsVisible!!.visibility).isEqualTo(View.GONE)
@@ -1512,7 +1512,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
             val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.sceneContainerRepository.showOverlay(Overlays.Bouncer)
 
             assertThat(clockVisible!!.visibility).isEqualTo(View.INVISIBLE)
@@ -1547,7 +1547,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
             val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.keyguardOcclusionRepository.setShowWhenLockedActivityInfo(true, taskInfo = null)
 
             assertThat(clockVisible!!.visibility).isEqualTo(View.VISIBLE)
@@ -1594,7 +1594,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
             val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Gone)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
 
             assertThat(clockVisible!!.visibility).isEqualTo(View.VISIBLE)
             assertThat(notifIconsVisible!!.visibility).isEqualTo(View.VISIBLE)
@@ -1735,7 +1735,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
             transitionKeyguardToGone()
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Shade)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Shade)
 
             assertThat(clockVisible!!.visibility).isEqualTo(View.INVISIBLE)
             assertThat(notifIconsVisible!!.visibility).isEqualTo(View.GONE)
@@ -1771,7 +1771,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
             val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             // Secure camera is an occluding activity
             kosmos.keyguardOcclusionRepository.setShowWhenLockedActivityInfo(true, taskInfo = null)
             kosmos.keyguardInteractor.onCameraLaunchDetected(CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP)

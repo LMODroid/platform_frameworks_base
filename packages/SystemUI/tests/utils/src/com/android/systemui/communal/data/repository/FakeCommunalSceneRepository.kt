@@ -24,18 +24,11 @@ class FakeCommunalSceneRepository(
     private val applicationScope: CoroutineScope,
     override val currentScene: MutableStateFlow<SceneKey> =
         MutableStateFlow(CommunalScenes.Default),
-    override val currentOverlays: StateFlow<Set<OverlayKey>> = MutableStateFlow(emptySet()),
+    override val currentOverlays: MutableStateFlow<Set<OverlayKey>> = MutableStateFlow(emptySet()),
 ) : CommunalSceneRepository {
 
     override fun changeScene(toScene: SceneKey, transitionKey: TransitionKey?) =
-        snapToScene(toScene)
-
-    override fun snapToScene(toScene: SceneKey) {
-        applicationScope.launch {
-            currentScene.value = toScene
-            _transitionState.value = flowOf(ObservableTransitionState.Idle(toScene))
-        }
-    }
+        instantlyTransitionTo(scene = toScene)
 
     override fun showOverlay(overlay: OverlayKey, transitionKey: TransitionKey?) = Unit
 
@@ -44,17 +37,22 @@ class FakeCommunalSceneRepository(
     override fun replaceOverlay(from: OverlayKey, to: OverlayKey, transitionKey: TransitionKey?) =
         Unit
 
-    override fun instantlyShowOverlay(overlay: OverlayKey) = Unit
-
-    override fun instantlyHideOverlay(overlay: OverlayKey) = Unit
-
     override fun freezeAndAnimateToCurrentState() = Unit
 
-    override fun showHubFromPowerButton() {
-        snapToScene(CommunalScenes.Communal)
+    override fun instantlyTransitionTo(scene: SceneKey, overlays: Set<OverlayKey>) {
+        applicationScope.launch {
+            currentScene.value = scene
+            currentOverlays.value = overlays
+            _transitionState.value = flowOf(ObservableTransitionState.Idle(scene, overlays))
+        }
     }
 
-    private val defaultTransitionState = ObservableTransitionState.Idle(CommunalScenes.Default)
+    override fun showHubFromPowerButton() {
+        instantlyTransitionTo(CommunalScenes.Communal)
+    }
+
+    private val defaultTransitionState =
+        ObservableTransitionState.Idle(currentScene.value, currentOverlays.value)
     private val _transitionState = MutableStateFlow<Flow<ObservableTransitionState>?>(null)
     override val transitionState: StateFlow<ObservableTransitionState> =
         _transitionState

@@ -72,6 +72,7 @@ import com.android.systemui.util.settings.SecureSettings
 import com.android.systemui.util.time.FakeSystemClock
 import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -87,6 +88,7 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 @RunWithLooper(setAsMainLooper = true)
@@ -802,10 +804,10 @@ class KeyguardStatusBarViewControllerTest : SysuiTestCase() {
 
                 looper.processAllMessages()
                 updateStateToKeyguard()
-                kosmos.fakeCommunalSceneRepository.snapToScene(CommunalScenes.Communal)
+                kosmos.fakeCommunalSceneRepository.instantlyTransitionTo(CommunalScenes.Communal)
                 runCurrent()
                 controller.updateCommunalAlphaTransition(transitionAlphaAmount)
-                assertThat(keyguardStatusBarView.getAlpha()).isEqualTo(transitionAlphaAmount)
+                assertThat(keyguardStatusBarView.alpha).isEqualTo(transitionAlphaAmount)
             } finally {
                 ViewUtils.detachView(keyguardStatusBarView)
             }
@@ -822,12 +824,12 @@ class KeyguardStatusBarViewControllerTest : SysuiTestCase() {
 
                 looper.processAllMessages()
                 updateStateToKeyguard()
-                kosmos.fakeCommunalSceneRepository.snapToScene(CommunalScenes.Communal)
+                kosmos.fakeCommunalSceneRepository.instantlyTransitionTo(CommunalScenes.Communal)
                 runCurrent()
                 controller.updateCommunalAlphaTransition(transitionAlphaAmount)
-                kosmos.fakeCommunalSceneRepository.snapToScene(CommunalScenes.Blank)
+                kosmos.fakeCommunalSceneRepository.instantlyTransitionTo(CommunalScenes.Blank)
                 runCurrent()
-                assertThat(keyguardStatusBarView.getAlpha()).isNotEqualTo(transitionAlphaAmount)
+                assertThat(keyguardStatusBarView.alpha).isNotEqualTo(transitionAlphaAmount)
             } finally {
                 ViewUtils.detachView(keyguardStatusBarView)
             }

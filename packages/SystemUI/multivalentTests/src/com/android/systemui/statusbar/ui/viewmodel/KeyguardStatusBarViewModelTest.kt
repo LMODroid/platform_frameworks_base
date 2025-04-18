@@ -99,7 +99,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
     fun isVisible_lockscreen_true() =
         testScope.runTest {
             val latest by collectLastValue(underTest.isVisible)
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
 
             assertThat(latest).isTrue()
         }
@@ -108,7 +108,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
     fun isVisible_dozing_false() =
         testScope.runTest {
             val latest by collectLastValue(underTest.isVisible)
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
 
             keyguardRepository.setIsDozing(true)
 
@@ -120,7 +120,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         testScope.runTest {
             val latest by collectLastValue(underTest.isVisible)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Shade)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Shade)
 
             assertThat(latest).isFalse()
         }
@@ -130,7 +130,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         testScope.runTest {
             val latest by collectLastValue(underTest.isVisible)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.sceneContainerRepository.showOverlay(Overlays.NotificationsShade)
             runCurrent()
 
@@ -142,7 +142,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         testScope.runTest {
             val latest by collectLastValue(underTest.isVisible)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.sceneContainerRepository.showOverlay(Overlays.QuickSettingsShade)
             runCurrent()
 
@@ -154,7 +154,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         testScope.runTest {
             val latest by collectLastValue(underTest.isVisible)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             kosmos.sceneContainerRepository.showOverlay(Overlays.Bouncer)
 
             assertThat(latest).isFalse()
@@ -173,7 +173,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
                 KeyguardState.LOCKSCREEN,
                 testSetup = true,
             )
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             faceAuthRepository.isBypassEnabled.value = true
 
             // THEN KeyguardStatusBar is NOT visible to make space for HeadsUpStatusBar
@@ -193,7 +193,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
                 KeyguardState.LOCKSCREEN,
                 testSetup = true,
             )
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             faceAuthRepository.isBypassEnabled.value = true
 
             // THEN KeyguardStatusBar is still visible because StatusBarNoHunBehavior is enabled
@@ -205,7 +205,7 @@ class KeyguardStatusBarViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         testScope.runTest {
             val latest by collectLastValue(underTest.isVisible)
 
-            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.sceneContainerRepository.instantlyTransitionTo(Scenes.Lockscreen)
             keyguardRepository.setIsDozing(false)
 
             assertThat(latest).isTrue()

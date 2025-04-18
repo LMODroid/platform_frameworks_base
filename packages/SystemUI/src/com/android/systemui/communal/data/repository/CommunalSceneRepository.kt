@@ -125,8 +125,6 @@ constructor(
 
         override fun changeScene(toScene: SceneKey, transitionKey: TransitionKey?) = Unit
 
-        override fun snapToScene(toScene: SceneKey) = Unit
-
         override fun showOverlay(overlay: OverlayKey, transitionKey: TransitionKey?) = Unit
 
         override fun hideOverlay(overlay: OverlayKey, transitionKey: TransitionKey?) = Unit
@@ -137,10 +135,8 @@ constructor(
             transitionKey: TransitionKey?,
         ) = Unit
 
-        override fun instantlyShowOverlay(overlay: OverlayKey) = Unit
-
-        override fun instantlyHideOverlay(overlay: OverlayKey) = Unit
-
         override fun freezeAndAnimateToCurrentState() = Unit
+
+        override fun instantlyTransitionTo(scene: SceneKey, overlays: Set<OverlayKey>) = Unit
     }
 }
