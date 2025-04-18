@@ -29,6 +29,7 @@ import com.android.systemui.classifier.domain.interactor.falsingInteractor
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.graphics.imageLoader
 import com.android.systemui.haptics.slider.sliderHapticsViewModelFactory
+import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.res.R
@@ -51,20 +52,9 @@ class BrightnessSliderViewModelTest : SysuiTestCase() {
 
     private val kosmos = testKosmos()
 
-    private val underTest by lazy {
-        with(kosmos) {
-            BrightnessSliderViewModel(
-                screenBrightnessInteractor,
-                brightnessPolicyEnforcementInteractor,
-                sliderHapticsViewModelFactory,
-                brightnessMirrorShowingInteractor,
-                falsingInteractor,
-                supportsMirroring = true,
-                brightnessWarningToast,
-                imageLoader,
-            )
-        }
-    }
+    private var brightnessMirrorInteractorRetrieved = false
+
+    private val underTest by lazy { kosmos.create(true) }
 
     @Before
     fun setUp() {
@@ -72,13 +62,14 @@ class BrightnessSliderViewModelTest : SysuiTestCase() {
             LinearBrightness(minBrightness),
             LinearBrightness(maxBrightness),
         )
-        underTest.activateIn(kosmos.testScope)
     }
 
     @Test
     fun brightnessChangeInRepository_changeInFlow() =
         with(kosmos) {
             testScope.runTest {
+                underTest.activateIn(this)
+
                 var brightness = 0.6f
                 fakeScreenBrightnessRepository.setBrightness(LinearBrightness(brightness))
                 runCurrent()
@@ -123,6 +114,8 @@ class BrightnessSliderViewModelTest : SysuiTestCase() {
     fun dragging_temporaryBrightnessSet_currentBrightnessDoesntChange() =
         with(kosmos) {
             testScope.runTest {
+                underTest.activateIn(this)
+
                 val temporaryBrightness by
                     collectLastValue(fakeScreenBrightnessRepository.temporaryBrightness)
 
@@ -148,6 +141,8 @@ class BrightnessSliderViewModelTest : SysuiTestCase() {
     fun draggingStopped_currentBrightnessChanges() =
         with(kosmos) {
             testScope.runTest {
+                underTest.activateIn(this)
+
                 val newBrightness = underTest.maxBrightness.value / 3
                 val drag = Drag.Stopped(GammaBrightness(newBrightness))
 
@@ -180,6 +175,8 @@ class BrightnessSliderViewModelTest : SysuiTestCase() {
     fun supportedMirror_mirrorShowingWhenDragging() =
         with(kosmos) {
             testScope.runTest {
+                underTest.activateIn(this)
+
                 val mirrorInInteractor by
                     collectLastValue(brightnessMirrorShowingInteractor.isShowing)
 
@@ -200,7 +197,8 @@ class BrightnessSliderViewModelTest : SysuiTestCase() {
                 val mirrorInInteractor by
                     collectLastValue(brightnessMirrorShowingInteractor.isShowing)
 
-                val noMirrorViewModel = brightnessSliderViewModelFactory.create(false)
+                val noMirrorViewModel = create(false)
+                noMirrorViewModel.activateIn(this)
 
                 noMirrorViewModel.setIsDragging(true)
                 assertThat(mirrorInInteractor).isEqualTo(false)
@@ -211,4 +209,35 @@ class BrightnessSliderViewModelTest : SysuiTestCase() {
                 assertThat(noMirrorViewModel.showMirror).isEqualTo(false)
             }
         }
+
+    @Test
+    fun unsupportedMirror_interactorNeverRetrieved() {
+        with(kosmos) {
+            runTest {
+                val noMirrorViewModel = brightnessSliderViewModelFactory.create(false)
+                noMirrorViewModel.activateIn(this)
+
+                noMirrorViewModel.setIsDragging(true)
+                noMirrorViewModel.setIsDragging(false)
+
+                assertThat(brightnessMirrorInteractorRetrieved).isFalse()
+            }
+        }
+    }
+
+    private fun Kosmos.create(supportsMirror: Boolean = true): BrightnessSliderViewModel {
+        return BrightnessSliderViewModel(
+            screenBrightnessInteractor,
+            brightnessPolicyEnforcementInteractor,
+            sliderHapticsViewModelFactory,
+            {
+                brightnessMirrorInteractorRetrieved = true
+                brightnessMirrorShowingInteractor
+            },
+            falsingInteractor,
+            supportsMirror,
+            brightnessWarningToast,
+            imageLoader,
+        )
+    }
 }

@@ -16,6 +16,7 @@
 
 package com.android.systemui.shade
 
+import android.os.UserHandle
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.LogBufferFactory
@@ -162,7 +163,11 @@ abstract class ShadeModule {
             sceneContainerOn: Provider<BrightnessMirrorShowingInteractorPassThrough>,
             sceneContainerOff: Provider<NotificationPanelViewController>,
         ): BrightnessMirrorShowingInteractor {
-            return if (SceneContainerFlag.isEnabled) {
+            // Do not use NPVC if the user is not system. We don't want to create an NPVC in that
+            // case.
+            return if (
+                SceneContainerFlag.isEnabled || UserHandle.myUserId() != UserHandle.USER_SYSTEM
+            ) {
                 sceneContainerOn.get()
             } else {
                 sceneContainerOff.get()

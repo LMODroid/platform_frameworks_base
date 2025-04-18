@@ -36,9 +36,11 @@ import com.android.systemui.res.R
 import com.android.systemui.settings.brightness.domain.interactor.BrightnessMirrorShowingInteractor
 import com.android.systemui.settings.brightness.ui.BrightnessWarningToast
 import com.android.systemui.utils.PolicyRestriction
+import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * View Model for a brightness slider.
@@ -55,12 +57,19 @@ constructor(
     private val screenBrightnessInteractor: ScreenBrightnessInteractor,
     private val brightnessPolicyEnforcementInteractor: BrightnessPolicyEnforcementInteractor,
     val hapticsViewModelFactory: SliderHapticsViewModel.Factory,
-    private val brightnessMirrorShowingInteractor: BrightnessMirrorShowingInteractor,
+    private val brightnessMirrorShowingInteractorLazy: Lazy<BrightnessMirrorShowingInteractor>,
     private val falsingInteractor: FalsingInteractor,
     @Assisted private val supportsMirroring: Boolean,
     private val brightnessWarningToast: BrightnessWarningToast,
     private val imageLoader: ImageLoader,
 ) : ExclusiveActivatable() {
+
+    init {
+        if (supportsMirroring) {
+            // Create eagerly only if supported
+            brightnessMirrorShowingInteractorLazy.get()
+        }
+    }
 
     private val hydrator = Hydrator("BrightnessSliderViewModel.hydrator")
 
@@ -114,11 +123,20 @@ constructor(
     }
 
     fun setIsDragging(dragging: Boolean) {
-        brightnessMirrorShowingInteractor.setMirrorShowing(dragging && supportsMirroring)
+        if (supportsMirroring) {
+            brightnessMirrorShowingInteractorLazy.get().setMirrorShowing(dragging)
+        }
     }
 
     val showMirror by
-        hydrator.hydratedStateOf("showMirror", brightnessMirrorShowingInteractor.isShowing)
+        hydrator.hydratedStateOf(
+            "showMirror",
+            if (supportsMirroring) {
+                brightnessMirrorShowingInteractorLazy.get().isShowing
+            } else {
+                MutableStateFlow(false)
+            },
+        )
 
     override suspend fun onActivated(): Nothing {
         hydrator.activate()
