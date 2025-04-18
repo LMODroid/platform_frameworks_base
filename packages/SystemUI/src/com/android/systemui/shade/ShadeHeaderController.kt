@@ -354,6 +354,7 @@ constructor(
                 date.setTextAppearance(R.style.TextAppearance_QS_Status)
                 mShadeCarrierGroup.updateTextAppearance(R.style.TextAppearance_QS_Status)
                 updateResources()
+                updateColors()
             }
 
             override fun onUiModeChanged() {
@@ -528,6 +529,12 @@ constructor(
         header
             .getConstraintSet(LARGE_SCREEN_HEADER_CONSTRAINT)
             .load(context, resources.getXml(R.xml.large_screen_shade_header))
+    }
+
+    private fun updateColors() {
+        clock.setTextAppearance(R.style.TextAppearance_QS_Status)
+        date.setTextAppearance(R.style.TextAppearance_QS_Status)
+        mShadeCarrierGroup.updateTextAppearance(R.style.TextAppearance_QS_Status)
     }
 
     private fun updateCarrierGroupPadding() {

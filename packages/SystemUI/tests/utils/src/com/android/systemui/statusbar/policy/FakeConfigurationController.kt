@@ -35,6 +35,10 @@ class FakeConfigurationController @Inject constructor() :
         listeners.forEach { it.onThemeChanged() }
     }
 
+    fun notifyUiModeChanged() {
+        listeners.forEach { it.onUiModeChanged() }
+    }
+
     fun notifyDensityOrFontScaleChanged() {
         listeners.forEach { it.onDensityOrFontScaleChanged() }
     }

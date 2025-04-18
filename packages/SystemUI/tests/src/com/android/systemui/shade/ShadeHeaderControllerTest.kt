@@ -309,6 +309,22 @@ class ShadeHeaderControllerTest : SysuiTestCase() {
     }
 
     @Test
+    fun updateUiMode_changesFontStyle() {
+        configurationController.notifyUiModeChanged()
+
+        verify(clock).setTextAppearance(R.style.TextAppearance_QS_Status)
+        verify(date).setTextAppearance(R.style.TextAppearance_QS_Status)
+    }
+
+    @Test
+    fun updateTheme_changesFontStyle() {
+        configurationController.notifyThemeChanged()
+
+        verify(clock).setTextAppearance(R.style.TextAppearance_QS_Status)
+        verify(date).setTextAppearance(R.style.TextAppearance_QS_Status)
+    }
+
+    @Test
     fun animateOutOnStartCustomizing() {
         val animator = mock(ViewPropertyAnimator::class.java, Answers.RETURNS_SELF)
         val duration = 1000L
