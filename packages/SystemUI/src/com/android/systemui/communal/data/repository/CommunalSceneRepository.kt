@@ -30,6 +30,7 @@ import com.android.systemui.scene.shared.model.SceneDataSource
 import com.android.systemui.scene.shared.model.SceneDataSourceDelegator
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -40,23 +41,13 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 
 /** Encapsulates the state of communal mode. */
-interface CommunalSceneRepository {
-    /**
-     * Target scene as requested by the underlying [SceneTransitionLayout] or through [changeScene].
-     */
-    val currentScene: StateFlow<SceneKey>
+interface CommunalSceneRepository : SceneDataSource {
 
     /** Exposes the transition state of the communal [SceneTransitionLayout]. */
     val transitionState: StateFlow<ObservableTransitionState>
 
     /** Current orientation of the communal container. */
     val communalContainerOrientation: StateFlow<Int>
-
-    /** Updates the requested scene. */
-    @MainThread fun changeScene(toScene: SceneKey, transitionKey: TransitionKey? = null)
-
-    /** Immediately snaps to the desired scene. */
-    @MainThread fun snapToScene(toScene: SceneKey)
 
     /** Shows the hub from a power button press. */
     @MainThread fun showHubFromPowerButton()
@@ -72,6 +63,7 @@ interface CommunalSceneRepository {
     fun setCommunalContainerOrientation(orientation: Int)
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SysUISingleton
 class CommunalSceneRepositoryImpl
 @Inject
@@ -79,9 +71,7 @@ constructor(
     @Background backgroundScope: CoroutineScope,
     @Communal private val sceneDataSource: SceneDataSource,
     @Communal private val delegator: SceneDataSourceDelegator,
-) : CommunalSceneRepository {
-
-    override val currentScene: StateFlow<SceneKey> = sceneDataSource.currentScene
+) : CommunalSceneRepository, SceneDataSource by sceneDataSource {
 
     private val defaultTransitionState = ObservableTransitionState.Idle(CommunalScenes.Default)
     private val _transitionState = MutableStateFlow<Flow<ObservableTransitionState>?>(null)
@@ -98,16 +88,6 @@ constructor(
         MutableStateFlow(Configuration.ORIENTATION_UNDEFINED)
     override val communalContainerOrientation: StateFlow<Int> =
         _communalContainerOrientation.asStateFlow()
-
-    @MainThread
-    override fun changeScene(toScene: SceneKey, transitionKey: TransitionKey?) {
-        sceneDataSource.changeScene(toScene, transitionKey)
-    }
-
-    @MainThread
-    override fun snapToScene(toScene: SceneKey) {
-        sceneDataSource.snapToScene(toScene)
-    }
 
     override fun setCommunalContainerOrientation(orientation: Int) {
         _communalContainerOrientation.value = orientation
@@ -135,7 +115,7 @@ constructor(
         _transitionState.value = transitionState
     }
 
-    /** Noop implementation of a scene data source that always returns the initial [SceneKey]. */
+    /** No-op implementation of a scene data source that always returns the initial [SceneKey]. */
     private class NoOpSceneDataSource(initialSceneKey: SceneKey) : SceneDataSource {
         override val currentScene: StateFlow<SceneKey> =
             MutableStateFlow(initialSceneKey).asStateFlow()
