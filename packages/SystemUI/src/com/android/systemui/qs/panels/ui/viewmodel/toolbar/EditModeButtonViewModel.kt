@@ -16,12 +16,19 @@
 
 package com.android.systemui.qs.panels.ui.viewmodel.toolbar
 
+import androidx.compose.runtime.getValue
+import com.android.systemui.Flags.hsuBehaviorChanges
 import com.android.systemui.classifier.domain.interactor.FalsingInteractor
+import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.plugins.FalsingManager
 import com.android.systemui.qs.panels.ui.viewmodel.EditModeViewModel
+import com.android.systemui.user.domain.interactor.HeadlessSystemUserMode
+import com.android.systemui.user.domain.interactor.SelectedUserInteractor
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.map
 
 class EditModeButtonViewModel
 @AssistedInject
@@ -29,12 +36,30 @@ constructor(
     private val editModeViewModel: EditModeViewModel,
     private val falsingInteractor: FalsingInteractor,
     private val activityStarter: ActivityStarter,
-) {
+    private val selectedUserInteractor: SelectedUserInteractor,
+    private val hsum: HeadlessSystemUserMode,
+) : ExclusiveActivatable() {
+
+    private val hydrator = Hydrator("editModeButtonViewModel.hydrator")
+
+    val isEditButtonVisible: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isEditButtonVisible",
+            initialValue = false,
+            source =
+                selectedUserInteractor.selectedUser.map { selectedUserId ->
+                    !hsuBehaviorChanges() || !hsum.isHeadlessSystemUser(selectedUserId)
+                },
+        )
 
     fun onButtonClick() {
         if (!falsingInteractor.isFalseTap(FalsingManager.LOW_PENALTY)) {
             activityStarter.postQSRunnableDismissingKeyguard { editModeViewModel.startEditing() }
         }
+    }
+
+    override suspend fun onActivated(): Nothing {
+        hydrator.activate()
     }
 
     @AssistedFactory

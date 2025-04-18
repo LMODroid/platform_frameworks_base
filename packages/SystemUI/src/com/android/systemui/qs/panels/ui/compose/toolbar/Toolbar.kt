@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,7 +46,7 @@ fun Toolbar(viewModel: ToolbarViewModel, modifier: Modifier = Modifier) {
             )
         }
 
-        EditModeButton(viewModel.editModeButtonViewModel)
+        EditModeButton(viewModel.editModeButtonViewModelFactory)
 
         IconButton(
             viewModel.settingsButtonViewModel,

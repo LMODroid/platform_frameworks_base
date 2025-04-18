@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 class ToolbarViewModel
 @AssistedInject
 constructor(
-    editModeButtonViewModelFactory: EditModeButtonViewModel.Factory,
+    val editModeButtonViewModelFactory: EditModeButtonViewModel.Factory,
     val buildNumberViewModelFactory: BuildNumberViewModel.Factory,
     val textFeedbackContentViewModelFactory: TextFeedbackContentViewModel.Factory,
     private val footerActionsInteractor: FooterActionsInteractor,
@@ -86,8 +86,6 @@ constructor(
                     ::onUserSwitcherClicked,
                 ),
         )
-
-    val editModeButtonViewModel: EditModeButtonViewModel = editModeButtonViewModelFactory.create()
 
     override suspend fun onActivated(): Nothing {
         coroutineScope {

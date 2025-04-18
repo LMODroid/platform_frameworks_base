@@ -16,16 +16,25 @@
 
 package com.android.systemui.qs.panels.ui.viewmodel
 
+import android.platform.test.annotations.DisableFlags
+import android.platform.test.annotations.EnableFlags
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.classifier.fakeFalsingManager
+import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runCurrent
 import com.android.systemui.kosmos.runTest
+import com.android.systemui.kosmos.testScope
+import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.plugins.activityStarter
+import com.android.systemui.qs.panels.ui.viewmodel.toolbar.EditModeButtonViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.editModeButtonViewModelFactory
 import com.android.systemui.testKosmos
+import com.android.systemui.user.domain.interactor.fakeHeadlessSystemUserMode
+import com.android.systemui.user.domain.interactor.headlessSystemUserMode
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -39,7 +48,8 @@ import org.mockito.kotlin.whenever
 class EditModeButtonViewModelTest : SysuiTestCase() {
     val kosmos = testKosmos()
 
-    val underTest = kosmos.editModeButtonViewModelFactory.create()
+    // NOTE: cannot instantiate EditModeButtonViewModel here because it would hydrate
+    // showEditButton before the value on fakeHeadlessSystemUserMode is set
 
     @Before
     fun setUp() {
@@ -53,6 +63,7 @@ class EditModeButtonViewModelTest : SysuiTestCase() {
     @Test
     fun falsingFalseTap_editModeDoesntStart() =
         kosmos.runTest {
+            val underTest = createEditModeButtonViewModel()
             val isEditing by collectLastValue(editModeViewModel.isEditing)
 
             fakeFalsingManager.setFalseTap(true)
@@ -66,6 +77,7 @@ class EditModeButtonViewModelTest : SysuiTestCase() {
     @Test
     fun falsingNotFalseTap_editModeStarted() =
         kosmos.runTest {
+            val underTest = createEditModeButtonViewModel()
             val isEditing by collectLastValue(editModeViewModel.isEditing)
 
             fakeFalsingManager.setFalseTap(false)
@@ -75,4 +87,56 @@ class EditModeButtonViewModelTest : SysuiTestCase() {
 
             assertThat(isEditing).isTrue()
         }
+
+    @Test
+    @DisableFlags(Flags.FLAG_HSU_BEHAVIOR_CHANGES)
+    fun isEditButtonVisibleTrue_nonHsu_flagDisabled() =
+        kosmos.runTest {
+            val underTest = createEditModeButtonViewModel(false)
+
+            runCurrent()
+
+            assertThat(underTest.isEditButtonVisible).isTrue()
+        }
+
+    @Test
+    @DisableFlags(Flags.FLAG_HSU_BEHAVIOR_CHANGES)
+    fun isEditButtonVisibleTrue_hsu_flagDisabled() =
+        kosmos.runTest {
+            val underTest = createEditModeButtonViewModel(true)
+
+            runCurrent()
+
+            assertThat(underTest.isEditButtonVisible).isTrue()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_HSU_BEHAVIOR_CHANGES)
+    fun isEditButtonVisibleTrue_nonHsu_flagEnabled() =
+        kosmos.runTest {
+            val underTest = createEditModeButtonViewModel(false)
+
+            runCurrent()
+
+            assertThat(underTest.isEditButtonVisible).isTrue()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_HSU_BEHAVIOR_CHANGES)
+    fun isEditButtonVisibleFalse_hsu_flagEnabled() =
+        kosmos.runTest {
+            val underTest = createEditModeButtonViewModel(true)
+
+            runCurrent()
+
+            assertThat(underTest.isEditButtonVisible).isFalse()
+        }
+
+    private fun Kosmos.createEditModeButtonViewModel(
+        isHeadlessSystemUser: Boolean = false
+    ): EditModeButtonViewModel {
+        headlessSystemUserMode = fakeHeadlessSystemUserMode
+        fakeHeadlessSystemUserMode.setIsHeadlessSystemUser(isHeadlessSystemUser)
+        return editModeButtonViewModelFactory.create().apply { activateIn(testScope) }
+    }
 }

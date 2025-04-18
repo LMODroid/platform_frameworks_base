@@ -197,7 +197,7 @@ private fun FooterBar(
         )
         Row(Modifier.weight(1f)) {
             Spacer(modifier = Modifier.weight(1f))
-            EditModeButton(viewModel = editButtonViewModel)
+            EditModeButton(editButtonViewModelFactory)
         }
     }
 }
