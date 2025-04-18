@@ -704,14 +704,6 @@ constructor(
         }
     }
 
-    /** Returns a flow indicating if the currently visible scene can be resolved from [family]. */
-    fun isCurrentSceneInFamily(family: SceneKey): Flow<Boolean> =
-        currentScene.map { currentScene -> isSceneInFamily(currentScene, family) }
-
-    /** Returns `true` if [scene] can be resolved from [family]. */
-    fun isSceneInFamily(scene: SceneKey, family: SceneKey): Boolean =
-        sceneFamilyResolvers.get()[family]?.includesScene(scene) == true
-
     /**
      * Returns a filtered version of [unfiltered], without action-result entries that would navigate
      * to disabled scenes.
