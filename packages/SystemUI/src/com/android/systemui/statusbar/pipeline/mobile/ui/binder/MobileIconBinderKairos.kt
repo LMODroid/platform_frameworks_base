@@ -238,15 +238,16 @@ object MobileIconBinderKairos {
                     Pair(background != null, colors)
                 }
                 .observe { (hasBackground, colors) ->
-                    // Tint will invert when this bit changes
                     val tint = ColorStateList.valueOf(colors.tint)
+                    val contrast = ColorStateList.valueOf(colors.contrast)
+                    iconView.imageTintList = tint
+                    // Tint will invert when this bit changes
                     if (hasBackground) {
                         networkTypeContainer.backgroundTintList = tint
-                        networkTypeView.imageTintList = ColorStateList.valueOf(colors.contrast)
+                        networkTypeView.imageTintList = contrast
                     } else {
                         networkTypeView.imageTintList = tint
                     }
-
                     roamingView.imageTintList = tint
                     activityIn.imageTintList = tint
                     activityOut.imageTintList = tint
