@@ -1051,7 +1051,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                     mBehindAlpha = mCustomScrimAlpha;
                     mNotificationsAlpha = behindFraction * mCustomScrimAlpha;
                 } else {
-                    if (Flags.notificationShadeBlur()) {
+                    if (Flags.notificationShadeBlur() && isBlurCurrentlySupported()) {
                         // TODO (b/390730594): match any spec for controlling alpha based on shade
                         //  expansion fraction.
                         mBehindAlpha = mState.getBehindAlpha() * mPanelExpansionFraction;
