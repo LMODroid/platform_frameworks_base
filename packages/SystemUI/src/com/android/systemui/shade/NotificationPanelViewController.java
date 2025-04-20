@@ -21,6 +21,7 @@ import static android.view.View.VISIBLE;
 
 import static com.android.app.animation.Interpolators.EMPHASIZED_DECELERATE;
 import static com.android.systemui.Flags.msdlFeedback;
+import static com.android.systemui.Flags.notificationShadeBlur;
 import static com.android.systemui.Flags.predictiveBackAnimateShade;
 import static com.android.systemui.classifier.Classifier.BOUNCER_UNLOCK;
 import static com.android.systemui.classifier.Classifier.GENERIC;
@@ -261,6 +262,10 @@ public final class NotificationPanelViewController implements
      */
     private static final int MAX_TIME_TO_OPEN_WHEN_FLINGING_FROM_LAUNCHER = 300;
     private static final int MAX_DOWN_EVENT_BUFFER_SIZE = 50;
+
+    private static final int PANEL_ALPHA_OUT_DURATION = notificationShadeBlur() ? 120 : 150;
+    private static final int PANEL_ALPHA_IN_DURATION = notificationShadeBlur() ? 140 : 200;
+
     private static final String COUNTER_PANEL_OPEN = "panel_open";
     public static final String COUNTER_PANEL_OPEN_QS = "panel_open_qs";
     private static final String COUNTER_PANEL_OPEN_PEEK = "panel_open_peek";
@@ -454,17 +459,19 @@ public final class NotificationPanelViewController implements
             R.id.panel_alpha_animator_tag, R.id.panel_alpha_animator_start_tag,
             R.id.panel_alpha_animator_end_tag);
     private final AnimationProperties mPanelAlphaOutPropertiesAnimator =
-            new AnimationProperties().setDuration(150).setCustomInterpolator(
+            new AnimationProperties().setDuration(PANEL_ALPHA_OUT_DURATION).setCustomInterpolator(
                     mPanelAlphaAnimator.getProperty(), Interpolators.ALPHA_OUT);
     private final AnimationProperties mPanelAlphaInPropertiesAnimator =
-            new AnimationProperties().setDuration(200).setAnimationEndAction((property) -> {
-                if (mPanelAlphaEndAction != null) {
-                    mPanelAlphaEndAction.run();
-                }
-                // Once the animation for the alpha has finished (NPV is visible again), dismiss
-                // the mirror
-                postToView(() -> mIsBrightnessMirrorShowing.setValue(false));
-            }).setCustomInterpolator(
+            new AnimationProperties().setDuration(PANEL_ALPHA_IN_DURATION).setAnimationEndAction(
+                    (property) -> {
+                        if (mPanelAlphaEndAction != null) {
+                            mPanelAlphaEndAction.run();
+                        }
+                        // Once the animation for the alpha has finished (NPV is visible again),
+                        // dismiss
+                        // the mirror
+                        postToView(() -> mIsBrightnessMirrorShowing.setValue(false));
+                    }).setCustomInterpolator(
                     mPanelAlphaAnimator.getProperty(), Interpolators.ALPHA_IN);
 
     private final CommandQueue mCommandQueue;
