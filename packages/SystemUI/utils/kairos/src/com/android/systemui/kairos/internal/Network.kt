@@ -167,7 +167,7 @@ internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy:
     }
 
     /** Evaluates [block] inside of a new transaction when the network is ready. */
-    fun <R> transaction(reason: String, block: suspend EvalScope.() -> R): Deferred<R> =
+    fun <R> transaction(reason: String, block: EvalScope.() -> R): Deferred<R> =
         CompletableDeferred<R>(parent = coroutineScope.coroutineContext.job).also { onResult ->
             if (!coroutineScope.isActive) {
                 onResult.cancel()
@@ -290,11 +290,11 @@ internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy:
 internal class ScheduledAction<T>(
     val reason: String,
     private val onResult: CompletableDeferred<T>? = null,
-    private val onStartTransaction: suspend EvalScope.() -> T,
+    private val onStartTransaction: EvalScope.() -> T,
 ) {
     private var result: Maybe<T> = Maybe.absent
 
-    suspend fun started(evalScope: EvalScope) {
+    fun started(evalScope: EvalScope) {
         result = Maybe.present(onStartTransaction(evalScope))
     }
 
