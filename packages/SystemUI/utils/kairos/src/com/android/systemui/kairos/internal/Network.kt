@@ -34,8 +34,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.yield
 
 private val nextNetworkId = AtomicLong()
@@ -78,7 +76,6 @@ internal class Network(
     private val muxMovers = ArrayDeque<MuxDeferredNode<*, *, *>>()
     private val deactivations = ArrayDeque<PushNode<*>>()
     private val outputDeactivations = ArrayDeque<Output<*>>()
-    private val transactionMutex = Mutex()
     private val inputScheduleChan = Channel<ScheduledAction<*>>()
 
     override fun scheduleOutput(output: Output<*>) {
@@ -133,35 +130,33 @@ internal class Network(
                     }
                 }
             }
-            transactionMutex.withLock {
-                val e = epoch
-                logDuration(indent = 0, { "Kairos Transaction epoch=$e" }, trace = true) {
-                    val evalScope =
-                        EvalScopeImpl(networkScope = this@Network, deferScope = deferScopeImpl)
-                    try {
-                        logDuration(getPrefix = { "process inputs" }, trace = true) {
-                            // Run all actions
-                            runThenDrainDeferrals {
-                                for (action in actions) {
-                                    action.started(evalScope)
-                                }
+            val e = epoch
+            logDuration(indent = 0, { "Kairos Transaction epoch=$e" }, trace = true) {
+                val evalScope =
+                    EvalScopeImpl(networkScope = this@Network, deferScope = deferScopeImpl)
+                try {
+                    logDuration(getPrefix = { "process inputs" }, trace = true) {
+                        // Run all actions
+                        runThenDrainDeferrals {
+                            for (action in actions) {
+                                action.started(evalScope)
                             }
                         }
-                        // Step through the network
-                        doTransaction(evalScope)
-                    } catch (e: Exception) {
-                        // Signal failure
+                    }
+                    // Step through the network
+                    coroutineScope { doTransaction(evalScope, coroutineScope = this) }
+                } catch (e: Exception) {
+                    // Signal failure
+                    while (actions.isNotEmpty()) {
+                        actions.removeLast().fail(e)
+                    }
+                    // re-throw, cancelling this coroutine
+                    throw e
+                } finally {
+                    logDuration(getPrefix = { "signal completions" }, trace = true) {
+                        // Signal completion
                         while (actions.isNotEmpty()) {
-                            actions.removeLast().fail(e)
-                        }
-                        // re-throw, cancelling this coroutine
-                        throw e
-                    } finally {
-                        logDuration(getPrefix = { "signal completions" }, trace = true) {
-                            // Signal completion
-                            while (actions.isNotEmpty()) {
-                                actions.removeLast().completed()
-                            }
+                            actions.removeLast().completed()
                         }
                     }
                 }
@@ -189,7 +184,7 @@ internal class Network(
         block().also { deferScopeImpl.drainDeferrals() }
 
     /** Performs a transactional update of the Kairos network. */
-    private fun LogIndent.doTransaction(evalScope: EvalScope) {
+    private fun LogIndent.doTransaction(evalScope: EvalScope, coroutineScope: CoroutineScope) {
         // Traverse network, then run outputs
         logDuration({ "traverse network" }, trace = true) {
             do {
@@ -204,7 +199,7 @@ internal class Network(
                 }
             )
         }
-        coroutineScope.launch { evalLaunchedOutputs() }
+        evalLaunchedOutputs(coroutineScope)
         // Update states
         logDuration({ "write states" }, trace = true) {
             runThenDrainDeferrals { evalStateWriters(currentLogIndent, evalScope) }
@@ -237,27 +232,19 @@ internal class Network(
         return true
     }
 
-    private suspend fun evalLaunchedOutputs() {
-        // Outputs might enqueue other outputs, so we need two loops
-        while (outputsByDispatcher.isNotEmpty()) {
-            var launchedAny = false
-            coroutineScope {
-                for ((key, outputs) in outputsByDispatcher) {
-                    if (outputs.isNotEmpty()) {
-                        launchedAny = true
-                        launch(key) {
-                            while (outputs.isNotEmpty()) {
-                                val output = outputs.removeFirst()
-                                launch { output() }
-                            }
-                        }
+    private fun evalLaunchedOutputs(coroutineScope: CoroutineScope) {
+        if (outputsByDispatcher.isEmpty()) return
+        for ((key, outputs) in outputsByDispatcher) {
+            if (outputs.isNotEmpty()) {
+                coroutineScope.launch(key) {
+                    while (outputs.isNotEmpty()) {
+                        val output = outputs.removeFirst()
+                        launch { output() }
                     }
                 }
             }
-            if (!launchedAny) {
-                outputsByDispatcher.clear()
-            }
         }
+        outputsByDispatcher.clear()
     }
 
     private fun evalMuxMovers(logIndent: Int, evalScope: EvalScope) {
