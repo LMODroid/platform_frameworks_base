@@ -64,6 +64,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -733,15 +734,6 @@ fun LazyGridScope.EditTiles(
                         onRemoveTile = onRemoveTile,
                         coroutineScope = coroutineScope,
                         largeTilesSpan = listState.largeTilesSpan,
-                        modifier =
-                            Modifier.animateItem(
-                                placementSpec =
-                                    spring(
-                                        stiffness = Spring.StiffnessMediumLow,
-                                        dampingRatio = Spring.DampingRatioLowBouncy,
-                                        visibilityThreshold = IntOffset.VisibilityThreshold,
-                                    )
-                            ),
                     )
                 }
             is SpacerGridCell ->
@@ -771,7 +763,7 @@ private fun rememberTileState(
 }
 
 @Composable
-private fun TileGridCell(
+private fun LazyGridItemScope.TileGridCell(
     cell: TileGridCell,
     index: Int,
     dragAndDropState: DragAndDropState,
@@ -838,10 +830,25 @@ private fun TileGridCell(
             TileState.Placeable,
             TileState.GreyedOut -> null
         }
+
     InteractiveTileContainer(
         tileState = tileState,
         resizingState = resizingState,
-        modifier = modifier.height(TileHeight).fillMaxWidth(),
+        modifier =
+            modifier.height(TileHeight).fillMaxWidth().thenIf(tileState != TileState.Selected) {
+                // TODO(b/412357793) Remove this workaround when animateItem is fixed for RTL grids
+                // Don't apply the animateItem modifier to the selected tile as it interferes with
+                // the resizing animation. The selection can't change positions without selecting a
+                // different tile, so this isn't needed regardless.
+                Modifier.animateItem(
+                    placementSpec =
+                        spring(
+                            stiffness = Spring.StiffnessMediumLow,
+                            dampingRatio = Spring.DampingRatioLowBouncy,
+                            visibilityThreshold = IntOffset.VisibilityThreshold,
+                        )
+                )
+            },
         onClick = {
             if (tileState == TileState.Removable) {
                 onRemoveTile(cell.tile.tileSpec)
