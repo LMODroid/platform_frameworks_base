@@ -468,6 +468,7 @@ constructor(
     }
 
     override fun setQsVisible(qsVisible: Boolean) {
+        containerView?.qsVisible = qsVisible
         viewModel.isQsVisible = qsVisible
     }
 
@@ -1150,6 +1151,14 @@ private class FrameLayoutTouchPassthrough(
             }
         }
 
+    var qsVisible: Boolean = false
+        set(value) {
+            if (value != field) {
+                field = value
+                invalidate()
+            }
+        }
+
     private var dirtyClipData = false
 
     private val clipEnabled
@@ -1188,7 +1197,13 @@ private class FrameLayoutTouchPassthrough(
             canvas.clipOutPath(currentClippingPath)
             canvas.translate(0f, translationY)
         }
-        super.dispatchDraw(canvas)
+        if (qsVisible) {
+            // If QS should not be visible, there's no need to draw this tree at all. We do this
+            // in the view (instead of in compose) so it's completely synchronized with the clip.
+            // As this FrameLayout doesn't have any content, and the ComposeView is the only child,
+            // this is equivalent to blocking the draw in `drawChild`.
+            super.dispatchDraw(canvas)
+        }
     }
 
     override fun isTransformedTouchPointInView(
