@@ -32,10 +32,10 @@ import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.scene.data.model.DualShadeEducationImpressionModel
 import com.android.systemui.scene.shared.model.DualShadeEducationElement
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -44,7 +44,6 @@ class DualShadeEducationRepository
 @Inject
 constructor(
     @Background private val backgroundScope: CoroutineScope,
-    @Background private val backgroundDispatcher: CoroutineDispatcher,
     private val dataStoreWrapperFactory: DataStoreWrapperFactory,
 ) {
 
@@ -67,38 +66,46 @@ constructor(
         get() = _elementBounds
 
     private var dataStore: DataStoreWrapper? = null
-    private var hydrationJob: Job? = null
+    private var dataStoreJob: Job? = null
 
     /**
      * Keeps the repository data up-to-date for the user identified by [selectedUserId]; runs until
      * cancelled by the caller.
      */
     suspend fun activateFor(@UserIdInt selectedUserId: Int) {
+        dataStoreJob?.cancelAndJoin()
+        val dataStoreScope =
+            CoroutineScope(
+                context =
+                    backgroundScope.coroutineContext + Job(backgroundScope.coroutineContext[Job])
+            )
+        dataStoreJob = dataStoreScope.coroutineContext[Job]
         val newDataStore =
             dataStoreWrapperFactory.create(
                 dataStoreFileName = DATA_STORE_FILE_NAME,
                 userId = selectedUserId,
+                scope = dataStoreScope,
             )
         dataStore = newDataStore
 
-        coroutineScope {
-            hydrationJob?.cancel()
-            hydrationJob =
-                launch(backgroundDispatcher) {
-                    repeatWhenPrefsChange(newDataStore) { prefs ->
-                        impressions =
-                            DualShadeEducationImpressionModel(
-                                everShownNotificationsShade =
-                                    prefs[Keys.EverShownNotificationsShade.name].asBoolean(),
-                                everShownQuickSettingsShade =
-                                    prefs[Keys.EverShownQuickSettingsShade.name].asBoolean(),
-                                everShownNotificationsTooltip =
-                                    prefs[Keys.EverShownNotificationsTooltip.name].asBoolean(),
-                                everShownQuickSettingsTooltip =
-                                    prefs[Keys.EverShownQuickSettingsTooltip.name].asBoolean(),
-                            )
-                    }
+        dataStoreScope.launch {
+            repeatWhenPrefsChange(newDataStore) { prefs ->
+                if (!isActive) {
+                    return@repeatWhenPrefsChange
                 }
+
+                impressions =
+                    DualShadeEducationImpressionModel(
+                        everShownNotificationsShade =
+                            prefs[Keys.EverShownNotificationsShade.name].asBoolean(),
+                        everShownQuickSettingsShade =
+                            prefs[Keys.EverShownQuickSettingsShade.name].asBoolean(),
+                        everShownNotificationsTooltip =
+                            prefs[Keys.EverShownNotificationsTooltip.name].asBoolean(),
+                        everShownQuickSettingsTooltip =
+                            prefs[Keys.EverShownQuickSettingsTooltip.name].asBoolean(),
+                    )
+            }
         }
     }
 

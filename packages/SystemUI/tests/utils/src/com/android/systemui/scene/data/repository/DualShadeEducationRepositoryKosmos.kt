@@ -20,12 +20,10 @@ import com.android.systemui.common.data.datastore.dataStoreWrapperFactory
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.kosmos.backgroundScope
-import com.android.systemui.kosmos.testDispatcher
 
 val Kosmos.dualShadeEducationRepository by Fixture {
     DualShadeEducationRepository(
         backgroundScope = backgroundScope,
-        backgroundDispatcher = testDispatcher,
         dataStoreWrapperFactory = dataStoreWrapperFactory,
     )
 }

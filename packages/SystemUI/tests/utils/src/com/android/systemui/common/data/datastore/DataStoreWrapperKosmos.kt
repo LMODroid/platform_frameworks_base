@@ -18,12 +18,17 @@ package com.android.systemui.common.data.datastore
 
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
+import kotlinx.coroutines.CoroutineScope
 
 val Kosmos.dataStoreWrapperFactory by Fixture {
     object : DataStoreWrapperFactory {
         private val cache = mutableMapOf<Int, DataStoreWrapper>()
 
-        override fun create(dataStoreFileName: String, userId: Int): DataStoreWrapper {
+        override fun create(
+            dataStoreFileName: String,
+            userId: Int,
+            scope: CoroutineScope,
+        ): DataStoreWrapper {
             return cache.getOrPut(userId) { FakeDataStoreWrapperImpl() }
         }
     }

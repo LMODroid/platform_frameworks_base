@@ -20,29 +20,33 @@ import android.annotation.UserIdInt
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.emptyPreferences
-import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.settings.UserFileManager
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 
 interface DataStoreWrapperFactory {
-    fun create(dataStoreFileName: String, @UserIdInt userId: Int): DataStoreWrapper
+    fun create(
+        dataStoreFileName: String,
+        @UserIdInt userId: Int,
+        scope: CoroutineScope,
+    ): DataStoreWrapper
 }
 
 class DataStoreWrapperFactoryImpl
 @Inject
-constructor(
-    @Background private val backgroundScope: CoroutineScope,
-    private val userFileManager: UserFileManager,
-) : DataStoreWrapperFactory {
+constructor(private val userFileManager: UserFileManager) : DataStoreWrapperFactory {
 
-    override fun create(dataStoreFileName: String, userId: Int): DataStoreWrapper {
+    override fun create(
+        dataStoreFileName: String,
+        userId: Int,
+        scope: CoroutineScope,
+    ): DataStoreWrapper {
         return DataStoreWrapperImpl(
             dataStore =
                 PreferenceDataStoreFactory.create(
                     corruptionHandler =
                         ReplaceFileCorruptionHandler(produceNewData = { emptyPreferences() }),
-                    scope = backgroundScope,
+                    scope = scope,
                 ) {
                     userFileManager.getFile(dataStoreFileName, userId)
                 }
