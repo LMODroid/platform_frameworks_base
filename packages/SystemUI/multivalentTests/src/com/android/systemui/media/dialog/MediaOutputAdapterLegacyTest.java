@@ -32,6 +32,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.kotlin.StubberKt.doNothing;
 
 import android.graphics.drawable.Icon;
 import android.platform.test.annotations.DisableFlags;
@@ -715,15 +716,16 @@ public class MediaOutputAdapterLegacyTest extends SysuiTestCase {
         assertThat(mMediaDevice2.getState()).isEqualTo(
                 LocalMediaManager.MediaDeviceState.STATE_DISCONNECTED);
         when(mMediaDevice2.getSelectionBehavior()).thenReturn(SELECTION_BEHAVIOR_TRANSFER);
-        mMediaOutputAdapter = new MediaOutputAdapterLegacy(mMediaSwitchingController,
-                mContext.getMainExecutor(), ThreadUtils.getBackgroundExecutor());
+        mMediaOutputAdapter = new MediaOutputAdapterLegacy(mMediaSwitchingController, mMainExecutor,
+                mBackgroundExecutor);
         mMediaOutputAdapter.updateItems();
         mViewHolder = (MediaOutputAdapterLegacy.MediaDeviceViewHolderLegacy) mMediaOutputAdapter
                 .onCreateViewHolder(new LinearLayout(mContext), 0);
         MediaOutputAdapterLegacy.MediaDeviceViewHolderLegacy spyMediaDeviceViewHolder = spy(
                 mViewHolder);
-        mMediaOutputAdapter.getItemCount();
+        doNothing().when(spyMediaDeviceViewHolder).showCustomEndSessionDialog(mMediaDevice2);
 
+        mMediaOutputAdapter.getItemCount();
         mMediaOutputAdapter.onBindViewHolder(spyMediaDeviceViewHolder, 0);
         mMediaOutputAdapter.onBindViewHolder(spyMediaDeviceViewHolder, 1);
         spyMediaDeviceViewHolder.mContainerLayout.performClick();
