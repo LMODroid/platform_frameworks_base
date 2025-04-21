@@ -69,11 +69,15 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.compose.modifiers.padding
+import com.android.compose.modifiers.thenIf
 import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.compose.ui.graphics.drawInOverlay
 import com.android.systemui.Flags
@@ -124,6 +128,7 @@ fun BrightnessSlider(
     val floatValueRange = valueRange.first.toFloat()..valueRange.last.toFloat()
     val isRestricted = restriction is PolicyRestriction.Restricted
     val enabled = !isRestricted
+    val contentDescription = stringResource(R.string.accessibility_brightness)
     val interactionSource = remember { MutableInteractionSource() }
     val hapticsViewModel: SliderHapticsViewModel? =
         if (Flags.hapticsForComposeSliders()) {
@@ -202,11 +207,16 @@ fun BrightnessSlider(
             }
         },
         modifier =
-            modifier.sysuiResTag("slider").clickable(enabled = isRestricted) {
-                if (restriction is PolicyRestriction.Restricted) {
-                    onRestrictedClick(restriction)
-                }
-            },
+            modifier
+                .sysuiResTag("slider")
+                .semantics(mergeDescendants = true) { this.contentDescription = contentDescription }
+                .thenIf(isRestricted) {
+                    Modifier.clickable {
+                        if (restriction is PolicyRestriction.Restricted) {
+                            onRestrictedClick(restriction)
+                        }
+                    }
+                },
         interactionSource = interactionSource,
         thumb = {
             SliderDefaults.Thumb(
