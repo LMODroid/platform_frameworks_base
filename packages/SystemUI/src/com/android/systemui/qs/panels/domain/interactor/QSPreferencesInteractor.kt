@@ -31,6 +31,10 @@ class QSPreferencesInteractor @Inject constructor(private val repo: QSPreference
         repo.writeLargeTileSpecs(specs)
     }
 
+    fun removeLargeTilesSpecs(specs: Set<TileSpec>) {
+        repo.removeLargeTileSpecs(specs)
+    }
+
     /**
      * This method should be called to indicate that a "new" set of tiles has been determined for a
      * particular user coming from different upgrade sources.

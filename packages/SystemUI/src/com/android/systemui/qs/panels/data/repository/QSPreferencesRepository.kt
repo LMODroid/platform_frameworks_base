@@ -71,15 +71,7 @@ constructor(
         combine(backupRestorationEvents, userRepository.selectedUserInfo, ::Pair)
             .flatMapLatest { (_, userInfo) ->
                 val prefs = getSharedPrefs(userInfo.id)
-                prefs.observe().emitOnStart().map {
-                    prefs
-                        .getStringSet(
-                            LARGE_TILES_SPECS_KEY,
-                            defaultLargeTilesRepository.defaultLargeTiles.map { it.spec }.toSet(),
-                        )
-                        ?.map { TileSpec.create(it) }
-                        ?.toSet() ?: defaultLargeTilesRepository.defaultLargeTiles
-                }
+                prefs.observe().emitOnStart().map { prefs.getLargeTilesSpecs() }
             }
             .flowOn(backgroundDispatcher)
 
@@ -87,6 +79,15 @@ constructor(
     fun writeLargeTileSpecs(specs: Set<TileSpec>) {
         with(getSharedPrefs(userRepository.getSelectedUserInfo().id)) {
             writeLargeTileSpecs(specs)
+            setLargeTilesDefault(false)
+        }
+    }
+
+    /** Remove the set of [TileSpec] from the current large tiles. */
+    fun removeLargeTileSpecs(specs: Set<TileSpec>) {
+        with(getSharedPrefs(userRepository.getSelectedUserInfo().id)) {
+            val largeSpecs = getLargeTilesSpecs()
+            writeLargeTileSpecs(largeSpecs - specs)
             setLargeTilesDefault(false)
         }
     }
@@ -103,6 +104,15 @@ constructor(
 
     private fun SharedPreferences.writeLargeTileSpecs(specs: Set<TileSpec>) {
         edit().putStringSet(LARGE_TILES_SPECS_KEY, specs.map { it.spec }.toSet()).apply()
+    }
+
+    private fun SharedPreferences.getLargeTilesSpecs(): Set<TileSpec> {
+        return getStringSet(
+                LARGE_TILES_SPECS_KEY,
+                defaultLargeTilesRepository.defaultLargeTiles.map { it.spec }.toSet(),
+            )
+            ?.map { TileSpec.create(it) }
+            ?.toSet() ?: defaultLargeTilesRepository.defaultLargeTiles
     }
 
     /**

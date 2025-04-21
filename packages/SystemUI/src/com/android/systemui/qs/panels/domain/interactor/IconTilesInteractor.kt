@@ -58,8 +58,14 @@ constructor(
 
     fun isIconTile(spec: TileSpec): Boolean = !largeTilesSpecs.value.contains(spec)
 
+    /** Set the large tiles to be [specs] */
     fun setLargeTiles(specs: Set<TileSpec>) {
         preferencesInteractor.setLargeTilesSpecs(specs)
+    }
+
+    /** Remove [specs] from the current set of large tiles */
+    fun removeLargeTiles(specs: Set<TileSpec>) {
+        preferencesInteractor.removeLargeTilesSpecs(specs)
     }
 
     fun resetToDefault() {
