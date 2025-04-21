@@ -61,6 +61,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -151,11 +153,12 @@ fun InteractiveTileContainer(
                         orientation = Orientation.Horizontal,
                     )
                     .clickable(enabled = tileState != None, onClick = onClick)
+                    .semantics { contentDescription?.let { this.contentDescription = it } }
             ) {
                 val size = with(LocalDensity.current) { BadgeIconSize.toDp() }
                 Icon(
                     Icons.Default.Remove,
-                    contentDescription = contentDescription,
+                    contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier =
                         Modifier.size(size).align(Alignment.Center).graphicsLayer {
