@@ -69,6 +69,7 @@ internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy:
     }
     override val transactionStore = TransactionStore()
 
+    private val deferScopeImpl = DeferScopeImpl()
     private val stateWrites = ArrayDeque<StateSource<*>>()
     private val fastOutputs = ArrayDeque<Output<*>>()
     private val outputsByDispatcher =
@@ -182,9 +183,10 @@ internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy:
             onResult.invokeOnCompletion { job.cancel() }
         }
 
-    inline fun <R> evalScope(block: EvalScope.() -> R): R = deferScope {
-        block(EvalScopeImpl(this@Network, this))
-    }
+    inline fun <R> evalScope(block: EvalScope.() -> R): R =
+        block(EvalScopeImpl(networkScope = this, deferScope = deferScopeImpl)).also {
+            deferScopeImpl.drainDeferrals()
+        }
 
     /** Performs a transactional update of the Kairos network. */
     private fun doTransaction(logIndent: Int) {
