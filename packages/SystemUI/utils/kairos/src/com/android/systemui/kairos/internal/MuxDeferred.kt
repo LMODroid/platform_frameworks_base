@@ -44,7 +44,7 @@ internal class MuxDeferredNode<W, K, V>(
     lifecycle: MuxLifecycle<W, K, V>,
     val spec: MuxActivator<W, K, V>,
     factory: MutableMapK.Factory<W, K>,
-) : MuxNode<W, K, V>(lifecycle, factory) {
+) : MuxNode<W, K, V>(lifecycle) {
 
     val schedulable = Schedulable.M(this)
     var patches: NodeConnection<Iterable<Map.Entry<K, Maybe<EventsImpl<V>>>>>? = null

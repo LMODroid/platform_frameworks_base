@@ -38,12 +38,12 @@ internal class SchedulerImpl(private val enqueue: (MuxNode<*, *, *>) -> Boolean)
         schedule(Int.MIN_VALUE + indirectDepth, node)
     }
 
-    internal fun drainEval(logIndent: Int, network: Network): Int =
+    internal fun drainEval(logIndent: Int, network: Network, evalScope: EvalScope): Int =
         drain(logIndent) { runStep ->
             runStep { muxNode ->
-                network.evalScope {
+                network.runThenDrainDeferrals {
                     muxNode.markedForEvaluation = false
-                    muxNode.visit(currentLogIndent, this)
+                    muxNode.visit(currentLogIndent, evalScope)
                 }
             }
             // If any visited MuxPromptNodes had their depths increased, eagerly propagate those

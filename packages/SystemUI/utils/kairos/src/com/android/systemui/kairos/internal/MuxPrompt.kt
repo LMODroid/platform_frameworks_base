@@ -32,7 +32,7 @@ internal class MuxPromptNode<W, K, V>(
     lifecycle: MuxLifecycle<W, K, V>,
     private val spec: MuxActivator<W, K, V>,
     factory: MutableMapK.Factory<W, K>,
-) : MuxNode<W, K, V>(lifecycle, factory) {
+) : MuxNode<W, K, V>(lifecycle) {
 
     var patchData: Iterable<Map.Entry<K, Maybe<EventsImpl<V>>>>? = null
     var patches: PatchNode? = null

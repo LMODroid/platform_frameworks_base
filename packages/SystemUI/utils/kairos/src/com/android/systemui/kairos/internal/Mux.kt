@@ -28,10 +28,8 @@ import com.android.systemui.kairos.internal.util.logDuration
 internal typealias MuxResult<W, K, V> = MapK<W, K, PullNode<V>>
 
 /** Base class for muxing nodes, which have a (potentially dynamic) collection of upstream nodes. */
-internal sealed class MuxNode<W, K, V>(
-    val lifecycle: MuxLifecycle<W, K, V>,
-    protected val storeFactory: MutableMapK.Factory<W, K>,
-) : PushNode<MuxResult<W, K, V>> {
+internal sealed class MuxNode<W, K, V>(val lifecycle: MuxLifecycle<W, K, V>) :
+    PushNode<MuxResult<W, K, V>> {
 
     lateinit var upstreamData: MutableMapK<W, K, PullNode<V>>
     lateinit var switchedIn: MutableMapK<W, K, BranchNode>
@@ -267,8 +265,6 @@ internal sealed class MuxNode<W, K, V>(
         override fun toString(): String = "MuxBranchNode(key=$key, mux=${this@MuxNode})"
     }
 }
-
-internal typealias BranchNode<W, K, V> = MuxNode<W, K, V>.BranchNode
 
 /** Tracks lifecycle of MuxNode in the network. Essentially a mutable ref for MuxLifecycleState. */
 internal class MuxLifecycle<W, K, V>(var lifecycleState: MuxLifecycleState<W, K, V>) :
