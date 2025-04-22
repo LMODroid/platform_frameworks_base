@@ -205,6 +205,8 @@ public interface QS extends FragmentBase {
 
     default void setPanelExpanded(boolean panelExpanded) {}
 
+    default void setQqsHeightListener(QqsHeightListener listener) {}
+
     /**
      * Callback for when QSPanel container is scrolled
      */
@@ -218,6 +220,12 @@ public interface QS extends FragmentBase {
     interface HeightListener {
         int VERSION = 1;
         void onQsHeightChanged();
+    }
+
+    @ProvidesInterface(version = HeightListener.VERSION)
+    interface QqsHeightListener {
+        int VERSION = 1;
+        void onQqsHeightChanged();
     }
 
 }
