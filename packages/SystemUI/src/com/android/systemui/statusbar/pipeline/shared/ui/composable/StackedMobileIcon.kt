@@ -34,6 +34,8 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.android.systemui.common.ui.compose.Icon
@@ -79,7 +81,11 @@ fun StackedMobileIcon(viewModel: StackedMobileIconViewModel, modifier: Modifier 
             Icon(it, tint = contentColor, modifier = Modifier.height(height).wrapContentWidth())
         }
 
-        StackedMobileIcon(dualSim, contentColor)
+        StackedMobileIcon(
+            viewModel = dualSim,
+            color = contentColor,
+            contentDescription = viewModel.contentDescription,
+        )
     }
 }
 
@@ -87,6 +93,7 @@ fun StackedMobileIcon(viewModel: StackedMobileIconViewModel, modifier: Modifier 
 private fun StackedMobileIcon(
     viewModel: StackedMobileIconViewModel.DualSim,
     color: Color,
+    contentDescription: String?,
     modifier: Modifier = Modifier,
 ) {
     // Removing 1 to get the real number of bars
@@ -95,7 +102,11 @@ private fun StackedMobileIcon(
     val iconSize =
         with(LocalDensity.current) { dimensions.totalWidth.toDp() to IconHeightSp.toDp() }
 
-    Canvas(modifier.width(iconSize.first).height(iconSize.second)) {
+    Canvas(
+        modifier.width(iconSize.first).height(iconSize.second).semantics {
+            contentDescription?.let { this.contentDescription = it }
+        }
+    ) {
         val verticalPaddingPx = BarsVerticalPaddingSp.roundToPx()
         val horizontalPaddingPx = dimensions.barsHorizontalPadding.roundToPx()
         val totalPaddingWidthPx = horizontalPaddingPx * (numberOfBars - 1)

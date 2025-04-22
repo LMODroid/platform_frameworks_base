@@ -16,11 +16,12 @@
 
 package com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel
 
-import androidx.compose.runtime.derivedStateOf
+import android.content.Context
 import androidx.compose.runtime.getValue
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
+import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.StackedMobileIconViewModel.DualSim
 import dagger.assisted.AssistedFactory
@@ -30,9 +31,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 interface StackedMobileIconViewModel {
     val dualSim: DualSim?
+    val contentDescription: String?
     val networkTypeIcon: Icon.Resource?
     val isIconVisible: Boolean
 
@@ -45,16 +48,11 @@ interface StackedMobileIconViewModel {
 @OptIn(ExperimentalCoroutinesApi::class)
 class StackedMobileIconViewModelImpl
 @AssistedInject
-constructor(mobileIconsViewModel: MobileIconsViewModel) :
-    ExclusiveActivatable(), StackedMobileIconViewModel {
+constructor(
+    mobileIconsViewModel: MobileIconsViewModel,
+    @ShadeDisplayAware private val context: Context,
+) : ExclusiveActivatable(), StackedMobileIconViewModel {
     private val hydrator = Hydrator("StackedMobileIconViewModel")
-
-    private val isStackable: Boolean by
-        hydrator.hydratedStateOf(
-            traceName = "isStackable",
-            source = mobileIconsViewModel.isStackable,
-            initialValue = false,
-        )
 
     private val iconViewModelFlow: Flow<List<MobileIconViewModelCommon>> =
         combine(
@@ -65,19 +63,48 @@ constructor(mobileIconsViewModel: MobileIconsViewModel) :
             viewModels.sortedByDescending { it.subscriptionId == activeSubId }
         }
 
+    private val _dualSim: Flow<DualSim?> =
+        iconViewModelFlow.flatMapLatest { viewModels ->
+            combine(viewModels.map { it.icon }) { icons ->
+                icons
+                    .toList()
+                    .filterIsInstance<SignalIconModel.Cellular>()
+                    .takeIf { it.size == 2 }
+                    ?.let { DualSim(it[0], it[1]) }
+            }
+        }
+
+    private val _isIconVisible: Flow<Boolean> =
+        combine(_dualSim, mobileIconsViewModel.isStackable) { dualSim, isStackable ->
+            dualSim != null && isStackable
+        }
+
     override val dualSim: DualSim? by
+        hydrator.hydratedStateOf(traceName = "dualSim", source = _dualSim, initialValue = null)
+
+    /** Content description of both icons, starting with the active connection. */
+    override val contentDescription: String? by
         hydrator.hydratedStateOf(
-            traceName = "dualSim",
+            traceName = "contentDescription",
             source =
-                iconViewModelFlow.flatMapLatest { viewModels ->
-                    combine(viewModels.map { it.icon }) { icons ->
-                        icons
-                            .toList()
-                            .filterIsInstance<SignalIconModel.Cellular>()
-                            .takeIf { it.size == 2 }
-                            ?.let { DualSim(it[0], it[1]) }
+                flowIfIconIsVisible(
+                    iconViewModelFlow.flatMapLatest { viewModels ->
+                        combine(viewModels.map { it.contentDescription }) { contentDescriptions ->
+                                contentDescriptions.map { it?.loadContentDescription(context) }
+                            }
+                            .map { loadedStrings ->
+                                // Only provide the content description if both icons have one
+                                if (loadedStrings.any { it == null }) {
+                                    null
+                                } else {
+                                    // The content description of each icon has the format:
+                                    // "[Carrier name], N bars."
+                                    // To combine, we simply join them with a space
+                                    loadedStrings.joinToString(" ")
+                                }
+                            }
                     }
-                },
+                ),
             initialValue = null,
         )
 
@@ -85,13 +112,30 @@ constructor(mobileIconsViewModel: MobileIconsViewModel) :
         hydrator.hydratedStateOf(
             traceName = "networkTypeIcon",
             source =
-                iconViewModelFlow.flatMapLatest { viewModels ->
-                    viewModels.firstOrNull()?.networkTypeIcon ?: flowOf(null)
-                },
+                flowIfIconIsVisible(
+                    iconViewModelFlow.flatMapLatest { viewModels ->
+                        viewModels.firstOrNull()?.networkTypeIcon ?: flowOf(null)
+                    }
+                ),
             initialValue = null,
         )
 
-    override val isIconVisible: Boolean by derivedStateOf { isStackable && dualSim != null }
+    override val isIconVisible: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isIconVisible",
+            source = _isIconVisible,
+            initialValue = false,
+        )
+
+    private fun <T> flowIfIconIsVisible(flow: Flow<T>): Flow<T?> {
+        return _isIconVisible.flatMapLatest { isVisible ->
+            if (isVisible) {
+                flow
+            } else {
+                flowOf(null)
+            }
+        }
+    }
 
     override suspend fun onActivated(): Nothing {
         hydrator.activate()

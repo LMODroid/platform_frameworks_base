@@ -43,16 +43,18 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class StackedMobileIconViewModelTest : SysuiTestCase() {
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
-    private val testScope = kosmos.testScope
 
     private val Kosmos.underTest: StackedMobileIconViewModelImpl by Fixture {
         stackedMobileIconViewModelImpl
     }
 
     @Before
-    fun setUp() {
-        kosmos.underTest.activateIn(testScope)
-    }
+    fun setUp() =
+        kosmos.run {
+            // Set prerequisites for the stacked icon
+            fakeMobileIconsInteractor.isStackable.value = true
+            underTest.activateIn(testScope)
+        }
 
     @Test
     @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
@@ -107,6 +109,72 @@ class StackedMobileIconViewModelTest : SysuiTestCase() {
 
             assertThat(underTest.dualSim!!.primary.level).isEqualTo(2)
             assertThat(underTest.dualSim!!.secondary.level).isEqualTo(1)
+        }
+
+    @Test
+    @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
+    fun contentDescription_requiresBothIcons() =
+        kosmos.runTest {
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf()
+            assertThat(underTest.contentDescription).isNull()
+
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1)
+            assertThat(underTest.contentDescription).isNull()
+
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2, SUB_3)
+            assertThat(underTest.contentDescription).isNull()
+
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            assertThat(underTest.contentDescription).isNotNull()
+        }
+
+    @Test
+    @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
+    fun contentDescription_tracksBars() =
+        kosmos.runTest {
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            setIconLevel(SUB_1.subscriptionId, 1)
+            setIconLevel(SUB_2.subscriptionId, 2)
+
+            assertThat(underTest.contentDescription!!)
+                .isEqualTo("demo mode, one bar. demo mode, two bars.")
+
+            // Change signal bars
+            setIconLevel(SUB_1.subscriptionId, 3)
+            setIconLevel(SUB_2.subscriptionId, 1)
+
+            assertThat(underTest.contentDescription!!)
+                .isEqualTo("demo mode, three bars. demo mode, one bar.")
+        }
+
+    @Test
+    @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
+    fun contentDescription_hasActiveIconFirst() =
+        kosmos.runTest {
+            // Active sub id is null, order is unchanged
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            setIconLevel(SUB_1.subscriptionId, 1)
+            setIconLevel(SUB_2.subscriptionId, 2)
+
+            assertThat(underTest.contentDescription!!)
+                .isEqualTo("demo mode, one bar. demo mode, two bars.")
+
+            // Active sub is 2, order is swapped
+            fakeMobileIconsInteractor.activeMobileDataSubscriptionId.value = SUB_2.subscriptionId
+
+            assertThat(underTest.contentDescription!!)
+                .isEqualTo("demo mode, two bars. demo mode, one bar.")
+        }
+
+    @Test
+    @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
+    fun contentDescription_tracksVisibility() =
+        kosmos.runTest {
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            assertThat(underTest.contentDescription).isNotNull()
+
+            fakeMobileIconsInteractor.isStackable.value = false
+            assertThat(underTest.contentDescription).isNull()
         }
 
     private fun setIconLevel(subId: Int, level: Int) {

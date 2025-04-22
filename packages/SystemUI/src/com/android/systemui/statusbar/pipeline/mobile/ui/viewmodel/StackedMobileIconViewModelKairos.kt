@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import com.android.systemui.KairosBuilder
 import com.android.systemui.common.shared.model.Icon
@@ -25,7 +26,9 @@ import com.android.systemui.kairos.combine
 import com.android.systemui.kairos.flatMap
 import com.android.systemui.kairos.stateOf
 import com.android.systemui.kairosBuilder
+import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
+import com.android.systemui.statusbar.pipeline.mobile.ui.model.MobileContentDescription
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.StackedMobileIconViewModel.DualSim
 import com.android.systemui.util.composable.kairos.hydratedComposeStateOf
 import dagger.assisted.AssistedFactory
@@ -34,8 +37,10 @@ import dagger.assisted.AssistedInject
 @OptIn(ExperimentalKairosApi::class)
 class StackedMobileIconViewModelKairos
 @AssistedInject
-constructor(mobileIcons: MobileIconsViewModelKairos) :
-    KairosBuilder by kairosBuilder(), StackedMobileIconViewModel {
+constructor(
+    mobileIcons: MobileIconsViewModelKairos,
+    @ShadeDisplayAware private val context: Context,
+) : KairosBuilder by kairosBuilder(), StackedMobileIconViewModel {
 
     private val isStackable: Boolean by
         hydratedComposeStateOf(mobileIcons.isStackable, initialValue = false)
@@ -52,6 +57,18 @@ constructor(mobileIcons: MobileIconsViewModelKairos) :
         hydratedComposeStateOf(
             iconList.flatMap { icons ->
                 icons.map { it.icon }.combine { signalIcons -> tryParseDualSim(signalIcons) }
+            },
+            initialValue = null,
+        )
+
+    override val contentDescription: String? by
+        hydratedComposeStateOf(
+            iconList.flatMap { icons ->
+                icons
+                    .map { it.contentDescription }
+                    .combine { contentDescriptions ->
+                        tryParseContentDescriptions(contentDescriptions)
+                    }
             },
             initialValue = null,
         )
@@ -77,6 +94,14 @@ constructor(mobileIcons: MobileIconsViewModelKairos) :
             }
         }
         return first?.let { second?.let { DualSim(first, second) } }
+    }
+
+    private fun tryParseContentDescriptions(
+        contentDescriptions: List<MobileContentDescription?>
+    ): String? {
+        if (contentDescriptions.size != 2 || null in contentDescriptions) return null
+
+        return contentDescriptions.joinToString(" ") { it?.loadContentDescription(context) ?: "" }
     }
 
     @AssistedFactory
