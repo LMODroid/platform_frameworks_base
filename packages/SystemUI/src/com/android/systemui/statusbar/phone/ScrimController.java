@@ -1679,7 +1679,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     }
 
     private int getShadePanelColor() {
-        return ShadeColors.shadePanel(mContext, isBlurCurrentlySupported());
+        return ShadeColors.shadePanel(mContext, isBlurCurrentlySupported(), true);
     }
 
     private void onThemeChanged() {

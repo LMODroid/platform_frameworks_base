@@ -205,7 +205,11 @@ object OverlayShade {
         val PanelBackground: Color
             @Composable
             @ReadOnlyComposable
-            get() = Color(shadePanel(LocalContext.current, Flags.notificationShadeBlur()))
+            get() = Color(shadePanel(
+                context = LocalContext.current,
+                blurSupported = Flags.notificationShadeBlur(),
+                withScrim = false
+            ))
     }
 
     object Dimensions {

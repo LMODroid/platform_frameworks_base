@@ -194,7 +194,11 @@ constructor(
                 bouncerBehindAlpha = 1.0f,
             )
         val shadeNotifAlpha = colorAlpha(notificationScrim(context, isBlurCurrentlySupported))
-        val shadeBehindAlpha = colorAlpha(shadePanel(context, isBlurCurrentlySupported))
+        val shadeBehindAlpha = colorAlpha(shadePanel(
+            context = context,
+            blurSupported = isBlurCurrentlySupported,
+            withScrim = true
+        ))
         val bouncerBehindAlpha =
             if (isBlurCurrentlySupported) ScrimController.TRANSPARENT_BOUNCER_SCRIM_ALPHA else 1.0f
         return when {

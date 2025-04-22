@@ -21,12 +21,24 @@ import com.android.internal.graphics.ColorUtils
 import com.android.systemui.res.R
 
 object ShadeColors {
+    /**
+     * Calculate notification shade panel color.
+     * @param context Context to resolve colors.
+     * @param blurSupported Whether blur is enabled (can be off due to battery saver)
+     * @param withScrim Whether to composite a scrim when blur is enabled (used by legacy shade).
+     * @return color for the shade panel.
+     */
     @JvmStatic
-    fun shadePanel(context: Context, blurSupported: Boolean): Int {
+    fun shadePanel(context: Context, blurSupported: Boolean, withScrim: Boolean): Int {
         return if (blurSupported) {
-            ColorUtils.compositeColors(
-                shadePanelStandard(context),
-                shadePanelScrimBehind(context))
+            if (withScrim) {
+                ColorUtils.compositeColors(
+                    shadePanelStandard(context),
+                    shadePanelScrimBehind(context))
+            } else {
+                shadePanelStandard(context)
+            }
+
         } else {
             shadePanelFallback(context)
         }
