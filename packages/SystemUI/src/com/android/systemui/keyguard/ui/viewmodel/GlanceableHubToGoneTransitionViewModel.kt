@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,38 +18,32 @@ package com.android.systemui.keyguard.ui.viewmodel
 
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.keyguard.dagger.GlanceableHubBlurComponent
-import com.android.systemui.keyguard.domain.interactor.FromGoneTransitionInteractor.Companion.TO_GLANCEABLE_HUB_DURATION
+import com.android.systemui.keyguard.domain.interactor.FromGlanceableHubTransitionInteractor.Companion.TO_GONE_DURATION
 import com.android.systemui.keyguard.shared.model.Edge
 import com.android.systemui.keyguard.shared.model.KeyguardState.GLANCEABLE_HUB
 import com.android.systemui.keyguard.shared.model.KeyguardState.GONE
 import com.android.systemui.keyguard.ui.KeyguardTransitionAnimationFlow
-import com.android.systemui.keyguard.ui.transitions.DeviceEntryIconTransition
 import com.android.systemui.keyguard.ui.transitions.GlanceableHubTransition
+import com.android.systemui.scene.shared.model.Scenes
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.flow.Flow
 
 @SysUISingleton
-class GoneToGlanceableHubTransitionViewModel
+class GlanceableHubToGoneTransitionViewModel
 @Inject
 constructor(
     animationFlow: KeyguardTransitionAnimationFlow,
     blurFactory: GlanceableHubBlurComponent.Factory,
-) : DeviceEntryIconTransition, GlanceableHubTransition {
+) : GlanceableHubTransition {
 
     private val transitionAnimation =
         animationFlow
-            .setup(duration = TO_GLANCEABLE_HUB_DURATION, edge = Edge.INVALID)
-            .setupWithoutSceneContainer(edge = Edge.create(GONE, GLANCEABLE_HUB))
-
-    override val deviceEntryParentViewAlpha: Flow<Float> =
-        transitionAnimation.sharedFlow(
-            duration = 167.milliseconds,
-            onStep = { it },
-            onCancel = { 1f },
-            onFinish = { 1f },
-        )
+            .setup(
+                duration = TO_GONE_DURATION,
+                edge = Edge.create(from = Scenes.Communal, to = GONE),
+            )
+            .setupWithoutSceneContainer(edge = Edge.create(from = GLANCEABLE_HUB, to = GONE))
 
     override val windowBlurRadius: Flow<Float> =
-        blurFactory.create(transitionAnimation).getBlurProvider().enterBlurRadius
+        blurFactory.create(transitionAnimation).getBlurProvider().exitBlurRadius
 }
