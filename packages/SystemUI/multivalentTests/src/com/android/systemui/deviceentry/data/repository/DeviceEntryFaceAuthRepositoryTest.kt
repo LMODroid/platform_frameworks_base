@@ -50,12 +50,15 @@ import com.android.systemui.deviceentry.shared.FaceAuthUiEvent
 import com.android.systemui.deviceentry.shared.FaceAuthUiEvent.FACE_AUTH_TRIGGERED_ALTERNATE_BIOMETRIC_BOUNCER_SHOWN
 import com.android.systemui.deviceentry.shared.FaceAuthUiEvent.FACE_AUTH_TRIGGERED_NOTIFICATION_PANEL_CLICKED
 import com.android.systemui.deviceentry.shared.FaceAuthUiEvent.FACE_AUTH_TRIGGERED_SWIPE_UP_ON_BOUNCER
+import com.android.systemui.deviceentry.shared.model.DeviceUnlockSource
+import com.android.systemui.deviceentry.shared.model.DeviceUnlockStatus
 import com.android.systemui.deviceentry.shared.model.ErrorFaceAuthenticationStatus
 import com.android.systemui.deviceentry.shared.model.FaceAuthenticationStatus
 import com.android.systemui.deviceentry.shared.model.FaceDetectionStatus
 import com.android.systemui.deviceentry.shared.model.SuccessFaceAuthenticationStatus
 import com.android.systemui.display.data.repository.displayRepository
 import com.android.systemui.dump.DumpManager
+import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.flags.FakeFeatureFlags
 import com.android.systemui.keyguard.data.repository.BiometricType
@@ -76,6 +79,7 @@ import com.android.systemui.log.FaceAuthenticationLogger
 import com.android.systemui.log.SessionTracker
 import com.android.systemui.log.logcatLogBuffer
 import com.android.systemui.log.table.logcatTableLogBuffer
+import com.android.systemui.plugins.statusbar.statusBarStateController
 import com.android.systemui.power.domain.interactor.PowerInteractor.Companion.setAsleepForTest
 import com.android.systemui.power.domain.interactor.PowerInteractor.Companion.setAwakeForTest
 import com.android.systemui.power.domain.interactor.powerInteractor
@@ -89,11 +93,11 @@ import com.android.systemui.user.data.model.SelectionStatus
 import com.android.systemui.user.data.repository.fakeUserRepository
 import com.android.systemui.util.mockito.KotlinArgumentCaptor
 import com.android.systemui.util.mockito.captureMany
-import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
 import java.io.PrintWriter
 import java.io.StringWriter
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestScope
@@ -116,6 +120,7 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
 import org.mockito.MockitoAnnotations
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
@@ -531,6 +536,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
         testScope.runTest { testGatingCheckForFaceAuth { underTest.setLockedOut(true) } }
 
     @Test
+    @DisableSceneContainer
     fun authenticateDoesNotRunWhenKeyguardIsGoingAway() =
         testScope.runTest {
             testGatingCheckForFaceAuth { keyguardRepository.setKeyguardGoingAway(true) }
@@ -842,6 +848,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
         }
 
     @Test
+    @DisableSceneContainer
     fun isAuthenticatedIsResetToFalseWhenFinishedTransitioningToGoneAndStatusBarStateShade() =
         testScope.runTest {
             initCollectors()
@@ -873,6 +880,44 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
             assertThat(authenticated()).isTrue()
 
             keyguardRepository.setStatusBarState(StatusBarState.SHADE)
+            runCurrent()
+
+            assertThat(authenticated()).isFalse()
+        }
+
+    @Test
+    @EnableSceneContainer
+    fun withSceneContainer_isAuthenticatedIsResetToFalseWhenFinishedTransitioningToGoneAndStatusBarStateShade() =
+        testScope.runTest {
+            kosmos.statusBarStateController.start()
+            runCurrent()
+
+            initCollectors()
+            allPreconditionsToRunFaceAuthAreTrue()
+
+            triggerFaceAuth(false)
+
+            keyguardRepository.setStatusBarState(StatusBarState.KEYGUARD)
+            authenticationCallback.value.onAuthenticationSucceeded(
+                mock(FaceManager.AuthenticationResult::class.java)
+            )
+            assertThat(authenticated()).isTrue()
+            kosmos.fakeDeviceEntryRepository.deviceUnlockStatus.value =
+                DeviceUnlockStatus(
+                    isUnlocked = true,
+                    deviceUnlockSource = DeviceUnlockSource.FaceWithBypass,
+                )
+            runCurrent()
+
+            kosmos.sceneInteractor.changeScene(
+                toScene = Scenes.Gone,
+                loggingReason = "transition for test",
+            )
+            assertThat(authenticated()).isTrue()
+
+            keyguardRepository.setStatusBarState(StatusBarState.SHADE)
+            runCurrent()
+
             assertThat(authenticated()).isFalse()
         }
 
@@ -885,6 +930,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
         }
 
     @Test
+    @DisableSceneContainer
     fun detectDoesNotRunWhenKeyguardGoingAway() =
         testScope.runTest {
             testGatingCheckForDetect { keyguardRepository.setKeyguardGoingAway(true) }
@@ -1028,6 +1074,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
         }
 
     @Test
+    @DisableSceneContainer
     fun schedulesFaceManagerWatchdogWhenKeyguardIsGoneFromDozing() =
         testScope.runTest {
             keyguardTransitionRepository.sendTransitionSteps(
@@ -1040,6 +1087,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
         }
 
     @Test
+    @DisableSceneContainer
     fun schedulesFaceManagerWatchdogWhenKeyguardIsGoneFromAod() =
         testScope.runTest {
             keyguardTransitionRepository.sendTransitionSteps(
@@ -1047,11 +1095,37 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
                 to = KeyguardState.GONE,
                 testScope,
             )
+
             runCurrent()
             verify(faceManager).scheduleWatchdog()
         }
 
     @Test
+    @EnableSceneContainer
+    fun schedulesFaceManagerWatchdogWhenKeyguardIsGone_withSceneContainer() =
+        testScope.runTest {
+            kosmos.sceneInteractor.setTransitionState(
+                MutableStateFlow(
+                    ObservableTransitionState.Transition.ChangeScene(
+                        fromScene = Scenes.Lockscreen,
+                        toScene = Scenes.Gone,
+                        currentScene = flowOf(Scenes.Lockscreen),
+                        currentOverlays = emptySet(),
+                        progress = flowOf(.2f),
+                        isInitiatedByUserInput = false,
+                        isUserInputOngoing = flowOf(false),
+                        isInPreviewStage = flowOf(false),
+                        previewProgress = flowOf(0.0f),
+                    )
+                )
+            )
+
+            runCurrent()
+            verify(faceManager).scheduleWatchdog()
+        }
+
+    @Test
+    @DisableSceneContainer
     fun schedulesFaceManagerWatchdogWhenKeyguardIsGoneFromLockscreen() =
         testScope.runTest {
             keyguardTransitionRepository.sendTransitionSteps(
@@ -1064,6 +1138,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
         }
 
     @Test
+    @DisableSceneContainer
     fun schedulesFaceManagerWatchdogWhenKeyguardIsGoneFromBouncer() =
         testScope.runTest {
             keyguardTransitionRepository.sendTransitionSteps(
@@ -1137,7 +1212,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
         }
 
     private suspend fun TestScope.testGatingCheckForFaceAuth(
-        sceneContainerEnabled: Boolean = false,
+        sceneContainerEnabled: Boolean = SceneContainerFlag.isEnabled,
         gatingCheckModifier: suspend () -> Unit,
     ) {
         initCollectors()
@@ -1180,7 +1255,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
     }
 
     private suspend fun TestScope.testGatingCheckForDetect(
-        sceneContainerEnabled: Boolean = false,
+        sceneContainerEnabled: Boolean = SceneContainerFlag.isEnabled,
         gatingCheckModifier: suspend () -> Unit,
     ) {
         initCollectors()
@@ -1233,7 +1308,7 @@ class DeviceEntryFaceAuthRepositoryTest : SysuiTestCase() {
     }
 
     private suspend fun TestScope.allPreconditionsToRunFaceAuthAreTrue(
-        sceneContainerEnabled: Boolean = false
+        sceneContainerEnabled: Boolean = SceneContainerFlag.isEnabled
     ) {
         fakeExecutor.runAllReady()
         verify(faceManager, atLeastOnce())
