@@ -975,17 +975,6 @@ flag {
 }
 
 flag {
-    name: "notification_row_user_context"
-    namespace: "systemui"
-    description: "Create a user-specific Context for the ImageResolver in ExpandableNotificationRow"
-        " (based on the NotificationEntry's user)."
-    bug: "317503801"
-    metadata {
-        purpose: PURPOSE_BUGFIX
-    }
-}
-
-flag {
    name: "get_connected_device_name_unsynchronized"
    namespace: "systemui"
    description: "Decide whether to fetch the connected bluetooth device name outside a synchronized block."
