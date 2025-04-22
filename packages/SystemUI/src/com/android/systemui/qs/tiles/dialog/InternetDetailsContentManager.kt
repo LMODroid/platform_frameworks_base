@@ -126,7 +126,6 @@ constructor(
     private var alertDialog: AlertDialog? = null
     private var canChangeWifiState = false
     private var wifiNetworkHeight = 0
-    private var backgroundOn: Drawable? = null
     private var entryBackgroundActive: Drawable? = null
     private var entryBackgroundInactive: Drawable? = null
     private var entryBackgroundStart: Drawable? = null
@@ -218,7 +217,6 @@ constructor(
         progressBar = contentView.requireViewById(R.id.wifi_searching_progress)
 
         // Background drawables
-        backgroundOn = context.getDrawable(R.drawable.settingslib_switch_bar_bg_on)
         entryBackgroundActive = context.getDrawable(R.drawable.settingslib_entry_bg_on)
         entryBackgroundInactive = context.getDrawable(R.drawable.settingslib_entry_bg_off)
         entryBackgroundStart = context.getDrawable(R.drawable.settingslib_entry_bg_off_start)
@@ -690,16 +688,6 @@ constructor(
         if (wifiToggle.isChecked != internetContent.isWifiEnabled) {
             wifiToggle.isChecked = internetContent.isWifiEnabled
         }
-        if (internetContent.isDeviceLocked) {
-            wifiToggleTitleTextView.setTextAppearance(
-                if ((connectedWifiEntry != null))
-                    R.style.TextAppearance_TileDetailsEntryTitle_Active
-                else R.style.TextAppearance_TileDetailsEntryTitle
-            )
-        }
-        turnWifiOnLayout.background =
-            if ((internetContent.isDeviceLocked && connectedWifiEntry != null)) backgroundOn
-            else null
 
         if (!canChangeWifiState && wifiToggle.isEnabled) {
             wifiToggle.isEnabled = false

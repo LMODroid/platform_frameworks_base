@@ -531,9 +531,8 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
         internetDetailsContentManager.internetContentData.observe(
             internetDetailsContentManager.lifecycleOwner!!
         ) {
-            // Show WiFi Toggle without background
+            // Show WiFi Toggle
             assertThat(wifiToggle!!.visibility).isEqualTo(View.VISIBLE)
-            assertThat(wifiToggle!!.background).isNull()
             // Hide Wi-Fi networks and See all
             assertThat(connectedWifi!!.visibility).isEqualTo(View.GONE)
             assertThat(wifiList!!.visibility).isEqualTo(View.GONE)
@@ -551,9 +550,8 @@ class InternetDetailsContentManagerTest : SysuiTestCase() {
         internetDetailsContentManager.internetContentData.observe(
             internetDetailsContentManager.lifecycleOwner!!
         ) {
-            // Show WiFi Toggle with highlight background
+            // Show WiFi Toggle
             assertThat(wifiToggle!!.visibility).isEqualTo(View.VISIBLE)
-            assertThat(wifiToggle!!.background).isNotNull()
             // Hide Wi-Fi networks and See all
             assertThat(connectedWifi!!.visibility).isEqualTo(View.GONE)
             assertThat(wifiList!!.visibility).isEqualTo(View.GONE)
