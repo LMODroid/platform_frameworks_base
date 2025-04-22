@@ -42,6 +42,7 @@ import com.android.systemui.shade.ShadeViewController
 import com.android.systemui.shade.StatusBarLongPressGestureDetector
 import com.android.systemui.shade.display.StatusBarTouchShadeDisplayPolicy
 import com.android.systemui.shade.domain.interactor.PanelExpansionInteractor
+import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
 import com.android.systemui.shade.shared.flag.ShadeWindowGoesAround
 import com.android.systemui.shared.animation.UnfoldMoveFromCenterAnimator
 import com.android.systemui.statusbar.core.StatusBarConnectedDisplays
@@ -73,6 +74,7 @@ private constructor(
     private val statusBarWindowStateController: StatusBarWindowStateController,
     private val shadeController: ShadeController,
     private val shadeViewController: ShadeViewController,
+    private val shadeModeInteractor: ShadeModeInteractor,
     private val panelExpansionInteractor: PanelExpansionInteractor,
     private val statusBarLongPressGestureDetector: Provider<StatusBarLongPressGestureDetector>,
     private val windowRootView: Provider<WindowRootView>,
@@ -94,7 +96,8 @@ private constructor(
     private val statusBarContentInsetsProvider
         get() = statusBarContentInsetsProviderStore.forDisplay(context.displayId)
 
-    private val iconsOnTouchListener =
+    // Creates a [View.OnTouchListener] that only handles mouse click events.
+    private fun createMouseClickListener(onClick: () -> Unit): View.OnTouchListener =
         object : View.OnTouchListener {
             override fun onTouch(v: View, event: MotionEvent): Boolean {
                 // We want to handle only mouse events here to avoid stealing finger touches
@@ -106,7 +109,7 @@ private constructor(
                     if (event.action == MotionEvent.ACTION_UP) {
                         dispatchEventToShadeDisplayPolicy(event)
                         v.performClick()
-                        shadeController.animateExpandShade()
+                        onClick()
                     }
                     return true
                 }
@@ -173,7 +176,15 @@ private constructor(
         endSideContainer.setOnHoverListener(
             statusOverlayHoverListenerFactory.createDarkAwareListener(endSideContainer)
         )
-        endSideContainer.setOnTouchListener(iconsOnTouchListener)
+        endSideContainer.setOnTouchListener(
+            createMouseClickListener {
+                if (shadeModeInteractor.isDualShade) {
+                    shadeController.animateExpandQs()
+                } else {
+                    shadeController.animateExpandShade()
+                }
+            }
+        )
 
         startSideContainer = mView.requireViewById(R.id.status_bar_start_side_content)
         startSideContainer.setOnHoverListener(
@@ -183,7 +194,9 @@ private constructor(
                 bottomHoverMargin = 6,
             )
         )
-        startSideContainer.setOnTouchListener(iconsOnTouchListener)
+        startSideContainer.setOnTouchListener(
+            createMouseClickListener { shadeController.animateExpandShade() }
+        )
     }
 
     @VisibleForTesting
@@ -381,6 +394,7 @@ private constructor(
         private val statusBarWindowStateController: StatusBarWindowStateController,
         private val shadeController: ShadeController,
         private val shadeViewController: ShadeViewController,
+        private val shadeModeInteractor: ShadeModeInteractor,
         private val panelExpansionInteractor: PanelExpansionInteractor,
         private val statusBarLongPressGestureDetector: Provider<StatusBarLongPressGestureDetector>,
         private val windowRootView: Provider<WindowRootView>,
@@ -407,6 +421,7 @@ private constructor(
                 statusBarWindowStateController,
                 shadeController,
                 shadeViewController,
+                shadeModeInteractor,
                 panelExpansionInteractor,
                 statusBarLongPressGestureDetector,
                 windowRootView,

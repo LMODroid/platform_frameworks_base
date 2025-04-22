@@ -40,8 +40,11 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.SysuiTestableContext
 import com.android.systemui.battery.BatteryMeterView
+import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.flags.Flags
+import com.android.systemui.kosmos.collectLastValue
+import com.android.systemui.kosmos.runTest
 import com.android.systemui.plugins.fakeDarkIconDispatcher
 import com.android.systemui.res.R
 import com.android.systemui.scene.ui.view.WindowRootView
@@ -51,7 +54,10 @@ import com.android.systemui.shade.ShadeViewController
 import com.android.systemui.shade.StatusBarLongPressGestureDetector
 import com.android.systemui.shade.display.StatusBarTouchShadeDisplayPolicy
 import com.android.systemui.shade.domain.interactor.PanelExpansionInteractor
+import com.android.systemui.shade.domain.interactor.enableDualShade
+import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.shade.shared.flag.ShadeWindowGoesAround
+import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.statusbar.CommandQueue
 import com.android.systemui.statusbar.core.StatusBarConnectedDisplays
 import com.android.systemui.statusbar.data.repository.fakeStatusBarContentInsetsProviderStore
@@ -519,14 +525,52 @@ class PhoneStatusBarViewControllerTest : SysuiTestCase() {
     }
 
     @Test
-    fun shadeIsExpandedOnStatusIconMouseClick() {
+    @EnableSceneContainer
+    fun dualShade_qsIsExpandedOnEndSideContentMouseClick() =
+        kosmos.runTest {
+            kosmos.enableDualShade(wideLayout = true)
+
+            val shadeMode by collectLastValue(shadeModeInteractor.shadeMode)
+            assertThat(shadeMode).isEqualTo(ShadeMode.Dual)
+
+            val view = createViewMock()
+            InstrumentationRegistry.getInstrumentation().runOnMainSync {
+                controller = createAndInitController(view)
+            }
+            val endSideContainer = view.requireViewById<View>(R.id.system_icons)
+            endSideContainer.dispatchTouchEvent(
+                getActionUpEventFromSource(InputDevice.SOURCE_MOUSE)
+            )
+
+            verify(shadeControllerImpl).animateExpandQs()
+            verify(shadeControllerImpl, never()).animateExpandShade()
+        }
+
+    @Test
+    fun shadeIsExpandedOnEndSideContentMouseClick() {
         val view = createViewMock()
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
             controller = createAndInitController(view)
         }
-        val statusContainer = view.requireViewById<View>(R.id.system_icons)
-        statusContainer.dispatchTouchEvent(getActionUpEventFromSource(InputDevice.SOURCE_MOUSE))
+        val endSideContainer = view.requireViewById<View>(R.id.system_icons)
+        endSideContainer.dispatchTouchEvent(getActionUpEventFromSource(InputDevice.SOURCE_MOUSE))
+
         verify(shadeControllerImpl).animateExpandShade()
+        verify(shadeControllerImpl, never()).animateExpandQs()
+    }
+
+    @Test
+    fun shadeIsExpandedOnStartSideContentMouseClick() {
+        val view = createViewMock()
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            controller = createAndInitController(view)
+        }
+
+        val startSideContainer = view.requireViewById<View>(R.id.status_bar_start_side_content)
+        startSideContainer.dispatchTouchEvent(getActionUpEventFromSource(InputDevice.SOURCE_MOUSE))
+
+        verify(shadeControllerImpl).animateExpandShade()
+        verify(shadeControllerImpl, never()).animateExpandQs()
     }
 
     @Test
@@ -583,6 +627,7 @@ class PhoneStatusBarViewControllerTest : SysuiTestCase() {
                 statusBarWindowStateController,
                 shadeControllerImpl,
                 shadeViewController,
+                kosmos.shadeModeInteractor,
                 panelExpansionInteractor,
                 { mStatusBarLongPressGestureDetector },
                 windowRootView,
