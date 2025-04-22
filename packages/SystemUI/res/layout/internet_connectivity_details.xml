@@ -171,6 +171,7 @@
                             <ImageView
                                 android:id="@+id/signal_icon"
                                 android:contentDescription="@string/mobile_data"
+                                android:tint="@androidprv:color/materialColorOnSurface"
                                 android:autoMirrored="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
