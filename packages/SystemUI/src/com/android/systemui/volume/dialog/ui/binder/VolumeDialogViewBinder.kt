@@ -32,7 +32,6 @@ import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import com.android.app.tracing.coroutines.launchInTraced
 import com.android.app.tracing.coroutines.launchTraced
-import com.android.internal.view.RotationPolicy
 import com.android.systemui.common.ui.view.onApplyWindowInsets
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.res.R
@@ -189,16 +188,7 @@ constructor(
      */
     private fun View.applyAnimationProgress(fraction: Float) {
         alpha = ceil(fraction)
-        if (display.rotation == RotationPolicy.NATURAL_ROTATION) {
-                if (isLayoutRtl) {
-                    -1
-                } else {
-                    1
-                } * width / 2f
-            } else {
-                null
-            }
-            ?.let { maxTranslationX -> translationX = lerp(maxTranslationX, 0f, fraction) }
+        translationX = lerp(width, 0, fraction).toFloat()
     }
 
     private suspend fun ViewTreeObserver.listenToComputeInternalInsets() =
