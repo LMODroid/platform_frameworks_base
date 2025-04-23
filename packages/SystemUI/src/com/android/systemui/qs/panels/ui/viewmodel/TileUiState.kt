@@ -43,7 +43,10 @@ data class TileUiState(
     val handlesSecondaryClick: Boolean,
     val sideDrawable: Drawable?,
     val accessibilityUiState: AccessibilityUiState,
-)
+) {
+    val isToggleable: Boolean
+        get() = accessibilityUiState.toggleableState != null
+}
 
 data class AccessibilityUiState(
     val contentDescription: String,

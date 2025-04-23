@@ -229,18 +229,20 @@ fun Tile(
                         hapticsViewModel?.setTileInteractionState(
                             TileHapticsViewModel.TileInteractionState.CLICKED
                         )
-                        if (uiState.accessibilityUiState.toggleableState != null) {
-                            // Bounce unless we're a large dual target tile. These don't toggle on
-                            // main click.
-                            if (iconOnly || !isDualTarget) {
-                                coroutineScope.launch {
-                                    currentBounceableInfo.bounceable.animateBounce()
-                                }
+                        val bounceContainer = uiState.isToggleable && (iconOnly || !isDualTarget)
+                        coroutineScope.launch {
+                            // Bounce the tile's container if it is toggleable and is not a large
+                            // dual target tile. These don't toggle on main click. Otherwise bounce
+                            // the content of the tile.
+                            if (bounceContainer) {
+                                currentBounceableInfo.bounceable.animateContainerBounce()
+                            } else {
+                                currentBounceableInfo.bounceable.animateContentBounce(iconOnly)
                             }
+                        }
+                        if (uiState.isToggleable && iconOnly) {
                             // And show footer text feedback for icons
-                            if (iconOnly) {
-                                requestToggleTextFeedback(tile.spec)
-                            }
+                            requestToggleTextFeedback(tile.spec)
                         }
                     },
                 onLongClick = longClick,
@@ -253,7 +255,10 @@ fun Tile(
                     SmallTileContent(
                         iconProvider = iconProvider,
                         color = colors.icon,
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier =
+                            Modifier.align(Alignment.Center).bounceScale {
+                                bounceableInfo.bounceable.iconBounceScale
+                            },
                     )
                 } else {
                     val iconShape by TileDefaults.animateIconShapeAsState(uiState.state)
@@ -277,6 +282,7 @@ fun Tile(
                         accessibilityUiState = uiState.accessibilityUiState,
                         squishiness = squishiness,
                         isVisible = isVisible,
+                        textScale = { bounceableInfo.bounceable.textBounceScale },
                         modifier =
                             Modifier.largeTilePadding(isDualTarget = uiState.handlesLongClick),
                     )

@@ -21,6 +21,7 @@ import android.graphics.drawable.Animatable
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
@@ -67,6 +68,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorProducer
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.DefaultAlpha
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
@@ -107,6 +109,8 @@ import com.android.systemui.qs.panels.ui.viewmodel.AccessibilityUiState
 import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
 import kotlin.math.abs
+import platform.test.motion.compose.values.MotionTestValueKey
+import platform.test.motion.compose.values.motionTestValues
 
 private const val TEST_TAG_TOGGLE = "qs_tile_toggle_target"
 
@@ -122,6 +126,7 @@ fun LargeTileContent(
     isVisible: () -> Boolean = { true },
     accessibilityUiState: AccessibilityUiState? = null,
     iconShape: RoundedCornerShape = RoundedCornerShape(CommonTileDefaults.InactiveCornerRadius),
+    textScale: () -> Float = { 1f },
     toggleClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
 ) {
@@ -178,7 +183,7 @@ fun LargeTileContent(
             colors = colors,
             accessibilityUiState = accessibilityUiState,
             isVisible = isVisible,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).bounceScale(TransformOrigin(0f, .5f), textScale),
         )
 
         if (sideDrawable != null) {
@@ -379,6 +384,25 @@ private fun DrawScope.drawFadedEdge(startX: Float, endX: Float, colors: List<Col
         brush = Brush.horizontalGradient(colors = colors, startX = startX, endX = endX),
         blendMode = BlendMode.DstIn,
     )
+}
+
+fun Modifier.bounceScale(
+    transformOrigin: TransformOrigin = TransformOrigin.Center,
+    scale: () -> Float,
+): Modifier {
+    return motionTestValues { scale() exportAs TileBounceMotionTestKeys.BounceScale }
+        .graphicsLayer {
+            scale().let {
+                scaleY = it
+                scaleX = it
+                this.transformOrigin = transformOrigin
+            }
+        }
+}
+
+@VisibleForTesting
+object TileBounceMotionTestKeys {
+    val BounceScale = MotionTestValueKey<Float>("bounceScale")
 }
 
 object CommonTileDefaults {
