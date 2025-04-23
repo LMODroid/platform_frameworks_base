@@ -792,6 +792,7 @@ constructor(
                                 }
                                 .onSizeChanged { viewModel.qsScrollHeight = it.height }
                                 .verticalScroll(scrollState)
+                                .padding(bottom = 8.dp)
                                 .sysuiResTag(ResIdTags.qsScroll)
                     ) {
                         val containerViewModel = viewModel.containerViewModel
