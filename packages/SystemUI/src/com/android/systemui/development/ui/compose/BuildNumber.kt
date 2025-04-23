@@ -20,6 +20,7 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
@@ -52,6 +53,7 @@ fun BuildNumber(
 
         Text(
             text = buildNumber.value,
+            style = MaterialTheme.typography.bodySmall,
             modifier =
                 modifier
                     .focusable()
