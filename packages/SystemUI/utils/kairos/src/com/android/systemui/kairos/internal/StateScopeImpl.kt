@@ -120,19 +120,21 @@ internal class StateScopeImpl(val evalScope: EvalScope, val aliveLazy: Lazy<Stat
         )
     }
 
-    fun childStateScope(childEndSignal: Events<Any>) =
-        StateScopeImpl(
+    fun childStateScope(childEndSignal: Events<Any>): StateScopeImpl {
+        val operatorName = "childStateScope.endSignalOnce"
+        return StateScopeImpl(
             evalScope,
             aliveLazy =
                 lazy {
                     val isChildAlive: State<Boolean> =
-                        childEndSignal
-                            .nextOnlyInternal("childStateScope.endSignalOnce")
+                        truncateToScope(childEndSignal)
+                            .nextOnlyInternal(operatorName)
                             .mapCheap { false }
-                            .holdState(true)
+                            .holdStateInternal(operatorName, true)
                     alive.flatMap { isAlive -> if (isAlive) isChildAlive else stateOf(false) }
                 },
         )
+    }
 
     override fun <A> truncateToScope(events: Events<A>): Events<A> =
         alive.mapCheapUnsafe { if (it) events else emptyEvents }.switchEvents()

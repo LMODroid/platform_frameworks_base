@@ -26,7 +26,6 @@ import com.android.systemui.kairos.internal.Schedulable
 import com.android.systemui.kairos.internal.StateImpl
 import com.android.systemui.kairos.internal.StateSource
 import com.android.systemui.kairos.internal.activated
-import com.android.systemui.kairos.internal.cached
 import com.android.systemui.kairos.internal.constInit
 import com.android.systemui.kairos.internal.constState
 import com.android.systemui.kairos.internal.filterImpl
@@ -227,13 +226,12 @@ class MutableState<T> internal constructor(internal val network: Network, initia
         val changes = input.impl
         val name = null
         val operatorName = "MutableState"
-        val state: StateSource<T> = StateSource(initialValue)
+        val state: StateSource<T> = StateSource(initialValue, name, operatorName)
         val mapImpl = mapImpl(upstream = { changes.activated() }) { it, _ -> it!!.value }
         val calm: EventsImpl<T> =
             filterImpl({ mapImpl }) { new ->
-                    new != state.getCurrentWithEpoch(evalScope = this).first
-                }
-                .cached()
+                new != state.getCurrentWithEpoch(evalScope = this).first
+            }
         @Suppress("DeferredResultUnused")
         network.transaction("MutableState.init") {
             calm.activate(evalScope = this, downstream = Schedulable.S(state))?.let {

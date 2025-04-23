@@ -89,8 +89,13 @@ internal sealed class StateStore<out S> {
     abstract fun getCurrentWithEpoch(evalScope: EvalScope): Pair<S, Long>
 }
 
-internal class StateSource<S>(init: Lazy<S>) : StateStore<S>() {
-    constructor(init: S) : this(lazyOf(init))
+internal class StateSource<S>(init: Lazy<S>, val name: String?, val operatorName: String) :
+    StateStore<S>() {
+    constructor(
+        init: S,
+        name: String?,
+        operatorName: String,
+    ) : this(lazyOf(init), name, operatorName)
 
     lateinit var upstreamConnection: NodeConnection<S>
 
@@ -113,14 +118,15 @@ internal class StateSource<S>(init: Lazy<S>) : StateStore<S>() {
         writeEpoch = evalScope.epoch + 1
     }
 
-    override fun toString(): String = "StateImpl(current=$_current, writeEpoch=$writeEpoch)"
+    override fun toString(): String =
+        "StateImpl(name=$name, operator=$operatorName, current=$_current, writeEpoch=$writeEpoch)"
 
     fun getStorageUnsafe(): Maybe<S> =
         if (_current.isInitialized()) Maybe.present(_current.value) else Maybe.absent
 }
 
 internal fun <A> constState(name: String?, operatorName: String, init: A): StateImpl<A> =
-    StateImpl(name, operatorName, neverImpl, StateSource(init))
+    StateImpl(name, operatorName, neverImpl, StateSource(init, name, operatorName))
 
 internal inline fun <A> activatedStateSource(
     name: String?,
@@ -129,9 +135,18 @@ internal inline fun <A> activatedStateSource(
     crossinline getChanges: EvalScope.() -> EventsImpl<A>,
     init: Lazy<A>,
 ): StateImpl<A> {
-    val store = StateSource(init)
-    val calm: EventsImpl<A> =
-        filterImpl(getChanges) { new -> new != store.getCurrentWithEpoch(evalScope = this).first }
+    val store = StateSource(init, name, operatorName)
+    val newValues: EventsImpl<Maybe<A>> =
+        mapImpl(getChanges) { new, _ ->
+                if (new != store.getCurrentWithEpoch(evalScope = this).first) {
+                    Maybe.present(new)
+                } else {
+                    Maybe.absent
+                }
+            }
+            // cache this for consistency: getCurrentWithEpoch is technically impure
+            .cached()
+    val calm: EventsImpl<A> = filterPresentImpl { newValues }
     evalScope.scheduleOutput(
         OneShot {
             calm.activate(evalScope = this, downstream = Schedulable.S(store))?.let {
@@ -146,17 +161,21 @@ internal inline fun <A> activatedStateSource(
     return StateImpl(name, operatorName, calm, store)
 }
 
-private inline fun <A> EventsImpl<A>.calm(state: StateDerived<A>): EventsImpl<A> =
-    filterImpl({ this@calm }) { new ->
-            val (current, _) = state.getCurrentWithEpoch(evalScope = this)
-            if (new != current) {
-                state.setCacheFromPush(new, epoch)
-                true
-            } else {
-                false
+private inline fun <A> EventsImpl<A>.calm(state: StateDerived<A>): EventsImpl<A> {
+    val newValues =
+        mapImpl({ this@calm }) { new, _ ->
+                val (current, _) = state.getCurrentWithEpoch(evalScope = this)
+                if (new != current) {
+                    state.setCacheFromPush(new, epoch)
+                    Maybe.present(new)
+                } else {
+                    Maybe.absent
+                }
             }
-        }
-        .cached()
+            // cache this for consistency: it is impure due to setCacheFromPush
+            .cached()
+    return filterPresentImpl { newValues }
+}
 
 internal fun <A, B> mapStateImplCheap(
     stateImpl: Init<StateImpl<A>>,

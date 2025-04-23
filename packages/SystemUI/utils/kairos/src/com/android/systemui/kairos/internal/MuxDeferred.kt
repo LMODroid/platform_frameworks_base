@@ -394,8 +394,8 @@ internal inline fun <A> mergeNodes(
     name: String? = null,
     crossinline f: EvalScope.(A, A) -> A,
 ): EventsImpl<A> {
-    val mergedThese = mergeNodes(name, getPulse, getOther)
-    val merged =
+    val mergedThese: EventsImpl<These<A, A>> = mergeNodes(name, getPulse, getOther)
+    val merged: EventsImpl<A> =
         mapImpl({ mergedThese }) { these, _ -> these.merge { thiz, that -> f(thiz, that) } }
     return merged.cached()
 }

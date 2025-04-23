@@ -1215,6 +1215,8 @@ class KairosTests {
         assertEquals(mapOf(0 to mapOf(10 to "(1, 10)")), state.value)
 
         // remove
+        println()
+        println("remove inner 10")
         emitter2.emit(mapOf(10 to Maybe.absent()))
         runCurrent()
 

@@ -41,7 +41,6 @@ internal inline fun <A> filterImpl(
     crossinline getPulse: EvalScope.() -> EventsImpl<A>,
     crossinline f: EvalScope.(A) -> Boolean,
 ): EventsImpl<A> {
-    val mapped =
-        mapImpl(getPulse) { it, _ -> if (f(it)) Maybe.present(it) else Maybe.absent }.cached()
+    val mapped = mapImpl(getPulse) { it, _ -> if (f(it)) Maybe.present(it) else Maybe.absent }
     return filterPresentImpl { mapped }
 }

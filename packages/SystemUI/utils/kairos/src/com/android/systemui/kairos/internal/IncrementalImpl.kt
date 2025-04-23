@@ -35,7 +35,7 @@ internal fun <K, V> constIncremental(
     operatorName: String,
     init: Map<K, V>,
 ): IncrementalImpl<K, V> =
-    IncrementalImpl(name, operatorName, neverImpl, neverImpl, StateSource(init))
+    IncrementalImpl(name, operatorName, neverImpl, neverImpl, StateSource(init, name, operatorName))
 
 internal inline fun <K, V> activatedIncremental(
     name: String?,
@@ -44,7 +44,7 @@ internal inline fun <K, V> activatedIncremental(
     crossinline getPatches: EvalScope.() -> EventsImpl<Map<K, Maybe<V>>>,
     init: Lazy<Map<K, V>>,
 ): IncrementalImpl<K, V> {
-    val store = StateSource(init)
+    val store = StateSource(init, name, operatorName)
     val maybeChanges =
         mapImpl(getPatches) { patch, _ ->
                 val (current, _) = store.getCurrentWithEpoch(evalScope = this)
