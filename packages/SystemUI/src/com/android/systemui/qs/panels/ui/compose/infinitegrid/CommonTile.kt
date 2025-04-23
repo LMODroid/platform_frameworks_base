@@ -40,7 +40,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -95,8 +94,6 @@ import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.common.ui.compose.load
 import com.android.systemui.compose.modifiers.sysuiResTag
-import com.android.systemui.qs.panels.ui.compose.icons.DualTargetArrow
-import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.ChevronSize
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.SideIconHeight
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.SideIconWidth
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TILE_INITIAL_DELAY_MILLIS
@@ -113,7 +110,6 @@ import kotlin.math.abs
 
 private const val TEST_TAG_TOGGLE = "qs_tile_toggle_target"
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LargeTileContent(
     label: String,
@@ -142,31 +138,30 @@ fun LargeTileContent(
         val focusBorderColor = MaterialTheme.colorScheme.secondary
         Box(
             modifier =
-                Modifier.size(CommonTileDefaults.ToggleTargetSize)
-                    .clip(iconShape)
-                    .verticalSquish(squishiness)
-                    .drawBehind { drawRect(animatedBackgroundColor) }
-                    .thenIf(isDualTarget) {
-                        Modifier.borderOnFocus(color = focusBorderColor, iconShape.topEnd)
-                            .combinedClickable(
-                                onClick = toggleClick!!,
-                                onLongClick = onLongClick,
-                                onLongClickLabel = longPressLabel,
-                                hapticFeedbackEnabled = !Flags.msdlFeedback(),
-                            )
-                            .thenIf(accessibilityUiState != null) {
-                                Modifier.semantics {
-                                        accessibilityUiState as AccessibilityUiState
-                                        contentDescription = accessibilityUiState.contentDescription
-                                        stateDescription = accessibilityUiState.stateDescription
-                                        accessibilityUiState.toggleableState?.let {
-                                            toggleableState = it
-                                        }
-                                        role = Role.Switch
+                Modifier.size(CommonTileDefaults.ToggleTargetSize).thenIf(isDualTarget) {
+                    Modifier.borderOnFocus(color = focusBorderColor, iconShape.topEnd)
+                        .clip(iconShape)
+                        .verticalSquish(squishiness)
+                        .drawBehind { drawRect(animatedBackgroundColor) }
+                        .combinedClickable(
+                            onClick = toggleClick!!,
+                            onLongClick = onLongClick,
+                            onLongClickLabel = longPressLabel,
+                            hapticFeedbackEnabled = !Flags.msdlFeedback(),
+                        )
+                        .thenIf(accessibilityUiState != null) {
+                            Modifier.semantics {
+                                    accessibilityUiState as AccessibilityUiState
+                                    contentDescription = accessibilityUiState.contentDescription
+                                    stateDescription = accessibilityUiState.stateDescription
+                                    accessibilityUiState.toggleableState?.let {
+                                        toggleableState = it
                                     }
-                                    .sysuiResTag(TEST_TAG_TOGGLE)
-                            }
-                    }
+                                    role = Role.Switch
+                                }
+                                .sysuiResTag(TEST_TAG_TOGGLE)
+                        }
+                }
         ) {
             SmallTileContent(
                 iconProvider = iconProvider,
@@ -191,13 +186,6 @@ fun LargeTileContent(
                 painter = rememberDrawablePainter(sideDrawable),
                 contentDescription = null,
                 modifier = Modifier.width(SideIconWidth).height(SideIconHeight),
-            )
-        } else if (isDualTarget) {
-            Icon(
-                DualTargetArrow,
-                contentDescription = null,
-                tint = colors.label,
-                modifier = Modifier.size(ChevronSize),
             )
         }
     }

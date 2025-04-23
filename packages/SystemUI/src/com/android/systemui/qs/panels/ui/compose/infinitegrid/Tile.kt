@@ -416,10 +416,10 @@ private object TileDefaults {
     val ActiveIconCornerRadius = 16.dp
     val ActiveTileCornerRadius = 24.dp
 
-    /** An active icon tile uses the active color as background */
+    /** An active tile uses the active color as background */
     @Composable
     @ReadOnlyComposable
-    fun activeIconTileColors(): TileColors =
+    fun activeTileColors(): TileColors =
         TileColors(
             background = MaterialTheme.colorScheme.primary,
             iconBackground = MaterialTheme.colorScheme.primary,
@@ -480,10 +480,10 @@ private object TileDefaults {
     fun getColorForState(uiState: TileUiState, iconOnly: Boolean): TileColors {
         return when (uiState.state) {
             STATE_ACTIVE -> {
-                if (!iconOnly) {
+                if (uiState.handlesSecondaryClick && !iconOnly) {
                     activeDualTargetTileColors()
                 } else {
-                    activeIconTileColors()
+                    activeTileColors()
                 }
             }
 
