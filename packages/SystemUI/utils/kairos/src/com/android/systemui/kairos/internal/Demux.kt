@@ -46,9 +46,9 @@ internal class DemuxNode<W, K, A>(
         branchNodeByKey.getOrPut(key) { BranchNode(key) }
 
     override fun schedule(logIndent: Int, evalScope: EvalScope) =
-        logDuration(logIndent, "DemuxNode.schedule") {
+        logDuration(logIndent, { "DemuxNode.schedule" }) {
             val upstreamResult =
-                logDuration("upstream.getPushEvent") {
+                logDuration({ "upstream.getPushEvent" }) {
                     upstreamConnection.getPushEvent(currentLogIndent, evalScope)
                 }
             updateEpoch(evalScope)
@@ -147,7 +147,7 @@ internal class DemuxNode<W, K, A>(
     }
 
     fun getPushEvent(logIndent: Int, evalScope: EvalScope, key: K): A =
-        logDuration(logIndent, "Demux.getPushEvent($key)") {
+        logDuration(logIndent, { "Demux.getPushEvent($key)" }) {
             upstreamConnection.getPushEvent(currentLogIndent, evalScope).getValue(key)
         }
 
@@ -193,7 +193,7 @@ internal class DemuxNode<W, K, A>(
         }
 
         fun schedule(logIndent: Int, evalScope: EvalScope) {
-            logDuration(logIndent, "DemuxBranchNode($key).schedule") {
+            logDuration(logIndent, { "DemuxBranchNode($key).schedule" }) {
                 if (!scheduleAll(currentLogIndent, downstreamSet, evalScope)) {
                     evalScope.scheduleDeactivation(this@BranchNode)
                 }

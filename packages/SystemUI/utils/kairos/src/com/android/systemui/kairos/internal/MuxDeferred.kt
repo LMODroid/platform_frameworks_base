@@ -43,7 +43,6 @@ internal class MuxDeferredNode<W, K, V>(
     val name: String?,
     lifecycle: MuxLifecycle<W, K, V>,
     val spec: MuxActivator<W, K, V>,
-    factory: MutableMapK.Factory<W, K>,
 ) : MuxNode<W, K, V>(lifecycle) {
 
     val schedulable = Schedulable.M(this)
@@ -52,21 +51,21 @@ internal class MuxDeferredNode<W, K, V>(
 
     override fun visit(logIndent: Int, evalScope: EvalScope) {
         check(epoch < evalScope.epoch) { "node unexpectedly visited multiple times in transaction" }
-        logDuration(logIndent, "MuxDeferred[$name].visit") {
+        logDuration(logIndent, { "MuxDeferred[$name].visit" }) {
             val scheduleDownstream: Boolean
             val result: MapK<W, K, PullNode<V>>
-            logDuration("copying upstream data", false) {
+            logDuration(getPrefix = { "copying upstream data" }, start = false) {
                 scheduleDownstream = upstreamData.isNotEmpty()
                 result = upstreamData.readOnlyCopy()
                 upstreamData.clear()
             }
             if (name != null) {
-                logLn("[${this@MuxDeferredNode}] result = $result")
+                logLn { "[${this@MuxDeferredNode}] result = $result" }
             }
             val compactDownstream = depthTracker.isDirty()
             if (scheduleDownstream || compactDownstream) {
                 if (compactDownstream) {
-                    logDuration("compactDownstream", false) {
+                    logDuration(getPrefix = { "compactDownstream" }, start = false) {
                         depthTracker.applyChanges(
                             evalScope.scheduler,
                             downstreamSet,
@@ -75,9 +74,9 @@ internal class MuxDeferredNode<W, K, V>(
                     }
                 }
                 if (scheduleDownstream) {
-                    logDuration("scheduleDownstream") {
+                    logDuration({ "scheduleDownstream" }) {
                         if (name != null) {
-                            logLn("[${this@MuxDeferredNode}] scheduling")
+                            logLn { "[${this@MuxDeferredNode}] scheduling" }
                         }
                         transactionCache.put(evalScope, result)
                         if (!scheduleAll(currentLogIndent, downstreamSet, evalScope)) {
@@ -90,10 +89,10 @@ internal class MuxDeferredNode<W, K, V>(
     }
 
     override fun getPushEvent(logIndent: Int, evalScope: EvalScope): MuxResult<W, K, V> =
-        logDuration(logIndent, "MuxDeferred.getPushEvent") {
+        logDuration(logIndent, { "MuxDeferred.getPushEvent" }) {
             transactionCache.getCurrentValue(evalScope).also {
                 if (name != null) {
-                    logLn("[${this@MuxDeferredNode}] getPushEvent = $it")
+                    logLn { "[${this@MuxDeferredNode}] getPushEvent = $it" }
                 }
             }
         }
@@ -119,7 +118,7 @@ internal class MuxDeferredNode<W, K, V>(
     //    deferred to the end of this phase.
     fun performMove(logIndent: Int, evalScope: EvalScope) {
         if (name != null) {
-            logLn(logIndent, "[${this@MuxDeferredNode}] performMove (patchData = $patchData)")
+            logLn(logIndent) { "[${this@MuxDeferredNode}] performMove (patchData = $patchData)" }
         }
 
         val patch = patchData ?: return
@@ -278,7 +277,7 @@ internal class MuxDeferredNode<W, K, V>(
     }
 
     fun scheduleMover(logIndent: Int, evalScope: EvalScope) {
-        logDuration(logIndent, "MuxDeferred.scheduleMover") {
+        logDuration(logIndent, { "MuxDeferred.scheduleMover" }) {
             patchData =
                 checkNotNull(patches) { "mux mover scheduled with unset patches upstream node" }
                     .getPushEvent(currentLogIndent, evalScope)
@@ -307,7 +306,7 @@ internal inline fun <A> switchDeferredImplSingle(
     return mapImpl({ switchDeferredImpl }) { map, logIndent ->
         map.asSingle().getValue(Unit).getPushEvent(logIndent, this).also {
             if (name != null) {
-                logLn(logIndent, "[$name] extracting single mux: $it")
+                logLn(logIndent) { "[$name] extracting single mux: $it" }
             }
         }
     }
@@ -333,7 +332,7 @@ private class MuxDeferredActivator<W, K, V>(
     ): Pair<MuxNode<W, K, V>, (() -> Unit)?>? {
         // Initialize mux node and switched-in connections.
         val muxNode =
-            MuxDeferredNode(name, lifecycle, this, storeFactory).apply {
+            MuxDeferredNode(name, lifecycle, this).apply {
                 initializeUpstream(evalScope, getStorage, storeFactory)
                 // Update depth based on all initial switched-in nodes.
                 initializeDepth()

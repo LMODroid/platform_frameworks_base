@@ -199,9 +199,9 @@ internal sealed class MuxNode<W, K, V>(val lifecycle: MuxLifecycle<W, K, V>) :
         lateinit var upstream: NodeConnection<V>
 
         override fun schedule(logIndent: Int, evalScope: EvalScope) {
-            logDuration(logIndent, "MuxBranchNode.schedule") {
+            logDuration(logIndent, { "MuxBranchNode.schedule" }) {
                 if (this@MuxNode is MuxPromptNode && this@MuxNode.name != null) {
-                    logLn("[${this@MuxNode}] scheduling $key")
+                    logLn({ "[${this@MuxNode}] scheduling $key" })
                 }
                 upstreamData[key] = upstream.directUpstream
                 this@MuxNode.schedule(evalScope)

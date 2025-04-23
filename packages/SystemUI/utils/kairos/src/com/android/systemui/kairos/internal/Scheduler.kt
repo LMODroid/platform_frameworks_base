@@ -49,7 +49,7 @@ internal class SchedulerImpl(private val enqueue: (MuxNode<*, *, *>) -> Boolean)
             // If any visited MuxPromptNodes had their depths increased, eagerly propagate those
             // depth changes now before performing further network evaluation.
             val numNodes = network.compactor.drainCompact(currentLogIndent)
-            logLn("promptly compacted $numNodes nodes")
+            logLn { "promptly compacted $numNodes nodes" }
         }
 
     internal fun drainCompact(logIndent: Int): Int =
@@ -71,9 +71,9 @@ internal class SchedulerImpl(private val enqueue: (MuxNode<*, *, *>) -> Boolean)
         while (scheduledQ.isNotEmpty()) {
             val maxDepth = scheduledQ.peek()?.first ?: error("Unexpected empty scheduler")
             LogIndent(logIndent).onStep { visit ->
-                logDuration("step $maxDepth") {
+                logDuration({ "step $maxDepth" }) {
                     val subtotal = runStep(maxDepth) { visit(it) }
-                    logLn("visited $subtotal nodes")
+                    logLn { "visited $subtotal nodes" }
                     total += subtotal
                 }
             }

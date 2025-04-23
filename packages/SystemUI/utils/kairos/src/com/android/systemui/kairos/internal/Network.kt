@@ -134,10 +134,10 @@ internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy:
             transactionMutex.withLock {
                 val e = epoch
                 val duration = measureTime {
-                    logLn(0, "===starting transaction $e===")
+                    logLn(indent = 0) { "===starting transaction $e===" }
                     val evalScope = EvalScopeImpl(networkScope = this, deferScope = deferScopeImpl)
                     try {
-                        logDuration(1, "init actions") {
+                        logDuration(indent = 1, getPrefix = { "init actions" }) {
                             // Run all actions
                             runThenDrainDeferrals {
                                 for (action in actions) {
@@ -155,7 +155,7 @@ internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy:
                         // re-throw, cancelling this coroutine
                         throw e
                     } finally {
-                        logDuration(1, "signal completions") {
+                        logDuration(indent = 1, getPrefix = { "signal completions" }) {
                             // Signal completion
                             while (actions.isNotEmpty()) {
                                 actions.removeLast().completed()
@@ -163,7 +163,7 @@ internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy:
                         }
                     }
                 }
-                logLn(0, "===transaction $e took $duration===")
+                logLn(indent = 0) { "===transaction $e took $duration===" }
             }
         }
     }
@@ -190,37 +190,39 @@ internal class Network(val coroutineScope: CoroutineScope, val coalescingPolicy:
     /** Performs a transactional update of the Kairos network. */
     private fun doTransaction(evalScope: EvalScope, logIndent: Int) {
         // Traverse network, then run outputs
-        logDuration(logIndent, "traverse network") {
+        logDuration(logIndent, { "traverse network" }) {
             do {
                 val numNodes: Int =
-                    logDuration("drainEval") {
+                    logDuration({ "drainEval" }) {
                         scheduler.drainEval(currentLogIndent, this@Network, evalScope)
                     }
-                logLn("drained $numNodes nodes")
+                logLn({ "drained $numNodes nodes" })
             } while (
-                logDuration("evalOutputs") { runThenDrainDeferrals { evalFastOutputs(evalScope) } }
+                logDuration({ "evalOutputs" }) {
+                    runThenDrainDeferrals { evalFastOutputs(evalScope) }
+                }
             )
         }
         coroutineScope.launch { evalLaunchedOutputs() }
         // Update states
-        logDuration(logIndent, "update states") {
+        logDuration(logIndent, { "update states" }) {
             runThenDrainDeferrals { evalStateWriters(currentLogIndent, evalScope) }
         }
         // Invalidate caches
         // Note: this needs to occur before deferred switches
-        logDuration(logIndent, "clear store") { transactionStore.clear() }
+        logDuration(logIndent, { "clear store" }) { transactionStore.clear() }
         epoch++
         // Perform deferred switches
-        logDuration(logIndent, "evalMuxMovers") {
+        logDuration(logIndent, { "evalMuxMovers" }) {
             runThenDrainDeferrals { evalMuxMovers(currentLogIndent, evalScope) }
         }
         // Compact depths
-        logDuration(logIndent, "compact") {
+        logDuration(logIndent, { "compact" }) {
             scheduler.drainCompact(currentLogIndent)
             compactor.drainCompact(currentLogIndent)
         }
         // Deactivate nodes with no downstream
-        logDuration(logIndent, "deactivations") { evalDeactivations() }
+        logDuration(logIndent, { "deactivations" }) { evalDeactivations() }
     }
 
     private fun evalFastOutputs(evalScope: EvalScope): Boolean {

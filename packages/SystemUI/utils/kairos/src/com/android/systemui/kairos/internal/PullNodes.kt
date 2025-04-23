@@ -23,10 +23,12 @@ internal val neverImpl: EventsImpl<Nothing> = EventsImplCheap { null }
 internal class MapNode<A, B>(val upstream: PullNode<A>, val transform: EvalScope.(A, Int) -> B) :
     PullNode<B> {
     override fun getPushEvent(logIndent: Int, evalScope: EvalScope): B =
-        logDuration(logIndent, "MapNode.getPushEvent") {
+        logDuration(logIndent, { "MapNode.getPushEvent" }) {
             val upstream =
-                logDuration("upstream event") { upstream.getPushEvent(currentLogIndent, evalScope) }
-            logDuration("transform") { evalScope.transform(upstream, currentLogIndent) }
+                logDuration({ "upstream event" }) {
+                    upstream.getPushEvent(currentLogIndent, evalScope)
+                }
+            logDuration({ "transform" }) { evalScope.transform(upstream, currentLogIndent) }
         }
 }
 
@@ -51,18 +53,18 @@ internal class CachedNode<A>(
     val upstream: PullNode<A>,
 ) : PullNode<A> {
     override fun getPushEvent(logIndent: Int, evalScope: EvalScope): A =
-        logDuration(logIndent, "CachedNode.getPushEvent") {
+        logDuration(logIndent, { "CachedNode.getPushEvent" }) {
             val deferred =
-                logDuration("CachedNode.getOrPut", false) {
+                logDuration({ "CachedNode.getOrPut" }, start = false) {
                     transactionCache.getOrPut(evalScope) {
                         evalScope.deferAsync {
-                            logDuration("CachedNode.getUpstreamEvent") {
+                            logDuration({ "CachedNode.getUpstreamEvent" }) {
                                 upstream.getPushEvent(currentLogIndent, evalScope)
                             }
                         }
                     }
                 }
-            logDuration("await") { deferred.value }
+            logDuration({ "await" }) { deferred.value }
         }
 }
 

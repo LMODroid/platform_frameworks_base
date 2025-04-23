@@ -83,7 +83,7 @@ internal class InputNode<A>(
     }
 
     override fun getPushEvent(logIndent: Int, evalScope: EvalScope): A =
-        logDuration(logIndent, "Input.getPushEvent", false) {
+        logDuration(logIndent, { "Input.getPushEvent" }, false) {
             transactionCache.getCurrentValue(evalScope)
         }
 }
@@ -114,5 +114,5 @@ internal data object AlwaysNode : PushNode<Unit> {
     override fun removeDownstreamAndDeactivateIfNeeded(downstream: Schedulable) {}
 
     override fun getPushEvent(logIndent: Int, evalScope: EvalScope) =
-        logDuration(logIndent, "Always.getPushEvent", false) { Unit }
+        logDuration(logIndent, { "Always.getPushEvent" }, false) { Unit }
 }
