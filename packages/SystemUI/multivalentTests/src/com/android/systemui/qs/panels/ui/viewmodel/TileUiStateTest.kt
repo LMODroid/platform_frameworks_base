@@ -267,6 +267,32 @@ class TileUiStateTest : SysuiTestCase() {
             .contains(resources.getString(R.string.tile_unavailable))
     }
 
+    @Test
+    fun dualTarget_inactive_hasStateDescriptionOff() {
+        val state =
+            QSTile.State().apply {
+                state = Tile.STATE_INACTIVE
+                handlesSecondaryClick = true
+            }
+
+        val uiState = state.toUiState()
+        assertThat(uiState.accessibilityUiState.stateDescription)
+            .contains(context.getString(R.string.switch_bar_off))
+    }
+
+    @Test
+    fun dualTarget_active_hasStateDescriptionOn() {
+        val state =
+            QSTile.State().apply {
+                state = Tile.STATE_ACTIVE
+                handlesSecondaryClick = true
+            }
+
+        val uiState = state.toUiState()
+        assertThat(uiState.accessibilityUiState.stateDescription)
+            .contains(context.getString(R.string.switch_bar_on))
+    }
+
     private fun QSTile.State.toUiState() = toUiState(resources)
 }
 

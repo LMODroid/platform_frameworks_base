@@ -63,7 +63,11 @@ fun QSTile.State.toUiState(resources: Resources): TileUiState {
     // State handling and description
     val stateDescription = StringBuilder()
     val stateText =
-        if (accessibilityRole == Role.Switch || state == Tile.STATE_UNAVAILABLE) {
+        if (
+            accessibilityRole == Role.Switch ||
+                state == Tile.STATE_UNAVAILABLE ||
+                handlesSecondaryClick
+        ) {
             getStateText(resources)
         } else {
             ""
