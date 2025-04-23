@@ -150,12 +150,17 @@ private fun Modifier.panelContainerPadding(isFullWidthPanel: Boolean): Modifier 
         return this
     }
     val systemBars = WindowInsets.systemBarsIgnoringVisibility
+    // TODO(b/412969642): The systemBars check above reports a top padding of 0 on some devices,
+    //  for an unknown reason. This additional check for status bar height specifically is added
+    //  here to work around that issue.
+    val statusBarHeight = PaddingValues(top = dimensionResource(R.dimen.status_bar_height))
     val displayCutout = WindowInsets.displayCutout
     val waterfall = WindowInsets.waterfall
     val horizontalPadding =
-        PaddingValues(horizontal = dimensionResource(id = R.dimen.shade_panel_margin_horizontal))
+        PaddingValues(horizontal = dimensionResource(R.dimen.shade_panel_margin_horizontal))
     return padding(
         combinePaddings(
+            statusBarHeight,
             systemBars.asPaddingValues(),
             displayCutout.asPaddingValues(),
             waterfall.asPaddingValues(),
