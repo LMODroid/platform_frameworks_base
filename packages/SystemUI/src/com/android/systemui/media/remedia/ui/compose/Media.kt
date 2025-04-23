@@ -37,6 +37,7 @@ import androidx.compose.foundation.OverscrollEffect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.hoverable
@@ -126,7 +127,9 @@ import com.android.compose.animation.scene.SceneTransitionLayout
 import com.android.compose.animation.scene.rememberMutableSceneTransitionLayoutState
 import com.android.compose.animation.scene.transitions
 import com.android.compose.gesture.effect.rememberOffsetOverscrollEffect
+import com.android.compose.gesture.overscrollToDismiss
 import com.android.compose.ui.graphics.painter.rememberDrawablePainter
+import com.android.mechanics.spec.builder.rememberMotionBuilderContext
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.common.ui.compose.PagerDots
@@ -243,6 +246,7 @@ private fun CardCarouselContent(
                     state = pagerState,
                     userScrollEnabled = isSwipingEnabled,
                     pageSpacing = 8.dp,
+                    beyondViewportPageCount = 1,
                     key = { index: Int -> viewModel.cards[index].key },
                     overscrollEffect = overscrollEffect ?: rememberOffsetOverscrollEffect(),
                 ) { pageIndex: Int ->
@@ -267,11 +271,17 @@ private fun CardCarouselContent(
         }
 
         if (behavior.isCarouselDismissible) {
-            SwipeToDismiss(
-                content = { PagerContent() },
-                isSwipingEnabled = isSwipingEnabled,
-                onDismissed = onDismissed,
-            )
+            Box(
+                modifier =
+                    Modifier.overscrollToDismiss(
+                        rememberMotionBuilderContext(),
+                        orientation = Orientation.Horizontal,
+                        enabled = isSwipingEnabled,
+                        onDismissed = onDismissed,
+                    )
+            ) {
+                PagerContent()
+            }
         } else {
             val overscrollEffect = rememberOffsetOverscrollEffect()
             SwipeToReveal(
