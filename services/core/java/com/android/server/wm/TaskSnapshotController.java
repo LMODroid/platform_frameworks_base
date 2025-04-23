@@ -16,6 +16,8 @@
 
 package com.android.server.wm;
 
+import static android.window.TaskSnapshot.REFERENCE_NONE;
+
 import static com.android.server.wm.WindowManagerDebugConfig.DEBUG_SCREENSHOT;
 import static com.android.server.wm.WindowManagerDebugConfig.TAG_WM;
 
@@ -154,7 +156,7 @@ class TaskSnapshotController extends AbsAppSnapshotController<Task, TaskSnapshot
         if (shouldDisableSnapshots()) {
             return;
         }
-        final SnapshotSupplier supplier = getRecordSnapshotSupplier(task);
+        final SnapshotSupplier supplier = getRecordSnapshotSupplier(task, REFERENCE_NONE);
         if (supplier == null) {
             return;
         }
@@ -172,8 +174,12 @@ class TaskSnapshotController extends AbsAppSnapshotController<Task, TaskSnapshot
      * {@link AbsAppSnapshotController.SnapshotSupplier#handleSnapshot} to complete the entire
      * record request.
      */
-    SnapshotSupplier getRecordSnapshotSupplier(Task task) {
+    SnapshotSupplier getRecordSnapshotSupplier(Task task,
+            @TaskSnapshot.ReferenceFlags int initialUsage) {
         return recordSnapshotInner(task, true /* allowAppTheme */, snapshot -> {
+            if (initialUsage != REFERENCE_NONE) {
+                snapshot.addReference(initialUsage);
+            }
             if (!task.isActivityTypeHome()) {
                 mPersister.persistSnapshot(task.mTaskId, task.mUserId, snapshot);
                 task.onSnapshotChanged(snapshot);
@@ -186,7 +192,7 @@ class TaskSnapshotController extends AbsAppSnapshotController<Task, TaskSnapshot
      */
     @Nullable
     TaskSnapshot getSnapshot(int taskId, boolean isLowResolution) {
-        return getSnapshot(taskId, false /* isLowResolution */, TaskSnapshot.REFERENCE_NONE);
+        return getSnapshot(taskId, false /* isLowResolution */, REFERENCE_NONE);
     }
 
     /**

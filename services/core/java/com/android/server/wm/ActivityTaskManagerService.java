@@ -4121,8 +4121,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 // be retrieved by recents. While if updateCache is false, the real snapshot will
                 // always be taken and the snapshot won't be put into SnapshotPersister.
                 if (updateCache) {
-                    supplier = mWindowManager.mTaskSnapshotController
-                            .getRecordSnapshotSupplier(task);
+                    supplier = mWindowManager.mTaskSnapshotController.getRecordSnapshotSupplier(
+                            task, TaskSnapshot.REFERENCE_WRITE_TO_PARCEL);
                 } else {
                     return mWindowManager.mTaskSnapshotController.snapshot(task);
                 }
