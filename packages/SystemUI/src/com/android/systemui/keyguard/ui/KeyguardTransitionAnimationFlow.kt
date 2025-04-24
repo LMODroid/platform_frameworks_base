@@ -40,7 +40,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapNotNull
 
-typealias IsShadeExpanded = Boolean
+private typealias IsShadeExpanded = Boolean
 
 /**
  * Assists in creating sub-flows for a KeyguardTransition. Call [setup] once for a transition, and

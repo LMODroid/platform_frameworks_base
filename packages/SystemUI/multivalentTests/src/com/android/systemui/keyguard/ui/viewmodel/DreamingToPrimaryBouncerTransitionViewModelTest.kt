@@ -52,6 +52,22 @@ class DreamingToPrimaryBouncerTransitionViewModelTest : SysuiTestCase() {
             )
         }
 
+    @Test
+    fun dreamingToPrimaryBouncerChangesNotificationBlurToMax_whenShadeExpanded() =
+        testScope.runTest {
+            val values by collectValues(underTest.notificationBlurRadius)
+            kosmos.keyguardWindowBlurTestUtil.shadeExpanded(true)
+
+            kosmos.keyguardWindowBlurTestUtil.assertTransitionToBlurRadius(
+                transitionProgress = listOf(0.0f, 0.0f, 0.3f, 0.4f, 0.5f, 1.0f),
+                startValue = kosmos.blurConfig.maxBlurRadiusPx,
+                endValue = kosmos.blurConfig.maxBlurRadiusPx,
+                transitionFactory = ::step,
+                actualValuesProvider = { values },
+                checkInterpolatedValues = false,
+            )
+        }
+
     private fun step(value: Float, transitionState: TransitionState = RUNNING) =
         TransitionStep(
             from = KeyguardState.DREAMING,
