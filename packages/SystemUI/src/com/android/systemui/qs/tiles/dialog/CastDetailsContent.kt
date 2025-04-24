@@ -17,10 +17,14 @@
 package com.android.systemui.qs.tiles.dialog
 
 import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ListView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,11 +32,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.android.compose.ui.graphics.painter.rememberDrawablePainter
 import com.android.internal.R
 import com.android.internal.app.MediaRouteChooserContentManager
 import com.android.internal.app.MediaRouteControllerContentManager
+
+private val MAX_CAST_LIST_HEIGHT = 5000.dp
 
 @Composable
 fun CastDetailsContent(castDetailsViewModel: CastDetailsViewModel) {
@@ -65,13 +72,25 @@ fun CastDetailsContent(castDetailsViewModel: CastDetailsViewModel) {
 @Composable
 fun CastChooserView(contentManager: MediaRouteChooserContentManager) {
     AndroidView(
-        modifier = Modifier.fillMaxWidth().testTag(CastDetailsViewModel.CHOOSER_VIEW_TEST_TAG),
+        // Use heightIn on this AndroidView to ensure it measures to a non-zero height that works
+        // within the scrollable area in the `TileDetails`.
+        modifier =
+            Modifier.fillMaxWidth()
+                .heightIn(max = MAX_CAST_LIST_HEIGHT)
+                .testTag(CastDetailsViewModel.CHOOSER_VIEW_TEST_TAG),
         factory = { context ->
             // Inflate with the existing dialog xml layout
             val view =
                 LayoutInflater.from(context).inflate(R.layout.media_route_chooser_dialog, null)
             contentManager.bindViews(view)
             contentManager.onAttachedToWindow()
+
+            val listView = view.findViewById<ListView>(R.id.media_route_list)
+            (listView.layoutParams as? LinearLayout.LayoutParams)?.apply {
+                weight = 0.0f
+                height = ViewGroup.LayoutParams.WRAP_CONTENT
+                listView.layoutParams = this
+            }
 
             view
         },
