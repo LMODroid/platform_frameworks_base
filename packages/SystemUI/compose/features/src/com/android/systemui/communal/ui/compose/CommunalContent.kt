@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.android.compose.animation.scene.ContentScope
 import com.android.systemui.Flags
 import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor
@@ -75,11 +74,6 @@ constructor(
                 content = {
                     Box(modifier = Modifier.fillMaxSize()) {
                         with(communalPopupSection) { Popup() }
-                        if (!Flags.glanceableHubV2()) {
-                            with(ambientStatusBarSection) {
-                                AmbientStatusBar(modifier = Modifier.fillMaxWidth().zIndex(1f))
-                            }
-                        }
                         CommunalHub(
                             viewModel = viewModel,
                             interactionHandler = interactionHandler,

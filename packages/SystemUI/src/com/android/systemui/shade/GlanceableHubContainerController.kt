@@ -48,6 +48,7 @@ import com.android.systemui.communal.domain.interactor.CommunalInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor
 import com.android.systemui.communal.ui.compose.CommunalContainer
 import com.android.systemui.communal.ui.compose.CommunalContent
+import com.android.systemui.communal.ui.compose.section.AmbientStatusBarSection
 import com.android.systemui.communal.ui.viewmodel.CommunalViewModel
 import com.android.systemui.communal.util.CommunalColors
 import com.android.systemui.communal.util.UserTouchActivityNotifier
@@ -100,6 +101,7 @@ constructor(
     private val keyguardMediaController: KeyguardMediaController,
     private val lockscreenSmartspaceController: LockscreenSmartspaceController,
     private val userTouchActivityNotifier: UserTouchActivityNotifier,
+    private val ambientStatusBarSection: AmbientStatusBarSection,
     @CommunalTouchLog logBuffer: LogBuffer,
     private val userActivityNotifier: UserActivityNotifier,
 ) : LifecycleOwner {
@@ -297,6 +299,7 @@ constructor(
                                         viewModel = communalViewModel,
                                         colors = communalColors,
                                         dataSourceDelegator = dataSourceDelegator,
+                                        ambientStatusBarSection = ambientStatusBarSection,
                                         content = communalContent,
                                     )
                                 }

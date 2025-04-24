@@ -47,6 +47,7 @@ import com.android.systemui.communal.domain.interactor.setCommunalAvailable
 import com.android.systemui.communal.domain.interactor.setCommunalV2ConfigEnabled
 import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.communal.ui.compose.CommunalContent
+import com.android.systemui.communal.ui.compose.section.AmbientStatusBarSection
 import com.android.systemui.communal.ui.viewmodel.CommunalViewModel
 import com.android.systemui.communal.util.CommunalColors
 import com.android.systemui.communal.util.userTouchActivityNotifier
@@ -140,6 +141,7 @@ class GlanceableHubContainerControllerTest : SysuiTestCase() {
                 keyguardMediaController,
                 lockscreenSmartspaceController,
                 userTouchActivityNotifier,
+                mock<AmbientStatusBarSection>(),
                 logcatLogBuffer("GlanceableHubContainerControllerTest"),
                 kosmos.userActivityNotifier,
             )
@@ -182,6 +184,7 @@ class GlanceableHubContainerControllerTest : SysuiTestCase() {
                     keyguardMediaController,
                     lockscreenSmartspaceController,
                     userTouchActivityNotifier,
+                    mock<AmbientStatusBarSection>(),
                     logcatLogBuffer("GlanceableHubContainerControllerTest"),
                     kosmos.userActivityNotifier,
                 )
@@ -213,6 +216,7 @@ class GlanceableHubContainerControllerTest : SysuiTestCase() {
                     keyguardMediaController,
                     lockscreenSmartspaceController,
                     userTouchActivityNotifier,
+                    mock<AmbientStatusBarSection>(),
                     logcatLogBuffer("GlanceableHubContainerControllerTest"),
                     kosmos.userActivityNotifier,
                 )
@@ -240,6 +244,7 @@ class GlanceableHubContainerControllerTest : SysuiTestCase() {
                     keyguardMediaController,
                     lockscreenSmartspaceController,
                     userTouchActivityNotifier,
+                    mock<AmbientStatusBarSection>(),
                     logcatLogBuffer("GlanceableHubContainerControllerTest"),
                     kosmos.userActivityNotifier,
                 )

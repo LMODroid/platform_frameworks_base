@@ -13,6 +13,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -34,6 +35,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentKey
 import com.android.compose.animation.scene.ContentScope
@@ -56,6 +58,7 @@ import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.communal.shared.model.CommunalTransitionKeys
 import com.android.systemui.communal.ui.compose.Dimensions.Companion.SlideOffsetY
 import com.android.systemui.communal.ui.compose.extensions.allowGestures
+import com.android.systemui.communal.ui.compose.section.AmbientStatusBarSection
 import com.android.systemui.communal.ui.viewmodel.CommunalViewModel
 import com.android.systemui.communal.util.CommunalColors
 import com.android.systemui.keyguard.domain.interactor.FromGlanceableHubTransitionInteractor.Companion.TO_LOCKSCREEN_DURATION
@@ -194,6 +197,7 @@ fun CommunalContainer(
     dataSourceDelegator: SceneDataSourceDelegator,
     colors: CommunalColors,
     content: CommunalContent,
+    ambientStatusBarSection: AmbientStatusBarSection,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val currentSceneKey: SceneKey by viewModel.currentScene.collectAsStateWithLifecycle()
@@ -273,6 +277,7 @@ fun CommunalContainer(
                 backgroundType = backgroundType,
                 colors = colors,
                 content = content,
+                ambientStatusBarSection = ambientStatusBarSection,
                 viewModel = viewModel,
             )
         }
@@ -303,6 +308,7 @@ fun ContentScope.CommunalScene(
     backgroundType: CommunalBackgroundType,
     colors: CommunalColors,
     content: CommunalContent,
+    ambientStatusBarSection: AmbientStatusBarSection,
     viewModel: CommunalViewModel,
     modifier: Modifier = Modifier,
 ) {
@@ -329,6 +335,12 @@ fun ContentScope.CommunalScene(
             CommunalBackgroundType.NONE -> BackgroundTopScrim()
             CommunalBackgroundType.BLUR -> Background()
             CommunalBackgroundType.SCRIM -> Scrimmed()
+        }
+
+        if (!Flags.glanceableHubV2()) {
+            with(ambientStatusBarSection) {
+                AmbientStatusBar(modifier = Modifier.fillMaxWidth().zIndex(1f))
+            }
         }
 
         with(content) {
