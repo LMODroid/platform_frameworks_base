@@ -16,8 +16,8 @@
 
 package com.android.systemui.statusbar.pipeline.battery.ui.binder
 
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -62,7 +62,7 @@ object UnifiedBatteryViewBinder {
                             UnifiedBattery(
                                 modifier =
                                     Modifier.height(height)
-                                        .aspectRatio(BatteryViewModel.ASPECT_RATIO)
+                                        .wrapContentWidth()
                                         .sysuiResTag(BatteryViewModel.TEST_TAG),
                                 viewModelFactory = viewModelFactory,
                                 isDarkProvider = { isDark },

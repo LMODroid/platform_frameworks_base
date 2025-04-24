@@ -24,9 +24,9 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,9 +43,8 @@ import com.android.systemui.statusbar.core.RudimentaryBattery
 import com.android.systemui.statusbar.events.BackgroundAnimatableView
 import com.android.systemui.statusbar.pipeline.battery.domain.interactor.BatteryInteractor
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryColors
-import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryFrame
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryGlyph
-import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryCanvas
+import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryLayout
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel.Companion.glyphRepresentation
 import java.text.NumberFormat
@@ -105,20 +104,15 @@ constructor(level: Int, context: Context, attrs: AttributeSet? = null) :
 private fun UnifiedBatteryChip(level: Int) {
     val isFull = BatteryInteractor.isBatteryFull(level)
     val height = with(LocalDensity.current) { BatteryViewModel.STATUS_BAR_BATTERY_HEIGHT.toDp() }
-    BatteryCanvas(
-        modifier = Modifier.height(height).aspectRatio(BatteryViewModel.ASPECT_RATIO),
-        path = BatteryFrame.pathSpec,
+    BatteryLayout(
+        attribution = BatteryGlyph.Bolt, // Always charging
+        levelProvider = { level },
+        isFullProvider = { isFull },
+        glyphsProvider = { level.glyphRepresentation() },
+        colorsProvider = { BatteryColors.DarkTheme.Charging },
+        modifier = Modifier.height(height).wrapContentWidth(),
         // TODO(b/394659067): get a content description for this chip
         contentDescription = "",
-        innerWidth = BatteryFrame.innerWidth,
-        innerHeight = BatteryFrame.innerHeight,
-        // This event only happens when plugged in, so we always show it as charging
-        glyphs =
-            if (isFull) listOf(BatteryGlyph.Bolt)
-            else level.glyphRepresentation() + BatteryGlyph.Bolt,
-        level = level,
-        isFull = isFull,
-        colorsProvider = { BatteryColors.DarkTheme.Charging },
     )
 }
 
@@ -128,18 +122,14 @@ private fun BatteryAndPercentChip(level: Int) {
     val isFull = BatteryInteractor.isBatteryFull(level)
     val height = with(LocalDensity.current) { BatteryViewModel.STATUS_BAR_BATTERY_HEIGHT.toDp() }
     Row(verticalAlignment = Alignment.CenterVertically) {
-        BatteryCanvas(
-            modifier = Modifier.height(height).aspectRatio(BatteryViewModel.ASPECT_RATIO),
-            path = BatteryFrame.pathSpec,
-            // TODO(b/394659067): get a content description for this chip
-            contentDescription = "",
-            innerWidth = BatteryFrame.innerWidth,
-            innerHeight = BatteryFrame.innerHeight,
-            // This event only happens when plugged in, so we always show it as charging
-            glyphs = listOf(BatteryGlyph.Bolt),
-            level = level,
-            isFull = isFull,
+        BatteryLayout(
+            attribution = BatteryGlyph.Bolt, // Always charging
+            levelProvider = { level },
+            isFullProvider = { isFull },
+            glyphsProvider = { emptyList() },
             colorsProvider = { BatteryColors.DarkTheme.Charging },
+            modifier = Modifier.height(height).wrapContentWidth(),
+            contentDescription = "",
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(

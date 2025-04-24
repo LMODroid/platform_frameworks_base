@@ -18,9 +18,9 @@ package com.android.systemui.statusbar.pipeline.battery.ui.composable
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -54,9 +54,7 @@ fun BatteryWithEstimate(
             viewModelFactory = viewModelFactory,
             isDarkProvider = isDarkProvider,
             modifier =
-                Modifier.height(batteryHeight)
-                    .align(Alignment.CenterVertically)
-                    .aspectRatio(BatteryViewModel.ASPECT_RATIO),
+                Modifier.height(batteryHeight).align(Alignment.CenterVertically).wrapContentWidth(),
         )
         if (showEstimate) {
             viewModel.batteryTimeRemainingEstimate?.let {

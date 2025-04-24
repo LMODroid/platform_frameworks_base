@@ -68,34 +68,33 @@ class BatteryViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun glyphList_charging_settingOn_notFull_hasLevelAndInlineGlyph() =
+    fun glyphList_charging_settingOn_notFull_hasLevel() =
         kosmos.runTest {
             fakeSystemSettingsRepository.setInt(Settings.System.SHOW_BATTERY_PERCENT, 1)
             batteryController.fake._isPluggedIn = true
             batteryController.fake._level = 39
 
-            assertThat(underTest.glyphList)
-                .isEqualTo(listOf(BatteryGlyph.Three, BatteryGlyph.Nine, BatteryGlyph.Bolt))
+            assertThat(underTest.glyphList).isEqualTo(listOf(BatteryGlyph.Three, BatteryGlyph.Nine))
         }
 
     @Test
-    fun glyphList_charging_settingOn_isFull_onlyHasLargeBolt() =
+    fun attribution_charging_settingOn_isFull_onlyHasLargeBolt() =
         kosmos.runTest {
             fakeSystemSettingsRepository.setInt(Settings.System.SHOW_BATTERY_PERCENT, 1)
             batteryController.fake._isPluggedIn = true
             batteryController.fake._level = 100
 
-            assertThat(underTest.glyphList).isEqualTo(listOf(BatteryGlyph.BoltLarge))
+            assertThat(underTest.attribution).isEqualTo(BatteryGlyph.Bolt)
         }
 
     @Test
-    fun glyphList_charging_settingOff_notFull_onlyHasLargeGlyph() =
+    fun attribution_charging_settingOff_notFull_onlyHasLargeGlyph() =
         kosmos.runTest {
             fakeSystemSettingsRepository.setInt(Settings.System.SHOW_BATTERY_PERCENT, 0)
             batteryController.fake._isPluggedIn = true
             batteryController.fake._level = 39
 
-            assertThat(underTest.glyphList).isEqualTo(listOf(BatteryGlyph.BoltLarge))
+            assertThat(underTest.attribution).isEqualTo(BatteryGlyph.Bolt)
         }
 
     @Test
@@ -106,11 +105,11 @@ class BatteryViewModelTest : SysuiTestCase() {
             batteryController.fake._isPluggedIn = true
             batteryController.fake._isDefender = true
 
-            assertThat(underTest.glyphList).isEqualTo(listOf(BatteryGlyph.DefendLarge))
+            assertThat(underTest.attribution).isEqualTo(BatteryGlyph.Defend)
         }
 
     @Test
-    fun glyphList_attributionOrdering_prioritizesPowerSaveOverDefend() =
+    fun attribution_ordering_prioritizesPowerSaveOverDefend() =
         kosmos.runTest {
             fakeSystemSettingsRepository.setInt(Settings.System.SHOW_BATTERY_PERCENT, 0)
             batteryController.fake._level = 39
@@ -118,11 +117,11 @@ class BatteryViewModelTest : SysuiTestCase() {
             batteryController.fake._isDefender = true
             batteryController.fake._isPowerSave = true
 
-            assertThat(underTest.glyphList).isEqualTo(listOf(BatteryGlyph.PlusLarge))
+            assertThat(underTest.attribution).isEqualTo(BatteryGlyph.Plus)
         }
 
     @Test
-    fun glyphList_attributionOrdering_prioritizesPowerSaveOverCharging() =
+    fun attribution_ordering_prioritizesPowerSaveOverCharging() =
         kosmos.runTest {
             fakeSystemSettingsRepository.setInt(Settings.System.SHOW_BATTERY_PERCENT, 0)
             batteryController.fake._level = 39
@@ -130,6 +129,16 @@ class BatteryViewModelTest : SysuiTestCase() {
             batteryController.fake._isDefender = false
             batteryController.fake._isPowerSave = true
 
-            assertThat(underTest.glyphList).isEqualTo(listOf(BatteryGlyph.PlusLarge))
+            assertThat(underTest.attribution).isEqualTo(BatteryGlyph.Plus)
+        }
+
+    @Test
+    fun attribution_charging_settingOn_notFull_hasBolt() =
+        kosmos.runTest {
+            fakeSystemSettingsRepository.setInt(Settings.System.SHOW_BATTERY_PERCENT, 1)
+            batteryController.fake._isPluggedIn = true
+            batteryController.fake._level = 39
+
+            assertThat(underTest.attribution).isEqualTo(BatteryGlyph.Bolt)
         }
 }

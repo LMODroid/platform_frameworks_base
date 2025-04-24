@@ -38,6 +38,9 @@ sealed interface BatteryColors {
     /** Background color suitable for providing contrast with the [glyph] color */
     val backgroundWithGlyph: Color
 
+    /** The layered attribution. Should match the tint of other status bar icons */
+    val attribution: Color
+
     /**
      * Light theme: light background, dark icons
      *
@@ -47,11 +50,13 @@ sealed interface BatteryColors {
      * thus allow for higher contrast with the darker [glyph] colors.
      */
     sealed class LightTheme : BatteryColors {
+        override val attribution = Color.Black
+        override val glyph = Color.Black.copy(alpha = 0.75f)
         override val backgroundOnly = lowAlphaBg
         override val backgroundWithGlyph = lowAlphaBg
 
         data object Default : LightTheme() {
-            override val glyph = Color.White
+            override val glyph = Color.White.copy(alpha = 0.9f)
             override val fill = Color.Black
 
             /** Use a higher opacity here because the foreground is white */
@@ -59,22 +64,19 @@ sealed interface BatteryColors {
         }
 
         data object Charging : LightTheme() {
-            override val glyph = Color(0xFF162100)
-            override val fill = Color(0xFFB4FF1E)
+            override val fill = Color(0xFF18CC47)
         }
 
         data object Error : LightTheme() {
-            override val glyph = Color(0xFF3A0907)
-            override val fill = Color(0xFFFF0101)
+            override val fill = Color(0xFFFF0E01)
         }
 
         data object PowerSave : LightTheme() {
-            override val glyph = Color(0xFF2F1400)
             override val fill = Color(0xFFFFC917)
         }
 
         companion object {
-            private val lowAlphaBg = Color.Black.copy(alpha = 0.30f)
+            private val lowAlphaBg = Color.Black.copy(alpha = 0.20f)
             private val highAlphaBg = Color.Black.copy(alpha = 0.55f)
         }
     }
@@ -88,26 +90,24 @@ sealed interface BatteryColors {
      * contrast.
      */
     sealed class DarkTheme : BatteryColors {
+        override val attribution = Color.White
         override val backgroundOnly = lowAlphaBg
         override val backgroundWithGlyph = highAlphaBg
+        override val glyph = Color.Black.copy(alpha = 0.75f)
 
         data object Default : DarkTheme() {
-            override val glyph = Color.Black
             override val fill = Color.White
         }
 
         data object Charging : DarkTheme() {
-            override val glyph = Color(0xFF162100)
-            override val fill = Color(0xFFB4FF1E)
+            override val fill = Color(0xFF18CC47)
         }
 
         data object Error : DarkTheme() {
-            override val glyph = Color(0xFF3A0907)
-            override val fill = Color(0xFFFF0101)
+            override val fill = Color(0xFFFF0E01)
         }
 
         data object PowerSave : DarkTheme() {
-            override val glyph = Color(0xFF2F1400)
             override val fill = Color(0xFFFFC917)
         }
 

@@ -23,11 +23,11 @@ import android.widget.LinearLayout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,7 +71,6 @@ import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryWithChargeStatus
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.ShowPercentMode
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.UnifiedBattery
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel.Companion.STATUS_BAR_BATTERY_HEIGHT
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.HomeStatusBarIconBlockListBinder
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.HomeStatusBarViewBinder
@@ -357,9 +356,7 @@ private fun addBatteryComposable(
                     val height = with(LocalDensity.current) { STATUS_BAR_BATTERY_HEIGHT.toDp() }
                     UnifiedBattery(
                         modifier =
-                            Modifier.sysUiResTagContainer()
-                                .height(height)
-                                .aspectRatio(BatteryViewModel.ASPECT_RATIO),
+                            Modifier.sysUiResTagContainer().height(height).wrapContentWidth(),
                         viewModelFactory = statusBarViewModel.unifiedBatteryViewModel,
                         isDarkProvider = { statusBarViewModel.areaDark },
                     )
@@ -403,9 +400,7 @@ private fun addSystemStatusIconsComposable(
                             viewModelFactory = statusBarViewModel.unifiedBatteryViewModel,
                             isDarkProvider = { statusBarViewModel.areaDark },
                             modifier =
-                                Modifier.sysUiResTagContainer()
-                                    .height(height)
-                                    .aspectRatio(BatteryViewModel.ASPECT_RATIO),
+                                Modifier.sysUiResTagContainer().height(height).wrapContentWidth(),
                         )
                     }
                 }

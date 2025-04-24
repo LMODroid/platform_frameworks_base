@@ -19,9 +19,9 @@ package com.android.systemui.statusbar.pipeline.battery.ui.composable
 import android.graphics.Rect
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
@@ -96,9 +96,7 @@ fun BatteryWithChargeStatus(
             isFull = viewModel.isFull,
             colorsProvider = colorProvider,
             modifier =
-                Modifier.height(batteryHeight)
-                    .align(Alignment.CenterVertically)
-                    .aspectRatio(BatteryViewModel.ASPECT_RATIO),
+                Modifier.height(batteryHeight).align(Alignment.CenterVertically).wrapContentWidth(),
             contentDescription = viewModel.contentDescription.load() ?: "",
         )
         if (shouldShowPercent(showPercentMode, viewModel)) {

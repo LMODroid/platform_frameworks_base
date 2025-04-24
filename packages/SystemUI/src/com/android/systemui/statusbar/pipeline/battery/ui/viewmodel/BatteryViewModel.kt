@@ -31,7 +31,6 @@ import com.android.systemui.statusbar.pipeline.battery.domain.interactor.Battery
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryColors
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryFrame
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryGlyph
-import com.android.systemui.statusbar.pipeline.battery.ui.model.AttributionGlyph
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import java.text.NumberFormat
@@ -39,6 +38,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 sealed class BatteryViewModel(val interactor: BatteryInteractor, @Application context: Context) :
@@ -74,30 +74,25 @@ sealed class BatteryViewModel(val interactor: BatteryInteractor, @Application co
         )
 
     /** The current attribution, if any */
-    protected val attributionGlyph: Flow<AttributionGlyph?> =
+    protected val attributionGlyph: Flow<BatteryGlyph?> =
         interactor.batteryAttributionType.map {
             when (it) {
-                Charging ->
-                    AttributionGlyph(
-                        inline = BatteryGlyph.Bolt,
-                        standalone = BatteryGlyph.BoltLarge,
-                    )
+                Charging -> BatteryGlyph.Bolt
 
-                PowerSave ->
-                    AttributionGlyph(
-                        inline = BatteryGlyph.Plus,
-                        standalone = BatteryGlyph.PlusLarge,
-                    )
+                PowerSave -> BatteryGlyph.Plus
 
-                Defend ->
-                    AttributionGlyph(
-                        inline = BatteryGlyph.Defend,
-                        standalone = BatteryGlyph.DefendLarge,
-                    )
+                Defend -> BatteryGlyph.Defend
 
                 else -> null
             }
         }
+
+    val attribution: BatteryGlyph? by
+        hydrator.hydratedStateOf(
+            traceName = "attribution",
+            initialValue = null,
+            source = attributionGlyph,
+        )
 
     private val _colorProfile: Flow<ColorProfile> =
         combine(interactor.batteryAttributionType, interactor.isCritical) { attr, isCritical ->
@@ -201,18 +196,10 @@ sealed class BatteryViewModel(val interactor: BatteryInteractor, @Application co
 
     companion object {
         /**
-         * Status bar battery height, based on a 21x12 base canvas. Defined in [sp] so that the icon
-         * properly scales when the font size changes (consistent with other status bar icons)
+         * Status bar battery height, based on a 26.5x13 base canvas. Defined in [sp] so that the
+         * icon properly scales when the font size changes (consistent with other status bar icons)
          */
-        val STATUS_BAR_BATTERY_HEIGHT = 12.sp
-
-        /**
-         * Status bar battery width, based on a 21x12 base canvas. Defined in [sp] so that the icon
-         * properly scales when the font size changes (consistent with other status bar icons)
-         */
-        val STATUS_BAR_BATTERY_WIDTH = 21.sp
-
-        val ASPECT_RATIO = STATUS_BAR_BATTERY_WIDTH.value / STATUS_BAR_BATTERY_HEIGHT.value
+        val STATUS_BAR_BATTERY_HEIGHT = 13.sp
 
         /** Resource id used to identify battery composable view in SysUI tests */
         const val TEST_TAG = "battery"
@@ -232,27 +219,9 @@ constructor(interactor: BatteryInteractor, @Application context: Context) :
     private val _glyphList: Flow<List<BatteryGlyph>> =
         interactor.isBatteryPercentSettingEnabled.flatMapLatest {
             if (it) {
-                combine(interactor.isFull, levelGlyphs, attributionGlyph) {
-                    isFull,
-                    levelGlyphs,
-                    attr ->
-                    // Don't ever show "100<attr>", since it won't fit. Just show the attr
-                    if (isFull && attr != null) {
-                        listOf(attr.standalone)
-                    } else if (attr != null) {
-                        levelGlyphs + attr.inline
-                    } else {
-                        levelGlyphs
-                    }
-                }
+                levelGlyphs
             } else {
-                attributionGlyph.map { attr ->
-                    if (attr == null) {
-                        emptyList()
-                    } else {
-                        listOf(attr.standalone)
-                    }
-                }
+                flowOf(emptyList())
             }
         }
 
@@ -301,7 +270,7 @@ constructor(interactor: BatteryInteractor, @Application context: Context) :
         )
 
     private val _attributionAsList: Flow<List<BatteryGlyph>> =
-        attributionGlyph.map { it?.let { listOf(it.standalone) } ?: emptyList() }
+        attributionGlyph.map { it?.let { listOf(it) } ?: emptyList() }
 
     override val glyphList: List<BatteryGlyph> by
         hydrator.hydratedStateOf(
