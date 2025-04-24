@@ -52,7 +52,6 @@ import com.android.systemui.shade.ui.composable.OverlayShade
 import com.android.systemui.shade.ui.composable.OverlayShadeHeader
 import com.android.systemui.shade.ui.composable.isFullWidthShade
 import com.android.systemui.statusbar.notification.stack.ui.view.NotificationScrollView
-import com.android.systemui.util.Utils
 import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Named
@@ -98,7 +97,7 @@ constructor(
             }
 
         val usingCollapsedLandscapeMedia =
-            Utils.useCollapsedMediaInLandscape(LocalResources.current)
+            LocalResources.current.getBoolean(R.bool.config_quickSettingsMediaLandscapeCollapsed)
         mediaHost.get().expansion =
             if (usingCollapsedLandscapeMedia && isLandscape()) COLLAPSED else EXPANDED
 
