@@ -70,8 +70,9 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -209,7 +210,9 @@ fun BrightnessSlider(
         modifier =
             modifier
                 .sysuiResTag("slider")
-                .semantics(mergeDescendants = true) { this.contentDescription = contentDescription }
+                .semantics(mergeDescendants = true) {
+                    this.text = AnnotatedString(contentDescription)
+                }
                 .thenIf(isRestricted) {
                     Modifier.clickable {
                         if (restriction is PolicyRestriction.Restricted) {
