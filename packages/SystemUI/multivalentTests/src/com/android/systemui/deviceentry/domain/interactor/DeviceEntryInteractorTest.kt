@@ -311,13 +311,6 @@ class DeviceEntryInteractorTest : SysuiTestCase() {
         }
 
     @Test
-    fun isBypassEnabled_enabledInRepository_true() =
-        testScope.runTest {
-            kosmos.fakeDeviceEntryRepository.setBypassEnabled(true)
-            assertThat(underTest.isBypassEnabled.value).isTrue()
-        }
-
-    @Test
     fun showOrUnlockDevice_notLocked_switchesToGoneScene() =
         testScope.runTest {
             val currentScene by collectLastValue(sceneInteractor.currentScene)
@@ -407,13 +400,6 @@ class DeviceEntryInteractorTest : SysuiTestCase() {
             underTest.attemptDeviceEntry()
 
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
-        }
-
-    @Test
-    fun isBypassEnabled_disabledInRepository_false() =
-        testScope.runTest {
-            kosmos.fakeDeviceEntryRepository.setBypassEnabled(false)
-            assertThat(underTest.isBypassEnabled.value).isFalse()
         }
 
     @Test

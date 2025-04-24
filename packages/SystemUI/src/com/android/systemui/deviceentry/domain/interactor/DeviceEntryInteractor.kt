@@ -210,14 +210,6 @@ constructor(
     }
 
     /**
-     * Whether lockscreen bypass is enabled. When enabled, the lockscreen will be automatically
-     * dismissed once the authentication challenge is completed. For example, completing a biometric
-     * authentication challenge via face unlock or fingerprint sensor can automatically bypass the
-     * lockscreen.
-     */
-    val isBypassEnabled: StateFlow<Boolean> = repository.isBypassEnabled
-
-    /**
      * Attempt to enter the device and dismiss the lockscreen. If authentication is required to
      * unlock the device it will transition to bouncer.
      *

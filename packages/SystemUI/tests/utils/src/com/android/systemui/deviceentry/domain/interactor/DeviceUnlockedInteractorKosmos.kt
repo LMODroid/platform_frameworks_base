@@ -42,6 +42,7 @@ val Kosmos.deviceUnlockedInteractor by Fixture {
             userAwareSecureSettingsRepository = userAwareSecureSettingsRepository,
             keyguardInteractor = keyguardInteractor,
             tableLogBuffer = logcatTableLogBuffer(this, "sceneFrameworkTableLogBuffer"),
+            deviceEntryBypassInteractor = deviceEntryBypassInteractor,
         )
         .apply { activateIn(testScope) }
 }

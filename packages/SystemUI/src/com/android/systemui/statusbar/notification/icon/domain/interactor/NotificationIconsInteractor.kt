@@ -16,7 +16,7 @@
 package com.android.systemui.statusbar.notification.icon.domain.interactor
 
 import com.android.systemui.dagger.qualifiers.Background
-import com.android.systemui.deviceentry.domain.interactor.DeviceEntryInteractor
+import com.android.systemui.deviceentry.domain.interactor.DeviceEntryBypassInteractor
 import com.android.systemui.statusbar.data.repository.NotificationListenerSettingsRepository
 import com.android.systemui.statusbar.notification.data.repository.NotificationsKeyguardViewStateRepository
 import com.android.systemui.statusbar.notification.domain.interactor.ActiveNotificationsInteractor
@@ -124,11 +124,11 @@ class AlwaysOnDisplayNotificationIconsInteractor
 @Inject
 constructor(
     @Background bgContext: CoroutineContext,
-    deviceEntryInteractor: DeviceEntryInteractor,
+    deviceEntryBypassInteractor: DeviceEntryBypassInteractor,
     iconsInteractor: NotificationIconsInteractor,
 ) {
     val aodNotifs: Flow<Set<ActiveNotificationModel>> =
-        deviceEntryInteractor.isBypassEnabled
+        deviceEntryBypassInteractor.isBypassEnabled
             .flatMapLatest { isBypassEnabled ->
                 iconsInteractor.filteredNotifSet(
                     showAmbient = false,

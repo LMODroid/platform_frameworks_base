@@ -53,6 +53,7 @@ import com.android.systemui.classifier.falsingCollector
 import com.android.systemui.classifier.falsingManager
 import com.android.systemui.concurrency.fakeExecutor
 import com.android.systemui.coroutines.collectLastValue
+import com.android.systemui.deviceentry.data.repository.fakeDeviceEntryBypassRepository
 import com.android.systemui.deviceentry.data.repository.fakeDeviceEntryRepository
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryHapticsInteractor
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
@@ -2891,7 +2892,7 @@ class SceneContainerStartableTest : SysuiTestCase() {
             "Cannot start on the Gone scene and have the device be locked at the same time."
         }
 
-        kosmos.fakeDeviceEntryRepository.setBypassEnabled(isBypassEnabled)
+        kosmos.fakeDeviceEntryBypassRepository.setBypassEnabled(isBypassEnabled)
         authenticationMethod?.let {
             kosmos.fakeAuthenticationRepository.setAuthenticationMethod(authenticationMethod)
             kosmos.fakeDeviceEntryRepository.setLockscreenEnabled(

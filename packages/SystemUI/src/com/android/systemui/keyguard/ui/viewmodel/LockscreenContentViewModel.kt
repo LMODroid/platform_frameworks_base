@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.biometrics.AuthController
 import com.android.systemui.customization.R as customR
+import com.android.systemui.deviceentry.domain.interactor.DeviceEntryBypassInteractor
 import com.android.systemui.deviceentry.domain.interactor.DeviceEntryInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardBlueprintInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardClockInteractor
@@ -54,7 +55,7 @@ constructor(
     val touchHandlingFactory: KeyguardTouchHandlingViewModel.Factory,
     shadeModeInteractor: ShadeModeInteractor,
     unfoldTransitionInteractor: UnfoldTransitionInteractor,
-    deviceEntryInteractor: DeviceEntryInteractor,
+    deviceEntryBypassInteractor: DeviceEntryBypassInteractor,
     transitionInteractor: KeyguardTransitionInteractor,
     private val keyguardTransitionAnimationCallbackDelegator:
         KeyguardTransitionAnimationCallbackDelegator,
@@ -129,7 +130,7 @@ constructor(
     val isBypassEnabled: Boolean by
         hydrator.hydratedStateOf(
             traceName = "isBypassEnabled",
-            source = deviceEntryInteractor.isBypassEnabled,
+            source = deviceEntryBypassInteractor.isBypassEnabled,
         )
 
     val blueprintId: String by

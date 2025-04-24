@@ -80,6 +80,7 @@ constructor(
     private val userAwareSecureSettingsRepository: UserAwareSecureSettingsRepository,
     private val keyguardInteractor: KeyguardInteractor,
     @SceneFrameworkTableLog private val tableLogBuffer: TableLogBuffer,
+    deviceEntryBypassInteractor: DeviceEntryBypassInteractor,
 ) : ExclusiveActivatable() {
 
     private val deviceUnlockSource =
@@ -88,7 +89,7 @@ constructor(
             faceAuthInteractor.isAuthenticated
                 .filter { it }
                 .map {
-                    if (repository.isBypassEnabled.value) {
+                    if (deviceEntryBypassInteractor.isBypassEnabled.value) {
                         DeviceUnlockSource.FaceWithBypass
                     } else {
                         DeviceUnlockSource.FaceWithoutBypass

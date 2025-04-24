@@ -26,7 +26,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.authentication.data.repository.fakeAuthenticationRepository
 import com.android.systemui.authentication.shared.model.AuthenticationMethodModel
 import com.android.systemui.coroutines.collectLastValue
-import com.android.systemui.deviceentry.data.repository.fakeDeviceEntryRepository
+import com.android.systemui.deviceentry.data.repository.fakeDeviceEntryBypassRepository
 import com.android.systemui.deviceentry.shared.model.DeviceEntryRestrictionReason
 import com.android.systemui.deviceentry.shared.model.DeviceUnlockSource
 import com.android.systemui.flags.fakeSystemPropertiesHelper
@@ -175,7 +175,7 @@ class DeviceUnlockedInteractorTest : SysuiTestCase() {
             kosmos.powerInteractor.setAwakeForTest()
 
             kosmos.fakeDeviceEntryFaceAuthRepository.isAuthenticated.value = true
-            kosmos.fakeDeviceEntryRepository.setBypassEnabled(true)
+            kosmos.fakeDeviceEntryBypassRepository.setBypassEnabled(true)
             runCurrent()
 
             assertThat(deviceUnlockStatus?.isUnlocked).isTrue()
@@ -189,7 +189,7 @@ class DeviceUnlockedInteractorTest : SysuiTestCase() {
             val deviceUnlockStatus by collectLastValue(underTest.deviceUnlockStatus)
 
             kosmos.fakeDeviceEntryFaceAuthRepository.isAuthenticated.value = true
-            kosmos.fakeDeviceEntryRepository.setBypassEnabled(false)
+            kosmos.fakeDeviceEntryBypassRepository.setBypassEnabled(false)
             runCurrent()
 
             assertThat(deviceUnlockStatus?.isUnlocked).isTrue()

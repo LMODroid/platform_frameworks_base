@@ -16,7 +16,7 @@
 
 package com.android.systemui.statusbar.notification.icon.domain.interactor
 
-import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
+import com.android.systemui.deviceentry.domain.interactor.deviceEntryBypassInteractor
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.kosmos.testDispatcher
@@ -30,7 +30,7 @@ import com.android.wm.shell.bubbles.bubblesOptional
 val Kosmos.alwaysOnDisplayNotificationIconsInteractor by Fixture {
     AlwaysOnDisplayNotificationIconsInteractor(
         bgContext = testDispatcher,
-        deviceEntryInteractor = deviceEntryInteractor,
+        deviceEntryBypassInteractor = deviceEntryBypassInteractor,
         iconsInteractor = notificationIconsInteractor,
     )
 }

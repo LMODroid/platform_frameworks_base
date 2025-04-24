@@ -24,7 +24,7 @@ import com.android.systemui.common.shared.model.NotificationContainerBounds
 import com.android.systemui.communal.domain.interactor.CommunalInteractor
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
-import com.android.systemui.deviceentry.domain.interactor.DeviceEntryInteractor
+import com.android.systemui.deviceentry.domain.interactor.DeviceEntryBypassInteractor
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardTransitionInteractor
@@ -55,7 +55,6 @@ import com.android.systemui.util.ui.AnimatableEvent
 import com.android.systemui.util.ui.AnimatedValue
 import com.android.systemui.util.ui.toAnimatedValueFlow
 import com.android.systemui.util.ui.zip
-import com.android.systemui.wallpapers.domain.interactor.WallpaperFocalAreaInteractor
 import javax.inject.Inject
 import kotlin.math.max
 import kotlinx.coroutines.CoroutineScope
@@ -76,16 +75,16 @@ class KeyguardRootViewModel
 @Inject
 constructor(
     @Application private val applicationScope: CoroutineScope,
-    private val deviceEntryInteractor: DeviceEntryInteractor,
+    private val deviceEntryBypassInteractor: DeviceEntryBypassInteractor,
     private val dozeParameters: DozeParameters,
     private val keyguardInteractor: KeyguardInteractor,
-    private val communalInteractor: CommunalInteractor,
-    private val keyguardTransitionInteractor: KeyguardTransitionInteractor,
+    communalInteractor: CommunalInteractor,
+    keyguardTransitionInteractor: KeyguardTransitionInteractor,
     private val notificationsKeyguardInteractor: NotificationsKeyguardInteractor,
     private val pulseExpansionInteractor: PulseExpansionInteractor,
     notificationShadeWindowModel: NotificationShadeWindowModel,
-    private val aodPromotedNotificationInteractor: AODPromotedNotificationInteractor,
-    private val aodNotificationIconViewModel: NotificationIconContainerAlwaysOnDisplayViewModel,
+    aodPromotedNotificationInteractor: AODPromotedNotificationInteractor,
+    aodNotificationIconViewModel: NotificationIconContainerAlwaysOnDisplayViewModel,
     private val alternateBouncerToAodTransitionViewModel: AlternateBouncerToAodTransitionViewModel,
     private val alternateBouncerToGoneTransitionViewModel:
         AlternateBouncerToGoneTransitionViewModel,
@@ -139,8 +138,7 @@ constructor(
         PrimaryBouncerToLockscreenTransitionViewModel,
     private val screenOffAnimationController: ScreenOffAnimationController,
     private val aodBurnInViewModel: AodBurnInViewModel,
-    private val shadeInteractor: ShadeInteractor,
-    wallpaperFocalAreaInteractor: WallpaperFocalAreaInteractor,
+    shadeInteractor: ShadeInteractor,
     dumpManager: DumpManager,
 ) : FlowDumperImpl(dumpManager) {
     val burnInLayerVisibility: Flow<Int> =
@@ -350,7 +348,7 @@ constructor(
                     content = Scenes.Gone,
                     stateWithoutSceneContainer = GONE,
                 ),
-                deviceEntryInteractor.isBypassEnabled,
+                deviceEntryBypassInteractor.isBypassEnabled,
                 areNotifsFullyHiddenAnimated(),
                 isPulseExpandingAnimated(),
                 aodNotificationIconViewModel.icons.map { it.visibleIcons.isNotEmpty() },
@@ -413,7 +411,9 @@ constructor(
     private fun areNotifsFullyHiddenAnimated(): Flow<AnimatedValue<Boolean>> {
         return notificationsKeyguardInteractor.areNotificationsFullyHidden
             .pairwise(initialValue = null)
-            .sample(deviceEntryInteractor.isBypassEnabled) { (prev, fullyHidden), bypassEnabled ->
+            .sample(deviceEntryBypassInteractor.isBypassEnabled) {
+                (prev, fullyHidden),
+                bypassEnabled ->
                 val animate =
                     when {
                         // Don't animate for the first value

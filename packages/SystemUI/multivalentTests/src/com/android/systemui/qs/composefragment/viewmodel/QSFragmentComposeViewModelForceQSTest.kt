@@ -18,7 +18,7 @@ package com.android.systemui.qs.composefragment.viewmodel
 
 import android.testing.TestableLooper.RunWithLooper
 import androidx.test.filters.SmallTest
-import com.android.systemui.deviceentry.data.repository.fakeDeviceEntryRepository
+import com.android.systemui.deviceentry.data.repository.fakeDeviceEntryBypassRepository
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.statusbar.StatusBarState
 import com.android.systemui.statusbar.sysuiStatusBarStateController
@@ -43,7 +43,7 @@ class QSFragmentComposeViewModelForceQSTest(private val testData: TestData) :
                     sysuiStatusBarStateController.setState(statusBarState)
                     underTest.isQsExpanded = expanded
                     underTest.isStackScrollerOverscrolling = stackScrollerOverScrolling
-                    fakeDeviceEntryRepository.setBypassEnabled(bypassEnabled)
+                    fakeDeviceEntryBypassRepository.setBypassEnabled(bypassEnabled)
                     underTest.isTransitioningToFullShade = transitioningToFullShade
                     underTest.isInSplitShade = inSplitShade
 

@@ -20,8 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectLastValue
-import com.android.systemui.deviceentry.data.repository.fakeDeviceEntryRepository
-import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
+import com.android.systemui.deviceentry.data.repository.fakeDeviceEntryBypassRepository
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.statusbar.data.repository.notificationListenerSettingsRepository
@@ -173,12 +172,7 @@ class AlwaysOnDisplayNotificationIconsInteractorTest : SysuiTestCase() {
     private val kosmos = testKosmos()
     private val testScope = kosmos.testScope
 
-    private val underTest =
-        AlwaysOnDisplayNotificationIconsInteractor(
-            kosmos.testDispatcher,
-            kosmos.deviceEntryInteractor,
-            kosmos.notificationIconsInteractor,
-        )
+    private val underTest = kosmos.alwaysOnDisplayNotificationIconsInteractor
 
     @Before
     fun setup() {
@@ -226,7 +220,7 @@ class AlwaysOnDisplayNotificationIconsInteractorTest : SysuiTestCase() {
     fun filteredEntrySet_showPulsing_notifsNotFullyHidden_bypassDisabled() =
         testScope.runTest {
             val filteredSet by collectLastValue(underTest.aodNotifs)
-            kosmos.fakeDeviceEntryRepository.setBypassEnabled(false)
+            kosmos.fakeDeviceEntryBypassRepository.setBypassEnabled(false)
             kosmos.notificationsKeyguardInteractor.setNotificationsFullyHidden(false)
             assertThat(filteredSet).comparingElementsUsing(byIsPulsing).contains(true)
         }
@@ -235,7 +229,7 @@ class AlwaysOnDisplayNotificationIconsInteractorTest : SysuiTestCase() {
     fun filteredEntrySet_showPulsing_notifsFullyHidden_bypassDisabled() =
         testScope.runTest {
             val filteredSet by collectLastValue(underTest.aodNotifs)
-            kosmos.fakeDeviceEntryRepository.setBypassEnabled(false)
+            kosmos.fakeDeviceEntryBypassRepository.setBypassEnabled(false)
             kosmos.notificationsKeyguardInteractor.setNotificationsFullyHidden(true)
             assertThat(filteredSet).comparingElementsUsing(byIsPulsing).contains(true)
         }
@@ -244,7 +238,7 @@ class AlwaysOnDisplayNotificationIconsInteractorTest : SysuiTestCase() {
     fun filteredEntrySet_noPulsing_notifsNotFullyHidden_bypassEnabled() =
         testScope.runTest {
             val filteredSet by collectLastValue(underTest.aodNotifs)
-            kosmos.fakeDeviceEntryRepository.setBypassEnabled(true)
+            kosmos.fakeDeviceEntryBypassRepository.setBypassEnabled(true)
             kosmos.notificationsKeyguardInteractor.setNotificationsFullyHidden(false)
             assertThat(filteredSet).comparingElementsUsing(byIsPulsing).doesNotContain(true)
         }
@@ -253,7 +247,7 @@ class AlwaysOnDisplayNotificationIconsInteractorTest : SysuiTestCase() {
     fun filteredEntrySet_showPulsing_notifsFullyHidden_bypassEnabled() =
         testScope.runTest {
             val filteredSet by collectLastValue(underTest.aodNotifs)
-            kosmos.fakeDeviceEntryRepository.setBypassEnabled(true)
+            kosmos.fakeDeviceEntryBypassRepository.setBypassEnabled(true)
             kosmos.notificationsKeyguardInteractor.setNotificationsFullyHidden(true)
             assertThat(filteredSet).comparingElementsUsing(byIsPulsing).contains(true)
         }
