@@ -877,23 +877,46 @@ private fun LazyGridItemScope.TileGridCell(
                 selectionState::unSelect,
             )
 
+        val toggleSelectionLabel = stringResource(R.string.accessibility_qs_edit_toggle_selection)
+        val placeTileLabel = stringResource(R.string.accessibility_qs_edit_place_tile_action)
         Box(
             Modifier.fillMaxSize()
                 .clearAndSetSemantics {
                     this.stateDescription = stateDescription
                     contentDescription = cell.tile.label.text
-                    customActions =
-                        listOf(
-                            // TODO(b/367748260): Add final accessibility actions
-                            CustomAccessibilityAction(toggleSizeLabel) {
-                                onResize(FinalResizeOperation(cell.tile.tileSpec, !cell.isIcon))
-                                true
-                            },
+
+                    val actions =
+                        mutableListOf(
                             CustomAccessibilityAction(togglePlacementModeLabel) {
                                 selectionState.togglePlacementMode(cell.tile.tileSpec)
                                 true
-                            },
+                            }
                         )
+
+                    if (selectionState.placementEnabled) {
+                        actions.add(
+                            CustomAccessibilityAction(placeTileLabel) {
+                                selectionState.placeTileAt(cell.tile.tileSpec)
+                                true
+                            }
+                        )
+                    } else {
+                        // Don't allow for resizing during placement mode
+                        actions.add(
+                            CustomAccessibilityAction(toggleSizeLabel) {
+                                onResize(FinalResizeOperation(cell.tile.tileSpec, !cell.isIcon))
+                                true
+                            }
+                        )
+                        actions.add(
+                            CustomAccessibilityAction(toggleSelectionLabel) {
+                                selectionState.toggleSelection(cell.tile.tileSpec)
+                                true
+                            }
+                        )
+                    }
+
+                    customActions = actions
                 }
                 .selectableTile(cell.tile.tileSpec, selectionState)
                 .thenIf(isReadyToDrag) { draggableModifier }

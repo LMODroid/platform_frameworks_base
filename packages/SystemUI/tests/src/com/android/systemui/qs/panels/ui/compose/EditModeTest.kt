@@ -22,12 +22,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.doubleClick
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performCustomAccessibilityActionWithLabel
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.text.AnnotatedString
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -43,11 +45,14 @@ import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.infiniteGridSnapshotViewModelFactory
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.model.TileCategory
+import com.android.systemui.res.R
 import com.android.systemui.testKosmos
+import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@OptIn(ExperimentalTestApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class EditModeTest : SysuiTestCase() {
@@ -59,10 +64,13 @@ class EditModeTest : SysuiTestCase() {
     @Composable
     private fun EditTileGridUnderTest() {
         val allTiles = remember { TestEditTiles.toMutableStateList() }
+        val largeTiles = remember { TestLargeTilesSpecs.toMutableStateList() }
         val currentTiles = allTiles.filter { it.isCurrent }
         val listState =
             EditTileListState(currentTiles, TestLargeTilesSpecs, columns = 4, largeTilesSpan = 2)
-        LaunchedEffect(currentTiles) { listState.updateTiles(currentTiles, TestLargeTilesSpecs) }
+        LaunchedEffect(currentTiles, largeTiles) {
+            listState.updateTiles(currentTiles, largeTiles.toSet())
+        }
 
         val snapshotViewModel = remember { snapshotViewModelFactory.create() }
 
@@ -91,6 +99,13 @@ class EditModeTest : SysuiTestCase() {
                     is EditAction.RemoveTile -> {
                         val index = allTiles.indexOfFirst { it.tileSpec == action.tileSpec }
                         allTiles[index] = allTiles[index].copy(isCurrent = false)
+                    }
+                    is EditAction.ResizeTile -> {
+                        if (action.toIcon) {
+                            largeTiles.remove(action.tileSpec)
+                        } else {
+                            largeTiles.add(action.tileSpec)
+                        }
                     }
                     else -> error("Not expecting action $action from test")
                 }
@@ -126,6 +141,56 @@ class EditModeTest : SysuiTestCase() {
         composeRule.assertCurrentTilesGridContainsExactly(
             listOf("tileB", "tileC", "tileD_large", "tileE", "tileA")
         )
+    }
+
+    @Test
+    fun resizingAction_dependsOnPlacementMode() {
+        composeRule.setContent { EditTileGridUnderTest() }
+        composeRule.waitForIdle()
+
+        // Use the toggle size action
+        composeRule
+            .onNodeWithContentDescription("tileE")
+            .performCustomAccessibilityActionWithLabel(
+                context.getString(R.string.accessibility_qs_edit_toggle_tile_size_action)
+            )
+
+        // Double tap "tileA" to enable placement mode
+        composeRule.onNodeWithContentDescription("tileA").performTouchInput { doubleClick() }
+
+        // Assert the toggle size action is missing
+        assertThrows(AssertionError::class.java) {
+            composeRule
+                .onNodeWithContentDescription("tileE")
+                .performCustomAccessibilityActionWithLabel(
+                    context.getString(R.string.accessibility_qs_edit_toggle_tile_size_action)
+                )
+        }
+    }
+
+    @Test
+    fun placementAction_dependsOnPlacementMode() {
+        composeRule.setContent { EditTileGridUnderTest() }
+        composeRule.waitForIdle()
+
+        // Assert the placement action is missing
+        assertThrows(AssertionError::class.java) {
+            composeRule
+                .onNodeWithContentDescription("tileE")
+                .performCustomAccessibilityActionWithLabel(
+                    context.getString(R.string.accessibility_qs_edit_place_tile_action)
+                )
+        }
+
+        // Double tap "tileA" to enable placement mode
+        composeRule.onNodeWithContentDescription("tileA").performTouchInput { doubleClick() }
+
+        // Use the placement action
+        composeRule
+            .onNodeWithContentDescription("tileE")
+            .performCustomAccessibilityActionWithLabel(
+                context.getString(R.string.accessibility_qs_edit_place_tile_action)
+            )
     }
 
     @Test

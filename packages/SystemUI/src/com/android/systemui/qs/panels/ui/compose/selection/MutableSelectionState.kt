@@ -63,6 +63,10 @@ class MutableSelectionState {
         exitPlacementMode()
     }
 
+    fun toggleSelection(tileSpec: TileSpec) {
+        if (selection == tileSpec) unSelect() else select(tileSpec)
+    }
+
     /** Selects [tileSpec] and enable placement mode. */
     fun enterPlacementMode(tileSpec: TileSpec) {
         selection = tileSpec
@@ -76,6 +80,13 @@ class MutableSelectionState {
 
     fun togglePlacementMode(tileSpec: TileSpec) {
         if (placementEnabled) exitPlacementMode() else enterPlacementMode(tileSpec)
+    }
+
+    fun placeTileAt(tileSpec: TileSpec) {
+        if (!placementEnabled) return
+
+        selection?.let { placementEvent = PlacementEvent.PlaceToTileSpec(it, tileSpec) }
+        exitPlacementMode()
     }
 
     suspend fun tileStateFor(
@@ -114,14 +125,10 @@ class MutableSelectionState {
                 exitPlacementMode()
             }
             placementEnabled -> {
-                selection?.let { placementEvent = PlacementEvent.PlaceToTileSpec(it, tileSpec) }
-                exitPlacementMode()
-            }
-            selection == tileSpec -> {
-                unSelect()
+                placeTileAt(tileSpec)
             }
             else -> {
-                select(tileSpec)
+                toggleSelection(tileSpec)
             }
         }
     }
