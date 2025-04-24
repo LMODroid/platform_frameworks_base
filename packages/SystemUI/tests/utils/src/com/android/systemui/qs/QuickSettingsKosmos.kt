@@ -34,6 +34,8 @@ import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.plugins.activityStarter
 import com.android.systemui.plugins.qs.QSFactory
 import com.android.systemui.plugins.qs.QSTile
+import com.android.systemui.qs.footer.domain.interactor.FakeFooterActionInteractor
+import com.android.systemui.qs.footer.domain.interactor.FooterActionsInteractor
 import com.android.systemui.qs.footer.domain.interactor.FooterActionsInteractorImpl
 import com.android.systemui.qs.footer.foregroundServicesRepository
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsViewModel
@@ -74,7 +76,7 @@ val Kosmos.qsSecurityFooterUtils by Fixture {
     )
 }
 
-val Kosmos.footerActionsInteractor by Fixture {
+var Kosmos.footerActionsInteractor: FooterActionsInteractor by Fixture {
     FooterActionsInteractorImpl(
         activityStarter = activityStarter,
         metricsLogger = metricsLogger,
@@ -92,6 +94,9 @@ val Kosmos.footerActionsInteractor by Fixture {
         context = mockedContext,
     )
 }
+
+val FooterActionsInteractor.fake
+    get() = this as FakeFooterActionInteractor
 
 val Kosmos.footerActionsViewModelFactory by Fixture {
     FooterActionsViewModel.Factory(

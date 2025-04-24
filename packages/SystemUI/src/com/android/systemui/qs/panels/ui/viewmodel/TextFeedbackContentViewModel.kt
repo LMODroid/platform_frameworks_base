@@ -42,7 +42,7 @@ constructor(
 ) : ExclusiveActivatable() {
     private val hydrator = Hydrator("TextFeedbackViewModel.hydrator")
 
-    val textFeedback by
+    val textFeedback: TextFeedbackViewModel by
         hydrator.hydratedStateOf(
             traceName = "textFeedback",
             initialValue = TextFeedbackViewModel.NoFeedback,

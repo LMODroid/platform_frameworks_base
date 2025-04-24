@@ -16,13 +16,19 @@
 
 package com.android.systemui.qs.panels.ui.compose.toolbar
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,21 +37,60 @@ import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.development.ui.compose.BuildNumber
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.qs.footer.ui.compose.IconButton
+import com.android.systemui.qs.panels.ui.compose.toolbar.Toolbar.TransitionKeys.SecurityInfoKey
 import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.ToolbarViewModel
 import com.android.systemui.qs.ui.compose.borderOnFocus
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun Toolbar(viewModel: ToolbarViewModel, modifier: Modifier = Modifier) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        viewModel.userSwitcherViewModel?.let {
-            IconButton(
-                it,
-                useModifierBasedExpandable = true,
-                Modifier.sysuiResTag("multi_user_switch"),
-            )
+        val securityInfoCollapsed = viewModel.securityInfoShowCollapsed
+
+        SharedTransitionLayout(modifier = Modifier.weight(1f)) {
+            AnimatedContent(
+                targetState = securityInfoCollapsed,
+                contentAlignment =
+                    if (securityInfoCollapsed) {
+                        Alignment.CenterStart
+                    } else {
+                        Alignment.Center
+                    },
+                label = "Toolbar.CollapsedSecurityInfo",
+            ) { securityInfoCollapsed ->
+                if (securityInfoCollapsed) {
+                    StandardToolbarLayout(animatedContentScope = this@AnimatedContent, viewModel)
+                } else {
+                    SecurityInfo(
+                        viewModel = viewModel.securityInfoViewModel,
+                        showCollapsed = false,
+                        modifier =
+                            Modifier.sharedElement(
+                                rememberSharedContentState(key = SecurityInfoKey),
+                                animatedVisibilityScope = this@AnimatedContent,
+                            ),
+                    )
+                }
+            }
         }
 
+        IconButton(
+            { viewModel.powerButtonViewModel },
+            useModifierBasedExpandable = true,
+            Modifier.sysuiResTag("pm_lite").minimumInteractiveComponentSize(),
+        )
+    }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+private fun SharedTransitionScope.StandardToolbarLayout(
+    animatedContentScope: AnimatedContentScope,
+    viewModel: ToolbarViewModel,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier) {
         // TODO(b/410843063): Support the tooltip in DualShade
         val editModeButtonViewModel =
             rememberViewModel("Toolbar") { viewModel.editModeButtonViewModelFactory.create() }
@@ -54,36 +99,62 @@ fun Toolbar(viewModel: ToolbarViewModel, modifier: Modifier = Modifier) {
         IconButton(
             viewModel.settingsButtonViewModel,
             useModifierBasedExpandable = true,
-            Modifier.sysuiResTag("settings_button_container"),
+            Modifier.sysuiResTag("settings_button_container").minimumInteractiveComponentSize(),
         )
 
-        Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-            val context = LocalContext.current
-            val textFeedbackViewModel =
-                rememberViewModel("", context) {
-                    viewModel.textFeedbackContentViewModelFactory.create(context)
-                }
+        viewModel.userSwitcherViewModel?.let {
+            IconButton(
+                it,
+                useModifierBasedExpandable = true,
+                Modifier.sysuiResTag("multi_user_switch").minimumInteractiveComponentSize(),
+            )
+        }
+        SecurityInfo(
+            viewModel = viewModel.securityInfoViewModel,
+            showCollapsed = true,
+            modifier =
+                Modifier.sharedElement(
+                    rememberSharedContentState(key = SecurityInfoKey),
+                    animatedVisibilityScope = animatedContentScope,
+                ),
+        )
 
-            if (textFeedbackViewModel.textFeedback != TextFeedbackViewModel.NoFeedback) {
-                TextFeedback(textFeedbackViewModel.textFeedback, Modifier.wrapContentSize())
-            } else {
-                BuildNumber(
-                    viewModelFactory = viewModel.buildNumberViewModelFactory,
-                    textColor = MaterialTheme.colorScheme.onSurface,
-                    modifier =
-                        Modifier.borderOnFocus(
-                                color = MaterialTheme.colorScheme.secondary,
-                                cornerSize = CornerSize(1.dp),
-                            )
-                            .wrapContentSize(),
-                )
+        val context = LocalContext.current
+        val textFeedbackViewModel =
+            rememberViewModel("Toolbar.TextFeedbackViewModel", context) {
+                viewModel.textFeedbackContentViewModelFactory.create(context)
+            }
+
+        Box(modifier = Modifier.weight(1f)) {
+            val hasTextFeedback =
+                textFeedbackViewModel.textFeedback !is TextFeedbackViewModel.NoFeedback
+
+            Crossfade(
+                targetState = hasTextFeedback,
+                modifier = Modifier.align(Alignment.Center),
+                label = "Toolbar.ShowTextFeedback",
+            ) { showTextFeedback ->
+                if (showTextFeedback) {
+                    TextFeedback(textFeedbackViewModel.textFeedback, Modifier.wrapContentSize())
+                } else {
+                    BuildNumber(
+                        viewModelFactory = viewModel.buildNumberViewModelFactory,
+                        textColor = MaterialTheme.colorScheme.onSurface,
+                        modifier =
+                            Modifier.borderOnFocus(
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    cornerSize = CornerSize(1.dp),
+                                )
+                                .wrapContentSize(),
+                    )
+                }
             }
         }
+    }
+}
 
-        IconButton(
-            { viewModel.powerButtonViewModel },
-            useModifierBasedExpandable = true,
-            Modifier.sysuiResTag("pm_lite"),
-        )
+private object Toolbar {
+    object TransitionKeys {
+        const val SecurityInfoKey = "SecurityInfo"
     }
 }
