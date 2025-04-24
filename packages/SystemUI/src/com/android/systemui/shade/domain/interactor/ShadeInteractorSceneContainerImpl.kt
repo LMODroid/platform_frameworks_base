@@ -95,18 +95,16 @@ constructor(
         shadeModeInteractor.shadeMode
             .flatMapLatest { shadeMode ->
                 when (shadeMode) {
-                    ShadeMode.Single ->
-                        sceneInteractor.transitionState
-                            .map { state ->
-                                when (state) {
-                                    is ObservableTransitionState.Idle ->
-                                        state.currentScene == Scenes.QuickSettings
-                                    is ObservableTransitionState.Transition -> false
-                                }
+                    ShadeMode.Single -> Scenes.QuickSettings.isShownAndIdle
+                    ShadeMode.Split -> flowOf(false)
+                    ShadeMode.Dual ->
+                        shadeModeInteractor.isShadeLayoutWide.flatMapLatest { isShadeLayoutWide ->
+                            if (isShadeLayoutWide) {
+                                flowOf(false)
+                            } else {
+                                Overlays.QuickSettingsShade.isShownAndIdle
                             }
-                            .distinctUntilChanged()
-                    ShadeMode.Split,
-                    ShadeMode.Dual -> flowOf(false)
+                        }
                 }
             }
             .distinctUntilChanged()
@@ -367,6 +365,23 @@ constructor(
                 }
             }
             .distinctUntilChanged()
+
+    /** Whether this content key is currently shown and in idle transition state. */
+    private val ContentKey.isShownAndIdle: Flow<Boolean>
+        get() {
+            return sceneInteractor.transitionState
+                .map { state ->
+                    when (state) {
+                        is ObservableTransitionState.Idle ->
+                            when (this) {
+                                is SceneKey -> this == state.currentScene
+                                is OverlayKey -> this in state.currentOverlays
+                            }
+                        is ObservableTransitionState.Transition -> false
+                    }
+                }
+                .distinctUntilChanged()
+        }
 
     private val ShadeMode.notificationsContentKey: ContentKey
         get() {

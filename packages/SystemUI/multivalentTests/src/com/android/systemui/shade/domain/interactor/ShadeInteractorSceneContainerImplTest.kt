@@ -35,6 +35,7 @@ import com.android.systemui.shade.shadeTestUtil
 import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestScope
@@ -43,6 +44,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 @EnableSceneContainer
@@ -114,7 +116,7 @@ class ShadeInteractorSceneContainerImplTest : SysuiTestCase() {
         }
 
     @Test
-    fun qsFullscreen_falseWhenTransitioning() =
+    fun qsFullscreen_singleShade_falseWhenTransitioning() =
         testScope.runTest {
             val actual by collectLastValue(underTest.isQsFullscreen)
 
@@ -139,7 +141,36 @@ class ShadeInteractorSceneContainerImplTest : SysuiTestCase() {
         }
 
     @Test
-    fun qsFullscreen_falseWhenIdleNotQS() =
+    fun qsFullscreen_dualShade_falseWhenTransitioning() =
+        testScope.runTest {
+            kosmos.enableDualShade(wideLayout = false)
+            val actual by collectLastValue(underTest.isQsFullscreen)
+
+            // WHEN overlay transition active
+            keyguardRepository.setStatusBarState(StatusBarState.SHADE)
+            sceneInteractor.setTransitionState(
+                MutableStateFlow<ObservableTransitionState>(
+                    ObservableTransitionState.Transition.ReplaceOverlay(
+                        fromOverlay = Overlays.QuickSettingsShade,
+                        toOverlay = Overlays.NotificationsShade,
+                        currentScene = Scenes.Gone,
+                        currentOverlays = flowOf(setOf(Overlays.QuickSettingsShade)),
+                        progress = MutableStateFlow(.3f),
+                        isInitiatedByUserInput = false,
+                        isUserInputOngoing = flowOf(false),
+                        previewProgress = flowOf(0f),
+                        isInPreviewStage = flowOf(false),
+                    )
+                )
+            )
+            runCurrent()
+
+            // THEN QS is not fullscreen
+            assertThat(actual).isFalse()
+        }
+
+    @Test
+    fun qsFullscreen_falseWhenIdleNotQs() =
         testScope.runTest {
             val actual by collectLastValue(underTest.isQsFullscreen)
 
@@ -157,7 +188,7 @@ class ShadeInteractorSceneContainerImplTest : SysuiTestCase() {
         }
 
     @Test
-    fun qsFullscreen_falseWhenIdleSplitShadeQs() =
+    fun qsFullscreen_splitShade_falseWhenIdleQs() =
         testScope.runTest {
             val actual by collectLastValue(underTest.isQsFullscreen)
 
@@ -176,7 +207,7 @@ class ShadeInteractorSceneContainerImplTest : SysuiTestCase() {
         }
 
     @Test
-    fun qsFullscreen_trueWhenIdleQS() =
+    fun qsFullscreen_singleShade_trueWhenIdleQs() =
         testScope.runTest {
             val actual by collectLastValue(underTest.isQsFullscreen)
 
@@ -191,6 +222,50 @@ class ShadeInteractorSceneContainerImplTest : SysuiTestCase() {
 
             // THEN QS is fullscreen
             assertThat(actual).isTrue()
+        }
+
+    @Test
+    fun qsFullscreen_dualShade_trueWhenIdleQs() =
+        testScope.runTest {
+            kosmos.enableDualShade(wideLayout = false)
+            val actual by collectLastValue(underTest.isQsFullscreen)
+
+            // WHEN Idle on QuickSettingsShade overlay
+            keyguardRepository.setStatusBarState(StatusBarState.SHADE)
+            sceneInteractor.setTransitionState(
+                MutableStateFlow<ObservableTransitionState>(
+                    ObservableTransitionState.Idle(
+                        currentScene = Scenes.Gone,
+                        currentOverlays = setOf(Overlays.QuickSettingsShade),
+                    )
+                )
+            )
+            runCurrent()
+
+            // THEN QS is fullscreen
+            assertThat(actual).isTrue()
+        }
+
+    @Test
+    fun qsFullscreen_dualShadeWide_falseWhenIdleQs() =
+        testScope.runTest {
+            kosmos.enableDualShade(wideLayout = true)
+            val actual by collectLastValue(underTest.isQsFullscreen)
+
+            // WHEN Idle on QuickSettingsShade overlay
+            keyguardRepository.setStatusBarState(StatusBarState.SHADE)
+            sceneInteractor.setTransitionState(
+                MutableStateFlow<ObservableTransitionState>(
+                    ObservableTransitionState.Idle(
+                        currentScene = Scenes.Gone,
+                        currentOverlays = setOf(Overlays.QuickSettingsShade),
+                    )
+                )
+            )
+            runCurrent()
+
+            // THEN QS is fullscreen
+            assertThat(actual).isFalse()
         }
 
     @Test
