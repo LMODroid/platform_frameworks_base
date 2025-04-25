@@ -2619,6 +2619,9 @@
     <!-- Accessibility action of action to add QS tile to end. [CHAR LIMIT=NONE] -->
     <string name="accessibility_qs_edit_tile_add_action">Add tile to the last position</string>
 
+    <!-- Accessibility action of action to add a named QS tile to the end. [CHAR LIMIT=NONE] -->
+    <string name="accessibility_qs_edit_named_tile_add_action">Add <xliff:g id="name" example="Internet">%1$s</xliff:g> to the last position</string>
+
     <!-- Accessibility action for context menu to move QS tile [CHAR LIMIT=NONE] -->
     <string name="accessibility_qs_edit_tile_start_move">Move tile</string>
 

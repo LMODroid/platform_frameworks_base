@@ -971,6 +971,8 @@ private fun AvailableTileGridCell(
         onAddTile(cell.tileSpec)
         selectionState.select(cell.tileSpec)
     }
+    val clickLabel =
+        stringResource(id = R.string.accessibility_qs_edit_named_tile_add_action, cell.label.text)
 
     // Displays the tile as an icon tile with the label underneath
     Column(
@@ -979,7 +981,7 @@ private fun AvailableTileGridCell(
         modifier =
             modifier
                 .graphicsLayer { this.alpha = alpha }
-                .clickable(enabled = !cell.isCurrent, onClick = onClick)
+                .clickable(enabled = !cell.isCurrent, onClick = onClick, onClickLabel = clickLabel)
                 .semantics { stateDescription?.let { this.stateDescription = it } },
     ) {
         Box(Modifier.fillMaxWidth().height(TileHeight)) {
@@ -1007,8 +1009,7 @@ private fun AvailableTileGridCell(
 
             StaticTileBadge(
                 icon = Icons.Default.Add,
-                contentDescription =
-                    stringResource(id = R.string.accessibility_qs_edit_tile_add_action),
+                contentDescription = clickLabel,
                 enabled = !cell.isCurrent,
                 onClick = onClick,
             )
