@@ -90,7 +90,8 @@ public class RecordingController
     final UserTracker.Callback mUserChangedCallback =
             new UserTracker.Callback() {
                 @Override
-                public void onUserChanged(int newUser, @NonNull Context userContext) {
+                public void onBeforeUserSwitching(int newUser) {
+                    Log.d(TAG, "stop recording, user switching to: " + newUser);
                     stopRecording();
                 }
             };
