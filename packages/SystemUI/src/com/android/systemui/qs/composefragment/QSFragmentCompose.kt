@@ -57,6 +57,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
@@ -696,20 +698,26 @@ constructor(
             ) {
                 val Tiles =
                     @Composable {
+                        // When always compose is false, this will always be true, and we'll be
+                        // listening whenever this is composed. When always compose is true, we
+                        // listen if we are visible and not fully expanded
+                        val isListening: () -> Boolean =
+                            if (alwaysCompose) {
+                                remember(viewModel) {
+                                        derivedStateOf {
+                                            viewModel.isQsVisibleAndAnyShadeExpanded &&
+                                                viewModel.expansionState.progress < 1f &&
+                                                !viewModel.isEditing
+                                        }
+                                    }
+                                    .let { state -> { state.value } }
+                            } else {
+                                { true }
+                            }
+
                         QuickQuickSettings(
                             viewModel = viewModel.quickQuickSettingsViewModel,
-                            listening = {
-                                /*
-                                 *  When always compose is false, this will always be true, and we'll be
-                                 *  listening whenever this is composed.
-                                 *  When always compose is true, we listen if we are visible and not
-                                 *  fully expanded
-                                 */
-                                !alwaysCompose ||
-                                    (viewModel.isQsVisibleAndAnyShadeExpanded &&
-                                        viewModel.expansionState.progress < 1f &&
-                                        !viewModel.isEditing)
-                            },
+                            listening = isListening,
                         )
                     }
                 val Media =
@@ -843,22 +851,30 @@ constructor(
                             @Composable {
                                 Box {
                                     GridAnchor()
+
+                                    // When always compose is false, this will always be true, and
+                                    // we'll be listening whenever this is composed. When always
+                                    // compose is true, we look a the second condition and we'll
+                                    // listen if QS is visible AND we are not fully collapsed.
+                                    val isListening: () -> Boolean =
+                                        if (alwaysCompose) {
+                                            remember(viewModel) {
+                                                    derivedStateOf {
+                                                        viewModel.isQsVisibleAndAnyShadeExpanded &&
+                                                            viewModel.expansionState.progress >
+                                                                0f &&
+                                                            !viewModel.isEditing
+                                                    }
+                                                }
+                                                .let { state -> { state.value } }
+                                        } else {
+                                            { true }
+                                        }
+
                                     TileGrid(
                                         viewModel = containerViewModel.tileGridViewModel,
                                         modifier = Modifier.fillMaxWidth(),
-                                        listening = {
-                                            /*
-                                             *  When always compose is false, this will always be true,
-                                             *  and we'll be listening whenever this is composed.
-                                             *  When always compose is true, we look a the second
-                                             *  condition and we'll listen if QS is visible AND we are
-                                             *  not fully collapsed.
-                                             */
-                                            !alwaysCompose ||
-                                                (viewModel.isQsVisibleAndAnyShadeExpanded &&
-                                                    viewModel.expansionState.progress > 0f &&
-                                                    !viewModel.isEditing)
-                                        },
+                                        listening = isListening,
                                     )
                                 }
                             }
