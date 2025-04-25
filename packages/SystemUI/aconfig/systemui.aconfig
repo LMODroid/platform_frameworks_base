@@ -2205,3 +2205,13 @@ flag {
     description: "Overall changes on Sytem UI when current user is the Headless System User"
     bug: "408066623"
 }
+
+flag {
+    name: "qs_tile_transition_interaction_refinement"
+    namespace: "systemui"
+    description: "Allowing Click Events for Quick Setting Tile while QS dialog is collapsing. This Flag also prevents QS Tile from Dismissal when it is tapped during launch "
+    bug: "358291064"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
