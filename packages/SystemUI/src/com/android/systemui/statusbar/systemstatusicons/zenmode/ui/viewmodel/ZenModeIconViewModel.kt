@@ -1,0 +1,80 @@
+/*
+ * Copyright (C) 2025 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.systemui.statusbar.systemstatusicons.zenmode.ui.viewmodel
+
+import android.content.Context
+import android.graphics.drawable.Drawable
+import androidx.compose.runtime.getValue
+import com.android.systemui.common.shared.model.ContentDescription
+import com.android.systemui.common.shared.model.Icon
+import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.lifecycle.Hydrator
+import com.android.systemui.statusbar.policy.domain.interactor.ZenModeInteractor
+import com.android.systemui.statusbar.policy.domain.model.ZenModeInfo
+import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconViewModel
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.map
+
+/**
+ * ViewModel for the Zen Mode system status icon. Observes the current Zen mode state and provides
+ * an appropriate [Icon] model for display.
+ */
+class ZenModeIconViewModel
+@AssistedInject
+constructor(interactor: ZenModeInteractor, @Application private val context: Context) :
+    SystemStatusIconViewModel, ExclusiveActivatable() {
+
+    private val hydrator: Hydrator = Hydrator("ZenModeIconViewModel.hydrator")
+
+    override val icon: Icon? by
+        hydrator.hydratedStateOf(
+            traceName = "SystemStatus.zenModeIcon",
+            initialValue = null,
+            source = interactor.mainActiveMode.map { it?.toUiState() },
+        )
+
+    override suspend fun onActivated(): Nothing {
+        hydrator.activate()
+    }
+
+    private fun ZenModeInfo.toUiState(): Icon.Loaded {
+        // Make a copy of the drawable to ensure we can style it separately from the cached state.
+        val cached: Drawable.ConstantState? = this.icon.drawable.constantState
+        val drawable =
+            cached?.newDrawable(context.resources)?.mutate() ?: this.icon.drawable.mutate()
+
+        // ZenIconKey.resPackage is null if its resId is a system icon.
+        val res =
+            if (this.icon.key.resPackage == null) {
+                this.icon.key.resId
+            } else {
+                null
+            }
+        return Icon.Loaded(
+            drawable = drawable,
+            contentDescription = ContentDescription.Loaded(this.name),
+            res = res,
+        )
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(): ZenModeIconViewModel
+    }
+}

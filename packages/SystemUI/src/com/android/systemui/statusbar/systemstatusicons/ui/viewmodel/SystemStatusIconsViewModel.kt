@@ -22,6 +22,7 @@ import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompo
 import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.AirplaneModeIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.BluetoothIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.EthernetIconViewModel
+import com.android.systemui.statusbar.systemstatusicons.zenmode.ui.viewmodel.ZenModeIconViewModel
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.awaitCancellation
@@ -40,17 +41,19 @@ constructor(
     airplaneModeIconViewModelFactory: AirplaneModeIconViewModel.Factory,
     bluetoothIconViewModelFactory: BluetoothIconViewModel.Factory,
     ethernetIconViewModelFactory: EthernetIconViewModel.Factory,
+    zenModeIconViewModelFactory: ZenModeIconViewModel.Factory,
 ) : ExclusiveActivatable() {
 
     init {
-        /* check if */ SystemStatusIconsInCompose.isUnexpectedlyInLegacyMode()
+        SystemStatusIconsInCompose.expectInNewMode()
     }
 
     private val airplaneModeIcon by lazy { airplaneModeIconViewModelFactory.create() }
     private val ethernetIcon by lazy { ethernetIconViewModelFactory.create() }
     private val bluetoothIcon by lazy { bluetoothIconViewModelFactory.create() }
+    private val zenModeIcon by lazy { zenModeIconViewModelFactory.create() }
     private val iconViewModels: List<SystemStatusIconViewModel> by lazy {
-        listOf(bluetoothIcon, ethernetIcon, airplaneModeIcon)
+        listOf(bluetoothIcon, zenModeIcon, ethernetIcon, airplaneModeIcon)
     }
 
     val icons: List<Icon>
@@ -58,6 +61,7 @@ constructor(
 
     override suspend fun onActivated(): Nothing {
         coroutineScope {
+            launch { zenModeIcon.activate() }
             launch { ethernetIcon.activate() }
             launch { bluetoothIcon.activate() }
             launch { airplaneModeIcon.activate() }

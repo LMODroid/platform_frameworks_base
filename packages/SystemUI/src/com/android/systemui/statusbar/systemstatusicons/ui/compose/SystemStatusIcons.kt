@@ -37,6 +37,7 @@ fun SystemStatusIcons(viewModelFactory: SystemStatusIconsViewModel.Factory, isDa
 
     for (icon in viewModel.icons) {
         // TODO(407622922): Use isDark to color the icon.
+        // TODO(414653733): Make sure icons are sized uniformly.
         Icon(icon = icon, modifier = Modifier.size(20.dp).padding(1.dp), tint = Color.Red)
     }
 }
