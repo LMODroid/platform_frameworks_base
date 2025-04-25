@@ -16,13 +16,13 @@
 
 package com.android.systemui.keyguard.domain.interactor
 
+import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.keyguard.data.repository.TrustRepository
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
-import com.android.app.tracing.coroutines.launchTraced as launch
 
 /** Encapsulates any state relevant to trust agents and trust grants. */
 @SysUISingleton
@@ -47,6 +47,11 @@ constructor(
 
     /** Whether the current user is trusted by any of the enabled trust agents. */
     val isTrusted: StateFlow<Boolean> = repository.isCurrentUserTrusted
+
+    /** Whether active unlock is running for the current user. */
+    suspend fun isCurrentUserActiveUnlockRunning(): Boolean {
+        return repository.isCurrentUserActiveUnlockRunning()
+    }
 
     /** Reports a keyguard visibility change. */
     fun reportKeyguardShowingChanged() {

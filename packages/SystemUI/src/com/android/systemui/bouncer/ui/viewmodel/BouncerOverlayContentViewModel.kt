@@ -424,6 +424,22 @@ constructor(
     }
 
     /**
+     * Call this method to determine if Bouncer contents should delay showing on initial transition
+     * to the bouncer. We have this delay to give an opportunity for passive authentication methods
+     * (such as face auth and watch unlock) to succeed first before showing the bouncer contents UI
+     * to avoid a flicker of the UI. However, we do not want to delay the entire Bouncer scene (with
+     * the bouncer background) because we still want to give the user a visual indication that their
+     * request for the bouncer is being processed.
+     *
+     * Returns `true` if a passive authentication method (such as face authentication or watch
+     * unlock) may authenticate the device before the user has the opportunity to enter their
+     * pin/pattern/password. Else, `false`.
+     */
+    suspend fun shouldDelayBouncerContent(): Boolean {
+        return bouncerInteractor.passiveAuthMaySucceedBeforeFullyShowingBouncer()
+    }
+
+    /**
      * Notifies that the bouncer UI has been destroyed (e.g. the composable left the composition).
      */
     fun onUiDestroyed() {

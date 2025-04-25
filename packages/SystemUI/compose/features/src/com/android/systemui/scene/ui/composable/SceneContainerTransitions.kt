@@ -20,6 +20,7 @@ import com.android.systemui.scene.ui.composable.transitions.dreamToBouncerTransi
 import com.android.systemui.scene.ui.composable.transitions.dreamToCommunalTransition
 import com.android.systemui.scene.ui.composable.transitions.dreamToGoneTransition
 import com.android.systemui.scene.ui.composable.transitions.dreamToShadeTransition
+import com.android.systemui.scene.ui.composable.transitions.fromBouncerTransition
 import com.android.systemui.scene.ui.composable.transitions.goneToQuickSettingsTransition
 import com.android.systemui.scene.ui.composable.transitions.goneToShadeTransition
 import com.android.systemui.scene.ui.composable.transitions.goneToSplitShadeTransition
@@ -189,16 +190,19 @@ class SceneContainerTransitions : SceneContainerTransitionsBuilder {
             // Overlay transitions
 
             to(Overlays.Bouncer) { toBouncerTransition() }
+            from(Overlays.Bouncer) { fromBouncerTransition() }
             from(Overlays.Bouncer, to = Scenes.Gone) { bouncerToGoneTransition() }
             from(Scenes.Dream, to = Overlays.Bouncer) { dreamToBouncerTransition() }
+            from(Overlays.Bouncer, to = Scenes.Dream) { fromBouncerTransition() }
             from(Scenes.Lockscreen, to = Overlays.Bouncer) { lockscreenToBouncerTransition() }
+            from(Overlays.Bouncer, to = Scenes.Lockscreen) { fromBouncerTransition() }
             from(
                 Scenes.Lockscreen,
                 to = Overlays.Bouncer,
                 key = TransitionKey.PredictiveBack,
                 reversePreview = { bouncerToLockscreenPreview() },
             ) {
-                lockscreenToBouncerTransition()
+                fromBouncerTransition()
             }
             from(Scenes.Communal, to = Overlays.Bouncer) { communalToBouncerTransition() }
             to(

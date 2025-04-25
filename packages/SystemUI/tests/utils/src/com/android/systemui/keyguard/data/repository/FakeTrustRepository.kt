@@ -52,6 +52,10 @@ class FakeTrustRepository @Inject constructor() : TrustRepository {
     var keyguardShowingChangeEventCount: Int = 0
         private set
 
+    override suspend fun isCurrentUserActiveUnlockRunning(): Boolean {
+        return isCurrentUserActiveUnlockRunning.value
+    }
+
     override suspend fun reportKeyguardShowingChanged() {
         keyguardShowingChangeEventCount++
     }

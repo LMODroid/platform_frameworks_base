@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,22 @@
 package com.android.systemui.scene.ui.composable.transitions
 
 import androidx.compose.animation.core.tween
+import androidx.compose.ui.unit.dp
 import com.android.compose.animation.scene.TransitionBuilder
 import com.android.compose.animation.scene.UserActionDistance
 import com.android.systemui.bouncer.ui.composable.Bouncer
 
-const val TO_BOUNCER_FADE_FRACTION = 0.5f
-const val TO_BOUNCER_SWIPE_DISTANCE_FRACTION = 0.5f
+val BOUNCER_INITIAL_TRANSLATION = 300.dp
 
-fun TransitionBuilder.toBouncerTransition() {
-    spec = tween(durationMillis = 250)
+fun TransitionBuilder.fromBouncerTransition() {
+    spec = tween(durationMillis = 500)
 
     distance = UserActionDistance { fromContent, _, _ ->
         val fromContentSize = checkNotNull(fromContent.targetSize())
         fromContentSize.height * TO_BOUNCER_SWIPE_DISTANCE_FRACTION
     }
 
-    fade(Bouncer.Elements.Background)
+    translate(Bouncer.Elements.Content, y = BOUNCER_INITIAL_TRANSLATION)
+    fractionRange(end = TO_BOUNCER_FADE_FRACTION) { fade(Bouncer.Elements.Background) }
+    fractionRange(start = TO_BOUNCER_FADE_FRACTION) { fade(Bouncer.Elements.Content) }
 }
