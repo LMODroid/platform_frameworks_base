@@ -57,6 +57,8 @@ import com.android.systemui.log.logcatLogBuffer
 import com.android.systemui.power.domain.interactor.PowerInteractor.Companion.setAwakeForTest
 import com.android.systemui.power.domain.interactor.powerInteractor
 import com.android.systemui.power.shared.model.WakeSleepReason
+import com.android.systemui.scene.data.repository.ShowOverlay
+import com.android.systemui.scene.data.repository.setSceneTransition
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
@@ -401,6 +403,23 @@ class DeviceEntryFaceAuthInteractorTest : SysuiTestCase() {
             )
 
             runCurrent()
+            assertThat(faceAuthRepository.runningAuthRequest.value)
+                .isEqualTo(Pair(FaceAuthUiEvent.FACE_AUTH_UPDATED_PRIMARY_BOUNCER_SHOWN, false))
+        }
+
+    @Test
+    @EnableSceneContainer
+    fun withSceneContainerEnabled_faceAuthIsRequestedWhenTransitioningToPrimaryBouncer() =
+        testScope.runTest {
+            underTest.start()
+
+            kosmos.setSceneTransition(
+                ShowOverlay(
+                    overlay = Overlays.Bouncer,
+                    fromScene = Scenes.Lockscreen,
+                    progress = flowOf(.5f),
+                )
+            )
             assertThat(faceAuthRepository.runningAuthRequest.value)
                 .isEqualTo(Pair(FaceAuthUiEvent.FACE_AUTH_UPDATED_PRIMARY_BOUNCER_SHOWN, false))
         }
