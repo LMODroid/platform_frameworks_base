@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalLayoutApi::class)
-
 package com.android.systemui.shade.ui.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsIgnoringVisibility
-import androidx.compose.foundation.layout.waterfall
+import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.overscroll
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -45,10 +37,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.LowestZIndexContentPicker
@@ -80,10 +70,10 @@ fun ContentScope.OverlayShade(
             contentAlignment = if (isFullWidth) Alignment.TopCenter else alignmentOnWideScreens,
         ) {
             Panel(
-                modifier =
-                    Modifier.overscroll(verticalOverscrollEffect)
-                        .element(panelElement)
-                        .panelWidth(isFullWidth),
+                modifier = Modifier
+                    .overscroll(verticalOverscrollEffect)
+                    .element(panelElement)
+                    .panelWidth(isFullWidth),
                 header = header.takeIf { isFullWidth },
                 content = content,
             )
@@ -149,40 +139,12 @@ private fun Modifier.panelContainerPadding(isFullWidthPanel: Boolean): Modifier 
     if (isFullWidthPanel) {
         return this
     }
-    val systemBars = WindowInsets.systemBarsIgnoringVisibility
-    // TODO(b/412969642): The systemBars check above reports a top padding of 0 on some devices,
-    //  for an unknown reason. This additional check for status bar height specifically is added
-    //  here to work around that issue.
-    val statusBarHeight = PaddingValues(top = dimensionResource(R.dimen.status_bar_height))
-    val displayCutout = WindowInsets.displayCutout
-    val waterfall = WindowInsets.waterfall
-    val horizontalPadding =
-        PaddingValues(horizontal = dimensionResource(R.dimen.shade_panel_margin_horizontal))
-    return padding(
-        combinePaddings(
-            statusBarHeight,
-            systemBars.asPaddingValues(),
-            displayCutout.asPaddingValues(),
-            waterfall.asPaddingValues(),
-            horizontalPadding,
+    val horizontalPaddingDp = dimensionResource(R.dimen.shade_panel_margin_horizontal)
+    return windowInsetsPadding(
+        WindowInsets.safeContent.union(
+            WindowInsets(left = horizontalPaddingDp, right = horizontalPaddingDp)
         )
     )
-}
-
-/** Creates a union of [paddingValues] by using the max padding of each edge. */
-@Composable
-private fun combinePaddings(vararg paddingValues: PaddingValues): PaddingValues {
-    return if (paddingValues.isEmpty()) {
-        PaddingValues(0.dp)
-    } else {
-        val layoutDirection = LocalLayoutDirection.current
-        PaddingValues(
-            start = paddingValues.maxOf { it.calculateStartPadding(layoutDirection) },
-            top = paddingValues.maxOf { it.calculateTopPadding() },
-            end = paddingValues.maxOf { it.calculateEndPadding(layoutDirection) },
-            bottom = paddingValues.maxOf { it.calculateBottomPadding() },
-        )
-    }
 }
 
 object OverlayShade {
