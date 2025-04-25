@@ -18,8 +18,9 @@
 
 package com.android.systemui.volume.ui.compose.slider
 
+import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -34,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -45,10 +47,15 @@ import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.setProgress
 import androidx.compose.ui.semantics.stateDescription
+import com.android.app.tracing.coroutines.launchTraced
 import com.android.systemui.haptics.slider.compose.ui.SliderHapticsViewModel
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.volume.haptics.ui.VolumeHapticsConfigs
 import kotlin.math.round
+import kotlinx.coroutines.Job
+
+private val DefaultAnimationSpec =
+    spring<Float>(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMedium)
 
 @Composable
 fun Slider(
@@ -62,6 +69,7 @@ fun Slider(
     stepDistance: Float = 0f,
     colors: SliderColors = SliderDefaults.colors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
     haptics: Haptics = Haptics.Disabled,
     isVertical: Boolean = false,
     isReverseDirection: Boolean = false,
@@ -75,21 +83,30 @@ fun Slider(
     },
 ) {
     require(stepDistance >= 0f) { "stepDistance must not be negative" }
-    val animatedValue by
-        animateFloatAsState(
-            targetValue = value,
-            animationSpec =
-                spring(
-                    dampingRatio = Spring.DampingRatioNoBouncy,
-                    stiffness = Spring.StiffnessMedium,
-                ),
-            label = "VolumeSliderValueAnimation",
-        )
-    val hapticsViewModel = haptics.createViewModel(animatedValue, valueRange, interactionSource)
+    var animationJob: Job? by remember { mutableStateOf(null) }
+    val sliderState = remember(valueRange) { SliderState(value = value, valueRange = valueRange) }
+    LaunchedEffect(value) {
+        if (!sliderState.isDragging && sliderState.value != value) {
+            animationJob =
+                launchTraced("Slider#animateValue") {
+                    animate(
+                        initialValue = sliderState.value,
+                        targetValue = value,
+                        animationSpec = animationSpec,
+                    ) { animatedValue, _ ->
+                        sliderState.value = animatedValue
+                    }
+                }
+        }
+    }
 
-    val sliderState =
-        remember(valueRange) { SliderState(value = animatedValue, valueRange = valueRange) }
+    val hapticsViewModel =
+        haptics.rememberViewModel(sliderState.value, valueRange, interactionSource)
     val valueChange: (Float) -> Unit = { newValue ->
+        if (sliderState.isDragging) {
+            animationJob?.cancel()
+            sliderState.value = newValue
+        }
         hapticsViewModel?.addVelocityDataPoint(newValue)
         onValueChanged(newValue)
     }
@@ -105,10 +122,9 @@ fun Slider(
 
     sliderState.onValueChangeFinished = {
         hapticsViewModel?.onValueChangeEnded()
-        onValueChangeFinished?.invoke(animatedValue)
+        onValueChangeFinished?.invoke(sliderState.value)
     }
     sliderState.onValueChange = valueChange
-    sliderState.value = animatedValue
 
     if (isVertical) {
         VerticalSlider(
@@ -174,7 +190,7 @@ private fun createSemantics(
 }
 
 @Composable
-private fun Haptics.createViewModel(
+private fun Haptics.rememberViewModel(
     value: Float,
     valueRange: ClosedFloatingPointRange<Float>,
     interactionSource: MutableInteractionSource,
