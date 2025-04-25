@@ -51,6 +51,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
@@ -763,29 +764,21 @@ private fun SystemIconChip(
     onClick: (() -> Unit)? = null,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isHovered by interactionSource.collectIsHoveredAsState()
-    val hoverModifier =
-        with(MaterialTheme.colorScheme) {
-            Modifier.background(onScrimDim, RoundedCornerShape(CollapsedHeight / 4))
-        }
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
             modifier
-                .thenIf(backgroundColor != Color.Unspecified) {
-                    Modifier.background(backgroundColor, RoundedCornerShape(25.dp))
-                        .padding(horizontal = ChipPaddingHorizontal, vertical = ChipPaddingVertical)
-                }
+                .clip(RoundedCornerShape(25.dp))
                 .thenIf(onClick != null) {
                     Modifier.clickable(
-                        interactionSource = interactionSource,
-                        indication = null,
                         onClick = { onClick?.invoke() },
                     )
                 }
-                .thenIf(isHovered) { hoverModifier },
+                .thenIf(backgroundColor != Color.Unspecified) {
+                    Modifier.background(backgroundColor)
+                        .padding(horizontal = ChipPaddingHorizontal, vertical = ChipPaddingVertical)
+                },
+
         content = content,
     )
 }
