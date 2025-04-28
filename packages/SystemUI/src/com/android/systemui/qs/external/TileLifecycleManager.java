@@ -48,7 +48,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
-import com.android.systemui.Flags;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
@@ -469,15 +468,11 @@ public class TileLifecycleManager extends BroadcastReceiver implements
         if (info.lowMemory) {
             delay = LOW_MEMORY_BIND_RETRY_DELAY;
         } else {
-            if (Flags.qsQuickRebindActiveTiles()) {
-                final long elapsedTimeSinceLastRebind = now - mLastRebind;
-                final boolean justAttemptedRebind =
-                        elapsedTimeSinceLastRebind < DEFAULT_BIND_RETRY_DELAY;
-                if (isActiveTile() && !justAttemptedRebind) {
-                    delay = ACTIVE_TILE_BIND_RETRY_DELAY;
-                } else {
-                    delay = DEFAULT_BIND_RETRY_DELAY;
-                }
+            final long elapsedTimeSinceLastRebind = now - mLastRebind;
+            final boolean justAttemptedRebind =
+                    elapsedTimeSinceLastRebind < DEFAULT_BIND_RETRY_DELAY;
+            if (isActiveTile() && !justAttemptedRebind) {
+                delay = ACTIVE_TILE_BIND_RETRY_DELAY;
             } else {
                 delay = DEFAULT_BIND_RETRY_DELAY;
             }
