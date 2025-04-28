@@ -50,6 +50,7 @@ import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.ui.composable.Overlay
 import com.android.systemui.shade.ui.composable.OverlayShade
 import com.android.systemui.shade.ui.composable.OverlayShadeHeader
+import com.android.systemui.shade.ui.composable.ShadeHeader
 import com.android.systemui.shade.ui.composable.isFullWidthShade
 import com.android.systemui.statusbar.notification.stack.ui.view.NotificationScrollView
 import dagger.Lazy
@@ -115,6 +116,8 @@ constructor(
                     }
                 OverlayShadeHeader(
                     viewModel = headerViewModel,
+                    notificationsHighlight = ShadeHeader.ChipHighlight.Strong,
+                    quickSettingsHighlight = ShadeHeader.ChipHighlight.Weak,
                     showClock = !isFullWidth,
                     modifier = Modifier.element(NotificationsShade.Elements.StatusBar),
                 )

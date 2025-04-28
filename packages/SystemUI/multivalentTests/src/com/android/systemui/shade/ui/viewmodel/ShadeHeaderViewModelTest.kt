@@ -15,7 +15,6 @@ import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.keyguard.data.repository.fakeDeviceEntryFingerprintAuthRepository
 import com.android.systemui.keyguard.shared.model.SuccessFingerprintAuthenticationStatus
-import com.android.systemui.kosmos.runCurrent
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
@@ -25,11 +24,8 @@ import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.domain.interactor.disableDualShade
 import com.android.systemui.shade.domain.interactor.enableDualShade
-import com.android.systemui.shade.domain.interactor.enableSingleShade
-import com.android.systemui.shade.domain.interactor.enableSplitShade
 import com.android.systemui.shade.domain.interactor.shadeMode
 import com.android.systemui.shade.shared.model.ShadeMode
-import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel.HeaderChipHighlight
 import com.android.systemui.statusbar.pipeline.mobile.data.model.SubscriptionModel
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.fakeMobileIconsInteractor
 import com.android.systemui.testKosmos
@@ -246,90 +242,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             assertThat(currentScene).isEqualTo(Scenes.Gone)
             assertThat(currentOverlays).contains(Overlays.NotificationsShade)
             assertThat(currentOverlays).doesNotContain(Overlays.QuickSettingsShade)
-        }
-
-    @Test
-    fun highlightChips_notifsOpenInSingleShade_bothNone() =
-        testScope.runTest {
-            kosmos.enableSingleShade()
-            val currentScene by collectLastValue(sceneInteractor.currentScene)
-            val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
-            setScene(Scenes.Shade)
-            assertThat(currentScene).isEqualTo(Scenes.Shade)
-            assertThat(currentOverlays).isEmpty()
-
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-        }
-
-    @Test
-    fun highlightChips_notifsOpenInSplitShade_bothNone() =
-        testScope.runTest {
-            kosmos.enableSplitShade()
-            val currentScene by collectLastValue(sceneInteractor.currentScene)
-            val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
-            setScene(Scenes.Shade)
-            assertThat(currentScene).isEqualTo(Scenes.Shade)
-            assertThat(currentOverlays).isEmpty()
-
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-        }
-
-    @Test
-    fun highlightChips_quickSettingsOpenInSingleShade_bothNone() =
-        testScope.runTest {
-            kosmos.enableSingleShade()
-            val currentScene by collectLastValue(sceneInteractor.currentScene)
-            val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
-            setScene(Scenes.QuickSettings)
-            assertThat(currentScene).isEqualTo(Scenes.QuickSettings)
-            assertThat(currentOverlays).isEmpty()
-
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-        }
-
-    @Test
-    fun highlightChips_notifsOpenInDualShade_notifsStrongQuickSettingsWeak() =
-        testScope.runTest {
-            // Test the lockscreen scenario.
-            setupDualShadeState(scene = Scenes.Lockscreen, overlay = Overlays.NotificationsShade)
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.Strong)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.Weak)
-
-            // Test the unlocked scenario.
-            setupDualShadeState(scene = Scenes.Gone, overlay = Overlays.NotificationsShade)
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.Strong)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.Weak)
-        }
-
-    @Test
-    fun highlightChips_quickSettingsOpenInDualShade_notifsWeakQuickSettingsStrong() =
-        testScope.runTest {
-            // Test the lockscreen scenario.
-            setupDualShadeState(scene = Scenes.Lockscreen, overlay = Overlays.QuickSettingsShade)
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.Weak)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.Strong)
-
-            // Test the unlocked scenario.
-            setupDualShadeState(scene = Scenes.Gone, overlay = Overlays.QuickSettingsShade)
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.Weak)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.Strong)
-        }
-
-    @Test
-    fun highlightChips_noOverlaysInDualShade_bothNone() =
-        testScope.runTest {
-            // Test the lockscreen scenario.
-            setupDualShadeState(scene = Scenes.Lockscreen)
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-
-            // Test the unlocked scenario.
-            setupDualShadeState(scene = Scenes.Gone)
-            assertThat(underTest.notificationsChipHighlight).isEqualTo(HeaderChipHighlight.None)
-            assertThat(underTest.quickSettingsChipHighlight).isEqualTo(HeaderChipHighlight.None)
         }
 
     companion object {

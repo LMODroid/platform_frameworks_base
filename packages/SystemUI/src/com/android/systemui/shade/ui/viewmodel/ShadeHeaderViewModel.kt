@@ -24,9 +24,7 @@ import android.icu.text.DateFormat
 import android.icu.text.DisplayContext
 import android.provider.Settings
 import android.view.ViewGroup
-import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntRect
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.battery.BatteryMeterViewController
@@ -97,34 +95,6 @@ constructor(
     val createBatteryMeterViewController:
         (ViewGroup, StatusBarLocation) -> BatteryMeterViewController =
         batteryMeterViewControllerFactory::create
-
-    val notificationsChipHighlight: HeaderChipHighlight by
-        hydrator.hydratedStateOf(
-            traceName = "notificationsChipHighlight",
-            initialValue = HeaderChipHighlight.None,
-            source =
-                sceneInteractor.currentOverlays.map { overlays ->
-                    when {
-                        Overlays.NotificationsShade in overlays -> HeaderChipHighlight.Strong
-                        Overlays.QuickSettingsShade in overlays -> HeaderChipHighlight.Weak
-                        else -> HeaderChipHighlight.None
-                    }
-                },
-        )
-
-    val quickSettingsChipHighlight: HeaderChipHighlight by
-        hydrator.hydratedStateOf(
-            traceName = "quickSettingsChipHighlight",
-            initialValue = HeaderChipHighlight.None,
-            source =
-                sceneInteractor.currentOverlays.map { overlays ->
-                    when {
-                        Overlays.QuickSettingsShade in overlays -> HeaderChipHighlight.Strong
-                        Overlays.NotificationsShade in overlays -> HeaderChipHighlight.Weak
-                        else -> HeaderChipHighlight.None
-                    }
-                },
-        )
 
     /** True if there is exactly one mobile connection. */
     val isSingleCarrier: StateFlow<Boolean> = mobileIconsInteractor.isSingleCarrier
@@ -264,39 +234,10 @@ constructor(
         dualShadeEducationInteractor.onDualShadeEducationElementBoundsChange(element, bounds)
     }
 
-    /** Represents the background highlight of a header icons chip. */
-    sealed interface HeaderChipHighlight {
-
-        fun backgroundColor(colorScheme: ColorScheme): Color
-
-        fun foregroundColor(colorScheme: ColorScheme): Color
-
-        data object None : HeaderChipHighlight {
-            override fun backgroundColor(colorScheme: ColorScheme): Color = Color.Unspecified
-
-            override fun foregroundColor(colorScheme: ColorScheme): Color = colorScheme.primary
-        }
-
-        data object Weak : HeaderChipHighlight {
-            override fun backgroundColor(colorScheme: ColorScheme): Color =
-                colorScheme.surface.copy(alpha = 0.1f)
-
-            override fun foregroundColor(colorScheme: ColorScheme): Color = colorScheme.onSurface
-        }
-
-        data object Strong : HeaderChipHighlight {
-            override fun backgroundColor(colorScheme: ColorScheme): Color =
-                colorScheme.primaryContainer
-
-            override fun foregroundColor(colorScheme: ColorScheme): Color =
-                colorScheme.onPrimaryContainer
-        }
-    }
-
     private fun getFormatFromPattern(pattern: String?): DateFormat {
-        val format = DateFormat.getInstanceForSkeleton(pattern, Locale.getDefault())
-        format.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE)
-        return format
+        return DateFormat.getInstanceForSkeleton(pattern, Locale.getDefault()).apply {
+            setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE)
+        }
     }
 
     @AssistedFactory

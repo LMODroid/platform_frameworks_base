@@ -47,6 +47,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -99,7 +100,6 @@ import com.android.systemui.shade.ui.composable.ShadeHeader.Dimensions.ChipPaddi
 import com.android.systemui.shade.ui.composable.ShadeHeader.Dimensions.ChipPaddingVertical
 import com.android.systemui.shade.ui.composable.ShadeHeader.Values.ClockScale
 import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel
-import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel.HeaderChipHighlight
 import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.phone.StatusBarLocation
 import com.android.systemui.statusbar.phone.StatusIconContainer
@@ -138,12 +138,36 @@ object ShadeHeader {
         val ChipPaddingVertical = 4.dp
 
         val StatusBarHeight: Dp
-            @Composable
-            get() = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+            @Composable get() = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
     }
 
     object TestTags {
         const val Root = "shade_header_root"
+    }
+
+    /** Represents the background highlighting of a header icons chip. */
+    sealed interface ChipHighlight {
+        val backgroundColor: Color
+            @Composable @ReadOnlyComposable get
+
+        val foregroundColor: Color
+            @Composable @ReadOnlyComposable get
+
+        data object Weak : ChipHighlight {
+            override val backgroundColor: Color
+                @Composable get() = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f)
+
+            override val foregroundColor: Color
+                @Composable get() = MaterialTheme.colorScheme.onSurface
+        }
+
+        data object Strong : ChipHighlight {
+            override val backgroundColor: Color
+                @Composable get() = MaterialTheme.colorScheme.primaryContainer
+
+            override val foregroundColor: Color
+                @Composable get() = MaterialTheme.colorScheme.onPrimaryContainer
+        }
     }
 }
 
@@ -309,6 +333,8 @@ fun ContentScope.ExpandedShadeHeader(
 @Composable
 fun ContentScope.OverlayShadeHeader(
     viewModel: ShadeHeaderViewModel,
+    notificationsHighlight: ShadeHeader.ChipHighlight,
+    quickSettingsHighlight: ShadeHeader.ChipHighlight,
     showClock: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -326,7 +352,6 @@ fun ContentScope.OverlayShadeHeader(
                 horizontalArrangement = Arrangement.spacedBy(5.dp),
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             ) {
-                val chipHighlight = viewModel.notificationsChipHighlight
                 if (showClock) {
                     Clock(
                         onClick = viewModel::onClockClicked,
@@ -335,7 +360,7 @@ fun ContentScope.OverlayShadeHeader(
                 }
                 NotificationsChip(
                     onClick = viewModel::onNotificationIconChipClicked,
-                    backgroundColor = chipHighlight.backgroundColor(MaterialTheme.colorScheme),
+                    backgroundColor = notificationsHighlight.backgroundColor,
                     modifier =
                         Modifier.bouncy(
                             isEnabled = viewModel.animateNotificationsChipBounce,
@@ -350,7 +375,7 @@ fun ContentScope.OverlayShadeHeader(
                     VariableDayDate(
                         longerDateText = viewModel.longerDateText,
                         shorterDateText = viewModel.shorterDateText,
-                        textColor = chipHighlight.foregroundColor(MaterialTheme.colorScheme),
+                        textColor = notificationsHighlight.foregroundColor,
                     )
                 }
             }
@@ -361,9 +386,8 @@ fun ContentScope.OverlayShadeHeader(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             ) {
-                val chipHighlight = viewModel.quickSettingsChipHighlight
                 SystemIconChip(
-                    backgroundColor = chipHighlight.backgroundColor(MaterialTheme.colorScheme),
+                    backgroundColor = quickSettingsHighlight.backgroundColor,
                     onClick = viewModel::onSystemIconChipClicked,
                     modifier =
                         Modifier.bouncy(
@@ -380,16 +404,18 @@ fun ContentScope.OverlayShadeHeader(
                         with(LocalDensity.current) {
                             (if (NewStatusBarIcons.isEnabled) 3.sp else 6.sp).toDp()
                         }
+                    val isHighlighted = quickSettingsHighlight is ShadeHeader.ChipHighlight.Strong
                     StatusIcons(
                         viewModel = viewModel,
                         useExpandedFormat = false,
                         modifier = Modifier.padding(end = paddingEnd).weight(1f, fill = false),
+                        isHighlighted = isHighlighted,
                     )
                     BatteryIcon(
                         createBatteryMeterViewController =
                             viewModel.createBatteryMeterViewController,
                         useExpandedFormat = false,
-                        chipHighlight = chipHighlight,
+                        isHighlighted = isHighlighted,
                     )
                 }
                 if (isPrivacyChipVisible) {
@@ -523,7 +549,7 @@ private fun BatteryIcon(
     createBatteryMeterViewController: (ViewGroup, StatusBarLocation) -> BatteryMeterViewController,
     useExpandedFormat: Boolean,
     modifier: Modifier = Modifier,
-    chipHighlight: HeaderChipHighlight = HeaderChipHighlight.None,
+    isHighlighted: Boolean = false,
 ) {
     val localContext = LocalContext.current
     val themedContext =
@@ -557,11 +583,11 @@ private fun BatteryIcon(
                 if (useExpandedFormat) BatteryMeterView.MODE_ESTIMATE else BatteryMeterView.MODE_ON
             )
             // TODO(b/397223606): Get the actual spec for this.
-            if (chipHighlight is HeaderChipHighlight.Strong) {
-                batteryIcon.updateColors(primaryColor, inverseColor, inverseColor)
-            } else if (chipHighlight is HeaderChipHighlight.Weak) {
-                batteryIcon.updateColors(primaryColor, inverseColor, primaryColor)
-            }
+            batteryIcon.updateColors(
+                primaryColor,
+                inverseColor,
+                if (isHighlighted) inverseColor else primaryColor,
+            )
         },
         modifier = modifier,
     )
@@ -644,6 +670,7 @@ private fun ContentScope.StatusIcons(
     viewModel: ShadeHeaderViewModel,
     useExpandedFormat: Boolean,
     modifier: Modifier = Modifier,
+    isHighlighted: Boolean = false,
 ) {
     val localContext = LocalContext.current
     val themedContext =
@@ -674,11 +701,9 @@ private fun ContentScope.StatusIcons(
         viewModel.createTintedIconManager(iconContainer, StatusBarLocation.QS)
     }
 
-    val chipHighlight = viewModel.quickSettingsChipHighlight
-
     // TODO(408001821): Use composable system status icons here instead.
     AndroidView(
-        factory = { context ->
+        factory = {
             iconManager.setTint(primaryColor, inverseColor)
             viewModel.statusBarIconController.addIconGroup(iconManager)
 
@@ -714,9 +739,9 @@ private fun ContentScope.StatusIcons(
             }
 
             // TODO(b/397223606): Get the actual spec for this.
-            if (chipHighlight is HeaderChipHighlight.Strong) {
+            if (isHighlighted) {
                 iconManager.setTint(inverseColor, primaryColor)
-            } else if (chipHighlight is HeaderChipHighlight.Weak) {
+            } else {
                 iconManager.setTint(primaryColor, inverseColor)
             }
         },
@@ -728,7 +753,7 @@ private fun ContentScope.StatusIcons(
 private fun NotificationsChip(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = Color.Unspecified,
+    backgroundColor: Color,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
