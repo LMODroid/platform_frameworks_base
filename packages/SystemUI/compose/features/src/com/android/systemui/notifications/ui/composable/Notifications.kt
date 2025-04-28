@@ -349,7 +349,7 @@ fun ContentScope.NotificationScrollingStack(
     DisposableEffect(Unit) { onDispose { viewModel.onScrimBoundsChanged(null) } }
 
     // Top position if the scrim, when it is fully expanded.
-    val minScrimTop = ShadeHeader.Dimensions.CollapsedHeight
+    val minScrimTop = ShadeHeader.Dimensions.StatusBarHeight
 
     // The minimum offset for the scrim. The scrim is considered fully expanded when it
     // is at this offset.

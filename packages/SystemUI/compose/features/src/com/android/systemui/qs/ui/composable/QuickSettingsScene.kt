@@ -70,8 +70,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.UserAction
 import com.android.compose.animation.scene.UserActionResult
+import com.android.compose.animation.scene.animateContentFloatAsState
 import com.android.compose.animation.scene.animateSceneDpAsState
-import com.android.compose.animation.scene.animateSceneFloatAsState
 import com.android.compose.animation.scene.content.state.TransitionState
 import com.android.compose.modifiers.thenIf
 import com.android.compose.windowsizeclass.LocalWindowSizeClass
@@ -251,7 +251,7 @@ private fun ContentScope.QuickSettingsScene(
             remember(lifecycleOwner, viewModel) {
                 viewModel.getFooterActionsViewModel(lifecycleOwner)
             }
-        animateSceneFloatAsState(value = 1f, key = QuickSettings.SharedValues.TilesSquishiness)
+        animateContentFloatAsState(value = 1f, key = QuickSettings.SharedValues.TilesSquishiness)
 
         // ############## SCROLLING ################
 
@@ -282,7 +282,7 @@ private fun ContentScope.QuickSettingsScene(
             )
         val topPadding by
             animateDpAsState(
-                targetValue = if (isCustomizing) ShadeHeader.Dimensions.CollapsedHeight else 0.dp,
+                targetValue = if (isCustomizing) ShadeHeader.Dimensions.StatusBarHeight else 0.dp,
                 animationSpec = tween(customizingAnimationDuration),
                 label = "animateQSSceneTopPaddingAsState",
             )

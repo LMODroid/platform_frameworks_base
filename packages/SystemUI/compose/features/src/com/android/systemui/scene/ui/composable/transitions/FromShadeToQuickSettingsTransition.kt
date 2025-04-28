@@ -23,16 +23,14 @@ fun TransitionBuilder.shadeToQuickSettingsTransition(durationScale: Double = 1.0
     translate(Notifications.Elements.NotificationScrim, Edge.Bottom)
     timestampRange(endMillis = 83) { fade(QuickSettings.Elements.FooterActions) }
 
-    translate(
-        ShadeHeader.Elements.CollapsedContentStart,
-        y = ShadeHeader.Dimensions.CollapsedHeight,
-    )
-    translate(ShadeHeader.Elements.CollapsedContentEnd, y = ShadeHeader.Dimensions.CollapsedHeight)
+    val translationY = ShadeHeader.Dimensions.CollapsedHeightForTransitions
+    translate(ShadeHeader.Elements.CollapsedContentStart, y = translationY)
+    translate(ShadeHeader.Elements.CollapsedContentEnd, y = translationY)
     translate(
         ShadeHeader.Elements.ExpandedContent,
-        y = -(ShadeHeader.Dimensions.ExpandedHeight - ShadeHeader.Dimensions.CollapsedHeight),
+        y = -(ShadeHeader.Dimensions.ExpandedHeight - translationY),
     )
-    translate(ShadeHeader.Elements.ShadeCarrierGroup, y = -ShadeHeader.Dimensions.CollapsedHeight)
+    translate(ShadeHeader.Elements.ShadeCarrierGroup, y = -translationY)
 
     fractionRange(end = .14f) {
         fade(ShadeHeader.Elements.CollapsedContentStart)

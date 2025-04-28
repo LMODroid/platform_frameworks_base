@@ -24,17 +24,16 @@ import com.android.systemui.qs.ui.composable.QuickSettings
 import com.android.systemui.shade.ui.composable.ShadeHeader
 import kotlin.time.Duration.Companion.milliseconds
 
-fun TransitionBuilder.toQuickSettingsTransition(
-    durationScale: Double = 1.0,
-) {
+fun TransitionBuilder.toQuickSettingsTransition(durationScale: Double = 1.0) {
     spec = tween(durationMillis = (DefaultDuration * durationScale).inWholeMilliseconds.toInt())
 
+    val translationY = ShadeHeader.Dimensions.CollapsedHeightForTransitions
     translate(
         ShadeHeader.Elements.ExpandedContent,
-        y = -(ShadeHeader.Dimensions.ExpandedHeight - ShadeHeader.Dimensions.CollapsedHeight)
+        y = -(ShadeHeader.Dimensions.ExpandedHeight - translationY),
     )
-    translate(ShadeHeader.Elements.Clock, y = -ShadeHeader.Dimensions.CollapsedHeight)
-    translate(ShadeHeader.Elements.ShadeCarrierGroup, y = -ShadeHeader.Dimensions.CollapsedHeight)
+    translate(ShadeHeader.Elements.Clock, y = -translationY)
+    translate(ShadeHeader.Elements.ShadeCarrierGroup, y = -translationY)
 
     fractionRange(start = .58f) {
         fade(ShadeHeader.Elements.ExpandedContent)
