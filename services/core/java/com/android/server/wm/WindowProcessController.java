@@ -319,11 +319,6 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
     private static final int ACTIVITY_STATE_FLAG_HAS_ACTIVITY_IN_VISIBLE_TASK = 1 << 22;
     private static final int ACTIVITY_STATE_FLAG_MASK_MIN_TASK_LAYER = 0x0000ffff;
 
-    private static final int ACTIVITY_STATE_VISIBLE =
-            com.android.window.flags.Flags.useVisibleRequestedForProcessTracker()
-                    ? ACTIVITY_STATE_FLAG_IS_VISIBLE
-                    : ACTIVITY_STATE_FLAG_IS_VISIBLE | ACTIVITY_STATE_FLAG_IS_WINDOW_VISIBLE;
-
     /**
      * The state for oom-adjustment calculation. The higher 16 bits are the activity states, and the
      * lower 16 bits are the task layer rank (see {@link Task#mLayerRank}). This field is written by
@@ -1271,7 +1266,7 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
         int minTaskLayer = Integer.MAX_VALUE;
         int stateFlags = 0;
         final boolean wasResumed = hasResumedActivity();
-        final boolean wasAnyVisible = (mActivityStateFlags & ACTIVITY_STATE_VISIBLE) != 0;
+        final boolean wasAnyVisible = (mActivityStateFlags & ACTIVITY_STATE_FLAG_IS_VISIBLE) != 0;
         for (int i = mActivities.size() - 1; i >= 0; i--) {
             final ActivityRecord r = mActivities.get(i);
             if (r.isVisible()) {
@@ -1301,8 +1296,7 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
                     bestInvisibleState = PAUSING;
                     // Treat PAUSING as visible in case the next activity in the same process has
                     // not yet been set as visible-requested.
-                    if (com.android.window.flags.Flags.useVisibleRequestedForProcessTracker()
-                            && r.isVisible()) {
+                    if (r.isVisible()) {
                         stateFlags |= ACTIVITY_STATE_FLAG_IS_VISIBLE;
                     }
                 } else if (state == PAUSED) {
@@ -1340,7 +1334,7 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
         }
         mActivityStateFlags = stateFlags;
 
-        final boolean anyVisible = (stateFlags & ACTIVITY_STATE_VISIBLE) != 0;
+        final boolean anyVisible = (stateFlags & ACTIVITY_STATE_FLAG_IS_VISIBLE) != 0;
         if (!wasAnyVisible && anyVisible) {
             mAtm.mVisibleActivityProcessTracker.onAnyActivityVisible(this);
             mAtm.mWindowManager.onProcessActivityVisibilityChanged(mUid, true /*visible*/);
