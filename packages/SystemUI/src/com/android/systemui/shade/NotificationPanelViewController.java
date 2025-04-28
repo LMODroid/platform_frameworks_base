@@ -3327,16 +3327,19 @@ public final class NotificationPanelViewController implements
             boolean isExpanded = isExpanded();
             mShadeExpansionStateManager.onPanelExpansionChanged(
                     mExpandedFraction, isExpanded, isTracking());
-            mQsController.setPanelExpanded(isExpanded);
+            mQsController.setPanelExpanded(isExpandedWithoutHeadsUp());
         }
         updateVisibility();
     }
 
     @Override
     public boolean isExpanded() {
+        return isExpandedWithoutHeadsUp() || isPanelVisibleBecauseOfHeadsUp();
+    }
+
+    private boolean isExpandedWithoutHeadsUp() {
         return mExpandedFraction > 0f
                 || mInstantExpanding
-                || isPanelVisibleBecauseOfHeadsUp()
                 || isTracking()
                 || mHeightAnimator != null
                 || isPanelVisibleBecauseScrimIsAnimatingOff()
