@@ -120,11 +120,6 @@
         <item name="android:layout_marginTop">@dimen/dialog_inter_element_margin</item>
     </style>
 
-    <style name="Widget.PackageInstaller.ProgressBar" parent="Widget.Material3.LinearProgressIndicator">
-        <item name="android:layout_marginTop">@dimen/dialog_inter_element_margin</item>
-        <item name="android:paddingVertical">4dp</item>
-    </style>
-
     <style name="Widget.PackageInstaller.ViewGroup.KeepData" parent="">
         <item name="android:layout_marginTop">@dimen/dialog_inter_element_margin</item>
     </style>
@@ -141,7 +136,4 @@
     <style name="Widget.PackageInstaller.TextView.KeepData.SubHeading" parent="@android:style/TextAppearance.DeviceDefault.Small">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
-
-
-
 </resources>

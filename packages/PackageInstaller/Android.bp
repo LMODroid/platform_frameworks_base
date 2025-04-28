@@ -55,7 +55,6 @@ java_defaults {
         "androidx.leanback_leanback",
         "androidx.lifecycle_lifecycle-extensions",
         "androidx.lifecycle_lifecycle-livedata",
-        "com.google.android.material_material",
         "kotlin-parcelize-runtime",
     ],
 

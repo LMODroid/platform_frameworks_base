@@ -23,12 +23,14 @@
 
     <include layout="@layout/app_snippet_layout" />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        style="@style/Widget.PackageInstaller.ProgressBar"
+    <ProgressBar
         android:id="@+id/progress_bar"
         android:indeterminate="true"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dialog_inter_element_margin"
+        android:paddingVertical="4dp"
+        style="?android:attr/progressBarStyleHorizontal"
         android:visibility="gone" />
 
     <TextView

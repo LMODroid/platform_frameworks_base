@@ -64,13 +64,6 @@ class UninstallLaunch : FragmentActivity(), UninstallActionListener {
         // be stale, if e.g. the app was uninstalled while the activity was destroyed.
         super.onCreate(null)
 
-        // The base theme inherits a deviceDefault theme. Applying a material style on the base
-        // theme below will enable using Material components, like the Material Progress Bar in the
-        // fragments
-        theme.applyStyle(
-            com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight,
-            /* force= */ false)
-
         fragmentManager = supportFragmentManager
         notificationManager = getSystemService(NotificationManager::class.java)
 

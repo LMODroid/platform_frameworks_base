@@ -28,14 +28,12 @@ import android.os.UserManager
 import android.provider.Settings
 import android.util.Log
 import android.view.Window
-
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-
 import com.android.packageinstaller.R
 import com.android.packageinstaller.v2.model.InstallAborted
 import com.android.packageinstaller.v2.model.InstallFailed
@@ -84,13 +82,6 @@ class InstallLaunch : FragmentActivity(), InstallActionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        // The base theme inherits a deviceDefault theme. Applying a material style on the base
-        // theme below will enable using Material components, like the Material Progress Bar in the
-        // fragments
-        theme.applyStyle(
-            com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight,
-            /* force= */ false)
-
         fragmentManager = supportFragmentManager
         appOpsManager = getSystemService(AppOpsManager::class.java)
         installRepository = InstallRepository(applicationContext)

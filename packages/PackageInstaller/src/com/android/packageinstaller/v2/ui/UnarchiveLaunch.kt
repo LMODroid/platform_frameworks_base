@@ -66,13 +66,6 @@ class UnarchiveLaunch : FragmentActivity(), UnarchiveActionListener {
         )
         super.onCreate(savedInstanceState)
 
-        // The base theme inherits a deviceDefault theme. Applying a material style on the base
-        // theme below will enable using Material components, like the Material Progress Bar in the
-        // fragments
-        theme.applyStyle(
-            com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight,
-            /* force= */ false)
-
         fragmentManager = supportFragmentManager
 
         unarchiveRepository = UnarchiveRepository(applicationContext)
