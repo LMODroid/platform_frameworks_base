@@ -15,31 +15,6 @@
   ~ limitations under the License.
   -->
 <resources>
-    <style name="AlertDialog">
-        <item name="fullDark">@empty</item>
-        <item name="topDark">@empty</item>
-        <item name="centerDark">@empty</item>
-        <item name="bottomDark">@empty</item>
-        <item name="fullBright">@empty</item>
-        <item name="topBright">@empty</item>
-        <item name="centerBright">@empty</item>
-        <item name="bottomBright">@empty</item>
-        <item name="bottomMedium">@empty</item>
-        <item name="centerMedium">@empty</item>
-        <item name="layout">@layout/alert_dialog_material</item>
-        <item name="listLayout">@layout/select_dialog_material</item>
-        <item name="progressLayout">@layout/progress_dialog_material</item>
-        <item name="horizontalProgressLayout">@layout/alert_dialog_progress_material</item>
-        <item name="listItemLayout">@layout/select_dialog_item_material</item>
-        <item name="multiChoiceItemLayout">@layout/select_dialog_multichoice_material</item>
-        <item name="singleChoiceItemLayout">@layout/select_dialog_singlechoice_material</item>
-        <item name="controllerType">@integer/config_alertDialogController</item>
-        <item name="selectionScrollOffset">@dimen/config_alertDialogSelectionScrollOffset</item>
-        <item name="needsDefaultBackgrounds">false</item>
-    </style>
-    <style name="TextAppearance">
-        <item name="textSize">16sp</item>
-    </style>
 
     <style name="Theme.PackageInstaller.AlertDialog" parent="@android:style/Theme.DeviceDefault.Light.Dialog.Alert">
         <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Button.Colored</item>
