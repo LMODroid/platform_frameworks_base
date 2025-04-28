@@ -63,6 +63,7 @@ fun BatteryWithEstimate(
                     text = it,
                     color = Color.White,
                     style = MaterialTheme.typography.bodyMediumEmphasized,
+                    maxLines = 1,
                 )
             }
         }
