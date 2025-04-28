@@ -571,6 +571,7 @@ private class AnimatedDialog(
      * configuration change) to ensure that the dialog stays full width.
      */
     private var decorViewLayoutListener: View.OnLayoutChangeListener? = null
+    private var dialogTouchInterceptorView: ViewGroup? = null
 
     private var hasInstrumentedJank = false
 
@@ -622,9 +623,13 @@ private class AnimatedDialog(
 
                 viewGroupWithBackground
             } else {
-                val (dialogContentWithBackground, decorViewLayoutListener) =
+                val (
+                    dialogContentWithBackground,
+                    dialogTouchInterceptorView,
+                    decorViewLayoutListener) =
                     dialog.maybeForceFullscreen()!!
                 this.decorViewLayoutListener = decorViewLayoutListener
+                this.dialogTouchInterceptorView = dialogTouchInterceptorView
                 dialogContentWithBackground
             }
 
@@ -804,6 +809,9 @@ private class AnimatedDialog(
                 if (hasInstrumentedJank) {
                     interactionJankMonitor.end(controller.cuj!!.cujType)
                 }
+                if (Flags.qsTileTransitionInteractionRefinement()) {
+                    dialogTouchInterceptorView?.visibility = View.GONE
+                }
             },
         )
     }
@@ -861,6 +869,12 @@ private class AnimatedDialog(
             onLaunchAnimationStart = {
                 // Remove the dim background as soon as we start the animation.
                 dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+
+                if (Flags.qsTileTransitionInteractionRefinement()) {
+                    // While collapsing the dialog with animation, allow other quick tiles to be
+                    // clickable.
+                    dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                }
             },
             onLaunchAnimationEnd = {
                 val dialogContentWithBackground = this.dialogContentWithBackground!!
@@ -969,6 +983,11 @@ private class AnimatedDialog(
                     state.visible = !state.visible
                     endController.onTransitionAnimationProgress(state, progress, linearProgress)
 
+                    if (Flags.qsTileTransitionInteractionRefinement()) {
+                        // animate touch Interceptor view
+                        updateTouchInterceptorViewConstraints(state)
+                    }
+
                     // If the dialog content is complex, its dimension might change during the
                     // launch animation. The animation end position might also change during the
                     // exit animation, for instance when locking the phone when the dialog is open.
@@ -982,6 +1001,37 @@ private class AnimatedDialog(
             }
 
         transitionAnimator.startAnimation(controller, endState, originalDialogBackgroundColor)
+    }
+
+    private fun updateTouchInterceptorViewConstraints(state: TransitionAnimator.State) {
+        dialogTouchInterceptorView?.let { view ->
+            val currentWidth = state.right - state.left
+            val currentHeight = state.bottom - state.top
+            var currentLayoutParams = view.layoutParams
+
+            if (currentLayoutParams == null) {
+                // If the view has no LayoutParams (e.g., created programmatically but not yet added
+                // to a parent,
+                // or added to a parent that didn't assign default params), create new ones.
+                // It's crucial to use the correct LayoutParams type for the view's parent.
+                currentLayoutParams = ViewGroup.MarginLayoutParams(currentWidth, currentHeight)
+            } else {
+                // Modify the existing LayoutParams
+                currentLayoutParams.width = currentWidth
+                currentLayoutParams.height = currentHeight
+            }
+
+            if (currentLayoutParams is ViewGroup.MarginLayoutParams) {
+                /**
+                 * update the left Margin and top Margin of [touchInterceptorView] to match that of
+                 * drawable during animation
+                 */
+                currentLayoutParams.leftMargin = state.left
+                currentLayoutParams.topMargin =
+                    state.top - ((view.parent as? ViewGroup)?.paddingTop ?: 0)
+            }
+            view.layoutParams = currentLayoutParams
+        }
     }
 
     private fun shouldAnimateDialogIntoSource(): Boolean {
