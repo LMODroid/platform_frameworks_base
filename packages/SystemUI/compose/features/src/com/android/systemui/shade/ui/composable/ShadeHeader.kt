@@ -155,7 +155,7 @@ object ShadeHeader {
 
         data object Weak : ChipHighlight {
             override val backgroundColor: Color
-                @Composable get() = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f)
+                @Composable get() = MaterialTheme.colorScheme.surface.copy(alpha = 0.3f)
 
             override val foregroundColor: Color
                 @Composable get() = MaterialTheme.colorScheme.onSurface
@@ -163,10 +163,10 @@ object ShadeHeader {
 
         data object Strong : ChipHighlight {
             override val backgroundColor: Color
-                @Composable get() = MaterialTheme.colorScheme.primaryContainer
+                @Composable get() = MaterialTheme.colorScheme.secondary
 
             override val foregroundColor: Color
-                @Composable get() = MaterialTheme.colorScheme.onPrimaryContainer
+                @Composable get() = MaterialTheme.colorScheme.onSecondary
         }
     }
 }
