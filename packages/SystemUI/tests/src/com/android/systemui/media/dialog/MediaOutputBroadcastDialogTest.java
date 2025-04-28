@@ -54,7 +54,9 @@ import com.android.settingslib.utils.ThreadUtils;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.SysuiTestCaseExtKt;
 import com.android.systemui.animation.DialogTransitionAnimator;
+import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.broadcast.BroadcastSender;
+import com.android.systemui.common.domain.interactor.SysUIStateDisplaysInteractor;
 import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.kosmos.Kosmos;
 import com.android.systemui.media.nearby.NearbyMediaDevicesManager;
@@ -62,6 +64,7 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.res.R;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.statusbar.notification.collection.notifcollection.CommonNotifCollection;
+import com.android.systemui.statusbar.phone.SystemUIDialogManager;
 import com.android.systemui.volume.panel.domain.interactor.VolumePanelGlobalStateInteractor;
 import com.android.systemui.volume.panel.domain.interactor.VolumePanelGlobalStateInteractorKosmosKt;
 
@@ -78,7 +81,7 @@ import java.util.List;
 
 @SmallTest
 @RunWith(AndroidJUnit4.class)
-@TestableLooper.RunWithLooper
+@TestableLooper.RunWithLooper(setAsMainLooper = true)
 public class MediaOutputBroadcastDialogTest extends SysuiTestCase {
 
     private static final String TEST_PACKAGE = "test_package";
@@ -124,6 +127,11 @@ public class MediaOutputBroadcastDialogTest extends SysuiTestCase {
 
     @Before
     public void setUp() {
+        mDependency.injectMockDependency(SystemUIDialogManager.class);
+        mDependency.injectMockDependency(SysUIStateDisplaysInteractor.class);
+        mDependency.injectMockDependency(BroadcastDispatcher.class);
+        mDependency.injectMockDependency(DialogTransitionAnimator.class);
+
         when(mLocalBluetoothManager.getProfileManager()).thenReturn(mLocalBluetoothProfileManager);
         when(mLocalBluetoothProfileManager.getLeAudioBroadcastProfile()).thenReturn(null);
         when(mLocalBluetoothProfileManager.getLeAudioBroadcastAssistantProfile()).thenReturn(null);
