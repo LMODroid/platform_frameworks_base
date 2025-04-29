@@ -1357,8 +1357,10 @@ class BackNavigationController {
         }
 
         boolean isStartingSurfaceDrawn(ActivityRecord activity) {
-            // Check whether we create windowless surface to prepare open transition
-            if (!mComposed || mOpenAnimAdaptor.mPreparedOpenTransition == null) {
+            // Check whether a windowless surface is created to prepare for the predictive
+            // back transition.
+            if (!mComposed || mOpenAnimAdaptor.mPreparedOpenTransition == null
+                    || !mOpenAnimAdaptor.mPreparedOpenTransition.isCollecting()) {
                 return false;
             }
             if (isTarget(activity, true /* open */)) {
