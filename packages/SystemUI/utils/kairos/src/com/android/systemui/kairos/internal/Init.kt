@@ -17,35 +17,42 @@
 package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.util.Maybe
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /** Performs actions once, when the reactive component is first connected to the network. */
-internal class Init<out A>(val name: String?, private val block: InitScope.() -> A) {
+internal class Init<out A>(val name: String?, initBlock: InitScope.() -> A) {
+
+    private var block: (InitScope.() -> A)? = initBlock
 
     /**
      * Stores the result after initialization, as well as the id of the [Network] it's been
      * initialized with.
      */
-    private val cache = CompletableLazy<Pair<Any, A>>()
+    private val cache = CompletableLazy<Initialized<A>>()
 
-    fun connect(evalScope: InitScope): A =
-        if (cache.isInitialized()) {
+    fun connect(evalScope: InitScope): A {
+        val block = block
+        if (block == null) {
             // Read from cache
             val (networkId, result) = cache.value
             check(networkId == evalScope.networkId) { "Network mismatch" }
-            result
+            return result
         } else {
             // Write to cache
-            block(evalScope).also { cache.setValue(evalScope.networkId to it) }
+            return block(evalScope).also {
+                cache.setValue(Initialized(evalScope.networkId, it))
+                this.block = null
+            }
         }
+    }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     fun getUnsafe(): Maybe<A> =
         if (cache.isInitialized()) {
-            Maybe.present(cache.value.second)
+            Maybe.present(cache.value.value)
         } else {
             Maybe.absent
         }
+
+    private data class Initialized<A>(val networkId: Any, val value: A)
 }
 
 @Suppress("NOTHING_TO_INLINE")
