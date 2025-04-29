@@ -47,8 +47,8 @@ import com.android.compose.windowsizeclass.LocalWindowSizeClass
 import com.android.mechanics.behavior.VerticalExpandContainerSpec
 import com.android.mechanics.behavior.verticalExpandContainerBackground
 import com.android.systemui.res.R
-import com.android.systemui.shade.ui.ShadeColors.notificationScrim
 import com.android.systemui.shade.ui.ShadeColors.shadePanel
+import com.android.systemui.shade.ui.ShadeColors.shadePanelScrimBehind
 import com.android.systemui.shade.ui.composable.OverlayShade.rememberShadeExpansionMotion
 
 /** Renders a lightweight shade UI container, as an overlay. */
@@ -170,7 +170,7 @@ object OverlayShade {
         val ScrimBackground: Color
             @Composable
             @ReadOnlyComposable
-            get() = Color(notificationScrim(LocalContext.current, /* blurSupported= */ true))
+            get() = Color(shadePanelScrimBehind(LocalContext.current))
 
         @Composable
         @ReadOnlyComposable

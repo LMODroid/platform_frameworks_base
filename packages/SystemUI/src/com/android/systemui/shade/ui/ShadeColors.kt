@@ -23,6 +23,7 @@ import com.android.systemui.res.R
 object ShadeColors {
     /**
      * Calculate notification shade panel color.
+     *
      * @param context Context to resolve colors.
      * @param blurSupported Whether blur is enabled (can be off due to battery saver)
      * @param withScrim Whether to composite a scrim when blur is enabled (used by legacy shade).
@@ -34,11 +35,11 @@ object ShadeColors {
             if (withScrim) {
                 ColorUtils.compositeColors(
                     shadePanelStandard(context),
-                    shadePanelScrimBehind(context))
+                    shadePanelScrimBehind(context),
+                )
             } else {
                 shadePanelStandard(context)
             }
-
         } else {
             shadePanelFallback(context)
         }
@@ -54,18 +55,20 @@ object ShadeColors {
     }
 
     @JvmStatic
-    private fun shadePanelStandard(context: Context): Int {
-        val layerAbove = context.resources.getColor(
-            com.android.internal.R.color.shade_panel_fg, context.theme)
-        val layerBelow = context.resources.getColor(
-            com.android.internal.R.color.shade_panel_bg, context.theme)
-        return ColorUtils.compositeColors(layerAbove, layerBelow)
+    fun shadePanelScrimBehind(context: Context): Int {
+        return context.resources.getColor(
+            com.android.internal.R.color.shade_panel_scrim,
+            context.theme,
+        )
     }
 
     @JvmStatic
-    private fun shadePanelScrimBehind(context: Context): Int {
-        return context.resources.getColor(
-            com.android.internal.R.color.shade_panel_scrim, context.theme)
+    private fun shadePanelStandard(context: Context): Int {
+        val layerAbove =
+            context.resources.getColor(com.android.internal.R.color.shade_panel_fg, context.theme)
+        val layerBelow =
+            context.resources.getColor(com.android.internal.R.color.shade_panel_bg, context.theme)
+        return ColorUtils.compositeColors(layerAbove, layerBelow)
     }
 
     @JvmStatic
