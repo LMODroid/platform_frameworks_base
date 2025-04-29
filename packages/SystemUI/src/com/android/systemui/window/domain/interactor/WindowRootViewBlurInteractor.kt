@@ -28,7 +28,6 @@ import com.android.systemui.window.data.repository.BlurAppliedListener
 import com.android.systemui.window.data.repository.WindowRootViewBlurRepository
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -47,17 +46,25 @@ class WindowRootViewBlurInteractor
 @Inject
 constructor(
     @Application private val applicationScope: CoroutineScope,
-    private val keyguardInteractor: KeyguardInteractor,
+    keyguardInteractor: KeyguardInteractor,
     keyguardTransitionInteractor: KeyguardTransitionInteractor,
     private val communalInteractor: CommunalInteractor,
     private val repository: WindowRootViewBlurRepository,
 ) {
-    private var isBouncerTransitionInProgress: StateFlow<Boolean> =
+    private var isPrimaryBouncerVisible: StateFlow<Boolean> =
         if (Flags.bouncerUiRevamp()) {
-            keyguardTransitionInteractor
-                .transitionValue(PRIMARY_BOUNCER)
-                .map { it > 0f }
-                .distinctUntilChanged()
+            combine(
+                    keyguardInteractor.primaryBouncerShowing,
+                    keyguardTransitionInteractor
+                        .transitionValue(PRIMARY_BOUNCER)
+                        .map { it > 0f }
+                        .distinctUntilChanged(),
+                ) { bouncerShowing, bouncerTransitionInProgress ->
+                    // We need to check either of these because they are two different sources of
+                    // truth, primaryBouncerShowing changes early to true/false, but blur is
+                    // coordinated by the transition fraction.
+                    bouncerShowing || bouncerTransitionInProgress
+                }
                 .stateIn(applicationScope, SharingStarted.Eagerly, false)
         } else {
             MutableStateFlow(false)
@@ -89,8 +96,8 @@ constructor(
     val blurRadiusRequestedByShade: StateFlow<Int> = repository.blurRequestedByShade.asStateFlow()
 
     /**
-     * Method that requests blur to be applied on window root view. It is applied only when other
-     * blurs are not applied.
+     * Requests blur to be applied on the window root view. It is applied only when other blurs are
+     * not applied.
      *
      * This method is present to temporarily support the blur for notification shade, ideally shade
      * should expose state that is used by this interactor to determine the blur that has to be
@@ -99,27 +106,18 @@ constructor(
      * @return whether the request for blur was processed or not.
      */
     fun requestBlurForShade(blurRadius: Int): Boolean {
-        // We need to check either of these because they are two different sources of truth,
-        // primaryBouncerShowing changes early to true/false, but blur is
-        // coordinated by transition value.
-        if (isBouncerTransitionInProgress()) {
+        if (isPrimaryBouncerVisible.value) {
+            Log.d(TAG, "requestBlurForShade rejected, bouncer is visible.")
             return false
         }
-        if (isGlanceableHubActive()) {
+        if (communalInteractor.isCommunalBlurring.value) {
+            Log.d(TAG, "requestBlurForShade rejected, glanceable hub is active.")
             return false
         }
-        Log.d(TAG, "requestingBlurForShade for $blurRadius")
+        Log.d(TAG, "requestingBlurForShade for radius=$blurRadius")
         repository.blurRequestedByShade.value = blurRadius
         return true
     }
-
-    private fun isGlanceableHubActive() = communalInteractor.isCommunalBlurring.value
-
-    private fun isBouncerTransitionInProgress() =
-        keyguardInteractor.primaryBouncerShowing.value || isBouncerTransitionInProgress.value
-
-    private fun Flow<Boolean>.or(anotherFlow: Flow<Boolean>): Flow<Boolean> =
-        this.combine(anotherFlow) { a, b -> a || b }
 
     companion object {
         const val TAG = "WindowRootViewBlurInteractor"

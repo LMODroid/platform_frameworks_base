@@ -18,6 +18,7 @@ package com.android.systemui.notifications.ui.viewmodel
 
 import androidx.compose.runtime.getValue
 import com.android.app.tracing.coroutines.launchTraced as launch
+import com.android.systemui.Flags
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.media.controls.domain.pipeline.interactor.MediaCarouselInteractor
@@ -27,6 +28,7 @@ import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel
 import com.android.systemui.statusbar.disableflags.domain.interactor.DisableFlagsInteractor
 import com.android.systemui.statusbar.notification.stack.ui.viewmodel.NotificationsPlaceholderViewModel
 import com.android.systemui.utils.coroutines.flow.flatMapLatestConflated
+import com.android.systemui.window.domain.interactor.WindowRootViewBlurInteractor
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.awaitCancellation
@@ -50,6 +52,7 @@ constructor(
     private val shadeInteractor: ShadeInteractor,
     disableFlagsInteractor: DisableFlagsInteractor,
     mediaCarouselInteractor: MediaCarouselInteractor,
+    windowRootViewBlurInteractor: WindowRootViewBlurInteractor,
 ) : ExclusiveActivatable() {
 
     private val hydrator = Hydrator("NotificationsShadeOverlayContentViewModel.hydrator")
@@ -67,6 +70,24 @@ constructor(
                     } else {
                         flowOf(false)
                     }
+                },
+        )
+
+    /**
+     * Whether the shade container transparency effect should be enabled (`true`), or whether to
+     * render a fully-opaque shade container (`false`).
+     */
+    val isTransparencyEnabled: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "transparencyEnabled",
+            initialValue =
+                Flags.notificationShadeBlur() &&
+                    windowRootViewBlurInteractor.isBlurCurrentlySupported.value,
+            source =
+                if (Flags.notificationShadeBlur()) {
+                    windowRootViewBlurInteractor.isBlurCurrentlySupported
+                } else {
+                    flowOf(false)
                 },
         )
 

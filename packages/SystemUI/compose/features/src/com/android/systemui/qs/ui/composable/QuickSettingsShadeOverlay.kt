@@ -149,6 +149,7 @@ constructor(
             OverlayShade(
                 panelElement = QuickSettingsShade.Elements.Panel,
                 alignmentOnWideScreens = Alignment.TopEnd,
+                enableTransparency = quickSettingsContainerViewModel.isTransparencyEnabled,
                 onScrimClicked = contentViewModel::onScrimClicked,
                 header = {
                     OverlayShadeHeader(
@@ -284,7 +285,8 @@ fun ContentScope.QuickSettingsLayout(
                     containerColors =
                         ContainerColors(
                             idleColor = Color.Transparent,
-                            mirrorColor = OverlayShade.Colors.PanelBackground,
+                            mirrorColor =
+                                OverlayShade.Colors.panelBackground(viewModel.isTransparencyEnabled),
                         ),
                     modifier = Modifier.fillMaxWidth(),
                 )

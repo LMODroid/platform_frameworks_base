@@ -20,6 +20,7 @@ import android.content.Context
 import android.media.AudioManager
 import androidx.compose.runtime.getValue
 import com.android.settingslib.volume.shared.model.AudioStream
+import com.android.systemui.Flags
 import com.android.systemui.brightness.ui.viewmodel.BrightnessSliderViewModel
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
@@ -37,12 +38,14 @@ import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel
 import com.android.systemui.volume.panel.component.volume.domain.model.SliderType
 import com.android.systemui.volume.panel.component.volume.slider.ui.viewmodel.AudioStreamSliderViewModel
+import com.android.systemui.window.domain.interactor.WindowRootViewBlurInteractor
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import javax.inject.Named
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 class QuickSettingsContainerViewModel
@@ -58,12 +61,31 @@ constructor(
     val editModeViewModel: EditModeViewModel,
     val detailsViewModel: DetailsViewModel,
     toolbarViewModelFactory: ToolbarViewModel.Factory,
+    windowRootViewBlurInteractor: WindowRootViewBlurInteractor,
     mediaCarouselInteractor: MediaCarouselInteractor,
     val mediaCarouselController: MediaCarouselController,
     @Named(MediaModule.QS_PANEL) val mediaHost: MediaHost,
 ) : ExclusiveActivatable() {
 
     private val hydrator = Hydrator("QuickSettingsContainerViewModel.hydrator")
+
+    /**
+     * Whether the shade container transparency effect should be enabled (`true`), or whether to
+     * render a fully-opaque shade container (`false`).
+     */
+    val isTransparencyEnabled: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "transparencyEnabled",
+            initialValue =
+                Flags.notificationShadeBlur() &&
+                    windowRootViewBlurInteractor.isBlurCurrentlySupported.value,
+            source =
+                if (Flags.notificationShadeBlur()) {
+                    windowRootViewBlurInteractor.isBlurCurrentlySupported
+                } else {
+                    flowOf(false)
+                },
+        )
 
     val brightnessSliderViewModel =
         brightnessSliderViewModelFactory.create(supportsBrightnessMirroring)

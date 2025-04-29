@@ -42,10 +42,10 @@ import androidx.compose.ui.unit.Dp
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.LowestZIndexContentPicker
+import com.android.compose.modifiers.thenIf
 import com.android.compose.windowsizeclass.LocalWindowSizeClass
 import com.android.mechanics.behavior.VerticalExpandContainerSpec
 import com.android.mechanics.behavior.verticalExpandContainerBackground
-import com.android.systemui.Flags
 import com.android.systemui.res.R
 import com.android.systemui.shade.ui.ShadeColors.notificationScrim
 import com.android.systemui.shade.ui.ShadeColors.shadePanel
@@ -56,6 +56,7 @@ import com.android.systemui.shade.ui.composable.OverlayShade.rememberShadeExpans
 fun ContentScope.OverlayShade(
     panelElement: ElementKey,
     alignmentOnWideScreens: Alignment,
+    enableTransparency: Boolean,
     onScrimClicked: () -> Unit,
     modifier: Modifier = Modifier,
     header: @Composable () -> Unit,
@@ -63,17 +64,18 @@ fun ContentScope.OverlayShade(
 ) {
     val isFullWidth = isFullWidthShade()
     Box(modifier) {
-        Scrim(onClicked = onScrimClicked)
+        Scrim(showBackgroundColor = enableTransparency, onClicked = onScrimClicked)
 
         Box(
             modifier = Modifier.fillMaxSize().panelContainerPadding(isFullWidth),
             contentAlignment = if (isFullWidth) Alignment.TopCenter else alignmentOnWideScreens,
         ) {
             Panel(
-                modifier = Modifier
-                    .overscroll(verticalOverscrollEffect)
-                    .element(panelElement)
-                    .panelWidth(isFullWidth),
+                enableTransparency = enableTransparency,
+                modifier =
+                    Modifier.overscroll(verticalOverscrollEffect)
+                        .element(panelElement)
+                        .panelWidth(isFullWidth),
                 header = header.takeIf { isFullWidth },
                 content = content,
             )
@@ -86,19 +88,25 @@ fun ContentScope.OverlayShade(
 }
 
 @Composable
-private fun ContentScope.Scrim(onClicked: () -> Unit, modifier: Modifier = Modifier) {
+private fun ContentScope.Scrim(
+    showBackgroundColor: Boolean,
+    onClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val scrimBackgroundColor = OverlayShade.Colors.ScrimBackground
     Spacer(
         modifier =
             modifier
                 .element(OverlayShade.Elements.Scrim)
                 .fillMaxSize()
-                .background(OverlayShade.Colors.ScrimBackground)
+                .thenIf(showBackgroundColor) { Modifier.background(scrimBackgroundColor) }
                 .clickable(onClick = onClicked, interactionSource = null, indication = null)
     )
 }
 
 @Composable
 private fun ContentScope.Panel(
+    enableTransparency: Boolean,
     modifier: Modifier = Modifier,
     header: (@Composable () -> Unit)?,
     content: @Composable () -> Unit,
@@ -108,7 +116,7 @@ private fun ContentScope.Panel(
             modifier
                 .disableSwipesWhenScrolling()
                 .verticalExpandContainerBackground(
-                    backgroundColor = OverlayShade.Colors.PanelBackground,
+                    backgroundColor = OverlayShade.Colors.panelBackground(enableTransparency),
                     spec = rememberShadeExpansionMotion(isFullWidthShade()),
                 )
     ) {
@@ -162,21 +170,19 @@ object OverlayShade {
         val ScrimBackground: Color
             @Composable
             @ReadOnlyComposable
-            get() =
-                if (Flags.notificationShadeBlur()) {
-                    Color(notificationScrim(LocalContext.current, /* blurSupported= */ true))
-                } else {
-                    Color.Transparent
-                }
+            get() = Color(notificationScrim(LocalContext.current, /* blurSupported= */ true))
 
-        val PanelBackground: Color
-            @Composable
-            @ReadOnlyComposable
-            get() = Color(shadePanel(
-                context = LocalContext.current,
-                blurSupported = Flags.notificationShadeBlur(),
-                withScrim = false
-            ))
+        @Composable
+        @ReadOnlyComposable
+        fun panelBackground(transparencyEnabled: Boolean): Color {
+            return Color(
+                shadePanel(
+                    context = LocalContext.current,
+                    blurSupported = transparencyEnabled,
+                    withScrim = false,
+                )
+            )
+        }
     }
 
     object Dimensions {
