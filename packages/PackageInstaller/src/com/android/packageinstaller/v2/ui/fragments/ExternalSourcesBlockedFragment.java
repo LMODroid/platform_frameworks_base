@@ -36,6 +36,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.android.packageinstaller.R;
 import com.android.packageinstaller.v2.model.InstallUserActionRequired;
+import com.android.packageinstaller.v2.model.PackageUtil;
 import com.android.packageinstaller.v2.model.PackageUtil.AppSnippet;
 import com.android.packageinstaller.v2.ui.InstallActionListener;
 
@@ -99,8 +100,16 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
         customMessage.setVisibility(View.VISIBLE);
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
-        mDialog = new AlertDialog.Builder(
-                    requireContext(), R.style.Theme_MaterialAlertDialog_Variant)
+
+        int themeResId = 0;
+        // The base theme inherits a deviceDefault theme. Applying a material style on the base
+        // theme to support the material design.
+        if (PackageUtil.isMaterialDesignEnabled(requireContext())) {
+            Log.d(LOG_TAG, "Apply material design");
+            themeResId = R.style.Theme_MaterialAlertDialog_Variant;
+        }
+
+        mDialog = new AlertDialog.Builder(requireContext(), themeResId)
                 .setTitle(R.string.title_unknown_source_blocked)
                 .setView(dialogView)
                 .setPositiveButton(R.string.external_sources_settings,

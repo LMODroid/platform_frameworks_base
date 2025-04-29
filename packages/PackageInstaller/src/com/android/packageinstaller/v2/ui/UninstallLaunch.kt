@@ -30,6 +30,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 
 import com.android.packageinstaller.R
+import com.android.packageinstaller.v2.model.PackageUtil
 import com.android.packageinstaller.v2.model.PackageUtil.localLogv
 import com.android.packageinstaller.v2.model.UninstallAborted
 import com.android.packageinstaller.v2.model.UninstallFailed
@@ -67,8 +68,10 @@ class UninstallLaunch : FragmentActivity(), UninstallActionListener {
 
         // The base theme inherits a deviceDefault theme. Applying a material style on the base
         // theme to support the material design.
-        Log.d(LOG_TAG, "Apply material design")
-        theme.applyStyle(R.style.Theme_AlertDialogActivity_Material, /* force= */ true)
+        if (PackageUtil.isMaterialDesignEnabled(this)) {
+            Log.d(LOG_TAG, "Apply material design")
+            theme.applyStyle(R.style.Theme_AlertDialogActivity_Material, /* force= */ true)
+        }
 
         fragmentManager = supportFragmentManager
         notificationManager = getSystemService(NotificationManager::class.java)

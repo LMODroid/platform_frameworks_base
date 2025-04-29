@@ -31,6 +31,7 @@ import androidx.fragment.app.DialogFragment;
 import com.android.packageinstaller.R;
 import com.android.packageinstaller.v2.model.InstallStage;
 import com.android.packageinstaller.v2.model.InstallUserActionRequired;
+import com.android.packageinstaller.v2.model.PackageUtil;
 import com.android.packageinstaller.v2.ui.InstallActionListener;
 
 /**
@@ -60,8 +61,15 @@ public class AnonymousSourceFragment extends DialogFragment {
         customMessage.setText(R.string.message_anonymous_source_warning);
         customMessage.setVisibility(View.VISIBLE);
 
-        mDialog = new AlertDialog.Builder(
-                requireContext(), R.style.Theme_MaterialAlertDialog_Variant)
+        int themeResId = 0;
+        // The base theme inherits a deviceDefault theme. Applying a material style on the base
+        // theme to support the material design.
+        if (PackageUtil.isMaterialDesignEnabled(requireContext())) {
+            Log.d(LOG_TAG, "Apply material design");
+            themeResId = R.style.Theme_MaterialAlertDialog_Variant;
+        }
+
+        mDialog = new AlertDialog.Builder(requireContext(), themeResId)
                 .setTitle(R.string.title_anonymous_source_warning)
                 .setView(dialogView)
                 .setPositiveButton(R.string.button_continue,

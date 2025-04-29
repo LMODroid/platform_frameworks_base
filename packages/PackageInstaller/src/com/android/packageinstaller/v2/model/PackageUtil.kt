@@ -499,6 +499,16 @@ object PackageUtil {
     }
 
     /**
+    * @return If the device supports the material design in the package installer
+     */
+    @JvmStatic
+    fun isMaterialDesignEnabled(context: Context): Boolean {
+        return android.content.pm.Flags.usePiaV2()
+                && context.resources.getBoolean(
+            android.R.bool.config_enableMaterialDesignInPackageInstaller)
+    }
+
+    /**
      * The class to hold an incoming package's icon and label.
      * See [getAppSnippet]
      */

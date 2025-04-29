@@ -42,6 +42,7 @@ import com.android.packageinstaller.v2.model.InstallRepository
 import com.android.packageinstaller.v2.model.InstallStage
 import com.android.packageinstaller.v2.model.InstallSuccess
 import com.android.packageinstaller.v2.model.InstallUserActionRequired
+import com.android.packageinstaller.v2.model.PackageUtil
 import com.android.packageinstaller.v2.model.PackageUtil.localLogv
 import com.android.packageinstaller.v2.ui.fragments.AnonymousSourceFragment
 import com.android.packageinstaller.v2.ui.fragments.ExternalSourcesBlockedFragment
@@ -85,8 +86,10 @@ class InstallLaunch : FragmentActivity(), InstallActionListener {
 
         // The base theme inherits a deviceDefault theme. Applying a material style on the base
         // theme to support the material design.
-        Log.d(LOG_TAG, "Apply material design")
-        theme.applyStyle(R.style.Theme_AlertDialogActivity_Material, /* force= */ true)
+        if (PackageUtil.isMaterialDesignEnabled(this)) {
+            Log.d(LOG_TAG, "Apply material design")
+            theme.applyStyle(R.style.Theme_AlertDialogActivity_Material, /* force= */ true)
+        }
 
         fragmentManager = supportFragmentManager
         appOpsManager = getSystemService(AppOpsManager::class.java)
