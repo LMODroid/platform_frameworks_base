@@ -29,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.compose.theme.PlatformTheme
 import com.android.systemui.compose.modifiers.sysuiResTag
+import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.UnifiedBattery
@@ -55,6 +56,10 @@ object UnifiedBatteryViewBinder {
                     )
                     setContent {
                         PlatformTheme {
+                            val viewModel =
+                                rememberViewModel(traceName = "UnifiedBattery") {
+                                    viewModelFactory.create()
+                                }
                             val isDark by
                                 isAreaDark.collectAsStateWithLifecycle(IsAreaDark { true })
                             val height =
@@ -64,7 +69,7 @@ object UnifiedBatteryViewBinder {
                                     Modifier.height(height)
                                         .wrapContentWidth()
                                         .sysuiResTag(BatteryViewModel.TEST_TAG),
-                                viewModelFactory = viewModelFactory,
+                                viewModel = viewModel,
                                 isDarkProvider = { isDark },
                             )
                         }

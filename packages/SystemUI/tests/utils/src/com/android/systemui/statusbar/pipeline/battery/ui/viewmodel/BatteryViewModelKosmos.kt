@@ -24,11 +24,7 @@ val Kosmos.unifiedBatteryViewModel by
     Kosmos.Fixture { UnifiedBatteryViewModel(batteryInteractor, testableContext) }
 
 val Kosmos.unifiedBatteryViewModelFactory by
-    Kosmos.Fixture {
-        object : UnifiedBatteryViewModel.Factory {
-            override fun create(): UnifiedBatteryViewModel = unifiedBatteryViewModel
-        }
-    }
+    Kosmos.Fixture { UnifiedBatteryViewModel.Factory { unifiedBatteryViewModel } }
 
 val Kosmos.batteryWithPercentViewModel by
     Kosmos.Fixture { BatteryNextToPercentViewModel(batteryInteractor, testableContext) }

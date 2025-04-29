@@ -35,7 +35,7 @@ abstract class ExclusiveActivatable : Activatable {
 
     final override suspend fun activate(): Nothing {
         val allowed = _isActive.compareAndSet(false, true)
-        check(allowed) { "Cannot activate an already active ExclusiveActivatable!" }
+        check(allowed) { "Cannot activate an already active ExclusiveActivatable! $this" }
 
         try {
             onActivated()

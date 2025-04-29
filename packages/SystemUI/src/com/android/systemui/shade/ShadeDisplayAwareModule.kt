@@ -51,6 +51,8 @@ import com.android.systemui.statusbar.notification.stack.NotificationStackRebind
 import com.android.systemui.statusbar.notification.stack.NotificationStackRebindingHiderImpl
 import com.android.systemui.statusbar.phone.ConfigurationControllerImpl
 import com.android.systemui.statusbar.phone.ConfigurationForwarder
+import com.android.systemui.statusbar.phone.domain.interactor.ShadeDarkIconInteractor
+import com.android.systemui.statusbar.phone.domain.interactor.ShadeDarkIconInteractorImpl
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.utils.windowmanager.WindowManagerProvider
 import com.android.systemui.utils.windowmanager.WindowManagerUtils
@@ -304,6 +306,11 @@ object ShadeDisplayAwareWithShadeWindowModule {
     fun bindNotificationStackRebindingHider(
         impl: NotificationStackRebindingHiderImpl
     ): NotificationStackRebindingHider = impl
+
+    @Provides
+    @SysUISingleton
+    fun bindShadeDarkIconInteractor(impl: ShadeDarkIconInteractorImpl): ShadeDarkIconInteractor =
+        impl
 }
 
 /**

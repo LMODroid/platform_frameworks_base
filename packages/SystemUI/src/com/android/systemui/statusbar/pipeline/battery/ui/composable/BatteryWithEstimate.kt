@@ -51,7 +51,7 @@ fun BatteryWithEstimate(
 
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         UnifiedBattery(
-            viewModelFactory = viewModelFactory,
+            viewModel = viewModel,
             isDarkProvider = isDarkProvider,
             modifier =
                 Modifier.height(batteryHeight).align(Alignment.CenterVertically).wrapContentWidth(),
