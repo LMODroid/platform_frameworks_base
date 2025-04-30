@@ -156,6 +156,8 @@ public class BackNavigationControllerTests extends WindowTestsBase {
     public void backTypeCrossTaskWhenBackToPreviousTask() {
         Task taskA = createTask(mDefaultDisplay);
         ActivityRecord recordA = createActivityRecord(taskA);
+        newWindowBuilder("windowA", TYPE_BASE_APPLICATION).setWindowToken(
+                recordA).build();
         Mockito.doNothing().when(recordA).reparentSurfaceControl(any(), any());
 
         final Task topTask = createTopTaskWithActivity();
@@ -206,6 +208,14 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         backNavigationInfo = startBackNavigation();
         assertThat(typeToString(backNavigationInfo.getType()))
                 .isEqualTo(typeToString(BackNavigationInfo.TYPE_CROSS_TASK));
+
+        // Reset drawing status to test no window activity.
+        backNavigationInfo.onBackNavigationFinished(false);
+        mBackNavigationController.clearBackAnimations(true);
+        doReturn(null).when(recordA).findMainWindow();
+        backNavigationInfo = startBackNavigation();
+        assertThat(typeToString(backNavigationInfo.getType()))
+                .isEqualTo(typeToString(BackNavigationInfo.TYPE_CALLBACK));
     }
 
     @Test
@@ -301,6 +311,14 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         backNavigationInfo.onBackNavigationFinished(false);
         mBackNavigationController.clearBackAnimations(true);
         doReturn(false).when(testCase.recordBack).hasProcess();
+        backNavigationInfo = startBackNavigation();
+        assertThat(typeToString(backNavigationInfo.getType()))
+                .isEqualTo(typeToString(BackNavigationInfo.TYPE_CALLBACK));
+
+        // reset drawing status, test previous activity has no window.
+        backNavigationInfo.onBackNavigationFinished(false);
+        mBackNavigationController.clearBackAnimations(true);
+        doReturn(null).when(testCase.recordBack).findMainWindow();
         backNavigationInfo = startBackNavigation();
         assertThat(typeToString(backNavigationInfo.getType()))
                 .isEqualTo(typeToString(BackNavigationInfo.TYPE_CALLBACK));

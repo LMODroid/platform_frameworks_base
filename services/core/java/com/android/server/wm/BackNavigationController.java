@@ -345,6 +345,10 @@ class BackNavigationController {
                 // Skip if one of previous activity has no process. Restart process can be slow, and
                 // the final hierarchy could be different.
                 backType = BackNavigationInfo.TYPE_CALLBACK;
+            } else if (!allActivitiesHaveWindow(prevActivities)) {
+                // Skip if one of previous activity doesn't has window. Predictive back animation
+                // cannot resume previous activity, so nothing will be shown.
+                backType = BackNavigationInfo.TYPE_CALLBACK;
             } else if (prevActivities.size() > 0
                     && requestOverride == SystemOverrideOnBackInvokedCallback.OVERRIDE_UNDEFINED) {
                 if ((!isOccluded || isAllActivitiesCanShowWhenLocked(prevActivities))
@@ -416,7 +420,8 @@ class BackNavigationController {
                     final Task currParent = currentTask.getParent().asTask();
                     if ((prevTask.inMultiWindowMode() && prevParent != currParent)
                             // Do not animate to translucent task, it could be trampoline.
-                            || hasTranslucentActivity(currentActivity, prevActivities)) {
+                            || hasTranslucentActivity(currentActivity, prevActivities)
+                            || !allActivitiesHaveWindow(prevActivities)) {
                         backType = BackNavigationInfo.TYPE_CALLBACK;
                     } else {
                         removedWindowContainer = prevTask;
@@ -644,6 +649,17 @@ class BackNavigationController {
         for (int i = prevActivities.size() - 1; i >= 0; --i) {
             final ActivityRecord test = prevActivities.get(i);
             if (!test.hasProcess()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean allActivitiesHaveWindow(
+            @NonNull ArrayList<ActivityRecord> prevActivities) {
+        for (int i = prevActivities.size() - 1; i >= 0; --i) {
+            final ActivityRecord test = prevActivities.get(i);
+            if (test.findMainWindow() == null) {
                 return false;
             }
         }
