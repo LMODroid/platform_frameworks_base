@@ -559,6 +559,8 @@ private fun BatteryIcon(
     val inverseColor =
         Utils.getColorAttrDefaultColor(themedContext, android.R.attr.textColorPrimaryInverse)
 
+    val cutoutLocation = LocalDisplayCutout.current.location
+
     AndroidView(
         factory = { context ->
             val batteryIcon = BatteryMeterView(context, null)
@@ -577,10 +579,12 @@ private fun BatteryIcon(
             batteryIcon
         },
         update = { batteryIcon ->
-            // TODO(b/298525212): use MODE_ESTIMATE in collapsed view when the screen
-            //  has no center cutout. See [QsBatteryModeController.getBatteryMode]
             batteryIcon.setPercentShowMode(
-                if (useExpandedFormat) BatteryMeterView.MODE_ESTIMATE else BatteryMeterView.MODE_ON
+                if (useExpandedFormat || cutoutLocation != CutoutLocation.CENTER) {
+                    BatteryMeterView.MODE_ESTIMATE
+                } else {
+                    BatteryMeterView.MODE_ON
+                }
             )
             // TODO(b/397223606): Get the actual spec for this.
             batteryIcon.updateColors(
