@@ -16,7 +16,6 @@
 
 package com.android.systemui.qs.panels.ui.compose
 
-import android.view.MotionEvent
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,8 +37,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.integerResource
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.modifiers.padding
@@ -113,6 +114,15 @@ constructor(
                     0.dp
                 }
             val contentPadding = PaddingValues(horizontal = contentPaddingValue)
+            val nestedScrollConnection =
+                remember(viewModel) {
+                    object : NestedScrollConnection {
+                        override suspend fun onPreFling(available: Velocity): Velocity {
+                            viewModel.registerSideSwipeGesture()
+                            return Velocity.Zero
+                        }
+                    }
+                }
 
             /* Use negative padding equal with value equal to content padding. That way, each page
              * layout extends to the sides, but the content is as if there was no padding. That
@@ -123,12 +133,7 @@ constructor(
                 modifier =
                     Modifier.sysuiResTag("qs_pager")
                         .padding(horizontal = { -contentPaddingValue.roundToPx() })
-                        .pointerInteropFilter { event ->
-                            if (event.actionMasked == MotionEvent.ACTION_UP) {
-                                viewModel.registerSideSwipeGesture()
-                            }
-                            false
-                        },
+                        .nestedScroll(nestedScrollConnection),
                 contentPadding = contentPadding,
                 pageSpacing = if (pages.size > 1) InterPageSpacing else 0.dp,
                 beyondViewportPageCount = 1,
