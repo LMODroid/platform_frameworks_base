@@ -116,7 +116,7 @@ class BluetoothRepositoryImplTest : SysuiTestCase() {
     fun connectedDevices_whenDeviceDisconnects_isEmpty() =
         kosmos.runTest {
             val connectedDevices by collectLastValue(underTest.connectedDevices)
-            bluetoothManager.eventManager?.let {
+            bluetoothManager.eventManager.let {
                 verify(it).registerCallback(callbackCaptor.capture())
             }
             val callback = callbackCaptor.value
@@ -156,8 +156,10 @@ class BluetoothRepositoryImplTest : SysuiTestCase() {
             whenever(cachedDevice.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
             whenever(cachedDevice2.isConnected).thenReturn(true)
             whenever(cachedDevice2.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+
             whenever(cachedBluetoothDeviceManager.cachedDevicesCopy)
                 .thenReturn(listOf(cachedDevice, cachedDevice2))
+
             callback.onConnectionStateChanged(cachedDevice, BluetoothProfile.STATE_CONNECTED)
 
             assertThat(connectedDevices).isEqualTo(listOf(cachedDevice, cachedDevice2))
@@ -199,12 +201,12 @@ class BluetoothRepositoryImplTest : SysuiTestCase() {
                 mock<CachedBluetoothDevice>().also {
                     whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_DISCONNECTED)
                 }
-            val device2 =
+            val cachedDevice2 =
                 mock<CachedBluetoothDevice>().also {
                     whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_DISCONNECTED)
                 }
 
-            val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
+            val status = fetchConnectionStatus(currentDevices = listOf(device1, cachedDevice2))
 
             assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTING)
         }
@@ -235,13 +237,13 @@ class BluetoothRepositoryImplTest : SysuiTestCase() {
                     whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
                     whenever(it.isConnected).thenReturn(false)
                 }
-            val device2 =
+            val cachedDevice2 =
                 mock<CachedBluetoothDevice>().also {
                     whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
                     whenever(it.isConnected).thenReturn(true)
                 }
 
-            val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
+            val status = fetchConnectionStatus(currentDevices = listOf(device1, cachedDevice2))
 
             assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTED)
         }
@@ -257,13 +259,13 @@ class BluetoothRepositoryImplTest : SysuiTestCase() {
                     whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
                     whenever(it.isConnected).thenReturn(false)
                 }
-            val device2 =
+            val cachedDevice2 =
                 mock<CachedBluetoothDevice>().also {
                     whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
                     whenever(it.isConnected).thenReturn(false)
                 }
 
-            val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
+            val status = fetchConnectionStatus(currentDevices = listOf(device1, cachedDevice2))
 
             // THEN the max state is DISCONNECTED
             assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_DISCONNECTED)
