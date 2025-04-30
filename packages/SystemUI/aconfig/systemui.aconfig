@@ -1865,6 +1865,17 @@ flag {
 }
 
 flag {
+  name: "shade_header_blur_font_color"
+  namespace: "systemui"
+  description: "Updates the font colors of the shade header for blur"
+  bug: "393609960"
+  is_fixed_read_only: true
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
     name: "keyboard_shortcut_helper_shortcut_customizer"
     namespace: "systemui"
     description: "An implementation of shortcut customizations through shortcut helper."
