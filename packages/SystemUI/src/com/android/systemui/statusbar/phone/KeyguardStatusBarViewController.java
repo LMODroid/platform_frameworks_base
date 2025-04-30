@@ -55,6 +55,7 @@ import com.android.systemui.battery.BatteryMeterViewController;
 import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor;
 import com.android.systemui.keyguard.ui.viewmodel.GlanceableHubToLockscreenTransitionViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.LockscreenToGlanceableHubTransitionViewModel;
 import com.android.systemui.log.core.LogLevel;
@@ -159,6 +160,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
     private final CommunalSceneInteractor mCommunalSceneInteractor;
     private final GlanceableHubToLockscreenTransitionViewModel mHubToLockscreenTransitionViewModel;
     private final LockscreenToGlanceableHubTransitionViewModel mLockscreenToHubTransitionViewModel;
+    private final KeyguardInteractor mKeyguardInteractor;
 
     private ViewGroup mSystemIconsContainer;
     private final StatusOverlayHoverListenerFactory mStatusOverlayHoverListenerFactory;
@@ -364,7 +366,8 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
             GlanceableHubToLockscreenTransitionViewModel
                     glanceableHubToLockscreenTransitionViewModel,
             LockscreenToGlanceableHubTransitionViewModel
-                    lockscreenToGlanceableHubTransitionViewModel
+                    lockscreenToGlanceableHubTransitionViewModel,
+            KeyguardInteractor keyguardInteractor
     ) {
         super(view);
         mCoroutineDispatcher = dispatcher;
@@ -397,6 +400,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
         mCommunalSceneInteractor = communalSceneInteractor;
         mHubToLockscreenTransitionViewModel = glanceableHubToLockscreenTransitionViewModel;
         mLockscreenToHubTransitionViewModel = lockscreenToGlanceableHubTransitionViewModel;
+        mKeyguardInteractor = keyguardInteractor;
 
         mFirstBypassAttempt = mKeyguardBypassController.getBypassEnabled();
         mKeyguardStateController.addCallback(
@@ -492,6 +496,9 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
                     mToGlanceableHubStatusBarAlphaConsumer, mCoroutineDispatcher);
             collectFlow(mView, mHubToLockscreenTransitionViewModel.getStatusBarAlpha(),
                     mFromGlanceableHubStatusBarAlphaConsumer, mCoroutineDispatcher);
+        }
+        if (Flags.bouncerUiRevamp()) {
+            collectFlow(mView, mKeyguardInteractor.primaryBouncerShowing, x -> updateViewState());
         }
         if (NewStatusBarIcons.isEnabled()) {
             ComposeView batteryComposeView = createAndBindComposeBattery();
@@ -666,6 +673,10 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
             newAlpha = Math.min(newAlpha, mSystemEventAnimatorAlpha);
         } else {
             mView.setTranslationX(0);
+        }
+
+        if (mKeyguardStateController.isPrimaryBouncerShowing() && Flags.bouncerUiRevamp()) {
+            newAlpha = 0.0f;
         }
 
         boolean hideForBypass =

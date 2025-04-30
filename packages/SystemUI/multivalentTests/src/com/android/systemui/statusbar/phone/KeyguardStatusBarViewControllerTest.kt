@@ -41,6 +41,7 @@ import com.android.systemui.communal.domain.interactor.communalSceneInteractor
 import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.flags.EnableSceneContainer
+import com.android.systemui.keyguard.domain.interactor.keyguardInteractor
 import com.android.systemui.keyguard.ui.viewmodel.glanceableHubToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.lockscreenToGlanceableHubTransitionViewModel
 import com.android.systemui.kosmos.Kosmos
@@ -219,6 +220,7 @@ class KeyguardStatusBarViewControllerTest : SysuiTestCase() {
             kosmos.communalSceneInteractor,
             kosmos.glanceableHubToLockscreenTransitionViewModel,
             kosmos.lockscreenToGlanceableHubTransitionViewModel,
+            kosmos.keyguardInteractor,
         )
     }
 
