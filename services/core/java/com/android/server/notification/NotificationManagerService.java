@@ -1076,6 +1076,7 @@ public class NotificationManagerService extends SystemService {
         }
 
         int oldFlags = summary.getSbn().getNotification().flags;
+        int newFlags = summaryAttr.flags != GroupHelper.FLAG_INVALID ? summaryAttr.flags : oldFlags;
 
         boolean attributesUpdated =
                 !summaryAttr.icon.sameAs(summary.getSbn().getNotification().getSmallIcon())
@@ -1085,7 +1086,7 @@ public class NotificationManagerService extends SystemService {
                         summary.getSbn().getNotification().getGroupAlertBehavior();
 
         if (notificationForceGrouping()) {
-            summary.getNotification().flags |= Notification.FLAG_SILENT;
+            newFlags |= Notification.FLAG_SILENT;
             if (!summary.getChannel().getId().equals(summaryAttr.channelId)) {
                 NotificationChannel newChannel = mPreferencesHelper.getNotificationChannel(pkg,
                         summary.getUid(), summaryAttr.channelId, false);
@@ -1096,9 +1097,8 @@ public class NotificationManagerService extends SystemService {
             }
         }
 
-        if (oldFlags != summaryAttr.flags || attributesUpdated) {
-            summary.getSbn().getNotification().flags =
-                    summaryAttr.flags != GroupHelper.FLAG_INVALID ? summaryAttr.flags : oldFlags;
+        if (oldFlags != newFlags || attributesUpdated) {
+            summary.getSbn().getNotification().flags = newFlags;
             summary.getSbn().getNotification().setSmallIcon(summaryAttr.icon);
             summary.getSbn().getNotification().color = summaryAttr.iconColor;
             summary.getSbn().getNotification().visibility = summaryAttr.visibility;
@@ -7497,8 +7497,8 @@ public class NotificationManagerService extends SystemService {
                 if (r.getSbn().isAppGroup()) {
                     // Override group key early for forced grouped notifications
                     r.setOverrideGroupKey(groupName);
+                    r.getNotification().flags |= Notification.FLAG_SILENT;
                 }
-                r.getNotification().flags |= Notification.FLAG_SILENT;
             }
 
             addAutoGroupAdjustment(r, groupName);
