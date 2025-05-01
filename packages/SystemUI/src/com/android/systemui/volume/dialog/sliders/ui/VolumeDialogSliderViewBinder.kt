@@ -69,12 +69,7 @@ constructor(
                 VolumeDialogSlider(
                     viewModel = viewModel,
                     overscrollViewModel = overscrollViewModel,
-                    hapticsViewModelFactory =
-                        if (com.android.systemui.Flags.hapticsForComposeSliders()) {
-                            hapticsViewModelFactory
-                        } else {
-                            null
-                        },
+                    hapticsViewModelFactory = hapticsViewModelFactory,
                 )
             }
         }
@@ -86,7 +81,7 @@ constructor(
 private fun VolumeDialogSlider(
     viewModel: VolumeDialogSliderViewModel,
     overscrollViewModel: VolumeDialogOverscrollViewModel,
-    hapticsViewModelFactory: SliderHapticsViewModel.Factory?,
+    hapticsViewModelFactory: SliderHapticsViewModel.Factory,
     modifier: Modifier = Modifier,
 ) {
     val colors =
@@ -128,16 +123,12 @@ private fun VolumeDialogSlider(
         colors = colors,
         interactionSource = interactionSource,
         haptics =
-            hapticsViewModelFactory?.let {
-                Haptics.Enabled(
-                    hapticsViewModelFactory = it,
-                    hapticConfigs =
-                        VolumeHapticsConfigsProvider.continuousConfigs(
-                            SliderHapticFeedbackFilter()
-                        ),
-                    orientation = Orientation.Vertical,
-                )
-            } ?: Haptics.Disabled,
+            Haptics.Enabled(
+                hapticsViewModelFactory = hapticsViewModelFactory,
+                hapticConfigs =
+                    VolumeHapticsConfigsProvider.continuousConfigs(SliderHapticFeedbackFilter()),
+                orientation = Orientation.Vertical,
+            ),
         stepDistance = 1f,
         track = { sliderState ->
             SliderTrack(

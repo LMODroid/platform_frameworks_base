@@ -18,7 +18,6 @@ package com.android.systemui.volume.panel.component.volume.slider.ui.viewmodel
 
 import android.content.Context
 import com.android.internal.logging.UiEventLogger
-import com.android.systemui.Flags
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.qualifiers.UiBackground
 import com.android.systemui.haptics.slider.SliderHapticFeedbackFilter
@@ -111,7 +110,7 @@ constructor(
     override fun toggleMuted(state: SliderState) {}
 
     override fun getSliderHapticsViewModelFactory(): SliderHapticsViewModel.Factory? =
-        if (Flags.hapticsForComposeSliders() && slider.value != SliderState.Empty) {
+        if (slider.value != SliderState.Empty) {
             hapticsViewModelFactory
         } else {
             null

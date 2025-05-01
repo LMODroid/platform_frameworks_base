@@ -147,12 +147,8 @@ constructor(
         }
     }
 
-    override fun getSliderHapticsViewModelFactory(): SliderHapticsViewModel.Factory? =
-        if (Flags.hapticsForComposeSliders() && slider.value != SliderState.Empty) {
-            hapticsViewModelFactory
-        } else {
-            null
-        }
+    override fun getSliderHapticsViewModelFactory(): SliderHapticsViewModel.Factory =
+        hapticsViewModelFactory
 
     private suspend fun AudioStreamModel.toState(
         isEnabled: Boolean,
