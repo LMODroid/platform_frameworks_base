@@ -58,7 +58,7 @@
     <string name="uninstall_application_title" msgid="4045420072401428123">"إلغاء تثبيت التطبيق"</string>
     <string name="uninstall_update_title" msgid="824411791011583031">"إزالة التحديث"</string>
     <string name="uninstall_activity_text" msgid="1928194674397770771">"<xliff:g id="ACTIVITY_NAME">%1$s</xliff:g> هو جزء من التطبيق التالي:"</string>
-    <string name="uninstall_application_text" msgid="3816830743706143980">"هل تريد إزالة هذا التطبيق؟"</string>
+    <string name="uninstall_application_text" msgid="3816830743706143980">"هل تريد إلغاء تثبيت هذا التطبيق؟"</string>
     <string name="archive_application_text" msgid="8482325710714386348">"سيتم حفظ بياناتك الشخصية."</string>
     <string name="archive_application_text_all_users" msgid="3151229641681672580">"هل تريد أرشفة هذا التطبيق لجميع المستخدمين؟ سيتم حفظ بياناتك الشخصية."</string>
     <string name="archive_application_text_current_user_work_profile" msgid="1450487362134779752">"هل تريد أرشفة هذا التطبيق في ملف العمل؟ سيتم حفظ بياناتك الشخصية."</string>
