@@ -18,11 +18,14 @@ package com.android.systemui.media.remedia.data.repository
 
 import android.content.Context
 import android.media.session.MediaController
+import androidx.compose.runtime.getValue
 import com.android.internal.logging.InstanceId
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.lifecycle.Activatable
+import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.media.controls.data.model.MediaSortKeyModel
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.remedia.data.model.MediaDataModel
@@ -30,13 +33,11 @@ import com.android.systemui.util.time.SystemClock
 import java.util.TreeMap
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 /** A repository that holds the state of current media on the device. */
-interface MediaRepository {
+interface MediaRepository : Activatable {
     /** Current sorted media sessions. */
-    val currentMedia: StateFlow<List<MediaDataModel>>
+    val currentMedia: List<MediaDataModel>
 
     /** Seek to [to], in milliseconds on the media session with the given [sessionKey]. */
     fun seek(sessionKey: InstanceId, to: Long)
@@ -51,9 +52,11 @@ class MediaRepositoryImpl
 constructor(@Application private val context: Context, private val systemClock: SystemClock) :
     MediaRepository, MediaPipelineRepository() {
 
+    private val hydrator = Hydrator(traceName = "MediaRepository.hydrator")
     private val mutableCurrentMedia: MutableStateFlow<List<MediaDataModel>> =
         MutableStateFlow(mutableListOf())
-    override val currentMedia: StateFlow<List<MediaDataModel>> = mutableCurrentMedia.asStateFlow()
+    override val currentMedia by
+        hydrator.hydratedStateOf(traceName = "currentMedia", source = mutableCurrentMedia)
 
     private var sortedMedia = TreeMap<MediaSortKeyModel, MediaDataModel>(comparator)
 
@@ -89,6 +92,10 @@ constructor(@Application private val context: Context, private val systemClock: 
 
     override fun reorderMedia() {
         mutableCurrentMedia.value = sortedMedia.values.toList()
+    }
+
+    override suspend fun activate(): Nothing {
+        hydrator.activate()
     }
 
     private fun addToSortedMedia(data: MediaData) {

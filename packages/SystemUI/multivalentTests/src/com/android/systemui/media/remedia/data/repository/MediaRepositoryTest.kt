@@ -24,14 +24,19 @@ import com.android.internal.logging.InstanceId
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.kosmos.testScope
+import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.remedia.data.model.MediaDataModel
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class MediaRepositoryTest : SysuiTestCase() {
@@ -41,6 +46,11 @@ class MediaRepositoryTest : SysuiTestCase() {
     private val session = MediaSession(context, "MediaRepositoryTestSession")
 
     private val underTest: MediaRepositoryImpl = kosmos.mediaRepository
+
+    @Before
+    fun setUp() {
+        underTest.activateIn(testScope)
+    }
 
     @Test
     fun addCurrentUserMediaEntry_activeThenInactivate() =
@@ -125,21 +135,20 @@ class MediaRepositoryTest : SysuiTestCase() {
     @Test
     fun addMediaControlPlayingThenRemote() =
         testScope.runTest {
-            val currentMedia by collectLastValue(underTest.currentMedia)
             val playingInstanceId = InstanceId.fakeInstanceId(123)
             val remoteInstanceId = InstanceId.fakeInstanceId(321)
             val playingData = createMediaData("app1", true, LOCAL, false, playingInstanceId)
             val remoteData = createMediaData("app2", true, REMOTE, false, remoteInstanceId)
 
             underTest.addCurrentUserMediaEntry(playingData)
-
             underTest.addCurrentUserMediaEntry(remoteData)
+            runCurrent()
 
-            assertThat(currentMedia?.size).isEqualTo(2)
-            assertThat(currentMedia)
+            assertThat(underTest.currentMedia.size).isEqualTo(2)
+            assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingData.toDataModel(currentMedia!![0].controller),
-                    remoteData.toDataModel(currentMedia!![1].controller),
+                    playingData.toDataModel(underTest.currentMedia[0].controller),
+                    remoteData.toDataModel(underTest.currentMedia[1].controller),
                 )
                 .inOrder()
         }
@@ -147,7 +156,6 @@ class MediaRepositoryTest : SysuiTestCase() {
     @Test
     fun switchMediaControlsPlaying() =
         testScope.runTest {
-            val currentMedia by collectLastValue(underTest.currentMedia)
             val playingInstanceId1 = InstanceId.fakeInstanceId(123)
             val playingInstanceId2 = InstanceId.fakeInstanceId(321)
             var playingData1 = createMediaData("app1", true, LOCAL, false, playingInstanceId1)
@@ -155,12 +163,13 @@ class MediaRepositoryTest : SysuiTestCase() {
 
             underTest.addCurrentUserMediaEntry(playingData1)
             underTest.addCurrentUserMediaEntry(playingData2)
+            runCurrent()
 
-            assertThat(currentMedia?.size).isEqualTo(2)
-            assertThat(currentMedia)
+            assertThat(underTest.currentMedia.size).isEqualTo(2)
+            assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingData1.toDataModel(currentMedia!![0].controller),
-                    playingData2.toDataModel(currentMedia!![1].controller),
+                    playingData1.toDataModel(underTest.currentMedia[0].controller),
+                    playingData2.toDataModel(underTest.currentMedia[1].controller),
                 )
                 .inOrder()
 
@@ -169,22 +178,24 @@ class MediaRepositoryTest : SysuiTestCase() {
 
             underTest.addCurrentUserMediaEntry(playingData1)
             underTest.addCurrentUserMediaEntry(playingData2)
+            runCurrent()
 
-            assertThat(currentMedia?.size).isEqualTo(2)
-            assertThat(currentMedia)
+            assertThat(underTest.currentMedia.size).isEqualTo(2)
+            assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingData1.toDataModel(currentMedia!![0].controller),
-                    playingData2.toDataModel(currentMedia!![1].controller),
+                    playingData1.toDataModel(underTest.currentMedia[0].controller),
+                    playingData2.toDataModel(underTest.currentMedia[1].controller),
                 )
                 .inOrder()
 
             underTest.reorderMedia()
+            runCurrent()
 
-            assertThat(currentMedia?.size).isEqualTo(2)
-            assertThat(currentMedia)
+            assertThat(underTest.currentMedia.size).isEqualTo(2)
+            assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingData2.toDataModel(currentMedia!![0].controller),
-                    playingData1.toDataModel(currentMedia!![1].controller),
+                    playingData2.toDataModel(underTest.currentMedia[0].controller),
+                    playingData1.toDataModel(underTest.currentMedia[1].controller),
                 )
                 .inOrder()
         }
@@ -192,7 +203,6 @@ class MediaRepositoryTest : SysuiTestCase() {
     @Test
     fun fullOrderTest() =
         testScope.runTest {
-            val currentMedia by collectLastValue(underTest.currentMedia)
             val instanceId1 = InstanceId.fakeInstanceId(123)
             val instanceId2 = InstanceId.fakeInstanceId(456)
             val instanceId3 = InstanceId.fakeInstanceId(321)
@@ -215,15 +225,16 @@ class MediaRepositoryTest : SysuiTestCase() {
             underTest.addCurrentUserMediaEntry(playingAndRemoteData)
 
             underTest.reorderMedia()
+            runCurrent()
 
-            assertThat(currentMedia?.size).isEqualTo(5)
-            assertThat(currentMedia)
+            assertThat(underTest.currentMedia.size).isEqualTo(5)
+            assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingAndLocalData.toDataModel(currentMedia!![0].controller),
-                    playingAndRemoteData.toDataModel(currentMedia!![1].controller),
-                    stoppedAndRemoteData.toDataModel(currentMedia!![2].controller),
-                    stoppedAndLocalData.toDataModel(currentMedia!![3].controller),
-                    canResumeData.toDataModel(currentMedia!![4].controller),
+                    playingAndLocalData.toDataModel(underTest.currentMedia[0].controller),
+                    playingAndRemoteData.toDataModel(underTest.currentMedia[1].controller),
+                    stoppedAndRemoteData.toDataModel(underTest.currentMedia[2].controller),
+                    stoppedAndLocalData.toDataModel(underTest.currentMedia[3].controller),
+                    canResumeData.toDataModel(underTest.currentMedia[4].controller),
                 )
                 .inOrder()
         }
