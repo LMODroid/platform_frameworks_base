@@ -21,6 +21,7 @@ import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.State
 import com.android.systemui.kairos.changes
 import com.android.systemui.kairos.effectSync
+import com.android.systemui.kairos.util.NameTag
 import com.android.systemui.util.kotlin.pairwiseBy
 import kotlinx.coroutines.flow.Flow
 
@@ -194,13 +195,14 @@ fun <T> Flow<List<T>>.logDiffsForTable(
 @ExperimentalKairosApi
 @JvmName("logIntDiffsForTable")
 fun BuildScope.logDiffsForTable(
+    name: NameTag,
     intState: State<Int?>,
     tableLogBuffer: TableLogBuffer,
     columnPrefix: String = "",
     columnName: String,
 ) {
     var isInitial = true
-    intState.observe { new ->
+    intState.observe(name = name) { new ->
         tableLogBuffer.logChange(columnPrefix, columnName, new, isInitial = isInitial)
         isInitial = false
     }
@@ -216,18 +218,19 @@ fun BuildScope.logDiffsForTable(
  */
 @ExperimentalKairosApi
 fun <T : Diffable<T>> BuildScope.logDiffsForTable(
+    name: NameTag,
     diffableState: State<T>,
     tableLogBuffer: TableLogBuffer,
     columnPrefix: String = "",
 ) {
     val initialValue = diffableState.sampleDeferred()
-    effectSync {
+    effectSync(name) {
         // Fully log the initial value to the table.
         tableLogBuffer.logChange(columnPrefix, isInitial = true) { row ->
             initialValue.value.logFull(row)
         }
     }
-    diffableState.changes.observeSync { newState ->
+    diffableState.changes.observeSync(name) { newState ->
         val prevState = diffableState.sample()
         tableLogBuffer.logDiffs(columnPrefix, prevVal = prevState, newVal = newState)
     }
@@ -237,13 +240,14 @@ fun <T : Diffable<T>> BuildScope.logDiffsForTable(
 @ExperimentalKairosApi
 @JvmName("logBooleanDiffsForTable")
 fun BuildScope.logDiffsForTable(
+    name: NameTag,
     booleanState: State<Boolean>,
     tableLogBuffer: TableLogBuffer,
     columnPrefix: String = "",
     columnName: String,
 ) {
     var isInitial = true
-    booleanState.observe { new ->
+    booleanState.observe(name = name) { new ->
         tableLogBuffer.logChange(columnPrefix, columnName, new, isInitial = isInitial)
         isInitial = false
     }
@@ -253,13 +257,14 @@ fun BuildScope.logDiffsForTable(
 @ExperimentalKairosApi
 @JvmName("logStringDiffsForTable")
 fun BuildScope.logDiffsForTable(
+    name: NameTag,
     stringState: State<String?>,
     tableLogBuffer: TableLogBuffer,
     columnPrefix: String = "",
     columnName: String,
 ) {
     var isInitial = true
-    stringState.observe { new ->
+    stringState.observe(name = name) { new ->
         tableLogBuffer.logChange(columnPrefix, columnName, new, isInitial = isInitial)
         isInitial = false
     }
@@ -269,13 +274,14 @@ fun BuildScope.logDiffsForTable(
 @ExperimentalKairosApi
 @JvmName("logListDiffsForTable")
 fun <T> BuildScope.logDiffsForTable(
+    name: NameTag,
     listState: State<List<T>>,
     tableLogBuffer: TableLogBuffer,
     columnPrefix: String = "",
     columnName: String,
 ) {
     var isInitial = true
-    listState.observe { new ->
+    listState.observe(name = name) { new ->
         tableLogBuffer.logChange(columnPrefix, columnName, new.toString(), isInitial = isInitial)
         isInitial = false
     }

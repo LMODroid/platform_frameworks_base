@@ -21,6 +21,7 @@ import com.android.systemui.kairos.Events
 import com.android.systemui.kairos.State
 import com.android.systemui.kairos.StateScope
 import com.android.systemui.kairos.TransactionScope
+import com.android.systemui.kairos.util.NameData
 import kotlin.coroutines.ContinuationInterceptor
 
 internal interface InitScope {
@@ -32,7 +33,7 @@ internal interface EvalScope : NetworkScope, DeferScope, TransactionScope
 internal interface InternalStateScope : EvalScope, StateScope {
     val alive: State<Boolean>
 
-    fun <A> truncateToScope(events: Events<A>): Events<A>
+    fun <A> truncateToScope(events: Events<A>, nameData: NameData): Events<A>
 }
 
 internal interface InternalBuildScope : InternalStateScope, BuildScope

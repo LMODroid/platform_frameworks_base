@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.pipeline.mobile.data.repository.prod
 
 import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.ExperimentalKairosApi
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.statusbar.pipeline.ims.data.model.ImsStateModel
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState
@@ -35,34 +36,138 @@ import kotlinx.coroutines.flow.MutableStateFlow
 fun BuildScope.MobileConnectionRepositoryKairosAdapter(
     kairosRepo: MobileConnectionRepositoryKairos,
     carrierConfig: SystemUiCarrierConfig,
-) =
+): MobileConnectionRepositoryKairosAdapter =
     MobileConnectionRepositoryKairosAdapter(
         subId = kairosRepo.subId,
-        carrierId = kairosRepo.carrierId.toStateFlow(),
+        carrierId =
+            kairosRepo.carrierId.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).carrierId"
+                }
+            ),
         inflateSignalStrength = carrierConfig.shouldInflateSignalStrength,
         allowNetworkSliceIndicator = carrierConfig.allowNetworkSliceIndicator,
         tableLogBuffer = kairosRepo.tableLogBuffer,
-        isEmergencyOnly = kairosRepo.isEmergencyOnly.toStateFlow(),
-        isRoaming = kairosRepo.isRoaming.toStateFlow(),
-        operatorAlphaShort = kairosRepo.operatorAlphaShort.toStateFlow(),
-        isInService = kairosRepo.isInService.toStateFlow(),
-        isNonTerrestrial = kairosRepo.isNonTerrestrial.toStateFlow(),
-        isGsm = kairosRepo.isGsm.toStateFlow(),
-        cdmaLevel = kairosRepo.cdmaLevel.toStateFlow(),
-        primaryLevel = kairosRepo.primaryLevel.toStateFlow(),
-        satelliteLevel = kairosRepo.satelliteLevel.toStateFlow(),
-        dataConnectionState = kairosRepo.dataConnectionState.toStateFlow(),
-        dataActivityDirection = kairosRepo.dataActivityDirection.toStateFlow(),
-        carrierNetworkChangeActive = kairosRepo.carrierNetworkChangeActive.toStateFlow(),
-        resolvedNetworkType = kairosRepo.resolvedNetworkType.toStateFlow(),
-        numberOfLevels = kairosRepo.numberOfLevels.toStateFlow(),
-        dataEnabled = kairosRepo.dataEnabled.toStateFlow(),
-        cdmaRoaming = kairosRepo.cdmaRoaming.toStateFlow(),
-        networkName = kairosRepo.networkName.toStateFlow(),
-        carrierName = kairosRepo.carrierName.toStateFlow(),
-        isAllowedDuringAirplaneMode = kairosRepo.isAllowedDuringAirplaneMode.toStateFlow(),
+        isEmergencyOnly =
+            kairosRepo.isEmergencyOnly.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).isEmergencyOnly"
+                }
+            ),
+        isRoaming =
+            kairosRepo.isRoaming.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).isRoaming"
+                }
+            ),
+        operatorAlphaShort =
+            kairosRepo.operatorAlphaShort.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).operatorAlphaShort"
+                }
+            ),
+        isInService =
+            kairosRepo.isInService.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).isInService"
+                }
+            ),
+        isNonTerrestrial =
+            kairosRepo.isNonTerrestrial.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).isNonTerrestrial"
+                }
+            ),
+        isGsm =
+            kairosRepo.isGsm.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).isGsm"
+                }
+            ),
+        cdmaLevel =
+            kairosRepo.cdmaLevel.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).cdmaLevel"
+                }
+            ),
+        primaryLevel =
+            kairosRepo.primaryLevel.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).primaryLevel"
+                }
+            ),
+        satelliteLevel =
+            kairosRepo.satelliteLevel.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).satelliteLevel"
+                }
+            ),
+        dataConnectionState =
+            kairosRepo.dataConnectionState.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).dataConnectionState"
+                }
+            ),
+        dataActivityDirection =
+            kairosRepo.dataActivityDirection.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).dataActivityDirection"
+                }
+            ),
+        carrierNetworkChangeActive =
+            kairosRepo.carrierNetworkChangeActive.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).carrierNetworkChangeActive"
+                }
+            ),
+        resolvedNetworkType =
+            kairosRepo.resolvedNetworkType.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).resolvedNetworkType"
+                }
+            ),
+        numberOfLevels =
+            kairosRepo.numberOfLevels.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).numberOfLevels"
+                }
+            ),
+        dataEnabled =
+            kairosRepo.dataEnabled.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).dataEnabled"
+                }
+            ),
+        cdmaRoaming =
+            kairosRepo.cdmaRoaming.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).cdmaRoaming"
+                }
+            ),
+        networkName =
+            kairosRepo.networkName.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).networkName"
+                }
+            ),
+        carrierName =
+            kairosRepo.carrierName.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).carrierName"
+                }
+            ),
+        isAllowedDuringAirplaneMode =
+            kairosRepo.isAllowedDuringAirplaneMode.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).isAllowedDuringAirplaneMode"
+                }
+            ),
         hasPrioritizedNetworkCapabilities =
-            kairosRepo.hasPrioritizedNetworkCapabilities.toStateFlow(),
+            kairosRepo.hasPrioritizedNetworkCapabilities.toStateFlow(
+                nameTag {
+                    "MobileConnectionRepositoryKairosAdapter(subId=${kairosRepo.subId}).hasPrioritizedNetworkCapabilities"
+                }
+            ),
         isInEcmMode = { kairosNetwork.transact { kairosRepo.isInEcmMode.sample() } },
         imsState = MutableStateFlow(ImsStateModel()),
     )

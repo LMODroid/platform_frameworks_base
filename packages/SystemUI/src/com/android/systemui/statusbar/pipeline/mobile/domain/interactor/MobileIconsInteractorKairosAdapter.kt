@@ -31,6 +31,7 @@ import com.android.systemui.kairos.combine
 import com.android.systemui.kairos.map
 import com.android.systemui.kairos.mapValues
 import com.android.systemui.kairos.toColdConflatedFlow
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairosBuilder
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.TableLogBufferFactory
@@ -55,7 +56,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -80,12 +80,17 @@ constructor(
             .mapValues { (subId, interactor) ->
                 buildSpec { MobileIconInteractorKairosAdapter(interactor) }
             }
-            .applyLatestSpecForKey()
+            .applyLatestSpecForKey(
+                name = nameTag("MobileIconsInteractorKairosAdapter.interactorsBySubIdK")
+            )
     }
 
     private val interactorsBySubId =
         interactorsBySubIdK
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.interactorsBySubId"),
+            )
             .stateIn(scope, SharingStarted.Eagerly, emptyMap())
 
     override val defaultDataSubId: Flow<Int?>
@@ -93,21 +98,30 @@ constructor(
 
     override val mobileIsDefault: StateFlow<Boolean> =
         kairosInteractor.mobileIsDefault
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.mobileIsDefault"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), repo.mobileIsDefault.value)
 
     override val filteredSubscriptions: Flow<List<SubscriptionModel>> =
-        kairosInteractor.filteredSubscriptions.toColdConflatedFlow(kairosNetwork)
+        kairosInteractor.filteredSubscriptions.toColdConflatedFlow(
+            kairosNetwork,
+            nameTag("MobileIconsInteractorKairosAdapter.filteredSubscriptions"),
+        )
 
     override val icons: StateFlow<List<MobileIconInteractor>> =
         interactorsBySubIdK
             .map { it.values.toList() }
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(kairosNetwork, nameTag("MobileIconsInteractorKairosAdapter.icons"))
             .stateIn(scope, SharingStarted.WhileSubscribed(), emptyList())
 
     override val isStackable: StateFlow<Boolean> =
         kairosInteractor.isStackable
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.isStackable"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override val activeMobileDataSubscriptionId: StateFlow<Int?>
@@ -115,39 +129,60 @@ constructor(
 
     override val activeDataConnectionHasDataEnabled: StateFlow<Boolean> =
         kairosInteractor.activeDataConnectionHasDataEnabled
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.activeDataConnectionHasDataEnabled"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override val activeDataIconInteractor: StateFlow<MobileIconInteractor?> =
         combine(repoK.activeMobileDataSubscriptionId, interactorsBySubIdK) { subId, interactors ->
                 interactors[subId]
             }
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.activeDataIconInteractor"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), null)
 
     override val alwaysShowDataRatIcon: StateFlow<Boolean> =
         kairosInteractor.alwaysShowDataRatIcon
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.alwaysShowDataRatIcon"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override val alwaysUseCdmaLevel: StateFlow<Boolean> =
         kairosInteractor.alwaysUseCdmaLevel
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.alwaysUseCdmaLevel"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override val isSingleCarrier: StateFlow<Boolean> =
         kairosInteractor.isSingleCarrier
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.isSingleCarrier"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override val defaultMobileIconMapping: StateFlow<Map<String, SignalIcon.MobileIconGroup>> =
         kairosInteractor.defaultMobileIconMapping
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.defaultMobileIconMapping"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), emptyMap())
 
     override val defaultMobileIconGroup: StateFlow<SignalIcon.MobileIconGroup> =
         kairosInteractor.defaultMobileIconGroup
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.defaultMobileIconGroup"),
+            )
             .stateIn(
                 scope,
                 SharingStarted.WhileSubscribed(),
@@ -156,7 +191,10 @@ constructor(
 
     override val isDefaultConnectionFailed: StateFlow<Boolean> =
         kairosInteractor.isDefaultConnectionFailed
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.isDefaultConnectionFailed"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override val isUserSetUp: StateFlow<Boolean>
@@ -164,7 +202,10 @@ constructor(
 
     override val isForceHidden: Flow<Boolean> =
         kairosInteractor.isForceHidden
-            .toColdConflatedFlow(kairosNetwork)
+            .toColdConflatedFlow(
+                kairosNetwork,
+                nameTag("MobileIconsInteractorKairosAdapter.isForceHidden"),
+            )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override val isDeviceInEmergencyCallsOnlyMode: Flow<Boolean>

@@ -23,6 +23,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.KairosNetwork
 import com.android.systemui.kairos.toColdConflatedFlow
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.LogBufferFactory
 import com.android.systemui.log.table.TableLogBuffer
@@ -239,7 +240,13 @@ abstract class StatusBarPipelineModule {
                     kairosViewModel
                         .get()
                         .firstMobileSubShowingNetworkTypeIcon
-                        .toColdConflatedFlow(kairosNetwork)
+                        .toColdConflatedFlow(
+                            kairosNetwork,
+                            name =
+                                nameTag(
+                                    "StatusBarPipelineModule.provideFirstMobileSubShowingNetworkTypeIconProvider"
+                                ),
+                        )
                 }
             } else {
                 Supplier { mobileIconsViewModel.get().firstMobileSubShowingNetworkTypeIcon }

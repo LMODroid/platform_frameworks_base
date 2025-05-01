@@ -17,7 +17,6 @@
 package com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel
 
 import android.content.applicationContext
-import com.android.systemui.flags.featureFlagsClassic
 import com.android.systemui.kairos.ActivatedKairosFixture
 import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kosmos.Kosmos
@@ -35,7 +34,6 @@ val Kosmos.mobileIconsViewModelKairos by ActivatedKairosFixture {
         interactor = mobileIconsInteractorKairos,
         airplaneModeInteractor = airplaneModeInteractor,
         constants = mock(),
-        flags = featureFlagsClassic,
         logFactory = tableLogBufferFactory,
         context = applicationContext,
     )

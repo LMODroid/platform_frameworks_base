@@ -28,6 +28,7 @@ import com.android.systemui.kairos.State
 import com.android.systemui.kairos.combine
 import com.android.systemui.kairos.flatMap
 import com.android.systemui.kairos.map
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairosBuilder
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.logDiffsForTable
@@ -228,7 +229,16 @@ class MobileIconInteractorKairosImpl(
                     DefaultIcon(networkType)
                 }
             }
-            .also { logDiffsForTable(it, tableLogBuffer = tableLogBuffer) }
+            .also {
+                logDiffsForTable(
+                    name =
+                        nameTag {
+                            "MobileIconInteractorKairosImpl(subId=$subscriptionId).networkTypeIconGroup"
+                        },
+                    it,
+                    tableLogBuffer = tableLogBuffer,
+                )
+            }
     }
 
     override val showSliceAttribution: State<Boolean> =
@@ -280,7 +290,18 @@ class MobileIconInteractorKairosImpl(
         connectionRepository.dataConnectionState
             .map { it == Connected }
             .also {
-                onActivated { logDiffsForTable(it, tableLogBuffer, "icon", "isDataConnected") }
+                onActivated {
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "MobileIconInteractorKairosImpl(subId=$subscriptionId).isDataConnected"
+                            },
+                        it,
+                        tableLogBuffer,
+                        "icon",
+                        "isDataConnected",
+                    )
+                }
             }
 
     override val isInService
@@ -357,5 +378,17 @@ class MobileIconInteractorKairosImpl(
                     cellularIcon
                 }
             }
-            .also { onActivated { logDiffsForTable(it, tableLogBuffer, columnPrefix = "icon") } }
+            .also {
+                onActivated {
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "MobileIconInteractorKairosImpl(subId=$subscriptionId).signalLevelIcon"
+                            },
+                        it,
+                        tableLogBuffer,
+                        columnPrefix = "icon",
+                    )
+                }
+            }
 }

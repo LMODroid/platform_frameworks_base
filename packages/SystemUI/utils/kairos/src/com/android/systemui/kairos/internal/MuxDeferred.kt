@@ -26,10 +26,10 @@ import com.android.systemui.kairos.internal.store.asSingle
 import com.android.systemui.kairos.internal.store.singleOf
 import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.internal.util.logDuration
-import com.android.systemui.kairos.internal.util.logLn
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.Maybe.Absent
 import com.android.systemui.kairos.util.Maybe.Present
+import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.These
 import com.android.systemui.kairos.util.flatMap
 import com.android.systemui.kairos.util.getMaybe
@@ -37,13 +37,14 @@ import com.android.systemui.kairos.util.maybeFirst
 import com.android.systemui.kairos.util.maybeSecond
 import com.android.systemui.kairos.util.merge
 import com.android.systemui.kairos.util.orError
+import com.android.systemui.kairos.util.plus
 import com.android.systemui.kairos.util.these
 
 internal class MuxDeferredNode<W, K, V>(
-    val name: String?,
+    nameData: NameData,
     lifecycle: MuxLifecycle<W, K, V>,
     val spec: MuxActivator<W, K, V>,
-) : MuxNode<W, K, V>(lifecycle) {
+) : MuxNode<W, K, V>(nameData, lifecycle) {
 
     val schedulable = Schedulable.M(this)
     var patches: NodeConnection<Iterable<Map.Entry<K, Maybe<EventsImpl<V>>>>>? = null
@@ -51,16 +52,13 @@ internal class MuxDeferredNode<W, K, V>(
 
     override fun visit(logIndent: Int, evalScope: EvalScope) {
         check(epoch < evalScope.epoch) { "node unexpectedly visited multiple times in transaction" }
-        logDuration(logIndent, { "MuxDeferred[$name].visit" }) {
+        logDuration(logIndent, { "MuxDeferred[$nameData].visit" }) {
             val scheduleDownstream: Boolean
             val result: MapK<W, K, PullNode<V>>
             logDuration(getPrefix = { "copying upstream data" }, start = false) {
                 scheduleDownstream = upstreamData.isNotEmpty()
                 result = upstreamData.readOnlyCopy()
                 upstreamData.clear()
-            }
-            if (name != null) {
-                logLn { "[${this@MuxDeferredNode}] result = $result" }
             }
             val compactDownstream = depthTracker.isDirty()
             if (scheduleDownstream || compactDownstream) {
@@ -75,9 +73,6 @@ internal class MuxDeferredNode<W, K, V>(
                 }
                 if (scheduleDownstream) {
                     logDuration({ "scheduleDownstream" }) {
-                        if (name != null) {
-                            logLn { "[${this@MuxDeferredNode}] scheduling" }
-                        }
                         transactionCache.put(evalScope, result)
                         if (!scheduleAll(currentLogIndent, downstreamSet, evalScope)) {
                             evalScope.scheduleDeactivation(this@MuxDeferredNode)
@@ -90,11 +85,7 @@ internal class MuxDeferredNode<W, K, V>(
 
     override fun getPushEvent(logIndent: Int, evalScope: EvalScope): MuxResult<W, K, V> =
         logDuration(logIndent, { "MuxDeferred.getPushEvent" }) {
-            transactionCache.getCurrentValue(evalScope).also {
-                if (name != null) {
-                    logLn { "[${this@MuxDeferredNode}] getPushEvent = $it" }
-                }
-            }
+            transactionCache.getCurrentValue(evalScope)
         }
 
     private fun compactIfNeeded(evalScope: EvalScope) {
@@ -117,10 +108,6 @@ internal class MuxDeferredNode<W, K, V>(
     //  - concurrent moves may be occurring, but no more evals. all depth recalculations are
     //    deferred to the end of this phase.
     fun performMove(logIndent: Int, evalScope: EvalScope) {
-        if (name != null) {
-            logLn(logIndent) { "[${this@MuxDeferredNode}] performMove (patchData = $patchData)" }
-        }
-
         val patch = patchData ?: return
         patchData = null
 
@@ -286,43 +273,40 @@ internal class MuxDeferredNode<W, K, V>(
         }
     }
 
-    override fun toString(): String =
-        "${this::class.simpleName}@$hashString${name?.let { "[$it]" }.orEmpty()}"
+    override fun toString(): String = "${this::class.simpleName}@$hashString[$nameData]"
 }
 
 internal inline fun <A> switchDeferredImplSingle(
-    name: String? = null,
+    nameData: NameData,
     crossinline getStorage: EvalScope.() -> EventsImpl<A>,
     crossinline getPatches: EvalScope.() -> EventsImpl<EventsImpl<A>>,
 ): EventsImpl<A> {
     val patches =
-        mapImpl(getPatches) { newEvents, _ -> singleOf(Maybe.present(newEvents)).asIterable() }
+        mapImpl(getPatches, nameData + "patches") { newEvents, _ ->
+            singleOf(Maybe.present(newEvents)).asIterable()
+        }
     val switchDeferredImpl =
         switchDeferredImpl(
-            name = name,
+            nameData,
             getStorage = { singleOf(getStorage()).asIterable() },
             getPatches = { patches },
             storeFactory = SingletonMapK.Factory(),
         )
-    return mapImpl({ switchDeferredImpl }) { map, logIndent ->
-        map.asSingle().getValue(Unit).getPushEvent(logIndent, this).also {
-            if (name != null) {
-                logLn(logIndent) { "[$name] extracting single mux: $it" }
-            }
-        }
+    return mapImpl({ switchDeferredImpl }, nameData + "getResult") { map, logIndent ->
+        map.asSingle().getValue(Unit).getPushEvent(logIndent, this)
     }
 }
 
 internal fun <W, K, V> switchDeferredImpl(
-    name: String? = null,
+    nameData: NameData,
     getStorage: EvalScope.() -> Iterable<Map.Entry<K, EventsImpl<V>>>,
     getPatches: EvalScope.() -> EventsImpl<Iterable<Map.Entry<K, Maybe<EventsImpl<V>>>>>,
     storeFactory: MutableMapK.Factory<W, K>,
 ): EventsImpl<MuxResult<W, K, V>> =
-    MuxLifecycle(MuxDeferredActivator(name, getStorage, storeFactory, getPatches))
+    MuxLifecycle(MuxDeferredActivator(nameData, getStorage, storeFactory, getPatches))
 
 private class MuxDeferredActivator<W, K, V>(
-    private val name: String?,
+    private val nameData: NameData,
     private val getStorage: EvalScope.() -> Iterable<Map.Entry<K, EventsImpl<V>>>,
     private val storeFactory: MutableMapK.Factory<W, K>,
     private val getPatches: EvalScope.() -> EventsImpl<Iterable<Map.Entry<K, Maybe<EventsImpl<V>>>>>,
@@ -333,7 +317,7 @@ private class MuxDeferredActivator<W, K, V>(
     ): Pair<MuxNode<W, K, V>, (() -> Unit)?>? {
         // Initialize mux node and switched-in connections.
         val muxNode =
-            MuxDeferredNode(name, lifecycle, this).apply {
+            MuxDeferredNode(nameData, lifecycle, this).apply {
                 initializeUpstream(evalScope, getStorage, storeFactory)
                 // Update depth based on all initial switched-in nodes.
                 initializeDepth()
@@ -387,43 +371,48 @@ private class MuxDeferredActivator<W, K, V>(
                 }
             }
     }
+
+    override fun toString(): String = "${super.toString()}[$nameData]"
 }
 
 internal inline fun <A> mergeNodes(
+    nameData: NameData,
     crossinline getPulse: EvalScope.() -> EventsImpl<A>,
     crossinline getOther: EvalScope.() -> EventsImpl<A>,
-    name: String? = null,
     crossinline f: EvalScope.(A, A) -> A,
 ): EventsImpl<A> {
-    val mergedThese: EventsImpl<These<A, A>> = mergeNodes(name, getPulse, getOther)
+    val mergedThese: EventsImpl<These<A, A>> =
+        mergeNodes(nameData + "mergedThese", getPulse, getOther)
     val merged: EventsImpl<A> =
-        mapImpl({ mergedThese }) { these, _ -> these.merge { thiz, that -> f(thiz, that) } }
-    return merged.cached()
+        mapImpl({ mergedThese }, nameData) { these, _ ->
+            these.merge { thiz, that -> f(thiz, that) }
+        }
+    return merged.cached(nameData + "cached")
 }
 
 internal fun <T> Iterable<T>.asIterableWithIndex(): Iterable<Map.Entry<Int, T>> =
     asSequence().mapIndexed { i, t -> StoreEntry(i, t) }.asIterable()
 
 internal inline fun <A, B> mergeNodes(
-    name: String? = null,
+    nameData: NameData,
     crossinline getPulse: EvalScope.() -> EventsImpl<A>,
     crossinline getOther: EvalScope.() -> EventsImpl<B>,
 ): EventsImpl<These<A, B>> {
     val storage =
         listOf(
-                mapImpl(getPulse) { it, _ -> These.first(it) },
-                mapImpl(getOther) { it, _ -> These.second(it) },
+                mapImpl(getPulse, nameData + "firstMergeInput") { it, _ -> These.first(it) },
+                mapImpl(getOther, nameData + "secondMergeInput") { it, _ -> These.second(it) },
             )
             .asIterableWithIndex()
     val switchNode =
         switchDeferredImpl(
-            name = name,
+            nameData,
             getStorage = { storage },
             getPatches = { neverImpl },
             storeFactory = MutableArrayMapK.Factory(),
         )
     val merged =
-        mapImpl({ switchNode }) { it, logIndent ->
+        mapImpl({ switchNode }, nameData + "mergeResults") { it, logIndent ->
             val mergeResults = it.asArrayHolder()
             val first =
                 mergeResults.getMaybe(0).flatMap { it.getPushEvent(logIndent, this).maybeFirst() }
@@ -431,39 +420,43 @@ internal inline fun <A, B> mergeNodes(
                 mergeResults.getMaybe(1).flatMap { it.getPushEvent(logIndent, this).maybeSecond() }
             these(first, second).orError { "unexpected missing merge result" }
         }
-    return merged.cached()
+    return merged.cached(nameData + "cached")
 }
 
 internal inline fun <A> mergeNodes(
-    crossinline getPulses: EvalScope.() -> Iterable<EventsImpl<A>>
+    nameData: NameData,
+    crossinline getPulses: EvalScope.() -> Iterable<EventsImpl<A>>,
 ): EventsImpl<List<A>> {
     val switchNode =
         switchDeferredImpl(
+            nameData,
             getStorage = { getPulses().asIterableWithIndex() },
             getPatches = { neverImpl },
             storeFactory = MutableArrayMapK.Factory(),
         )
     val merged =
-        mapImpl({ switchNode }) { it, logIndent ->
+        mapImpl({ switchNode }, nameData + "getMergeResults") { it, logIndent ->
             val mergeResults = it.asArrayHolder()
             mergeResults.map { (_, node) -> node.getPushEvent(logIndent, this) }
         }
-    return merged.cached()
+    return merged.cached(nameData + "cached")
 }
 
 internal inline fun <A> mergeNodesLeft(
-    crossinline getPulses: EvalScope.() -> Iterable<EventsImpl<A>>
+    nameData: NameData,
+    crossinline getPulses: EvalScope.() -> Iterable<EventsImpl<A>>,
 ): EventsImpl<A> {
     val switchNode =
         switchDeferredImpl(
+            nameData,
             getStorage = { getPulses().asIterableWithIndex() },
             getPatches = { neverImpl },
             storeFactory = MutableArrayMapK.Factory(),
         )
     val merged =
-        mapImpl({ switchNode }) { it, logIndent ->
+        mapImpl({ switchNode }, nameData + "getLeftResult") { it, logIndent ->
             val mergeResults = it.asArrayHolder()
             mergeResults.values.first().getPushEvent(logIndent, this)
         }
-    return merged.cached()
+    return merged.cached(nameData + "cached")
 }

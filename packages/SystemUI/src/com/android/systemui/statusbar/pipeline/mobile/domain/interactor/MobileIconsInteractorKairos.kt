@@ -41,6 +41,7 @@ import com.android.systemui.kairos.flatten
 import com.android.systemui.kairos.map
 import com.android.systemui.kairos.mapValues
 import com.android.systemui.kairos.stateOf
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairosBuilder
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.logDiffsForTable
@@ -157,6 +158,7 @@ constructor(
             .also {
                 onActivated {
                     logDiffsForTable(
+                        nameTag("MobileIconsInteractorKairosImpl.mobileIsDefault"),
                         it,
                         tableLogger,
                         LOGGING_PREFIX,
@@ -217,12 +219,15 @@ constructor(
         combine(
                 subscriptionsBasedFilteredSubs,
                 mobileConnectionsRepo.activeMobileDataSubscriptionId,
-                connectivityRepository.vcnSubId.toState(),
+                connectivityRepository.vcnSubId.toState(
+                    nameTag("MobileIconsInteractorKairosImpl.vcnSubId")
+                ),
             ) { preFilteredSubs, activeId, vcnSubId ->
                 filterSubsBasedOnOpportunistic(preFilteredSubs, activeId, vcnSubId)
             }
             .also {
                 logDiffsForTable(
+                    nameTag("MobileIconsInteractorKairosImpl.filteredSubscriptions"),
                     it,
                     tableLogger,
                     LOGGING_PREFIX,
@@ -286,7 +291,7 @@ constructor(
             }
             // Just map the repos to interactors
             .mapValues { (subId, repo) -> buildSpec { mobileConnection(repo) } }
-            .applyLatestSpecForKey()
+            .applyLatestSpecForKey(name = nameTag("MobileIconsInteractorKairosImpl.icons"))
     }
 
     override val isStackable: State<Boolean> =
@@ -326,17 +331,31 @@ constructor(
     private val forcingCellularValidation: State<Boolean> = buildState {
         mobileConnectionsRepo.activeSubChangedInGroupEvent
             .filter(mobileConnectionsRepo.defaultConnectionIsValidated)
-            .mapLatestBuild {
-                asyncEvent {
+            .mapLatestBuild(
+                name = nameTag("MobileIconsInteractorKairos.forcingCellularValidationNewInnerState")
+            ) {
+                asyncEvent(nameTag("MobileIconsInteractorKairos.delayForcingCellularValidation")) {
                         delay(2.seconds)
                         false
                     }
-                    .holdState(true)
+                    .holdState(
+                        true,
+                        nameTag("MobileIconsInteractorKairos.forcingCellularValidationInnerState"),
+                    )
             }
-            .holdState(stateOf(false))
+            .holdState(
+                stateOf(false),
+                nameTag("MobileIconsInteractorKairos.forcingCellularValidation"),
+            )
             .flatten()
             .also {
-                logDiffsForTable(it, tableLogger, LOGGING_PREFIX, columnName = "forcingValidation")
+                logDiffsForTable(
+                    nameTag("MobileIconsInteractorKairos.forcingCellularValidation::logDiffs"),
+                    it,
+                    tableLogger,
+                    LOGGING_PREFIX,
+                    columnName = "forcingValidation",
+                )
             }
     }
 
@@ -359,6 +378,7 @@ constructor(
             .also {
                 onActivated {
                     logDiffsForTable(
+                        nameTag("MobileIconsInteractorKairosImpl.isSingleCarrier"),
                         it,
                         tableLogger,
                         columnPrefix = LOGGING_PREFIX,
@@ -390,6 +410,7 @@ constructor(
             .also {
                 onActivated {
                     logDiffsForTable(
+                        nameTag("MobileIconsInteractorKairosImpl.isDefaultConnectionFailed"),
                         it,
                         tableLogger,
                         LOGGING_PREFIX,
@@ -398,12 +419,14 @@ constructor(
                 }
             }
 
-    override val isUserSetUp: State<Boolean> = buildState { userSetupRepo.isUserSetUp.toState() }
+    override val isUserSetUp: State<Boolean> = buildState {
+        userSetupRepo.isUserSetUp.toState(nameTag("MobileIconsInteractorKairosImpl.isUserSetUp"))
+    }
 
     override val isForceHidden: State<Boolean> = buildState {
-        connectivityRepository.forceHiddenSlots.toState().map {
-            it.contains(ConnectivitySlot.MOBILE)
-        }
+        connectivityRepository.forceHiddenSlots
+            .toState(nameTag("MobileIconsInteractorKairosImpl.isForceHidden"))
+            .map { it.contains(ConnectivitySlot.MOBILE) }
     }
 
     override val isDeviceInEmergencyCallsOnlyMode: State<Boolean>

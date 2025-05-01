@@ -89,6 +89,7 @@ import com.android.systemui.common.ui.compose.windowinsets.LocalDisplayCutout
 import com.android.systemui.common.ui.compose.windowinsets.LocalScreenCornerRadius
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.kairos.ExperimentalKairosApi
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.privacy.OngoingPrivacyChip
 import com.android.systemui.privacy.PrivacyItem
 import com.android.systemui.res.R
@@ -667,6 +668,7 @@ private fun ShadeCarrierGroupKairos(
         ActivatedKairosSpec(
             buildSpec = viewModel.mobileIconsViewModelKairos.get().composeWrapper(),
             kairosNetwork = viewModel.kairosNetwork,
+            name = nameTag("ShadeCarrierGroupKairos"),
         ) { iconsViewModel: MobileIconsViewModelKairosComposeWrapper ->
             for ((subId, icon) in iconsViewModel.icons) {
                 Spacer(modifier = Modifier.width(5.dp))

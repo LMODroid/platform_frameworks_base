@@ -22,6 +22,10 @@ import com.android.systemui.kairos.internal.TransactionalImpl
 import com.android.systemui.kairos.internal.init
 import com.android.systemui.kairos.internal.transactionalImpl
 import com.android.systemui.kairos.internal.util.hashString
+import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.NameTaggingDisabled
+import com.android.systemui.kairos.util.nameTag
+import com.android.systemui.kairos.util.toNameData
 
 /**
  * A time-varying value. A [Transactional] encapsulates the idea of some continuous state; each time
@@ -39,7 +43,10 @@ class Transactional<out A> internal constructor(internal val impl: State<Transac
 /** A constant [Transactional] that produces [value] whenever it is sampled. */
 @ExperimentalKairosApi
 fun <A> transactionalOf(value: A): Transactional<A> =
-    Transactional(stateOf(TransactionalImpl.Const(lazyOf(value))))
+    transactionalOf(nameTag { "transactionalOf($value)" }.toNameData("transactionalOf"), value)
+
+internal fun <A> transactionalOf(nameData: NameData, value: A): Transactional<A> =
+    Transactional(stateOf(nameData, TransactionalImpl.Const(lazyOf(value))))
 
 /**
  * Returns a [Transactional] that acts as a deferred-reference to the [Transactional] produced by
@@ -91,7 +98,9 @@ fun <A> deferredTransactional(block: KairosScope.() -> Transactional<A>): Transa
 private inline fun <A> deferInline(
     crossinline block: InitScope.() -> Transactional<A>
 ): Transactional<A> =
-    Transactional(StateInit(init(name = null) { block().impl.init.connect(evalScope = this) }))
+    Transactional(
+        StateInit(init(NameTaggingDisabled) { block().impl.init.connect(evalScope = this) })
+    )
 
 /**
  * Returns a [Transactional]. The passed [block] will be evaluated on demand at most once per

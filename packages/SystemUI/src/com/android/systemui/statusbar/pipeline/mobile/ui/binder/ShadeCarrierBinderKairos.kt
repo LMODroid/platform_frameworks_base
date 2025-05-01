@@ -20,6 +20,7 @@ import androidx.core.view.isVisible
 import com.android.systemui.kairos.BuildSpec
 import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.KairosNetwork
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.lifecycle.repeatWhenWindowIsVisible
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.ShadeCarrierGroupMobileIconViewModelKairos
 import com.android.systemui.util.AutoMarqueeTextView
@@ -28,14 +29,19 @@ object ShadeCarrierBinderKairos {
     /** Binds the view to the view-model, continuing to update the former based on the latter */
     @ExperimentalKairosApi
     suspend fun bind(
+        subId: Int,
         carrierTextView: AutoMarqueeTextView,
         viewModel: BuildSpec<ShadeCarrierGroupMobileIconViewModelKairos>,
         kairosNetwork: KairosNetwork,
     ) {
         carrierTextView.isVisible = true
         carrierTextView.repeatWhenWindowIsVisible {
-            kairosNetwork.activateSpec {
-                viewModel.applySpec().carrierName.observe { carrierTextView.text = it }
+            kairosNetwork.activateSpec(nameTag { "ShadeCarrierBinderKairos(subId=$subId).bind" }) {
+                viewModel.applySpec().carrierName.observe(
+                    name = nameTag { "ShadeCarrierBinderKairos(subId=$subId).carrierName" }
+                ) {
+                    carrierTextView.text = it
+                }
             }
         }
     }

@@ -32,6 +32,7 @@ import com.android.systemui.demomode.DemoMode.COMMAND_NETWORK
 import com.android.systemui.demomode.DemoModeController
 import com.android.systemui.kairos.Events
 import com.android.systemui.kairos.ExperimentalKairosApi
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairosBuilder
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.demo.model.FakeNetworkEventModel
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.demo.model.FakeNetworkEventModel.Mobile
@@ -67,7 +68,9 @@ constructor(demoModeController: DemoModeController) :
     private val _mobileCommands: Flow<FakeNetworkEventModel?> =
         demoCommandStream.map { args -> args.toMobileEvent() }
     override val mobileEvents: Events<FakeNetworkEventModel?> = buildEvents {
-        _mobileCommands.toEvents()
+        _mobileCommands.toEvents(
+            nameTag("DemoModeMobileConnectionDataSourceKairosImpl.mobileEvents")
+        )
     }
 
     private fun Bundle.toMobileEvent(): FakeNetworkEventModel? {

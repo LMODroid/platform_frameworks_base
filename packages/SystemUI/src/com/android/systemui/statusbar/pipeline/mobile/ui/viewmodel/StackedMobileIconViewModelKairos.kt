@@ -46,7 +46,11 @@ constructor(
 ) : KairosBuilder by kairosBuilder(), StackedMobileIconViewModel {
 
     private val isStackable: Boolean by
-        hydratedComposeStateOf(mobileIcons.isStackable, initialValue = false)
+        hydratedComposeStateOf(
+            "StackedMobileIconViewModelKairos.isStackable",
+            mobileIcons.isStackable,
+            initialValue = false,
+        )
 
     private val iconList: KairosState<List<MobileIconViewModelKairos>> =
         combine(mobileIcons.icons, mobileIcons.activeSubscriptionId) { iconsBySubId, activeSubId ->
@@ -58,6 +62,7 @@ constructor(
 
     override val dualSim: DualSim? by
         hydratedComposeStateOf(
+            "StackedMobileIconViewModelKairos.dualSim",
             iconList.flatMap { icons ->
                 icons
                     .map { vm -> vm.icon.map { vm.subscriptionId to it } } // Map subId to icon
@@ -68,6 +73,7 @@ constructor(
 
     override val contentDescription: String? by
         hydratedComposeStateOf(
+            "StackedMobileIconViewModelKairos.contentDescription",
             iconList.flatMap { icons ->
                 icons
                     .map { it.contentDescription }
@@ -80,6 +86,7 @@ constructor(
 
     override val networkTypeIcon: Icon.Resource? by
         hydratedComposeStateOf(
+            "StackedMobileIconViewModelKairos.networkTypeIcon",
             iconList.flatMap { icons -> icons.firstOrNull()?.networkTypeIcon ?: stateOf(null) },
             initialValue = null,
         )

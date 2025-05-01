@@ -26,6 +26,7 @@ import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.awaitClose
 import com.android.systemui.kairos.combine
 import com.android.systemui.kairos.launchEffect
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.shade.carrier.ShadeCarrierGroupController
 import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconsInteractorKairos
@@ -65,7 +66,7 @@ constructor(
     private var shadeCarrierGroupController: ShadeCarrierGroupController? = null
 
     override fun BuildScope.activate() {
-        launchEffect {
+        launchEffect(name = nameTag("MobileUiAdapterKairos.isCollecting")) {
             isCollecting = true
             awaitClose { isCollecting = false }
         }
@@ -73,7 +74,8 @@ constructor(
         combine(mobileIconsViewModel.subscriptionIds, mobileIconsViewModel.isStackable) { a, b ->
                 Pair(a, b)
             }
-            .observe { (subIds, isStackable) ->
+            .observe(name = nameTag("MobileUiAdapterKairos.notifyIconController")) {
+                (subIds, isStackable) ->
                 logger.logUiAdapterSubIdsSentToIconController(subIds, isStackable)
                 lastValue = subIds
                 if (isStackable) {

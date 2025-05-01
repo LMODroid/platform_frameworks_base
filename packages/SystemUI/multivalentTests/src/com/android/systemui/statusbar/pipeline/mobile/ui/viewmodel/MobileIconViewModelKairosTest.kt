@@ -81,13 +81,7 @@ import org.mockito.kotlin.stub
 class MobileIconViewModelKairosTest : SysuiTestCase() {
 
     private val Kosmos.underTest: MobileIconViewModelKairos by ActivatedKairosFixture {
-        MobileIconViewModelKairos(
-            SUB_1_ID,
-            interactor,
-            airplaneModeInteractor,
-            constants,
-            featureFlagsClassic,
-        )
+        MobileIconViewModelKairos(SUB_1_ID, interactor, airplaneModeInteractor, constants)
     }
     private val Kosmos.interactor: MobileIconInteractorKairos by ActivatedKairosFixture {
         MobileIconInteractorKairosImpl(

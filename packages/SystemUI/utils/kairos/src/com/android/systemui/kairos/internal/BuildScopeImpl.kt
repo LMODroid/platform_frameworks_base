@@ -39,10 +39,19 @@ import com.android.systemui.kairos.internal.util.childScope
 import com.android.systemui.kairos.internal.util.invokeOnCancel
 import com.android.systemui.kairos.internal.util.launchImmediate
 import com.android.systemui.kairos.launchEffect
+import com.android.systemui.kairos.observeSync
+import com.android.systemui.kairos.skipNext
+import com.android.systemui.kairos.takeUntil
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.Maybe.Absent
 import com.android.systemui.kairos.util.Maybe.Present
+import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.NameTag
+import com.android.systemui.kairos.util.appendNames
 import com.android.systemui.kairos.util.map
+import com.android.systemui.kairos.util.mapName
+import com.android.systemui.kairos.util.plus
+import com.android.systemui.kairos.util.toNameData
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
@@ -57,50 +66,66 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.job
 
-internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope: CoroutineScope) :
-    InternalBuildScope, InternalStateScope by stateScope {
+internal class BuildScopeImpl(
+    val nameData: NameData,
+    val createdEpoch: Long,
+    val stateScope: StateScopeImpl,
+    val coroutineScope: CoroutineScope,
+) : InternalBuildScope, InternalStateScope by stateScope {
 
     private val job: Job
         get() = coroutineScope.coroutineContext.job
 
     override val kairosNetwork: LocalNetwork by lazy {
-        LocalNetwork(network, coroutineScope, stateScope.aliveLazy)
+        LocalNetwork(nameData, network, coroutineScope, stateScope.aliveLazy)
     }
 
-    override fun <T> events(builder: suspend EventProducerScope<T>.() -> Unit): Events<T> =
-        buildEvents(
+    override fun <T> events(
+        name: NameTag?,
+        builder: suspend EventProducerScope<T>.() -> Unit,
+    ): Events<T> {
+        val fullTag = name.toNameData("BuildScope.events")
+        return buildEvents(
+            fullTag,
             constructEvents = { inputNode ->
-                val events = MutableEvents(network, inputNode)
-                events to EventProducerScope<T> { value -> events.emit(value) }
+                val events = MutableEvents(network, fullTag, inputNode)
+                events to EventProducerScope { value -> events.emit(value) }
             },
             builder = builder,
         )
+    }
 
     override fun <In, Out> coalescingEvents(
         getInitialValue: KairosScope.() -> Out,
         coalesce: (old: Out, new: In) -> Out,
+        name: NameTag?,
         builder: suspend CoalescingEventProducerScope<In>.() -> Unit,
-    ): Events<Out> =
-        buildEvents(
+    ): Events<Out> {
+        val nameData = name.toNameData("BuildScope.coalescingEvents")
+        return buildEvents(
+            nameData,
             constructEvents = { inputNode ->
                 val events =
                     CoalescingMutableEvents(
-                        name = null,
+                        nameData,
                         coalesce = { old, new: In -> coalesce(old.value, new) },
                         network = network,
                         getInitialValue = { NoScope.getInitialValue() },
                         impl = inputNode,
                     )
-                events to CoalescingEventProducerScope<In> { value -> events.emit(value) }
+                events to CoalescingEventProducerScope { value -> events.emit(value) }
             },
             builder = builder,
         )
+    }
 
     override fun <A> asyncScope(
         coroutineContext: CoroutineContext,
+        name: NameTag?,
         block: BuildSpec<A>,
     ): Pair<DeferredValue<A>, Job> {
-        val childScope = mutableChildBuildScope(coroutineContext)
+        val nameData = name.toNameData("BuildScope.asyncScope")
+        val childScope = mutableChildBuildScope(nameData, coroutineContext)
         return DeferredValue(deferAsync { block(childScope) }) to childScope.job
     }
 
@@ -113,18 +138,22 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
 
     override fun <A> Events<A>.observe(
         coroutineContext: CoroutineContext,
+        name: NameTag?,
         block: EffectScope.(A) -> Unit,
     ): DisposableHandle {
+        val nameData = name.toNameData("Events.observe")
         val interceptor = coroutineContext[ContinuationInterceptor]
-        return observeInternal(coroutineContext) { effectScope, output ->
+        return observeInternal(nameData, coroutineContext) { effectScope, output ->
             scheduleDispatchedOutput(interceptor = interceptor) { effectScope.block(output) }
         }
     }
 
     override fun <A> Events<A>.observeSync(
-        block: TransactionEffectScope.(A) -> Unit
-    ): DisposableHandle =
-        observeInternal(EmptyCoroutineContext) { effectScope, output ->
+        name: NameTag?,
+        block: TransactionEffectScope.(A) -> Unit,
+    ): DisposableHandle {
+        val nameData = name.toNameData("Events.observeSync")
+        return observeInternal(nameData, EmptyCoroutineContext) { effectScope, output ->
             val scope =
                 object :
                     TransactionEffectScope,
@@ -132,17 +161,22 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
                     EffectScope by effectScope {}
             scope.block(output)
         }
+    }
 
-    override fun <A, B> Events<A>.mapBuild(transform: BuildScope.(A) -> B): Events<B> {
+    override fun <A, B> Events<A>.mapBuild(
+        name: NameTag?,
+        transform: BuildScope.(A) -> B,
+    ): Events<B> {
+        val nameData = name.toNameData("Events.mapBuild")
         val childScope = coroutineScope.childScope()
         return EventsInit(
             constInit(
-                "mapBuild",
-                mapImpl({ init.connect(evalScope = this) }) { spec, _ ->
+                nameData,
+                mapImpl({ init.connect(evalScope = this) }, nameData) { spec, _ ->
                         reenterBuildScope(outerScope = this@BuildScopeImpl, childScope)
                             .transform(spec)
                     }
-                    .cached(),
+                    .cached(nameData),
             )
         )
     }
@@ -150,38 +184,47 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
     override fun <K, A, B> Events<Map<K, Maybe<BuildSpec<A>>>>.applyLatestSpecForKey(
         initialSpecs: DeferredValue<Map<K, BuildSpec<B>>>,
         numKeys: Int?,
+        name: NameTag?,
     ): Pair<Events<Map<K, Maybe<A>>>, DeferredValue<Map<K, B>>> {
+        val nameData = name.toNameData("Events.applyLatestSpecForKey")
         val eventsByKey: KeyedEvents<K, Maybe<BuildSpec<A>>> = groupByKey(numKeys)
         val initOut: Lazy<Map<K, B>> = deferAsync {
             initialSpecs.unwrapped.value.mapValues { (k, spec) ->
                 val newEnd = eventsByKey[k]
-                val newScope = childBuildScope(newEnd)
+                val newScope = childBuildScope(newEnd, nameData.mapName { "$it[key=$k]" })
                 newScope.spec()
             }
         }
+        // TODO: should this also be used for the initOut?
         val childScope = coroutineScope.childScope()
-        val changesNode: EventsImpl<Map<K, Maybe<A>>> =
-            mapImpl(upstream = { this@applyLatestSpecForKey.init.connect(evalScope = this) }) {
-                upstreamMap,
-                _ ->
+        val changesImpl: EventsImpl<Map<K, Maybe<A>>> =
+            mapImpl(
+                upstream = { this@applyLatestSpecForKey.init.connect(evalScope = this) },
+                nameData + "changes",
+            ) { upstreamMap, _ ->
                 reenterBuildScope(this@BuildScopeImpl, childScope).run {
                     upstreamMap.mapValues { (k: K, ma: Maybe<BuildSpec<A>>) ->
                         ma.map { spec ->
-                            val newEnd = eventsByKey[k].skipNext()
-                            val newScope = childBuildScope(newEnd)
+                            val newEnd =
+                                skipNext(nameData.mapName { "$it[key=$k]-newEnd" }, eventsByKey[k])
+                            val newScope =
+                                childBuildScope(newEnd, nameData.mapName { "$it[key=$k]" })
                             newScope.spec()
                         }
                     }
                 }
             }
         val changes: Events<Map<K, Maybe<A>>> =
-            EventsInit(constInit("applyLatestForKey", changesNode.cached()))
+            EventsInit(constInit(nameData, changesImpl.cached(nameData)))
         // Ensure effects are observed; otherwise init will stay alive longer than expected
-        changes.observeSync()
+        changes.observeSync(nameData + "observeNoop")
         return changes to DeferredValue(initOut)
     }
 
+    override fun toString(): String = "${super.toString()}[$nameData]"
+
     private fun <A> Events<A>.observeInternal(
+        nameData: NameData,
         context: CoroutineContext,
         block: EvalScope.(EffectScope, A) -> Unit,
     ): DisposableHandle {
@@ -201,9 +244,10 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         }
         // When our scope is cancelled, deactivate this observer.
         cancelHandle = childScope.coroutineContext.job.invokeOnCompletion { handle.dispose() }
-        val effectScope: EffectScope = effectScope(childScope)
+        val effectScope: EffectScope = effectScope(childScope, nameData + "effectScope")
         val outputNode =
             Output<A>(
+                nameData,
                 onDeath = { subRef.set(Absent) },
                 onEmit = onEmit@{ output ->
                         if (subRef.get() !is Present) return@onEmit
@@ -215,7 +259,7 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         deferAction {
             // Check for immediate cancellation
             if (subRef.get() != null) return@deferAction
-            truncateToScope(this@observeInternal)
+            truncateToScope(this@observeInternal, nameData + "truncateToScope")
                 .init
                 .connect(evalScope = stateScope.evalScope)
                 .activate(evalScope = stateScope.evalScope, outputNode.schedulable)
@@ -232,22 +276,29 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         return handle
     }
 
-    private fun effectScope(childScope: CoroutineScope) =
+    private fun effectScope(childScope: CoroutineScope, nameData: NameData) =
         object : EffectScope {
             override fun <R> async(
                 context: CoroutineContext,
                 start: CoroutineStart,
+                name: NameTag?,
                 block: suspend KairosCoroutineScope.() -> R,
-            ): Deferred<R> =
-                childScope.async(context, start) newScope@{
+            ): Deferred<R> {
+                val asynaNameData = name.toNameData("EffectScope.async")
+                return childScope.async(context, start) newScope@{
                     val childEndSignal: Events<Unit> =
-                        this@BuildScopeImpl.newStopEmitter("EffectScope.async").apply {
-                            this@newScope.invokeOnCancel { emit(Unit) }
-                        }
+                        this@BuildScopeImpl.newStopEmitter(
+                                asynaNameData.appendNames("childEndSignal")
+                            )
+                            .apply { this@newScope.invokeOnCancel { emit(Unit) } }
                     val childStateScope: StateScopeImpl =
-                        this@BuildScopeImpl.stateScope.childStateScope(childEndSignal)
+                        this@BuildScopeImpl.stateScope.childStateScope(
+                            childEndSignal,
+                            asynaNameData,
+                        )
                     val localNetwork =
                         LocalNetwork(
+                            asynaNameData,
                             network = this@BuildScopeImpl.network,
                             scope = this@newScope,
                             aliveLazy = childStateScope.aliveLazy,
@@ -258,9 +309,11 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
                         }
                     scope.block()
                 }
+            }
 
             override val kairosNetwork: KairosNetwork =
                 LocalNetwork(
+                    nameData,
                     network = this@BuildScopeImpl.network,
                     scope = childScope,
                     aliveLazy = this@BuildScopeImpl.stateScope.aliveLazy,
@@ -268,80 +321,94 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
         }
 
     private fun <A, T : Events<A>, S> buildEvents(
-        name: String? = null,
+        nameData: NameData,
         constructEvents: (InputNode<A>) -> Pair<T, S>,
         builder: suspend S.() -> Unit,
     ): Events<A> {
         var job: Job? = null
-        val stopEmitter = newStopEmitter("buildEvents[$name]")
+        val stopEmitter = newStopEmitter(nameData + "stopEmitter")
         // Create a child scope that will be kept alive beyond the end of this transaction.
         val childScope = coroutineScope.childScope()
-        lateinit var emitter: Pair<T, S>
+        lateinit var emitterAndScope: Pair<T, S>
         val inputNode =
             InputNode<A>(
+                nameData,
                 activate = {
                     // It's possible that activation occurs after all effects have been run, due
                     // to a MuxDeferred switch-in. For this reason, we need to activate in a new
                     // transaction.
-                    check(job == null) { "[$name] already activated" }
+                    check(job == null) { "[$nameData] already activated" }
                     job =
                         childScope.launchImmediate {
                             network
                                 .transaction("buildEvents") {
-                                    reenterBuildScope(this@BuildScopeImpl, childScope)
-                                        .launchEffect {
-                                            builder(emitter.second)
-                                            stopEmitter.emit(Unit)
-                                        }
+                                    reenterBuildScope(this@BuildScopeImpl, childScope).launchEffect(
+                                        nameData + "activatedBuilderEffect"
+                                    ) {
+                                        builder(emitterAndScope.second)
+                                        stopEmitter.emit(Unit)
+                                    }
                                 }
                                 .await()
                                 .join()
                         }
                 },
                 deactivate = {
-                    checkNotNull(job) { "[$name] already deactivated" }.cancel()
+                    checkNotNull(job) { "[$nameData] already deactivated" }.cancel()
                     job = null
                 },
             )
-        emitter = constructEvents(inputNode)
-        return truncateToScope(emitter.first.takeUntil(stopEmitter))
+        emitterAndScope = constructEvents(inputNode)
+        return truncateToScope(
+            takeUntil(nameData + "takeUntilStopped", emitterAndScope.first, stopEmitter),
+            nameData + "scopeLifetimeBound",
+        )
     }
 
-    private fun newStopEmitter(name: String): CoalescingMutableEvents<Unit, Unit> =
+    private fun newStopEmitter(nameData: NameData): CoalescingMutableEvents<Unit, Unit> =
         CoalescingMutableEvents(
-            name = name,
+            nameData,
             coalesce = { _, _: Unit -> },
             network = network,
             getInitialValue = {},
         )
 
-    fun childBuildScope(newEnd: Events<Any>): BuildScopeImpl {
+    fun childBuildScope(newEnd: Events<Any>, nameData: NameData): BuildScopeImpl {
         val newCoroutineScope: CoroutineScope = coroutineScope.childScope()
         return BuildScopeImpl(
-                stateScope = stateScope.childStateScope(newEnd),
+                nameData,
+                epoch,
+                stateScope = stateScope.childStateScope(newEnd, nameData),
                 coroutineScope = newCoroutineScope,
             )
             .apply {
                 // Ensure that once this transaction is done, the new child scope enters the
                 // completing state (kept alive so long as there are child jobs).
                 scheduleOutput(
-                    OneShot {
+                    OneShot(nameData + "completeJob") {
                         // TODO: don't like this cast
                         (newCoroutineScope.coroutineContext.job as CompletableJob).complete()
                     }
                 )
-                alive.observeSync { if (!it) newCoroutineScope.cancel() }
+                observeSync(nameData + "observeLifetime", alive) {
+                    if (!it) newCoroutineScope.cancel()
+                }
             }
     }
 
-    private fun mutableChildBuildScope(coroutineContext: CoroutineContext): BuildScopeImpl {
+    private fun mutableChildBuildScope(
+        childNameData: NameData,
+        coroutineContext: CoroutineContext,
+    ): BuildScopeImpl {
         val childScope = coroutineScope.childScope(coroutineContext)
         val stopEmitter =
-            newStopEmitter("mutableChildBuildScope").apply {
+            newStopEmitter(childNameData + "stopEmitter").apply {
                 childScope.invokeOnCancel { emit(Unit) }
             }
         return BuildScopeImpl(
-            stateScope = stateScope.childStateScope(stopEmitter),
+            childNameData,
+            epoch,
+            stateScope = stateScope.childStateScope(stopEmitter, childNameData),
             coroutineScope = childScope,
         )
     }
@@ -352,6 +419,14 @@ private fun EvalScope.reenterBuildScope(
     coroutineScope: CoroutineScope,
 ) =
     BuildScopeImpl(
-        stateScope = StateScopeImpl(evalScope = this, aliveLazy = outerScope.stateScope.aliveLazy),
+        outerScope.nameData,
+        outerScope.createdEpoch,
+        stateScope =
+            StateScopeImpl(
+                outerScope.stateScope.nameData,
+                outerScope.stateScope.createdEpoch,
+                evalScope = this,
+                aliveLazy = outerScope.stateScope.aliveLazy,
+            ),
         coroutineScope,
     )

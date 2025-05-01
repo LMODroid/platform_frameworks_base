@@ -16,6 +16,7 @@
 
 package com.android.systemui.kairos
 
+import com.android.systemui.kairos.util.NameTag
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.CoroutineScope
@@ -41,6 +42,7 @@ interface EffectScope : HasNetwork {
     fun <R> async(
         context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
+        name: NameTag? = null,
         block: suspend KairosCoroutineScope.() -> R,
     ): Deferred<R>
 
@@ -53,8 +55,9 @@ interface EffectScope : HasNetwork {
     fun launch(
         context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
+        name: NameTag? = null,
         block: suspend KairosCoroutineScope.() -> Unit,
-    ): Job = async(context, start, block)
+    ): Job = async(context, start, name, block)
 }
 
 /**

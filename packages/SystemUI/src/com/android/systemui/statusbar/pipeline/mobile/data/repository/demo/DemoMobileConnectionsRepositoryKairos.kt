@@ -46,6 +46,7 @@ import com.android.systemui.kairos.mapNotNull
 import com.android.systemui.kairos.mapValues
 import com.android.systemui.kairos.mergeLeft
 import com.android.systemui.kairos.stateOf
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairosBuilder
 import com.android.systemui.log.table.TableLogBufferFactory
 import com.android.systemui.statusbar.pipeline.mobile.data.model.SubscriptionModel
@@ -76,7 +77,9 @@ constructor(
     }
 
     private val wifiEvents: Events<FakeWifiEventModel?> = buildEvents {
-        wifiDataSource.wifiEvents.toEvents()
+        wifiDataSource.wifiEvents.toEvents(
+            nameTag("DemoMobileConnectionsRepositoryKairos.wifiEvents")
+        )
     }
 
     private val mobileEventsWithSubId: Events<Pair<Int, FakeNetworkEventModel>> =
@@ -98,7 +101,7 @@ constructor(
                 mobileEventsWithSubId.mapCheap { it.first },
                 carrierMergedEvents.mapCheap { it.subscriptionId },
             )
-            .holdState(null)
+            .holdState(null, nameTag("DemoMobileConnectionsRepositoryKairos.lastSeenSubId"))
     }
 
     private val activeCarrierMergedSubscription: State<Int?> = buildState {
@@ -110,7 +113,10 @@ constructor(
                     }
                     .map { null },
             )
-            .holdState(null)
+            .holdState(
+                null,
+                nameTag("DemoMobileConnectionsRepositoryKairos.activeCarrierMergedSubscription"),
+            )
     }
 
     private val activeMobileSubscriptions: State<Set<Int>> = buildState {
@@ -125,7 +131,12 @@ constructor(
                         }
                 }
             }
-            .foldState(emptySet()) { f, s -> f(s) }
+            .foldState(
+                emptySet(),
+                nameTag("DemoMobileConnectionsRepositoryKairos.activeMobileSubscriptions"),
+            ) { f, s ->
+                f(s)
+            }
     }
 
     private val subscriptionIds: State<Set<Int>> =
@@ -169,7 +180,9 @@ constructor(
             subscriptionsById
                 .asIncremental()
                 .mapValues { (id, _) -> buildSpec { newRepo(id) } }
-                .applyLatestSpecForKey()
+                .applyLatestSpecForKey(
+                    name = nameTag("DemoMobileConnectionsRepositoryKairos.reposBySubId")
+                )
         }
 
     // TODO(b/261029387): add a command for this value

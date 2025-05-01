@@ -27,6 +27,8 @@ import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.kairos.KairosNetwork
 import com.android.systemui.kairos.awaitClose
 import com.android.systemui.kairos.launchEffect
+import com.android.systemui.kairos.util.NameTag
+import com.android.systemui.kairos.util.map
 
 /**
  * Activates the Kairos [buildSpec] within [kairosNetwork], bound to the current composition.
@@ -39,13 +41,14 @@ import com.android.systemui.kairos.launchEffect
 fun <T> ActivatedKairosSpec(
     buildSpec: BuildSpec<T>,
     kairosNetwork: KairosNetwork,
+    name: NameTag? = null,
     block: @Composable (T) -> Unit,
 ) {
     var state by remember { mutableStateOf<Any?>(Uninitialized) }
     LaunchedEffect(key1 = Unit) {
-        kairosNetwork.activateSpec {
+        kairosNetwork.activateSpec(name) {
             val v = buildSpec.applySpec()
-            launchEffect {
+            launchEffect(name = name?.map { "$it-effect" }) {
                 state = v
                 awaitClose { state = Uninitialized }
             }

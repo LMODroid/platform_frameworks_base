@@ -1451,7 +1451,7 @@ class KairosTests {
     }
 
     private fun TestScope.activateSpec(network: KairosNetwork, spec: BuildSpec<*>) =
-        backgroundScope.launch { network.activateSpec(spec) }
+        backgroundScope.launch { network.activateSpec(spec = spec) }
 
     private suspend fun <R> TestScope.activateSpecWithResult(
         network: KairosNetwork,

@@ -17,9 +17,10 @@
 package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.util.Maybe
+import com.android.systemui.kairos.util.NameData
 
 /** Performs actions once, when the reactive component is first connected to the network. */
-internal class Init<out A>(val name: String?, initBlock: InitScope.() -> A) {
+internal class Init<out A>(val nameData: NameData, initBlock: InitScope.() -> A) {
 
     private var block: (InitScope.() -> A)? = initBlock
 
@@ -52,12 +53,14 @@ internal class Init<out A>(val name: String?, initBlock: InitScope.() -> A) {
             Maybe.absent
         }
 
+    override fun toString(): String = "${super.toString()}[$nameData]"
+
     private data class Initialized<A>(val networkId: Any, val value: A)
 }
 
 @Suppress("NOTHING_TO_INLINE")
-internal inline fun <A> init(name: String?, noinline block: InitScope.() -> A): Init<A> =
-    Init(name, block)
+internal inline fun <A> init(nameData: NameData, noinline block: InitScope.() -> A): Init<A> =
+    Init(nameData, block)
 
 @Suppress("NOTHING_TO_INLINE")
-internal inline fun <A> constInit(name: String?, value: A): Init<A> = init(name) { value }
+internal inline fun <A> constInit(nameData: NameData, value: A): Init<A> = init(nameData) { value }

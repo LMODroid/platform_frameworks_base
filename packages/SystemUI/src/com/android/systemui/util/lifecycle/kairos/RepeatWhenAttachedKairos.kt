@@ -21,6 +21,8 @@ import android.view.ViewTreeObserver
 import com.android.systemui.coroutines.newTracingContext
 import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.ExperimentalKairosApi
+import com.android.systemui.kairos.util.NameTag
+import com.android.systemui.kairos.util.map
 import com.android.systemui.lifecycle.WindowLifecycleState
 import com.android.systemui.util.Assert
 import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
@@ -46,12 +48,13 @@ import kotlinx.coroutines.flow.onStart
 fun BuildScope.repeatOnWindowLifecycle(
     view: View,
     state: WindowLifecycleState,
+    name: NameTag? = null,
     block: BuildScope.() -> Unit,
 ) {
     when (state) {
-        WindowLifecycleState.ATTACHED -> repeatWhenAttachedToWindow(view, block)
-        WindowLifecycleState.VISIBLE -> repeatWhenWindowIsVisible(view, block)
-        WindowLifecycleState.FOCUSED -> repeatWhenWindowHasFocus(view, block)
+        WindowLifecycleState.ATTACHED -> repeatWhenAttachedToWindow(view, name, block)
+        WindowLifecycleState.VISIBLE -> repeatWhenWindowIsVisible(view, name, block)
+        WindowLifecycleState.FOCUSED -> repeatWhenWindowHasFocus(view, name, block)
     }
 }
 
@@ -63,12 +66,19 @@ fun BuildScope.repeatOnWindowLifecycle(
  * [block] may be run multiple times, running once per every time the view is attached.
  */
 @ExperimentalKairosApi
-fun BuildScope.repeatWhenAttachedToWindow(view: View, block: BuildScope.() -> Unit) {
-    view.isAttached.flowOn(MAIN_DISPATCHER_SINGLETON).toState(false).observeLatestBuild {
-        if (it) {
-            block()
+fun BuildScope.repeatWhenAttachedToWindow(
+    view: View,
+    name: NameTag? = null,
+    block: BuildScope.() -> Unit,
+) {
+    view.isAttached
+        .flowOn(MAIN_DISPATCHER_SINGLETON)
+        .toState(false, name?.map { "$it-attachedState" })
+        .observeLatestBuild(name) {
+            if (it) {
+                block()
+            }
         }
-    }
 }
 
 /**
@@ -79,12 +89,19 @@ fun BuildScope.repeatWhenAttachedToWindow(view: View, block: BuildScope.() -> Un
  * [block] may be run multiple times, running once per every time the window becomes visible.
  */
 @ExperimentalKairosApi
-fun BuildScope.repeatWhenWindowIsVisible(view: View, block: BuildScope.() -> Unit) {
-    view.isWindowVisible.flowOn(MAIN_DISPATCHER_SINGLETON).toState(false).observeLatestBuild {
-        if (it) {
-            block()
+fun BuildScope.repeatWhenWindowIsVisible(
+    view: View,
+    name: NameTag? = null,
+    block: BuildScope.() -> Unit,
+) {
+    view.isWindowVisible
+        .flowOn(MAIN_DISPATCHER_SINGLETON)
+        .toState(false, name?.map { "$it-visibleState" })
+        .observeLatestBuild(name) {
+            if (it) {
+                block()
+            }
         }
-    }
 }
 
 /**
@@ -95,12 +112,19 @@ fun BuildScope.repeatWhenWindowIsVisible(view: View, block: BuildScope.() -> Uni
  * [block] may be run multiple times, running once per every time the window is focused.
  */
 @ExperimentalKairosApi
-fun BuildScope.repeatWhenWindowHasFocus(view: View, block: BuildScope.() -> Unit) {
-    view.isWindowFocused.flowOn(MAIN_DISPATCHER_SINGLETON).toState(false).observeLatestBuild {
-        if (it) {
-            block()
+fun BuildScope.repeatWhenWindowHasFocus(
+    view: View,
+    name: NameTag? = null,
+    block: BuildScope.() -> Unit,
+) {
+    view.isWindowFocused
+        .flowOn(MAIN_DISPATCHER_SINGLETON)
+        .toState(false, name?.map { "$it-focusState" })
+        .observeLatestBuild(name) {
+            if (it) {
+                block()
+            }
         }
-    }
 }
 
 private val View.isAttached

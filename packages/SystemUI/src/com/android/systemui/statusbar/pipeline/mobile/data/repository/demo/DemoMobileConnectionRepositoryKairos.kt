@@ -32,6 +32,7 @@ import com.android.systemui.kairos.util.Either
 import com.android.systemui.kairos.util.Either.First
 import com.android.systemui.kairos.util.Either.Second
 import com.android.systemui.kairos.util.firstOrNull
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairosBuilder
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.logDiffsForTable
@@ -86,7 +87,10 @@ class DemoMobileConnectionRepositoryKairos(
         )
 
     private val lastMobileEvent: State<FakeMobileEvent> = buildState {
-        mobileEvents.holdState(initialState)
+        mobileEvents.holdState(
+            initialState,
+            nameTag { "DemoMobileConnectionRepositoryKairos(subId=$subId).lastMobileEvent" },
+        )
     }
 
     private val lastEvent: State<Either<FakeMobileEvent, FakeCarrierMergedEvent>> = buildState {
@@ -95,7 +99,10 @@ class DemoMobileConnectionRepositoryKairos(
                 wifiEvents.mapCheap { Second(it) },
                 carrierMergedResetEvents.mapCheap { First(lastMobileEvent.sample()) },
             )
-            .holdState(First(initialState))
+            .holdState(
+                First(initialState),
+                nameTag { "DemoMobileConnectionRepositoryKairos(subId=$subId).lastEvent" },
+            )
     }
 
     override val carrierId: State<Int> =
@@ -104,6 +111,10 @@ class DemoMobileConnectionRepositoryKairos(
             .also {
                 onActivated {
                     logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).carrierId"
+                            },
                         intState = it,
                         tableLogBuffer = tableLogBuffer,
                         columnName = COL_CARRIER_ID,
@@ -114,8 +125,24 @@ class DemoMobileConnectionRepositoryKairos(
     override val inflateSignalStrength: State<Boolean> = buildState {
         mobileEvents
             .map { ev -> ev.inflateStrength }
-            .holdState(false)
-            .also { logDiffsForTable(it, tableLogBuffer, "", columnName = "inflate") }
+            .holdState(
+                false,
+                nameTag {
+                    "DemoMobileConnectionRepositoryKairos(subId=$subId).inflateSignalStrength"
+                },
+            )
+            .also {
+                logDiffsForTable(
+                    name =
+                        nameTag {
+                            "DemoMobileConnectionRepositoryKairos(subId=$subId).inflateSignalStrength::logDiffs"
+                        },
+                    it,
+                    tableLogBuffer,
+                    "",
+                    columnName = "inflate",
+                )
+            }
     }
 
     // I don't see a reason why we would turn the config off for demo mode.
@@ -127,13 +154,35 @@ class DemoMobileConnectionRepositoryKairos(
     override val isRoaming: State<Boolean> =
         lastEvent
             .map { it.firstOrNull()?.roaming ?: false }
-            .also { onActivated { logDiffsForTable(it, tableLogBuffer, columnName = COL_ROAMING) } }
+            .also {
+                onActivated {
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).isRoaming"
+                            },
+                        it,
+                        tableLogBuffer,
+                        columnName = COL_ROAMING,
+                    )
+                }
+            }
 
     override val operatorAlphaShort: State<String?> =
         lastEvent
             .map { it.firstOrNull()?.name }
             .also {
-                onActivated { logDiffsForTable(it, tableLogBuffer, columnName = COL_OPERATOR) }
+                onActivated {
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).operatorAlphaShort"
+                            },
+                        it,
+                        tableLogBuffer,
+                        columnName = COL_OPERATOR,
+                    )
+                }
             }
 
     override val isInService: State<Boolean> =
@@ -145,14 +194,37 @@ class DemoMobileConnectionRepositoryKairos(
                 }
             }
             .also {
-                onActivated { logDiffsForTable(it, tableLogBuffer, columnName = COL_IS_IN_SERVICE) }
+                onActivated {
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).isInService"
+                            },
+                        it,
+                        tableLogBuffer,
+                        columnName = COL_IS_IN_SERVICE,
+                    )
+                }
             }
 
     override val isNonTerrestrial: State<Boolean> = buildState {
         mobileEvents
             .map { it.ntn }
-            .holdState(false)
-            .also { logDiffsForTable(it, tableLogBuffer, columnName = COL_IS_NTN) }
+            .holdState(
+                false,
+                nameTag { "DemoMobileConnectionRepositoryKairos(subId=$subId).isNonTerrestrial" },
+            )
+            .also {
+                logDiffsForTable(
+                    name =
+                        nameTag {
+                            "DemoMobileConnectionRepositoryKairos(subId=$subId).isNonTerrestrial::logDiffs"
+                        },
+                    it,
+                    tableLogBuffer,
+                    columnName = COL_IS_NTN,
+                )
+            }
     }
 
     // TODO(b/261029387): not yet supported
@@ -167,7 +239,17 @@ class DemoMobileConnectionRepositoryKairos(
                 }
             }
             .also {
-                onActivated { logDiffsForTable(it, tableLogBuffer, columnName = COL_CDMA_LEVEL) }
+                onActivated {
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).cdmaLevel"
+                            },
+                        it,
+                        tableLogBuffer,
+                        columnName = COL_CDMA_LEVEL,
+                    )
+                }
             }
 
     override val primaryLevel: State<Int> =
@@ -179,12 +261,32 @@ class DemoMobileConnectionRepositoryKairos(
                 }
             }
             .also {
-                onActivated { logDiffsForTable(it, tableLogBuffer, columnName = COL_PRIMARY_LEVEL) }
+                onActivated {
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).primaryLevel"
+                            },
+                        it,
+                        tableLogBuffer,
+                        columnName = COL_PRIMARY_LEVEL,
+                    )
+                }
             }
 
     override val satelliteLevel: State<Int> =
         stateOf(0).also {
-            onActivated { logDiffsForTable(it, tableLogBuffer, columnName = COL_SATELLITE_LEVEL) }
+            onActivated {
+                logDiffsForTable(
+                    name =
+                        nameTag {
+                            "DemoMobileConnectionRepositoryKairos(subId=$subId).satelliteLevel"
+                        },
+                    it,
+                    tableLogBuffer,
+                    columnName = COL_SATELLITE_LEVEL,
+                )
+            }
         }
 
     // TODO(b/261029387): not yet supported
@@ -192,11 +294,23 @@ class DemoMobileConnectionRepositoryKairos(
         buildState {
                 mergeLeft(mobileEvents, wifiEvents)
                     .map { DataConnectionState.Connected }
-                    .holdState(DataConnectionState.Disconnected)
+                    .holdState(
+                        DataConnectionState.Disconnected,
+                        nameTag {
+                            "DemoMobileConnectionRepositoryKairos(subId=$subId).dataConnectionState"
+                        },
+                    )
             }
             .also {
                 onActivated {
-                    logDiffsForTable(diffableState = it, tableLogBuffer = tableLogBuffer)
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).dataConnectionState::logDiffs"
+                            },
+                        diffableState = it,
+                        tableLogBuffer = tableLogBuffer,
+                    )
                 }
             }
 
@@ -210,14 +324,34 @@ class DemoMobileConnectionRepositoryKairos(
                     }
                 activity.toMobileDataActivityModel()
             }
-            .also { onActivated { logDiffsForTable(it, tableLogBuffer, columnPrefix = "") } }
+            .also {
+                onActivated {
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).dataActivityDirection"
+                            },
+                        it,
+                        tableLogBuffer,
+                        columnPrefix = "",
+                    )
+                }
+            }
 
     override val carrierNetworkChangeActive: State<Boolean> =
         lastEvent
             .map { it.firstOrNull()?.carrierNetworkChange ?: false }
             .also {
                 onActivated {
-                    logDiffsForTable(it, tableLogBuffer, columnName = COL_CARRIER_NETWORK_CHANGE)
+                    logDiffsForTable(
+                        name =
+                            nameTag {
+                                "DemoMobileConnectionRepositoryKairos(subId=$subId).carrierNetworkChangeActive"
+                            },
+                        it,
+                        tableLogBuffer,
+                        columnName = COL_CARRIER_NETWORK_CHANGE,
+                    )
                 }
             }
 
@@ -227,7 +361,17 @@ class DemoMobileConnectionRepositoryKairos(
                 it.firstOrNull()?.dataType?.let { resolvedNetworkTypeForIconGroup(it) }
                     ?: ResolvedNetworkType.CarrierMergedNetworkType
             }
-            .also { logDiffsForTable(it, tableLogBuffer, columnPrefix = "") }
+            .also {
+                logDiffsForTable(
+                    name =
+                        nameTag {
+                            "DemoMobileConnectionRepositoryKairos(subId=$subId).resolvedNetworkType"
+                        },
+                    it,
+                    tableLogBuffer,
+                    columnPrefix = "",
+                )
+            }
     }
 
     override val numberOfLevels: State<Int> =

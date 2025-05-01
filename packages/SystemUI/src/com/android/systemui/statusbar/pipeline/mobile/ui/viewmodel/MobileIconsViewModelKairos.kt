@@ -26,7 +26,6 @@ import com.android.systemui.KairosBuilder
 import com.android.systemui.activated
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.SysUISingleton
-import com.android.systemui.flags.FeatureFlagsClassic
 import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.BuildSpec
 import com.android.systemui.kairos.ExperimentalKairosApi
@@ -40,6 +39,7 @@ import com.android.systemui.kairos.flatten
 import com.android.systemui.kairos.map
 import com.android.systemui.kairos.mapValues
 import com.android.systemui.kairos.stateOf
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairosBuilder
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.TableLogBufferFactory
@@ -79,7 +79,6 @@ constructor(
     private val interactor: MobileIconsInteractorKairos,
     private val airplaneModeInteractor: AirplaneModeInteractor,
     private val constants: ConnectivityConstants,
-    private val flags: FeatureFlagsClassic,
     private val logFactory: TableLogBufferFactory,
     private val context: Context,
 ) : KairosBuilder by kairosBuilder() {
@@ -95,7 +94,7 @@ constructor(
     val icons: Incremental<Int, MobileIconViewModelKairos> = buildIncremental {
         interactor.icons
             .mapValues { (subId, icon) -> buildSpec { commonViewModel(subId, icon) } }
-            .applyLatestSpecForKey()
+            .applyLatestSpecForKey(name = nameTag("MobileIconsViewModelKairos.icons"))
     }
 
     /** Whether the mobile sub that's displayed first visually is showing its network type icon. */
@@ -204,7 +203,6 @@ constructor(
                 iconInteractor = iconInteractor,
                 airplaneModeInteractor = airplaneModeInteractor,
                 constants = constants,
-                flags = flags,
             )
         }
 
@@ -230,5 +228,8 @@ class MobileIconsViewModelKairosComposeWrapper(
 @ExperimentalKairosApi
 fun MobileIconsViewModelKairos.composeWrapper():
     BuildSpec<MobileIconsViewModelKairosComposeWrapper> = buildSpec {
-    MobileIconsViewModelKairosComposeWrapper(icons = toComposeState(icons), logger = logger)
+    MobileIconsViewModelKairosComposeWrapper(
+        icons = toComposeState(icons, nameTag("MobileIconsViewModelKairosComposeWrapper.icons")),
+        logger = logger,
+    )
 }

@@ -30,9 +30,10 @@ import com.android.systemui.kairos.RootKairosNetwork
 import com.android.systemui.kairos.State
 import com.android.systemui.kairos.StateLoop
 import com.android.systemui.kairos.TransactionScope
-import com.android.systemui.kairos.activateSpec
 import com.android.systemui.kairos.effect
 import com.android.systemui.kairos.launchKairosNetwork
+import com.android.systemui.kairos.util.NameTag
+import com.android.systemui.kairos.util.nameTag
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.ClassKey
@@ -194,18 +195,20 @@ private constructor(
 
     override fun start() {
         appScope.launch {
-            unwrappedNetwork.activateSpec {
+            unwrappedNetwork.activateSpec(nameTag("KairosCoreStartable")) {
                 for (activatable in activatables.get()) {
                     activatable.run { activate() }
                 }
-                effect { started.complete(Unit) }
+                effect(name = nameTag("KairosCoreStartable::notifyStarted")) {
+                    started.complete(Unit)
+                }
             }
         }
     }
 
-    override suspend fun activateSpec(spec: BuildSpec<*>) {
+    override suspend fun activateSpec(name: NameTag?, spec: BuildSpec<*>) {
         started.await()
-        unwrappedNetwork.activateSpec(spec)
+        unwrappedNetwork.activateSpec(name, spec)
     }
 
     override suspend fun <R> transact(block: TransactionScope.() -> R): R {

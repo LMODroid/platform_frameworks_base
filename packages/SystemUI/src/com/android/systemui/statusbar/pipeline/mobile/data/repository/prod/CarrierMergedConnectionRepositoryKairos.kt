@@ -27,6 +27,7 @@ import com.android.systemui.kairos.State
 import com.android.systemui.kairos.combine
 import com.android.systemui.kairos.map
 import com.android.systemui.kairos.stateOf
+import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairosBuilder
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState
@@ -68,13 +69,19 @@ class CarrierMergedConnectionRepositoryKairos(
     }
 
     private val isWifiEnabled: State<Boolean> = buildState {
-        wifiRepository.isWifiEnabled.toState()
+        wifiRepository.isWifiEnabled.toState(
+            nameTag("CarrierMergedConnectionRepositoryKairos.isWifiEnabled")
+        )
     }
     private val isWifiDefault: State<Boolean> = buildState {
-        wifiRepository.isWifiDefault.toState()
+        wifiRepository.isWifiDefault.toState(
+            nameTag("CarrierMergedConnectionRepositoryKairos.isWifiDefault")
+        )
     }
     private val wifiNetwork: State<WifiNetworkModel> = buildState {
-        wifiRepository.wifiNetwork.toState()
+        wifiRepository.wifiNetwork.toState(
+            nameTag("CarrierMergedConnectionRepositoryKairos.wifiNetwork")
+        )
     }
 
     /**
@@ -127,7 +134,9 @@ class CarrierMergedConnectionRepositoryKairos(
         network.map { it?.level ?: SIGNAL_STRENGTH_NONE_OR_UNKNOWN }
 
     override val dataActivityDirection: State<DataActivityModel> = buildState {
-        wifiRepository.wifiActivity.toState()
+        wifiRepository.wifiActivity.toState(
+            nameTag("CarrierMergedConnectionRepositoryKairos.dataActivityDirection")
+        )
     }
 
     override val resolvedNetworkType: State<ResolvedNetworkType> =
