@@ -18,12 +18,14 @@ package com.android.systemui.statusbar.systemstatusicons.ui.viewmodel
 
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.airplaneModeIconViewModelFactory
+import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.bluetoothIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.ethernetIconViewModelFactory
 
 val Kosmos.systemStatusIconsViewModel by
     Kosmos.Fixture {
         SystemStatusIconsViewModel(
             airplaneModeIconViewModelFactory = airplaneModeIconViewModelFactory,
+            bluetoothIconViewModelFactory = bluetoothIconViewModelFactory,
             ethernetIconViewModelFactory = ethernetIconViewModelFactory,
         )
     }

@@ -20,6 +20,7 @@ import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.AirplaneModeIconViewModel
+import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.BluetoothIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.EthernetIconViewModel
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -37,6 +38,7 @@ class SystemStatusIconsViewModel
 @AssistedInject
 constructor(
     airplaneModeIconViewModelFactory: AirplaneModeIconViewModel.Factory,
+    bluetoothIconViewModelFactory: BluetoothIconViewModel.Factory,
     ethernetIconViewModelFactory: EthernetIconViewModel.Factory,
 ) : ExclusiveActivatable() {
 
@@ -46,8 +48,9 @@ constructor(
 
     private val airplaneModeIcon by lazy { airplaneModeIconViewModelFactory.create() }
     private val ethernetIcon by lazy { ethernetIconViewModelFactory.create() }
+    private val bluetoothIcon by lazy { bluetoothIconViewModelFactory.create() }
     private val iconViewModels: List<SystemStatusIconViewModel> by lazy {
-        listOf(ethernetIcon, airplaneModeIcon)
+        listOf(bluetoothIcon, ethernetIcon, airplaneModeIcon)
     }
 
     val icons: List<Icon>
@@ -56,6 +59,7 @@ constructor(
     override suspend fun onActivated(): Nothing {
         coroutineScope {
             launch { ethernetIcon.activate() }
+            launch { bluetoothIcon.activate() }
             launch { airplaneModeIcon.activate() }
         }
         awaitCancellation()
