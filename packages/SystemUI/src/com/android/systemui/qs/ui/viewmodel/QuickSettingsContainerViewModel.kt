@@ -43,6 +43,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import javax.inject.Named
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.flowOf
@@ -53,11 +54,12 @@ class QuickSettingsContainerViewModel
 constructor(
     @ShadeDisplayAware shadeContext: Context,
     brightnessSliderViewModelFactory: BrightnessSliderViewModel.Factory,
-    private val audioStreamSliderViewModelFactory: AudioStreamSliderViewModel.Factory,
+    audioStreamSliderViewModelFactory: AudioStreamSliderViewModel.Factory,
     shadeHeaderViewModelFactory: ShadeHeaderViewModel.Factory,
     tileGridViewModelFactory: TileGridViewModel.Factory,
     @Assisted private val supportsBrightnessMirroring: Boolean,
     @Assisted private val expansion: Float?,
+    @Assisted private val volumeSliderCoroutineScope: CoroutineScope?,
     val editModeViewModel: EditModeViewModel,
     val detailsViewModel: DetailsViewModel,
     toolbarViewModelFactory: ToolbarViewModel.Factory,
@@ -94,7 +96,17 @@ constructor(
         QsDetailedView.isEnabled &&
             shadeContext.resources.getBoolean(R.bool.config_enableDesktopAudioTileDetailsView)
 
-    var volumeSliderViewModel: AudioStreamSliderViewModel? = null
+    val volumeSliderViewModel =
+        if (showVolumeSlider && volumeSliderCoroutineScope != null)
+            audioStreamSliderViewModelFactory.create(
+                AudioStreamSliderViewModel.FactoryAudioStreamWrapper(
+                    SliderType.Stream(AudioStream(AudioManager.STREAM_MUSIC)).stream
+                ),
+                volumeSliderCoroutineScope,
+            )
+        else {
+            null
+        }
 
     val toolbarViewModel = toolbarViewModelFactory.create()
 
@@ -110,19 +122,6 @@ constructor(
 
     override suspend fun onActivated(): Nothing {
         coroutineScope {
-            if (showVolumeSlider) {
-                val volumeSliderStream =
-                    SliderType.Stream(AudioStream(AudioManager.STREAM_MUSIC)).stream
-                launch {
-                    volumeSliderViewModel =
-                        audioStreamSliderViewModelFactory.create(
-                            AudioStreamSliderViewModel.FactoryAudioStreamWrapper(
-                                volumeSliderStream
-                            ),
-                            this,
-                        )
-                }
-            }
             expansion?.let { mediaHost.expansion = it }
             launch { hydrator.activate() }
             launch { brightnessSliderViewModel.activate() }
@@ -138,6 +137,7 @@ constructor(
         fun create(
             supportsBrightnessMirroring: Boolean,
             expansion: Float? = null,
+            volumeSliderCoroutineScope: CoroutineScope? = null,
         ): QuickSettingsContainerViewModel
     }
 }

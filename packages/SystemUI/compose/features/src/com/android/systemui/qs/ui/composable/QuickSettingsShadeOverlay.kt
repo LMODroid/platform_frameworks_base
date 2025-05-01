@@ -35,6 +35,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -112,6 +113,7 @@ constructor(
 
     @Composable
     override fun ContentScope.Content(modifier: Modifier) {
+        val coroutineScope = rememberCoroutineScope()
         val contentViewModel =
             rememberViewModel("QuickSettingsShadeOverlayContent") {
                 contentViewModelFactory.create()
@@ -121,6 +123,7 @@ constructor(
                 quickSettingsContainerViewModelFactory.create(
                     supportsBrightnessMirroring = true,
                     expansion = COLLAPSED,
+                    volumeSliderCoroutineScope = coroutineScope,
                 )
             }
         val hunPlaceholderViewModel =
