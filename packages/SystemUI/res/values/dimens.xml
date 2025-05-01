@@ -240,6 +240,9 @@
     <!-- Size of the view displaying the mobile roam icon in the status bar. This value should
         match the viewport size of drawable stat_sys_roaming -->
     <dimen name="status_bar_mobile_roam_size">8sp</dimen>
+    <!-- Size of the roaming indicator. This indicator is positioned at the end of the mobile
+        group -->
+    <dimen name="status_bar_mobile_roam_size_updated">10sp</dimen>
 
     <!-- Spacing before the airplane mode icon if there are any icons preceding it. -->
     <dimen name="status_bar_airplane_spacer_width">4sp</dimen>
