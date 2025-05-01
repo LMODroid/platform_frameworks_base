@@ -40,7 +40,7 @@ import com.android.systemui.communal.ui.compose.section.CommunalPopupSection
 import com.android.systemui.communal.ui.compose.section.HubOnboardingSection
 import com.android.systemui.communal.ui.view.layout.sections.CommunalAppWidgetSection
 import com.android.systemui.communal.ui.viewmodel.CommunalViewModel
-import com.android.systemui.keyguard.ui.composable.blueprint.BlueprintAlignmentLines
+import com.android.systemui.keyguard.ui.composable.layout.LockIconAlignmentLines
 import com.android.systemui.keyguard.ui.composable.section.BottomAreaSection
 import com.android.systemui.keyguard.ui.composable.section.LockSection
 import com.android.systemui.statusbar.phone.SystemUIDialogFactory
@@ -144,10 +144,10 @@ constructor(
                         )
                     } else {
                         IntRect(
-                            left = lockIconPlaceable[BlueprintAlignmentLines.LockIcon.Left],
-                            top = lockIconPlaceable[BlueprintAlignmentLines.LockIcon.Top],
-                            right = lockIconPlaceable[BlueprintAlignmentLines.LockIcon.Right],
-                            bottom = lockIconPlaceable[BlueprintAlignmentLines.LockIcon.Bottom],
+                            left = lockIconPlaceable[LockIconAlignmentLines.Left],
+                            top = lockIconPlaceable[LockIconAlignmentLines.Top],
+                            right = lockIconPlaceable[LockIconAlignmentLines.Right],
+                            bottom = lockIconPlaceable[LockIconAlignmentLines.Bottom],
                         )
                     }
 

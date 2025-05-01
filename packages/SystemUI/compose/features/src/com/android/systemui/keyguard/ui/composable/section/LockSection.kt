@@ -37,7 +37,7 @@ import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.flags.FeatureFlagsClassic
 import com.android.systemui.flags.Flags
 import com.android.systemui.keyguard.ui.binder.DeviceEntryIconViewBinder
-import com.android.systemui.keyguard.ui.composable.blueprint.BlueprintAlignmentLines
+import com.android.systemui.keyguard.ui.composable.layout.LockIconAlignmentLines
 import com.android.systemui.keyguard.ui.view.DeviceEntryIconView
 import com.android.systemui.keyguard.ui.viewmodel.DeviceEntryBackgroundViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DeviceEntryForegroundViewModel
@@ -112,10 +112,10 @@ constructor(
                         height = placeable.height,
                         alignmentLines =
                             mapOf(
-                                BlueprintAlignmentLines.LockIcon.Left to lockIconBounds.left,
-                                BlueprintAlignmentLines.LockIcon.Top to lockIconBounds.top,
-                                BlueprintAlignmentLines.LockIcon.Right to lockIconBounds.right,
-                                BlueprintAlignmentLines.LockIcon.Bottom to lockIconBounds.bottom,
+                                LockIconAlignmentLines.Left to lockIconBounds.left,
+                                LockIconAlignmentLines.Top to lockIconBounds.top,
+                                LockIconAlignmentLines.Right to lockIconBounds.right,
+                                LockIconAlignmentLines.Bottom to lockIconBounds.bottom,
                             ),
                     ) {
                         placeable.place(0, 0)

@@ -35,6 +35,7 @@ import com.android.compose.animation.scene.ContentScope
 import com.android.compose.modifiers.padding
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.keyguard.ui.composable.LockscreenLongPress
+import com.android.systemui.keyguard.ui.composable.layout.LockIconAlignmentLines
 import com.android.systemui.keyguard.ui.composable.section.AmbientIndicationSection
 import com.android.systemui.keyguard.ui.composable.section.BottomAreaSection
 import com.android.systemui.keyguard.ui.composable.section.LockSection
@@ -234,10 +235,10 @@ constructor(
                 val lockIconPlaceable = lockIconMeasurable.measure(noMinConstraints)
                 val lockIconBounds =
                     IntRect(
-                        left = lockIconPlaceable[BlueprintAlignmentLines.LockIcon.Left],
-                        top = lockIconPlaceable[BlueprintAlignmentLines.LockIcon.Top],
-                        right = lockIconPlaceable[BlueprintAlignmentLines.LockIcon.Right],
-                        bottom = lockIconPlaceable[BlueprintAlignmentLines.LockIcon.Bottom],
+                        left = lockIconPlaceable[LockIconAlignmentLines.Left],
+                        top = lockIconPlaceable[LockIconAlignmentLines.Top],
+                        right = lockIconPlaceable[LockIconAlignmentLines.Right],
+                        bottom = lockIconPlaceable[LockIconAlignmentLines.Bottom],
                     )
 
                 val aboveLockIconPlaceable =
