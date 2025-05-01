@@ -44,7 +44,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.compose.PlatformSliderDefaults
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.ElementKey
@@ -85,8 +84,6 @@ import com.android.systemui.volume.panel.component.volume.ui.composable.VolumeSl
 import dagger.Lazy
 import javax.inject.Inject
 import kotlin.math.roundToInt
-import kotlinx.coroutines.awaitCancellation
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 
 @SysUISingleton
@@ -95,7 +92,7 @@ class QuickSettingsShadeOverlay
 constructor(
     private val actionsViewModelFactory: QuickSettingsShadeOverlayActionsViewModel.Factory,
     private val contentViewModelFactory: QuickSettingsShadeOverlayContentViewModel.Factory,
-    quickSettingsContainerViewModelFactory: QuickSettingsContainerViewModel.Factory,
+    private val quickSettingsContainerViewModelFactory: QuickSettingsContainerViewModel.Factory,
     private val notificationStackScrollView: Lazy<NotificationScrollView>,
     private val notificationsPlaceholderViewModelFactory: NotificationsPlaceholderViewModel.Factory,
 ) : Overlay {
@@ -108,19 +105,8 @@ constructor(
 
     override val userActions: Flow<Map<UserAction, UserActionResult>> = actionsViewModel.actions
 
-    private val quickSettingsContainerViewModel by lazy {
-        quickSettingsContainerViewModelFactory.create(
-            supportsBrightnessMirroring = true,
-            expansion = COLLAPSED,
-        )
-    }
-
     override suspend fun activate(): Nothing {
-        coroutineScope {
-            launch { quickSettingsContainerViewModel.activate() }
-            launch { actionsViewModel.activate() }
-        }
-        awaitCancellation()
+        actionsViewModel.activate()
     }
 
     @Composable
@@ -128,6 +114,13 @@ constructor(
         val contentViewModel =
             rememberViewModel("QuickSettingsShadeOverlayContent") {
                 contentViewModelFactory.create()
+            }
+        val quickSettingsContainerViewModel =
+            rememberViewModel("QuickSettingsShadeOverlayContainer") {
+                quickSettingsContainerViewModelFactory.create(
+                    supportsBrightnessMirroring = true,
+                    expansion = COLLAPSED,
+                )
             }
         val hunPlaceholderViewModel =
             rememberViewModel("QuickSettingsShadeOverlayPlaceholder") {
