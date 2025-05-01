@@ -1042,7 +1042,12 @@ public final class NotificationPanelViewController implements
 
     private void handleBouncerShowingChanged(Boolean isBouncerShowing) {
         if (!com.android.systemui.Flags.bouncerUiRevamp()) return;
-        if (isBouncerShowing && mStatusBarStateController.getState() != KEYGUARD) {
+        boolean statusBarStateIsNotKeyguard = mStatusBarStateController.getState() != KEYGUARD;
+        boolean qsExpanded = mShadeRepository.getLegacyIsQsExpanded().getValue();
+        boolean shouldBlurShade = statusBarStateIsNotKeyguard || qsExpanded;
+        debugLog("statusBarStateIsNotKeyguard=" + statusBarStateIsNotKeyguard + ", qsExpanded="
+                + qsExpanded);
+        if (isBouncerShowing && shouldBlurShade) {
             if (mBlurRenderEffect == null) {
                 mBlurRenderEffect = RenderEffect.createBlurEffect(
                         mBlurConfig.getMaxBlurRadiusPx(),
