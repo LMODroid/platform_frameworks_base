@@ -19,13 +19,22 @@ package com.android.systemui.statusbar.policy.bluetooth.data.repository
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothProfile
 import com.android.app.tracing.coroutines.launchTraced as launch
+import com.android.settingslib.bluetooth.BluetoothCallback
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.bluetooth.LocalBluetoothManager
+import com.android.systemui.common.coroutine.ChannelExt.trySendWithFailureLogging
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Background
+import com.android.systemui.kairos.awaitClose
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 
 /**
@@ -36,6 +45,12 @@ import kotlinx.coroutines.withContext
  * now.
  */
 interface BluetoothRepository {
+    /**
+     * A [StateFlow] that emits the current list of [CachedBluetoothDevice] instances that are
+     * considered to be connected.
+     */
+    val connectedDevices: StateFlow<List<CachedBluetoothDevice>>
+
     /**
      * Fetches the connection statuses for the given [currentDevices] and invokes [callback] once
      * those statuses have been fetched. The fetching occurs on a background thread because IPCs may
@@ -57,6 +72,72 @@ constructor(
     @Background private val bgDispatcher: CoroutineDispatcher,
     private val localBluetoothManager: LocalBluetoothManager?,
 ) : BluetoothRepository {
+
+    override val connectedDevices: StateFlow<List<CachedBluetoothDevice>> =
+        conflatedCallbackFlow {
+                val callback =
+                    object : BluetoothCallback {
+                        override fun onBluetoothStateChanged(bluetoothState: Int) {
+                            scope.launch {
+                                trySendWithFailureLogging(
+                                    getCurrentConnectedDevices(),
+                                    TAG,
+                                    "onBluetoothStateChanged",
+                                )
+                            }
+                        }
+
+                        override fun onConnectionStateChanged(
+                            cachedDevice: CachedBluetoothDevice?,
+                            state: Int,
+                        ) {
+                            scope.launch {
+                                trySendWithFailureLogging(
+                                    getCurrentConnectedDevices(),
+                                    TAG,
+                                    "onConnectionStateChanged",
+                                )
+                            }
+                        }
+
+                        override fun onProfileConnectionStateChanged(
+                            cachedDevice: CachedBluetoothDevice,
+                            state: Int,
+                            bluetoothProfile: Int,
+                        ) {
+                            scope.launch {
+                                trySendWithFailureLogging(
+                                    getCurrentConnectedDevices(),
+                                    TAG,
+                                    "onProfileConnectionStateChanged",
+                                )
+                            }
+                        }
+
+                        override fun onAclConnectionStateChanged(
+                            cachedDevice: CachedBluetoothDevice,
+                            state: Int,
+                        ) {
+                            scope.launch {
+                                trySendWithFailureLogging(
+                                    getCurrentConnectedDevices(),
+                                    TAG,
+                                    "onAclConnectionStateChanged",
+                                )
+                            }
+                        }
+                    }
+                localBluetoothManager?.eventManager?.registerCallback(callback)
+                awaitClose { localBluetoothManager?.eventManager?.unregisterCallback(callback) }
+            }
+            .onStart { scope.launch { getCurrentConnectedDevices() } }
+            .flowOn(bgDispatcher)
+            .stateIn(
+                scope = scope,
+                started = SharingStarted.WhileSubscribed(),
+                initialValue = emptyList(),
+            )
+
     override fun fetchConnectionStatusInBackground(
         currentDevices: Collection<CachedBluetoothDevice>,
         callback: ConnectionStatusFetchedCallback,
@@ -95,6 +176,17 @@ constructor(
 
             ConnectionStatusModel(maxConnectionState, connectedDevices)
         }
+    }
+
+    private suspend fun getCurrentConnectedDevices(): List<CachedBluetoothDevice> {
+        return withContext(bgDispatcher) {
+            localBluetoothManager?.cachedDeviceManager?.cachedDevicesCopy?.filter { it.isConnected }
+                ?: emptyList()
+        }
+    }
+
+    companion object {
+        private const val TAG = "BluetoothRepositoryImpl"
     }
 }
 

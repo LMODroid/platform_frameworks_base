@@ -16,6 +16,8 @@ package com.android.systemui.statusbar.policy.bluetooth.data.repository
 
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.bluetooth.LocalBluetoothManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.TestScope
@@ -35,6 +37,13 @@ class FakeBluetoothRepository(localBluetoothManager: LocalBluetoothManager) : Bl
 
     private val impl =
         BluetoothRepositoryImpl(testScope.backgroundScope, dispatcher, localBluetoothManager)
+
+    private val _connectedDevices = MutableStateFlow(emptyList<CachedBluetoothDevice>())
+    override val connectedDevices = _connectedDevices.asStateFlow()
+
+    fun setConnectedDevices(devices: List<CachedBluetoothDevice>) {
+        _connectedDevices.value = devices
+    }
 
     override fun fetchConnectionStatusInBackground(
         currentDevices: Collection<CachedBluetoothDevice>,

@@ -17,10 +17,14 @@ package com.android.systemui.statusbar.policy.bluetooth
 import android.bluetooth.BluetoothProfile
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.settingslib.bluetooth.BluetoothCallback
+import com.android.settingslib.bluetooth.BluetoothEventManager
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.bluetooth.LocalBluetoothAdapter
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.bluetooth.cachedBluetoothDeviceManager
 import com.android.systemui.bluetooth.localBluetoothManager
+import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.statusbar.policy.bluetooth.data.repository.BluetoothRepositoryImpl
@@ -36,8 +40,11 @@ import kotlinx.coroutines.test.TestScope
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentCaptor
+import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @SmallTest
@@ -47,6 +54,12 @@ class BluetoothRepositoryImplTest : SysuiTestCase() {
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
     private val underTest: BluetoothRepositoryImpl =
         kosmos.realBluetoothRepository as BluetoothRepositoryImpl
+
+    private val bluetoothManager = kosmos.localBluetoothManager!!
+    @Mock private lateinit var eventManager: BluetoothEventManager
+    @Mock private lateinit var cachedDevice: CachedBluetoothDevice
+    @Mock private lateinit var cachedDevice2: CachedBluetoothDevice
+    @Captor private lateinit var callbackCaptor: ArgumentCaptor<BluetoothCallback>
 
     private lateinit var scheduler: TestCoroutineScheduler
     private lateinit var dispatcher: TestDispatcher
@@ -60,8 +73,95 @@ class BluetoothRepositoryImplTest : SysuiTestCase() {
         scheduler = TestCoroutineScheduler()
         dispatcher = StandardTestDispatcher(scheduler)
         testScope = TestScope(dispatcher)
-        whenever(kosmos.localBluetoothManager?.bluetoothAdapter).thenReturn(bluetoothAdapter)
+
+        whenever(bluetoothManager.eventManager).thenReturn(eventManager)
+        whenever(bluetoothManager.bluetoothAdapter).thenReturn(bluetoothAdapter)
     }
+
+    @Test
+    fun connectedDevices_initialStateWithNoDevices_isEmpty() =
+        kosmos.runTest {
+            val connectedDevices by collectLastValue(underTest.connectedDevices)
+
+            bluetoothManager.eventManager.let {
+                verify(it).registerCallback(callbackCaptor.capture())
+            }
+
+            assertThat(connectedDevices).isEmpty()
+        }
+
+    @Test
+    fun connectedDevices_whenDeviceConnects_emitsDevice() =
+        kosmos.runTest {
+            val connectedDevices by collectLastValue(underTest.connectedDevices)
+            bluetoothManager.eventManager.let {
+                verify(it).registerCallback(callbackCaptor.capture())
+            }
+
+            val callback = callbackCaptor.value
+            assertThat(connectedDevices).isEmpty()
+
+            // Simulate device connecting
+            whenever(cachedDevice.isConnected).thenReturn(true)
+            whenever(cachedDevice.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+            whenever(cachedBluetoothDeviceManager.cachedDevicesCopy)
+                .thenReturn(listOf(cachedDevice))
+
+            // Trigger a callback
+            callback.onConnectionStateChanged(cachedDevice, BluetoothProfile.STATE_CONNECTED)
+            assertThat(connectedDevices).isEqualTo(listOf(cachedDevice))
+        }
+
+    @Test
+    fun connectedDevices_whenDeviceDisconnects_isEmpty() =
+        kosmos.runTest {
+            val connectedDevices by collectLastValue(underTest.connectedDevices)
+            bluetoothManager.eventManager?.let {
+                verify(it).registerCallback(callbackCaptor.capture())
+            }
+            val callback = callbackCaptor.value
+
+            // Start with a connected device
+            whenever(cachedDevice.isConnected).thenReturn(true)
+            whenever(cachedDevice.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+            whenever(cachedBluetoothDeviceManager.cachedDevicesCopy)
+                .thenReturn(listOf(cachedDevice))
+            callback.onConnectionStateChanged(cachedDevice, BluetoothProfile.STATE_CONNECTED)
+            assertThat(connectedDevices).isNotEmpty()
+
+            // Simulate device disconnecting
+            whenever(cachedDevice.isConnected).thenReturn(false)
+            whenever(cachedDevice.maxConnectionState)
+                .thenReturn(BluetoothProfile.STATE_DISCONNECTED)
+            whenever(cachedBluetoothDeviceManager.cachedDevicesCopy).thenReturn(emptyList())
+
+            // Trigger a callback reflecting the disconnection
+            callback.onConnectionStateChanged(cachedDevice, BluetoothProfile.STATE_DISCONNECTED)
+
+            assertThat(connectedDevices).isEmpty()
+        }
+
+    @Test
+    fun connectedDevices_whenMultipleDevicesConnects_emitsAllDevices() =
+        kosmos.runTest {
+            val connectedDevices by collectLastValue(underTest.connectedDevices)
+            bluetoothManager.eventManager.let {
+                verify(it).registerCallback(callbackCaptor.capture())
+            }
+
+            val callback = callbackCaptor.value
+            assertThat(connectedDevices).isEmpty()
+
+            whenever(cachedDevice.isConnected).thenReturn(true)
+            whenever(cachedDevice.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+            whenever(cachedDevice2.isConnected).thenReturn(true)
+            whenever(cachedDevice2.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+            whenever(cachedBluetoothDeviceManager.cachedDevicesCopy)
+                .thenReturn(listOf(cachedDevice, cachedDevice2))
+            callback.onConnectionStateChanged(cachedDevice, BluetoothProfile.STATE_CONNECTED)
+
+            assertThat(connectedDevices).isEqualTo(listOf(cachedDevice, cachedDevice2))
+        }
 
     @Test
     fun fetchConnectionStatusInBackground_currentDevicesEmpty_maxStateIsManagerState() =
