@@ -18,7 +18,16 @@ package com.android.systemui.media.remedia.data.repository
 
 import android.content.applicationContext
 import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.kosmos.applicationCoroutineScope
+import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.util.time.systemClock
 
 val Kosmos.mediaRepository by
-    Kosmos.Fixture { MediaRepositoryImpl(context = applicationContext, systemClock = systemClock) }
+    Kosmos.Fixture {
+        MediaRepositoryImpl(
+            applicationContext = applicationContext,
+            applicationScope = applicationCoroutineScope,
+            backgroundDispatcher = testDispatcher,
+            systemClock = systemClock,
+        )
+    }

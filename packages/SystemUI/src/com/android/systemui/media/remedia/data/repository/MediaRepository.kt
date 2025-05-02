@@ -17,6 +17,7 @@
 package com.android.systemui.media.remedia.data.repository
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.media.session.MediaController
 import androidx.compose.runtime.getValue
 import com.android.internal.logging.InstanceId
@@ -24,15 +25,21 @@ import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.lifecycle.Activatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.media.controls.data.model.MediaSortKeyModel
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.remedia.data.model.MediaDataModel
+import com.android.systemui.res.R
 import com.android.systemui.util.time.SystemClock
 import java.util.TreeMap
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /** A repository that holds the state of current media on the device. */
 interface MediaRepository : Activatable {
@@ -49,8 +56,12 @@ interface MediaRepository : Activatable {
 @SysUISingleton
 class MediaRepositoryImpl
 @Inject
-constructor(@Application private val context: Context, private val systemClock: SystemClock) :
-    MediaRepository, MediaPipelineRepository() {
+constructor(
+    @Application private val applicationContext: Context,
+    @Application private val applicationScope: CoroutineScope,
+    @Background val backgroundDispatcher: CoroutineDispatcher,
+    private val systemClock: SystemClock,
+) : MediaRepository, MediaPipelineRepository() {
 
     private val hydrator = Hydrator(traceName = "MediaRepository.hydrator")
     private val mutableCurrentMedia: MutableStateFlow<List<MediaDataModel>> =
@@ -123,31 +134,34 @@ constructor(@Application private val context: Context, private val systemClock: 
                     if (currentModel != null && currentModel.controller.sessionToken == token) {
                         currentModel.controller
                     } else {
-                        MediaController(context, token!!)
+                        MediaController(applicationContext, token!!)
                     }
-                val mediaModel = toDataModel(controller)
-                sortedMap[sortKey] = mediaModel
 
-                var isNewToCurrentMedia = true
-                val currentList =
-                    mutableListOf<MediaDataModel>().apply { addAll(mutableCurrentMedia.value) }
-                currentList.forEachIndexed { index, mediaDataModel ->
-                    if (mediaDataModel.instanceId == data.instanceId) {
-                        // When loading an update for an existing media control.
-                        isNewToCurrentMedia = false
-                        if (mediaDataModel != mediaModel) {
-                            // Update media model if changed.
-                            currentList[index] = mediaModel
+                applicationScope.launch {
+                    val mediaModel = toDataModel(controller)
+                    sortedMap[sortKey] = mediaModel
+
+                    var isNewToCurrentMedia = true
+                    val currentList =
+                        mutableListOf<MediaDataModel>().apply { addAll(mutableCurrentMedia.value) }
+                    currentList.forEachIndexed { index, mediaDataModel ->
+                        if (mediaDataModel.instanceId == data.instanceId) {
+                            // When loading an update for an existing media control.
+                            isNewToCurrentMedia = false
+                            if (mediaDataModel != mediaModel) {
+                                // Update media model if changed.
+                                currentList[index] = mediaModel
+                            }
                         }
                     }
-                }
-                if (isNewToCurrentMedia && active) {
-                    mutableCurrentMedia.value = sortedMap.values.toList()
-                } else {
-                    mutableCurrentMedia.value = currentList
-                }
+                    if (isNewToCurrentMedia && active) {
+                        mutableCurrentMedia.value = sortedMap.values.toList()
+                    } else {
+                        mutableCurrentMedia.value = currentList
+                    }
 
-                sortedMedia = sortedMap
+                    sortedMedia = sortedMap
+                }
             }
         }
     }
@@ -159,15 +173,17 @@ constructor(@Application private val context: Context, private val systemClock: 
             TreeMap(sortedMedia.filter { (keyModel, _) -> keyModel.instanceId != data.instanceId })
     }
 
-    private fun MediaData.toDataModel(controller: MediaController): MediaDataModel {
-        val icon = appIcon?.loadDrawable(context)
-        val background = artwork?.loadDrawable(context)
+    private suspend fun MediaData.toDataModel(controller: MediaController): MediaDataModel {
+        val icon = appIcon?.loadDrawable(applicationContext)
+        val background = artwork?.loadDrawable(applicationContext)
         return MediaDataModel(
             instanceId = instanceId,
             appUid = appUid,
             packageName = packageName,
             appName = app.toString(),
-            appIcon = icon?.let { Icon.Loaded(it, ContentDescription.Loaded(app)) },
+            appIcon =
+                icon?.let { Icon.Loaded(it, ContentDescription.Loaded(app)) }
+                    ?: getAltIcon(packageName),
             background = background?.let { Icon.Loaded(background, null) },
             title = song.toString(),
             subtitle = artist.toString(),
@@ -182,5 +198,16 @@ constructor(@Application private val context: Context, private val systemClock: 
             resumeAction = resumeAction,
             isExplicit = isExplicit,
         )
+    }
+
+    private suspend fun getAltIcon(packageName: String): Icon {
+        return withContext(backgroundDispatcher) {
+            try {
+                val icon = applicationContext.packageManager.getApplicationIcon(packageName)
+                Icon.Loaded(icon, null)
+            } catch (exception: PackageManager.NameNotFoundException) {
+                Icon.Resource(R.drawable.ic_music_note, null)
+            }
+        }
     }
 }

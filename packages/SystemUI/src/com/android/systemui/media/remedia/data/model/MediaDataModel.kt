@@ -33,7 +33,7 @@ data class MediaDataModel(
     /** Package name of the app that's posting the media, used for logging. */
     val packageName: String,
     val appName: String,
-    val appIcon: Icon?,
+    val appIcon: Icon,
     val background: Icon?,
     val title: String,
     val subtitle: String,
