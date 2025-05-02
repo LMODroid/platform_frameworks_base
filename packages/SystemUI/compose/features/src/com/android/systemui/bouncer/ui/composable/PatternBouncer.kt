@@ -45,6 +45,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.integerResource
@@ -211,9 +212,11 @@ fun PatternBouncer(
         }
     }
 
-    // This is the position of the input pointer.
+    // This is the position of the input pointer. Calculated in context of bouncer Box.
     var inputPosition: Offset? by remember { mutableStateOf(null) }
+    // Calculated in context of Canvas inside the Box.
     var gridCoordinates: LayoutCoordinates? by remember { mutableStateOf(null) }
+    // Calculated in context of Canvas inside the Box.
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }
     var scale: Float by remember { mutableStateOf(1f) }
     // This is the size of the drawing area, in dips.
@@ -346,8 +349,10 @@ fun PatternBouncer(
                     }
 
                     // Draw the line between the most recently-selected dot and the input pointer
-                    // position.
-                    inputPosition?.let { lineEnd ->
+                    // position. Note that `inputPosition` is calculated relative to enclosing
+                    // `Box`.
+                    inputPosition?.let { lineEndInParent ->
+                        val lineEnd = lineEndInParent.minus(nonNullCoordinates.positionInParent())
                         currentDot?.let { dot ->
                             val from = pixelOffset(dot, spacing, horizontalOffset, verticalOffset)
                             val lineLength =
