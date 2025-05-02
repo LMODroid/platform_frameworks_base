@@ -31,12 +31,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @SysUISingleton
 class PrivacyChipInteractor
 @Inject
 constructor(
-    @Application applicationScope: CoroutineScope,
+    @Application val applicationScope: CoroutineScope,
     private val repository: PrivacyChipRepository,
     private val privacyDialogController: PrivacyDialogController,
     private val privacyDialogControllerV2: PrivacyDialogControllerV2,
@@ -80,10 +81,15 @@ constructor(
     fun onPrivacyChipClicked(privacyChip: OngoingPrivacyChip) {
         if (!deviceProvisionedController.isDeviceProvisioned) return
 
-        if (repository.isSafetyCenterEnabled.value) {
-            privacyDialogControllerV2.showDialog(shadeDialogContextInteractor.context, privacyChip)
-        } else {
-            privacyDialogController.showDialog(shadeDialogContextInteractor.context)
+        applicationScope.launch {
+            if (repository.isSafetyCenterEnabled()) {
+                privacyDialogControllerV2.showDialog(
+                    shadeDialogContextInteractor.context,
+                    privacyChip
+                )
+            } else {
+                privacyDialogController.showDialog(shadeDialogContextInteractor.context)
+            }
         }
     }
 }

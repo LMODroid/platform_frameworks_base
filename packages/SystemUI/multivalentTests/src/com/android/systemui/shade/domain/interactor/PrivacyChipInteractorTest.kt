@@ -28,11 +28,11 @@ import com.android.systemui.privacy.PrivacyType
 import com.android.systemui.privacy.privacyDialogController
 import com.android.systemui.privacy.privacyDialogControllerV2
 import com.android.systemui.shade.data.repository.fakePrivacyChipRepository
-import com.android.systemui.shade.data.repository.privacyChipRepository
 import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.any
 import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -128,23 +128,27 @@ class PrivacyChipInteractorTest : SysuiTestCase() {
             assertThat(actual).isTrue()
         }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun onPrivacyChipClicked_safetyCenterEnabled() =
         testScope.runTest {
             privacyChipRepository.setIsSafetyCenterEnabled(true)
 
             underTest.onPrivacyChipClicked(privacyChip)
+            runCurrent()
 
             verify(privacyDialogControllerV2).showDialog(any(), any())
             verify(privacyDialogController, never()).showDialog(any())
         }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun onPrivacyChipClicked_safetyCenterDisabled() =
         testScope.runTest {
             privacyChipRepository.setIsSafetyCenterEnabled(false)
 
             underTest.onPrivacyChipClicked(privacyChip)
+            runCurrent()
 
             verify(privacyDialogController).showDialog(any())
             verify(privacyDialogControllerV2, never()).showDialog(any(), any())
