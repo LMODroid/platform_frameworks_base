@@ -12,7 +12,7 @@
  * permissions and limitations under the License.
  */
 
-package com.android.systemui.statusbar.policy.bluetooth
+package com.android.systemui.statusbar.policy.bluetooth.data.repository
 
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.bluetooth.LocalBluetoothManager
@@ -38,7 +38,7 @@ class FakeBluetoothRepository(localBluetoothManager: LocalBluetoothManager) : Bl
 
     override fun fetchConnectionStatusInBackground(
         currentDevices: Collection<CachedBluetoothDevice>,
-        callback: ConnectionStatusFetchedCallback
+        callback: ConnectionStatusFetchedCallback,
     ) {
         impl.fetchConnectionStatusInBackground(currentDevices, callback)
         scheduler.runCurrent()

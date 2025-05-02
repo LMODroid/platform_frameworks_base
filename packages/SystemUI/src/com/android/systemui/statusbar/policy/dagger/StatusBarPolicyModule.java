@@ -81,8 +81,8 @@ import com.android.systemui.statusbar.policy.WalletController;
 import com.android.systemui.statusbar.policy.WalletControllerImpl;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.statusbar.policy.ZenModeControllerImpl;
-import com.android.systemui.statusbar.policy.bluetooth.BluetoothRepository;
-import com.android.systemui.statusbar.policy.bluetooth.BluetoothRepositoryImpl;
+import com.android.systemui.statusbar.policy.bluetooth.data.repository.BluetoothRepository;
+import com.android.systemui.statusbar.policy.bluetooth.data.repository.BluetoothRepositoryImpl;
 import com.android.systemui.statusbar.policy.data.repository.DeviceProvisioningRepositoryModule;
 
 import dagger.Binds;

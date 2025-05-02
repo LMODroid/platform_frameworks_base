@@ -19,10 +19,15 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.bluetooth.LocalBluetoothAdapter
-import com.android.settingslib.bluetooth.LocalBluetoothManager
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.bluetooth.localBluetoothManager
+import com.android.systemui.kosmos.runTest
+import com.android.systemui.kosmos.useUnconfinedTestDispatcher
+import com.android.systemui.statusbar.policy.bluetooth.data.repository.BluetoothRepositoryImpl
+import com.android.systemui.statusbar.policy.bluetooth.data.repository.ConnectionStatusModel
+import com.android.systemui.statusbar.policy.bluetooth.data.repository.realBluetoothRepository
+import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.mock
-import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -33,179 +38,192 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.whenever
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class BluetoothRepositoryImplTest : SysuiTestCase() {
 
-    private lateinit var underTest: BluetoothRepositoryImpl
+    private val kosmos = testKosmos().useUnconfinedTestDispatcher()
+    private val underTest: BluetoothRepositoryImpl =
+        kosmos.realBluetoothRepository as BluetoothRepositoryImpl
 
     private lateinit var scheduler: TestCoroutineScheduler
     private lateinit var dispatcher: TestDispatcher
     private lateinit var testScope: TestScope
 
-    @Mock private lateinit var localBluetoothManager: LocalBluetoothManager
     @Mock private lateinit var bluetoothAdapter: LocalBluetoothAdapter
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        whenever(localBluetoothManager.bluetoothAdapter).thenReturn(bluetoothAdapter)
-
         scheduler = TestCoroutineScheduler()
         dispatcher = StandardTestDispatcher(scheduler)
         testScope = TestScope(dispatcher)
-
-        underTest =
-            BluetoothRepositoryImpl(testScope.backgroundScope, dispatcher, localBluetoothManager)
+        whenever(kosmos.localBluetoothManager?.bluetoothAdapter).thenReturn(bluetoothAdapter)
     }
 
     @Test
-    fun fetchConnectionStatusInBackground_currentDevicesEmpty_maxStateIsManagerState() {
-        whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
+    fun fetchConnectionStatusInBackground_currentDevicesEmpty_maxStateIsManagerState() =
+        kosmos.runTest {
+            whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
 
-        val status = fetchConnectionStatus(currentDevices = emptyList())
+            val status = fetchConnectionStatus(currentDevices = emptyList())
 
-        assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTING)
-    }
-
-    @Test
-    fun fetchConnectionStatusInBackground_currentDevicesEmpty_nullManager_maxStateIsDisconnected() {
-        // This CONNECTING state should be unused because localBluetoothManager is null
-        whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
-        underTest =
-            BluetoothRepositoryImpl(
-                testScope.backgroundScope,
-                dispatcher,
-                localBluetoothManager = null,
-            )
-
-        val status = fetchConnectionStatus(currentDevices = emptyList())
-
-        assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_DISCONNECTED)
-    }
+            assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTING)
+        }
 
     @Test
-    fun fetchConnectionStatusInBackground_managerStateLargerThanDeviceStates_maxStateIsManager() {
-        whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
-        val device1 =
-            mock<CachedBluetoothDevice>().also {
-                whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_DISCONNECTED)
-            }
-        val device2 =
-            mock<CachedBluetoothDevice>().also {
-                whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_DISCONNECTED)
-            }
+    fun fetchConnectionStatusInBackground_currentDevicesEmpty_nullManager_maxStateIsDisconnected() =
+        kosmos.runTest {
+            // This CONNECTING state should be unused because localBluetoothManager is null
+            whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
+            val repository =
+                BluetoothRepositoryImpl(
+                    testScope.backgroundScope,
+                    dispatcher,
+                    localBluetoothManager = null,
+                )
 
-        val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
+            val status =
+                fetchConnectionStatus(repository = repository, currentDevices = emptyList())
 
-        assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTING)
-    }
-
-    @Test
-    fun fetchConnectionStatusInBackground_oneCurrentDevice_maxStateIsDeviceState() {
-        whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_DISCONNECTED)
-        val device =
-            mock<CachedBluetoothDevice>().also {
-                whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
-            }
-
-        val status = fetchConnectionStatus(currentDevices = listOf(device))
-
-        assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTING)
-    }
+            assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_DISCONNECTED)
+        }
 
     @Test
-    fun fetchConnectionStatusInBackground_multipleDevices_maxStateIsHighestState() {
-        whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_DISCONNECTED)
+    fun fetchConnectionStatusInBackground_managerStateLargerThanDeviceStates_maxStateIsManager() =
+        kosmos.runTest {
+            whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
+            val device1 =
+                mock<CachedBluetoothDevice>().also {
+                    whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_DISCONNECTED)
+                }
+            val device2 =
+                mock<CachedBluetoothDevice>().also {
+                    whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_DISCONNECTED)
+                }
 
-        val device1 =
-            mock<CachedBluetoothDevice>().also {
-                whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
-                whenever(it.isConnected).thenReturn(false)
-            }
-        val device2 =
-            mock<CachedBluetoothDevice>().also {
-                whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
-                whenever(it.isConnected).thenReturn(true)
-            }
+            val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
 
-        val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
-
-        assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTED)
-    }
+            assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTING)
+        }
 
     @Test
-    fun fetchConnectionStatusInBackground_devicesNotConnected_maxStateIsDisconnected() {
-        whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
+    fun fetchConnectionStatusInBackground_oneCurrentDevice_maxStateIsDeviceState() =
+        kosmos.runTest {
+            whenever(bluetoothAdapter.connectionState)
+                .thenReturn(BluetoothProfile.STATE_DISCONNECTED)
+            val device =
+                mock<CachedBluetoothDevice>().also {
+                    whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
+                }
 
-        // WHEN the devices say their state is CONNECTED but [isConnected] is false
-        val device1 =
-            mock<CachedBluetoothDevice>().also {
-                whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
-                whenever(it.isConnected).thenReturn(false)
-            }
-        val device2 =
-            mock<CachedBluetoothDevice>().also {
-                whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
-                whenever(it.isConnected).thenReturn(false)
-            }
+            val status = fetchConnectionStatus(currentDevices = listOf(device))
 
-        val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
-
-        // THEN the max state is DISCONNECTED
-        assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_DISCONNECTED)
-    }
+            assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTING)
+        }
 
     @Test
-    fun fetchConnectionStatusInBackground_currentDevicesEmpty_connectedDevicesEmpty() {
-        val status = fetchConnectionStatus(currentDevices = emptyList())
+    fun fetchConnectionStatusInBackground_multipleDevices_maxStateIsHighestState() =
+        kosmos.runTest {
+            whenever(bluetoothAdapter.connectionState)
+                .thenReturn(BluetoothProfile.STATE_DISCONNECTED)
 
-        assertThat(status.connectedDevices).isEmpty()
-    }
+            val device1 =
+                mock<CachedBluetoothDevice>().also {
+                    whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
+                    whenever(it.isConnected).thenReturn(false)
+                }
+            val device2 =
+                mock<CachedBluetoothDevice>().also {
+                    whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+                    whenever(it.isConnected).thenReturn(true)
+                }
 
-    @Test
-    fun fetchConnectionStatusInBackground_oneCurrentDeviceDisconnected_connectedDevicesEmpty() {
-        val device =
-            mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(false) }
+            val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
 
-        val status = fetchConnectionStatus(currentDevices = listOf(device))
-
-        assertThat(status.connectedDevices).isEmpty()
-    }
-
-    @Test
-    fun fetchConnectionStatusInBackground_oneCurrentDeviceConnected_connectedDevicesHasDevice() {
-        val device =
-            mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(true) }
-
-        val status = fetchConnectionStatus(currentDevices = listOf(device))
-
-        assertThat(status.connectedDevices).isEqualTo(listOf(device))
-    }
+            assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_CONNECTED)
+        }
 
     @Test
-    fun fetchConnectionStatusInBackground_multipleDevices_connectedDevicesHasOnlyConnected() {
-        val device1Connected =
-            mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(true) }
-        val device2Disconnected =
-            mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(false) }
-        val device3Connected =
-            mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(true) }
+    fun fetchConnectionStatusInBackground_devicesNotConnected_maxStateIsDisconnected() =
+        kosmos.runTest {
+            whenever(bluetoothAdapter.connectionState).thenReturn(BluetoothProfile.STATE_CONNECTING)
 
-        val status =
-            fetchConnectionStatus(
-                currentDevices = listOf(device1Connected, device2Disconnected, device3Connected)
-            )
+            // WHEN the devices say their state is CONNECTED but [isConnected] is false
+            val device1 =
+                mock<CachedBluetoothDevice>().also {
+                    whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+                    whenever(it.isConnected).thenReturn(false)
+                }
+            val device2 =
+                mock<CachedBluetoothDevice>().also {
+                    whenever(it.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+                    whenever(it.isConnected).thenReturn(false)
+                }
 
-        assertThat(status.connectedDevices).isEqualTo(listOf(device1Connected, device3Connected))
-    }
+            val status = fetchConnectionStatus(currentDevices = listOf(device1, device2))
+
+            // THEN the max state is DISCONNECTED
+            assertThat(status.maxConnectionState).isEqualTo(BluetoothProfile.STATE_DISCONNECTED)
+        }
+
+    @Test
+    fun fetchConnectionStatusInBackground_currentDevicesEmpty_connectedDevicesEmpty() =
+        kosmos.runTest {
+            val status = fetchConnectionStatus(currentDevices = emptyList())
+
+            assertThat(status.connectedDevices).isEmpty()
+        }
+
+    @Test
+    fun fetchConnectionStatusInBackground_oneCurrentDeviceDisconnected_connectedDevicesEmpty() =
+        kosmos.runTest {
+            val device =
+                mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(false) }
+
+            val status = fetchConnectionStatus(currentDevices = listOf(device))
+
+            assertThat(status.connectedDevices).isEmpty()
+        }
+
+    @Test
+    fun fetchConnectionStatusInBackground_oneCurrentDeviceConnected_connectedDevicesHasDevice() =
+        kosmos.runTest {
+            val device =
+                mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(true) }
+
+            val status = fetchConnectionStatus(currentDevices = listOf(device))
+
+            assertThat(status.connectedDevices).isEqualTo(listOf(device))
+        }
+
+    @Test
+    fun fetchConnectionStatusInBackground_multipleDevices_connectedDevicesHasOnlyConnected() =
+        kosmos.runTest {
+            val device1Connected =
+                mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(true) }
+            val device2Disconnected =
+                mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(false) }
+            val device3Connected =
+                mock<CachedBluetoothDevice>().also { whenever(it.isConnected).thenReturn(true) }
+
+            val status =
+                fetchConnectionStatus(
+                    currentDevices = listOf(device1Connected, device2Disconnected, device3Connected)
+                )
+
+            assertThat(status.connectedDevices)
+                .isEqualTo(listOf(device1Connected, device3Connected))
+        }
 
     private fun fetchConnectionStatus(
-        currentDevices: Collection<CachedBluetoothDevice>
+        repository: BluetoothRepositoryImpl = underTest,
+        currentDevices: Collection<CachedBluetoothDevice>,
     ): ConnectionStatusModel {
         var receivedStatus: ConnectionStatusModel? = null
-        underTest.fetchConnectionStatusInBackground(currentDevices) { status ->
+        repository.fetchConnectionStatusInBackground(currentDevices) { status ->
             receivedStatus = status
         }
         scheduler.runCurrent()
