@@ -97,8 +97,8 @@ internal class SchedulerImpl(private val enqueue: (MuxNode<*, *, *>) -> Boolean)
             }
         }
 
-        for (node in toVisit) {
-            visit(node)
+        for (idx in toVisit.indices) {
+            visit(toVisit[idx])
         }
 
         return total

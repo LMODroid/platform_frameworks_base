@@ -61,14 +61,14 @@ import java.util.TreeMap
  */
 internal class DepthTracker {
 
-    @Volatile var snapshotIsDirect = true
-    @Volatile private var snapshotIsIndirectRoot = false
+    var snapshotIsDirect = true
+    private var snapshotIsIndirectRoot = false
 
     private inline val snapshotIsIndirect: Boolean
         get() = !snapshotIsDirect
 
-    @Volatile var snapshotIndirectDepth: Int = 0
-    @Volatile var snapshotDirectDepth: Int = 0
+    var snapshotIndirectDepth: Int = 0
+    var snapshotDirectDepth: Int = 0
 
     private val _snapshotIndirectRoots = HashSet<MuxDeferredNode<*, *, *>>()
     val snapshotIndirectRoots
@@ -79,10 +79,10 @@ internal class DepthTracker {
     private val dirty_directUpstreamDepths = TreeMap<Int, Int>()
     private val dirty_indirectUpstreamDepths = TreeMap<Int, Int>()
     private val dirty_indirectUpstreamRoots = Bag<MuxDeferredNode<*, *, *>>()
-    @Volatile var dirty_directDepth = 0
-    @Volatile private var dirty_indirectDepth = 0
-    @Volatile private var dirty_depthIsDirect = true
-    @Volatile private var dirty_isIndirectRoot = false
+    var dirty_directDepth = 0
+    private var dirty_indirectDepth = 0
+    private var dirty_depthIsDirect = true
+    private var dirty_isIndirectRoot = false
 
     fun schedule(scheduler: Scheduler, node: MuxNode<*, *, *>) {
         if (dirty_depthIsDirect) {
@@ -182,7 +182,7 @@ internal class DepthTracker {
         return (!dirty_depthIsDirect && (addsChanged || removalsChanged))
     }
 
-    private fun <T> HashSet<T>.applyRemovalDiff(changeSet: Set<T>): Set<T> {
+    private fun <T> HashSet<T>.applyRemovalDiff(changeSet: HashSet<T>): Set<T> {
         val remainder = HashSet<T>()
         for (element in changeSet) {
             if (!remove(element)) {
@@ -479,9 +479,17 @@ internal fun scheduleAll(
     downstreamSet: DownstreamSet,
     evalScope: EvalScope,
 ): Boolean {
-    downstreamSet.nodes.forEach { it.schedule(logIndent, evalScope) }
-    downstreamSet.muxMovers.forEach { it.scheduleMover(logIndent, evalScope) }
-    downstreamSet.outputs.forEach { it.schedule(logIndent, evalScope) }
-    downstreamSet.stateWriters.forEach { evalScope.schedule(it) }
+    for (node in downstreamSet.nodes) {
+        node.schedule(logIndent, evalScope)
+    }
+    for (mover in downstreamSet.muxMovers) {
+        mover.scheduleMover(logIndent, evalScope)
+    }
+    for (output in downstreamSet.outputs) {
+        output.schedule(logIndent, evalScope)
+    }
+    for (idx in downstreamSet.stateWriters.indices) {
+        evalScope.schedule(downstreamSet.stateWriters[idx])
+    }
     return downstreamSet.isNotEmpty()
 }

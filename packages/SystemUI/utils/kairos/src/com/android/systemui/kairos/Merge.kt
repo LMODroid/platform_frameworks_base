@@ -21,7 +21,7 @@ import com.android.systemui.kairos.internal.constInit
 import com.android.systemui.kairos.internal.mapImpl
 import com.android.systemui.kairos.internal.mergeNodes
 import com.android.systemui.kairos.internal.mergeNodesLeft
-import com.android.systemui.kairos.internal.store.ConcurrentHashMapK
+import com.android.systemui.kairos.internal.store.HashMapK
 import com.android.systemui.kairos.internal.switchDeferredImpl
 import com.android.systemui.kairos.internal.switchPromptImpl
 import com.android.systemui.kairos.util.map
@@ -205,7 +205,7 @@ fun <K, V> Incremental<K, Events<V>>.mergeEventsIncrementally(): Events<Map<K, V
                             .asIterable()
                     },
                     getPatches = { patches },
-                    storeFactory = ConcurrentHashMapK.Factory(),
+                    storeFactory = HashMapK.Factory(),
                 )
                 .awaitValues(),
         )
@@ -250,7 +250,7 @@ fun <K, V> Incremental<K, Events<V>>.mergeEventsIncrementallyPromptly(): Events<
                             .asIterable()
                     },
                     getPatches = { patches },
-                    storeFactory = ConcurrentHashMapK.Factory(),
+                    storeFactory = HashMapK.Factory(),
                 )
                 .awaitValues(),
         )

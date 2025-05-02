@@ -36,7 +36,7 @@ internal class DeferScopeImpl : DeferScope {
     }
 
     override fun <R> deferAsync(block: () -> R): Lazy<R> =
-        lazy(block).also { deferrals.add { it.value } }
+        lazy(LazyThreadSafetyMode.NONE, block).also { deferrals.add { it.value } }
 }
 
 internal class CompletableLazy<T>(

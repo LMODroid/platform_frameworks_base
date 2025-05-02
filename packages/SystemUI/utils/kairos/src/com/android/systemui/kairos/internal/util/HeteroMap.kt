@@ -18,16 +18,15 @@ package com.android.systemui.kairos.internal.util
 
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.Maybe.Absent
-import java.util.concurrent.ConcurrentHashMap
 
 private object NULL
 
-internal class HeteroMap private constructor(private val store: ConcurrentHashMap<Key<*>, Any>) {
+internal class HeteroMap private constructor(private val store: HashMap<Key<*>, Any>) {
     interface Key<A> {}
 
-    constructor() : this(ConcurrentHashMap())
+    constructor() : this(HashMap())
 
-    constructor(capacity: Int) : this(ConcurrentHashMap(capacity))
+    constructor(capacity: Int) : this(HashMap(capacity))
 
     @Suppress("UNCHECKED_CAST")
     operator fun <A> get(key: Key<A>): Maybe<A> =

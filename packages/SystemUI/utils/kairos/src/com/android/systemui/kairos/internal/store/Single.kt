@@ -33,7 +33,7 @@ internal class Single<V>(val unwrapped: Any?) : MapK<Single.W, Unit, V>, Abstrac
 @Suppress("NOTHING_TO_INLINE")
 internal inline fun <V> MapK<Single.W, Unit, V>.asSingle(): Single<V> = this as Single<V>
 
-internal class SingletonMapK<V>(@Volatile private var value: Any?) :
+internal class SingletonMapK<V>(private var value: Any?) :
     MutableMapK<Single.W, Unit, V>, AbstractMutableMap<Unit, V>() {
 
     constructor() : this(NoValue)

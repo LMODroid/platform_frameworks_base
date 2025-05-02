@@ -16,7 +16,7 @@
 
 package com.android.systemui.kairos.internal
 
-import com.android.systemui.kairos.internal.store.ConcurrentHashMapK
+import com.android.systemui.kairos.internal.store.HashMapK
 import com.android.systemui.kairos.internal.store.MutableArrayMapK
 import com.android.systemui.kairos.internal.store.MutableMapK
 import com.android.systemui.kairos.internal.store.StoreEntry
@@ -35,15 +35,12 @@ internal open class StateImpl<out A>(
 
 internal sealed class StateDerived<A> : StateStore<A>() {
 
-    @Volatile
     var invalidatedEpoch = Long.MIN_VALUE
         private set
 
-    @Volatile
     protected var validatedEpoch = Long.MIN_VALUE
         private set
 
-    @Volatile
     protected var cache: Any? = EmptyCache
         private set
 
@@ -102,9 +99,8 @@ internal class StateSource<S>(init: Lazy<S>, val name: String?, val operatorName
     // Note: Don't need to synchronize; we will never interleave reads and writes, since all writes
     // are performed at the end of a network step, after any reads would have taken place.
 
-    @Volatile private var _current: Lazy<S> = init
+    private var _current: Lazy<S> = init
 
-    @Volatile
     var writeEpoch = 0L
         private set
 
@@ -161,7 +157,7 @@ internal inline fun <A> activatedStateSource(
     return StateImpl(name, operatorName, calm, store)
 }
 
-private inline fun <A> EventsImpl<A>.calm(state: StateDerived<A>): EventsImpl<A> {
+private fun <A> EventsImpl<A>.calm(state: StateDerived<A>): EventsImpl<A> {
     val newValues =
         mapImpl({ this@calm }) { new, _ ->
                 val (current, _) = state.getCurrentWithEpoch(evalScope = this)
@@ -266,12 +262,11 @@ internal class DerivedFlatten<A>(val upstream: InitScope.() -> StateImpl<StateIm
     override fun toString(): String = "${this::class.simpleName}@$hashString"
 }
 
-@Suppress("NOTHING_TO_INLINE")
-internal inline fun <A, B> flatMapStateImpl(
-    noinline stateImpl: InitScope.() -> StateImpl<A>,
+internal fun <A, B> flatMapStateImpl(
+    stateImpl: InitScope.() -> StateImpl<A>,
     name: String?,
     operatorName: String,
-    noinline transform: EvalScope.(A) -> StateImpl<B>,
+    transform: EvalScope.(A) -> StateImpl<B>,
 ): StateImpl<B> {
     val mapped = mapStateImpl(stateImpl, null, operatorName, transform)
     return flattenStateImpl({ mapped }, name, operatorName)
@@ -381,7 +376,7 @@ internal fun <K, V> zipStateMap(
         operatorName = operatorName,
         numStates = numStates,
         states = init(null) { states.connect(this).asIterable() },
-        storeFactory = ConcurrentHashMapK.Factory(),
+        storeFactory = HashMapK.Factory(),
     )
 
 internal fun <V> zipStateList(
@@ -471,8 +466,7 @@ internal class DerivedZipped<W, K, A>(
     override fun toString(): String = "${this::class.simpleName}@$hashString"
 }
 
-@Suppress("NOTHING_TO_INLINE")
-internal inline fun <A> zipStates(
+internal fun <A> zipStates(
     name: String?,
     operatorName: String,
     numStates: Int,

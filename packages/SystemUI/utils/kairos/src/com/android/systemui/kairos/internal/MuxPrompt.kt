@@ -100,11 +100,8 @@ internal class MuxPromptNode<W, K, V>(
         val severed = mutableListOf<NodeConnection<*>>()
 
         // remove and sever
-        removes.forEach { k ->
-            switchedIn.remove(k)?.let { branchNode: BranchNode ->
-                if (name != null) {
-                    logLn { "[${this@MuxPromptNode}] removing $k" }
-                }
+        for (idx in removes.indices) {
+            switchedIn.remove(removes[idx])?.let { branchNode: BranchNode ->
                 val conn: NodeConnection<V> = branchNode.upstream
                 severed.add(conn)
                 conn.removeDownstream(downstream = branchNode.schedulable)
@@ -120,7 +117,8 @@ internal class MuxPromptNode<W, K, V>(
         }
 
         // add or replace
-        adds.forEach { (k, newUpstream: EventsImpl<V>) ->
+        for (idx in adds.indices) {
+            val (k, newUpstream: EventsImpl<V>) = adds[idx]
             // remove old and sever, if present
             switchedIn.remove(k)?.let { oldBranch: BranchNode ->
                 if (name != null) {
@@ -171,8 +169,8 @@ internal class MuxPromptNode<W, K, V>(
             }
         }
 
-        for (severedNode in severed) {
-            severedNode.scheduleDeactivationIfNeeded(evalScope)
+        for (idx in severed.indices) {
+            severed[idx].scheduleDeactivationIfNeeded(evalScope)
         }
 
         return needsReschedule
@@ -205,7 +203,7 @@ internal class MuxPromptNode<W, K, V>(
         if (lifecycle.lifecycleState !is MuxLifecycleState.Active) return
         lifecycle.lifecycleState = MuxLifecycleState.Inactive(spec)
         // Process branch nodes
-        switchedIn.forEach { (_, branchNode) ->
+        switchedIn.forEach { _, branchNode ->
             branchNode.upstream.removeDownstreamAndDeactivateIfNeeded(
                 downstream = branchNode.schedulable
             )

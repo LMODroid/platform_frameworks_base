@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
-
 package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.internal.store.MapHolder
@@ -34,8 +32,8 @@ internal sealed class MuxNode<W, K, V>(val lifecycle: MuxLifecycle<W, K, V>) :
     lateinit var upstreamData: MutableMapK<W, K, PullNode<V>>
     lateinit var switchedIn: MutableMapK<W, K, BranchNode>
 
-    @Volatile var markedForCompaction = false
-    @Volatile var markedForEvaluation = false
+    var markedForCompaction = false
+    var markedForEvaluation = false
 
     val downstreamSet: DownstreamSet = DownstreamSet()
 
@@ -46,6 +44,7 @@ internal sealed class MuxNode<W, K, V>(val lifecycle: MuxLifecycle<W, K, V>) :
     val epoch
         get() = transactionCache.epoch
 
+    @Suppress("NOTHING_TO_INLINE")
     inline fun hasCurrentValueLocked(evalScope: EvalScope): Boolean = epoch == evalScope.epoch
 
     override fun hasCurrentValue(logIndent: Int, evalScope: EvalScope): Boolean =
@@ -97,7 +96,6 @@ internal sealed class MuxNode<W, K, V>(val lifecycle: MuxLifecycle<W, K, V>) :
     }
 
     fun adjustDirectUpstream(scheduler: Scheduler, oldDepth: Int, newDepth: Int) {
-
         if (depthTracker.addDirectUpstream(oldDepth, newDepth)) {
             depthTracker.schedule(scheduler, this)
         }
@@ -326,6 +324,7 @@ internal interface MuxActivator<W, K, V> {
     ): Pair<MuxNode<W, K, V>, (() -> Unit)?>?
 }
 
+@Suppress("NOTHING_TO_INLINE")
 internal inline fun <W, K, V> MuxLifecycle(
     onSubscribe: MuxActivator<W, K, V>
 ): EventsImpl<MuxResult<W, K, V>> = MuxLifecycle(MuxLifecycleState.Inactive(onSubscribe))
@@ -359,8 +358,8 @@ internal fun <W, K, V> MuxNode<W, K, V>.initializeUpstream(
     }
     switchedIn = storeFactory.create(initUpstream.size)
     upstreamData = storeFactory.create(initUpstream.size)
-    for (triple in initUpstream) {
-        triple?.let { (key, branch, upstream) ->
+    for (idx in initUpstream.indices) {
+        initUpstream[idx]?.let { (key, branch, upstream) ->
             switchedIn[key] = branch
             upstream?.let { upstreamData[key] = upstream }
         }
@@ -368,7 +367,7 @@ internal fun <W, K, V> MuxNode<W, K, V>.initializeUpstream(
 }
 
 internal fun <W, K, V> MuxNode<W, K, V>.initializeDepth() {
-    switchedIn.forEach { (_, branch) ->
+    switchedIn.forEach { _, branch ->
         val conn = branch.upstream
         if (conn.depthTracker.snapshotIsDirect) {
             depthTracker.addDirectUpstream(

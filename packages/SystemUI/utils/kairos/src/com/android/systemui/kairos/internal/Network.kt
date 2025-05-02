@@ -137,8 +137,8 @@ internal class Network(
                     logDuration(getPrefix = { "process inputs" }, trace = true) {
                         // Run all actions
                         runThenDrainDeferrals {
-                            for (action in actions) {
-                                action.started(evalScope)
+                            for (idx in actions.indices) {
+                                actions[idx].started(evalScope)
                             }
                         }
                     }
@@ -233,7 +233,7 @@ internal class Network(
 
     private fun evalLaunchedOutputs(coroutineScope: CoroutineScope) {
         if (outputsByDispatcher.isEmpty()) return
-        for ((key, outputs) in outputsByDispatcher) {
+        outputsByDispatcher.forEach { key, outputs ->
             if (outputs.isNotEmpty()) {
                 coroutineScope.launch(key) {
                     while (outputs.isNotEmpty()) {
@@ -326,7 +326,7 @@ internal class TransactionStore private constructor(private val storage: HeteroM
 
 internal class TransactionCache<A> {
     private val key = object : HeteroMap.Key<A> {}
-    @Volatile
+
     var epoch: Long = Long.MIN_VALUE
         private set
 

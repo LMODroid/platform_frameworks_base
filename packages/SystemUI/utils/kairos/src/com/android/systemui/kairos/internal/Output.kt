@@ -20,8 +20,8 @@ internal class Output<A>(val onDeath: () -> Unit = {}, val onEmit: EvalScope.(A)
 
     val schedulable = Schedulable.O(this)
 
-    @Volatile var upstream: NodeConnection<A>? = null
-    @Volatile var result: Any? = NoResult
+    var upstream: NodeConnection<A>? = null
+    var result: Any? = NoResult
 
     private object NoResult
 

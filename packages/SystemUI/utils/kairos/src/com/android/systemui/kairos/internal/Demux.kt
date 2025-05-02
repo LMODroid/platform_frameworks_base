@@ -16,7 +16,7 @@
 
 package com.android.systemui.kairos.internal
 
-import com.android.systemui.kairos.internal.store.ConcurrentHashMapK
+import com.android.systemui.kairos.internal.store.HashMapK
 import com.android.systemui.kairos.internal.store.MapHolder
 import com.android.systemui.kairos.internal.store.MapK
 import com.android.systemui.kairos.internal.store.MutableMapK
@@ -33,7 +33,7 @@ internal class DemuxNode<W, K, A>(
 
     lateinit var upstreamConnection: NodeConnection<MapK<W, K, A>>
 
-    @Volatile private var epoch: Long = Long.MIN_VALUE
+    private var epoch: Long = Long.MIN_VALUE
 
     fun hasCurrentValueLocked(logIndent: Int, evalScope: EvalScope, key: K): Boolean =
         evalScope.epoch == epoch &&
@@ -52,15 +52,16 @@ internal class DemuxNode<W, K, A>(
                     upstreamConnection.getPushEvent(currentLogIndent, evalScope)
                 }
             updateEpoch(evalScope)
-            for ((key, _) in upstreamResult) {
-                if (!branchNodeByKey.contains(key)) continue
-                val branch = branchNodeByKey.getValue(key)
-                branch.schedule(currentLogIndent, evalScope)
+            upstreamResult.forEach { key, _ ->
+                if (branchNodeByKey.contains(key)) {
+                    val branch = branchNodeByKey.getValue(key)
+                    branch.schedule(currentLogIndent, evalScope)
+                }
             }
         }
 
     override fun adjustDirectUpstream(scheduler: Scheduler, oldDepth: Int, newDepth: Int) {
-        for ((_, branchNode) in branchNodeByKey) {
+        branchNodeByKey.forEach { _, branchNode ->
             branchNode.downstreamSet.adjustDirectUpstream(scheduler, oldDepth, newDepth)
         }
     }
@@ -71,7 +72,7 @@ internal class DemuxNode<W, K, A>(
         oldIndirectSet: Set<MuxDeferredNode<*, *, *>>,
         newDirectDepth: Int,
     ) {
-        for ((_, branchNode) in branchNodeByKey) {
+        branchNodeByKey.forEach { _, branchNode ->
             branchNode.downstreamSet.moveIndirectUpstreamToDirect(
                 scheduler,
                 oldIndirectDepth,
@@ -88,7 +89,7 @@ internal class DemuxNode<W, K, A>(
         removals: Set<MuxDeferredNode<*, *, *>>,
         additions: Set<MuxDeferredNode<*, *, *>>,
     ) {
-        for ((_, branchNode) in branchNodeByKey) {
+        branchNodeByKey.forEach { _, branchNode ->
             branchNode.downstreamSet.adjustIndirectUpstream(
                 scheduler,
                 oldDepth,
@@ -105,7 +106,7 @@ internal class DemuxNode<W, K, A>(
         newIndirectDepth: Int,
         newIndirectSet: Set<MuxDeferredNode<*, *, *>>,
     ) {
-        for ((_, branchNode) in branchNodeByKey) {
+        branchNodeByKey.forEach { _, branchNode ->
             branchNode.downstreamSet.moveDirectUpstreamToIndirect(
                 scheduler,
                 oldDirectDepth,
@@ -121,14 +122,14 @@ internal class DemuxNode<W, K, A>(
         indirectSet: Set<MuxDeferredNode<*, *, *>>,
     ) {
         lifecycle.lifecycleState = DemuxLifecycleState.Dead
-        for ((_, branchNode) in branchNodeByKey) {
+        branchNodeByKey.forEach { _, branchNode ->
             branchNode.downstreamSet.removeIndirectUpstream(scheduler, depth, indirectSet)
         }
     }
 
     override fun removeDirectUpstream(scheduler: Scheduler, depth: Int) {
         lifecycle.lifecycleState = DemuxLifecycleState.Dead
-        for ((_, branchNode) in branchNodeByKey) {
+        branchNodeByKey.forEach { _, branchNode ->
             branchNode.downstreamSet.removeDirectUpstream(scheduler, depth)
         }
     }
@@ -217,7 +218,7 @@ internal fun <K, A> demuxMap(
     upstream: EvalScope.() -> EventsImpl<Map<K, A>>,
     numKeys: Int?,
 ): DemuxImpl<K, A> =
-    DemuxImpl(mapImpl(upstream) { it, _ -> MapHolder(it) }, numKeys, ConcurrentHashMapK.Factory())
+    DemuxImpl(mapImpl(upstream) { it, _ -> MapHolder(it) }, numKeys, HashMapK.Factory())
 
 internal class DemuxActivator<W, K, A>(
     private val numKeys: Int?,

@@ -74,7 +74,7 @@ private fun <K, V> Map<K, V>.applyPatchCalm(
     val current = this
     val filteredPatch = mutableMapOf<K, Maybe<V>>()
     val new = current.toMutableMap()
-    for ((key, change) in patch) {
+    patch.forEach { key, change ->
         when (change) {
             is Maybe.Present -> {
                 if (key !in current || current.getValue(key) != change.value) {
@@ -93,7 +93,7 @@ private fun <K, V> Map<K, V>.applyPatchCalm(
     return if (filteredPatch.isNotEmpty()) filteredPatch to new else null
 }
 
-internal inline fun <K, V> EventsImpl<Map<K, Maybe<V>>>.calmUpdates(
+internal fun <K, V> EventsImpl<Map<K, Maybe<V>>>.calmUpdates(
     state: StateDerived<Map<K, V>>
 ): Pair<EventsImpl<Map<K, Maybe<V>>>, EventsImpl<Map<K, V>>> {
     val maybeUpdate =

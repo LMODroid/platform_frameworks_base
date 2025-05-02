@@ -106,7 +106,7 @@ internal class MuxDeferredNode<W, K, V>(
         if (lifecycle.lifecycleState !is MuxLifecycleState.Active) return@doDeactivate
         lifecycle.lifecycleState = MuxLifecycleState.Inactive(spec)
         // Process branch nodes
-        switchedIn.forEach { (_, branchNode) ->
+        switchedIn.forEach { _, branchNode ->
             branchNode.upstream.removeDownstreamAndDeactivateIfNeeded(branchNode.schedulable)
         }
         // Process patch node
@@ -139,8 +139,8 @@ internal class MuxDeferredNode<W, K, V>(
         val severed = mutableListOf<NodeConnection<*>>()
 
         // remove and sever
-        removes.forEach { k ->
-            switchedIn.remove(k)?.let { branchNode: BranchNode ->
+        for (idx in removes.indices) {
+            switchedIn.remove(removes[idx])?.let { branchNode: BranchNode ->
                 val conn = branchNode.upstream
                 severed.add(conn)
                 conn.removeDownstream(downstream = branchNode.schedulable)
@@ -156,7 +156,8 @@ internal class MuxDeferredNode<W, K, V>(
         }
 
         // add or replace
-        adds.forEach { (k, newUpstream: EventsImpl<V>) ->
+        for (idx in adds.indices) {
+            val (k, newUpstream: EventsImpl<V>) = adds[idx]
             // remove old and sever, if present
             switchedIn.remove(k)?.let { branchNode ->
                 val conn = branchNode.upstream
@@ -196,8 +197,8 @@ internal class MuxDeferredNode<W, K, V>(
             }
         }
 
-        for (severedNode in severed) {
-            severedNode.scheduleDeactivationIfNeeded(evalScope)
+        for (idx in severed.indices) {
+            severed[idx].scheduleDeactivationIfNeeded(evalScope)
         }
 
         compactIfNeeded(evalScope)
