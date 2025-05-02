@@ -34,6 +34,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.android.packageinstaller.R;
 import com.android.packageinstaller.v2.model.InstallInstalling;
+import com.android.packageinstaller.v2.model.PackageUtil;
 import com.android.packageinstaller.v2.model.PackageUtil.AppSnippet;
 
 /**
@@ -73,7 +74,12 @@ public class InstallInstallingFragment extends DialogFragment {
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
 
-        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        int layoutId = R.layout.install_fragment_layout;
+        if (PackageUtil.isMaterialDesignEnabled(requireContext())) {
+            layoutId = R.layout.install_fragment_material_layout;
+        }
+        View dialogView = getLayoutInflater().inflate(layoutId, null);
+
         dialogView.requireViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
         dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
         ((ImageView) dialogView.requireViewById(R.id.app_icon))

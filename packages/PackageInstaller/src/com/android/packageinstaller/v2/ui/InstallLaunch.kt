@@ -89,6 +89,10 @@ class InstallLaunch : FragmentActivity(), InstallActionListener {
         if (PackageUtil.isMaterialDesignEnabled(this)) {
             Log.d(LOG_TAG, "Apply material design")
             theme.applyStyle(R.style.Theme_AlertDialogActivity_Material, /* force= */ true)
+            // Apply the material theme for the material components
+            theme.applyStyle(
+                com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight,
+                /* force= */ false)
         }
 
         fragmentManager = supportFragmentManager

@@ -55,6 +55,7 @@ java_defaults {
         "androidx.leanback_leanback",
         "androidx.lifecycle_lifecycle-extensions",
         "androidx.lifecycle_lifecycle-livedata",
+        "com.google.android.material_material",
         "kotlin-parcelize-runtime",
     ],
 
@@ -62,6 +63,10 @@ java_defaults {
         error_checks: ["Recycle"],
     },
     kotlin_plugins: ["kotlin-parcelize-compiler-plugin"],
+
+    optimize: {
+        shrink_resources: true,
+    },
 }
 
 android_app {
