@@ -16,18 +16,18 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keep_data_layout"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:id="@+id/keep_data_layout"
+    android:layout_marginTop="@dimen/dialog_inter_element_margin"
     android:orientation="horizontal"
-    android:visibility="gone"
-    style="@style/Widget.PackageInstaller.ViewGroup.KeepData">
+    android:visibility="gone" >
 
     <CheckBox
-        style="@style/Widget.PackageInstaller.CheckBox"
         android:id="@+id/keep_data_checkbox"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/checkbox_margin" />
 
     <LinearLayout
         android:layout_height="wrap_content"

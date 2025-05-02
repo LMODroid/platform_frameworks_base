@@ -33,8 +33,6 @@
         <item name="android:background">@null</item>
         <item name="android:minHeight">@dimen/button_min_height</item>
         <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginLeft">8dp</item>
-
     </style>
 
     <style name="Widget.PackageInstaller.Button.Colored" parent="android:Widget.DeviceDefault.Button.Colored">
@@ -42,7 +40,6 @@
         <item name="android:minHeight">@dimen/button_min_height</item>
         <item name="android:paddingHorizontal">24dp</item>
         <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginLeft">8dp</item>
     </style>
 
     <style name="Widget.PackageInstaller.Button.Outlined" parent="android:Widget.DeviceDefault.Button.Colored">
@@ -50,7 +47,6 @@
         <item name="android:textColor">?android:attr/colorAccent</item>
         <item name="android:minHeight">@dimen/button_min_height</item>
         <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginLeft">8dp</item>
     </style>
 
    <style name="Widget.PackageInstaller.ButtonBar" parent="">
@@ -65,26 +61,6 @@
         <item name="android:autoSizeTextType">uniform</item>
     </style>
 
-    <style name="Widget.PackageInstaller.WindowTitle.Custom">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">16dp</item>
-    </style>
-
-    <style name="Widget.PackageInstaller.ViewGroup.AppSnippet" parent="">
-        <item name="android:layout_marginTop">@dimen/app_snippet_layout_vertical_margin</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="Widget.PackageInstaller.ViewGroup.CustomTitle" parent="">
-        <item name="android:paddingTop">@dimen/alert_dialog_inner_padding</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="Widget.PackageInstaller.ImageView.AppIcon" parent="">
-        <item name="android:layout_marginVertical">@dimen/app_icon_margin</item>
-        <item name="android:layout_marginRight">@dimen/app_icon_margin</item>
-    </style>
-
     <style name="Widget.PackageInstaller.TextView.AppLabel" parent="@android:style/TextAppearance.DeviceDefault.SearchResult.Subtitle">
         <item name="android:textFontWeight">600</item>
         <item name="android:color">?android:attr/textColorPrimary</item>
@@ -92,15 +68,6 @@
 
     <style name="Widget.PackageInstaller.TextView.CustomMessage" parent="@android:style/TextAppearance.DeviceDefault.Small">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:layout_marginTop">@dimen/dialog_inter_element_margin</item>
-    </style>
-
-    <style name="Widget.PackageInstaller.ViewGroup.KeepData" parent="">
-        <item name="android:layout_marginTop">@dimen/dialog_inter_element_margin</item>
-    </style>
-
-    <style name="Widget.PackageInstaller.CheckBox" parent = "">
-        <item name="android:layout_margin">@dimen/checkbox_margin</item>
     </style>
 
     <style name="Widget.PackageInstaller.TextView.KeepData.Heading" parent="@android:style/TextAppearance.DeviceDefault.Small">

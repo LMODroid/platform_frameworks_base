@@ -20,15 +20,17 @@
     android:id="@+id/app_snippet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/app_snippet_layout_vertical_margin"
     android:orientation="horizontal"
-    android:visibility="gone"
-    style="@style/Widget.PackageInstaller.ViewGroup.AppSnippet">
+    android:visibility="gone">
 
     <ImageView
         android:id="@+id/app_icon"
         android:layout_width="@dimen/app_snippet_icon_dimen"
         android:layout_height="@dimen/app_snippet_icon_dimen"
-        style="@style/Widget.PackageInstaller.ImageView.AppIcon"/>
+        android:layout_marginEnd="@dimen/app_icon_margin"
+        android:layout_marginVertical="@dimen/app_icon_margin" />
 
     <TextView
         android:id="@+id/app_label"

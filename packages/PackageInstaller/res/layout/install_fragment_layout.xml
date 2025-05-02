@@ -38,6 +38,7 @@
         android:id="@+id/custom_message"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dialog_inter_element_margin"
         android:visibility="gone" />
 
     <include layout="@layout/keep_data_option_layout" />
