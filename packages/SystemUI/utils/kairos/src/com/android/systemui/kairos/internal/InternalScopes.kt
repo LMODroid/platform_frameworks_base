@@ -49,7 +49,7 @@ internal interface NetworkScope : InitScope {
 
     fun scheduleOutput(output: Output<*>)
 
-    fun scheduleDispatchedOutput(interceptor: ContinuationInterceptor?, block: suspend () -> Unit)
+    fun scheduleDispatchedOutput(interceptor: ContinuationInterceptor?, block: () -> Unit)
 
     fun scheduleMuxMover(muxMover: MuxDeferredNode<*, *, *>)
 

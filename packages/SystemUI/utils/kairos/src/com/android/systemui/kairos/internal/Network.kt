@@ -71,8 +71,7 @@ internal class Network(
     private val deferScopeImpl = DeferScopeImpl()
     private val stateWrites = ArrayDeque<StateSource<*>>()
     private val fastOutputs = ArrayDeque<Output<*>>()
-    private val outputsByDispatcher =
-        HashMap<ContinuationInterceptor, ArrayDeque<suspend () -> Unit>>()
+    private val outputsByDispatcher = HashMap<ContinuationInterceptor, ArrayDeque<() -> Unit>>()
     private val muxMovers = ArrayDeque<MuxDeferredNode<*, *, *>>()
     private val deactivations = ArrayDeque<PushNode<*>>()
     private val outputDeactivations = ArrayDeque<Output<*>>()
@@ -84,7 +83,7 @@ internal class Network(
 
     override fun scheduleDispatchedOutput(
         interceptor: ContinuationInterceptor?,
-        block: suspend () -> Unit,
+        block: () -> Unit,
     ) {
         outputsByDispatcher
             .computeIfAbsent(interceptor ?: Dispatchers.Unconfined) { ArrayDeque() }

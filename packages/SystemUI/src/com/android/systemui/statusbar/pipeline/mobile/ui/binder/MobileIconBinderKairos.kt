@@ -34,6 +34,7 @@ import com.android.systemui.kairos.KairosNetwork
 import com.android.systemui.kairos.MutableState
 import com.android.systemui.kairos.combine
 import com.android.systemui.kairos.effect
+import com.android.systemui.kairos.launchEffect
 import com.android.systemui.lifecycle.repeatWhenAttachedToWindow
 import com.android.systemui.lifecycle.repeatWhenWindowIsVisible
 import com.android.systemui.plugins.DarkIconDispatcher
@@ -163,7 +164,7 @@ object MobileIconBinderKairos {
         repeatWhenWindowIsVisible(view) {
             logger.logCollectionStarted(view, viewModel)
             binding.isCollecting = true
-            effect {
+            launchEffect {
                 try {
                     awaitCancellation()
                 } finally {

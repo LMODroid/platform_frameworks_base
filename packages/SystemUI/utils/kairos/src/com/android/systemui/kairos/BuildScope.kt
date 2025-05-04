@@ -114,7 +114,7 @@ interface BuildScope : HasNetwork, StateScope {
     // TODO: remove disposable handle return? might add more confusion than convenience
     fun <A> Events<A>.observe(
         coroutineContext: CoroutineContext = EmptyCoroutineContext,
-        block: suspend EffectScope.(A) -> Unit,
+        block: EffectScope.(A) -> Unit,
     ): DisposableHandle
 
     /**
@@ -638,7 +638,7 @@ interface BuildScope : HasNetwork, StateScope {
      *
      * With each invocation of [block], running effects from the previous invocation are cancelled.
      */
-    fun <A> Events<A>.observeLatest(block: suspend EffectScope.(A) -> Unit): DisposableHandle =
+    fun <A> Events<A>.observeLatest(block: EffectScope.(A) -> Unit): DisposableHandle =
         mapLatestBuild { effect { block(it) } }.observeSync()
 
     /**
@@ -702,7 +702,7 @@ interface BuildScope : HasNetwork, StateScope {
      */
     fun <A> State<A>.observe(
         coroutineContext: CoroutineContext = EmptyCoroutineContext,
-        block: suspend EffectScope.(A) -> Unit,
+        block: EffectScope.(A) -> Unit,
     ): DisposableHandle =
         now.map { sample() }.mergeWith(changes) { _, new -> new }.observe(coroutineContext, block)
 
@@ -769,7 +769,7 @@ fun <A> BuildScope.asyncEvent(block: suspend KairosScope.() -> A): Events<A> =
 @ExperimentalKairosApi
 fun BuildScope.effect(
     context: CoroutineContext = EmptyCoroutineContext,
-    block: suspend EffectScope.() -> Unit,
+    block: EffectScope.() -> Unit,
 ): Job = launchScope(context) { now.observe { block() } }
 
 /**

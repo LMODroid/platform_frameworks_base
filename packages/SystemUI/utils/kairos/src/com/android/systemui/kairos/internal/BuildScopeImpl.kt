@@ -113,7 +113,7 @@ internal class BuildScopeImpl(val stateScope: StateScopeImpl, val coroutineScope
 
     override fun <A> Events<A>.observe(
         coroutineContext: CoroutineContext,
-        block: suspend EffectScope.(A) -> Unit,
+        block: EffectScope.(A) -> Unit,
     ): DisposableHandle {
         val interceptor = coroutineContext[ContinuationInterceptor]
         return observeInternal(coroutineContext) { effectScope, output ->
