@@ -35,8 +35,12 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
 import com.android.compose.animation.scene.ContentScope
@@ -50,6 +54,7 @@ import com.android.systemui.res.R
 import com.android.systemui.shade.ui.ShadeColors.shadePanel
 import com.android.systemui.shade.ui.ShadeColors.shadePanelScrimBehind
 import com.android.systemui.shade.ui.composable.OverlayShade.rememberShadeExpansionMotion
+import kotlin.math.min
 
 /** Renders a lightweight shade UI container, as an overlay. */
 @Composable
@@ -59,10 +64,15 @@ fun ContentScope.OverlayShade(
     enableTransparency: Boolean,
     onScrimClicked: () -> Unit,
     modifier: Modifier = Modifier,
+    onBackgroundPlaced: (bounds: Rect, topCornerRadius: Float, bottomCornerRadius: Float) -> Unit =
+        { _, _, _ ->
+        },
     header: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
     val isFullWidth = isFullWidthShade()
+    val panelSpec = rememberShadeExpansionMotion(isFullWidth)
+    val panelCornerRadiusPx = with(LocalDensity.current) { panelSpec.radius.toPx() }
     Box(modifier) {
         Scrim(showBackgroundColor = enableTransparency, onClicked = onScrimClicked)
 
@@ -72,10 +82,23 @@ fun ContentScope.OverlayShade(
         ) {
             Panel(
                 enableTransparency = enableTransparency,
+                spec = panelSpec,
                 modifier =
                     Modifier.overscroll(verticalOverscrollEffect)
                         .element(panelElement)
-                        .panelWidth(isFullWidth),
+                        .panelWidth(isFullWidth)
+                        .onPlaced { coordinates ->
+                            val bounds = coordinates.boundsInWindow()
+                            val isTopRounded = panelSpec.isFloating
+                            val bottomCornerRadius: Float =
+                                if (isTopRounded) {
+                                    min(panelCornerRadiusPx, bounds.height / 2)
+                                } else {
+                                    min(panelCornerRadiusPx, bounds.height)
+                                }
+                            val topCornerRadius = if (isTopRounded) bottomCornerRadius else 0f
+                            onBackgroundPlaced(bounds, topCornerRadius, bottomCornerRadius)
+                        },
                 header = header.takeIf { isFullWidth },
                 content = content,
             )
@@ -107,6 +130,7 @@ private fun ContentScope.Scrim(
 @Composable
 private fun ContentScope.Panel(
     enableTransparency: Boolean,
+    spec: VerticalExpandContainerSpec,
     modifier: Modifier = Modifier,
     header: (@Composable () -> Unit)?,
     content: @Composable () -> Unit,
@@ -117,7 +141,7 @@ private fun ContentScope.Panel(
                 .disableSwipesWhenScrolling()
                 .verticalExpandContainerBackground(
                     backgroundColor = OverlayShade.Colors.panelBackground(enableTransparency),
-                    spec = rememberShadeExpansionMotion(isFullWidthShade()),
+                    spec = spec,
                 )
     ) {
         Column {

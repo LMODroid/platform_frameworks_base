@@ -41,8 +41,6 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.boundsInWindow
-import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -86,6 +84,7 @@ import com.android.systemui.statusbar.notification.stack.ui.viewmodel.Notificati
 import com.android.systemui.volume.panel.component.volume.ui.composable.VolumeSlider
 import dagger.Lazy
 import javax.inject.Inject
+import kotlin.math.roundToInt
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -135,8 +134,6 @@ constructor(
                 notificationsPlaceholderViewModelFactory.create()
             }
 
-        val panelCornerRadius =
-            with(LocalDensity.current) { OverlayShade.Dimensions.PanelCornerRadius.toPx().toInt() }
         val showBrightnessMirror =
             quickSettingsContainerViewModel.brightnessSliderViewModel.showMirror
         val contentAlphaFromBrightnessMirror by
@@ -151,6 +148,15 @@ constructor(
                 alignmentOnWideScreens = Alignment.TopEnd,
                 enableTransparency = quickSettingsContainerViewModel.isTransparencyEnabled,
                 onScrimClicked = contentViewModel::onScrimClicked,
+                onBackgroundPlaced = { bounds, topCornerRadius, bottomCornerRadius ->
+                    contentViewModel.onPanelShapeChanged(
+                        ShadeScrimShape(
+                            bounds = ShadeScrimBounds(bounds),
+                            topRadius = topCornerRadius.roundToInt(),
+                            bottomRadius = bottomCornerRadius.roundToInt(),
+                        )
+                    )
+                },
                 header = {
                     OverlayShadeHeader(
                         viewModel = quickSettingsContainerViewModel.shadeHeaderViewModel,
@@ -161,19 +167,7 @@ constructor(
                     )
                 },
             ) {
-                QuickSettingsContainer(
-                    viewModel = quickSettingsContainerViewModel,
-                    modifier =
-                        Modifier.onPlaced { coordinates ->
-                            val shape =
-                                ShadeScrimShape(
-                                    bounds = ShadeScrimBounds(coordinates.boundsInWindow()),
-                                    topRadius = 0,
-                                    bottomRadius = panelCornerRadius,
-                                )
-                            contentViewModel.onPanelShapeChanged(shape)
-                        },
-                )
+                QuickSettingsContainer(viewModel = quickSettingsContainerViewModel)
             }
             SnoozeableHeadsUpNotificationSpace(
                 stackScrollView = notificationStackScrollView.get(),

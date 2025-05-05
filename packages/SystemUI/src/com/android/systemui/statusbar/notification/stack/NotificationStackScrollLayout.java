@@ -6051,10 +6051,12 @@ public class NotificationStackScrollLayout
         mNegativeRoundedClipPath.reset();
         if (shape != null) {
             ShadeScrimBounds bounds = shape.getBounds();
+            float topRadius = shape.getTopRadius();
             float bottomRadius = shape.getBottomRadius();
             mNegativeRoundedClipPath.addRoundRect(
                     bounds.getLeft(), bounds.getTop(), bounds.getRight(), bounds.getBottom(),
-                    new float[]{0, 0, 0, 0, bottomRadius, bottomRadius, bottomRadius, bottomRadius},
+                    new float[]{topRadius, topRadius, topRadius, topRadius,
+                            bottomRadius, bottomRadius, bottomRadius, bottomRadius},
                     Path.Direction.CW);
         }
         invalidate();
