@@ -123,7 +123,12 @@ public final class StringBlock implements Closeable {
                     mStrings = new CharSequence[num];
                 }
             }
-            String str = nativeGetString(mNative, idx);
+            String str = null;
+            try {
+                str = nativeGetString(mNative, idx);
+            } catch (IndexOutOfBoundsException e) {
+                // do nothing
+            }
             if (str == null) {
                 return null;
             }
