@@ -30,7 +30,6 @@ import com.android.systemui.keyguard.shared.model.StatusBarState
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.power.data.repository.fakePowerRepository
 import com.android.systemui.power.shared.model.WakefulnessState
-import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.shade.domain.interactor.enableDualShade
 import com.android.systemui.shade.domain.interactor.enableSingleShade
@@ -43,7 +42,6 @@ import com.android.systemui.statusbar.notification.emptyshade.shared.ModesEmptyS
 import com.android.systemui.statusbar.notification.headsup.PinnedStatus
 import com.android.systemui.statusbar.notification.stack.data.repository.headsUpNotificationRepository
 import com.android.systemui.statusbar.policy.data.repository.fakeUserSetupRepository
-import com.android.systemui.statusbar.policy.fakeConfigurationController
 import com.android.systemui.testKosmos
 import com.android.systemui.util.ui.isAnimating
 import com.android.systemui.util.ui.value
@@ -70,7 +68,6 @@ class NotificationListViewModelTest(flags: FlagsParameterization) : SysuiTestCas
     private val testScope = kosmos.testScope
 
     private val activeNotificationListRepository = kosmos.activeNotificationListRepository
-    private val fakeConfigurationController = kosmos.fakeConfigurationController
     private val fakeKeyguardRepository = kosmos.fakeKeyguardRepository
     private val fakePowerRepository = kosmos.fakePowerRepository
     private val fakeRemoteInputRepository = kosmos.fakeRemoteInputRepository
@@ -201,10 +198,9 @@ class NotificationListViewModelTest(flags: FlagsParameterization) : SysuiTestCas
             activeNotificationListRepository.setActiveNotifs(count = 0)
             // AND quick settings are expanded
             shadeTestUtil.setQsExpansion(1f)
-            // AND split shade is expanded
-            overrideResource(R.bool.config_use_split_notification_shade, true)
+            // AND split shade is enabled
             shadeTestUtil.setShadeExpansion(1f)
-            fakeConfigurationController.notifyConfigurationChanged()
+            shadeTestUtil.setSplitShade(true)
             runCurrent()
 
             // THEN empty shade is visible
@@ -381,8 +377,7 @@ class NotificationListViewModelTest(flags: FlagsParameterization) : SysuiTestCas
             fakeKeyguardRepository.setStatusBarState(StatusBarState.SHADE)
             shadeTestUtil.setShadeExpansion(1f)
             // AND split shade is enabled
-            overrideResource(R.bool.config_use_split_notification_shade, true)
-            fakeConfigurationController.notifyConfigurationChanged()
+            shadeTestUtil.setSplitShade(true)
             runCurrent()
 
             // THEN footer is visible

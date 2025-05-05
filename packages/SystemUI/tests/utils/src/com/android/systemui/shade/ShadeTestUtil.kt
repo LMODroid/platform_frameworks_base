@@ -91,6 +91,10 @@ class ShadeTestUtil(val delegate: ShadeTestUtilDelegate) {
     fun setQsFullscreen(qsFullscreen: Boolean) {
         delegate.assertFlagValid()
         delegate.setQsFullscreen(qsFullscreen)
+
+        // If QS is full screen, expansion is 1 and split shade is off.
+        delegate.setQsExpansion(1.0f)
+        delegate.setSplitShade(false)
     }
 
     fun setLegacyExpandedOrAwaitingInputTransfer(legacyExpandedOrAwaitingInputTransfer: Boolean) {
