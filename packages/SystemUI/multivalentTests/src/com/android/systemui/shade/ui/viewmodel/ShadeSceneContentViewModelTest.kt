@@ -28,6 +28,7 @@ import com.android.systemui.authentication.shared.model.AuthenticationMethodMode
 import com.android.systemui.common.ui.data.repository.fakeConfigurationRepository
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
+import com.android.systemui.deviceentry.domain.interactor.deviceUnlockedInteractor
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.keyguard.data.repository.fakeDeviceEntryFingerprintAuthRepository
 import com.android.systemui.keyguard.shared.model.SuccessFingerprintAuthenticationStatus
@@ -48,6 +49,7 @@ import com.google.common.truth.Truth.assertThat
 import java.util.Locale
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
@@ -210,10 +212,15 @@ class ShadeSceneContentViewModelTest : SysuiTestCase() {
     private fun TestScope.setDeviceEntered(isEntered: Boolean) {
         if (isEntered) {
             // Unlock the device marking the device has entered.
+            val isDeviceUnlocked by
+                collectLastValue(
+                    kosmos.deviceUnlockedInteractor.deviceUnlockStatus.map { it.isUnlocked }
+                )
             kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
             runCurrent()
+            assertThat(isDeviceUnlocked).isTrue()
         }
         setScene(
             if (isEntered) {
