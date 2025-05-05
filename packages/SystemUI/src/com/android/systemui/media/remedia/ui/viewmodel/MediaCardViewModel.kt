@@ -35,7 +35,7 @@ interface MediaCardViewModel {
 
     val background: ImageBitmap?
 
-    val colorScheme: MediaColorScheme
+    val colorScheme: MediaColorScheme?
 
     val title: String
 

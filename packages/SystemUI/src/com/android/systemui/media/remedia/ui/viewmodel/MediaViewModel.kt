@@ -77,7 +77,7 @@ constructor(
                 override val background: ImageBitmap?
                     get() = session.background
 
-                override val colorScheme: MediaColorScheme
+                override val colorScheme: MediaColorScheme?
                     get() = session.colorScheme
 
                 override val title = session.title

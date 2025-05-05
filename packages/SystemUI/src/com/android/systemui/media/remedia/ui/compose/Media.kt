@@ -128,6 +128,7 @@ import com.android.compose.animation.scene.rememberMutableSceneTransitionLayoutS
 import com.android.compose.animation.scene.transitions
 import com.android.compose.gesture.effect.rememberOffsetOverscrollEffect
 import com.android.compose.gesture.overscrollToDismiss
+import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.compose.ui.graphics.painter.rememberDrawablePainter
 import com.android.mechanics.spec.builder.rememberMotionBuilderContext
 import com.android.systemui.common.shared.model.Icon
@@ -339,9 +340,11 @@ private fun Card(
 }
 
 @Composable
-private fun rememberAnimatedColorScheme(colorScheme: MediaColorScheme): AnimatedColorScheme {
-    val animatedPrimary by animateColorAsState(targetValue = colorScheme.primary)
-    val animatedOnPrimary by animateColorAsState(targetValue = colorScheme.onPrimary)
+private fun rememberAnimatedColorScheme(colorScheme: MediaColorScheme?): AnimatedColorScheme {
+    val primaryColor = colorScheme?.primary ?: LocalAndroidColorScheme.current.primaryFixed
+    val onPrimaryColor = colorScheme?.onPrimary ?: LocalAndroidColorScheme.current.onPrimaryFixed
+    val animatedPrimary by animateColorAsState(targetValue = primaryColor)
+    val animatedOnPrimary by animateColorAsState(targetValue = onPrimaryColor)
 
     return remember {
         object : AnimatedColorScheme {

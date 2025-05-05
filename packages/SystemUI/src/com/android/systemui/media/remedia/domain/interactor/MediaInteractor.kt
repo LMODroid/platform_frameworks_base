@@ -91,8 +91,8 @@ constructor(@Application val applicationContext: Context, val repository: MediaR
                         (it as Icon.Loaded).drawable.toBitmap()?.asImageBitmap()
                     }
 
-            override val colorScheme: MediaColorScheme
-                get() = TODO("Not yet implemented")
+            override val colorScheme: MediaColorScheme?
+                get() = dataModel.colorScheme
 
             override val title: String
                 get() = dataModel.title
