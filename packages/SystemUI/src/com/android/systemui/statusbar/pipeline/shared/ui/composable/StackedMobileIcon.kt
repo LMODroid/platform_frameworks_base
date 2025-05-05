@@ -39,6 +39,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.android.systemui.common.ui.compose.Icon
+import com.android.systemui.statusbar.pipeline.mobile.ui.model.DualSim
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.StackedMobileIconViewModel
 import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobileIconDimensions.BarBaseHeightFiveBarsSp
 import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobileIconDimensions.BarBaseHeightFourBarsSp
@@ -91,7 +92,7 @@ fun StackedMobileIcon(viewModel: StackedMobileIconViewModel, modifier: Modifier 
 
 @Composable
 private fun StackedMobileIcon(
-    viewModel: StackedMobileIconViewModel.DualSim,
+    viewModel: DualSim,
     color: Color,
     contentDescription: String?,
     modifier: Modifier = Modifier,

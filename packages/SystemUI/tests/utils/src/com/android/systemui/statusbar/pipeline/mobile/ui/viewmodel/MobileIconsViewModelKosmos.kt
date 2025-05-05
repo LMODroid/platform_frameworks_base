@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel
 
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.applicationCoroutineScope
+import com.android.systemui.log.table.logcatTableLogBuffer
 import com.android.systemui.statusbar.pipeline.airplane.domain.interactor.airplaneModeInteractor
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.mobileIconsInteractor
 import com.android.systemui.statusbar.pipeline.shared.connectivityConstants
@@ -31,6 +32,7 @@ val Kosmos.mobileIconsViewModel: MobileIconsViewModel by
             interactor = mobileIconsInteractor,
             airplaneModeInteractor = airplaneModeInteractor,
             constants = connectivityConstants,
+            tableLogger = logcatTableLogBuffer(this, "summaryLogger"),
             scope = applicationCoroutineScope,
         )
     }

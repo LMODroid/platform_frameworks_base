@@ -21,9 +21,14 @@ import androidx.compose.runtime.getValue
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
+import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.log.table.logDiffsForTable
 import com.android.systemui.shade.ShadeDisplayAware
-import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
-import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.StackedMobileIconViewModel.DualSim
+import com.android.systemui.statusbar.pipeline.dagger.StackedMobileIconTableLog
+import com.android.systemui.statusbar.pipeline.mobile.ui.model.DualSim
+import com.android.systemui.statusbar.pipeline.mobile.ui.model.logDualSimDiff
+import com.android.systemui.statusbar.pipeline.mobile.ui.model.tryParseDualSim
+import com.android.systemui.util.kotlin.pairwiseBy
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -38,11 +43,6 @@ interface StackedMobileIconViewModel {
     val contentDescription: String?
     val networkTypeIcon: Icon.Resource?
     val isIconVisible: Boolean
-
-    data class DualSim(
-        val primary: SignalIconModel.Cellular,
-        val secondary: SignalIconModel.Cellular,
-    )
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -50,6 +50,7 @@ class StackedMobileIconViewModelImpl
 @AssistedInject
 constructor(
     mobileIconsViewModel: MobileIconsViewModel,
+    @StackedMobileIconTableLog private val tableLogger: TableLogBuffer,
     @ShadeDisplayAware private val context: Context,
 ) : ExclusiveActivatable(), StackedMobileIconViewModel {
     private val hydrator = Hydrator("StackedMobileIconViewModel")
@@ -65,12 +66,9 @@ constructor(
 
     private val _dualSim: Flow<DualSim?> =
         iconViewModelFlow.flatMapLatest { viewModels ->
-            combine(viewModels.map { it.icon }) { icons ->
-                icons
-                    .toList()
-                    .filterIsInstance<SignalIconModel.Cellular>()
-                    .takeIf { it.size == 2 }
-                    ?.let { DualSim(it[0], it[1]) }
+            // Map subIds to icons
+            combine(viewModels.map { vm -> vm.icon.map { vm.subscriptionId to it } }) { icons ->
+                tryParseDualSim(icons.toList())
             }
         }
 
@@ -80,7 +78,17 @@ constructor(
         }
 
     override val dualSim: DualSim? by
-        hydrator.hydratedStateOf(traceName = "dualSim", source = _dualSim, initialValue = null)
+        hydrator.hydratedStateOf(
+            traceName = "dualSim",
+            source =
+                _dualSim.pairwiseBy(initialValue = null) { old: DualSim?, new: DualSim? ->
+                    // _dualSim is nullable, meaning logDiffsForTable can't be used here. Instead,
+                    // we do the comparison manually and return the new value
+                    logDualSimDiff(old, new, tableLogger)
+                    new
+                },
+            initialValue = null,
+        )
 
     /** Content description of both icons, starting with the active connection. */
     override val contentDescription: String? by
@@ -123,7 +131,12 @@ constructor(
     override val isIconVisible: Boolean by
         hydrator.hydratedStateOf(
             traceName = "isIconVisible",
-            source = _isIconVisible,
+            source =
+                _isIconVisible.logDiffsForTable(
+                    tableLogger,
+                    columnName = COL_IS_ICON_VISIBLE,
+                    initialValue = false,
+                ),
             initialValue = false,
         )
 
@@ -144,5 +157,9 @@ constructor(
     @AssistedFactory
     interface Factory {
         fun create(): StackedMobileIconViewModelImpl
+    }
+
+    private companion object {
+        const val COL_IS_ICON_VISIBLE = "isIconVisible"
     }
 }

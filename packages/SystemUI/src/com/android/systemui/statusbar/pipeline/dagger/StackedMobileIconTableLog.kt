@@ -14,20 +14,12 @@
  * limitations under the License.
  */
 
-package com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel
+package com.android.systemui.statusbar.pipeline.dagger
 
-import android.content.testableContext
-import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.log.table.logcatTableLogBuffer
+import javax.inject.Qualifier
 
-var Kosmos.stackedMobileIconViewModel: StackedMobileIconViewModel by
-    Kosmos.Fixture { stackedMobileIconViewModelImpl }
-
-val Kosmos.stackedMobileIconViewModelImpl by
-    Kosmos.Fixture {
-        StackedMobileIconViewModelImpl(
-            mobileIconsViewModel,
-            logcatTableLogBuffer(this, "stackedMobileIconTableLogger"),
-            testableContext,
-        )
-    }
+/** Logs for the dual-sim mobile icon. */
+@Qualifier
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
+annotation class StackedMobileIconTableLog
