@@ -74,7 +74,7 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
      * When [NewStatusBarIcons] is enabled, we have to tweak the layout. This can be moved directly
      * into the layout xml when the flag is rolled out fully
      */
-    private fun configureLayoutForNewStatusBarIcons() {
+    fun configureLayoutForNewStatusBarIcons() {
         // Margins around the entire container
         requireViewById<AlphaOptimizedLinearLayout>(R.id.mobile_group).apply {
             val lp = layoutParams as MarginLayoutParams

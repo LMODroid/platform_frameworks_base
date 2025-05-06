@@ -25,6 +25,7 @@ import com.android.systemui.kairos.KairosNetwork
 import com.android.systemui.kairos.buildSpec
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.StatusBarIconView.STATE_ICON
+import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.phone.StatusBarLocation
 import com.android.systemui.statusbar.pipeline.mobile.ui.MobileViewLogger
 import com.android.systemui.statusbar.pipeline.mobile.ui.binder.MobileIconBinder
@@ -78,16 +79,19 @@ class ModernShadeCarrierGroupMobileView(context: Context, attrs: AttributeSet?) 
         ): ModernShadeCarrierGroupMobileView {
             return (LayoutInflater.from(context).inflate(R.layout.shade_carrier_new, null)
                     as ModernShadeCarrierGroupMobileView)
-                .also {
-                    it.subId = viewModel.subscriptionId
+                .apply {
+                    subId = viewModel.subscriptionId
 
-                    val iconView = it.requireViewById<ModernStatusBarMobileView>(R.id.mobile_combo)
+                    val iconView = requireViewById<ModernStatusBarMobileView>(R.id.mobile_combo)
+                    if (NewStatusBarIcons.isEnabled) {
+                        iconView.configureLayoutForNewStatusBarIcons()
+                    }
                     iconView.initView(slot) {
                         MobileIconBinder.bind(iconView, viewModel, STATE_ICON, logger)
                     }
-                    logger.logNewViewBinding(it, viewModel)
+                    logger.logNewViewBinding(this, viewModel)
 
-                    val textView = it.requireViewById<AutoMarqueeTextView>(R.id.mobile_carrier_text)
+                    val textView = requireViewById<AutoMarqueeTextView>(R.id.mobile_carrier_text)
                     ShadeCarrierBinder.bind(textView, viewModel)
                 }
         }
@@ -111,7 +115,14 @@ class ModernShadeCarrierGroupMobileView(context: Context, attrs: AttributeSet?) 
             val view =
                 (LayoutInflater.from(context).inflate(R.layout.shade_carrier_new, null)
                         as ModernShadeCarrierGroupMobileView)
-                    .apply { subId = subscriptionId }
+                    .apply {
+                        subId = subscriptionId
+
+                        val iconView = requireViewById<ModernStatusBarMobileView>(R.id.mobile_combo)
+                        if (NewStatusBarIcons.isEnabled) {
+                            iconView.configureLayoutForNewStatusBarIcons()
+                        }
+                    }
             return view to
                 scope.launch {
                     val iconView =
