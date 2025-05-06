@@ -23,16 +23,6 @@
 
     <include layout="@layout/app_snippet_layout" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:indeterminate="true"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/dialog_inter_element_margin"
-        android:paddingVertical="4dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:visibility="gone" />
-
     <TextView
         style="@style/Widget.PackageInstaller.TextView.CustomMessage"
         android:id="@+id/custom_message"
@@ -40,5 +30,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/dialog_inter_element_margin"
         android:visibility="gone" />
+
+    <include layout="@layout/keep_data_option_layout" />
 
 </LinearLayout>

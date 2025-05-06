@@ -84,7 +84,7 @@ public class UnarchiveErrorFragment extends DialogFragment implements
         setDialogData(requireArguments());
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
 
-        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.uninstall_fragment_layout, null);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireActivity())
                 .setView(dialogView);
