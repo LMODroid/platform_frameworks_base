@@ -36,7 +36,6 @@ class DeviceEntryFingerprintAuthInteractor
 @Inject
 constructor(
     repository: DeviceEntryFingerprintAuthRepository,
-    biometricSettingsInteractor: DeviceEntryBiometricSettingsInteractor,
     fingerprintPropertyRepository: FingerprintPropertyRepository,
 ) {
     /**

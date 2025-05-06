@@ -148,6 +148,14 @@ class FakeUserRepository @Inject constructor() : UserRepository {
         _userInfos.value = infos
     }
 
+    suspend fun setMainUserIsUserSwitching() {
+        setUserInfos(listOf(MAIN_USER))
+        setSelectedUserInfo(
+            userInfo = MAIN_USER,
+            selectionStatus = SelectionStatus.SELECTION_IN_PROGRESS,
+        )
+    }
+
     suspend fun setSelectedUserInfo(
         userInfo: UserInfo,
         selectionStatus: SelectionStatus = SelectionStatus.SELECTION_COMPLETE,

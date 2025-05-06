@@ -21,8 +21,8 @@ import com.android.systemui.authentication.domain.interactor.authenticationInter
 import com.android.systemui.bouncer.data.repository.bouncerRepository
 import com.android.systemui.classifier.domain.interactor.falsingInteractor
 import com.android.systemui.common.ui.domain.interactor.configurationInteractor
+import com.android.systemui.deviceentry.domain.interactor.activeUnlockInteractor
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryFaceAuthInteractor
-import com.android.systemui.keyguard.domain.interactor.trustInteractor
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.kosmos.testScope
@@ -44,6 +44,6 @@ val Kosmos.bouncerInteractor by Fixture {
         sceneInteractor = sceneInteractor,
         sceneBackInteractor = sceneBackInteractor,
         configurationInteractor = configurationInteractor,
-        trustInteractor = trustInteractor,
+        activeUnlockInteractor = activeUnlockInteractor,
     )
 }

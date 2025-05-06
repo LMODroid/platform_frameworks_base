@@ -35,6 +35,7 @@ import com.android.systemui.bouncer.shared.logging.BouncerUiEvent
 import com.android.systemui.common.ui.data.repository.fakeConfigurationRepository
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.coroutines.collectValues
+import com.android.systemui.deviceentry.domain.interactor.canTriggerActiveUnlock
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryFaceAuthInteractor
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.flags.Flags.FULL_SCREEN_USER_SWITCHER
@@ -42,7 +43,6 @@ import com.android.systemui.flags.fakeFeatureFlagsClassic
 import com.android.systemui.keyguard.data.repository.fakeDeviceEntryFaceAuthRepository
 import com.android.systemui.keyguard.data.repository.fakeTrustRepository
 import com.android.systemui.kosmos.collectLastValue
-import com.android.systemui.kosmos.runCurrent
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.power.data.repository.fakePowerRepository
@@ -123,11 +123,15 @@ class BouncerInteractorTest : SysuiTestCase() {
     @Test
     fun isCurrentUserActiveUnlockRunning_passiveAuthMaySucceedBeforeFullyShowingBouncer_true() =
         kosmos.runTest {
-            kosmos.fakeAuthenticationRepository.setAuthenticationMethod(
-                AuthenticationMethodModel.Pin
-            )
-            kosmos.fakeTrustRepository.setCurrentUserActiveUnlockAvailable(true)
-            assertThat(underTest.passiveAuthMaySucceedBeforeFullyShowingBouncer()).isTrue()
+            // We need lazy<BouncerInteractor> to be initialized so that ActiveUnlockInteractor
+            // is also initialized and eagerly updates canRunActiveUnlock
+            underTest.let {
+                kosmos.fakeAuthenticationRepository.setAuthenticationMethod(
+                    AuthenticationMethodModel.Pin
+                )
+                kosmos.canTriggerActiveUnlock(canRun = true)
+                assertThat(underTest.passiveAuthMaySucceedBeforeFullyShowingBouncer()).isTrue()
+            }
         }
 
     @Test

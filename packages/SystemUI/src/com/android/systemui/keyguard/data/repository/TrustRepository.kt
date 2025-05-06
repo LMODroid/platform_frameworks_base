@@ -56,7 +56,7 @@ interface TrustRepository {
     val isCurrentUserTrusted: StateFlow<Boolean>
 
     /** Flow representing whether active unlock is running for the current user. */
-    val isCurrentUserActiveUnlockRunning: Flow<Boolean>
+    val isCurrentUserActiveUnlockEnabled: Flow<Boolean>
 
     /**
      * Reports whether a trust agent is currently enabled and managing the trust of the current user
@@ -65,8 +65,6 @@ interface TrustRepository {
 
     /** A trust agent is requesting to dismiss the keyguard from a trust change. */
     val trustAgentRequestingToDismissKeyguard: Flow<TrustModel>
-
-    suspend fun isCurrentUserActiveUnlockRunning(): Boolean
 
     /** Reports a keyguard visibility change. */
     suspend fun reportKeyguardShowingChanged()
@@ -154,7 +152,7 @@ constructor(
             }
             .shareIn(applicationScope, started = SharingStarted.Eagerly, replay = 1)
 
-    override val isCurrentUserActiveUnlockRunning: Flow<Boolean> =
+    override val isCurrentUserActiveUnlockEnabled: Flow<Boolean> =
         combine(trust, userRepository.selectedUserInfo, ::Pair)
             .map { activeUnlockRunningForUser[it.second.id]?.isRunning ?: false }
             .distinctUntilChanged()
@@ -215,12 +213,6 @@ constructor(
         selectedUserId: Int = userRepository.getSelectedUserInfo().id
     ): Boolean {
         return latestTrustModelForUser[selectedUserId]?.isTrusted ?: false
-    }
-
-    override suspend fun isCurrentUserActiveUnlockRunning(): Boolean {
-        return withContext(backgroundDispatcher) {
-            trustManager.isActiveUnlockRunning(userRepository.getSelectedUserInfo().id)
-        }
     }
 
     override suspend fun reportKeyguardShowingChanged() {

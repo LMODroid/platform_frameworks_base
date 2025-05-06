@@ -42,14 +42,27 @@ class DeviceEntryBiometricsAllowedInteractorTest : SysuiTestCase() {
     private val underTest = kosmos.deviceEntryBiometricsAllowedInteractor
 
     @Test
-    fun isFingerprintAuthCurrentlyAllowed_true() =
+    fun isFingerprintAuthCurrentlyAllowed_initialFalse() =
+        testScope.runTest {
+            val fpAllowed by collectLastValue(underTest.isFingerprintAuthCurrentlyAllowed)
+            assertThat(fpAllowed).isFalse()
+        }
+
+    @Test
+    fun isFingerprintAuthCurrentlyAllowed_initialStateTrue() =
+        testScope.runTest {
+            kosmos.allowFingerprint()
+            val fpAllowed by collectLastValue(underTest.isFingerprintAuthCurrentlyAllowed)
+            assertThat(fpAllowed).isTrue()
+        }
+
+    @Test
+    fun isFingerprintAuthCurrentlyAllowed_becomesTrue() =
         testScope.runTest {
             val fpAllowed by collectLastValue(underTest.isFingerprintAuthCurrentlyAllowed)
 
             // WHEN: not locked out, no face sensor, no strong auth requirements
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setLockedOut(false)
-            kosmos.fakeFacePropertyRepository.setSensorInfo(null)
-            kosmos.fakeBiometricSettingsRepository.setIsFingerprintAuthCurrentlyAllowed(true)
+            kosmos.allowFingerprint()
 
             // THEN fp is allowed
             assertThat(fpAllowed).isTrue()
@@ -63,10 +76,7 @@ class DeviceEntryBiometricsAllowedInteractorTest : SysuiTestCase() {
             // WHEN: not locked out, face is strong & locked out,  no strong auth requirements
             kosmos.fakeDeviceEntryFingerprintAuthRepository.setLockedOut(false)
             kosmos.fakeFacePropertyRepository.setSensorInfo(
-                FaceSensorInfo(
-                    id = 0,
-                    strength = SensorStrength.STRONG,
-                )
+                FaceSensorInfo(id = 0, strength = SensorStrength.STRONG)
             )
             kosmos.fakeDeviceEntryFaceAuthRepository.setLockedOut(true)
             kosmos.fakeBiometricSettingsRepository.setIsFingerprintAuthCurrentlyAllowed(true)
@@ -83,10 +93,7 @@ class DeviceEntryBiometricsAllowedInteractorTest : SysuiTestCase() {
             // WHEN: not locked out, face is convenience & locked out, no strong auth requirements
             kosmos.fakeDeviceEntryFingerprintAuthRepository.setLockedOut(false)
             kosmos.fakeFacePropertyRepository.setSensorInfo(
-                FaceSensorInfo(
-                    id = 0,
-                    strength = SensorStrength.CONVENIENCE,
-                )
+                FaceSensorInfo(id = 0, strength = SensorStrength.CONVENIENCE)
             )
             kosmos.fakeDeviceEntryFaceAuthRepository.setLockedOut(true)
             kosmos.fakeBiometricSettingsRepository.setIsFingerprintAuthCurrentlyAllowed(true)

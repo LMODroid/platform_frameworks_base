@@ -22,6 +22,7 @@ import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.keyguard.data.repository.TrustRepository
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 /** Encapsulates any state relevant to trust agents and trust grants. */
@@ -48,10 +49,9 @@ constructor(
     /** Whether the current user is trusted by any of the enabled trust agents. */
     val isTrusted: StateFlow<Boolean> = repository.isCurrentUserTrusted
 
-    /** Whether active unlock is running for the current user. */
-    suspend fun isCurrentUserActiveUnlockRunning(): Boolean {
-        return repository.isCurrentUserActiveUnlockRunning()
-    }
+    /** Whether the current user has active unlock setup and enabled */
+    val isCurrentUserActiveUnlockEnabled: Flow<Boolean> =
+        repository.isCurrentUserActiveUnlockEnabled
 
     /** Reports a keyguard visibility change. */
     fun reportKeyguardShowingChanged() {
