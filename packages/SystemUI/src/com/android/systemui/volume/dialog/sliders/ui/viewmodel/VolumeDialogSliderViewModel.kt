@@ -41,11 +41,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 
 /*
@@ -129,9 +131,10 @@ constructor(
 
     init {
         userVolumeUpdates
-            .filterNotNull()
+            .mapNotNull { it?.newVolumeLevel?.roundToInt() }
+            .distinctUntilChanged()
             .mapLatest { volume ->
-                interactor.setStreamVolume(volume.newVolumeLevel.roundToInt())
+                interactor.setStreamVolume(volume)
                 Events.writeEvent(Events.EVENT_TOUCH_LEVEL_CHANGED, model.first().stream, volume)
             }
             .launchIn(coroutineScope)
