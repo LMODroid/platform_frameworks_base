@@ -39,7 +39,7 @@ import com.android.mechanics.DistanceGestureContext
 import com.android.mechanics.MotionValue
 import com.android.mechanics.debug.findMotionValueDebugger
 import com.android.mechanics.effects.MagneticDetach
-import com.android.mechanics.effects.MagneticDetach.Companion.Defaults.AttachDetachState
+import com.android.mechanics.effects.MagneticDetach.Defaults.AttachDetachState
 import com.android.mechanics.spec.InputDirection
 import com.android.mechanics.spec.SemanticKey
 import com.android.mechanics.spec.builder.MotionBuilderContext
@@ -161,7 +161,8 @@ private class OverscrollToDismissNode(
     ): NestedDraggable.Controller {
         overscrollSign = sign
         gestureContext.reset(dragOffset = motionValue.output, direction = InputDirection.Max)
-        motionValue.spec = motionBuilderContext.spatialMotionSpec { at(0f, MagneticDetach()) }
+        motionValue.spec = motionBuilderContext.spatialMotionSpec { after(0f, MagneticDetach()) }
+
         return this
     }
 
