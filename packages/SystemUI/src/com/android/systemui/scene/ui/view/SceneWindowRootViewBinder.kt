@@ -62,6 +62,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
+/** View binder that wires up scene container specific view bindings. */
 object SceneWindowRootViewBinder {
 
     /** Binds between the view and view-model pertaining to a specific scene container. */

@@ -19,6 +19,7 @@ package com.android.systemui.shade
 import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.os.Handler
+import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.ViewStub
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -46,6 +47,7 @@ import com.android.systemui.scene.ui.view.WindowRootView
 import com.android.systemui.scene.ui.view.WindowRootViewKeyEventHandler
 import com.android.systemui.scene.ui.viewmodel.SceneContainerViewModel
 import com.android.systemui.settings.UserTracker
+import com.android.systemui.statusbar.BlurUtils
 import com.android.systemui.statusbar.LightRevealScrim
 import com.android.systemui.statusbar.NotificationInsetsController
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout
@@ -57,11 +59,14 @@ import com.android.systemui.statusbar.phone.TapAgainView
 import com.android.systemui.statusbar.policy.BatteryController
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.tuner.TunerService
+import com.android.systemui.window.ui.WindowRootViewBinder
+import com.android.systemui.window.ui.viewmodel.WindowRootViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
 import javax.inject.Provider
+import kotlinx.coroutines.CoroutineDispatcher
 
 /** Module for providing views related to the shade. */
 @Module
@@ -91,11 +96,22 @@ abstract class ShadeViewProviderModule {
             qsSceneAdapter: Provider<QSSceneAdapter>,
             sceneJankMonitorFactory: SceneJankMonitor.Factory,
             windowRootViewKeyEventHandler: WindowRootViewKeyEventHandler,
+            windowRootViewModelFactory: WindowRootViewModel.Factory,
+            blurUtils: BlurUtils,
+            choreographer: Choreographer?,
+            @Main mainDispatcher: CoroutineDispatcher,
         ): WindowRootView {
             return if (SceneContainerFlag.isEnabled) {
                 checkNoSceneDuplicates(scenesProvider.get())
                 val sceneWindowRootView =
                     layoutInflater.inflate(R.layout.scene_window_root, null) as SceneWindowRootView
+                WindowRootViewBinder.bind(
+                    view = sceneWindowRootView,
+                    viewModelFactory = windowRootViewModelFactory,
+                    blurUtils = blurUtils,
+                    choreographer = choreographer,
+                    mainDispatcher = mainDispatcher,
+                )
                 sceneWindowRootView.init(
                     viewModelFactory = viewModelFactory,
                     containerConfig = containerConfigProvider.get(),
