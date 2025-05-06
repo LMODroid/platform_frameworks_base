@@ -166,6 +166,7 @@ import com.android.systemui.qs.panels.ui.compose.infinitegrid.EditModeTileDefaul
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.EditModeTileDefaults.AvailableTilesGridMinHeight
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.EditModeTileDefaults.CurrentTilesGridPadding
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.EditModeTileDefaults.GridBackgroundCornerRadius
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.EditModeTileDefaults.TilePlacementSpec
 import com.android.systemui.qs.panels.ui.compose.selection.InteractiveTileContainer
 import com.android.systemui.qs.panels.ui.compose.selection.MutableSelectionState
 import com.android.systemui.qs.panels.ui.compose.selection.ResizingState
@@ -831,24 +832,16 @@ private fun LazyGridItemScope.TileGridCell(
             TileState.GreyedOut -> null
         }
 
+    // TODO(b/412357793) Remove this workaround when animateItem is fixed for RTL grids
+    // Don't apply the placementSpec to the selected tile as it interferes with
+    // the resizing animation. The selection can't change positions without selecting a
+    // different tile, so this isn't needed regardless.
+    val placementSpec = if (tileState != TileState.Selected) TilePlacementSpec else null
     InteractiveTileContainer(
         tileState = tileState,
         resizingState = resizingState,
         modifier =
-            modifier.height(TileHeight).fillMaxWidth().thenIf(tileState != TileState.Selected) {
-                // TODO(b/412357793) Remove this workaround when animateItem is fixed for RTL grids
-                // Don't apply the animateItem modifier to the selected tile as it interferes with
-                // the resizing animation. The selection can't change positions without selecting a
-                // different tile, so this isn't needed regardless.
-                Modifier.animateItem(
-                    placementSpec =
-                        spring(
-                            stiffness = Spring.StiffnessMediumLow,
-                            dampingRatio = Spring.DampingRatioLowBouncy,
-                            visibilityThreshold = IntOffset.VisibilityThreshold,
-                        )
-                )
-            },
+            modifier.height(TileHeight).fillMaxWidth().animateItem(placementSpec = placementSpec),
         onClick = {
             if (tileState == TileState.Removable) {
                 onRemoveTile(cell.tile.tileSpec)
@@ -1168,6 +1161,12 @@ private object EditModeTileDefaults {
     val CurrentTilesGridPadding = 10.dp
     val AvailableTilesGridMinHeight = 200.dp
     val GridBackgroundCornerRadius = 28.dp
+    val TilePlacementSpec =
+        spring(
+            stiffness = Spring.StiffnessMediumLow,
+            dampingRatio = Spring.DampingRatioLowBouncy,
+            visibilityThreshold = IntOffset.VisibilityThreshold,
+        )
 
     @Composable
     fun editTileColors(): TileColors =
