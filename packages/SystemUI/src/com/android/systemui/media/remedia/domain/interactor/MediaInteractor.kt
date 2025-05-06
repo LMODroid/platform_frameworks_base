@@ -20,10 +20,13 @@ import android.content.Context
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import com.android.systemui.biometrics.Utils.toBitmap
+import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.media.controls.domain.pipeline.getNotificationActions
+import com.android.systemui.media.controls.shared.model.MediaAction
 import com.android.systemui.media.remedia.data.model.MediaDataModel
 import com.android.systemui.media.remedia.data.repository.MediaRepository
 import com.android.systemui.media.remedia.domain.model.MediaActionModel
@@ -32,6 +35,8 @@ import com.android.systemui.media.remedia.domain.model.MediaSessionModel
 import com.android.systemui.media.remedia.shared.model.MediaCardActionButtonLayout
 import com.android.systemui.media.remedia.shared.model.MediaColorScheme
 import com.android.systemui.media.remedia.shared.model.MediaSessionState
+import com.android.systemui.plugins.ActivityStarter
+import com.android.systemui.res.R
 import javax.inject.Inject
 
 /**
@@ -56,8 +61,11 @@ interface MediaInteractor {
 @SysUISingleton
 class MediaInteractorImpl
 @Inject
-constructor(@Application val applicationContext: Context, val repository: MediaRepository) :
-    MediaInteractor, ExclusiveActivatable() {
+constructor(
+    @Application val applicationContext: Context,
+    val repository: MediaRepository,
+    private val activityStarter: ActivityStarter,
+) : MediaInteractor, ExclusiveActivatable() {
 
     override val sessions: List<MediaSessionModel>
         get() = repository.currentMedia.map { toMediaSessionModel(it) }
@@ -122,26 +130,84 @@ constructor(@Application val applicationContext: Context, val repository: MediaR
                 get() = TODO("Not yet implemented")
 
             override val outputDevice: MediaOutputDeviceModel
-                get() = TODO("Not yet implemented")
+                get() =
+                    with(dataModel.outputDevice) {
+                        MediaOutputDeviceModel(
+                            name = this?.name.toString(),
+                            // Set home devices icon as default.
+                            icon =
+                                this?.icon?.let { Icon.Loaded(it, contentDescription = null) }
+                                    ?: Icon.Resource(
+                                        R.drawable.ic_media_home_devices,
+                                        contentDescription = null,
+                                    ),
+                            isInProgress = false,
+                        )
+                    }
 
             override val actionButtonLayout: MediaCardActionButtonLayout
-                get() = TODO("Not yet implemented")
+                get() =
+                    dataModel.playbackStateActions?.let {
+                        MediaCardActionButtonLayout.WithPlayPause
+                    } ?: MediaCardActionButtonLayout.SecondaryActionsOnly
 
             override val playPauseAction: MediaActionModel
-                get() = TODO("Not yet implemented")
+                get() =
+                    dataModel.playbackStateActions?.playOrPause?.getMediaActionModel()
+                        ?: MediaActionModel.None
 
             override val leftAction: MediaActionModel
-                get() = TODO("Not yet implemented")
+                get() =
+                    dataModel.playbackStateActions?.let {
+                        it.prevOrCustom?.getMediaActionModel()
+                            ?: if (it.reservePrev) {
+                                MediaActionModel.ReserveSpace
+                            } else {
+                                MediaActionModel.None
+                            }
+                    } ?: MediaActionModel.None
 
             override val rightAction: MediaActionModel
-                get() = TODO("Not yet implemented")
+                get() =
+                    dataModel.playbackStateActions?.let {
+                        it.nextOrCustom?.getMediaActionModel()
+                            ?: if (it.reserveNext) {
+                                MediaActionModel.ReserveSpace
+                            } else {
+                                MediaActionModel.None
+                            }
+                    } ?: MediaActionModel.None
 
             override val additionalActions: List<MediaActionModel.Action>
-                get() = TODO("Not yet implemented")
+                get() =
+                    dataModel.playbackStateActions?.let { playbackActions ->
+                        listOfNotNull(
+                            playbackActions.custom0?.getMediaActionModel()
+                                as? MediaActionModel.Action,
+                            playbackActions.custom1?.getMediaActionModel()
+                                as? MediaActionModel.Action,
+                        )
+                    }
+                        ?: getNotificationActions(dataModel.notificationActions, activityStarter)
+                            .mapNotNull { it.getMediaActionModel() as? MediaActionModel.Action }
         }
     }
 
     override suspend fun onActivated(): Nothing {
         repository.activate()
+    }
+
+    private fun MediaAction.getMediaActionModel(): MediaActionModel {
+        return icon?.let { drawable ->
+            MediaActionModel.Action(
+                icon =
+                    Icon.Loaded(
+                        drawable = drawable,
+                        contentDescription =
+                            contentDescription?.let { ContentDescription.Loaded(it.toString()) },
+                    ),
+                onClick = { action?.run() },
+            )
+        } ?: MediaActionModel.None
     }
 }
