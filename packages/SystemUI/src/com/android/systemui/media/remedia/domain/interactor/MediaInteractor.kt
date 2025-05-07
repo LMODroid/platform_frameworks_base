@@ -17,14 +17,18 @@
 package com.android.systemui.media.remedia.domain.interactor
 
 import android.content.Context
+import android.content.Intent
+import android.provider.Settings
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import com.android.internal.logging.InstanceId
 import com.android.systemui.biometrics.Utils.toBitmap
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.media.controls.domain.pipeline.MediaDataProcessor
 import com.android.systemui.media.controls.domain.pipeline.getNotificationActions
 import com.android.systemui.media.controls.shared.model.MediaAction
 import com.android.systemui.media.remedia.data.model.MediaDataModel
@@ -52,7 +56,7 @@ interface MediaInteractor {
     fun seek(sessionKey: Any, to: Long)
 
     /** Hide the representation of the media session with the given [sessionKey]. */
-    fun hide(sessionKey: Any)
+    fun hide(sessionKey: Any, delayMs: Long)
 
     /** Open media settings. */
     fun openMediaSettings()
@@ -64,6 +68,7 @@ class MediaInteractorImpl
 constructor(
     @Application val applicationContext: Context,
     val repository: MediaRepository,
+    val mediaDataProcessor: MediaDataProcessor,
     private val activityStarter: ActivityStarter,
 ) : MediaInteractor, ExclusiveActivatable() {
 
@@ -71,15 +76,15 @@ constructor(
         get() = repository.currentMedia.map { toMediaSessionModel(it) }
 
     override fun seek(sessionKey: Any, to: Long) {
-        TODO("Not yet implemented")
+        repository.seek(sessionKey as InstanceId, to)
     }
 
-    override fun hide(sessionKey: Any) {
-        TODO("Not yet implemented")
+    override fun hide(sessionKey: Any, delayMs: Long) {
+        mediaDataProcessor.dismissMediaData(sessionKey as InstanceId, delayMs, userInitiated = true)
     }
 
     override fun openMediaSettings() {
-        TODO("Not yet implemented")
+        activityStarter.startActivity(settingsIntent, true)
     }
 
     private fun toMediaSessionModel(dataModel: MediaDataModel): MediaSessionModel {
@@ -209,5 +214,9 @@ constructor(
                 onClick = { action?.run() },
             )
         } ?: MediaActionModel.None
+    }
+
+    companion object {
+        private val settingsIntent: Intent = Intent(Settings.ACTION_MEDIA_CONTROLS_SETTINGS)
     }
 }

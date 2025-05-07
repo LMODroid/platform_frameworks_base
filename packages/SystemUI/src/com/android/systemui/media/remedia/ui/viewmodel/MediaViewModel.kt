@@ -163,7 +163,10 @@ constructor(
                                             falsingSystem.runIfNotFalseTap(
                                                 FalsingManager.LOW_PENALTY
                                             ) {
-                                                interactor.hide(session.key)
+                                                interactor.hide(
+                                                    session.key,
+                                                    MEDIA_PLAYER_ANIMATION_DELAY_MS,
+                                                )
                                                 isGutsVisible = false
                                             }
                                         },
@@ -387,5 +390,6 @@ constructor(
     companion object {
         private const val OneMinuteInSec = 60
         private const val OneHourInSec = OneMinuteInSec * 60
+        private const val MEDIA_PLAYER_ANIMATION_DELAY_MS = 334L
     }
 }
