@@ -16,6 +16,7 @@
 
 package com.android.systemui.common.ui.compose
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
@@ -32,13 +33,14 @@ import com.android.systemui.common.shared.model.Icon
  * Note: Some drawables aren't compatible with [rememberDrawablePainter], used here for
  * [Icon.Loaded] icons, and won't be resized from their intrinsic size (b/394738023).
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Icon(icon: Icon, modifier: Modifier = Modifier, tint: Color = LocalContentColor.current) {
     val contentDescription = icon.contentDescription?.load()
     when (icon) {
         is Icon.Loaded -> {
-            Icon(rememberDrawablePainter(icon.drawable), contentDescription, modifier, tint)
+            Icon(rememberDrawablePainter(icon.drawable), { tint }, contentDescription, modifier)
         }
-        is Icon.Resource -> Icon(painterResource(icon.res), contentDescription, modifier, tint)
+        is Icon.Resource -> Icon(painterResource(icon.res), { tint }, contentDescription, modifier)
     }
 }
