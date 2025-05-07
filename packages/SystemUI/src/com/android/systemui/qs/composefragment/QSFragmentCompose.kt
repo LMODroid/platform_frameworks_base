@@ -31,9 +31,6 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.activity.setViewTreeOnBackPressedDispatcherOwner
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
@@ -57,7 +54,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -120,6 +116,7 @@ import com.android.systemui.compose.modifiers.sysUiResTagContainer
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dump.DumpManager
+import com.android.systemui.initOnBackPressedDispatcherOwner
 import com.android.systemui.keyboard.shortcut.ui.composable.InteractionsConfig
 import com.android.systemui.keyboard.shortcut.ui.composable.ProvideShortcutHelperIndication
 import com.android.systemui.lifecycle.repeatWhenAttached
@@ -222,19 +219,7 @@ constructor(
                 id = R.id.quick_settings_container
                 repeatWhenAttached {
                     repeatOnLifecycle(Lifecycle.State.CREATED) {
-                        setViewTreeOnBackPressedDispatcherOwner(
-                            object : OnBackPressedDispatcherOwner {
-                                override val onBackPressedDispatcher =
-                                    OnBackPressedDispatcher().apply {
-                                        setOnBackInvokedDispatcher(
-                                            it.viewRootImpl.onBackInvokedDispatcher
-                                        )
-                                    }
-
-                                override val lifecycle: Lifecycle =
-                                    this@repeatWhenAttached.lifecycle
-                            }
-                        )
+                        initOnBackPressedDispatcherOwner(this@repeatWhenAttached.lifecycle)
                         setContent {
                             this@QSFragmentCompose.Content(Modifier.sysUiResTagContainer())
                         }

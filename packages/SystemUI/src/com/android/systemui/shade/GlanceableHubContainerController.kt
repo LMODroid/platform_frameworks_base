@@ -27,9 +27,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.FrameLayout
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.activity.setViewTreeOnBackPressedDispatcherOwner
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.updateMargins
 import androidx.lifecycle.Lifecycle
@@ -55,6 +52,7 @@ import com.android.systemui.communal.ui.viewmodel.CommunalViewModel
 import com.android.systemui.communal.util.CommunalColors
 import com.android.systemui.communal.util.UserTouchActivityNotifier
 import com.android.systemui.dagger.SysUISingleton
+import com.android.systemui.initOnBackPressedDispatcherOwner
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardTransitionInteractor
 import com.android.systemui.keyguard.shared.model.Edge
@@ -291,19 +289,7 @@ constructor(
                 repeatWhenAttached {
                     lifecycleScope.launch {
                         repeatOnLifecycle(Lifecycle.State.CREATED) {
-                            setViewTreeOnBackPressedDispatcherOwner(
-                                object : OnBackPressedDispatcherOwner {
-                                    override val onBackPressedDispatcher =
-                                        OnBackPressedDispatcher().apply {
-                                            setOnBackInvokedDispatcher(
-                                                viewRootImpl.onBackInvokedDispatcher
-                                            )
-                                        }
-
-                                    override val lifecycle: Lifecycle =
-                                        this@repeatWhenAttached.lifecycle
-                                }
-                            )
+                            initOnBackPressedDispatcherOwner(this@repeatWhenAttached.lifecycle)
 
                             setContent {
                                 PlatformTheme {

@@ -33,9 +33,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.OnHierarchyChangeListener
 import android.view.WindowInsets
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.activity.setViewTreeOnBackPressedDispatcherOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.app.tracing.coroutines.launchTraced as launch
@@ -51,6 +48,7 @@ import com.android.systemui.common.ui.view.onLayoutChanged
 import com.android.systemui.common.ui.view.onTouchListener
 import com.android.systemui.customization.R as customR
 import com.android.systemui.deviceentry.domain.interactor.DeviceEntryHapticsInteractor
+import com.android.systemui.initOnBackPressedDispatcherOwner
 import com.android.systemui.keyguard.shared.model.KeyguardState
 import com.android.systemui.keyguard.ui.view.layout.sections.AodPromotedNotificationSection
 import com.android.systemui.keyguard.ui.viewmodel.BurnInParameters
@@ -232,18 +230,9 @@ object KeyguardRootViewBinder {
             view.repeatWhenAttached {
                 repeatOnLifecycle(Lifecycle.State.CREATED) {
                     if (SceneContainerFlag.isEnabled) {
-                        view.setViewTreeOnBackPressedDispatcherOwner(
-                            object : OnBackPressedDispatcherOwner {
-                                override val onBackPressedDispatcher =
-                                    OnBackPressedDispatcher().apply {
-                                        setOnBackInvokedDispatcher(
-                                            view.viewRootImpl.onBackInvokedDispatcher
-                                        )
-                                    }
-
-                                override val lifecycle: Lifecycle =
-                                    this@repeatWhenAttached.lifecycle
-                            }
+                        view.initOnBackPressedDispatcherOwner(
+                            this@repeatWhenAttached.lifecycle,
+                            force = true,
                         )
                     }
                     launch {

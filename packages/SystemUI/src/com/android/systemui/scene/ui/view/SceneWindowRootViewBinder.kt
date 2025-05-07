@@ -22,15 +22,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.FrameLayout
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.activity.setViewTreeOnBackPressedDispatcherOwner
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import com.android.compose.animation.scene.OverlayKey
 import com.android.compose.animation.scene.SceneKey
 import com.android.compose.theme.PlatformTheme
@@ -39,6 +35,7 @@ import com.android.systemui.common.ui.compose.windowinsets.CutoutLocation
 import com.android.systemui.common.ui.compose.windowinsets.DisplayCutout
 import com.android.systemui.common.ui.compose.windowinsets.ScreenDecorProvider
 import com.android.systemui.compose.modifiers.sysUiResTagContainer
+import com.android.systemui.initOnBackPressedDispatcherOwner
 import com.android.systemui.lifecycle.WindowLifecycleState
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.lifecycle.setSnapshotBinding
@@ -114,17 +111,9 @@ object SceneWindowRootViewBinder {
                 factory = { viewModelFactory.create(view, motionEventHandlerReceiver) },
             ) { viewModel ->
                 try {
-                    view.setViewTreeOnBackPressedDispatcherOwner(
-                        object : OnBackPressedDispatcherOwner {
-                            override val onBackPressedDispatcher =
-                                OnBackPressedDispatcher().apply {
-                                    setOnBackInvokedDispatcher(
-                                        view.viewRootImpl.onBackInvokedDispatcher
-                                    )
-                                }
-
-                            override val lifecycle: Lifecycle = this@repeatWhenAttached.lifecycle
-                        }
+                    view.initOnBackPressedDispatcherOwner(
+                        lifecycle = this@repeatWhenAttached.lifecycle,
+                        force = true,
                     )
 
                     view.addView(
