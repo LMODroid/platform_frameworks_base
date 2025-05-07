@@ -629,16 +629,6 @@ flag {
 }
 
 flag {
-   name: "faster_unlock_transition"
-   namespace: "systemui"
-   description: "Faster wallpaper unlock transition"
-   bug: "298186160"
-   metadata {
-     purpose: PURPOSE_BUGFIX
-   }
-}
-
-flag {
    name: "confine_notification_touch_to_view_width"
    namespace: "systemui"
    description: "Use notification view width when detecting gestures."

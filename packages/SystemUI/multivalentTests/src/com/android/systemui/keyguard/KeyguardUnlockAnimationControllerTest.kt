@@ -7,7 +7,6 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.os.PowerManager
 import android.platform.test.annotations.DisableFlags
-import android.platform.test.annotations.EnableFlags
 import android.testing.TestableLooper.RunWithLooper
 import android.view.RemoteAnimationTarget
 import android.view.SurfaceControl
@@ -419,7 +418,6 @@ class KeyguardUnlockAnimationControllerTest : SysuiTestCase() {
      * and home screen.
      */
     @Test
-    @EnableFlags(Flags.FLAG_FASTER_UNLOCK_TRANSITION)
     fun manualUnlock_multipleWallpapers() {
         var lastFadeInAlpha = -1f
         var lastFadeOutAlpha = -1f
