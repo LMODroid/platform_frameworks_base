@@ -26,6 +26,7 @@ import com.android.systemui.keyguard.shared.transition.keyguardTransitionAnimati
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.shade.domain.interactor.shadeModeInteractor
+import com.android.systemui.statusbar.notification.domain.interactor.activeNotificationsInteractor
 import com.android.systemui.unfold.domain.interactor.unfoldTransitionInteractor
 
 val Kosmos.lockscreenContentViewModelFactory by Fixture {
@@ -45,6 +46,9 @@ val Kosmos.lockscreenContentViewModelFactory by Fixture {
                 keyguardTransitionAnimationCallbackDelegator =
                     keyguardTransitionAnimationCallbackDelegator,
                 keyguardTransitionAnimationCallback = keyguardTransitionAnimationCallback,
+                keyguardMediaViewModelFactory = keyguardMediaViewModelFactory,
+                keyguardSmartspaceViewModel = keyguardSmartspaceViewModel,
+                activeNotificationsInteractor = activeNotificationsInteractor,
             )
         }
     }

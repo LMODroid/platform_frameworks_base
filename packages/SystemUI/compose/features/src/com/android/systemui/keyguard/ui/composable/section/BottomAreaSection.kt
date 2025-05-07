@@ -88,7 +88,7 @@ constructor(
 
     @Composable
     fun ContentScope.IndicationArea(modifier: Modifier = Modifier) {
-        Element(key = IndicationAreaElementKey, modifier = modifier.indicationAreaPadding()) {
+        Element(key = IndicationAreaElementKey, modifier = modifier) {
             IndicationArea(
                 indicationAreaViewModel = indicationAreaViewModel,
                 indicationController = indicationController,
@@ -188,11 +188,6 @@ constructor(
                 horizontal = dimensionResource(R.dimen.keyguard_affordance_horizontal_offset)
             )
             .padding(bottom = dimensionResource(R.dimen.keyguard_affordance_vertical_offset))
-    }
-
-    @Composable
-    private fun Modifier.indicationAreaPadding(): Modifier {
-        return this.padding(bottom = dimensionResource(R.dimen.keyguard_indication_margin_bottom))
     }
 }
 

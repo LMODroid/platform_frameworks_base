@@ -26,7 +26,6 @@ import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.media.controls.data.repository.mediaFilterRepository
 import com.android.systemui.media.controls.shared.model.MediaData
-import com.android.systemui.shade.data.repository.shadeRepository
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
@@ -81,21 +80,5 @@ class KeyguardMediaViewModelTest : SysuiTestCase() {
             keyguardRepository.setIsDozing(false)
 
             assertThat(underTest.isMediaVisible).isFalse()
-        }
-
-    @Test
-    fun isShadeLayoutWide_withConfigTrue_true() =
-        kosmos.runTest {
-            shadeRepository.setShadeLayoutWide(true)
-
-            assertThat(underTest.isShadeLayoutWide).isTrue()
-        }
-
-    @Test
-    fun isShadeLayoutWide_withConfigFalse_false() =
-        kosmos.runTest {
-            shadeRepository.setShadeLayoutWide(false)
-
-            assertThat(underTest.isShadeLayoutWide).isFalse()
         }
 }

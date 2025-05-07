@@ -20,11 +20,13 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntRect
@@ -43,6 +45,7 @@ import com.android.systemui.communal.ui.viewmodel.CommunalViewModel
 import com.android.systemui.keyguard.ui.composable.layout.LockIconAlignmentLines
 import com.android.systemui.keyguard.ui.composable.section.BottomAreaSection
 import com.android.systemui.keyguard.ui.composable.section.LockSection
+import com.android.systemui.res.R
 import com.android.systemui.statusbar.phone.SystemUIDialogFactory
 import javax.inject.Inject
 import kotlin.math.min
@@ -103,7 +106,12 @@ constructor(
                     }
                     with(bottomAreaSection) {
                         IndicationArea(
-                            Modifier.element(Communal.Elements.IndicationArea).fillMaxWidth()
+                            Modifier.element(Communal.Elements.IndicationArea)
+                                .fillMaxWidth()
+                                .padding(
+                                    bottom =
+                                        dimensionResource(R.dimen.keyguard_indication_margin_bottom)
+                                )
                         )
                     }
                 },

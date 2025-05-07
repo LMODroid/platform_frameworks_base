@@ -17,12 +17,10 @@
 package com.android.systemui.keyguard.ui.viewmodel
 
 import android.platform.test.flag.junit.FlagsParameterization
-import androidx.compose.ui.Alignment
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.biometrics.authController
 import com.android.systemui.common.ui.data.repository.fakeConfigurationRepository
-import com.android.systemui.flags.DisableSceneContainer
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.flags.andSceneContainer
 import com.android.systemui.keyguard.data.repository.fakeKeyguardClockRepository
@@ -33,8 +31,6 @@ import com.android.systemui.keyguard.shared.model.ClockSize
 import com.android.systemui.keyguard.shared.model.KeyguardState
 import com.android.systemui.keyguard.shared.transition.fakeKeyguardTransitionAnimationCallback
 import com.android.systemui.keyguard.shared.transition.keyguardTransitionAnimationCallbackDelegator
-import com.android.systemui.keyguard.ui.viewmodel.LockscreenContentViewModel.NotificationsPlacement.BelowClock
-import com.android.systemui.keyguard.ui.viewmodel.LockscreenContentViewModel.NotificationsPlacement.BesideClock
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runCurrent
@@ -50,8 +46,13 @@ import com.android.systemui.shade.domain.interactor.enableSingleShade
 import com.android.systemui.shade.domain.interactor.enableSplitShade
 import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.shade.shared.model.ShadeMode
+import com.android.systemui.statusbar.notification.data.model.activeNotificationModel
+import com.android.systemui.statusbar.notification.data.repository.ActiveNotificationsStore
+import com.android.systemui.statusbar.notification.data.repository.activeNotificationListRepository
+import com.android.systemui.statusbar.notification.domain.interactor.activeNotificationsInteractor
 import com.android.systemui.testKosmos
 import com.android.systemui.unfold.fakeUnfoldTransitionProgressProvider
+import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
 import java.util.Locale
@@ -94,100 +95,35 @@ class LockscreenContentViewModelTest(flags: FlagsParameterization) : SysuiTestCa
     }
 
     @Test
-    fun isUdfpsVisible_withUdfps_true() =
+    fun isAmbientIndicationVisible_withUdfps_false() =
         kosmos.runTest {
             whenever(authController.isUdfpsSupported).thenReturn(true)
-            assertThat(underTest.isUdfpsVisible).isTrue()
+            assertThat(underTest.layout.isAmbientIndicationVisible).isFalse()
         }
 
     @Test
-    fun isUdfpsVisible_withoutUdfps_false() =
+    fun isAmbientIndicationVisible_withoutUdfps_true() =
         kosmos.runTest {
             whenever(authController.isUdfpsSupported).thenReturn(false)
-            assertThat(underTest.isUdfpsVisible).isFalse()
-        }
-
-    @Test
-    fun notificationsPlacement_splitShade_topEnd() =
-        kosmos.runTest {
-            setupState(shadeMode = ShadeMode.Split, clockSize = ClockSize.SMALL)
-
-            assertThat(underTest.notificationsPlacement)
-                .isEqualTo(BesideClock(alignment = Alignment.TopEnd))
-        }
-
-    @Test
-    fun notificationsPlacement_singleShade_below() =
-        kosmos.runTest {
-            setupState(shadeMode = ShadeMode.Single, clockSize = ClockSize.SMALL)
-
-            assertThat(underTest.notificationsPlacement).isEqualTo(BelowClock)
+            assertThat(underTest.layout.isAmbientIndicationVisible).isTrue()
         }
 
     @Test
     @EnableSceneContainer
-    fun notificationsPlacement_dualShadeSmallClock_below() =
+    fun isNotificationsVisible_hasNotifications_true() =
         kosmos.runTest {
-            setupState(
-                shadeMode = ShadeMode.Dual,
-                clockSize = ClockSize.SMALL,
-                shadeLayoutWide = true,
-            )
+            setupState(hasNotifications = true)
 
-            assertThat(underTest.notificationsPlacement).isEqualTo(BelowClock)
+            assertThat(underTest.layout.isNotificationsVisible).isTrue()
         }
 
     @Test
     @EnableSceneContainer
-    fun notificationsPlacement_dualShadeLargeClock_topStart() =
+    fun isNotificationsVisible_hasNoNotifications_false() =
         kosmos.runTest {
-            setupState(
-                shadeMode = ShadeMode.Dual,
-                clockSize = ClockSize.LARGE,
-                shadeLayoutWide = true,
-            )
+            setupState(hasNotifications = false)
 
-            assertThat(underTest.notificationsPlacement)
-                .isEqualTo(BesideClock(alignment = Alignment.TopStart))
-        }
-
-    @Test
-    fun areNotificationsVisible_splitShadeTrue_true() =
-        kosmos.runTest {
-            setupState(shadeMode = ShadeMode.Split, clockSize = ClockSize.LARGE)
-
-            assertThat(underTest.areNotificationsVisible).isTrue()
-        }
-
-    @Test
-    @EnableSceneContainer
-    fun areNotificationsVisible_dualShadeWideOnLockscreen_true() =
-        kosmos.runTest {
-            setupState(
-                shadeMode = ShadeMode.Dual,
-                clockSize = ClockSize.LARGE,
-                shadeLayoutWide = true,
-            )
-
-            assertThat(underTest.areNotificationsVisible).isTrue()
-        }
-
-    @Test
-    @DisableSceneContainer
-    fun areNotificationsVisible_withSmallClock_true() =
-        kosmos.runTest {
-            setupState(shadeMode = ShadeMode.Single, clockSize = ClockSize.SMALL)
-
-            assertThat(underTest.areNotificationsVisible).isTrue()
-        }
-
-    @Test
-    @DisableSceneContainer
-    fun areNotificationsVisible_withLargeClock_false() =
-        kosmos.runTest {
-            setupState(shadeMode = ShadeMode.Single, clockSize = ClockSize.LARGE)
-
-            assertThat(underTest.areNotificationsVisible).isFalse()
+            assertThat(underTest.layout.isNotificationsVisible).isFalse()
         }
 
     @Test
@@ -198,28 +134,28 @@ class LockscreenContentViewModelTest(flags: FlagsParameterization) : SysuiTestCa
             val unfoldProvider = fakeUnfoldTransitionProgressProvider
             unfoldProvider.onTransitionStarted()
             runCurrent()
-            assertThat(underTest.unfoldTranslations.start).isZero()
-            assertThat(underTest.unfoldTranslations.end).isZero()
+            assertThat(underTest.layout.unfoldTranslations.start).isZero()
+            assertThat(underTest.layout.unfoldTranslations.end).isZero()
 
             repeat(10) { repetition ->
                 val transitionProgress = 0.1f * (repetition + 1)
                 unfoldProvider.onTransitionProgress(transitionProgress)
                 runCurrent()
-                assertThat(underTest.unfoldTranslations.start)
+                assertThat(underTest.layout.unfoldTranslations.start)
                     .isEqualTo((1 - transitionProgress) * maxTranslation)
-                assertThat(underTest.unfoldTranslations.end)
+                assertThat(underTest.layout.unfoldTranslations.end)
                     .isEqualTo(-(1 - transitionProgress) * maxTranslation)
             }
 
             unfoldProvider.onTransitionFinishing()
             runCurrent()
-            assertThat(underTest.unfoldTranslations.start).isZero()
-            assertThat(underTest.unfoldTranslations.end).isZero()
+            assertThat(underTest.layout.unfoldTranslations.start).isZero()
+            assertThat(underTest.layout.unfoldTranslations.end).isZero()
 
             unfoldProvider.onTransitionFinished()
             runCurrent()
-            assertThat(underTest.unfoldTranslations.start).isZero()
-            assertThat(underTest.unfoldTranslations.end).isZero()
+            assertThat(underTest.layout.unfoldTranslations.start).isZero()
+            assertThat(underTest.layout.unfoldTranslations.end).isZero()
         }
 
     @Test
@@ -297,13 +233,16 @@ class LockscreenContentViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         }
 
     private fun Kosmos.setupState(
-        shadeMode: ShadeMode,
-        clockSize: ClockSize,
+        shadeMode: ShadeMode = ShadeMode.Single,
+        clockSize: ClockSize = ClockSize.SMALL,
+        hasNotifications: Boolean = false,
         shadeLayoutWide: Boolean? = null,
     ) {
         val isShadeLayoutWide by collectLastValue(kosmos.shadeRepository.isShadeLayoutWide)
         val collectedClockSize by collectLastValue(kosmos.keyguardClockInteractor.clockSize)
         val collectedShadeMode by collectLastValue(kosmos.shadeModeInteractor.shadeMode)
+        val areAnyNotificationsPresent by
+            collectLastValue(kosmos.activeNotificationsInteractor.areAnyNotificationsPresent)
         when (shadeMode) {
             ShadeMode.Dual -> kosmos.enableDualShade(wideLayout = shadeLayoutWide)
             ShadeMode.Single -> kosmos.enableSingleShade()
@@ -311,12 +250,27 @@ class LockscreenContentViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         }
         fakeKeyguardClockRepository.setShouldForceSmallClock(clockSize == ClockSize.SMALL)
         fakeKeyguardClockRepository.setClockSize(clockSize)
+        kosmos.activeNotificationListRepository.activeNotifications.value =
+            ActiveNotificationsStore.Builder()
+                .apply {
+                    if (hasNotifications) {
+                        addIndividualNotif(
+                            activeNotificationModel(
+                                key = "notif",
+                                aodIcon = mock(),
+                                groupKey = "testGroup",
+                            )
+                        )
+                    }
+                }
+                .build()
         runCurrent()
         if (shadeLayoutWide != null) {
             assertThat(isShadeLayoutWide).isEqualTo(shadeLayoutWide)
         }
         assertThat(collectedShadeMode).isEqualTo(shadeMode)
         assertThat(collectedClockSize).isEqualTo(clockSize)
+        assertThat(areAnyNotificationsPresent).isEqualTo(hasNotifications)
     }
 
     private fun prepareConfiguration(): Int {

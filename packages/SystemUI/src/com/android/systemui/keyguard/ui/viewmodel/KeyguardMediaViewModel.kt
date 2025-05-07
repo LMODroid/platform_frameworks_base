@@ -55,12 +55,6 @@ constructor(
                 !keyguardInteractor.isDozing.value && mediaCarouselInteractor.hasActiveMedia.value,
         )
 
-    val isShadeLayoutWide: Boolean by
-        hydrator.hydratedStateOf(
-            traceName = "isShadeLayoutWide",
-            source = shadeModeInteractor.isShadeLayoutWide,
-        )
-
     override suspend fun onActivated(): Nothing {
         hydrator.activate()
     }

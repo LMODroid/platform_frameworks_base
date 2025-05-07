@@ -18,6 +18,8 @@ package com.android.systemui.keyguard.ui.composable.section
 
 import android.content.res.Resources
 import android.widget.FrameLayout
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -126,6 +128,27 @@ constructor(
     }
 
     @Composable
+    fun DateAndWeather(orientation: Orientation, modifier: Modifier = Modifier) {
+        when (orientation) {
+            Orientation.Horizontal ->
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier,
+                ) {
+                    Date()
+                    Weather()
+                }
+
+            Orientation.Vertical ->
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = modifier) {
+                    Date()
+                    Weather()
+                }
+        }
+    }
+
+    @Composable
     private fun Card(modifier: Modifier = Modifier) {
         AndroidView(
             factory = { context ->
@@ -159,13 +182,15 @@ constructor(
             factory = { context ->
                 FrameLayout(context).apply {
                     addView(
-                        lockscreenSmartspaceController.buildAndConnectWeatherView(this, false).apply {
-                            layoutParams =
-                                FrameLayout.LayoutParams(
-                                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                                )
-                        }
+                        lockscreenSmartspaceController
+                            .buildAndConnectWeatherView(this, false)
+                            .apply {
+                                layoutParams =
+                                    FrameLayout.LayoutParams(
+                                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                                    )
+                            }
                     )
                 }
             },

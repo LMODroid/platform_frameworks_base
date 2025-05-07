@@ -22,8 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import com.android.compose.animation.scene.ContentScope
-import com.android.systemui.keyguard.ui.viewmodel.KeyguardMediaViewModel
-import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.media.controls.ui.composable.MediaCarousel
 import com.android.systemui.media.controls.ui.controller.MediaCarouselController
 import com.android.systemui.media.controls.ui.view.MediaHost
@@ -37,24 +35,22 @@ class MediaCarouselSection
 constructor(
     private val mediaCarouselController: MediaCarouselController,
     @param:Named(MediaModule.KEYGUARD) private val mediaHost: MediaHost,
-    private val keyguardMediaViewModelFactory: KeyguardMediaViewModel.Factory,
 ) {
 
     @Composable
-    fun ContentScope.KeyguardMediaCarousel(modifier: Modifier = Modifier) {
-        val viewModel =
-            rememberViewModel(traceName = "KeyguardMediaCarousel") {
-                keyguardMediaViewModelFactory.create()
-            }
+    fun ContentScope.KeyguardMediaCarousel(
+        isShadeLayoutWide: Boolean,
+        modifier: Modifier = Modifier,
+    ) {
         val horizontalPadding =
-            if (viewModel.isShadeLayoutWide) {
+            if (isShadeLayoutWide) {
                 dimensionResource(id = R.dimen.notification_side_paddings)
             } else {
                 dimensionResource(id = R.dimen.notification_side_paddings) +
                     dimensionResource(id = R.dimen.notification_panel_margin_horizontal)
             }
         MediaCarousel(
-            isVisible = viewModel.isMediaVisible,
+            isVisible = true,
             mediaHost = mediaHost,
             modifier = modifier.fillMaxWidth().padding(horizontal = horizontalPadding),
             carouselController = mediaCarouselController,
