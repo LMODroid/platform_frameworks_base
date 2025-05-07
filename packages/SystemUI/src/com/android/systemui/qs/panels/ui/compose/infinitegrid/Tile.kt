@@ -192,21 +192,22 @@ fun Tile(
                     )
                     .graphicsLayer { alpha = animatedAlpha },
         ) { expandable ->
+            // Use main click on long press for small, available dual target tiles.
+            // Open settings otherwise.
+            val useLongClickToSettings = !(iconOnly && isDualTarget && isClickable)
             val longClick: (() -> Unit)? =
                 {
                         hapticsViewModel?.setTileInteractionState(
                             TileHapticsViewModel.TileInteractionState.LONG_CLICKED
                         )
 
-                        // User main click on long press for small dual target tiles
-                        if (iconOnly && isDualTarget) {
-                            tile.mainClick(expandable)
-                        } else {
-                            // Settings click otherwise
+                        if (useLongClickToSettings) {
                             tile.settingsClick(expandable)
+                        } else {
+                            tile.mainClick(expandable)
                         }
                     }
-                    .takeIf { uiState.handlesLongClick }
+                    .takeIf { !useLongClickToSettings || uiState.handlesLongClick }
 
             TileContainer(
                 onClick = onClick@{

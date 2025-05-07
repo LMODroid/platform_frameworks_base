@@ -16,6 +16,7 @@
 
 package com.android.systemui.qs.panels.ui.compose
 
+import android.service.quicksettings.Tile.STATE_UNAVAILABLE
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -202,6 +203,111 @@ class TileTest : SysuiTestCase() {
         }
 
         assertThat(tile.interactions).containsExactly(InteractableFakeQSTile.Interaction.CLICK)
+    }
+
+    @Test
+    fun longClick_smallDualTargetTile_doesNotHandleLongClick_shouldReceiveClick() {
+        val tile = InteractableFakeQSTile()
+        tile.fakeTile.changeState(
+            QSTile.State().apply {
+                contentDescription = "smallDualTargetTile"
+                handlesSecondaryClick = true
+                handlesLongClick = false
+            }
+        )
+        val viewModel = TileViewModel(tile.fakeTile, TileSpec.Companion.create("test"))
+
+        composeRule.setContent { TestTile(viewModel, iconOnly = true) }
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithContentDescription("smallDualTargetTile").performTouchInput {
+            longClick()
+        }
+
+        assertThat(tile.interactions).containsExactly(InteractableFakeQSTile.Interaction.CLICK)
+    }
+
+    @Test
+    fun longClick_largeDualTargetTile_doesNotHandleLongClick_shouldNotReceiveLongClick() {
+        val tile = InteractableFakeQSTile()
+        tile.fakeTile.changeState(
+            QSTile.State().apply {
+                label = "largeDualTargetTile"
+                handlesSecondaryClick = true
+                handlesLongClick = false
+            }
+        )
+        val viewModel = TileViewModel(tile.fakeTile, TileSpec.Companion.create("test"))
+
+        composeRule.setContent { TestTile(viewModel, iconOnly = false) }
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithText("largeDualTargetTile").performTouchInput { longClick() }
+
+        // Long clicks default to a normal click when a tile does not handle long clicks
+        assertThat(tile.interactions).containsExactly(InteractableFakeQSTile.Interaction.CLICK)
+    }
+
+    @Test
+    fun longClick_smallTile_doesNotHandleLongClick_shouldNotReceiveLongClick() {
+        val tile = InteractableFakeQSTile()
+        tile.fakeTile.changeState(
+            QSTile.State().apply {
+                contentDescription = "smallTile"
+                handlesLongClick = false
+            }
+        )
+        val viewModel = TileViewModel(tile.fakeTile, TileSpec.Companion.create("test"))
+
+        composeRule.setContent { TestTile(viewModel, iconOnly = true) }
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithContentDescription("smallTile").performTouchInput { longClick() }
+
+        // Long clicks default to a normal click when a tile does not handle long clicks
+        assertThat(tile.interactions).containsExactly(InteractableFakeQSTile.Interaction.CLICK)
+    }
+
+    @Test
+    fun longClick_largeTile_doesNotHandleLongClick_shouldReceiveLongClick() {
+        val tile = InteractableFakeQSTile()
+        tile.fakeTile.changeState(
+            QSTile.State().apply {
+                label = "largeTile"
+                handlesLongClick = false
+            }
+        )
+        val viewModel = TileViewModel(tile.fakeTile, TileSpec.Companion.create("test"))
+
+        composeRule.setContent { TestTile(viewModel, iconOnly = false) }
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithText("largeTile").performTouchInput { longClick() }
+
+        // Long clicks default to a normal click when a tile does not handle long clicks
+        assertThat(tile.interactions).containsExactly(InteractableFakeQSTile.Interaction.CLICK)
+    }
+
+    @Test
+    fun longClick_smallDualTargetTile_isUnavailable_shouldReceiveLongClick() {
+        val tile = InteractableFakeQSTile()
+        tile.fakeTile.changeState(
+            QSTile.State().apply {
+                contentDescription = "smallDualTargetTile"
+                handlesSecondaryClick = true
+                state = STATE_UNAVAILABLE
+            }
+        )
+        val viewModel = TileViewModel(tile.fakeTile, TileSpec.Companion.create("test"))
+
+        composeRule.setContent { TestTile(viewModel, iconOnly = true) }
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithContentDescription("smallDualTargetTile").performTouchInput {
+            longClick()
+        }
+
+        assertThat(tile.interactions).containsExactly(InteractableFakeQSTile.Interaction.LONG_CLICK)
     }
 
     private class InteractableFakeQSTile {
