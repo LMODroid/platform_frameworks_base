@@ -16,10 +16,12 @@
 
 package com.android.systemui.shade.ui.composable
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,10 +41,13 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onPlaced
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.LowestZIndexContentPicker
@@ -77,7 +82,8 @@ fun ContentScope.OverlayShade(
         Scrim(showBackgroundColor = enableTransparency, onClicked = onScrimClicked)
 
         Box(
-            modifier = Modifier.fillMaxSize().panelContainerPadding(isFullWidth),
+            modifier =
+                Modifier.fillMaxSize().panelContainerPadding(isFullWidth, alignmentOnWideScreens),
             contentAlignment = if (isFullWidth) Alignment.TopCenter else alignmentOnWideScreens,
         ) {
             Panel(
@@ -156,7 +162,7 @@ private fun Modifier.panelWidth(isFullWidthPanel: Boolean): Modifier {
     return if (isFullWidthPanel) {
         fillMaxWidth()
     } else {
-        width(dimensionResource(id = R.dimen.shade_panel_width))
+        width(dimensionResource(R.dimen.shade_panel_width))
     }
 }
 
@@ -167,14 +173,38 @@ internal fun isFullWidthShade(): Boolean {
 }
 
 @Composable
-private fun Modifier.panelContainerPadding(isFullWidthPanel: Boolean): Modifier {
+@ReadOnlyComposable
+@SuppressLint("ConfigurationScreenWidthHeight")
+private fun getHalfScreenWidth(): Dp {
+    return LocalConfiguration.current.screenWidthDp.dp / 2
+}
+
+@Composable
+private fun Modifier.panelContainerPadding(
+    isFullWidthPanel: Boolean,
+    alignment: Alignment,
+): Modifier {
     if (isFullWidthPanel) {
         return this
     }
+    // On wide screens, the shade panel width is limited to half the screen width.
+    val halfScreenWidth = getHalfScreenWidth()
     val horizontalPaddingDp = dimensionResource(R.dimen.shade_panel_margin_horizontal)
+
+    val (startPadding, endPadding) =
+        when (alignment) {
+            Alignment.TopStart -> horizontalPaddingDp to halfScreenWidth
+            Alignment.TopEnd -> halfScreenWidth to horizontalPaddingDp
+            else -> horizontalPaddingDp to horizontalPaddingDp
+        }
+    val paddings = PaddingValues(start = startPadding, end = endPadding)
+    val layoutDirection = LocalLayoutDirection.current
     return windowInsetsPadding(
         WindowInsets.safeContent.union(
-            WindowInsets(left = horizontalPaddingDp, right = horizontalPaddingDp)
+            WindowInsets(
+                left = paddings.calculateLeftPadding(layoutDirection),
+                right = paddings.calculateRightPadding(layoutDirection),
+            )
         )
     )
 }

@@ -265,8 +265,10 @@ constructor(
                                 Split -> HorizontalPosition.MiddleToEdge(ratio = 0.5f)
                                 Dual ->
                                     if (isShadeLayoutWide) {
-                                        HorizontalPosition.FloatAtStart(
-                                            width = getDimensionPixelSize(R.dimen.shade_panel_width)
+                                        HorizontalPosition.EdgeToMiddle(
+                                            ratio = 0.5f,
+                                            maxWidth =
+                                                getDimensionPixelSize(R.dimen.shade_panel_width),
                                         )
                                     } else {
                                         HorizontalPosition.EdgeToEdge
@@ -276,7 +278,7 @@ constructor(
                         ConfigurationBasedDimensions(
                             horizontalPosition = horizontalPosition,
                             marginStart = if (shadeMode is Split) 0 else marginHorizontal,
-                            marginEnd = marginHorizontal,
+                            marginEnd = if (shadeMode is Dual) 0 else marginHorizontal,
                             marginBottom =
                                 getDimensionPixelSize(R.dimen.notification_panel_margin_bottom),
                             // y position of the NSSL in the window needs to be 0 under scene
@@ -911,14 +913,14 @@ constructor(
         /** The container is using the full width of the screen (minus any margins). */
         data object EdgeToEdge : HorizontalPosition
 
+        /**
+         * The container is laid out from the start edge to the given [ratio] of the screen width,
+         * or to [maxWidth], whichever dimension is smaller.
+         */
+        data class EdgeToMiddle(val ratio: Float = 0.5f, val maxWidth: Int) : HorizontalPosition
+
         /** The container is laid out from the given [ratio] of the screen width to the end edge. */
         data class MiddleToEdge(val ratio: Float = 0.5f) : HorizontalPosition
-
-        /**
-         * The container has a fixed [width] and is aligned to the start of the screen. In this
-         * layout, the end edge of the container is floating, i.e. unconstrained.
-         */
-        data class FloatAtStart(val width: Int) : HorizontalPosition
     }
 
     /**

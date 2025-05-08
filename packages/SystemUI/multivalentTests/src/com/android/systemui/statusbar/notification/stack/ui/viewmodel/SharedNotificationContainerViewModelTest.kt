@@ -236,8 +236,8 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
             val dimens by collectLastValue(underTest.configurationBasedDimensions)
 
             val horizontalPosition = checkNotNull(dimens).horizontalPosition
-            assertIs<HorizontalPosition.FloatAtStart>(horizontalPosition)
-            assertThat(horizontalPosition.width).isEqualTo(200)
+            assertIs<HorizontalPosition.EdgeToMiddle>(horizontalPosition)
+            assertThat(horizontalPosition.maxWidth).isEqualTo(200)
         }
 
     @Test
