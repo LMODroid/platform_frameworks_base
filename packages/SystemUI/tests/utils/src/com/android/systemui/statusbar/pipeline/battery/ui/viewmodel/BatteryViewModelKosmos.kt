@@ -20,11 +20,33 @@ import android.content.testableContext
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.statusbar.pipeline.battery.domain.interactor.batteryInteractor
 
-val Kosmos.unifiedBatteryViewModel by
-    Kosmos.Fixture { UnifiedBatteryViewModel(batteryInteractor, testableContext) }
+val Kosmos.batteryViewModelBasedOnSetting by
+    Kosmos.Fixture { BatteryViewModel.BasedOnUserSetting(batteryInteractor, testableContext) }
 
-val Kosmos.unifiedBatteryViewModelFactory by
-    Kosmos.Fixture { UnifiedBatteryViewModel.Factory { unifiedBatteryViewModel } }
+val Kosmos.batteryViewModelBasedOnSettingFactory by
+    Kosmos.Fixture {
+        BatteryViewModel.BasedOnUserSetting.Factory { batteryViewModelBasedOnSetting }
+    }
+
+val Kosmos.batteryViewModelShowWhenChargingOrSetting by
+    Kosmos.Fixture {
+        BatteryViewModel.ShowPercentWhenChargingOrSetting(batteryInteractor, testableContext)
+    }
+
+val Kosmos.batteryViewModelShowWhenChargingOrSettingFactory by
+    Kosmos.Fixture {
+        BatteryViewModel.ShowPercentWhenChargingOrSetting.Factory {
+            batteryViewModelShowWhenChargingOrSetting
+        }
+    }
+
+val Kosmos.batteryViewModelAlwaysShowPercent by
+    Kosmos.Fixture { BatteryViewModel.AlwaysShowPercent(batteryInteractor, testableContext) }
+
+val Kosmos.batteryViewModelAlwaysShowPercentFactory by
+    Kosmos.Fixture {
+        BatteryViewModel.AlwaysShowPercent.Factory { batteryViewModelAlwaysShowPercent }
+    }
 
 val Kosmos.batteryWithPercentViewModel by
     Kosmos.Fixture { BatteryNextToPercentViewModel(batteryInteractor, testableContext) }

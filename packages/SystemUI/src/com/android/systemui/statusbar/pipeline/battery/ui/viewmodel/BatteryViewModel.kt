@@ -41,8 +41,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
-sealed class BatteryViewModel(val interactor: BatteryInteractor, @Application context: Context) :
-    ExclusiveActivatable() {
+@OptIn(ExperimentalCoroutinesApi::class)
+sealed class BatteryViewModel(
+    val interactor: BatteryInteractor,
+    shouldShowPercent: Flow<Boolean>,
+    @Application context: Context,
+) : ExclusiveActivatable() {
     protected val hydrator: Hydrator = Hydrator("BatteryViewModel.hydrator")
 
     val batteryFrame = BatteryFrame.pathSpec
@@ -71,6 +75,30 @@ sealed class BatteryViewModel(val interactor: BatteryInteractor, @Application co
             traceName = "isBatteryPercentSettingEnabled",
             initialValue = interactor.isBatteryPercentSettingEnabled.value,
             source = interactor.isBatteryPercentSettingEnabled,
+        )
+
+    /** A [List<BatteryGlyph>] representation of the current [level] */
+    private val levelGlyphs: Flow<List<BatteryGlyph>> =
+        interactor.level.map { it.glyphRepresentation() }
+
+    private val _glyphList: Flow<List<BatteryGlyph>> =
+        shouldShowPercent.flatMapLatest {
+            if (it) {
+                levelGlyphs
+            } else {
+                flowOf(emptyList())
+            }
+        }
+
+    /**
+     * For everything except the BatteryNextToPercentViewModel, this is the glyphs of the battery
+     * percent
+     */
+    open val glyphList: List<BatteryGlyph> by
+        hydrator.hydratedStateOf(
+            traceName = "glyphList",
+            initialValue = emptyList(),
+            source = _glyphList,
         )
 
     /** The current attribution, if any */
@@ -187,11 +215,69 @@ sealed class BatteryViewModel(val interactor: BatteryInteractor, @Application co
             source = interactor.batteryTimeRemainingEstimate,
         )
 
-    /** TODO: This can be simplified if we get rid of UnifiedBatteryViewModel */
-    abstract val glyphList: List<BatteryGlyph>
-
     override suspend fun onActivated(): Nothing {
         hydrator.activate()
+    }
+
+    /** Base factory class so implementations can take any kind of view model */
+    interface Factory {
+        fun create(): BatteryViewModel
+    }
+
+    /** View model that shows the percentage based on the percent setting */
+    class BasedOnUserSetting
+    @AssistedInject
+    constructor(interactor: BatteryInteractor, @Application context: Context) :
+        BatteryViewModel(
+            interactor = interactor,
+            shouldShowPercent = interactor.isBatteryPercentSettingEnabled,
+            context = context,
+        ) {
+
+        @AssistedFactory
+        fun interface Factory : BatteryViewModel.Factory {
+            override fun create(): BasedOnUserSetting
+        }
+    }
+
+    /**
+     * BatteryViewModel that shows percentage when the device is charging, or when the setting is
+     * enabled
+     */
+    class ShowPercentWhenChargingOrSetting
+    @AssistedInject
+    constructor(interactor: BatteryInteractor, @Application context: Context) :
+        BatteryViewModel(
+            interactor = interactor,
+            shouldShowPercent =
+                combine(interactor.isCharging, interactor.isBatteryPercentSettingEnabled) {
+                    charging,
+                    settingEnabled ->
+                    charging || settingEnabled
+                },
+            context = context,
+        ) {
+
+        @AssistedFactory
+        fun interface Factory : BatteryViewModel.Factory {
+            override fun create(): ShowPercentWhenChargingOrSetting
+        }
+    }
+
+    /** BatteryViewModel that always shows the percentage */
+    class AlwaysShowPercent
+    @AssistedInject
+    constructor(interactor: BatteryInteractor, @Application context: Context) :
+        BatteryViewModel(
+            interactor = interactor,
+            shouldShowPercent = flowOf(true),
+            context = context,
+        ) {
+
+        @AssistedFactory
+        fun interface Factory : BatteryViewModel.Factory {
+            override fun create(): AlwaysShowPercent
+        }
     }
 
     companion object {
@@ -203,42 +289,7 @@ sealed class BatteryViewModel(val interactor: BatteryInteractor, @Application co
 
         /** Resource id used to identify battery composable view in SysUI tests */
         const val TEST_TAG = "battery"
-    }
-}
 
-/** View-model for the battery composable with the percentage inside */
-@OptIn(ExperimentalCoroutinesApi::class)
-class UnifiedBatteryViewModel
-@AssistedInject
-constructor(interactor: BatteryInteractor, @Application context: Context) :
-    BatteryViewModel(interactor, context) {
-    /** A [List<BatteryGlyph>] representation of the current [level] */
-    private val levelGlyphs: Flow<List<BatteryGlyph>> =
-        interactor.level.map { it.glyphRepresentation() }
-
-    private val _glyphList: Flow<List<BatteryGlyph>> =
-        interactor.isBatteryPercentSettingEnabled.flatMapLatest {
-            if (it) {
-                levelGlyphs
-            } else {
-                flowOf(emptyList())
-            }
-        }
-
-    /** For the status bar battery, this is the complete set of glyphs to show */
-    override val glyphList: List<BatteryGlyph> by
-        hydrator.hydratedStateOf(
-            traceName = "glyphList",
-            initialValue = emptyList(),
-            source = _glyphList,
-        )
-
-    @AssistedFactory
-    fun interface Factory {
-        fun create(): UnifiedBatteryViewModel
-    }
-
-    companion object {
         fun Int.glyphRepresentation(): List<BatteryGlyph> = toString().map { it.toGlyph() }
 
         private fun Char.toGlyph(): BatteryGlyph =
@@ -258,10 +309,15 @@ constructor(interactor: BatteryInteractor, @Application context: Context) :
     }
 }
 
+/**
+ * BatteryViewModel that only exposes the attribution as a glyph. The percentage is expected to be
+ * displayed next to it in a text view
+ */
 class BatteryNextToPercentViewModel
 @AssistedInject
 constructor(interactor: BatteryInteractor, @Application context: Context) :
-    BatteryViewModel(interactor, context) {
+    BatteryViewModel(interactor = interactor, shouldShowPercent = flowOf(true), context = context) {
+
     val batteryPercent: String? by
         hydrator.hydratedStateOf(
             traceName = "batteryPercent",
@@ -280,8 +336,8 @@ constructor(interactor: BatteryInteractor, @Application context: Context) :
         )
 
     @AssistedFactory
-    interface Factory {
-        fun create(): BatteryNextToPercentViewModel
+    interface Factory : BatteryViewModel.Factory {
+        override fun create(): BatteryNextToPercentViewModel
     }
 }
 

@@ -55,7 +55,6 @@ import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryFrame
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryGlyph
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.PathSpec
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
@@ -158,7 +157,7 @@ private fun Int.scaledLevel(): Float {
  */
 @Composable
 fun UnifiedBattery(
-    viewModel: UnifiedBatteryViewModel,
+    viewModel: BatteryViewModel,
     isDarkProvider: () -> IsAreaDark,
     modifier: Modifier,
 ) {

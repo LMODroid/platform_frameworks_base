@@ -31,12 +31,11 @@ import androidx.compose.ui.unit.dp
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BatteryWithEstimate(
-    viewModelFactory: UnifiedBatteryViewModel.Factory,
+    viewModelFactory: BatteryViewModel.Factory,
     isDarkProvider: () -> IsAreaDark,
     textColor: Color,
     showEstimate: Boolean,

@@ -35,7 +35,6 @@ import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.UnifiedBattery
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel.Companion.STATUS_BAR_BATTERY_HEIGHT
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel
 import kotlinx.coroutines.flow.Flow
 
 /** In cases where the battery needs to be bound to an existing android view */
@@ -44,7 +43,7 @@ object UnifiedBatteryViewBinder {
     @JvmStatic
     fun bind(
         view: ComposeView,
-        viewModelFactory: UnifiedBatteryViewModel.Factory,
+        viewModelFactory: BatteryViewModel.Factory,
         isAreaDark: Flow<IsAreaDark>,
     ) {
         view.repeatWhenAttached {

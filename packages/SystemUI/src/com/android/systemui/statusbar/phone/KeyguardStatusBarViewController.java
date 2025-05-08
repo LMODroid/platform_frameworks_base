@@ -87,7 +87,7 @@ import com.android.systemui.statusbar.pipeline.battery.ui.binder.BatteryWithPerc
 import com.android.systemui.statusbar.pipeline.battery.ui.binder.UnifiedBatteryViewBinder;
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.ShowPercentMode;
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryNextToPercentViewModel;
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel;
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel;
 import com.android.systemui.statusbar.pipeline.shared.ui.view.SystemStatusIconsLayoutHelper;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -140,7 +140,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
     private final TintedIconManager.Factory mTintedIconManagerFactory;
     private final BatteryMeterViewController mBatteryMeterViewController;
     private final BatteryNextToPercentViewModel.Factory mTandemBatteryViewModelFactory;
-    private final UnifiedBatteryViewModel.Factory mUnifiedBatteryViewModelFactory;
+    private final BatteryViewModel.ShowPercentWhenChargingOrSetting.Factory mBatteryViewModel;
     private final ShadeViewStateProvider mShadeViewStateProvider;
     private final KeyguardStateController mKeyguardStateController;
     private final KeyguardBypassController mKeyguardBypassController;
@@ -345,7 +345,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
             TintedIconManager.Factory tintedIconManagerFactory,
             BatteryMeterViewController batteryMeterViewController,
             BatteryNextToPercentViewModel.Factory tandemBatteryViewModelFactory,
-            UnifiedBatteryViewModel.Factory unifiedBatteryViewModelFactory,
+            BatteryViewModel.ShowPercentWhenChargingOrSetting.Factory batteryViewModel,
             ShadeViewStateProvider shadeViewStateProvider,
             KeyguardStateController keyguardStateController,
             KeyguardBypassController bypassController,
@@ -381,7 +381,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
         mTintedIconManagerFactory = tintedIconManagerFactory;
         mBatteryMeterViewController = batteryMeterViewController;
         mTandemBatteryViewModelFactory = tandemBatteryViewModelFactory;
-        mUnifiedBatteryViewModelFactory = unifiedBatteryViewModelFactory;
+        mBatteryViewModel = batteryViewModel;
         mShadeViewStateProvider = shadeViewStateProvider;
         mKeyguardStateController = keyguardStateController;
         mKeyguardBypassController = bypassController;
@@ -523,7 +523,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
         } else {
             UnifiedBatteryViewBinder.bind(
                     batteryComposeView,
-                    mUnifiedBatteryViewModelFactory,
+                    mBatteryViewModel,
                     DarkIconInteractor.toIsAreaDark(mView.darkChangeFlow()));
         }
 

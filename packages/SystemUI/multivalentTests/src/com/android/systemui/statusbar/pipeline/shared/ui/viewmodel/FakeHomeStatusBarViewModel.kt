@@ -32,7 +32,7 @@ import com.android.systemui.statusbar.events.shared.model.SystemEventAnimationSt
 import com.android.systemui.statusbar.featurepods.popups.shared.model.PopupChipModel
 import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryNextToPercentViewModel
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.ChipsVisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.SystemInfoCombinedVisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.model.VisibilityModel
@@ -79,11 +79,11 @@ class FakeHomeStatusBarViewModel(
                 mock(BatteryNextToPercentViewModel::class.java)
         }
 
-    override val unifiedBatteryViewModel: UnifiedBatteryViewModel.Factory =
-        object : UnifiedBatteryViewModel.Factory {
-            override fun create(): UnifiedBatteryViewModel =
-                mock(UnifiedBatteryViewModel::class.java)
+    override val unifiedBatteryViewModel: BatteryViewModel.BasedOnUserSetting.Factory =
+        BatteryViewModel.BasedOnUserSetting.Factory {
+            mock(BatteryViewModel.BasedOnUserSetting::class.java)
         }
+
     override val systemStatusIconsViewModelFactory: SystemStatusIconsViewModel.Factory =
         object : SystemStatusIconsViewModel.Factory {
             override fun create(): SystemStatusIconsViewModel =

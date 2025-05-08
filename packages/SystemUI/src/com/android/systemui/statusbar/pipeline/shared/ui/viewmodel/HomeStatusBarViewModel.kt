@@ -72,7 +72,7 @@ import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.phone.domain.interactor.LightsOutInteractor
 import com.android.systemui.statusbar.phone.ongoingcall.StatusBarChipsModernization
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryNextToPercentViewModel
-import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatteryViewModel
+import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
 import com.android.systemui.statusbar.pipeline.shared.domain.interactor.HomeStatusBarIconBlockListInteractor
 import com.android.systemui.statusbar.pipeline.shared.domain.interactor.HomeStatusBarInteractor
 import com.android.systemui.statusbar.pipeline.shared.ui.model.ChipsVisibilityModel
@@ -114,7 +114,7 @@ interface HomeStatusBarViewModel : Activatable {
     /** Factory to create the view model for the battery icon with the percentage alongside */
     val batteryNextToPercentViewModel: BatteryNextToPercentViewModel.Factory
     /** Factory for the unified (percent embedded) battery view model */
-    val unifiedBatteryViewModel: UnifiedBatteryViewModel.Factory
+    val unifiedBatteryViewModel: BatteryViewModel.BasedOnUserSetting.Factory
 
     /** Factory to create the view model for system status icons */
     val systemStatusIconsViewModelFactory: SystemStatusIconsViewModel.Factory
@@ -219,7 +219,7 @@ class HomeStatusBarViewModelImpl
 constructor(
     @Assisted thisDisplayId: Int,
     override val batteryNextToPercentViewModel: BatteryNextToPercentViewModel.Factory,
-    override val unifiedBatteryViewModel: UnifiedBatteryViewModel.Factory,
+    override val unifiedBatteryViewModel: BatteryViewModel.BasedOnUserSetting.Factory,
     override val systemStatusIconsViewModelFactory: SystemStatusIconsViewModel.Factory,
     tableLoggerFactory: TableLogBufferFactory,
     homeStatusBarInteractor: HomeStatusBarInteractor,
