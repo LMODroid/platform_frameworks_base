@@ -844,6 +844,7 @@ private fun LazyGridItemScope.TileGridCell(
             modifier.height(TileHeight).fillMaxWidth().animateItem(placementSpec = placementSpec),
         onClick = {
             if (tileState == TileState.Removable) {
+                selectionState.unSelect()
                 onRemoveTile(cell.tile.tileSpec)
             } else if (tileState == TileState.Selected) {
                 coroutineScope.launch { resizingState.toggleCurrentValue() }
