@@ -174,11 +174,12 @@ fun BrightnessSlider(
 
     val activeIconColor = colors.activeTickColor
     val inactiveIconColor = colors.inactiveTickColor
+    // Offset from the right
     val trackIcon: DrawScope.(Offset, Color, Float) -> Unit = remember {
         { offset, color, alpha ->
             val rtl = layoutDirection == LayoutDirection.Rtl
             scale(if (rtl) -1f else 1f, 1f) {
-                translate(offset.x + IconPadding.toPx(), offset.y) {
+                translate(offset.x - IconPadding.toPx() - IconSize.toSize().width, offset.y) {
                     with(painter) {
                         draw(
                             IconSize.toSize(),
@@ -293,24 +294,25 @@ fun BrightnessSlider(
 
                             val activeTrackWidth = activeTrackEnd - activeTrackStart
                             val inactiveTrackWidth = inactiveTrackEnd - inactiveTrackStart
+
                             if (
-                                IconSize.toSize().width < activeTrackWidth - IconPadding.toPx() * 2
-                            ) {
-                                showIconActive = true
-                                trackIcon(
-                                    Offset(activeTrackStart, yOffset),
-                                    activeIconColor,
-                                    iconActiveAlphaAnimatable.value,
-                                )
-                            } else if (
                                 IconSize.toSize().width <
                                     inactiveTrackWidth - IconPadding.toPx() * 2
                             ) {
                                 showIconActive = false
                                 trackIcon(
-                                    Offset(inactiveTrackStart, yOffset),
+                                    Offset(inactiveTrackEnd, yOffset),
                                     inactiveIconColor,
                                     iconInactiveAlphaAnimatable.value,
+                                )
+                            } else if (
+                                IconSize.toSize().width < activeTrackWidth - IconPadding.toPx() * 2
+                            ) {
+                                showIconActive = true
+                                trackIcon(
+                                    Offset(activeTrackEnd, yOffset),
+                                    activeIconColor,
+                                    iconActiveAlphaAnimatable.value,
                                 )
                             }
                         },
