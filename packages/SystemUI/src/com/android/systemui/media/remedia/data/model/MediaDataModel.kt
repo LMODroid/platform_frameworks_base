@@ -17,13 +17,13 @@
 package com.android.systemui.media.remedia.data.model
 
 import android.app.PendingIntent
-import android.media.session.MediaController
 import com.android.internal.logging.InstanceId
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.media.controls.shared.model.MediaButton
 import com.android.systemui.media.controls.shared.model.MediaDeviceData
 import com.android.systemui.media.controls.shared.model.MediaNotificationAction
 import com.android.systemui.media.remedia.shared.model.MediaColorScheme
+import com.android.systemui.media.remedia.shared.model.MediaSessionState
 
 /** Data model representing a media data. */
 data class MediaDataModel(
@@ -50,7 +50,10 @@ data class MediaDataModel(
     val outputDevice: MediaDeviceData?,
     /** Action to perform when the media player is tapped. */
     val clickIntent: PendingIntent?,
-    val controller: MediaController,
+    val state: MediaSessionState,
+    val durationMs: Long,
+    val positionMs: Long,
+    val canBeScrubbed: Boolean,
     val canBeDismissed: Boolean,
     /**
      * An active player represents a current media session that has not timed out or been swiped

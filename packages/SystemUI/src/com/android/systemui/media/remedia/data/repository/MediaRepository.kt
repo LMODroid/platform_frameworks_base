@@ -20,9 +20,12 @@ import android.app.WallpaperColors
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.media.MediaMetadata
 import android.media.session.MediaController
+import android.media.session.PlaybackState
 import android.util.Log
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.graphics.Color
 import com.android.internal.logging.InstanceId
 import com.android.systemui.common.shared.model.ContentDescription
@@ -30,12 +33,12 @@ import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
-import com.android.systemui.lifecycle.Activatable
-import com.android.systemui.lifecycle.Hydrator
+import com.android.systemui.media.NotificationMediaManager
 import com.android.systemui.media.controls.data.model.MediaSortKeyModel
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.remedia.data.model.MediaDataModel
 import com.android.systemui.media.remedia.shared.model.MediaColorScheme
+import com.android.systemui.media.remedia.shared.model.MediaSessionState
 import com.android.systemui.monet.ColorScheme
 import com.android.systemui.monet.Style
 import com.android.systemui.res.R
@@ -44,12 +47,14 @@ import java.util.TreeMap
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /** A repository that holds the state of current media on the device. */
-interface MediaRepository : Activatable {
+interface MediaRepository {
     /** Current sorted media sessions. */
     val currentMedia: List<MediaDataModel>
 
@@ -70,13 +75,15 @@ constructor(
     private val systemClock: SystemClock,
 ) : MediaRepository, MediaPipelineRepository() {
 
-    private val hydrator = Hydrator(traceName = "MediaRepository.hydrator")
-    private val mutableCurrentMedia: MutableStateFlow<List<MediaDataModel>> =
-        MutableStateFlow(mutableListOf())
-    override val currentMedia by
-        hydrator.hydratedStateOf(traceName = "currentMedia", source = mutableCurrentMedia)
+    override val currentMedia: SnapshotStateList<MediaDataModel> = mutableStateListOf()
 
     private var sortedMedia = TreeMap<MediaSortKeyModel, MediaDataModel>(comparator)
+
+    // To store active controllers and their callbacks
+    private val activeControllers = mutableMapOf<InstanceId, MediaController>()
+    private val mediaCallbacks = mutableMapOf<InstanceId, MediaController.Callback>()
+    // To store active polling jobs
+    private val positionPollers = mutableMapOf<InstanceId, Job>()
 
     override fun addCurrentUserMediaEntry(data: MediaData): Boolean {
         return super.addCurrentUserMediaEntry(data).also { addToSortedMedia(data) }
@@ -101,19 +108,19 @@ constructor(
     }
 
     override fun seek(sessionKey: InstanceId, to: Long) {
-        mutableCurrentMedia.value
-            .first { sessionKey == it.instanceId }
-            .controller
-            .transportControls
-            .seekTo(to)
+        activeControllers[sessionKey]?.let { controller ->
+            controller.transportControls.seekTo(to)
+            currentMedia
+                .find { it.instanceId == sessionKey }
+                ?.let { latestModel ->
+                    updateMediaModelInState(latestModel) { it.copy(positionMs = to) }
+                }
+        }
     }
 
     override fun reorderMedia() {
-        mutableCurrentMedia.value = sortedMedia.values.toList()
-    }
-
-    override suspend fun activate(): Nothing {
-        hydrator.activate()
+        currentMedia.clear()
+        currentMedia.addAll(sortedMedia.values.toList())
     }
 
     private fun addToSortedMedia(data: MediaData) {
@@ -139,12 +146,23 @@ constructor(
                     )
 
                 applicationScope.launch {
-                    val mediaModel = toDataModel(currentModel)
+                    val controller =
+                        if (
+                            currentModel != null &&
+                                activeControllers[currentModel.instanceId]?.sessionToken == token
+                        ) {
+                            activeControllers[currentModel.instanceId]
+                        } else {
+                            // Clear controller state if changed for the same media session.
+                            currentModel?.instanceId?.let { clearControllerState(it) }
+                            token?.let { MediaController(applicationContext, it) }
+                        }
+                    val mediaModel = toDataModel(controller)
                     sortedMap[sortKey] = mediaModel
+                    controller?.let { setupController(mediaModel, it) }
 
                     var isNewToCurrentMedia = true
-                    val currentList =
-                        mutableListOf<MediaDataModel>().apply { addAll(mutableCurrentMedia.value) }
+                    val currentList = mutableListOf<MediaDataModel>().apply { addAll(currentMedia) }
                     currentList.forEachIndexed { index, mediaDataModel ->
                         if (mediaDataModel.instanceId == data.instanceId) {
                             // When loading an update for an existing media control.
@@ -155,10 +173,11 @@ constructor(
                             }
                         }
                     }
+                    currentMedia.clear()
                     if (isNewToCurrentMedia && active) {
-                        mutableCurrentMedia.value = sortedMap.values.toList()
+                        currentMedia.addAll(sortedMap.values.toList())
                     } else {
-                        mutableCurrentMedia.value = currentList
+                        currentMedia.addAll(currentList)
                     }
 
                     sortedMedia = sortedMap
@@ -168,20 +187,21 @@ constructor(
     }
 
     private fun removeFromSortedMedia(data: MediaData) {
-        mutableCurrentMedia.value =
-            mutableCurrentMedia.value.filter { model -> data.instanceId != model.instanceId }
+        currentMedia.removeIf { model -> data.instanceId == model.instanceId }
         sortedMedia =
             TreeMap(sortedMedia.filter { (keyModel, _) -> keyModel.instanceId != data.instanceId })
+        clearControllerState(data.instanceId)
     }
 
-    private suspend fun MediaData.toDataModel(currentModel: MediaDataModel?): MediaDataModel {
+    private suspend fun MediaData.toDataModel(controller: MediaController?): MediaDataModel {
         return withContext(backgroundDispatcher) {
-            val controller =
-                if (currentModel != null && currentModel.controller.sessionToken == token) {
-                    currentModel.controller
-                } else {
-                    MediaController(applicationContext, token!!)
-                }
+            val metadata = controller?.metadata
+            val currentPlaybackState = controller?.playbackState
+
+            val duration = metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L
+            val position = currentPlaybackState?.position ?: 0L
+            val state = currentPlaybackState?.state ?: PlaybackState.STATE_NONE
+
             val icon = appIcon?.loadDrawable(applicationContext)
             val background = artwork?.loadDrawable(applicationContext)
             MediaDataModel(
@@ -200,7 +220,16 @@ constructor(
                 playbackStateActions = semanticActions,
                 outputDevice = device,
                 clickIntent = clickIntent,
-                controller = controller,
+                state =
+                    when {
+                        NotificationMediaManager.isPlayingState(state) -> MediaSessionState.Playing
+                        NotificationMediaManager.isConnectingState(state) ->
+                            MediaSessionState.Buffering
+                        else -> MediaSessionState.Paused
+                    },
+                durationMs = duration,
+                positionMs = position,
+                canBeScrubbed = state != PlaybackState.STATE_NONE && duration > 0L,
                 canBeDismissed = isClearable,
                 isActive = active,
                 isResume = resumption,
@@ -287,7 +316,137 @@ constructor(
         }
     }
 
+    private fun setupController(dataModel: MediaDataModel, controller: MediaController) {
+        activeControllers[dataModel.instanceId] = controller
+        val callback =
+            object : MediaController.Callback() {
+                override fun onPlaybackStateChanged(state: PlaybackState?) {
+                    if (state == null || PlaybackState.STATE_NONE.equals(state)) {
+                        clearControllerState(dataModel.instanceId)
+                    } else {
+                        updatePollingState(dataModel.instanceId, state)
+                    }
+                }
+
+                override fun onMetadataChanged(metadata: MediaMetadata?) {
+                    val duration = metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L
+                    updateMediaModelInState(dataModel) { model ->
+                        val canBeScrubbed =
+                            controller.playbackState?.state != PlaybackState.STATE_NONE &&
+                                duration > 0L
+                        model.copy(canBeScrubbed = canBeScrubbed, durationMs = duration)
+                    }
+                }
+
+                override fun onSessionDestroyed() {
+                    clearControllerState(dataModel.instanceId)
+                }
+            }
+        controller.registerCallback(callback)
+        mediaCallbacks[dataModel.instanceId] = callback
+
+        // Initial polling setup.
+        controller.playbackState?.let {
+            updatePollingState(dataModel.instanceId, it, requireUpdate = false)
+        }
+    }
+
+    private fun updatePollingState(
+        instanceId: InstanceId,
+        playbackState: PlaybackState,
+        requireUpdate: Boolean = true,
+    ) {
+        val controller = activeControllers[instanceId] ?: return
+        val isInMotion = NotificationMediaManager.isPlayingState(playbackState.state)
+
+        if (isInMotion) {
+            if (positionPollers[instanceId]?.isActive != true) {
+                // Cancel previous if any.
+                positionPollers[instanceId]?.cancel()
+                positionPollers[instanceId] =
+                    applicationScope.launch(backgroundDispatcher) {
+                        while (isActive) {
+                            val currentController = activeControllers[instanceId]
+                            val latestPlaybackState = currentController?.playbackState
+                            checkPlaybackPosition(instanceId, latestPlaybackState)
+                            delay(POSITION_UPDATE_INTERVAL_MILLIS)
+                        }
+                        positionPollers.remove(instanceId)
+                    }
+            }
+        } else if (requireUpdate) {
+            positionPollers[instanceId]?.cancel()
+            positionPollers.remove(instanceId)
+            checkPlaybackPosition(instanceId, controller.playbackState)
+        }
+    }
+
+    private fun PlaybackState.computeActualPosition(mediaDurationMs: Long): Long {
+        var currentPosition = position
+        if (NotificationMediaManager.isPlayingState(state)) {
+            val currentTime = systemClock.elapsedRealtime()
+            if (lastPositionUpdateTime > 0) {
+                var estimatedPosition =
+                    (playbackSpeed * (currentTime - lastPositionUpdateTime)).toLong() + position
+                if (mediaDurationMs in 0..<estimatedPosition) {
+                    estimatedPosition = mediaDurationMs
+                } else if (estimatedPosition < 0) {
+                    estimatedPosition = 0
+                }
+                currentPosition = estimatedPosition
+            }
+        }
+        return currentPosition
+    }
+
+    private fun checkPlaybackPosition(instanceId: InstanceId, playbackState: PlaybackState?) {
+        currentMedia
+            .find { it.instanceId == instanceId }
+            ?.let { latestModel ->
+                val newPosition = playbackState?.computeActualPosition(latestModel.durationMs)
+                updateMediaModelInState(latestModel) {
+                    if (newPosition != null && newPosition <= latestModel.durationMs) {
+                        it.copy(positionMs = newPosition)
+                    } else {
+                        it
+                    }
+                }
+            }
+    }
+
+    private fun clearControllerState(instanceId: InstanceId) {
+        positionPollers[instanceId]?.cancel()
+        positionPollers.remove(instanceId)
+        mediaCallbacks[instanceId]?.let { activeControllers[instanceId]?.unregisterCallback(it) }
+        activeControllers.remove(instanceId)
+        mediaCallbacks.remove(instanceId)
+    }
+
+    private fun updateMediaModelInState(
+        oldModel: MediaDataModel,
+        updateBlock: (MediaDataModel) -> MediaDataModel,
+    ) {
+        val newModel = updateBlock(oldModel)
+        if (oldModel != newModel) {
+            sortedMedia.keys
+                .find { it.instanceId == newModel.instanceId }
+                ?.let {
+                    val sortedMap = TreeMap<MediaSortKeyModel, MediaDataModel>(comparator)
+                    sortedMap.putAll(
+                        sortedMedia.filter { (keyModel, _) ->
+                            keyModel.instanceId != newModel.instanceId
+                        }
+                    )
+                    sortedMap[it] = newModel
+                    sortedMedia = sortedMap
+                }
+
+            currentMedia[currentMedia.indexOf(oldModel)] = newModel
+        }
+    }
+
     companion object {
         private const val TAG = "MediaRepository"
+        private const val POSITION_UPDATE_INTERVAL_MILLIS = 500L
     }
 }

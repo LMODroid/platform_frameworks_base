@@ -27,7 +27,6 @@ import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
-import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.media.controls.domain.pipeline.MediaDataProcessor
 import com.android.systemui.media.controls.domain.pipeline.getNotificationActions
 import com.android.systemui.media.controls.shared.model.MediaAction
@@ -70,7 +69,7 @@ constructor(
     val repository: MediaRepository,
     val mediaDataProcessor: MediaDataProcessor,
     private val activityStarter: ActivityStarter,
-) : MediaInteractor, ExclusiveActivatable() {
+) : MediaInteractor {
 
     override val sessions: List<MediaSessionModel>
         get() = repository.currentMedia.map { toMediaSessionModel(it) }
@@ -123,16 +122,16 @@ constructor(
                 get() = dataModel.canBeDismissed
 
             override val canBeScrubbed: Boolean
-                get() = TODO("Not yet implemented")
+                get() = dataModel.canBeScrubbed
 
             override val state: MediaSessionState
-                get() = TODO("Not yet implemented")
+                get() = dataModel.state
 
             override val positionMs: Long
-                get() = TODO("Not yet implemented")
+                get() = dataModel.positionMs
 
             override val durationMs: Long
-                get() = TODO("Not yet implemented")
+                get() = dataModel.durationMs
 
             override val outputDevice: MediaOutputDeviceModel
                 get() =
@@ -196,10 +195,6 @@ constructor(
                         ?: getNotificationActions(dataModel.notificationActions, activityStarter)
                             .mapNotNull { it.getMediaActionModel() as? MediaActionModel.Action }
         }
-    }
-
-    override suspend fun onActivated(): Nothing {
-        repository.activate()
     }
 
     private fun MediaAction.getMediaActionModel(): MediaActionModel {

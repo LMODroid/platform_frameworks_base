@@ -17,8 +17,8 @@
 package com.android.systemui.media.remedia.data.repository
 
 import android.content.packageManager
-import android.media.session.MediaController
 import android.media.session.MediaSession
+import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.internal.logging.InstanceId
@@ -26,10 +26,8 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.kosmos.testScope
-import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.media.remedia.data.model.MediaDataModel
-import com.android.systemui.media.remedia.shared.model.MediaColorScheme
 import com.android.systemui.res.R
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
@@ -37,7 +35,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyString
@@ -46,6 +43,7 @@ import org.mockito.kotlin.whenever
 @OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
+@UiThreadTest
 class MediaRepositoryTest : SysuiTestCase() {
 
     private val drawable = context.getDrawable(R.drawable.ic_music_note)!!
@@ -58,11 +56,6 @@ class MediaRepositoryTest : SysuiTestCase() {
     private val session = MediaSession(context, "MediaRepositoryTestSession")
 
     private val underTest: MediaRepositoryImpl = kosmos.mediaRepository
-
-    @Before
-    fun setUp() {
-        underTest.activateIn(testScope)
-    }
 
     @Test
     fun addCurrentUserMediaEntry_activeThenInactivate() =
@@ -158,14 +151,8 @@ class MediaRepositoryTest : SysuiTestCase() {
             assertThat(underTest.currentMedia.size).isEqualTo(2)
             assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingData.toDataModel(
-                        underTest.currentMedia[0].controller,
-                        underTest.currentMedia[0].colorScheme,
-                    ),
-                    remoteData.toDataModel(
-                        underTest.currentMedia[1].controller,
-                        underTest.currentMedia[1].colorScheme,
-                    ),
+                    playingData.toDataModel(underTest.currentMedia[0]),
+                    remoteData.toDataModel(underTest.currentMedia[1]),
                 )
                 .inOrder()
         }
@@ -184,14 +171,8 @@ class MediaRepositoryTest : SysuiTestCase() {
             assertThat(underTest.currentMedia.size).isEqualTo(2)
             assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingData1.toDataModel(
-                        underTest.currentMedia[0].controller,
-                        underTest.currentMedia[0].colorScheme,
-                    ),
-                    playingData2.toDataModel(
-                        underTest.currentMedia[1].controller,
-                        underTest.currentMedia[1].colorScheme,
-                    ),
+                    playingData1.toDataModel(underTest.currentMedia[0]),
+                    playingData2.toDataModel(underTest.currentMedia[1]),
                 )
                 .inOrder()
 
@@ -204,14 +185,8 @@ class MediaRepositoryTest : SysuiTestCase() {
             assertThat(underTest.currentMedia.size).isEqualTo(2)
             assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingData1.toDataModel(
-                        underTest.currentMedia[0].controller,
-                        underTest.currentMedia[0].colorScheme,
-                    ),
-                    playingData2.toDataModel(
-                        underTest.currentMedia[1].controller,
-                        underTest.currentMedia[1].colorScheme,
-                    ),
+                    playingData1.toDataModel(underTest.currentMedia[0]),
+                    playingData2.toDataModel(underTest.currentMedia[1]),
                 )
                 .inOrder()
 
@@ -221,14 +196,8 @@ class MediaRepositoryTest : SysuiTestCase() {
             assertThat(underTest.currentMedia.size).isEqualTo(2)
             assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingData2.toDataModel(
-                        underTest.currentMedia[0].controller,
-                        underTest.currentMedia[0].colorScheme,
-                    ),
-                    playingData1.toDataModel(
-                        underTest.currentMedia[1].controller,
-                        underTest.currentMedia[1].colorScheme,
-                    ),
+                    playingData2.toDataModel(underTest.currentMedia[0]),
+                    playingData1.toDataModel(underTest.currentMedia[1]),
                 )
                 .inOrder()
         }
@@ -263,26 +232,11 @@ class MediaRepositoryTest : SysuiTestCase() {
             assertThat(underTest.currentMedia.size).isEqualTo(5)
             assertThat(underTest.currentMedia)
                 .containsExactly(
-                    playingAndLocalData.toDataModel(
-                        underTest.currentMedia[0].controller,
-                        underTest.currentMedia[0].colorScheme,
-                    ),
-                    playingAndRemoteData.toDataModel(
-                        underTest.currentMedia[1].controller,
-                        underTest.currentMedia[1].colorScheme,
-                    ),
-                    stoppedAndRemoteData.toDataModel(
-                        underTest.currentMedia[2].controller,
-                        underTest.currentMedia[2].colorScheme,
-                    ),
-                    stoppedAndLocalData.toDataModel(
-                        underTest.currentMedia[3].controller,
-                        underTest.currentMedia[3].colorScheme,
-                    ),
-                    canResumeData.toDataModel(
-                        underTest.currentMedia[4].controller,
-                        underTest.currentMedia[4].colorScheme,
-                    ),
+                    playingAndLocalData.toDataModel(underTest.currentMedia[0]),
+                    playingAndRemoteData.toDataModel(underTest.currentMedia[1]),
+                    stoppedAndRemoteData.toDataModel(underTest.currentMedia[2]),
+                    stoppedAndLocalData.toDataModel(underTest.currentMedia[3]),
+                    canResumeData.toDataModel(underTest.currentMedia[4]),
                 )
                 .inOrder()
         }
@@ -310,10 +264,7 @@ class MediaRepositoryTest : SysuiTestCase() {
         )
     }
 
-    private fun MediaData.toDataModel(
-        mediaController: MediaController,
-        colorScheme: MediaColorScheme?,
-    ): MediaDataModel {
+    private fun MediaData.toDataModel(mediaModel: MediaDataModel): MediaDataModel {
         return MediaDataModel(
             instanceId = instanceId,
             appUid = appUid,
@@ -323,12 +274,15 @@ class MediaRepositoryTest : SysuiTestCase() {
             background = null,
             title = song.toString(),
             subtitle = artist.toString(),
-            colorScheme = colorScheme,
+            colorScheme = mediaModel.colorScheme,
             notificationActions = actions,
             playbackStateActions = semanticActions,
             outputDevice = device,
             clickIntent = clickIntent,
-            controller = mediaController,
+            state = mediaModel.state,
+            durationMs = mediaModel.durationMs,
+            positionMs = mediaModel.positionMs,
+            canBeScrubbed = mediaModel.canBeScrubbed,
             canBeDismissed = isClearable,
             isActive = active,
             isResume = resumption,
