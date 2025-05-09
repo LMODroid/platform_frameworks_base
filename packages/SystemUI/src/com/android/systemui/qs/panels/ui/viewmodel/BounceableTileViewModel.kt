@@ -20,7 +20,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.VectorConverter
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.keyframes
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.android.compose.animation.Bounceable
@@ -40,8 +40,7 @@ class BounceableTileViewModel : Bounceable {
         get() = animatableTextBounceScale.value
 
     suspend fun animateContainerBounce() {
-        animatableContainerBounce.animateToBounce(BounceSize)
-        animatableContainerBounce.animateToRest(ContainerBounceAtRest)
+        animatableContainerBounce.animateBounce(ContainerBounceAtRest, BounceSize)
     }
 
     suspend fun animateContentBounce(iconOnly: Boolean) {
@@ -53,26 +52,26 @@ class BounceableTileViewModel : Bounceable {
     }
 
     private suspend fun animateIconBounce() {
-        animatableIconBounceScale.animateToBounce(ICON_BOUNCE_SCALE)
-        animatableIconBounceScale.animateToRest(SCALE_BOUNCE_AT_REST)
+        animatableIconBounceScale.animateBounce(SCALE_BOUNCE_AT_REST, ICON_BOUNCE_SCALE)
     }
 
     private suspend fun animateTextBounce() {
-        animatableTextBounceScale.animateToBounce(TEXT_BOUNCE_SCALE)
-        animatableTextBounceScale.animateToRest(SCALE_BOUNCE_AT_REST)
+        animatableTextBounceScale.animateBounce(SCALE_BOUNCE_AT_REST, TEXT_BOUNCE_SCALE)
     }
 
-    private suspend fun <T, V : AnimationVector> Animatable<T, V>.animateToBounce(targetValue: T) {
+    /** Animates from [valueAtRest] to [targetValue] and back to [valueAtRest]. */
+    private suspend fun <T, V : AnimationVector> Animatable<T, V>.animateBounce(
+        valueAtRest: T,
+        targetValue: T,
+    ) {
         animateTo(
-            targetValue,
-            tween(durationMillis = BOUNCE_DURATION_MILLIS, easing = BounceStartEasing),
-        )
-    }
-
-    private suspend fun <T, V : AnimationVector> Animatable<T, V>.animateToRest(targetValue: T) {
-        animateTo(
-            targetValue,
-            tween(durationMillis = BOUNCE_DURATION_MILLIS, easing = BounceEndEasing),
+            valueAtRest,
+            animationSpec =
+                keyframes {
+                    durationMillis = BOUNCE_DURATION_MILLIS
+                    targetValue at BOUNCE_DURATION_MILLIS / 2 using BounceStartEasing
+                    valueAtRest at BOUNCE_DURATION_MILLIS using BounceEndEasing
+                },
         )
     }
 
@@ -84,6 +83,6 @@ class BounceableTileViewModel : Bounceable {
         const val ICON_BOUNCE_SCALE = 1.1f
         const val TEXT_BOUNCE_SCALE = 1.06f
         const val SCALE_BOUNCE_AT_REST = 1f
-        const val BOUNCE_DURATION_MILLIS = 167
+        const val BOUNCE_DURATION_MILLIS = 167 * 2
     }
 }
