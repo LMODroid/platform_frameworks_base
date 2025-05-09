@@ -35,6 +35,8 @@ import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.pipeline.airplane.data.repository.airplaneModeRepository
 import com.android.systemui.statusbar.pipeline.shared.data.repository.connectivityRepository
 import com.android.systemui.statusbar.pipeline.shared.data.repository.fake
+import com.android.systemui.statusbar.pipeline.wifi.data.repository.fakeWifiRepository
+import com.android.systemui.statusbar.pipeline.wifi.shared.model.WifiNetworkModel
 import com.android.systemui.statusbar.policy.bluetooth.data.repository.bluetoothRepository
 import com.android.systemui.statusbar.policy.data.repository.fakeZenModeRepository
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
@@ -66,6 +68,7 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
     private lateinit var slotEthernet: String
     private lateinit var slotMute: String
     private lateinit var slotVibrate: String
+    private lateinit var slotWifi: String
     private lateinit var slotZen: String
 
     @Before
@@ -75,6 +78,7 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
         slotEthernet = context.getString(com.android.internal.R.string.status_bar_ethernet)
         slotMute = context.getString(com.android.internal.R.string.status_bar_mute)
         slotVibrate = context.getString(com.android.internal.R.string.status_bar_volume)
+        slotWifi = context.getString(com.android.internal.R.string.status_bar_wifi)
         slotZen = context.getString(com.android.internal.R.string.status_bar_zen)
     }
 
@@ -172,17 +176,20 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
             showAirplaneMode()
             showEthernet()
             showVibrate()
+            showWifi()
 
             assertThat(underTest.activeSlotNames)
                 .containsExactly(slotAirplane, slotBluetooth, slotEthernet, slotVibrate, slotZen)
                 .inOrder()
 
-            // The mute and vibrate icon can not be shown at the same time so we have to test it
+            // The [mute,vibrate] and [ethernet, wifi] icons can not be shown at the same time so we
+            // have to test it
             // separately.
-            showMute()
+            showMute() // This will make vibrate inactive
+            showWifi() // This will make ethernet inactive
 
             assertThat(underTest.activeSlotNames)
-                .containsExactly(slotAirplane, slotBluetooth, slotEthernet, slotMute, slotZen)
+                .containsExactly(slotAirplane, slotBluetooth, slotMute, slotWifi, slotZen)
                 .inOrder()
         }
 
@@ -218,6 +225,14 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
 
     private fun Kosmos.showVibrate() {
         fakeAudioRepository.setRingerMode(RingerMode(AudioManager.RINGER_MODE_VIBRATE))
+    }
+
+    private fun Kosmos.showWifi() {
+        fakeWifiRepository.setIsWifiEnabled(true)
+        val testNetwork =
+            WifiNetworkModel.Active.of(isValidated = true, level = 4, ssid = "TestWifi")
+        fakeWifiRepository.setWifiNetwork(testNetwork)
+        connectivityRepository.fake.setWifiConnected()
     }
 
     private fun Kosmos.showZenMode() {

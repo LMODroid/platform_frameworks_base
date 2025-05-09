@@ -23,6 +23,7 @@ import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.b
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.ethernetIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.muteIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.vibrateIconViewModelFactory
+import com.android.systemui.statusbar.systemstatusicons.wifi.ui.viewmodel.wifiIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.zenmode.ui.viewmodel.zenModeIconViewModelFactory
 
 val Kosmos.systemStatusIconsViewModelFactory by
@@ -37,6 +38,7 @@ val Kosmos.systemStatusIconsViewModelFactory by
                     ethernetIconViewModelFactory = ethernetIconViewModelFactory,
                     muteIconViewModelFactory = muteIconViewModelFactory,
                     vibrateIconViewModelFactory = vibrateIconViewModelFactory,
+                    wifiIconViewModelFactory = wifiIconViewModelFactory,
                     zenModeIconViewModelFactory = zenModeIconViewModelFactory,
                 )
         }

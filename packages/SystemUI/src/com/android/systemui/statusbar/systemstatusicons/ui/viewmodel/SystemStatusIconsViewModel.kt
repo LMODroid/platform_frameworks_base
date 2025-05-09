@@ -28,6 +28,7 @@ import com.android.systemui.statusbar.systemstatusicons.domain.interactor.Ordere
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.EthernetIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.MuteIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.VibrateIconViewModel
+import com.android.systemui.statusbar.systemstatusicons.wifi.ui.viewmodel.WifiIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.zenmode.ui.viewmodel.ZenModeIconViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -53,6 +54,7 @@ constructor(
     ethernetIconViewModelFactory: EthernetIconViewModel.Factory,
     muteIconViewModelFactory: MuteIconViewModel.Factory,
     vibrateIconViewModelFactory: VibrateIconViewModel.Factory,
+    wifiIconViewModelFactory: WifiIconViewModel.Factory,
     zenModeIconViewModelFactory: ZenModeIconViewModel.Factory,
 ) : ExclusiveActivatable() {
 
@@ -67,10 +69,19 @@ constructor(
     private val ethernetIcon by lazy { ethernetIconViewModelFactory.create(context) }
     private val muteIcon by lazy { muteIconViewModelFactory.create(context) }
     private val vibrateIcon by lazy { vibrateIconViewModelFactory.create(context) }
+    private val wifiIcon by lazy { wifiIconViewModelFactory.create(context) }
     private val zenModeIcon by lazy { zenModeIconViewModelFactory.create(context) }
 
     private val unOrderedIconViewModels: List<SystemStatusIconViewModel> by lazy {
-        listOf(airplaneModeIcon, bluetoothIcon, ethernetIcon, muteIcon, vibrateIcon, zenModeIcon)
+        listOf(
+            airplaneModeIcon,
+            bluetoothIcon,
+            ethernetIcon,
+            muteIcon,
+            vibrateIcon,
+            wifiIcon,
+            zenModeIcon,
+        )
     }
 
     private val viewModelMap: Map<String, SystemStatusIconViewModel> by lazy {
@@ -99,6 +110,7 @@ constructor(
             launch { ethernetIcon.activate() }
             launch { muteIcon.activate() }
             launch { vibrateIcon.activate() }
+            launch { wifiIcon.activate() }
             launch { zenModeIcon.activate() }
         }
         awaitCancellation()
