@@ -42,6 +42,9 @@ import com.android.systemui.controls.management.ControlsListingController
 import com.android.systemui.controls.ui.ControlsActivity
 import com.android.systemui.controls.ui.ControlsUiController
 import com.android.systemui.controls.ui.SelectedItem
+import com.android.systemui.flags.DisableSceneContainer
+import com.android.systemui.flags.EnableSceneContainer
+import com.android.systemui.flags.andSceneContainer
 import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.plugins.statusbar.StatusBarStateController
 import com.android.systemui.qs.QSHost
@@ -400,7 +403,8 @@ class DeviceControlsTileTest(flags: FlagsParameterization) : SysuiTestCase() {
 
     @Test
     @DisableFlags(QSComposeFragment.FLAG_NAME)
-    fun tileIconEqualsResourceFromComponent_composeFlagDisabled() {
+    @DisableSceneContainer
+    fun tileIconEqualsResourceFromComponent_composeFlagsDisabled() {
         tile.refreshState()
         testableLooper.processAllMessages()
         assertThat(tile.state.icon).isEqualTo(QSTileImpl.ResourceIcon.get(R.drawable.controls_icon))
@@ -409,6 +413,20 @@ class DeviceControlsTileTest(flags: FlagsParameterization) : SysuiTestCase() {
     @Test
     @EnableFlags(QSComposeFragment.FLAG_NAME)
     fun tileIconEqualsResourceFromComponent_composeFlagEnable() {
+        tile.refreshState()
+        testableLooper.processAllMessages()
+        assertThat(tile.state.icon)
+            .isEqualTo(
+                QSTileImpl.DrawableIconWithRes(
+                    mContext.getDrawable(R.drawable.controls_icon),
+                    R.drawable.controls_icon,
+                )
+            )
+    }
+
+    @Test
+    @EnableSceneContainer
+    fun tileIconEqualsResourceFromComponent_sceneContainerEnabled() {
         tile.refreshState()
         testableLooper.processAllMessages()
         assertThat(tile.state.icon)
@@ -443,7 +461,7 @@ class DeviceControlsTileTest(flags: FlagsParameterization) : SysuiTestCase() {
         @JvmStatic
         @Parameters(name = "{0}")
         fun getParams(): List<FlagsParameterization> {
-            return allCombinationsOf(QSComposeFragment.FLAG_NAME)
+            return allCombinationsOf(QSComposeFragment.FLAG_NAME).andSceneContainer()
         }
     }
 }
