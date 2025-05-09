@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel
 
+import android.content.Context
 import android.platform.test.annotations.EnableFlags
 import android.telephony.SubscriptionManager.PROFILE_CLASS_UNSET
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -28,6 +29,7 @@ import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
+import com.android.systemui.statusbar.connectivity.ui.mobileContextProvider
 import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.core.StatusBarRootModernization
 import com.android.systemui.statusbar.pipeline.mobile.data.model.SubscriptionModel
@@ -38,6 +40,10 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.whenever
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
@@ -53,6 +59,7 @@ class StackedMobileIconViewModelTest : SysuiTestCase() {
         kosmos.run {
             // Set prerequisites for the stacked icon
             fakeMobileIconsInteractor.isStackable.value = true
+            whenever(mobileContextProvider.getMobileContextForSub(any(), any())).thenReturn(context)
             underTest.activateIn(testScope)
         }
 
@@ -175,6 +182,35 @@ class StackedMobileIconViewModelTest : SysuiTestCase() {
 
             fakeMobileIconsInteractor.isStackable.value = false
             assertThat(underTest.contentDescription).isNull()
+        }
+
+    @Test
+    @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
+    fun mobileContext_tracksConnections() =
+        kosmos.runTest {
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf()
+            assertThat(underTest.mobileContext).isNull()
+
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            assertThat(underTest.mobileContext).isNotNull()
+        }
+
+    @Test
+    @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
+    fun mobileContext_tracksPrimaryConnection() =
+        kosmos.runTest {
+            val contextSub1 = mock(Context::class.java)
+            val contextSub2 = mock(Context::class.java)
+            whenever(mobileContextProvider.getMobileContextForSub(eq(SUB_1.subscriptionId), any()))
+                .thenReturn(contextSub1)
+            whenever(mobileContextProvider.getMobileContextForSub(eq(SUB_2.subscriptionId), any()))
+                .thenReturn(contextSub2)
+
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            assertThat(underTest.mobileContext).isEqualTo(contextSub1)
+
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_2, SUB_1)
+            assertThat(underTest.mobileContext).isEqualTo(contextSub2)
         }
 
     private fun setIconLevel(subId: Int, level: Int) {

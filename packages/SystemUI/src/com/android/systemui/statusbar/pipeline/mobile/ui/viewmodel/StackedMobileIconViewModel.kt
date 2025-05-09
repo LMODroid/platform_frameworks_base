@@ -24,6 +24,7 @@ import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.logDiffsForTable
 import com.android.systemui.shade.ShadeDisplayAware
+import com.android.systemui.statusbar.connectivity.ui.MobileContextProvider
 import com.android.systemui.statusbar.pipeline.dagger.StackedMobileIconTableLog
 import com.android.systemui.statusbar.pipeline.mobile.ui.model.DualSim
 import com.android.systemui.statusbar.pipeline.mobile.ui.model.logDualSimDiff
@@ -42,6 +43,8 @@ interface StackedMobileIconViewModel {
     val dualSim: DualSim?
     val contentDescription: String?
     val networkTypeIcon: Icon.Resource?
+    /** [Context] to use when loading the [networkTypeIcon] */
+    val mobileContext: Context?
     val isIconVisible: Boolean
 }
 
@@ -52,6 +55,7 @@ constructor(
     mobileIconsViewModel: MobileIconsViewModel,
     @StackedMobileIconTableLog private val tableLogger: TableLogBuffer,
     @ShadeDisplayAware private val context: Context,
+    private val mobileContextProvider: MobileContextProvider,
 ) : ExclusiveActivatable(), StackedMobileIconViewModel {
     private val hydrator = Hydrator("StackedMobileIconViewModel")
 
@@ -123,6 +127,21 @@ constructor(
                 flowIfIconIsVisible(
                     iconViewModelFlow.flatMapLatest { viewModels ->
                         viewModels.firstOrNull()?.networkTypeIcon ?: flowOf(null)
+                    }
+                ),
+            initialValue = null,
+        )
+
+    override val mobileContext: Context? by
+        hydrator.hydratedStateOf(
+            traceName = "mobileContext",
+            source =
+                flowIfIconIsVisible(
+                    iconViewModelFlow.map { viewModels ->
+                        // Get mobile context of primary connection
+                        viewModels.firstOrNull()?.let {
+                            mobileContextProvider.getMobileContextForSub(it.subscriptionId, context)
+                        }
                     }
                 ),
             initialValue = null,

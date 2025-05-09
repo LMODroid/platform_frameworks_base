@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -33,6 +34,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -78,8 +80,12 @@ fun StackedMobileIcon(viewModel: StackedMobileIconViewModel, modifier: Modifier 
         modifier = modifier.padding(horizontal = padding),
     ) {
         viewModel.networkTypeIcon?.let {
-            val height = with(LocalDensity.current) { IconHeightSp.toDp() }
-            Icon(it, tint = contentColor, modifier = Modifier.height(height).wrapContentWidth())
+            // Provide the RAT context needed for the resource overlays
+            val ratContext = viewModel.mobileContext ?: LocalContext.current
+            CompositionLocalProvider(LocalContext provides ratContext) {
+                val height = with(LocalDensity.current) { IconHeightSp.toDp() }
+                Icon(it, tint = contentColor, modifier = Modifier.height(height).wrapContentWidth())
+            }
         }
 
         StackedMobileIcon(
