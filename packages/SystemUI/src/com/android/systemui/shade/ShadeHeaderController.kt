@@ -341,6 +341,10 @@ constructor(
                 mShadeCarrierGroup.updateTextAppearance(R.style.TextAppearance_QS_Status)
                 updateResources()
             }
+
+            override fun onUiModeChanged() {
+                onThemeChanged()
+            }
         }
 
     private val nextAlarmCallback =
