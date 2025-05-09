@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,7 +30,7 @@ import com.android.systemui.res.R
 import javax.inject.Inject
 import javax.inject.Named
 
-class MediaCarouselSection
+class MediaCarouselElement
 @Inject
 constructor(
     private val mediaCarouselController: MediaCarouselController,

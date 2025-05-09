@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import android.content.res.Resources
 import android.widget.FrameLayout
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -32,7 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -50,7 +48,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.lockscreen.LockscreenSmartspaceController
 import javax.inject.Inject
 
-class SmartSpaceSection
+class SmartSpaceElement
 @Inject
 constructor(
     private val lockscreenSmartspaceController: LockscreenSmartspaceController,
@@ -65,7 +63,7 @@ constructor(
         smartSpacePaddingTop: (Resources) -> Int,
         modifier: Modifier = Modifier,
     ) {
-        val resources = LocalContext.current.resources
+        val resources = LocalResources.current
 
         Element(key = ClockElementKeys.smartspaceElementKey, modifier = modifier) {
             Column(
@@ -124,27 +122,6 @@ constructor(
                             .burnInAware(viewModel = aodBurnInViewModel, params = burnInParams)
                 )
             }
-        }
-    }
-
-    @Composable
-    fun DateAndWeather(orientation: Orientation, modifier: Modifier = Modifier) {
-        when (orientation) {
-            Orientation.Horizontal ->
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = modifier,
-                ) {
-                    Date()
-                    Weather()
-                }
-
-            Orientation.Vertical ->
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = modifier) {
-                    Date()
-                    Weather()
-                }
         }
     }
 

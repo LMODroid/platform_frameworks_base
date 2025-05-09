@@ -14,92 +14,32 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import android.content.res.Resources
-import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentScope
-import com.android.compose.modifiers.padding
-import com.android.systemui.customization.R
 import com.android.systemui.keyguard.ui.composable.blueprint.ClockElementKeys.largeClockElementKey
-import com.android.systemui.keyguard.ui.composable.blueprint.ClockElementKeys.smallClockElementKey
 import com.android.systemui.keyguard.ui.composable.blueprint.ClockScenes.largeClockScene
 import com.android.systemui.keyguard.ui.composable.blueprint.ClockScenes.splitShadeLargeClockScene
 import com.android.systemui.keyguard.ui.composable.modifier.burnInAware
-import com.android.systemui.keyguard.ui.composable.modifier.onTopPlacementChanged
 import com.android.systemui.keyguard.ui.viewmodel.AodBurnInViewModel
 import com.android.systemui.keyguard.ui.viewmodel.BurnInParameters
 import com.android.systemui.keyguard.ui.viewmodel.KeyguardClockViewModel
 import javax.inject.Inject
 
-@Composable
-fun ClockView(view: View?, modifier: Modifier = Modifier) {
-    AndroidView(
-        factory = {
-            FrameLayout(it).apply {
-                // Clip nothing. The clock views at times render outside their bounds. Compose does
-                // not clip by default, so only this layer needs clipping to be explicitly disabled.
-                clipChildren = false
-                clipToPadding = false
-            }
-        },
-        update = { parent ->
-            view?.let {
-                parent.removeAllViews()
-                (view.parent as? ViewGroup)?.removeView(view)
-                parent.addView(view)
-            } ?: run { parent.removeAllViews() }
-        },
-        modifier = modifier,
-    )
-}
-
 /** Provides small clock and large clock composables for the default clock face. */
-class DefaultClockSection
+class LargeClockElement
 @Inject
 constructor(
     private val viewModel: KeyguardClockViewModel,
     private val aodBurnInViewModel: AodBurnInViewModel,
-) {
-    @Composable
-    fun ContentScope.SmallClock(
-        burnInParams: BurnInParameters,
-        onTopChanged: (top: Float?) -> Unit,
-        modifier: Modifier = Modifier,
-    ) {
-        val currentClock by viewModel.currentClock.collectAsStateWithLifecycle()
-        val smallTopMargin by
-            viewModel.smallClockTopMargin.collectAsStateWithLifecycle(
-                viewModel.getSmallClockTopMargin()
-            )
-        if (currentClock?.smallClock?.view == null) {
-            return
-        }
-
-        ClockView(
-            checkNotNull(currentClock).smallClock.view,
-            modifier =
-                modifier
-                    .height(dimensionResource(R.dimen.small_clock_height))
-                    .padding(horizontal = dimensionResource(R.dimen.clock_padding_start))
-                    .padding(top = { smallTopMargin })
-                    .onTopPlacementChanged(onTopChanged)
-                    .burnInAware(viewModel = aodBurnInViewModel, params = burnInParams)
-                    .element(smallClockElementKey),
-        )
-    }
+) : ClockElement() {
 
     @Composable
     fun ContentScope.LargeClock(burnInParams: BurnInParameters, modifier: Modifier = Modifier) {
@@ -143,7 +83,9 @@ constructor(
         }
     }
 
-    fun getClockCenteringDistance(): Float {
-        return Resources.getSystem().displayMetrics.widthPixels / 4f
+    companion object {
+        private fun getClockCenteringDistance(): Float {
+            return Resources.getSystem().displayMetrics.widthPixels / 4f
+        }
     }
 }

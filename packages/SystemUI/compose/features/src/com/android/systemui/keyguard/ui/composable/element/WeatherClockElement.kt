@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -34,17 +34,12 @@ import com.android.systemui.keyguard.ui.composable.blueprint.WeatherClockElement
 import com.android.systemui.keyguard.ui.composable.modifier.burnInAware
 import com.android.systemui.keyguard.ui.viewmodel.AodBurnInViewModel
 import com.android.systemui.keyguard.ui.viewmodel.BurnInParameters
-import com.android.systemui.keyguard.ui.viewmodel.KeyguardClockViewModel
 import com.android.systemui.plugins.clocks.ClockController
 import javax.inject.Inject
 
 /** Provides small clock and large clock composables for the weather clock layout. */
-class WeatherClockSection
-@Inject
-constructor(
-    private val viewModel: KeyguardClockViewModel,
-    private val aodBurnInViewModel: AodBurnInViewModel,
-) {
+class WeatherClockElement @Inject constructor(private val aodBurnInViewModel: AodBurnInViewModel) :
+    ClockElement() {
     @Composable
     fun ContentScope.Time(clock: ClockController, burnInParams: BurnInParameters) {
         Row(

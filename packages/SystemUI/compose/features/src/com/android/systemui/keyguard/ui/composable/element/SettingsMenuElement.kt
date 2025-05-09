@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import android.view.LayoutInflater
 import androidx.compose.foundation.layout.padding
@@ -38,7 +38,7 @@ import com.android.systemui.statusbar.VibratorHelper
 import javax.inject.Inject
 import kotlinx.coroutines.DisposableHandle
 
-class SettingsMenuSection
+class SettingsMenuElement
 @Inject
 constructor(
     private val viewModel: KeyguardSettingsMenuViewModel,
@@ -46,6 +46,7 @@ constructor(
     private val vibratorHelper: VibratorHelper,
     private val activityStarter: ActivityStarter,
 ) {
+
     @Composable
     @SuppressWarnings("InflateParams") // null is passed into the inflate call, on purpose.
     fun SettingsMenu(onPlaced: (Rect?) -> Unit, modifier: Modifier = Modifier) {

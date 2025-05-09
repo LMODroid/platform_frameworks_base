@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import android.content.Context
 import android.util.DisplayMetrics
@@ -54,7 +54,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
-class LockSection
+class LockElement
 @Inject
 constructor(
     @Application private val applicationScope: CoroutineScope,
@@ -70,6 +70,7 @@ constructor(
     private val msdlPlayer: Lazy<MSDLPlayer>,
     @LongPressTouchLog private val logBuffer: LogBuffer,
 ) {
+
     @Composable
     fun ContentScope.LockIcon(overrideColor: Color? = null, modifier: Modifier = Modifier) {
         val context = LocalContext.current

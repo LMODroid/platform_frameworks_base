@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.android.compose.animation.scene.ContentScope
 
 /** Defines interface for classes that can render the ambient indication area. */
-interface AmbientIndicationSection {
+interface AmbientIndicationElement {
     @Composable fun ContentScope.AmbientIndication(modifier: Modifier)
 }

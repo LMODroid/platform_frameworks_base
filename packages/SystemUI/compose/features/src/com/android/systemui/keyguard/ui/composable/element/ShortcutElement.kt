@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.IdRes
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.DpSize
@@ -33,26 +31,22 @@ import androidx.core.content.res.ResourcesCompat
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.ElementKey
 import com.android.systemui.animation.view.LaunchableImageView
-import com.android.systemui.keyguard.ui.binder.KeyguardIndicationAreaBinder
 import com.android.systemui.keyguard.ui.binder.KeyguardQuickAffordanceViewBinder
-import com.android.systemui.keyguard.ui.view.KeyguardIndicationArea
-import com.android.systemui.keyguard.ui.viewmodel.KeyguardIndicationAreaViewModel
 import com.android.systemui.keyguard.ui.viewmodel.KeyguardQuickAffordanceViewModel
 import com.android.systemui.keyguard.ui.viewmodel.KeyguardQuickAffordancesCombinedViewModel
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.KeyguardIndicationController
 import javax.inject.Inject
-import kotlinx.coroutines.DisposableHandle
 import kotlinx.coroutines.flow.Flow
 
-class BottomAreaSection
+class ShortcutElement
 @Inject
 constructor(
     private val viewModel: KeyguardQuickAffordancesCombinedViewModel,
-    private val indicationController: KeyguardIndicationController,
-    private val indicationAreaViewModel: KeyguardIndicationAreaViewModel,
     private val keyguardQuickAffordanceViewBinder: KeyguardQuickAffordanceViewBinder,
+    private val indicationController: KeyguardIndicationController,
 ) {
+
     /**
      * Renders a single lockscreen shortcut.
      *
@@ -82,16 +76,6 @@ constructor(
                     } else {
                         Modifier
                     },
-            )
-        }
-    }
-
-    @Composable
-    fun ContentScope.IndicationArea(modifier: Modifier = Modifier) {
-        Element(key = IndicationAreaElementKey, modifier = modifier) {
-            IndicationArea(
-                indicationAreaViewModel = indicationAreaViewModel,
-                indicationController = indicationController,
             )
         }
     }
@@ -156,33 +140,6 @@ constructor(
     }
 
     @Composable
-    private fun IndicationArea(
-        indicationAreaViewModel: KeyguardIndicationAreaViewModel,
-        indicationController: KeyguardIndicationController,
-        modifier: Modifier = Modifier,
-    ) {
-        val (disposable, setDisposable) = remember { mutableStateOf<DisposableHandle?>(null) }
-
-        AndroidView(
-            factory = { context ->
-                val view = KeyguardIndicationArea(context, null)
-                view.isFocusable = true
-                view.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
-                setDisposable(
-                    KeyguardIndicationAreaBinder.bind(
-                        view = view,
-                        viewModel = indicationAreaViewModel,
-                        indicationController = indicationController,
-                    )
-                )
-                view
-            },
-            onRelease = { disposable?.dispose() },
-            modifier = modifier.fillMaxWidth(),
-        )
-    }
-
-    @Composable
     private fun Modifier.shortcutPadding(): Modifier {
         return this.padding(
                 horizontal = dimensionResource(R.dimen.keyguard_affordance_horizontal_offset)
@@ -193,4 +150,3 @@ constructor(
 
 private val StartButtonElementKey = ElementKey("StartButton")
 private val EndButtonElementKey = ElementKey("EndButton")
-private val IndicationAreaElementKey = ElementKey("IndicationArea")

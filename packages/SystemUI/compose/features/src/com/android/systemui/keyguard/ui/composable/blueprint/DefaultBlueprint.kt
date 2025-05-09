@@ -23,16 +23,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.android.compose.animation.scene.ContentScope
 import com.android.systemui.keyguard.ui.composable.LockscreenLongPress
+import com.android.systemui.keyguard.ui.composable.element.AmbientIndicationElement
+import com.android.systemui.keyguard.ui.composable.element.AodPromotedNotificationAreaElement
+import com.android.systemui.keyguard.ui.composable.element.DateAndWeatherElement
+import com.android.systemui.keyguard.ui.composable.element.HeadsUpNotificationsElement
+import com.android.systemui.keyguard.ui.composable.element.IndicationAreaElement
+import com.android.systemui.keyguard.ui.composable.element.LargeClockElement
+import com.android.systemui.keyguard.ui.composable.element.LockElement
+import com.android.systemui.keyguard.ui.composable.element.MediaCarouselElement
+import com.android.systemui.keyguard.ui.composable.element.NotificationElement
+import com.android.systemui.keyguard.ui.composable.element.SettingsMenuElement
+import com.android.systemui.keyguard.ui.composable.element.ShortcutElement
+import com.android.systemui.keyguard.ui.composable.element.SmallClockElement
+import com.android.systemui.keyguard.ui.composable.element.SmartSpaceElement
+import com.android.systemui.keyguard.ui.composable.element.StatusBarElement
 import com.android.systemui.keyguard.ui.composable.layout.LockscreenSceneLayout
-import com.android.systemui.keyguard.ui.composable.section.AmbientIndicationSection
-import com.android.systemui.keyguard.ui.composable.section.BottomAreaSection
-import com.android.systemui.keyguard.ui.composable.section.DefaultClockSection
-import com.android.systemui.keyguard.ui.composable.section.LockSection
-import com.android.systemui.keyguard.ui.composable.section.MediaCarouselSection
-import com.android.systemui.keyguard.ui.composable.section.NotificationSection
-import com.android.systemui.keyguard.ui.composable.section.SettingsMenuSection
-import com.android.systemui.keyguard.ui.composable.section.SmartSpaceSection
-import com.android.systemui.keyguard.ui.composable.section.StatusBarSection
 import com.android.systemui.keyguard.ui.viewmodel.KeyguardClockViewModel
 import com.android.systemui.keyguard.ui.viewmodel.LockscreenContentViewModel
 import java.util.Optional
@@ -45,16 +50,21 @@ import javax.inject.Inject
 class DefaultBlueprint
 @Inject
 constructor(
-    private val statusBarSection: StatusBarSection,
-    private val lockSection: LockSection,
-    private val ambientIndicationSectionOptional: Optional<AmbientIndicationSection>,
-    private val bottomAreaSection: BottomAreaSection,
-    private val settingsMenuSection: SettingsMenuSection,
-    private val notificationSection: NotificationSection,
-    private val clockSection: DefaultClockSection,
+    private val statusBarElement: StatusBarElement,
+    private val lockElement: LockElement,
+    private val ambientIndicationElementOptional: Optional<AmbientIndicationElement>,
+    private val shortcutElement: ShortcutElement,
+    private val indicationAreaElement: IndicationAreaElement,
+    private val settingsMenuElement: SettingsMenuElement,
+    private val headsUpNotificationsElement: HeadsUpNotificationsElement,
+    private val notificationsElement: NotificationElement,
+    private val aodPromotedNotificationAreaElement: AodPromotedNotificationAreaElement,
+    private val smallClockElement: SmallClockElement,
+    private val largeClockElement: LargeClockElement,
     private val keyguardClockViewModel: KeyguardClockViewModel,
-    private val smartSpaceSection: SmartSpaceSection,
-    private val mediaSection: MediaCarouselSection,
+    private val smartSpaceElement: SmartSpaceElement,
+    private val dateAndWeatherElement: DateAndWeatherElement,
+    private val mediaCarouselElement: MediaCarouselElement,
 ) : ComposableLockscreenSceneBlueprint {
 
     override val id: String = "default"
@@ -64,7 +74,7 @@ constructor(
         val isBypassEnabled = viewModel.isBypassEnabled
 
         if (isBypassEnabled) {
-            with(notificationSection) { HeadsUpNotifications() }
+            with(headsUpNotificationsElement) { HeadsUpNotifications() }
         }
 
         LockscreenLongPress(
@@ -76,10 +86,10 @@ constructor(
             LockscreenSceneLayout(
                 viewModel = viewModel.layout,
                 statusBar = {
-                    with(statusBarSection) { StatusBar(modifier = Modifier.fillMaxWidth()) }
+                    with(statusBarElement) { StatusBar(modifier = Modifier.fillMaxWidth()) }
                 },
                 smallClock = {
-                    with(clockSection) {
+                    with(smallClockElement) {
                         SmallClock(
                             burnInParams = burnIn.parameters,
                             onTopChanged = burnIn.onSmallClockTopChanged,
@@ -87,13 +97,13 @@ constructor(
                     }
                 },
                 largeClock = {
-                    with(clockSection) { LargeClock(burnInParams = burnIn.parameters) }
+                    with(largeClockElement) { LargeClock(burnInParams = burnIn.parameters) }
                 },
                 dateAndWeather = { orientation ->
-                    with(smartSpaceSection) { DateAndWeather(orientation) }
+                    with(dateAndWeatherElement) { DateAndWeather(orientation) }
                 },
                 smartSpace = {
-                    with(smartSpaceSection) {
+                    with(smartSpaceElement) {
                         SmartSpace(
                             burnInParams = burnIn.parameters,
                             onTopChanged = burnIn.onSmartspaceTopChanged,
@@ -102,37 +112,39 @@ constructor(
                     }
                 },
                 media = {
-                    with(mediaSection) {
+                    with(mediaCarouselElement) {
                         KeyguardMediaCarousel(isShadeLayoutWide = viewModel.isShadeLayoutWide)
                     }
                 },
                 notifications = {
-                    with(notificationSection) {
-                        Box(modifier = Modifier.fillMaxHeight()) {
-                            AodPromotedNotificationArea()
+                    Box(modifier = Modifier.fillMaxHeight()) {
+                        with(aodPromotedNotificationAreaElement) { AodPromotedNotificationArea() }
+                        with(notificationsElement) {
                             Notifications(areNotificationsVisible = true, burnInParams = null)
                         }
                     }
                 },
-                lockIcon = { with(lockSection) { LockIcon() } },
+                lockIcon = { with(lockElement) { LockIcon() } },
                 startShortcut = {
-                    with(bottomAreaSection) { Shortcut(isStart = true, applyPadding = false) }
+                    with(shortcutElement) { Shortcut(isStart = true, applyPadding = false) }
                 },
                 ambientIndication = {
-                    if (ambientIndicationSectionOptional.isPresent) {
-                        with(ambientIndicationSectionOptional.get()) {
+                    if (ambientIndicationElementOptional.isPresent) {
+                        with(ambientIndicationElementOptional.get()) {
                             AmbientIndication(modifier = Modifier.fillMaxWidth())
                         }
                     }
                 },
                 bottomIndication = {
-                    with(bottomAreaSection) { IndicationArea(modifier = Modifier.fillMaxWidth()) }
+                    with(indicationAreaElement) {
+                        IndicationArea(modifier = Modifier.fillMaxWidth())
+                    }
                 },
                 endShortcut = {
-                    with(bottomAreaSection) { Shortcut(isStart = false, applyPadding = false) }
+                    with(shortcutElement) { Shortcut(isStart = false, applyPadding = false) }
                 },
                 settingsMenu = {
-                    with(settingsMenuSection) { SettingsMenu(onPlaced = onSettingsMenuPlaced) }
+                    with(settingsMenuElement) { SettingsMenu(onPlaced = onSettingsMenuPlaced) }
                 },
             )
         }

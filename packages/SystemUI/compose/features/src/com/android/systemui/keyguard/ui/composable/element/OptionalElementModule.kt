@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.ui.composable.section
+package com.android.systemui.keyguard.ui.composable.element
 
 import dagger.BindsOptionalOf
 import dagger.Module
 
 /**
- * Dagger module for providing placeholders for optional lockscreen scene sections that don't exist
+ * Dagger module for providing placeholders for optional lockscreen scene elements that don't exist
  * in AOSP but may be provided by OEMs.
  */
 @Module
-interface OptionalSectionModule {
-    @BindsOptionalOf fun ambientIndicationSection(): AmbientIndicationSection
+interface OptionalElementModule {
+    @BindsOptionalOf fun ambientIndicationElement(): AmbientIndicationElement
 }
