@@ -19,9 +19,12 @@ package com.android.systemui.qs.composefragment.viewmodel
 import android.app.StatusBarManager
 import android.content.testableContext
 import android.graphics.Rect
+import android.platform.test.annotations.DisableFlags
+import android.platform.test.annotations.EnableFlags
 import android.testing.TestableLooper.RunWithLooper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.systemui.Flags.FLAG_QS_COMPOSE_FRAGMENT_EARLY_EXPANSION
 import com.android.systemui.common.ui.data.repository.fakeConfigurationRepository
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.kosmos.testScope
@@ -470,6 +473,30 @@ class QSFragmentComposeViewModelTest : AbstractQSFragmentComposeViewModelTest() 
                 underTest.containerViewModel.editModeViewModel.stopEditing()
                 runCurrent()
                 assertThat(underTest.isEditing).isFalse()
+            }
+        }
+
+    @Test
+    @DisableFlags(FLAG_QS_COMPOSE_FRAGMENT_EARLY_EXPANSION)
+    fun minExpansion_expanded_noEarlyExpansion() =
+        with(kosmos) {
+            testScope.testWithinLifecycle {
+                underTest.isQsExpanded = true
+                underTest.setQsExpansionValue(0f)
+
+                assertThat(underTest.expansionState.progress).isEqualTo(0f)
+            }
+        }
+
+    @Test
+    @EnableFlags(FLAG_QS_COMPOSE_FRAGMENT_EARLY_EXPANSION)
+    fun minExpansion_expanded_earlyExpansion() =
+        with(kosmos) {
+            testScope.testWithinLifecycle {
+                underTest.isQsExpanded = true
+                underTest.setQsExpansionValue(0f)
+
+                assertThat(underTest.expansionState.progress).isGreaterThan(0f)
             }
         }
 
