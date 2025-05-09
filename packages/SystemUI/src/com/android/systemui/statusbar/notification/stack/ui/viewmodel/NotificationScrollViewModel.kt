@@ -331,7 +331,8 @@ constructor(
         combine(sceneInteractor.currentScene, sceneInteractor.currentOverlays) {
                 currentScene,
                 currentOverlays ->
-                currentScene.showsNotifications() || currentOverlays.any { it.showsNotifications() }
+                currentScene.showsScrollableStack() ||
+                    currentOverlays.any { it.showsScrollableStack() }
             }
             .dumpWhileCollecting("isScrollable")
 
@@ -361,10 +362,9 @@ constructor(
         }
     }
 
-    private fun ContentKey.showsNotifications(): Boolean {
+    private fun ContentKey.showsScrollableStack(): Boolean {
         return when (this) {
             Overlays.NotificationsShade,
-            Scenes.Lockscreen,
             Scenes.Shade -> true
             else -> false
         }

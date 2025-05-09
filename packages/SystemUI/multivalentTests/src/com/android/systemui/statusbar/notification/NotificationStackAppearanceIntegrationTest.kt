@@ -191,7 +191,7 @@ class NotificationStackAppearanceIntegrationTest : SysuiTestCase() {
 
             fakeSceneDataSource.changeScene(toScene = Scenes.Lockscreen)
             val isScrollable by collectLastValue(scrollViewModel.isScrollable)
-            assertThat(isScrollable).isTrue()
+            assertThat(isScrollable).isFalse()
         }
 
     @Test
