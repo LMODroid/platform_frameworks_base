@@ -17,12 +17,12 @@
 package com.android.systemui.statusbar.pipeline.shared.ui.composable
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -33,14 +33,17 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.android.systemui.common.ui.compose.Icon
+import com.android.systemui.common.ui.compose.load
 import com.android.systemui.statusbar.pipeline.mobile.ui.model.DualSim
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.StackedMobileIconViewModel
 import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobileIconDimensions.BarBaseHeightFiveBarsSp
@@ -84,7 +87,13 @@ fun StackedMobileIcon(viewModel: StackedMobileIconViewModel, modifier: Modifier 
             val ratContext = viewModel.mobileContext ?: LocalContext.current
             CompositionLocalProvider(LocalContext provides ratContext) {
                 val height = with(LocalDensity.current) { IconHeightSp.toDp() }
-                Icon(it, tint = contentColor, modifier = Modifier.height(height).wrapContentWidth())
+                Image(
+                    painter = painterResource(it.res),
+                    contentDescription = it.contentDescription?.load(),
+                    modifier = Modifier.height(height),
+                    colorFilter = ColorFilter.tint(contentColor, BlendMode.SrcIn),
+                    contentScale = ContentScale.FillHeight,
+                )
             }
         }
 
