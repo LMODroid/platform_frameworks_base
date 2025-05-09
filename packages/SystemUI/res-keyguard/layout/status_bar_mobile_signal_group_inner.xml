@@ -99,7 +99,7 @@
             android:id="@+id/mobile_roaming_updated"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/status_bar_mobile_roam_size_updated"
-            android:layout_marginStart="@dimen/status_bar_mobile_type_container_margin_end"
+            android:layout_marginStart="@dimen/status_bar_end_side_roam_icon_margin_start"
             android:layout_marginTop="1sp"
             android:visibility="gone"
             android:src="@drawable/stat_sys_roaming_updated"

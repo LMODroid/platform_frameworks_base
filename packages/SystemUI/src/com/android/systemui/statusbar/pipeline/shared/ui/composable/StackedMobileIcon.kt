@@ -62,6 +62,7 @@ import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobil
 import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobileIconDimensions.IconSpacingSp
 import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobileIconDimensions.IconWidthFiveBarsSp
 import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobileIconDimensions.IconWidthFourBarsSp
+import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobileIconDimensions.RatIndicatorPaddingSp
 import com.android.systemui.statusbar.pipeline.shared.ui.composable.StackedMobileIconDimensions.SecondaryBarHeightSp
 import kotlin.math.max
 
@@ -87,10 +88,11 @@ fun StackedMobileIcon(viewModel: StackedMobileIconViewModel, modifier: Modifier 
             val ratContext = viewModel.mobileContext ?: LocalContext.current
             CompositionLocalProvider(LocalContext provides ratContext) {
                 val height = with(LocalDensity.current) { IconHeightSp.toDp() }
+                val paddingEnd = with(LocalDensity.current) { RatIndicatorPaddingSp.toDp() }
                 Image(
                     painter = painterResource(it.res),
                     contentDescription = it.contentDescription?.load(),
-                    modifier = Modifier.height(height),
+                    modifier = Modifier.height(height).padding(end = paddingEnd),
                     colorFilter = ColorFilter.tint(contentColor, BlendMode.SrcIn),
                     contentScale = ContentScale.FillHeight,
                 )
@@ -245,6 +247,7 @@ private object StackedMobileIconDimensions {
     val BarsVerticalPaddingSp = 1.5.sp
     val BarsLevelIncrementSp = 1.sp
     val SecondaryBarHeightSp = 3.sp
+    val RatIndicatorPaddingSp = 4.sp // 6.sp total between RAT and bars
 
     // Exclamation cutout dimensions
     val ExclamationCutoutRadiusSp = 5.sp
