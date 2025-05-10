@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageInstaller;
+import android.content.pm.PackageInstaller.SessionInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.net.Uri;
@@ -94,11 +95,11 @@ public class InstallStart extends Activity {
         // If the activity was started via a PackageInstaller session, we retrieve the calling
         // package from that session
         final int sessionId = (isSessionInstall
-                ? intent.getIntExtra(PackageInstaller.EXTRA_SESSION_ID, -1)
-                : -1);
+                ? intent.getIntExtra(PackageInstaller.EXTRA_SESSION_ID, SessionInfo.INVALID_ID)
+                : SessionInfo.INVALID_ID);
         int originatingUidFromSession = callingUid;
-        if (callingPackage == null && sessionId != -1) {
-            PackageInstaller packageInstaller = getPackageManager().getPackageInstaller();
+        if (sessionId != SessionInfo.INVALID_ID) {
+            PackageInstaller packageInstaller = mPackageManager.getPackageInstaller();
             PackageInstaller.SessionInfo sessionInfo = packageInstaller.getSessionInfo(sessionId);
             if (sessionInfo != null) {
                 callingPackage = sessionInfo.getInstallerPackageName();
@@ -257,14 +258,13 @@ public class InstallStart extends Activity {
     private ApplicationInfo getSourceInfo(@Nullable String callingPackage) {
         if (callingPackage != null) {
             try {
-                return getPackageManager().getApplicationInfo(callingPackage, 0);
+                return mPackageManager.getApplicationInfo(callingPackage, 0);
             } catch (PackageManager.NameNotFoundException ex) {
                 // ignore
             }
         }
         return null;
     }
-
 
     @NonNull
     private boolean canPackageQuery(int callingUid, Uri packageUri) {
@@ -295,7 +295,7 @@ public class InstallStart extends Activity {
         if (originatingUid == Process.ROOT_UID) {
             return true;
         }
-        PackageInstaller packageInstaller = getPackageManager().getPackageInstaller();
+        PackageInstaller packageInstaller = mPackageManager.getPackageInstaller();
         PackageInstaller.SessionInfo sessionInfo = packageInstaller.getSessionInfo(sessionId);
         if (sessionInfo == null) {
             return false;
