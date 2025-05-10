@@ -58,6 +58,7 @@ import androidx.test.filters.SmallTest;
 import com.android.keyguard.BouncerPanelExpansionCalculator;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.dump.DumpManager;
+import com.android.systemui.flags.DisableSceneContainer;
 import com.android.systemui.flags.EnableSceneContainer;
 import com.android.systemui.media.controls.ui.view.MediaHost;
 import com.android.systemui.qs.customize.QSCustomizerController;
@@ -188,6 +189,7 @@ public class QSImplTest extends SysuiTestCase {
     }
 
     @Test
+    @DisableSceneContainer
     public void
             transitionToFullShade_onKeyguard_noBouncer_setsAlphaUsingLinearInterpolator() {
         setStatusBarCurrentAndUpcomingState(KEYGUARD);
@@ -289,6 +291,7 @@ public class QSImplTest extends SysuiTestCase {
     }
 
     @Test
+    @DisableSceneContainer
     public void setQsExpansion_inSplitShade_setsFooterActionsExpansion_basedOnPanelExpFraction() {
         // Random test values without any meaning. They just have to be different from each other.
         float expansion = 0.123f;
@@ -306,6 +309,7 @@ public class QSImplTest extends SysuiTestCase {
     }
 
     @Test
+    @DisableSceneContainer
     public void setQsExpansion_notInSplitShade_setsFooterActionsExpansion_basedOnExpansion() {
         // Random test values without any meaning. They just have to be different from each other.
         float expansion = 0.123f;
@@ -500,6 +504,7 @@ public class QSImplTest extends SysuiTestCase {
     }
 
     @Test
+    @DisableSceneContainer
     public void testUpdateQSBounds_setMediaClipCorrectly() {
         disableSplitShade();
 
@@ -516,6 +521,7 @@ public class QSImplTest extends SysuiTestCase {
     }
 
     @Test
+    @DisableSceneContainer
     public void testQsUpdatesQsAnimatorWithUpcomingState() {
         setStatusBarCurrentAndUpcomingState(SHADE);
         mUnderTest.onUpcomingStateChanged(KEYGUARD);
