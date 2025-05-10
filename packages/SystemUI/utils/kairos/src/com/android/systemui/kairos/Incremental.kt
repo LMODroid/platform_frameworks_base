@@ -30,6 +30,7 @@ import com.android.systemui.kairos.util.MapPatch
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.NameTag
 import com.android.systemui.kairos.util.NameTaggingDisabled
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.mapPatchFromFullDiff
 import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairos.util.plus
@@ -153,6 +154,10 @@ class IncrementalLoop<K, V>(name: String? = null) : Incremental<K, V>() {
 
     internal val nameData: NameData =
         name?.let { nameTag(name).toNameData("IncrementalLoop") } ?: NameTaggingDisabled
+
+    init {
+        nameData.forceInit()
+    }
 
     private val deferred = CompletableLazy<Incremental<K, V>>(name = name)
 

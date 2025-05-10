@@ -33,6 +33,7 @@ import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.NameTaggingDisabled
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairos.util.plus
 import com.android.systemui.kairos.util.toMaybe
@@ -291,6 +292,11 @@ internal constructor(
     private val getInitialValue: () -> Out,
     internal val impl: InputNode<Out> = InputNode(nameData),
 ) : Events<Out>() {
+
+    init {
+        nameData.forceInit()
+    }
+
     private val storage = AtomicReference(false to lazy { getInitialValue() })
 
     override fun toString(): String = "${this::class.simpleName}@$hashString[$nameData]"
@@ -329,6 +335,10 @@ internal constructor(
     internal val nameData: NameData,
     internal val impl: InputNode<T> = InputNode(nameData),
 ) : Events<T>() {
+
+    init {
+        nameData.forceInit()
+    }
 
     private val storage = AtomicReference<Job?>(null)
 

@@ -23,6 +23,7 @@ import com.android.systemui.kairos.internal.store.asMapHolder
 import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.internal.util.logDuration
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.forceInit
 
 internal typealias MuxResult<W, K, V> = MapK<W, K, PullNode<V>>
 
@@ -31,6 +32,10 @@ internal sealed class MuxNode<W, K, V>(
     val nameData: NameData,
     val lifecycle: MuxLifecycle<W, K, V>,
 ) : PushNode<MuxResult<W, K, V>> {
+
+    init {
+        nameData.forceInit()
+    }
 
     lateinit var upstreamData: MutableMapK<W, K, PullNode<V>>
     lateinit var switchedIn: MutableMapK<W, K, BranchNode>

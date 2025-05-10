@@ -48,6 +48,7 @@ import com.android.systemui.kairos.util.Maybe.Present
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.NameTag
 import com.android.systemui.kairos.util.appendNames
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.map
 import com.android.systemui.kairos.util.mapName
 import com.android.systemui.kairos.util.plus
@@ -72,6 +73,10 @@ internal class BuildScopeImpl(
     val stateScope: StateScopeImpl,
     val coroutineScope: CoroutineScope,
 ) : InternalBuildScope, InternalStateScope by stateScope {
+
+    init {
+        nameData.forceInit()
+    }
 
     private val job: Job
         get() = coroutineScope.coroutineContext.job

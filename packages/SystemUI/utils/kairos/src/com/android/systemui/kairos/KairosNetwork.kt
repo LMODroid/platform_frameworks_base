@@ -26,6 +26,7 @@ import com.android.systemui.kairos.internal.util.invokeOnCancel
 import com.android.systemui.kairos.util.FullNameTag
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.NameTag
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.mapName
 import com.android.systemui.kairos.util.toNameData
 import kotlin.coroutines.CoroutineContext
@@ -168,6 +169,10 @@ internal class LocalNetwork(
     private val scope: CoroutineScope,
     private val aliveLazy: Lazy<State<Boolean>>,
 ) : KairosNetwork {
+
+    init {
+        nameData.forceInit()
+    }
 
     override suspend fun <R> transact(block: TransactionScope.() -> R): R =
         network.transaction("KairosNetwork.transact") { block() }.awaitOrCancel()

@@ -98,3 +98,11 @@ internal inline operator fun NameData.plus(name: String): NameData = appendNames
 internal inline operator fun NameData.plus(crossinline name: () -> String): NameData = mapName {
     "$it-${name()}"
 }
+
+internal fun NameData.forceInit() {
+    if (!TaggingEnabled) return
+    when (this) {
+        is FullNameTag -> name.value
+        NameTaggingDisabled -> Unit
+    }
+}

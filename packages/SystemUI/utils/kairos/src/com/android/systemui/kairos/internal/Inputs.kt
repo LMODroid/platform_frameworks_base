@@ -18,6 +18,7 @@ package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.internal.util.logDuration
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.forceInit
 import java.util.concurrent.atomic.AtomicBoolean
 
 internal class InputNode<A>(
@@ -25,6 +26,10 @@ internal class InputNode<A>(
     private val activate: EvalScope.() -> Unit = {},
     private val deactivate: () -> Unit = {},
 ) : PushNode<A> {
+
+    init {
+        nameData.forceInit()
+    }
 
     private val downstreamSet = DownstreamSet()
     val activated = AtomicBoolean(false)

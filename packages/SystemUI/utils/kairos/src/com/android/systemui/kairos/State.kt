@@ -38,6 +38,7 @@ import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.NameTaggingDisabled
 import com.android.systemui.kairos.util.WithPrev
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.mapName
 import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairos.util.plus
@@ -224,6 +225,10 @@ internal constructor(
     internal val network: Network,
     initialValue: Lazy<T>,
 ) : State<T>() {
+
+    init {
+        nameData.forceInit()
+    }
 
     private val input: CoalescingMutableEvents<Lazy<T>, Lazy<T>?> =
         CoalescingMutableEvents(

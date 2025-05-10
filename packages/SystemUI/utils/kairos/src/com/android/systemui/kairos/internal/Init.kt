@@ -18,9 +18,14 @@ package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.forceInit
 
 /** Performs actions once, when the reactive component is first connected to the network. */
 internal class Init<out A>(val nameData: NameData, initBlock: InitScope.() -> A) {
+
+    init {
+        nameData.forceInit()
+    }
 
     private var block: (InitScope.() -> A)? = initBlock
 

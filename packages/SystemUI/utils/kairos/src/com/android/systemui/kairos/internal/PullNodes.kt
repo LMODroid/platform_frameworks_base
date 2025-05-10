@@ -18,6 +18,7 @@ package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.internal.util.logDuration
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.forceInit
 
 internal val neverImpl: EventsImpl<Nothing> = EventsImplCheap { null }
 
@@ -26,6 +27,11 @@ internal class MapNode<A, B>(
     val upstream: PullNode<A>,
     val transform: EvalScope.(A, Int) -> B,
 ) : PullNode<B> {
+
+    init {
+        nameData.forceInit()
+    }
+
     override fun getPushEvent(logIndent: Int, evalScope: EvalScope): B =
         logDuration(logIndent, { "MapNode.getPushEvent" }) {
             val upstream =
@@ -60,6 +66,11 @@ internal class CachedNode<A>(
     private val transactionCache: TransactionCache<Lazy<A>>,
     val upstream: PullNode<A>,
 ) : PullNode<A> {
+
+    init {
+        nameData.forceInit()
+    }
+
     override fun getPushEvent(logIndent: Int, evalScope: EvalScope): A =
         logDuration(logIndent, { "CachedNode.getPushEvent" }) {
             val deferred =

@@ -17,12 +17,18 @@
 package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.forceInit
 
 internal class Output<A>(
     val nameData: NameData,
     val onDeath: () -> Unit = {},
     val onEmit: EvalScope.(A) -> Unit,
 ) {
+
+    init {
+        nameData.forceInit()
+    }
+
     val schedulable = Schedulable.O(this)
 
     var upstream: NodeConnection<A>? = null

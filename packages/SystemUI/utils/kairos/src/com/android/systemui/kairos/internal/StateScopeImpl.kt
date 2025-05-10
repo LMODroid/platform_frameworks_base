@@ -40,6 +40,7 @@ import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.NameTag
 import com.android.systemui.kairos.util.appendNames
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.map
 import com.android.systemui.kairos.util.mapName
 import com.android.systemui.kairos.util.plus
@@ -51,6 +52,10 @@ internal class StateScopeImpl(
     val evalScope: EvalScope,
     val aliveLazy: Lazy<State<Boolean>>,
 ) : InternalStateScope, EvalScope by evalScope {
+
+    init {
+        nameData.forceInit()
+    }
 
     override val alive: State<Boolean> by aliveLazy
 
@@ -162,7 +167,9 @@ internal class StateScopeImpl(
     }
 
     override fun <A> truncateToScope(events: Events<A>, nameData: NameData): Events<A> =
-        alive.mapCheapUnsafe { if (it) events else emptyEvents }.switchEvents()
+        alive
+            .mapCheapUnsafe(nameData + "mapCheapSwitchOff") { if (it) events else emptyEvents }
+            .switchEvents(nameData)
 
     private fun <A> Events<A>.nextOnlyInternal(nameData: NameData): Events<A> =
         if (this === emptyEvents) {

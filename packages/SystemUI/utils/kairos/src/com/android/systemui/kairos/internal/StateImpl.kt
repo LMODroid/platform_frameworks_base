@@ -24,6 +24,7 @@ import com.android.systemui.kairos.internal.store.StoreEntry
 import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.plus
 
 internal open class StateImpl<out A>(
@@ -31,6 +32,11 @@ internal open class StateImpl<out A>(
     val changes: EventsImpl<A>,
     val store: StateStore<A>,
 ) {
+
+    init {
+        nameData.forceInit()
+    }
+
     fun getCurrentWithEpoch(evalScope: EvalScope): Pair<A, Long> =
         store.getCurrentWithEpoch(evalScope)
 
@@ -92,6 +98,10 @@ internal sealed class StateStore<out S> {
 
 internal class StateSource<S>(init: Lazy<S>, val nameData: NameData) : StateStore<S>() {
     constructor(init: S, nameData: NameData) : this(lazyOf(init), nameData)
+
+    init {
+        nameData.forceInit()
+    }
 
     lateinit var upstreamConnection: NodeConnection<S>
 
@@ -190,6 +200,11 @@ internal class DerivedMapCheap<A, B>(
     val upstream: Init<StateImpl<A>>,
     private val transform: EvalScope.(A) -> B,
 ) : StateStore<B>() {
+
+    init {
+        nameData.forceInit()
+    }
+
     override fun getCurrentWithEpoch(evalScope: EvalScope): Pair<B, Long> {
         val (a, epoch) = upstream.connect(evalScope).getCurrentWithEpoch(evalScope)
         return evalScope.transform(a) to epoch
@@ -216,6 +231,11 @@ internal class DerivedMap<A, B>(
     val upstream: InitScope.() -> StateImpl<A>,
     private val transform: EvalScope.(A) -> B,
 ) : StateDerived<B>() {
+
+    init {
+        nameData.forceInit()
+    }
+
     override fun recalc(evalScope: EvalScope): Pair<B, Long>? {
         val (a, epoch) = evalScope.upstream().getCurrentWithEpoch(evalScope)
         return if (epoch > validatedEpoch) {
@@ -264,6 +284,11 @@ internal class DerivedFlatten<A>(
     val nameData: NameData,
     val upstream: InitScope.() -> StateImpl<StateImpl<A>>,
 ) : StateDerived<A>() {
+
+    init {
+        nameData.forceInit()
+    }
+
     override fun recalc(evalScope: EvalScope): Pair<A, Long> {
         val (inner, epoch0) = evalScope.upstream().getCurrentWithEpoch(evalScope)
         val (a, epoch1) = inner.getCurrentWithEpoch(evalScope)
@@ -457,6 +482,11 @@ internal class DerivedZipped<W, K, A>(
     val upstream: Init<Iterable<Map.Entry<K, StateImpl<A>>>>,
     private val storeFactory: MutableMapK.Factory<W, K>,
 ) : StateDerived<MutableMapK<W, K, A>>() {
+
+    init {
+        nameData.forceInit()
+    }
+
     override fun recalc(evalScope: EvalScope): Pair<MutableMapK<W, K, A>, Long> {
         var newEpoch = 0L
         val store = storeFactory.create<A>(upstreamSize)

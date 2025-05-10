@@ -32,6 +32,7 @@ import com.android.systemui.kairos.util.Maybe.Present
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.These
 import com.android.systemui.kairos.util.flatMap
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.getMaybe
 import com.android.systemui.kairos.util.maybeFirst
 import com.android.systemui.kairos.util.maybeSecond
@@ -311,6 +312,11 @@ private class MuxDeferredActivator<W, K, V>(
     private val storeFactory: MutableMapK.Factory<W, K>,
     private val getPatches: EvalScope.() -> EventsImpl<Iterable<Map.Entry<K, Maybe<EventsImpl<V>>>>>,
 ) : MuxActivator<W, K, V> {
+
+    init {
+        nameData.forceInit()
+    }
+
     override fun activate(
         evalScope: EvalScope,
         lifecycle: MuxLifecycle<W, K, V>,

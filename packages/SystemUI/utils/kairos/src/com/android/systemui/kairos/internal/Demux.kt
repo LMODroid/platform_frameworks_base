@@ -22,6 +22,7 @@ import com.android.systemui.kairos.internal.store.MapK
 import com.android.systemui.kairos.internal.store.MutableMapK
 import com.android.systemui.kairos.internal.util.logDuration
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.plus
 
 internal class DemuxNode<W, K, A>(
@@ -30,6 +31,10 @@ internal class DemuxNode<W, K, A>(
     val lifecycle: DemuxLifecycle<K, A>,
     private val spec: DemuxActivator<W, K, A>,
 ) : SchedulableNode {
+
+    init {
+        nameData.forceInit()
+    }
 
     val schedulable = Schedulable.N(this)
 
@@ -239,6 +244,11 @@ internal class DemuxActivator<W, K, A>(
     private val upstream: EventsImpl<MapK<W, K, A>>,
     private val storeFactory: MutableMapK.Factory<W, K>,
 ) {
+
+    init {
+        nameData.forceInit()
+    }
+
     fun activate(
         evalScope: EvalScope,
         lifecycle: DemuxLifecycle<K, A>,
@@ -282,6 +292,11 @@ internal class DemuxLifecycle<K, A>(
     val nameData: NameData,
     @Volatile var lifecycleState: DemuxLifecycleState<K, A>,
 ) {
+
+    init {
+        nameData.forceInit()
+    }
+
     fun activate(evalScope: EvalScope, key: K): Pair<DemuxNode<*, K, A>.BranchNode, Boolean>? =
         when (val state = lifecycleState) {
             is DemuxLifecycleState.Dead -> {

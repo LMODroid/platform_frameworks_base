@@ -27,6 +27,7 @@ import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.Maybe.Absent
 import com.android.systemui.kairos.util.Maybe.Present
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.forceInit
 import com.android.systemui.kairos.util.plus
 
 internal class MuxPromptNode<W, K, V>(
@@ -338,6 +339,11 @@ private class MuxPromptActivator<W, K, V>(
     private val storeFactory: MutableMapK.Factory<W, K>,
     private val getPatches: EvalScope.() -> EventsImpl<Iterable<Map.Entry<K, Maybe<EventsImpl<V>>>>>,
 ) : MuxActivator<W, K, V> {
+
+    init {
+        nameData.forceInit()
+    }
+
     override fun activate(
         evalScope: EvalScope,
         lifecycle: MuxLifecycle<W, K, V>,
