@@ -291,11 +291,18 @@ public class NotificationLockscreenUserManagerTest extends SysuiTestCase {
                 .thenReturn(mock(StateFlow.class));
         when(mWifiRepositoryLazy.get()).thenReturn(mWifiRepository);
         when(mWifiRepository.getWifiNetwork()).thenReturn(mock(StateFlow.class));
+
+        // Add the following for SceneContainer enabled
+        when(mDeviceUnlockedInteractorLazy.get()).thenReturn(mDeviceUnlockedInteractor);
+        when(mDeviceUnlockedInteractor.getDeviceUnlockStatus()).thenReturn(
+                mDeviceUnlockStatusStateFlow);
+        when(mDeviceUnlockStatusStateFlow.getValue()).thenReturn(new DeviceUnlockStatus(
+                /* isUnlocked = */ true,
+                /* deviceUnlockSource = */ null
+        ));
+
         mLockscreenUserManager = new TestNotificationLockscreenUserManager(mContext);
         mLockscreenUserManager.setUpWithPresenter(mPresenter);
-
-        when(mDeviceUnlockedInteractor.getDeviceUnlockStatus())
-                .thenReturn(mDeviceUnlockStatusStateFlow);
 
         mBackgroundExecutor.runAllReady();
     }
