@@ -15,13 +15,18 @@ import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.keyguard.data.repository.fakeDeviceEntryFingerprintAuthRepository
 import com.android.systemui.keyguard.shared.model.SuccessFingerprintAuthenticationStatus
+import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.plugins.activityStarter
+import com.android.systemui.privacy.PrivacyApplication
+import com.android.systemui.privacy.PrivacyItem
+import com.android.systemui.privacy.PrivacyType
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
+import com.android.systemui.shade.data.repository.fakePrivacyChipRepository
 import com.android.systemui.shade.domain.interactor.disableDualShade
 import com.android.systemui.shade.domain.interactor.enableDualShade
 import com.android.systemui.shade.domain.interactor.shadeMode
@@ -31,10 +36,8 @@ import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.fakeMobi
 import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.argThat
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -44,7 +47,6 @@ import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 @EnableSceneContainer
@@ -66,12 +68,10 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
     fun mobileSubIds_update() =
         testScope.runTest {
             mobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1)
-            runCurrent()
 
             assertThat(underTest.mobileSubIds).isEqualTo(listOf(1))
 
             mobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
-            runCurrent()
 
             assertThat(underTest.mobileSubIds).isEqualTo(listOf(1, 2))
         }
@@ -110,7 +110,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             setScene(Scenes.Shade)
 
             underTest.onSystemIconChipClicked()
-            runCurrent()
 
             assertThat(sceneInteractor.currentScene.value).isEqualTo(Scenes.Lockscreen)
         }
@@ -123,7 +122,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
             underTest.onSystemIconChipClicked()
-            runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
             assertThat(currentOverlays).isEmpty()
@@ -137,7 +135,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
             underTest.onSystemIconChipClicked()
-            runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
             assertThat(currentOverlays).contains(Overlays.QuickSettingsShade)
@@ -152,7 +149,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             setScene(Scenes.Shade)
 
             underTest.onSystemIconChipClicked()
-            runCurrent()
 
             assertThat(sceneInteractor.currentScene.value).isEqualTo(Scenes.Gone)
         }
@@ -165,7 +161,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
             underTest.onSystemIconChipClicked()
-            runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Gone)
             assertThat(currentOverlays).isEmpty()
@@ -179,7 +174,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
             underTest.onSystemIconChipClicked()
-            runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Gone)
             assertThat(currentOverlays).contains(Overlays.QuickSettingsShade)
@@ -194,7 +188,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
             underTest.onNotificationIconChipClicked()
-            runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
             assertThat(currentOverlays).isEmpty()
@@ -208,7 +201,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
             underTest.onNotificationIconChipClicked()
-            runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
             assertThat(currentOverlays).contains(Overlays.NotificationsShade)
@@ -223,7 +215,6 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
             underTest.onNotificationIconChipClicked()
-            runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Gone)
             assertThat(currentOverlays).isEmpty()
@@ -237,11 +228,65 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
             underTest.onNotificationIconChipClicked()
-            runCurrent()
 
             assertThat(currentScene).isEqualTo(Scenes.Gone)
             assertThat(currentOverlays).contains(Overlays.NotificationsShade)
             assertThat(currentOverlays).doesNotContain(Overlays.QuickSettingsShade)
+        }
+
+    @Test
+    fun isPrivacyChipVisible_updates() =
+        kosmos.runTest {
+            fakePrivacyChipRepository.setPrivacyItems(emptyList())
+
+            assertThat(underTest.isPrivacyChipVisible).isFalse()
+
+            fakePrivacyChipRepository.setPrivacyItems(
+                listOf(
+                    PrivacyItem(
+                        privacyType = PrivacyType.TYPE_CAMERA,
+                        application = PrivacyApplication("", 0),
+                    )
+                )
+            )
+
+            assertThat(underTest.isPrivacyChipVisible).isTrue()
+        }
+
+    @Test
+    fun isPrivacyChipEnabled_noIndicationEnabled() =
+        kosmos.runTest {
+            fakePrivacyChipRepository.setIsMicCameraIndicationEnabled(false)
+            fakePrivacyChipRepository.setIsLocationIndicationEnabled(false)
+
+            assertThat(underTest.isPrivacyChipEnabled).isFalse()
+        }
+
+    @Test
+    fun isPrivacyChipEnabled_micCameraIndicationEnabled() =
+        kosmos.runTest {
+            fakePrivacyChipRepository.setIsMicCameraIndicationEnabled(true)
+            fakePrivacyChipRepository.setIsLocationIndicationEnabled(false)
+
+            assertThat(underTest.isPrivacyChipEnabled).isTrue()
+        }
+
+    @Test
+    fun isPrivacyChipEnabled_locationIndicationEnabled() =
+        kosmos.runTest {
+            fakePrivacyChipRepository.setIsMicCameraIndicationEnabled(false)
+            fakePrivacyChipRepository.setIsLocationIndicationEnabled(true)
+
+            assertThat(underTest.isPrivacyChipEnabled).isTrue()
+        }
+
+    @Test
+    fun isPrivacyChipEnabled_allIndicationEnabled() =
+        kosmos.runTest {
+            fakePrivacyChipRepository.setIsMicCameraIndicationEnabled(true)
+            fakePrivacyChipRepository.setIsLocationIndicationEnabled(true)
+
+            assertThat(underTest.isPrivacyChipEnabled).isTrue()
         }
 
     companion object {
@@ -272,19 +317,16 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
         }
-        runCurrent()
         assertThat(shadeMode).isEqualTo(ShadeMode.Dual)
 
         sceneInteractor.changeScene(scene, "test")
         checkNotNull(currentOverlays).forEach { sceneInteractor.instantlyHideOverlay(it, "test") }
-        runCurrent()
         overlay?.let { sceneInteractor.showOverlay(it, "test") }
         sceneInteractor.setTransitionState(
             MutableStateFlow<ObservableTransitionState>(
                 ObservableTransitionState.Idle(scene, setOfNotNull(overlay))
             )
         )
-        runCurrent()
 
         assertThat(currentScene).isEqualTo(scene)
         if (overlay == null) {
@@ -299,16 +341,14 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
         sceneInteractor.setTransitionState(
             MutableStateFlow<ObservableTransitionState>(ObservableTransitionState.Idle(key))
         )
-        testScope.runCurrent()
     }
 
-    private fun TestScope.setDeviceEntered(isEntered: Boolean) {
+    private fun setDeviceEntered(isEntered: Boolean) {
         if (isEntered) {
             // Unlock the device marking the device has entered.
             kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
-            runCurrent()
         }
         setScene(
             if (isEntered) {

@@ -26,11 +26,7 @@ import com.android.systemui.shade.data.repository.PrivacyChipRepository
 import com.android.systemui.statusbar.policy.DeviceProvisionedController
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @SysUISingleton
@@ -53,30 +49,6 @@ constructor(
     /** Whether or not location indicators are enabled in the device privacy config. */
     val isLocationIndicationEnabled: StateFlow<Boolean> = repository.isLocationIndicationEnabled
 
-    /** Whether or not the privacy chip should be visible. */
-    val isChipVisible: StateFlow<Boolean> =
-        privacyItems
-            .map { it.isNotEmpty() }
-            .stateIn(
-                scope = applicationScope,
-                started = SharingStarted.WhileSubscribed(),
-                initialValue = false,
-            )
-
-    /** Whether or not the privacy chip is enabled in the device privacy config. */
-    val isChipEnabled: StateFlow<Boolean> =
-        combine(
-                isMicCameraIndicationEnabled,
-                isLocationIndicationEnabled,
-            ) { micCamera, location ->
-                micCamera || location
-            }
-            .stateIn(
-                scope = applicationScope,
-                started = SharingStarted.WhileSubscribed(),
-                initialValue = false,
-            )
-
     /** Notifies that the privacy chip was clicked. */
     fun onPrivacyChipClicked(privacyChip: OngoingPrivacyChip) {
         if (!deviceProvisionedController.isDeviceProvisioned) return
@@ -85,7 +57,7 @@ constructor(
             if (repository.isSafetyCenterEnabled()) {
                 privacyDialogControllerV2.showDialog(
                     shadeDialogContextInteractor.context,
-                    privacyChip
+                    privacyChip,
                 )
             } else {
                 privacyDialogController.showDialog(shadeDialogContextInteractor.context)

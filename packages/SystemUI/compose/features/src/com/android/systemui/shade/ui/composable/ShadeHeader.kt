@@ -72,7 +72,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.LowestZIndexContentPicker
@@ -91,6 +90,7 @@ import com.android.systemui.common.ui.compose.windowinsets.LocalScreenCornerRadi
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.kairos.ExperimentalKairosApi
 import com.android.systemui.privacy.OngoingPrivacyChip
+import com.android.systemui.privacy.PrivacyItem
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.model.DualShadeEducationElement
 import com.android.systemui.scene.shared.model.Scenes
@@ -191,8 +191,6 @@ fun ContentScope.CollapsedShadeHeader(
             }
         }
 
-    val isPrivacyChipVisible by viewModel.isPrivacyChipVisible.collectAsStateWithLifecycle()
-
     // This layout assumes it is globally positioned at (0, 0) and is the same size as the screen.
     CutoutAwareShadeHeader(
         modifier = modifier,
@@ -212,10 +210,11 @@ fun ContentScope.CollapsedShadeHeader(
             }
         },
         endContent = {
-            if (isPrivacyChipVisible) {
+            if (viewModel.isPrivacyChipVisible) {
                 Box(modifier = Modifier.fillMaxSize().padding(horizontal = horizontalPadding)) {
                     PrivacyChip(
-                        viewModel = viewModel,
+                        privacyList = viewModel.privacyItems,
+                        onClick = viewModel::onPrivacyChipClicked,
                         modifier = Modifier.align(Alignment.CenterEnd),
                     )
                 }
@@ -266,12 +265,14 @@ fun ContentScope.ExpandedShadeHeader(
         derivedStateOf { shouldUseExpandedFormat(layoutState.transitionState) }
     }
 
-    val isPrivacyChipVisible by viewModel.isPrivacyChipVisible.collectAsStateWithLifecycle()
-
     Box(modifier = modifier.sysuiResTag(ShadeHeader.TestTags.Root)) {
-        if (isPrivacyChipVisible) {
+        if (viewModel.isPrivacyChipVisible) {
             Box(modifier = Modifier.height(ShadeHeader.Dimensions.StatusBarHeight).fillMaxWidth()) {
-                PrivacyChip(viewModel = viewModel, modifier = Modifier.align(Alignment.CenterEnd))
+                PrivacyChip(
+                    privacyList = viewModel.privacyItems,
+                    onClick = viewModel::onPrivacyChipClicked,
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                )
             }
         }
         Column(
@@ -343,8 +344,6 @@ fun ContentScope.OverlayShadeHeader(
 ) {
     val horizontalPadding =
         max(LocalScreenCornerRadius.current / 2f, Shade.Dimensions.HorizontalPadding)
-
-    val isPrivacyChipVisible by viewModel.isPrivacyChipVisible.collectAsStateWithLifecycle()
 
     // This layout assumes it is globally positioned at (0, 0) and is the same size as the screen.
     CutoutAwareShadeHeader(
@@ -421,10 +420,11 @@ fun ContentScope.OverlayShadeHeader(
                         isHighlighted = isHighlighted,
                     )
                 }
-                if (isPrivacyChipVisible) {
+                if (viewModel.isPrivacyChipVisible) {
                     Box(modifier = Modifier.fillMaxSize().padding(horizontal = horizontalPadding)) {
                         PrivacyChip(
-                            viewModel = viewModel,
+                            privacyList = viewModel.privacyItems,
+                            onClick = viewModel::onPrivacyChipClicked,
                             modifier = Modifier.align(Alignment.CenterEnd),
                         )
                     }
@@ -721,13 +721,6 @@ private fun ContentScope.StatusIcons(
     val micSlot = stringResource(id = com.android.internal.R.string.status_bar_microphone)
     val locationSlot = stringResource(id = com.android.internal.R.string.status_bar_location)
 
-    val isSingleCarrier by viewModel.isSingleCarrier.collectAsStateWithLifecycle()
-    val isPrivacyChipEnabled by viewModel.isPrivacyChipEnabled.collectAsStateWithLifecycle()
-    val isMicCameraIndicationEnabled by
-        viewModel.isMicCameraIndicationEnabled.collectAsStateWithLifecycle()
-    val isLocationIndicationEnabled by
-        viewModel.isLocationIndicationEnabled.collectAsStateWithLifecycle()
-
     val iconContainer = remember { StatusIconContainer(themedContext, null) }
     val iconManager = remember {
         viewModel.createTintedIconManager(iconContainer, StatusBarLocation.QS)
@@ -745,21 +738,21 @@ private fun ContentScope.StatusIcons(
             iconContainer.setQsExpansionTransitioning(
                 layoutState.isTransitioningBetween(Scenes.Shade, Scenes.QuickSettings)
             )
-            if (isSingleCarrier || !useExpandedFormat) {
+            if (viewModel.isSingleCarrier || !useExpandedFormat) {
                 iconContainer.removeIgnoredSlots(carrierIconSlots)
             } else {
                 iconContainer.addIgnoredSlots(carrierIconSlots)
             }
 
-            if (isPrivacyChipEnabled) {
-                if (isMicCameraIndicationEnabled) {
+            if (viewModel.isPrivacyChipEnabled) {
+                if (viewModel.isMicCameraIndicationEnabled) {
                     iconContainer.addIgnoredSlot(cameraSlot)
                     iconContainer.addIgnoredSlot(micSlot)
                 } else {
                     iconContainer.removeIgnoredSlot(cameraSlot)
                     iconContainer.removeIgnoredSlot(micSlot)
                 }
-                if (isLocationIndicationEnabled) {
+                if (viewModel.isLocationIndicationEnabled) {
                     iconContainer.addIgnoredSlot(locationSlot)
                 } else {
                     iconContainer.removeIgnoredSlot(locationSlot)
@@ -827,17 +820,16 @@ private fun SystemIconChip(
 
 @Composable
 private fun ContentScope.PrivacyChip(
-    viewModel: ShadeHeaderViewModel,
+    privacyList: List<PrivacyItem>,
+    onClick: (OngoingPrivacyChip) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val privacyList by viewModel.privacyItems.collectAsStateWithLifecycle()
-
     AndroidView(
         factory = { context ->
             val view =
                 OngoingPrivacyChip(context, null).also { privacyChip ->
                     privacyChip.privacyList = privacyList
-                    privacyChip.setOnClickListener { viewModel.onPrivacyChipClicked(privacyChip) }
+                    privacyChip.setOnClickListener { onClick(privacyChip) }
                 }
             view
         },
