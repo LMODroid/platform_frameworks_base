@@ -27,6 +27,7 @@ java_library {
         "kotlin-stdlib",
         "kotlinx_coroutines",
         "tracinglib-platform",
+        "androidx.collection_collection",
     ],
 }
 
