@@ -29,6 +29,7 @@ import com.android.systemui.SysuiTestCase;
 import com.android.systemui.doze.DozeHost;
 import com.android.systemui.doze.DozeLog;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.scene.shared.flag.SceneContainerFlag;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +65,9 @@ public class DozeScrimControllerTest extends SysuiTestCase {
 
         // Manually simulate a scrim lifecycle
         mDozeScrimController.getScrimCallback().onStart();
-        mDozeScrimController.getScrimCallback().onDisplayBlanked();
+        if (!SceneContainerFlag.isEnabled()) {
+            mDozeScrimController.getScrimCallback().onDisplayBlanked();
+        }
         mDozeScrimController.getScrimCallback().onFinished();
 
         verify(callback).onPulseStarted();
