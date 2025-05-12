@@ -158,25 +158,25 @@ fun VolumeSlider(
                             sliderState = sliderState,
                             colors = materialSliderColors,
                             isEnabled = state.isEnabled,
-                            activeTrackStartIcon =
+                            activeTrackEndIcon =
                                 state.icon?.let { icon ->
                                     { iconsState ->
                                         SliderIcon(
                                             icon = {
                                                 Icon(icon = icon, modifier = Modifier.size(24.dp))
                                             },
-                                            isVisible = iconsState.isActiveTrackStartIconVisible,
+                                            isVisible = !iconsState.isInactiveTrackEndIconVisible,
                                         )
                                     }
                                 },
-                            inactiveTrackStartIcon =
+                            inactiveTrackEndIcon =
                                 state.icon?.let { icon ->
                                     { iconsState ->
                                         SliderIcon(
                                             icon = {
                                                 Icon(icon = icon, modifier = Modifier.size(24.dp))
                                             },
-                                            isVisible = !iconsState.isActiveTrackStartIconVisible,
+                                            isVisible = iconsState.isInactiveTrackEndIconVisible,
                                         )
                                     }
                                 },

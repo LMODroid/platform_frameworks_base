@@ -145,20 +145,20 @@ private fun VolumeDialogSlider(
                 colors = colors,
                 isEnabled = !sliderStateModel.isDisabled,
                 isVertical = true,
-                activeTrackStartIcon = { iconsState ->
+                activeTrackEndIcon = { iconsState ->
                     SliderIcon(
                         icon = {
                             Icon(icon = sliderStateModel.icon, modifier = Modifier.size(20.dp))
                         },
-                        isVisible = iconsState.isActiveTrackStartIconVisible,
+                        isVisible = !iconsState.isInactiveTrackEndIconVisible,
                     )
                 },
-                inactiveTrackStartIcon = { iconsState ->
+                inactiveTrackEndIcon = { iconsState ->
                     SliderIcon(
                         icon = {
                             Icon(icon = sliderStateModel.icon, modifier = Modifier.size(20.dp))
                         },
-                        isVisible = !iconsState.isActiveTrackStartIconVisible,
+                        isVisible = iconsState.isInactiveTrackEndIconVisible,
                     )
                 },
             )
