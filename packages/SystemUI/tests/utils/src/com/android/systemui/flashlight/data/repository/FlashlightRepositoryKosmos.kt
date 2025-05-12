@@ -25,7 +25,6 @@ import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.backgroundScope
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.shared.settings.data.repository.secureSettingsRepository
-import com.android.systemui.util.time.fakeSystemClock
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.whenever
 
@@ -38,7 +37,6 @@ val Kosmos.flashlightRepository: FlashlightRepositoryImpl by
             cameraManager,
             dumpManager,
             packageManager,
-            fakeSystemClock,
             flashlightLogger,
         )
     }

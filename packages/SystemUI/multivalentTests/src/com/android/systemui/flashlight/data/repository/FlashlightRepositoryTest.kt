@@ -25,11 +25,11 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.camera.cameraManager
 import com.android.systemui.camera.injectCameraCharacteristics
 import com.android.systemui.flashlight.shared.model.FlashlightModel
+import com.android.systemui.kosmos.advanceTimeBy
 import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runCurrent
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.testKosmos
-import com.android.systemui.util.time.fakeSystemClock
 import com.google.common.truth.Truth.assertThat
 import java.util.concurrent.Executor
 import kotlin.time.Duration.Companion.seconds
@@ -473,8 +473,7 @@ class FlashlightRepositoryTest : SysuiTestCase() {
             assertThat(state).isEqualTo(FlashlightModel.Unavailable.Temporarily.NotFound)
 
             injectCameraCharacteristics(true, CameraCharacteristics.LENS_FACING_BACK)
-            fakeSystemClock.advanceTime(RECONNECT_COOLDOWN.inWholeMilliseconds + 1000)
-
+            advanceTimeBy(RECONNECT_COOLDOWN.inWholeMilliseconds + 1000)
             assertThat(state).isEqualTo(FlashlightModel.Unavailable.Temporarily.NotFound)
 
             underTest.setEnabled(true)
@@ -497,7 +496,7 @@ class FlashlightRepositoryTest : SysuiTestCase() {
             assertThat(state).isEqualTo(FlashlightModel.Unavailable.Temporarily.NotFound)
 
             injectCameraCharacteristics(true, CameraCharacteristics.LENS_FACING_BACK)
-            fakeSystemClock.advanceTime(RECONNECT_COOLDOWN.inWholeMilliseconds + 1000)
+            advanceTimeBy(RECONNECT_COOLDOWN.inWholeMilliseconds + 1000)
 
             assertThat(state).isEqualTo(FlashlightModel.Unavailable.Temporarily.NotFound)
 
@@ -521,7 +520,7 @@ class FlashlightRepositoryTest : SysuiTestCase() {
             assertThat(state).isEqualTo(FlashlightModel.Unavailable.Temporarily.NotFound)
 
             injectCameraCharacteristics(true, CameraCharacteristics.LENS_FACING_BACK)
-            fakeSystemClock.advanceTime(RECONNECT_COOLDOWN.inWholeMilliseconds - 1000)
+            advanceTimeBy(RECONNECT_COOLDOWN.inWholeMilliseconds - 1000)
 
             underTest.setLevel(BASE_TORCH_LEVEL)
 

@@ -33,9 +33,9 @@ import com.android.systemui.shared.settings.data.repository.SecureSettingsReposi
 import com.android.systemui.util.asIndenting
 import com.android.systemui.util.printSection
 import com.android.systemui.util.println
-import com.android.systemui.util.time.SystemClock
 import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import java.io.PrintWriter
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineDispatcher
@@ -43,6 +43,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -80,7 +81,6 @@ constructor(
     private val cameraManager: CameraManager,
     private val dumpManager: DumpManager,
     private val packageManager: PackageManager,
-    private val systemClock: SystemClock,
     private val logger: FlashlightLogger,
 ) : FlashlightRepository, CoreStartable {
 
@@ -104,8 +104,8 @@ constructor(
     }
 
     private val flashlightInfo = MutableStateFlow<FlashlightInfo>(FlashlightInfo.NotSupported)
-    private var lastConnectionAttempt =
-        systemClock.currentTimeMillis() - RECONNECT_COOLDOWN.inWholeMilliseconds
+
+    private var canAttemptReconnect = AtomicBoolean(true)
 
     override fun start() {
         if (FlashlightStrength.isUnexpectedlyInLegacyMode()) {
@@ -141,32 +141,36 @@ constructor(
             is FlashlightInfo.Supported.LoadedSuccessfully -> true
             is FlashlightInfo.Supported.Initial,
             FlashlightInfo.Supported.ErrorLoading -> {
-                val now = systemClock.currentTimeMillis()
-                val timeElapsedSinceLastAttempt = now - lastConnectionAttempt
-                if (timeElapsedSinceLastAttempt < RECONNECT_COOLDOWN.inWholeMilliseconds) {
-                    logger.d(
-                        "Need to wait for " +
-                            "${(RECONNECT_COOLDOWN.inWholeMilliseconds
-                                        - timeElapsedSinceLastAttempt) / 1000} " +
-                            "more seconds before trying to connect again."
-                    )
-                    false
-                } else {
-                    lastConnectionAttempt = now
+                if (canAttemptReconnect.getAndSet(false)) {
+                    updateReconnect()
                     var foundCamera: Boolean
                     try {
                         foundCamera = loadFlashlightInfo() != null
                     } catch (exception: Exception) {
                         foundCamera = false
-                        logger.w("could not find a camera: ${exception.message}")
+                        logger.w("Could not find a camera: ${exception.message}")
                     }
                     if (!foundCamera) {
                         flashlightInfo.emit(FlashlightInfo.Supported.ErrorLoading)
                     }
                     foundCamera
+                } else {
+                    logger.d(
+                        "Need to wait for ${RECONNECT_COOLDOWN.inWholeSeconds}" +
+                            " seconds from last attempt before trying to reconnect."
+                    )
+                    false
                 }
             }
         }
+
+    /** Prevent reconnect attempts until [RECONNECT_COOLDOWN] later. */
+    private fun updateReconnect() {
+        bgScope.launch {
+            delay(RECONNECT_COOLDOWN)
+            canAttemptReconnect.set(true)
+        }
+    }
 
     /**
      * Reads flashlight info from available [CameraCharacteristics]
@@ -341,6 +345,7 @@ constructor(
         }
     }
 
+    /** @throws IllegalArgumentException if level is below 1 and above max */
     override fun setLevel(level: Int) {
         bgScope.launch {
             if (!connectToCameraLoadFlashlightInfo()) {
