@@ -36,6 +36,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentScope
 import com.android.systemui.common.ui.ConfigurationState
+import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.keyguard.ui.composable.blueprint.rememberBurnIn
 import com.android.systemui.keyguard.ui.composable.modifier.burnInAware
@@ -132,7 +133,10 @@ constructor(
             exit = if (isVisible.isAnimating) fadeOut() else ExitTransition.None,
             modifier = modifier.burnInAware(aodBurnInViewModel, burnIn.parameters),
         ) {
-            AODPromotedNotification(aodPromotedNotificationViewModelFactory)
+            AODPromotedNotification(
+                aodPromotedNotificationViewModelFactory,
+                modifier = Modifier.sysuiResTag("aod_promoted_notification_frame"),
+            )
         }
     }
 
