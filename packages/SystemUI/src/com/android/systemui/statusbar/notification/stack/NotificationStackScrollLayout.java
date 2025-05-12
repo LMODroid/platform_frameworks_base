@@ -195,7 +195,7 @@ public class NotificationStackScrollLayout
     private int mMaxLayoutHeight;
 
     private VelocityTracker mVelocityTracker;
-    private OverScroller mScroller;
+    private OverScrollerInterface mScroller;
 
     private Runnable mFinishScrollingCallback;
     private int mTouchSlop;
@@ -906,7 +906,9 @@ public class NotificationStackScrollLayout
 
     void initView(Context context, NotificationSwipeHelper swipeHelper,
                   NotificationStackSizeCalculator notificationStackSizeCalculator) {
-        mScroller = new OverScroller(getContext());
+        mScroller = !SceneContainerFlag.isEnabled()
+                ? OverScrollerWrapper.wrap(new OverScroller(getContext()))
+                : new NoOpOverScroller();
         mSwipeHelper = swipeHelper;
         mNotificationStackSizeCalculator = notificationStackSizeCalculator;
 
