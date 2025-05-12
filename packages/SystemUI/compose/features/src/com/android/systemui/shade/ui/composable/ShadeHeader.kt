@@ -242,8 +242,9 @@ fun ContentScope.CollapsedShadeHeader(
                             useExpandedFormat = useExpandedTextFormat,
                             modifier = Modifier.padding(end = paddingEnd).weight(1f, fill = false),
                         )
-                        BatteryIcon(
+                        BatteryInfo(
                             viewModel = viewModel,
+                            showIcon = true,
                             useExpandedFormat = useExpandedTextFormat,
                             modifier = Modifier.padding(vertical = 8.dp),
                         )
@@ -315,7 +316,11 @@ fun ContentScope.ExpandedShadeHeader(
                         useExpandedFormat = useExpandedFormat,
                         modifier = Modifier.padding(end = paddingEnd).weight(1f, fill = false),
                     )
-                    BatteryIcon(viewModel = viewModel, useExpandedFormat = useExpandedFormat)
+                    BatteryInfo(
+                        viewModel = viewModel,
+                        showIcon = true,
+                        useExpandedFormat = useExpandedFormat,
+                    )
                 }
             }
         }
@@ -407,8 +412,9 @@ fun ContentScope.OverlayShadeHeader(
                         modifier = Modifier.padding(end = paddingEnd).weight(1f, fill = false),
                         isHighlighted = isHighlighted,
                     )
-                    BatteryIcon(
+                    BatteryInfo(
                         viewModel = viewModel,
+                        showIcon = true,
                         useExpandedFormat = false,
                         isHighlighted = isHighlighted,
                     )
@@ -435,7 +441,7 @@ fun QuickSettingsOverlayHeader(viewModel: ShadeHeaderViewModel, modifier: Modifi
         modifier = modifier.fillMaxWidth(),
     ) {
         ShadeCarrierGroup(viewModel = viewModel)
-        BatteryIcon(viewModel = viewModel, useExpandedFormat = true)
+        BatteryInfo(viewModel = viewModel, showIcon = false, useExpandedFormat = true)
     }
 }
 
@@ -537,8 +543,9 @@ private fun ContentScope.Clock(
 }
 
 @Composable
-private fun BatteryIcon(
+private fun BatteryInfo(
     viewModel: ShadeHeaderViewModel,
+    showIcon: Boolean,
     useExpandedFormat: Boolean,
     modifier: Modifier = Modifier,
     isHighlighted: Boolean = false,
@@ -547,6 +554,7 @@ private fun BatteryIcon(
         BatteryWithEstimate(
             viewModelFactory = viewModel.batteryViewModelFactory,
             isDarkProvider = { viewModel.isShadeAreaDark },
+            showIcon = showIcon,
             showEstimate = useExpandedFormat,
             modifier = modifier,
         )
