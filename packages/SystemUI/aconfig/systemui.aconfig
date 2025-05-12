@@ -1816,16 +1816,6 @@ flag {
 }
 
 flag {
-  name: "disable_blurred_shade_visible"
-  namespace: "systemui"
-  description: "Removes the check for a blur radius when determining shade window visibility"
-  bug: "394977231"
-  metadata {
-    purpose: PURPOSE_BUGFIX
-  }
-}
-
-flag {
     name: "notification_shade_blur"
     namespace: "systemui"
     description: "Enables the new blur effect on the Notification Shade."

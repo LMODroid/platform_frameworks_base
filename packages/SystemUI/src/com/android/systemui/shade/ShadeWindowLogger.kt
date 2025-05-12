@@ -60,7 +60,6 @@ class ShadeWindowLogger @Inject constructor(@ShadeWindowLog private val buffer: 
         bouncerShowing: Boolean,
         headsUpNotificationShowing: Boolean,
         scrimsVisibilityNotTransparent: Boolean,
-        backgroundBlurRadius: Boolean,
         launchingActivityFromNotification: Boolean,
     ) {
         buffer.log(
@@ -75,7 +74,6 @@ class ShadeWindowLogger @Inject constructor(@ShadeWindowLog private val buffer: 
                 int1 = if (bouncerShowing) 1 else 0
                 int2 = if (headsUpNotificationShowing) 1 else 0
                 long1 = if (scrimsVisibilityNotTransparent) 1 else 0
-                long2 = if (backgroundBlurRadius) 1 else 0
                 double1 = if (launchingActivityFromNotification) 1.0 else 0.0
             },
             {
