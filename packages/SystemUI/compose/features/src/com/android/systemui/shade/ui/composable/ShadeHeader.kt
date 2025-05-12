@@ -247,6 +247,7 @@ fun ContentScope.CollapsedShadeHeader(
                             showIcon = true,
                             useExpandedFormat = useExpandedTextFormat,
                             modifier = Modifier.padding(vertical = 8.dp),
+                            textColor = Color.White, // Single shade is always in Dark theme
                         )
                     }
                 }
@@ -320,6 +321,7 @@ fun ContentScope.ExpandedShadeHeader(
                         viewModel = viewModel,
                         showIcon = true,
                         useExpandedFormat = useExpandedFormat,
+                        textColor = Color.White, // Single shade is always in Dark theme
                     )
                 }
             }
@@ -549,6 +551,7 @@ private fun BatteryInfo(
     useExpandedFormat: Boolean,
     modifier: Modifier = Modifier,
     isHighlighted: Boolean = false,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
 ) {
     if (NewStatusBarIcons.isEnabled) {
         BatteryWithEstimate(
@@ -556,6 +559,7 @@ private fun BatteryInfo(
             isDarkProvider = { viewModel.isShadeAreaDark },
             showIcon = showIcon,
             showEstimate = useExpandedFormat,
+            textColor = textColor,
             modifier = modifier,
         )
     } else {

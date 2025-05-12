@@ -38,6 +38,7 @@ import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.UnifiedBatte
 fun BatteryWithEstimate(
     viewModelFactory: UnifiedBatteryViewModel.Factory,
     isDarkProvider: () -> IsAreaDark,
+    textColor: Color,
     showEstimate: Boolean,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
@@ -64,7 +65,7 @@ fun BatteryWithEstimate(
             viewModel.batteryTimeRemainingEstimate?.let {
                 Text(
                     text = it,
-                    color = Color.White,
+                    color = textColor,
                     style = MaterialTheme.typography.bodyMediumEmphasized,
                     maxLines = 1,
                 )
