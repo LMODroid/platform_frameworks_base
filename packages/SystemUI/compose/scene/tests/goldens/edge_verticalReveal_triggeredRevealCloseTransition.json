@@ -26,9 +26,7 @@
     368,
     384,
     400,
-    416,
-    432,
-    448
+    416
   ],
   "features": [
     {
@@ -142,14 +140,6 @@
         {
           "x": 19.2,
           "y": 5.2
-        },
-        {
-          "x": 19.2,
-          "y": 5.2
-        },
-        {
-          "x": 19.2,
-          "y": 5.2
         }
       ]
     },
@@ -195,75 +185,67 @@
         },
         {
           "width": 132.4,
-          "height": 28
+          "height": 39.2
         },
         {
           "width": 128.4,
-          "height": 13.2
+          "height": 36.4
         },
         {
           "width": 125.6,
-          "height": 4
+          "height": 32
         },
         {
           "width": 124,
-          "height": 0
+          "height": 26.8
         },
         {
           "width": 122.8,
-          "height": 0
+          "height": 22
         },
         {
           "width": 122.4,
-          "height": 0
+          "height": 17.6
         },
         {
           "width": 122,
-          "height": 0
+          "height": 14
         },
         {
           "width": 122,
-          "height": 0
+          "height": 10.8
         },
         {
           "width": 122,
-          "height": 0
+          "height": 8
         },
         {
           "width": 122,
-          "height": 0
+          "height": 6
         },
         {
           "width": 122,
-          "height": 0
+          "height": 4.4
         },
         {
           "width": 122,
-          "height": 0
+          "height": 3.2
         },
         {
           "width": 122,
-          "height": 0
+          "height": 2
         },
         {
           "width": 122,
-          "height": 0
+          "height": 1.2
         },
         {
           "width": 122,
-          "height": 0
+          "height": 0.8
         },
         {
           "width": 122,
-          "height": 0
-        },
-        {
-          "width": 122,
-          "height": 0
-        },
-        {
-          "width": 122,
-          "height": 0
+          "height": 0.4
         },
         {
           "width": 122,
@@ -301,8 +283,6 @@
         0.030979585,
         0.019001357,
         0.011548039,
-        0,
-        0,
         0,
         0,
         0,

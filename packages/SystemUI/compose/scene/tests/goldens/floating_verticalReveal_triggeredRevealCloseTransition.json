@@ -25,23 +25,13 @@
     352,
     368,
     384,
-    400,
-    416,
-    432
+    400
   ],
   "features": [
     {
       "name": "RevealElement_position",
       "type": "dpOffset",
       "data_points": [
-        {
-          "x": 5.2,
-          "y": 5.2
-        },
-        {
-          "x": 5.2,
-          "y": 5.2
-        },
         {
           "x": 5.2,
           "y": 5.2
@@ -182,83 +172,75 @@
         },
         {
           "width": 150,
-          "height": 66.8
+          "height": 89.6
         },
         {
           "width": 150,
-          "height": 41.6
+          "height": 82
         },
         {
           "width": 150,
-          "height": 23.6
+          "height": 71.6
         },
         {
           "width": 150,
-          "height": 12
+          "height": 60.4
         },
         {
           "width": 150,
-          "height": 4.4
+          "height": 49.6
         },
         {
           "width": 150,
-          "height": 0
+          "height": 39.6
         },
         {
           "width": 150,
-          "height": 0
+          "height": 31.2
         },
         {
           "width": 150,
-          "height": 0
+          "height": 24
         },
         {
           "width": 150,
-          "height": 0
+          "height": 18
         },
         {
           "width": 150,
-          "height": 0
+          "height": 13.2
         },
         {
           "width": 150,
-          "height": 0
+          "height": 9.6
         },
         {
           "width": 150,
-          "height": 0
+          "height": 6.8
         },
         {
           "width": 150,
-          "height": 0
+          "height": 4.8
         },
         {
           "width": 150,
-          "height": 0
+          "height": 3.2
         },
         {
           "width": 150,
-          "height": 0
+          "height": 2
         },
         {
           "width": 150,
-          "height": 0
+          "height": 1.2
         },
         {
           "width": 150,
-          "height": 0
+          "height": 0.4
         },
         {
           "width": 150,
-          "height": 0
-        },
-        {
-          "width": 150,
-          "height": 0
-        },
-        {
-          "width": 150,
-          "height": 0
+          "height": 0.4
         },
         {
           "width": 150,
@@ -292,8 +274,6 @@
         0.030979585,
         0.019001357,
         0.011548039,
-        0,
-        0,
         0,
         0,
         0,
