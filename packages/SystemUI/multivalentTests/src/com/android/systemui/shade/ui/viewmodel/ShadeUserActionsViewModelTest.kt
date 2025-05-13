@@ -36,6 +36,7 @@ import com.android.systemui.keyguard.data.repository.fakeDeviceEntryFingerprintA
 import com.android.systemui.keyguard.domain.interactor.keyguardEnabledInteractor
 import com.android.systemui.keyguard.shared.model.SuccessFingerprintAuthenticationStatus
 import com.android.systemui.kosmos.testScope
+import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.qs.ui.adapter.fakeQSSceneAdapter
 import com.android.systemui.scene.domain.interactor.sceneInteractor
@@ -51,9 +52,7 @@ import com.android.systemui.shade.domain.startable.shadeStartable
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -65,7 +64,7 @@ import org.junit.runner.RunWith
 @EnableSceneContainer
 class ShadeUserActionsViewModelTest : SysuiTestCase() {
 
-    private val kosmos = testKosmos()
+    private val kosmos = testKosmos().useUnconfinedTestDispatcher()
     private val testScope = kosmos.testScope
     private val sceneInteractor by lazy { kosmos.sceneInteractor }
     private val qsSceneAdapter by lazy { kosmos.fakeQSSceneAdapter }
@@ -148,7 +147,6 @@ class ShadeUserActionsViewModelTest : SysuiTestCase() {
             kosmos.fakeAuthenticationRepository.setAuthenticationMethod(
                 AuthenticationMethodModel.None
             )
-            runCurrent()
             sceneInteractor.changeScene(Scenes.Gone, "reason")
 
             assertThat((actions?.get(Swipe.Up) as? UserActionResult.ChangeScene)?.toScene)
@@ -161,7 +159,6 @@ class ShadeUserActionsViewModelTest : SysuiTestCase() {
         testScope.runTest {
             val actions by collectLastValue(underTest.actions)
             kosmos.enableSplitShade()
-            runCurrent()
 
             assertThat(actions?.get(Swipe.Up)?.transitionKey).isEqualTo(ToSplitShade)
         }
@@ -171,7 +168,6 @@ class ShadeUserActionsViewModelTest : SysuiTestCase() {
         testScope.runTest {
             val actions by collectLastValue(underTest.actions)
             kosmos.enableSingleShade()
-            runCurrent()
 
             assertThat(actions?.get(Swipe.Up)?.transitionKey).isNull()
         }
@@ -245,29 +241,19 @@ class ShadeUserActionsViewModelTest : SysuiTestCase() {
             }
         }
 
-    private fun TestScope.setDeviceEntered(isEntered: Boolean) {
+    private fun setDeviceEntered(isEntered: Boolean) {
         if (isEntered) {
             // Unlock the device marking the device has entered.
             kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
-            runCurrent()
         }
-        setScene(
-            if (isEntered) {
-                Scenes.Gone
-            } else {
-                Scenes.Lockscreen
-            }
-        )
+        setScene(if (isEntered) Scenes.Gone else Scenes.Lockscreen)
         assertThat(kosmos.deviceEntryInteractor.isDeviceEntered.value).isEqualTo(isEntered)
     }
 
-    private fun TestScope.setScene(key: SceneKey) {
+    private fun setScene(key: SceneKey) {
         sceneInteractor.changeScene(key, "test")
-        sceneInteractor.setTransitionState(
-            MutableStateFlow<ObservableTransitionState>(ObservableTransitionState.Idle(key))
-        )
-        runCurrent()
+        sceneInteractor.setTransitionState(flowOf(ObservableTransitionState.Idle(key)))
     }
 }

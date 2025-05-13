@@ -294,7 +294,7 @@ private fun ContentScope.QuickSettingsScene(
         }
 
         // ############# Media ###############
-        val isMediaVisible by viewModel.isMediaVisible.collectAsStateWithLifecycle()
+        val isMediaVisible = viewModel.isMediaVisible
         val mediaInRow = isMediaVisible && isLandscape()
         val mediaOffset by
             animateSceneDpAsState(value = InQS, key = MediaLandscapeTopOffset, canOverflow = false)

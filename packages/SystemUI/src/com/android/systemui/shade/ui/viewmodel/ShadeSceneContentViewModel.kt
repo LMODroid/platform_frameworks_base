@@ -16,9 +16,12 @@
 
 package com.android.systemui.shade.ui.viewmodel
 
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.LifecycleOwner
+import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.deviceentry.domain.interactor.DeviceEntryInteractor
 import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.media.controls.domain.pipeline.interactor.MediaCarouselInteractor
 import com.android.systemui.qs.FooterActionsController
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsViewModel
@@ -36,12 +39,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 
 /**
  * Models UI state used to render the content of the shade scene.
@@ -57,38 +55,48 @@ constructor(
     val brightnessMirrorViewModelFactory: BrightnessMirrorViewModel.Factory,
     val mediaCarouselInteractor: MediaCarouselInteractor,
     shadeModeInteractor: ShadeModeInteractor,
-    private val disableFlagsInteractor: DisableFlagsInteractor,
+    disableFlagsInteractor: DisableFlagsInteractor,
     private val footerActionsViewModelFactory: FooterActionsViewModel.Factory,
     private val footerActionsController: FooterActionsController,
     private val unfoldTransitionInteractor: UnfoldTransitionInteractor,
-    private val deviceEntryInteractor: DeviceEntryInteractor,
+    deviceEntryInteractor: DeviceEntryInteractor,
     private val sceneInteractor: SceneInteractor,
 ) : ExclusiveActivatable() {
 
-    val shadeMode: StateFlow<ShadeMode> = shadeModeInteractor.shadeMode
+    private val hydrator = Hydrator("ShadeSceneContentViewModel.hydrator")
 
-    private val _isEmptySpaceClickable =
-        MutableStateFlow(!deviceEntryInteractor.isDeviceEntered.value)
-    /** Whether clicking on the empty area of the shade does something */
-    val isEmptySpaceClickable: StateFlow<Boolean> = _isEmptySpaceClickable.asStateFlow()
+    val shadeMode: ShadeMode by
+        hydrator.hydratedStateOf(traceName = "shadeMode", source = shadeModeInteractor.shadeMode)
 
-    val isMediaVisible: StateFlow<Boolean> = mediaCarouselInteractor.hasActiveMedia
+    /** Whether clicking on the empty area of the shade should do something. */
+    val isEmptySpaceClickable: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isEmptySpaceClickable",
+            initialValue = !deviceEntryInteractor.isDeviceEntered.value,
+            source = deviceEntryInteractor.isDeviceEntered.map { !it },
+        )
 
-    private val _isQsEnabled =
-        MutableStateFlow(!disableFlagsInteractor.disableFlags.value.isQuickSettingsEnabled())
-    val isQsEnabled: StateFlow<Boolean> = _isQsEnabled.asStateFlow()
+    val isMediaVisible: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isMediaVisible",
+            source = mediaCarouselInteractor.hasActiveMedia,
+        )
+
+    val isQsEnabled: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isQsEnabled",
+            initialValue = disableFlagsInteractor.disableFlags.value.isQuickSettingsEnabled(),
+            source = disableFlagsInteractor.disableFlags.map { it.isQuickSettingsEnabled() },
+        )
 
     private val footerActionsControllerInitialized = AtomicBoolean(false)
 
-    override suspend fun onActivated(): Nothing = coroutineScope {
-        deviceEntryInteractor.isDeviceEntered
-            .onEach { isDeviceEntered -> _isEmptySpaceClickable.value = !isDeviceEntered }
-            .launchIn(this)
-        disableFlagsInteractor.disableFlags
-            .map { it.isQuickSettingsEnabled() }
-            .onEach { _isQsEnabled.value = it }
-            .launchIn(this)
-        awaitCancellation()
+    override suspend fun onActivated(): Nothing {
+        coroutineScope {
+            launch { hydrator.activate() }
+
+            awaitCancellation()
+        }
     }
 
     /**
@@ -108,7 +116,7 @@ constructor(
 
     /** Notifies that the empty space in the shade has been clicked. */
     fun onEmptySpaceClicked() {
-        if (!isEmptySpaceClickable.value) {
+        if (!isEmptySpaceClickable) {
             return
         }
 

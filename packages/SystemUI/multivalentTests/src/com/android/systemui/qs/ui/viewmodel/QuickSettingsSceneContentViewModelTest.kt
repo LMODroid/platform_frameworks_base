@@ -24,6 +24,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.kosmos.testScope
+import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.media.controls.data.repository.mediaFilterRepository
 import com.android.systemui.media.controls.domain.pipeline.interactor.mediaCarouselInteractor
@@ -35,8 +36,8 @@ import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.domain.startable.sceneContainerStartable
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.settings.brightness.ui.viewmodel.brightnessMirrorViewModelFactory
-import com.android.systemui.shade.data.repository.shadeRepository
 import com.android.systemui.shade.domain.interactor.disableDualShade
+import com.android.systemui.shade.domain.interactor.enableSplitShade
 import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.shade.ui.viewmodel.shadeHeaderViewModelFactory
 import com.android.systemui.testKosmos
@@ -44,8 +45,6 @@ import com.android.systemui.util.mockito.any
 import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -53,14 +52,13 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 @RunWithLooper
 @EnableSceneContainer
 class QuickSettingsSceneContentViewModelTest : SysuiTestCase() {
 
-    private val kosmos = testKosmos()
+    private val kosmos = testKosmos().useUnconfinedTestDispatcher()
     private val testScope = kosmos.testScope
     private val qsFlexiglassAdapter = FakeQSSceneAdapter({ mock() })
     private val footerActionsViewModel = mock<FooterActionsViewModel>()
@@ -104,31 +102,29 @@ class QuickSettingsSceneContentViewModelTest : SysuiTestCase() {
     @Test
     fun addAndRemoveMedia_mediaVisibilityIsUpdated() =
         testScope.runTest {
-            val isMediaVisible by collectLastValue(underTest.isMediaVisible)
             val userMedia = MediaData(active = true)
 
-            assertThat(isMediaVisible).isFalse()
+            assertThat(underTest.isMediaVisible).isFalse()
 
             kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
 
-            assertThat(isMediaVisible).isTrue()
+            assertThat(underTest.isMediaVisible).isTrue()
 
             kosmos.mediaFilterRepository.removeCurrentUserMediaEntry(userMedia.instanceId)
 
-            assertThat(isMediaVisible).isFalse()
+            assertThat(underTest.isMediaVisible).isFalse()
         }
 
     @Test
     fun addInactiveMedia_mediaVisibilityIsUpdated() =
         testScope.runTest {
-            val isMediaVisible by collectLastValue(underTest.isMediaVisible)
             val userMedia = MediaData(active = false)
 
-            assertThat(isMediaVisible).isFalse()
+            assertThat(underTest.isMediaVisible).isFalse()
 
             kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
 
-            assertThat(isMediaVisible).isTrue()
+            assertThat(underTest.isMediaVisible).isTrue()
         }
 
     @Test
@@ -136,9 +132,7 @@ class QuickSettingsSceneContentViewModelTest : SysuiTestCase() {
         testScope.runTest {
             val scene by collectLastValue(sceneInteractor.currentScene)
 
-            // switch to split shade
-            kosmos.shadeRepository.setShadeLayoutWide(true)
-            runCurrent()
+            kosmos.enableSplitShade()
 
             assertThat(scene).isEqualTo(Scenes.Shade)
         }

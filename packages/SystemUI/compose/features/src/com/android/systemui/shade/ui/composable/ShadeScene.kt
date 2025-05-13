@@ -206,8 +206,7 @@ private fun ContentScope.ShadeScene(
     shadeSession: SaveableSession,
     usingCollapsedLandscapeMedia: Boolean,
 ) {
-    val shadeMode by viewModel.shadeMode.collectAsStateWithLifecycle()
-    when (shadeMode) {
+    when (viewModel.shadeMode) {
         is ShadeMode.Single ->
             SingleShade(
                 notificationStackScrollView = notificationStackScrollView,
@@ -261,15 +260,12 @@ private fun ContentScope.SingleShade(
             key = QuickSettings.SharedValues.TilesSquishiness,
             canOverflow = false,
         )
-    val isEmptySpaceClickable by viewModel.isEmptySpaceClickable.collectAsStateWithLifecycle()
-    val isMediaVisible by viewModel.isMediaVisible.collectAsStateWithLifecycle()
-    val isQsEnabled by viewModel.isQsEnabled.collectAsStateWithLifecycle()
 
     val shouldPunchHoleBehindScrim =
         layoutState.isTransitioningBetween(Scenes.Gone, Scenes.Shade) ||
             layoutState.isTransitioning(from = Scenes.Lockscreen, to = Scenes.Shade)
     // Media is visible and we are in landscape on a small height screen
-    val mediaInRow = isMediaVisible && isLandscape()
+    val mediaInRow = viewModel.isMediaVisible && isLandscape()
     val mediaOffset by
         animateContentDpAsState(
             value = QuickSettings.SharedValues.MediaOffset.inQqs(mediaInRow),
@@ -322,7 +318,7 @@ private fun ContentScope.SingleShade(
         )
         Layout(
             modifier =
-                Modifier.thenIf(isEmptySpaceClickable) {
+                Modifier.thenIf(viewModel.isEmptySpaceClickable) {
                     Modifier.clickable { viewModel.onEmptySpaceClicked() }
                 },
             content = {
@@ -348,7 +344,7 @@ private fun ContentScope.SingleShade(
                 val qqsLayoutPaddingBottom =
                     dimensionResource(id = R.dimen.qqs_layout_padding_bottom)
                 ShadeMediaCarousel(
-                    isVisible = isMediaVisible,
+                    isVisible = viewModel.isMediaVisible,
                     isInRow = mediaInRow,
                     mediaHost = mediaHost,
                     mediaOffsetProvider = mediaOffsetProvider,
@@ -364,7 +360,7 @@ private fun ContentScope.SingleShade(
                                 Modifier.padding(bottom = qqsLayoutPaddingBottom)
                             },
                     usingCollapsedLandscapeMedia = usingCollapsedLandscapeMedia,
-                    isQsEnabled = isQsEnabled,
+                    isQsEnabled = viewModel.isQsEnabled,
                     isInSplitShade = false,
                 )
 
@@ -379,7 +375,7 @@ private fun ContentScope.SingleShade(
                     stackBottomPadding = navBarHeight,
                     supportNestedScrolling = true,
                     onEmptySpaceClick =
-                        viewModel::onEmptySpaceClicked.takeIf { isEmptySpaceClickable },
+                        viewModel::onEmptySpaceClicked.takeIf { viewModel.isEmptySpaceClickable },
                     modifier =
                         Modifier.layoutId(SingleShadeMeasurePolicy.LayoutId.Notifications)
                             .padding(horizontal = shadeHorizontalPadding),
@@ -416,7 +412,6 @@ private fun ContentScope.SplitShade(
     jankMonitor: InteractionJankMonitor,
 ) {
     val isCustomizing by viewModel.qsSceneAdapter.isCustomizing.collectAsStateWithLifecycle()
-    val isQsEnabled by viewModel.isQsEnabled.collectAsStateWithLifecycle()
     val isCustomizerShowing by
         viewModel.qsSceneAdapter.isCustomizerShowing.collectAsStateWithLifecycle()
     val customizingAnimationDuration by
@@ -471,9 +466,6 @@ private fun ContentScope.SplitShade(
     DisposableEffect(Unit) {
         onDispose { notificationsPlaceholderViewModel.setAlphaForBrightnessMirror(1f) }
     }
-
-    val isEmptySpaceClickable by viewModel.isEmptySpaceClickable.collectAsStateWithLifecycle()
-    val isMediaVisible by viewModel.isMediaVisible.collectAsStateWithLifecycle()
 
     val brightnessMirrorShowingModifier = Modifier.graphicsLayer { alpha = contentAlpha }
 
@@ -555,7 +547,7 @@ private fun ContentScope.SplitShade(
                             }
 
                             ShadeMediaCarousel(
-                                isVisible = isMediaVisible,
+                                isVisible = viewModel.isMediaVisible,
                                 isInRow = false,
                                 mediaHost = mediaHost,
                                 mediaOffsetProvider = mediaOffsetProvider,
@@ -570,7 +562,7 @@ private fun ContentScope.SplitShade(
                                                 dimensionResource(id = R.dimen.qs_horizontal_margin)
                                         ),
                                 carouselController = mediaCarouselController,
-                                isQsEnabled = isQsEnabled,
+                                isQsEnabled = viewModel.isQsEnabled,
                                 isInSplitShade = true,
                             )
                         }
@@ -598,7 +590,7 @@ private fun ContentScope.SplitShade(
                     shouldPunchHoleBehindScrim = false,
                     supportNestedScrolling = false,
                     onEmptySpaceClick =
-                        viewModel::onEmptySpaceClicked.takeIf { isEmptySpaceClickable },
+                        viewModel::onEmptySpaceClicked.takeIf { viewModel.isEmptySpaceClickable },
                     modifier =
                         Modifier.weight(1f)
                             .fillMaxHeight()

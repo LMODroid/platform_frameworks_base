@@ -16,9 +16,11 @@
 
 package com.android.systemui.qs.ui.viewmodel
 
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.LifecycleOwner
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.media.controls.domain.pipeline.interactor.MediaCarouselInteractor
 import com.android.systemui.qs.FooterActionsController
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsViewModel
@@ -34,7 +36,6 @@ import dagger.assisted.AssistedInject
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Models UI state needed for rendering the content of the quick settings scene.
@@ -55,7 +56,13 @@ constructor(
     private val sceneInteractor: SceneInteractor,
 ) : ExclusiveActivatable() {
 
-    val isMediaVisible: StateFlow<Boolean> = mediaCarouselInteractor.hasAnyMedia
+    private val hydrator = Hydrator("QuickSettingsSceneContentViewModel.hydrator")
+
+    val isMediaVisible: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isMediaVisible",
+            source = mediaCarouselInteractor.hasAnyMedia,
+        )
 
     private val footerActionsControllerInitialized = AtomicBoolean(false)
 
@@ -68,6 +75,8 @@ constructor(
 
     override suspend fun onActivated(): Nothing {
         coroutineScope {
+            launch { hydrator.activate() }
+
             launch {
                 shadeModeInteractor.shadeMode.collect { shadeMode ->
                     if (shadeMode is ShadeMode.Split) {
