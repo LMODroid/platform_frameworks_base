@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.systemstatusicons.ui.viewmodel
 import android.content.Context
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.airplaneModeIconViewModelFactory
+import com.android.systemui.statusbar.systemstatusicons.alarm.ui.viewmodel.nextAlarmIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.bluetoothIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.connecteddisplay.ui.viewmodel.connectedDisplayIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.ethernetIconViewModelFactory
@@ -39,6 +40,7 @@ val Kosmos.systemStatusIconsViewModelFactory by
                     connectedDisplayIconViewModelFactory = connectedDisplayIconViewModelFactory,
                     ethernetIconViewModelFactory = ethernetIconViewModelFactory,
                     muteIconViewModelFactory = muteIconViewModelFactory,
+                    nextAlarmIconViewModelFactory = nextAlarmIconViewModelFactory,
                     vibrateIconViewModelFactory = vibrateIconViewModelFactory,
                     wifiIconViewModelFactory = wifiIconViewModelFactory,
                     zenModeIconViewModelFactory = zenModeIconViewModelFactory,

@@ -15,7 +15,9 @@
 
 package com.android.systemui.statusbar.systemstatusicons.ui.viewmodel
 
+import android.app.AlarmManager
 import android.app.AutomaticZenRule
+import android.app.PendingIntent
 import android.bluetooth.BluetoothProfile
 import android.content.testableContext
 import android.media.AudioManager
@@ -43,6 +45,7 @@ import com.android.systemui.statusbar.pipeline.wifi.data.repository.fakeWifiRepo
 import com.android.systemui.statusbar.pipeline.wifi.shared.model.WifiNetworkModel
 import com.android.systemui.statusbar.policy.bluetooth.data.repository.bluetoothRepository
 import com.android.systemui.statusbar.policy.data.repository.fakeZenModeRepository
+import com.android.systemui.statusbar.policy.fakeNextAlarmController
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.data.repository.statusBarConfigIconSlotNames
 import com.android.systemui.testKosmos
@@ -72,6 +75,7 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
     private lateinit var slotConnectedDisplay: String
     private lateinit var slotEthernet: String
     private lateinit var slotMute: String
+    private lateinit var slotNextAlarm: String
     private lateinit var slotVibrate: String
     private lateinit var slotWifi: String
     private lateinit var slotZen: String
@@ -84,6 +88,7 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
             context.getString(com.android.internal.R.string.status_bar_connected_display)
         slotEthernet = context.getString(com.android.internal.R.string.status_bar_ethernet)
         slotMute = context.getString(com.android.internal.R.string.status_bar_mute)
+        slotNextAlarm = context.getString(com.android.internal.R.string.status_bar_alarm_clock)
         slotVibrate = context.getString(com.android.internal.R.string.status_bar_volume)
         slotWifi = context.getString(com.android.internal.R.string.status_bar_wifi)
         slotZen = context.getString(com.android.internal.R.string.status_bar_zen)
@@ -182,6 +187,7 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
             showBluetooth()
             showConnectedDisplay()
             showAirplaneMode()
+            showNextAlarm()
             showEthernet()
             showVibrate()
 
@@ -191,6 +197,7 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
                     slotBluetooth,
                     slotConnectedDisplay,
                     slotEthernet,
+                    slotNextAlarm,
                     slotVibrate,
                     slotZen,
                 )
@@ -207,6 +214,7 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
                     slotBluetooth,
                     slotConnectedDisplay,
                     slotMute,
+                    slotNextAlarm,
                     slotWifi,
                     slotZen,
                 )
@@ -254,6 +262,11 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
 
     private fun Kosmos.showMute() {
         fakeAudioRepository.setRingerMode(RingerMode(AudioManager.RINGER_MODE_SILENT))
+    }
+
+    private fun Kosmos.showNextAlarm() {
+        val alarmClockInfo = AlarmManager.AlarmClockInfo(1L, mock<PendingIntent>())
+        fakeNextAlarmController.setNextAlarm(alarmClockInfo)
     }
 
     private fun Kosmos.showVibrate() {

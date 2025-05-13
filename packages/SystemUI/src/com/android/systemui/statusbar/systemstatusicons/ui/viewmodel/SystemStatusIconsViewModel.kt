@@ -23,6 +23,7 @@ import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.AirplaneModeIconViewModel
+import com.android.systemui.statusbar.systemstatusicons.alarm.ui.viewmodel.NextAlarmIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.BluetoothIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.connecteddisplay.ui.viewmodel.ConnectedDisplayIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.domain.interactor.OrderedIconSlotNamesInteractor
@@ -55,6 +56,7 @@ constructor(
     connectedDisplayIconViewModelFactory: ConnectedDisplayIconViewModel.Factory,
     ethernetIconViewModelFactory: EthernetIconViewModel.Factory,
     muteIconViewModelFactory: MuteIconViewModel.Factory,
+    nextAlarmIconViewModelFactory: NextAlarmIconViewModel.Factory,
     vibrateIconViewModelFactory: VibrateIconViewModel.Factory,
     wifiIconViewModelFactory: WifiIconViewModel.Factory,
     zenModeIconViewModelFactory: ZenModeIconViewModel.Factory,
@@ -73,6 +75,7 @@ constructor(
     }
     private val ethernetIcon by lazy { ethernetIconViewModelFactory.create(context) }
     private val muteIcon by lazy { muteIconViewModelFactory.create(context) }
+    private val nextAlarmIcon by lazy { nextAlarmIconViewModelFactory.create(context) }
     private val vibrateIcon by lazy { vibrateIconViewModelFactory.create(context) }
     private val wifiIcon by lazy { wifiIconViewModelFactory.create(context) }
     private val zenModeIcon by lazy { zenModeIconViewModelFactory.create(context) }
@@ -84,6 +87,7 @@ constructor(
             connectedDisplayIcon,
             ethernetIcon,
             muteIcon,
+            nextAlarmIcon,
             vibrateIcon,
             wifiIcon,
             zenModeIcon,
@@ -117,6 +121,7 @@ constructor(
             launch { connectedDisplayIcon.activate() }
             launch { ethernetIcon.activate() }
             launch { muteIcon.activate() }
+            launch { nextAlarmIcon.activate() }
             launch { vibrateIcon.activate() }
             launch { wifiIcon.activate() }
             launch { zenModeIcon.activate() }
