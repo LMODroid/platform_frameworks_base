@@ -376,6 +376,14 @@ constructor(
                         }
                 }
             }
+            launch {
+                snapshotFlow { viewModel.isQsFullyExpanded }
+                    .collect {
+                        if (!it && viewModel.isEditing) {
+                            viewModel.containerViewModel.editModeViewModel.stopEditing()
+                        }
+                    }
+            }
         }
 
         SceneTransitionLayout(state = sceneState, modifier = Modifier.fillMaxSize()) {
