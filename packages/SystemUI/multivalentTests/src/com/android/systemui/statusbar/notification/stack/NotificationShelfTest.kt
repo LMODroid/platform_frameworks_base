@@ -16,6 +16,7 @@ import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.flags.FakeFeatureFlags
 import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.res.R
+import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.shade.transition.LargeScreenShadeInterpolator
 import com.android.systemui.statusbar.NotificationShelf
 import com.android.systemui.statusbar.StatusBarIconView
@@ -460,6 +461,12 @@ open class NotificationShelfTest : SysuiTestCase() {
         val shelfSpy = spy(shelf)
         whenever(shelfSpy.isLayoutRtl).thenReturn(rtl)
         whenever(ambientState.useSplitShade).thenReturn(splitShade)
+
+        // Ensure mAlignedToEnd is set when SceneContainerFlag is enabled.
+        if (SceneContainerFlag.isEnabled) {
+            shelfSpy.setAlignedToEnd(splitShade)
+        }
+
         shelfSpy.layout(0, 0, width, 5)
         shelfSpy.mShelfIcons.layout(0, 0, width, 5)
         iconContainerPadding?.let {
@@ -980,10 +987,11 @@ open class NotificationShelfTest : SysuiTestCase() {
     ) {
         val sbnMock: StatusBarNotification = mock()
         val mockEntry = mock<NotificationEntry>().apply { whenever(this.sbn).thenReturn(sbnMock) }
-        val row = when (NotificationBundleUi.isEnabled) {
-            true -> ExpandableNotificationRow(mContext, null, UserHandle.CURRENT)
-            false -> ExpandableNotificationRow(mContext, null, mockEntry)
-        }
+        val row =
+            when (NotificationBundleUi.isEnabled) {
+                true -> ExpandableNotificationRow(mContext, null, UserHandle.CURRENT)
+                false -> ExpandableNotificationRow(mContext, null, mockEntry)
+            }
         whenever(ambientState.lastVisibleBackgroundChild).thenReturn(row)
         whenever(ambientState.isExpansionChanging).thenReturn(true)
         whenever(ambientState.expansionFraction).thenReturn(expansionFraction)
