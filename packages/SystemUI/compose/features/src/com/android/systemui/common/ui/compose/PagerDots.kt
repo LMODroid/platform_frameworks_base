@@ -65,7 +65,7 @@ fun PagerDots(
 
     // List of animated colors, one per page
     val colors =
-        remember(pagerState.pageCount) {
+        remember(pagerState.pageCount, activeColor, nonActiveColor) {
             List(pagerState.pageCount) { page ->
                 Animatable(if (page == pagerState.currentPage) activeColor else nonActiveColor)
             }
