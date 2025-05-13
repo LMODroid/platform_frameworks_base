@@ -74,7 +74,7 @@ internal class Network(
     private val muxMovers = ArrayDeque<MuxDeferredNode<*, *, *>>()
     private val deactivations = ArrayDeque<PushNode<*>>()
     private val outputDeactivations = ArrayDeque<Output<*>>()
-    private val inputScheduleChan = Channel<ScheduledAction<*>>()
+    private val inputScheduleChan = Channel<ScheduledAction<*>>(Channel.UNLIMITED)
 
     override fun scheduleOutput(output: Output<*>) {
         fastOutputs.add(output)
@@ -169,13 +169,9 @@ internal class Network(
                 onResult.cancel()
                 return@also
             }
-            val job =
-                coroutineScope.launch {
-                    inputScheduleChan.send(
-                        ScheduledAction(reason, onStartTransaction = block, onResult = onResult)
-                    )
-                }
-            onResult.invokeOnCompletion { job.cancel() }
+            inputScheduleChan.trySend(
+                ScheduledAction(reason, onStartTransaction = block, onResult = onResult)
+            )
         }
 
     inline fun <R> runThenDrainDeferrals(block: () -> R): R =
