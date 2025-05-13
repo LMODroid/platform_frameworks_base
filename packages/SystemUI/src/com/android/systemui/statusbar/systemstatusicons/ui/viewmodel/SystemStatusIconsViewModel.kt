@@ -23,6 +23,7 @@ import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.Ai
 import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.BluetoothIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.EthernetIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.MuteIconViewModel
+import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.VibrateIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.zenmode.ui.viewmodel.ZenModeIconViewModel
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -44,6 +45,7 @@ constructor(
     ethernetIconViewModelFactory: EthernetIconViewModel.Factory,
     zenModeIconViewModelFactory: ZenModeIconViewModel.Factory,
     muteIconViewModelFactory: MuteIconViewModel.Factory,
+    vibrateIconViewModelFactory: VibrateIconViewModel.Factory,
 ) : ExclusiveActivatable() {
 
     init {
@@ -55,9 +57,10 @@ constructor(
     private val bluetoothIcon by lazy { bluetoothIconViewModelFactory.create() }
     private val zenModeIcon by lazy { zenModeIconViewModelFactory.create() }
     private val muteIcon by lazy { muteIconViewModelFactory.create() }
+    private val vibrateIcon by lazy { vibrateIconViewModelFactory.create() }
 
     private val iconViewModels: List<SystemStatusIconViewModel> by lazy {
-        listOf(bluetoothIcon, zenModeIcon, muteIcon, ethernetIcon, airplaneModeIcon)
+        listOf(bluetoothIcon, zenModeIcon, vibrateIcon, muteIcon, ethernetIcon, airplaneModeIcon)
     }
 
     val icons: List<Icon>
@@ -70,6 +73,7 @@ constructor(
             launch { bluetoothIcon.activate() }
             launch { airplaneModeIcon.activate() }
             launch { muteIcon.activate() }
+            launch { vibrateIcon.activate() }
         }
         awaitCancellation()
     }
