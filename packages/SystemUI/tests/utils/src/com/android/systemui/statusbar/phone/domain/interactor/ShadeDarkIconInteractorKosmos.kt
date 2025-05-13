@@ -23,6 +23,6 @@ val Kosmos.shadeDarkIconInteractor: ShadeDarkIconInteractor by
     Kosmos.Fixture {
         ShadeDarkIconInteractorImpl(
             darkIconInteractor = darkIconInteractor,
-            shadeDisplaysInteractor = shadeDisplaysInteractor,
+            shadeDisplaysInteractor = { shadeDisplaysInteractor },
         )
     }

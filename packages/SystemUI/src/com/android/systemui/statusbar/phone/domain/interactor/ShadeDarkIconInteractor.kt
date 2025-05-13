@@ -17,9 +17,12 @@
 package com.android.systemui.statusbar.phone.domain.interactor
 
 import android.graphics.Rect
+import android.view.Display
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.shade.domain.interactor.ShadeDisplaysInteractor
+import com.android.systemui.shade.shared.flag.ShadeWindowGoesAround
 import com.android.systemui.statusbar.phone.SysuiDarkIconDispatcher.DarkChange
+import dagger.Lazy
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -42,8 +45,12 @@ class ShadeDarkIconInteractorImpl
 @Inject
 constructor(
     darkIconInteractor: DarkIconInteractor,
-    shadeDisplaysInteractor: ShadeDisplaysInteractor,
+    shadeDisplaysInteractor: Lazy<ShadeDisplaysInteractor>,
 ) : ShadeDarkIconInteractor {
     override val isShadeAreaDark: Flow<IsAreaDark> =
-        shadeDisplaysInteractor.displayId.flatMapLatest(darkIconInteractor::isAreaDark)
+        if (ShadeWindowGoesAround.isEnabled) {
+            shadeDisplaysInteractor.get().displayId.flatMapLatest(darkIconInteractor::isAreaDark)
+        } else {
+            darkIconInteractor.isAreaDark(Display.DEFAULT_DISPLAY)
+        }
 }
