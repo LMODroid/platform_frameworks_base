@@ -56,12 +56,13 @@ data class UnloadedEditTileViewModel(
                     append(loadedLabel)
                 }
             } else {
-                loadedLabel
+                null
             }
         return EditTileViewModel(
             tileSpec = tileSpec,
             icon = icon,
-            label = inlinedLabel,
+            label = loadedLabel,
+            inlinedLabel = inlinedLabel,
             appName = appName?.toAnnotatedString(context),
             appIcon = appIcon,
             isCurrent = isCurrent,
@@ -72,11 +73,30 @@ data class UnloadedEditTileViewModel(
     }
 }
 
+/**
+ * Viewmodel for a loaded tile within Quick Settings edit mode.
+ *
+ * This represents a tile that has been loaded with localized resources and is ready to be displayed
+ * in the UI.
+ *
+ * @property tileSpec The [TileSpec] for this tile.
+ * @property icon The icon for the tile.
+ * @property label The main label for the tile.
+ * @property inlinedLabel An optional [AnnotatedString] with an inlined app icon.
+ * @property appName The name of the associated app, if applicable.
+ * @property appIcon The icon of the associated app, if applicable.
+ * @property isCurrent True if the tile is in the user's active set of tiles, false otherwise.
+ * @property isDualTarget True if the tile supports dual-target clicks, false otherwise.
+ * @property availableEditActions A set of [AvailableEditActions] that can be performed on this tile
+ *   in edit mode.
+ * @property category The [TileCategory] the tile belongs to.
+ */
 @Immutable
 data class EditTileViewModel(
     val tileSpec: TileSpec,
     val icon: Icon,
     val label: AnnotatedString,
+    val inlinedLabel: AnnotatedString?,
     val appName: AnnotatedString?,
     val appIcon: Icon?,
     val isCurrent: Boolean,

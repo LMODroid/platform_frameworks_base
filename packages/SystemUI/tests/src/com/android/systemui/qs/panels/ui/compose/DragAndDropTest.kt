@@ -215,6 +215,7 @@ class DragAndDropTest : SysuiTestCase() {
                 icon =
                     Icon.Resource(android.R.drawable.star_on, ContentDescription.Loaded(tileSpec)),
                 label = AnnotatedString(tileSpec),
+                inlinedLabel = null,
                 appName = null,
                 isCurrent = true,
                 isDualTarget = false,

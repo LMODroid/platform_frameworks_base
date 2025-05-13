@@ -228,6 +228,7 @@ class EditTileListStateTest : SysuiTestCase() {
                 tileSpec = TileSpec.create(tileSpec),
                 icon = Icon.Resource(0, null),
                 label = AnnotatedString("unused"),
+                inlinedLabel = null,
                 appName = null,
                 isCurrent = true,
                 isDualTarget = false,

@@ -1009,9 +1009,10 @@ private fun AvailableTileGridCell(
             )
         }
         Box(Modifier.fillMaxSize()) {
+            val inlinedLabel = cell.inlinedLabel
             val icon = cell.appIcon
-            if (icon != null && icon is Icon.Loaded) {
-                AppIconText(icon, cell.label, colors.label)
+            if (inlinedLabel != null && icon != null && icon is Icon.Loaded) {
+                AppIconText(icon, inlinedLabel, colors.label)
             } else {
                 Text(
                     cell.label.text,
