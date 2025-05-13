@@ -37,6 +37,7 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -446,10 +447,11 @@ constructor(
                     PlatformTheme {
                         id = R.id.battery_meter_composable_view
                         val showBatteryEstimate by showBatteryEstimate.collectAsStateWithLifecycle()
+                        val dark = isSystemInDarkTheme()
                         BatteryWithChargeStatus(
                             modifier = Modifier.wrapContentSize(),
                             viewModelFactory = tandemBatteryViewModelFactory,
-                            isDarkProvider = { IsAreaDark { true } },
+                            isDarkProvider = { IsAreaDark { dark } },
                             showPercentMode =
                                 if (showBatteryEstimate) ShowPercentMode.PreferEstimate
                                 else ShowPercentMode.Always,
@@ -463,10 +465,11 @@ constructor(
                     PlatformTheme {
                         id = R.id.battery_meter_composable_view
                         val showBatteryEstimate by showBatteryEstimate.collectAsStateWithLifecycle()
+                        val dark = isSystemInDarkTheme()
                         BatteryWithEstimate(
                             modifier = Modifier.wrapContentSize(),
                             viewModelFactory = unifiedBatteryViewModelFactory,
-                            isDarkProvider = { IsAreaDark { true } },
+                            isDarkProvider = { IsAreaDark { dark } },
                             textColor =
                                 if (notificationShadeBlur())
                                     Color(context.getColor(R.color.shade_header_text_color))
