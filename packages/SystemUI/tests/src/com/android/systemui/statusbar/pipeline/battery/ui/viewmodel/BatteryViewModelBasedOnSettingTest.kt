@@ -20,11 +20,13 @@ import android.provider.Settings
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
+import com.android.systemui.res.R
 import com.android.systemui.shared.settings.data.repository.fakeSystemSettingsRepository
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryGlyph
 import com.android.systemui.statusbar.policy.batteryController
@@ -140,5 +142,66 @@ class BatteryViewModelBasedOnSettingTest : SysuiTestCase() {
             batteryController.fake._level = 39
 
             assertThat(underTest.attribution).isEqualTo(BatteryGlyph.Bolt)
+        }
+
+    @Test
+    fun contentDescription_default() =
+        kosmos.runTest {
+            batteryController.fake._isPluggedIn = false
+            batteryController.fake._isPowerSave = false
+            batteryController.fake._isDefender = false
+            batteryController.fake._level = 39
+
+            val expected =
+                ContentDescription.Loaded(
+                    context.getString(R.string.accessibility_battery_level, 39)
+                )
+
+            assertThat(underTest.contentDescription).isEqualTo(expected)
+        }
+
+    @Test
+    fun contentDescription_defendEnabled() =
+        kosmos.runTest {
+            batteryController.fake._isDefender = true
+            batteryController.fake._level = 39
+
+            val expected =
+                ContentDescription.Loaded(
+                    context.getString(R.string.accessibility_battery_level_charging_paused, 39)
+                )
+
+            assertThat(underTest.contentDescription).isEqualTo(expected)
+        }
+
+    @Test
+    fun contentDescription_charging() =
+        kosmos.runTest {
+            batteryController.fake._isPluggedIn = true
+            batteryController.fake._level = 39
+
+            val expected =
+                ContentDescription.Loaded(
+                    context.getString(R.string.accessibility_battery_level_charging, 39)
+                )
+
+            assertThat(underTest.contentDescription).isEqualTo(expected)
+        }
+
+    @Test
+    fun contentDescription_batterySaver() =
+        kosmos.runTest {
+            batteryController.fake._isPowerSave = true
+            batteryController.fake._level = 39
+
+            val expected =
+                ContentDescription.Loaded(
+                    context.getString(
+                        R.string.accessibility_battery_level_battery_saver_with_percent,
+                        39,
+                    )
+                )
+
+            assertThat(underTest.contentDescription).isEqualTo(expected)
         }
 }

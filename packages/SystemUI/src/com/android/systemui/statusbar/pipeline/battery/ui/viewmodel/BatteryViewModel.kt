@@ -198,6 +198,15 @@ sealed class BatteryViewModel(
                             ContentDescription.Loaded(descr)
                         }
 
+                        attr == PowerSave -> {
+                            val descr =
+                                context.getString(
+                                    R.string.accessibility_battery_level_battery_saver_with_percent,
+                                    level,
+                                )
+                            ContentDescription.Loaded(descr)
+                        }
+
                         else -> {
                             val descr =
                                 context.getString(R.string.accessibility_battery_level, level)
