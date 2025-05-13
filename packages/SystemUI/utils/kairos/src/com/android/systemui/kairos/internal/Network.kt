@@ -18,7 +18,6 @@ package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.CoalescingPolicy
 import com.android.systemui.kairos.State
-import com.android.systemui.kairos.internal.util.HeteroMap
 import com.android.systemui.kairos.internal.util.LogIndent
 import com.android.systemui.kairos.internal.util.logDuration
 import com.android.systemui.kairos.util.Maybe
@@ -309,23 +308,28 @@ internal class ScheduledAction<T>(
     }
 }
 
-internal class TransactionStore private constructor(private val storage: HeteroMap) {
-    constructor(capacity: Int) : this(HeteroMap(capacity))
+internal class TransactionStore private constructor(private val storage: ArrayList<Any?>) {
+    constructor(capacity: Int) : this(ArrayList(capacity))
 
-    constructor() : this(HeteroMap())
+    constructor() : this(ArrayList())
 
-    operator fun <A> get(key: HeteroMap.Key<A>): A =
-        storage.getOrError(key) { "no value for $key in this transaction" }
+    @Suppress("UNCHECKED_CAST")
+    operator fun <A> get(key: Key<A>): A =
+        storage.getOrElse(key.index) { error("no value for $key in this transaction") } as A
 
-    operator fun <A> set(key: HeteroMap.Key<A>, value: A) {
-        storage[key] = value
+    fun <A> put(value: A): Key<A> {
+        val index = storage.size
+        storage.add(value)
+        return Key(index)
     }
 
     fun clear() = storage.clear()
+
+    @JvmInline value class Key<A>(val index: Int)
 }
 
 internal class TransactionCache<A> {
-    private val key = object : HeteroMap.Key<A> {}
+    private var key: TransactionStore.Key<A>? = null
 
     var epoch: Long = Long.MIN_VALUE
         private set
@@ -333,15 +337,18 @@ internal class TransactionCache<A> {
     fun getOrPut(evalScope: EvalScope, block: () -> A): A =
         if (epoch < evalScope.epoch) {
             epoch = evalScope.epoch
-            block().also { evalScope.transactionStore[key] = it }
+            block().also { key = evalScope.transactionStore.put(it) }
         } else {
-            evalScope.transactionStore[key]
+            evalScope.transactionStore[key!!]
         }
 
     fun put(evalScope: EvalScope, value: A) {
         epoch = evalScope.epoch
-        evalScope.transactionStore[key] = value
+        key = evalScope.transactionStore.put(value)
     }
 
-    fun getCurrentValue(evalScope: EvalScope): A = evalScope.transactionStore[key]
+    fun getCurrentValue(evalScope: EvalScope): A {
+        check(epoch == evalScope.epoch) { "no value for $key in this transaction" }
+        return evalScope.transactionStore[key!!]
+    }
 }
