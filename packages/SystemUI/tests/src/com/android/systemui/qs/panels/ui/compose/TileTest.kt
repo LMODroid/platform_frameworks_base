@@ -27,6 +27,9 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.compose.animation.scene.SceneTransitionLayout
+import com.android.compose.animation.scene.TestScenes.SceneA
+import com.android.compose.animation.scene.rememberMutableSceneTransitionLayoutState
 import com.android.compose.theme.PlatformTheme
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.haptics.msdl.tileHapticsViewModelFactoryProvider
@@ -52,21 +55,25 @@ class TileTest : SysuiTestCase() {
     @Composable
     private fun TestTile(tile: TileViewModel, iconOnly: Boolean) {
         PlatformTheme {
-            Tile(
-                tile = tile,
-                iconOnly = iconOnly,
-                squishiness = { 1f },
-                coroutineScope = rememberCoroutineScope(),
-                bounceableInfo =
-                    BounceableInfo(
-                        BounceableTileViewModel(),
-                        previousTile = null,
-                        nextTile = null,
-                        bounceEnd = true,
-                    ),
-                tileHapticsViewModelFactoryProvider = tileHapticsViewModelFactoryProvider,
-                detailsViewModel = null,
-            )
+            SceneTransitionLayout(rememberMutableSceneTransitionLayoutState(SceneA)) {
+                scene(SceneA) {
+                    Tile(
+                        tile = tile,
+                        iconOnly = iconOnly,
+                        squishiness = { 1f },
+                        coroutineScope = rememberCoroutineScope(),
+                        bounceableInfo =
+                            BounceableInfo(
+                                BounceableTileViewModel(),
+                                previousTile = null,
+                                nextTile = null,
+                                bounceEnd = true,
+                            ),
+                        tileHapticsViewModelFactoryProvider = tileHapticsViewModelFactoryProvider,
+                        detailsViewModel = null,
+                    )
+                }
+            }
         }
     }
 

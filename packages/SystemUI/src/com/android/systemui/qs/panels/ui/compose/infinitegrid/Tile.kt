@@ -75,8 +75,11 @@ import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.compose.animation.Expandable
 import com.android.compose.animation.bounceable
 import com.android.compose.animation.rememberExpandableController
+import com.android.compose.animation.scene.ContentScope
 import com.android.compose.modifiers.thenIf
 import com.android.compose.theme.LocalAndroidColorScheme
+import com.android.mechanics.compose.modifier.verticalFadeContentReveal
+import com.android.mechanics.spec.builder.rememberMotionBuilderContext
 import com.android.systemui.Flags
 import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.Icon
@@ -98,6 +101,7 @@ import com.android.systemui.qs.panels.ui.viewmodel.toIconProvider
 import com.android.systemui.qs.panels.ui.viewmodel.toUiState
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.tileimpl.QSTileImpl
+import com.android.systemui.qs.ui.composable.QuickSettingsShade
 import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
 import kotlinx.coroutines.CoroutineScope
@@ -128,7 +132,7 @@ private val TileViewModel.traceName
     get() = spec.toString().takeLast(Trace.MAX_SECTION_NAME_LEN)
 
 @Composable
-fun Tile(
+fun ContentScope.Tile(
     tile: TileViewModel,
     iconOnly: Boolean,
     squishiness: () -> Float,
@@ -139,6 +143,7 @@ fun Tile(
     isVisible: () -> Boolean = { true },
     requestToggleTextFeedback: (TileSpec) -> Unit = {},
     detailsViewModel: DetailsViewModel?,
+    verticalFadeContentReveal: Boolean = false,
 ) {
     trace(tile.traceName) {
         val currentBounceableInfo by rememberUpdatedState(bounceableInfo)
@@ -246,6 +251,16 @@ fun Tile(
                 accessibilityUiState = uiState.accessibilityUiState,
                 iconOnly = iconOnly,
                 isDualTarget = isDualTarget,
+                modifier =
+                    if (verticalFadeContentReveal) {
+                        Modifier.verticalFadeContentReveal(
+                            contentScope = this,
+                            motionBuilderContext = rememberMotionBuilderContext(),
+                            container = QuickSettingsShade.Elements.Panel,
+                        )
+                    } else {
+                        Modifier
+                    },
             ) {
                 val iconProvider: Context.() -> Icon = { getTileIcon(icon = icon) }
                 if (iconOnly) {

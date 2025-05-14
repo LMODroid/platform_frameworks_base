@@ -25,6 +25,9 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.compose.animation.scene.SceneTransitionLayout
+import com.android.compose.animation.scene.TestScenes.SceneA
+import com.android.compose.animation.scene.rememberMutableSceneTransitionLayoutState
 import com.android.compose.theme.PlatformTheme
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.grid.ui.compose.VerticalSpannedGrid
@@ -73,27 +76,32 @@ class TileBounceMotionTest : SysuiTestCase() {
         val bounceables = remember { List(tiles.size) { BounceableTileViewModel() } }
         val spans = remember { tiles.map { it.span } }
         PlatformTheme {
-            VerticalSpannedGrid(
-                columns = 4,
-                columnSpacing = 8.dp,
-                rowSpacing = 8.dp,
-                spans = spans,
-            ) { index, _, _, _ ->
-                Tile(
-                    tile = tiles[index].viewModel,
-                    iconOnly = tiles[index].iconOnly,
-                    squishiness = { 1f },
-                    coroutineScope = rememberCoroutineScope(),
-                    bounceableInfo =
-                        BounceableInfo(
-                            bounceables[index],
-                            previousTile = bounceables.getOrNull(index - 1),
-                            nextTile = bounceables.getOrNull(index + 1),
-                            bounceEnd = index != tiles.size - 1,
-                        ),
-                    tileHapticsViewModelFactoryProvider = tileHapticsViewModelFactoryProvider,
-                    detailsViewModel = null,
-                )
+            SceneTransitionLayout(rememberMutableSceneTransitionLayoutState(SceneA)) {
+                scene(SceneA) {
+                    VerticalSpannedGrid(
+                        columns = 4,
+                        columnSpacing = 8.dp,
+                        rowSpacing = 8.dp,
+                        spans = spans,
+                    ) { index, _, _, _ ->
+                        Tile(
+                            tile = tiles[index].viewModel,
+                            iconOnly = tiles[index].iconOnly,
+                            squishiness = { 1f },
+                            coroutineScope = rememberCoroutineScope(),
+                            bounceableInfo =
+                                BounceableInfo(
+                                    bounceables[index],
+                                    previousTile = bounceables.getOrNull(index - 1),
+                                    nextTile = bounceables.getOrNull(index + 1),
+                                    bounceEnd = index != tiles.size - 1,
+                                ),
+                            tileHapticsViewModelFactoryProvider =
+                                tileHapticsViewModelFactoryProvider,
+                            detailsViewModel = null,
+                        )
+                    }
+                }
             }
         }
 
