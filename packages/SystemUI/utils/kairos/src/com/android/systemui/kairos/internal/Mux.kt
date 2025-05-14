@@ -20,6 +20,7 @@ import com.android.systemui.kairos.internal.store.MapHolder
 import com.android.systemui.kairos.internal.store.MapK
 import com.android.systemui.kairos.internal.store.MutableMapK
 import com.android.systemui.kairos.internal.store.asMapHolder
+import com.android.systemui.kairos.internal.util.fastForEach
 import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.internal.util.logDuration
 import com.android.systemui.kairos.util.NameData
@@ -367,8 +368,8 @@ internal fun <W, K, V> MuxNode<W, K, V>.initializeUpstream(
     }
     switchedIn = storeFactory.create(initUpstream.size)
     upstreamData = storeFactory.create(initUpstream.size)
-    for (idx in initUpstream.indices) {
-        initUpstream[idx]?.let { (key, branch, upstream) ->
+    initUpstream.fastForEach {
+        it?.let { (key, branch, upstream) ->
             switchedIn[key] = branch
             upstream?.let { upstreamData[key] = upstream }
         }

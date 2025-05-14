@@ -16,9 +16,9 @@
 
 package com.android.systemui.kairos
 
-import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.These
+import com.android.systemui.kairos.util.maybeOf
 import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairos.util.plus
 import com.android.systemui.kairos.util.toNameData
@@ -166,10 +166,10 @@ internal fun <A, B, C> Events<A>.samplePromptly(
         .mapMaybe(nameData) { these ->
             when (these) {
                 // both present, transform the upstream value and the new value
-                is These.Both -> Maybe.present(transform(these.first.first, these.second))
+                is These.Both -> maybeOf(transform(these.first.first, these.second))
                 // no upstream present, so don't perform the sample
-                is These.Second -> Maybe.absent()
+                is These.Second -> maybeOf()
                 // just the upstream, so transform the upstream and the old value
-                is These.First -> Maybe.present(transform(these.value.first, these.value.second))
+                is These.First -> maybeOf(transform(these.value.first, these.value.second))
             }
         }

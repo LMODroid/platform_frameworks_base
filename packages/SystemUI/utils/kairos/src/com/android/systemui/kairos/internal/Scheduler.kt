@@ -17,6 +17,7 @@
 package com.android.systemui.kairos.internal
 
 import com.android.systemui.kairos.internal.util.LogIndent
+import com.android.systemui.kairos.internal.util.fastForEach
 import java.util.PriorityQueue
 
 internal interface Scheduler {
@@ -96,11 +97,7 @@ internal class SchedulerImpl(private val enqueue: (MuxNode<*, *, *>) -> Boolean)
                 toVisit.add(node)
             }
         }
-
-        for (idx in toVisit.indices) {
-            visit(toVisit[idx])
-        }
-
+        toVisit.fastForEach(visit)
         return total
     }
 }

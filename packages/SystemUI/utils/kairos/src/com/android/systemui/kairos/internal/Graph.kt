@@ -18,6 +18,7 @@ package com.android.systemui.kairos.internal
 
 import androidx.collection.MutableScatterSet
 import com.android.systemui.kairos.internal.util.Bag
+import com.android.systemui.kairos.internal.util.fastForEach
 import java.util.TreeMap
 
 /**
@@ -429,12 +430,14 @@ internal class DownstreamSet {
         nodes.forEach { node -> node.removeIndirectUpstream(scheduler, depth, indirectSet) }
         muxMovers.forEach { mover -> mover.removeIndirectPatchNode(scheduler, depth, indirectSet) }
         outputs.forEach { output -> output.kill() }
+        stateWriters.fastForEach { writer -> writer.kill() }
     }
 
     fun removeDirectUpstream(scheduler: Scheduler, depth: Int) {
         nodes.forEach { node -> node.removeDirectUpstream(scheduler, depth) }
         muxMovers.forEach { mover -> mover.removeDirectPatchNode(scheduler) }
         outputs.forEach { output -> output.kill() }
+        stateWriters.fastForEach { writer -> writer.kill() }
     }
 
     fun clear() {
@@ -469,8 +472,6 @@ internal fun scheduleAll(
     downstreamSet.nodes.forEach { node -> node.schedule(logIndent, evalScope) }
     downstreamSet.muxMovers.forEach { mover -> mover.scheduleMover(logIndent, evalScope) }
     downstreamSet.outputs.forEach { output -> output.schedule(logIndent, evalScope) }
-    for (idx in downstreamSet.stateWriters.indices) {
-        evalScope.schedule(downstreamSet.stateWriters[idx])
-    }
+    downstreamSet.stateWriters.fastForEach { writer -> writer.schedule(logIndent, evalScope) }
     return downstreamSet.isNotEmpty()
 }

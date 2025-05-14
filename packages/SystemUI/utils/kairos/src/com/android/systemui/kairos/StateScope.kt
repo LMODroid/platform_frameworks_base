@@ -23,6 +23,7 @@ import com.android.systemui.kairos.util.NameTag
 import com.android.systemui.kairos.util.WithPrev
 import com.android.systemui.kairos.util.map
 import com.android.systemui.kairos.util.mapMaybeValues
+import com.android.systemui.kairos.util.maybeOf
 import com.android.systemui.kairos.util.nameTag
 import com.android.systemui.kairos.util.plus
 import com.android.systemui.kairos.util.toNameData
@@ -1256,7 +1257,7 @@ internal fun <A, B> StateScope.applyLatestStateful(
     init: Stateful<A>,
 ): Pair<Events<B>, DeferredValue<A>> {
     val singletonMap =
-        events.mapCheap(nameData + "singletonMap") { spec -> mapOf(Unit to Maybe.present(spec)) }
+        events.mapCheap(nameData + "singletonMap") { spec -> mapOf(Unit to maybeOf(spec)) }
     val (events, result) =
         applyLatestStatefulForKey(nameData, singletonMap, init = mapOf(Unit to init), numKeys = 1)
     val outEvents: Events<B> =
@@ -1403,7 +1404,7 @@ internal fun <A> StateScope.childStateScope(
 ): DeferredValue<A> {
     val turnOff =
         nextOnly(nameData + "onlyOne", stop).mapCheap(nameData + "turnOff") {
-            mapOf(Unit to Maybe.absent<Stateful<A>>())
+            mapOf(Unit to maybeOf<Stateful<A>>())
         }
     val (_, init: DeferredValue<Map<Unit, A>>) =
         applyLatestStatefulForKey(nameData, turnOff, init = mapOf(Unit to stateful), numKeys = 1)
@@ -1464,8 +1465,8 @@ internal fun <A> StateScope.pairwise(
     nameData: NameData,
     events: Events<A>,
 ): Events<WithPrev<A, A>> {
-    val mapPresent = events.mapCheap(nameData + "mapPresent") { Maybe.present(it) }
-    val pairwise = pairwise(nameData, mapPresent, Maybe.absent)
+    val mapPresent = events.mapCheap(nameData + "mapPresent") { maybeOf(it) }
+    val pairwise = pairwise(nameData, mapPresent, maybeOf())
     return pairwise.mapMaybe(nameData + "zipMaybe") { (prev, next) ->
         prev.zipWith(next, ::WithPrev)
     }
@@ -1518,8 +1519,8 @@ internal fun <A, B, C> StateScope.sample(
     val state =
         holdState(
             nameData + "otherStore",
-            other.mapCheap(nameData + "mapOtherPresent") { Maybe.present(it) },
-            Maybe.absent,
+            other.mapCheap(nameData + "mapOtherPresent") { maybeOf(it) },
+            maybeOf(),
         )
     return events
         .map(nameData) { a -> state.sample().map { transform(a, it) } }
@@ -1639,7 +1640,7 @@ internal fun <K, V> StateScope.filterIncrementally(
 ): Incremental<K, V> =
     mapIncrementalState(nameData, incremental) { entry ->
         transform(entry).map(nameData + { "filter[key=${entry.key}]" }) {
-            if (it) Maybe.present(entry.value) else Maybe.absent
+            if (it) maybeOf(entry.value) else maybeOf()
         }
     }
 

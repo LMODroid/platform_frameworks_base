@@ -67,8 +67,8 @@ inline fun <A, B, C> Either<A, B>.mapSecond(transform: (B) -> C): Either<A, C> =
 /** Returns a [Maybe] containing the [First] value held by this [Either], if present. */
 inline fun <A> Either<A, *>.firstMaybe(): Maybe<A> =
     when (this) {
-        is First -> Maybe.present(value)
-        else -> Maybe.absent
+        is First -> maybeOf(value)
+        else -> maybeOf()
     }
 
 /** Returns the [First] value held by this [Either], or `null` if this is a [Second] value. */
@@ -81,8 +81,8 @@ inline fun <A> Either<A, *>.firstOrNull(): A? =
 /** Returns a [Maybe] containing the [Second] value held by this [Either], if present. */
 inline fun <B> Either<*, B>.secondMaybe(): Maybe<B> =
     when (this) {
-        is Second -> Maybe.present(value)
-        else -> Maybe.absent
+        is Second -> maybeOf(value)
+        else -> maybeOf()
     }
 
 /** Returns the [Second] value held by this [Either], or `null` if this is a [First] value. */

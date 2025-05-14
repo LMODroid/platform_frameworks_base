@@ -20,6 +20,7 @@ import com.android.systemui.kairos.internal.store.StoreEntry
 import com.android.systemui.kairos.util.MapPatch
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.appendNames
 import com.android.systemui.kairos.util.map
 import com.android.systemui.kairos.util.plus
 import com.android.systemui.kairos.util.toMaybe
@@ -41,22 +42,14 @@ internal inline fun <K, V> activatedIncremental(
     init: Lazy<Map<K, V>>,
 ): IncrementalImpl<K, V> {
     val store = StateSource(init, nameData)
-    val maybeChanges =
-        mapImpl(getPatches, nameData + "maybeChanges") { patch, _ ->
-                val (current, _) = store.getCurrentWithEpoch(evalScope = this)
-                current.applyPatchCalm(patch).toMaybe()
-            }
-            .cached(nameData + "cached")
-    val calm = filterPresentImpl(nameData + "calm") { maybeChanges }
-    val changes = mapImpl({ calm }, nameData + "stateChanges") { (_, change), _ -> change }
-    val patches = mapImpl({ calm }, nameData + "incPatches") { (patch, _), _ -> patch }
+    val (patches, changes) = calmUpdates(getPatches, nameData, store)
     evalScope.scheduleOutput(
         OneShot(nameData + "activateIncremental") {
             changes.activate(evalScope = this, downstream = Schedulable.S(store))?.let {
                 (connection, needsEval) ->
                 store.upstreamConnection = connection
                 if (needsEval) {
-                    schedule(store)
+                    store.schedule(0, this)
                 }
             }
         }
@@ -89,22 +82,24 @@ private fun <K, V> Map<K, V>.applyPatchCalm(
     return if (filteredPatch.isNotEmpty()) filteredPatch to new else null
 }
 
-internal fun <K, V> EventsImpl<Map<K, Maybe<V>>>.calmUpdates(
+internal inline fun <K, V> calmUpdates(
+    crossinline getUpdates: EvalScope.() -> EventsImpl<Map<K, Maybe<V>>>,
     nameData: NameData,
-    state: StateDerived<Map<K, V>>,
+    state: CachedStateStore<Map<K, V>>,
 ): Pair<EventsImpl<Map<K, Maybe<V>>>, EventsImpl<Map<K, V>>> {
-    val maybeUpdate =
-        mapImpl({ this@calmUpdates }, nameData + "maybeUpdate") { patch, _ ->
+    val maybeChanges =
+        mapImpl(getUpdates, nameData + "maybeChanges") { patch, _ ->
                 val (current, _) = state.getCurrentWithEpoch(evalScope = this)
                 current
                     .applyPatchCalm(patch)
                     ?.also { (_, newMap) -> state.setCacheFromPush(newMap, epoch) }
                     .toMaybe()
             }
-            .cached(nameData + "cached")
-    val calm = filterPresentImpl(nameData + "calmUpdates") { maybeUpdate }
-    val patches = mapImpl({ calm }, nameData + "updatePatches") { (p, _), _ -> p }
-    val changes = mapImpl({ calm }, nameData + "updateChanges") { (_, s), _ -> s }
+            // cache this for consistency: it is impure due to setCacheFromPush
+            .cached(nameData.appendNames("maybeChanges", "cached"))
+    val calm = filterPresentImpl(nameData + "calm") { maybeChanges }
+    val changes = mapImpl({ calm }, nameData + "incChanges") { (_, change), _ -> change }
+    val patches = mapImpl({ calm }, nameData + "incPatches") { (patch, _), _ -> patch }
     return patches to changes
 }
 
@@ -119,6 +114,6 @@ internal fun <K, A, B> mapValuesImpl(
                 patch.mapValues { (k, mv) -> mv.map { v -> transform(StoreEntry(k, v)) } }
             }
             .cached(nameData + "cached")
-    val (calmPatches, calmChanges) = mappedPatches.calmUpdates(nameData, store)
+    val (calmPatches, calmChanges) = calmUpdates({ mappedPatches }, nameData, store)
     return IncrementalImpl(nameData, calmChanges, calmPatches, store)
 }

@@ -24,6 +24,7 @@ import com.android.systemui.kairos.internal.store.StoreEntry
 import com.android.systemui.kairos.internal.store.asArrayHolder
 import com.android.systemui.kairos.internal.store.asSingle
 import com.android.systemui.kairos.internal.store.singleOf
+import com.android.systemui.kairos.internal.util.fastForEach
 import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.internal.util.logDuration
 import com.android.systemui.kairos.util.Maybe
@@ -106,8 +107,8 @@ internal class MuxDeferredNode<W, K, V>(
     }
 
     // MOVE phase
-    //  - concurrent moves may be occurring, but no more evals. all depth recalculations are
-    //    deferred to the end of this phase.
+    //  - no more node evaluations are occurring. all depth recalculations are deferred to the end
+    //    of this phase.
     fun performMove(logIndent: Int, evalScope: EvalScope) {
         val patch = patchData ?: return
         patchData = null
@@ -127,8 +128,8 @@ internal class MuxDeferredNode<W, K, V>(
         val severed = mutableListOf<NodeConnection<*>>()
 
         // remove and sever
-        for (idx in removes.indices) {
-            switchedIn.remove(removes[idx])?.let { branchNode: BranchNode ->
+        removes.fastForEach { k ->
+            switchedIn.remove(k)?.let { branchNode: BranchNode ->
                 val conn = branchNode.upstream
                 severed.add(conn)
                 conn.removeDownstream(downstream = branchNode.schedulable)
@@ -144,8 +145,7 @@ internal class MuxDeferredNode<W, K, V>(
         }
 
         // add or replace
-        for (idx in adds.indices) {
-            val (k, newUpstream: EventsImpl<V>) = adds[idx]
+        adds.fastForEach { (k, newUpstream: EventsImpl<V>) ->
             // remove old and sever, if present
             switchedIn.remove(k)?.let { branchNode ->
                 val conn = branchNode.upstream
@@ -185,9 +185,7 @@ internal class MuxDeferredNode<W, K, V>(
             }
         }
 
-        for (idx in severed.indices) {
-            severed[idx].scheduleDeactivationIfNeeded(evalScope)
-        }
+        severed.fastForEach { it.scheduleDeactivationIfNeeded(evalScope) }
 
         compactIfNeeded(evalScope)
     }

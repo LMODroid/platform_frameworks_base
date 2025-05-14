@@ -54,8 +54,6 @@ internal interface NetworkScope : InitScope {
 
     fun scheduleMuxMover(muxMover: MuxDeferredNode<*, *, *>)
 
-    fun schedule(state: StateSource<*>)
-
     fun scheduleDeactivation(node: PushNode<*>)
 
     fun scheduleDeactivation(output: Output<*>)

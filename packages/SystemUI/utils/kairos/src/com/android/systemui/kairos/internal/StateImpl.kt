@@ -24,7 +24,9 @@ import com.android.systemui.kairos.internal.store.StoreEntry
 import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.appendNames
 import com.android.systemui.kairos.util.forceInit
+import com.android.systemui.kairos.util.maybeOf
 import com.android.systemui.kairos.util.plus
 
 internal open class StateImpl<out A>(
@@ -43,10 +45,9 @@ internal open class StateImpl<out A>(
     override fun toString(): String = "${this::class.simpleName}@$hashString[$nameData]"
 }
 
-internal sealed class StateDerived<A> : StateStore<A>() {
+internal sealed class StateDerived<A> : CachedStateStore<A>() {
 
-    var invalidatedEpoch = Long.MIN_VALUE
-        private set
+    private var invalidatedEpoch = Long.MIN_VALUE
 
     protected var validatedEpoch = Long.MIN_VALUE
         private set
@@ -78,12 +79,12 @@ internal sealed class StateDerived<A> : StateStore<A>() {
 
     fun getCachedUnsafe(): Maybe<A> {
         @Suppress("UNCHECKED_CAST")
-        return if (cache == EmptyCache) Maybe.absent else Maybe.present(cache as A)
+        return if (cache == EmptyCache) maybeOf() else Maybe.present(cache as A)
     }
 
     protected abstract fun recalc(evalScope: EvalScope): Pair<A, Long>?
 
-    fun setCacheFromPush(value: A, epoch: Long) {
+    override fun setCacheFromPush(value: A, epoch: Long) {
         cache = value
         validatedEpoch = epoch + 1
         invalidatedEpoch = epoch + 1
@@ -96,38 +97,48 @@ internal sealed class StateStore<out S> {
     abstract fun getCurrentWithEpoch(evalScope: EvalScope): Pair<S, Long>
 }
 
-internal class StateSource<S>(init: Lazy<S>, val nameData: NameData) : StateStore<S>() {
+internal sealed class CachedStateStore<S> : StateStore<S>() {
+    abstract fun setCacheFromPush(value: S, epoch: Long)
+}
+
+internal class StateSource<S>(init: Lazy<S>, val nameData: NameData) : CachedStateStore<S>() {
     constructor(init: S, nameData: NameData) : this(lazyOf(init), nameData)
 
     init {
         nameData.forceInit()
     }
 
-    lateinit var upstreamConnection: NodeConnection<S>
+    private val transactionCache = TransactionCache<Pair<S, Long>>()
 
-    // Note: Don't need to synchronize; we will never interleave reads and writes, since all writes
-    // are performed at the end of a network step, after any reads would have taken place.
+    var upstreamConnection: NodeConnection<S>? = null
 
     private var _current: Lazy<S> = init
 
-    var writeEpoch = 0L
-        private set
+    private var writeEpoch = 0L
 
     override fun getCurrentWithEpoch(evalScope: EvalScope): Pair<S, Long> =
-        _current.value to writeEpoch
+        transactionCache.getOrPut(evalScope) { _current.value to writeEpoch }
 
-    /** called by network after eval phase has completed */
-    fun updateState(logIndent: Int, evalScope: EvalScope) {
-        // write the latch
-        _current = lazyOf(upstreamConnection.getPushEvent(logIndent, evalScope))
-        writeEpoch = evalScope.epoch + 1
+    override fun setCacheFromPush(value: S, epoch: Long) {
+        _current = lazyOf(value)
+        writeEpoch = epoch + 1
     }
 
     override fun toString(): String =
         "StateImpl(nameTag=$nameData, current=$_current, writeEpoch=$writeEpoch)"
 
     fun getStorageUnsafe(): Maybe<S> =
-        if (_current.isInitialized()) Maybe.present(_current.value) else Maybe.absent
+        if (_current.isInitialized()) Maybe.present(_current.value) else maybeOf()
+
+    fun kill() {
+        upstreamConnection = null
+    }
+
+    fun schedule(logIndent: Int, evalScope: EvalScope) {
+        // Note: this *relies* on the calm node (created in [activatedStateSource]) querying the
+        //  current value of this state, thus caching it within the current transaction
+        upstreamConnection!!.getPushEvent(logIndent, evalScope)
+    }
 }
 
 internal fun <A> constState(nameData: NameData, init: A): StateImpl<A> =
@@ -140,24 +151,14 @@ internal inline fun <A> activatedStateSource(
     init: Lazy<A>,
 ): StateImpl<A> {
     val store = StateSource(init, nameData)
-    val newValues: EventsImpl<Maybe<A>> =
-        mapImpl(getChanges, nameData + "newValues") { new, _ ->
-                if (new != store.getCurrentWithEpoch(evalScope = this).first) {
-                    Maybe.present(new)
-                } else {
-                    Maybe.absent
-                }
-            }
-            // cache this for consistency: getCurrentWithEpoch is technically impure
-            .cached(nameData + "cached")
-    val calm: EventsImpl<A> = filterPresentImpl(nameData + "calm") { newValues }
+    val calm = distinctChanges(getChanges, nameData + "calm", store)
     evalScope.scheduleOutput(
         OneShot(nameData + "activateState") {
             calm.activate(evalScope = this, downstream = Schedulable.S(store))?.let {
                 (connection, needsEval) ->
                 store.upstreamConnection = connection
                 if (needsEval) {
-                    schedule(store)
+                    store.schedule(0, this)
                 }
             }
         }
@@ -165,19 +166,23 @@ internal inline fun <A> activatedStateSource(
     return StateImpl(nameData, calm, store)
 }
 
-private fun <A> EventsImpl<A>.calm(nameData: NameData, state: StateDerived<A>): EventsImpl<A> {
+internal inline fun <A> distinctChanges(
+    crossinline getUpstream: EvalScope.() -> EventsImpl<A>,
+    nameData: NameData,
+    state: CachedStateStore<A>,
+): EventsImpl<A> {
     val newValues =
-        mapImpl({ this@calm }, nameData + "calmUpdates") { new, _ ->
+        mapImpl(getUpstream, nameData + "newValues") { new, _ ->
                 val (current, _) = state.getCurrentWithEpoch(evalScope = this)
                 if (new != current) {
                     state.setCacheFromPush(new, epoch)
-                    Maybe.present(new)
+                    maybeOf(new)
                 } else {
-                    Maybe.absent
+                    maybeOf()
                 }
             }
             // cache this for consistency: it is impure due to setCacheFromPush
-            .cached(nameData + "cached")
+            .cached(nameData.appendNames("newValues", "cached"))
     return filterPresentImpl(nameData) { newValues }
 }
 
@@ -219,10 +224,10 @@ internal fun <A, B> mapStateImpl(
     transform: EvalScope.(A) -> B,
 ): StateImpl<B> {
     val store = DerivedMap(nameData, stateImpl, transform)
-    val mappedChanges: EventsImpl<B> =
+    val upstream =
         mapImpl({ stateImpl().changes }, nameData + "mappedChanges") { it, _ -> transform(it) }
-            .cached(nameData + "cached")
-            .calm(nameData + "calm", store)
+            .cached(nameData.appendNames("mappedChanges", "cached"))
+    val mappedChanges: EventsImpl<B> = distinctChanges({ upstream }, nameData + "calm", store)
     return StateImpl(nameData, mappedChanges, store)
 }
 
@@ -277,7 +282,11 @@ internal fun <A> flattenStateImpl(
             getPatches = { innerChanges },
         )
     val store: DerivedFlatten<A> = DerivedFlatten(nameData, stateImpl)
-    return StateImpl(nameData, switchedChanges.calm(nameData + "calm", store), store)
+    return StateImpl(
+        nameData,
+        distinctChanges({ switchedChanges }, nameData + "calm", store),
+        store,
+    )
 }
 
 internal class DerivedFlatten<A>(

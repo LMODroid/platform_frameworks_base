@@ -19,6 +19,7 @@ package com.android.systemui.kairos.internal
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.forceInit
+import com.android.systemui.kairos.util.maybeOf
 
 /** Performs actions once, when the reactive component is first connected to the network. */
 internal class Init<out A>(val nameData: NameData, initBlock: InitScope.() -> A) {
@@ -53,9 +54,9 @@ internal class Init<out A>(val nameData: NameData, initBlock: InitScope.() -> A)
 
     fun getUnsafe(): Maybe<A> =
         if (cache.isInitialized()) {
-            Maybe.present(cache.value.value)
+            maybeOf(cache.value.value)
         } else {
-            Maybe.absent
+            maybeOf()
         }
 
     override fun toString(): String = "${super.toString()}[$nameData]"

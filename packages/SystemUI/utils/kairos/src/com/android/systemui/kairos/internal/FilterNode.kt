@@ -21,6 +21,7 @@ import com.android.systemui.kairos.internal.store.SingletonMapK
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.Maybe.Present
 import com.android.systemui.kairos.util.NameData
+import com.android.systemui.kairos.util.maybeOf
 import com.android.systemui.kairos.util.plus
 
 internal inline fun <A> filterPresentImpl(
@@ -47,8 +48,6 @@ internal inline fun <A> filterImpl(
     crossinline f: EvalScope.(A) -> Boolean,
 ): EventsImpl<A> {
     val mapped =
-        mapImpl(getPulse, nameData + "toMaybe") { it, _ ->
-            if (f(it)) Maybe.present(it) else Maybe.absent
-        }
+        mapImpl(getPulse, nameData + "toMaybe") { it, _ -> if (f(it)) maybeOf(it) else maybeOf() }
     return filterPresentImpl(nameData) { mapped }
 }

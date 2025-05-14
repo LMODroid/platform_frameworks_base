@@ -40,7 +40,7 @@ import org.junit.Test
 class KairosTests {
 
     @Test
-    fun basic() = runFrpTest { network ->
+    fun basic() = kairosTest { network ->
         val emitter = network.mutableEvents<Int>()
         var result: Int? = null
         activateSpec(network) { emitter.observeSync { result = it } }
@@ -52,7 +52,7 @@ class KairosTests {
     }
 
     @Test
-    fun basicEvents() = runFrpTest { network ->
+    fun basicEvents() = kairosTest { network ->
         val emitter = network.mutableEvents<Int>()
         println("starting network")
         val result = activateSpecWithResult(network) { emitter.nextDeferred() }
@@ -66,7 +66,7 @@ class KairosTests {
     }
 
     @Test
-    fun basicState() = runFrpTest { network ->
+    fun basicState() = kairosTest { network ->
         val emitter = network.mutableEvents<Int>()
         val result = activateSpecWithResult(network) { emitter.holdState(0).changes.nextDeferred() }
         runCurrent()
@@ -78,7 +78,7 @@ class KairosTests {
     }
 
     @Test
-    fun basicEvent() = runFrpTest { network ->
+    fun basicEvent() = kairosTest { network ->
         val emitter = MutableSharedFlow<Int>()
         val result = activateSpecWithResult(network) { async { emitter.first() } }
         runCurrent()
@@ -89,7 +89,7 @@ class KairosTests {
     }
 
     @Test
-    fun basicTransactional() = runFrpTest { network ->
+    fun basicTransactional() = kairosTest { network ->
         var value: Int? = null
         var bSource = 1
         val emitter = network.mutableEvents<Unit>()
@@ -130,7 +130,7 @@ class KairosTests {
     }
 
     @Test
-    fun diamondGraph() = runFrpTest { network ->
+    fun diamondGraph() = kairosTest { network ->
         val flow = network.mutableEvents<Int>()
         val ouevents =
             activateSpecWithResult(network) {
@@ -166,7 +166,7 @@ class KairosTests {
     }
 
     @Test
-    fun staticNetwork() = runFrpTest { network ->
+    fun staticNetwork() = kairosTest { network ->
         var finalSum: Int? = null
 
         val intEmitter = network.mutableEvents<Int>()
@@ -207,7 +207,7 @@ class KairosTests {
     }
 
     @Test
-    fun recursiveDefinition() = runFrpTest { network ->
+    fun recursiveDefinition() = kairosTest { network ->
         var wasSold = false
         var currentAmt: Int? = null
 
@@ -295,7 +295,7 @@ class KairosTests {
     }
 
     @Test
-    fun promptCleanup() = runFrpTest { network ->
+    fun promptCleanup() = kairosTest { network ->
         val emitter = network.mutableEvents<Int>()
         val stopper = network.mutableEvents<Unit>()
 
@@ -315,7 +315,7 @@ class KairosTests {
     }
 
     @Test
-    fun switchEvents() = runFrpTest { network ->
+    fun switchEvents() = kairosTest { network ->
         var currentSum: Int? = null
 
         val switchHandler = network.mutableEvents<Pair<Events<Int>, String>>()
@@ -476,7 +476,7 @@ class KairosTests {
     }
 
     @Test
-    fun switchIndirect() = runFrpTest { network ->
+    fun switchIndirect() = kairosTest { network ->
         val emitter = network.mutableEvents<Unit>()
         activateSpec(network) {
             emptyEvents.map { emitter.map { 1 } }.flatten().map { "$it" }.observeSync()
@@ -485,7 +485,7 @@ class KairosTests {
     }
 
     @Test
-    fun switchInWithResult() = runFrpTest { network ->
+    fun switchInWithResult() = kairosTest { network ->
         val emitter = network.mutableEvents<Unit>()
         val out =
             activateSpecWithResult(network) {
@@ -499,7 +499,7 @@ class KairosTests {
     }
 
     @Test
-    fun switchInCompleted() = runFrpTest { network ->
+    fun switchInCompleted() = kairosTest { network ->
         val outputs = mutableListOf<Int>()
 
         val switchAH = network.mutableEvents<Unit>()
@@ -538,7 +538,7 @@ class KairosTests {
     }
 
     @Test
-    fun switchEvents_outerCompletesFirst() = runFrpTest { network ->
+    fun switchEvents_outerCompletesFirst() = kairosTest { network ->
         var stepResult: Int? = null
 
         val switchAH = network.mutableEvents<Unit>()
@@ -592,7 +592,7 @@ class KairosTests {
     }
 
     @Test
-    fun mapEvents() = runFrpTest { network ->
+    fun mapEvents() = kairosTest { network ->
         val emitter = network.mutableEvents<Int>()
         var stepResult: Int? = null
 
@@ -622,7 +622,7 @@ class KairosTests {
     }
 
     @Test
-    fun mapTransactional() = runFrpTest { network ->
+    fun mapTransactional() = kairosTest { network ->
         var doubledResult: Int? = null
         var pullValue = 0
         val a = transactionally { pullValue }
@@ -651,7 +651,7 @@ class KairosTests {
     }
 
     @Test
-    fun mapState() = runFrpTest { network ->
+    fun mapState() = kairosTest { network ->
         val emitter = network.mutableEvents<Int>()
         var stepResult: Int? = null
         val flow =
@@ -678,7 +678,7 @@ class KairosTests {
     }
 
     @Test
-    fun partitionEither() = runFrpTest { network ->
+    fun partitionEither() = kairosTest { network ->
         val emitter = network.mutableEvents<Either<Int, Int>>()
         val result =
             activateSpecWithResult(network) {
@@ -702,7 +702,7 @@ class KairosTests {
     }
 
     @Test
-    fun accumState() = runFrpTest { network ->
+    fun accumState() = kairosTest { network ->
         val emitter = network.mutableEvents<Int>()
         val sampler = network.mutableEvents<Unit>()
         var stepResult: Int? = null
@@ -735,7 +735,7 @@ class KairosTests {
     }
 
     @Test
-    fun mergeEventss() = runFrpTest { network ->
+    fun mergeEventss() = kairosTest { network ->
         val first = network.mutableEvents<Int>()
         val stopFirst = network.mutableEvents<Unit>()
         val second = network.mutableEvents<Int>()
@@ -835,7 +835,7 @@ class KairosTests {
     }
 
     @Test
-    fun sampleCancel() = runFrpTest { network ->
+    fun sampleCancel() = kairosTest { network ->
         val updater = network.mutableEvents<Int>()
         val stopUpdater = network.mutableEvents<Unit>()
         val sampler = network.mutableEvents<Unit>()
@@ -877,7 +877,7 @@ class KairosTests {
     }
 
     @Test
-    fun combineStates_differentUpstreams() = runFrpTest { network ->
+    fun combineStates_differentUpstreams() = kairosTest { network ->
         val a = network.mutableEvents<Int>()
         val b = network.mutableEvents<Int>()
         var observed: Pair<Int, Int>? = null
@@ -898,7 +898,7 @@ class KairosTests {
     }
 
     @Test
-    fun sampleCombinedStates() = runFrpTest { network ->
+    fun sampleCombinedStates() = kairosTest { network ->
         val updater = network.mutableEvents<Int>()
         val emitter = network.mutableEvents<Unit>()
 
@@ -926,7 +926,7 @@ class KairosTests {
     }
 
     @Test
-    fun switchMapPromptly() = runFrpTest { network ->
+    fun switchMapPromptly() = kairosTest { network ->
         val emitter = network.mutableEvents<Unit>()
         val result =
             activateSpecWithResult(network) {
@@ -946,7 +946,7 @@ class KairosTests {
     }
 
     @Test
-    fun switchDeeper() = runFrpTest { network ->
+    fun switchDeeper() = kairosTest { network ->
         val emitter = network.mutableEvents<Unit>()
         val e2 = network.mutableEvents<Unit>()
         val result =
@@ -972,7 +972,7 @@ class KairosTests {
     }
 
     @Test
-    fun recursionBasic() = runFrpTest { network ->
+    fun recursionBasic() = kairosTest { network ->
         val add1 = network.mutableEvents<Unit>()
         val sub1 = network.mutableEvents<Unit>()
         val stepResult: StateFlow<Int> =
@@ -1002,7 +1002,7 @@ class KairosTests {
     }
 
     @Test
-    fun recursiveState() = runFrpTest { network ->
+    fun recursiveState() = kairosTest { network ->
         val e = network.mutableEvents<Unit>()
         var changes = 0
         val state =
@@ -1021,7 +1021,7 @@ class KairosTests {
     }
 
     @Test
-    fun fanOut() = runFrpTest { network ->
+    fun fanOut() = kairosTest { network ->
         val e = network.mutableEvents<Map<String, Int>>()
         val (fooFlow, barFlow) =
             activateSpecWithResult(network) {
@@ -1045,7 +1045,7 @@ class KairosTests {
     @Test
     fun propagateError() {
         try {
-            runFrpTest { network ->
+            kairosTest { network ->
                 runCurrent()
                 try {
                     network.transact<Unit> { error("message") }
@@ -1057,7 +1057,7 @@ class KairosTests {
     }
 
     @Test
-    fun fanOutLateSubscribe() = runFrpTest { network ->
+    fun fanOutLateSubscribe() = kairosTest { network ->
         val e = network.mutableEvents<Map<String, Int>>()
         val barFlow =
             activateSpecWithResult(network) {
@@ -1081,7 +1081,7 @@ class KairosTests {
     }
 
     @Test
-    fun inputEventsCompleted() = runFrpTest { network ->
+    fun inputEventsCompleted() = kairosTest { network ->
         val results = mutableListOf<Int>()
         val e = network.mutableEvents<Int>()
         activateSpec(network) { e.nextOnly().observeSync { results.add(it) } }
@@ -1098,7 +1098,7 @@ class KairosTests {
     }
 
     @Test
-    fun fanOutThenMergeIncrementally() = runFrpTest { network ->
+    fun fanOutThenMergeIncrementally() = kairosTest { network ->
         // A events of group updates, where a group is a events of child updates, where a child is a
         // stateflow
         val e = network.mutableEvents<Map<Int, Maybe<Events<Map<Int, Maybe<StateFlow<String>>>>>>>()
@@ -1246,7 +1246,7 @@ class KairosTests {
     }
 
     @Test
-    fun applyLatestNetworkChanges() = runFrpTest { network ->
+    fun applyLatestNetworkChanges() = kairosTest { network ->
         val newCount = network.mutableEvents<BuildSpec<Flow<Int>>>()
         val flowOfFlows: Flow<Flow<Int>> =
             activateSpecWithResult(network) { newCount.applyLatestSpec().toSharedFlow() }
@@ -1314,7 +1314,7 @@ class KairosTests {
     }
 
     @Test
-    fun buildScope_stateAccumulation() = runFrpTest { network ->
+    fun buildScope_stateAccumulation() = kairosTest { network ->
         val input = network.mutableEvents<Unit>()
         var observedCount: Int? = null
         activateSpec(network) {
@@ -1334,7 +1334,7 @@ class KairosTests {
     }
 
     @Test
-    fun effect() = runFrpTest { network ->
+    fun effect() = kairosTest { network ->
         val input = network.mutableEvents<Unit>()
         var effectRunning = false
         var count = 0
@@ -1370,7 +1370,7 @@ class KairosTests {
     }
 
     @Test
-    fun observeEffect_disposeHandle() = runFrpTest { network ->
+    fun observeEffect_disposeHandle() = kairosTest { network ->
         val input = network.mutableEvents<Unit>()
         val stopper = network.mutableEvents<Unit>()
         var runningCount = 0
@@ -1406,7 +1406,7 @@ class KairosTests {
     }
 
     @Test
-    fun observeEffect_takeUntil() = runFrpTest { network ->
+    fun observeEffect_takeUntil() = kairosTest { network ->
         val input = network.mutableEvents<Unit>()
         val stopper = network.mutableEvents<Unit>()
         var runningCount = 0
@@ -1439,7 +1439,7 @@ class KairosTests {
         assertEquals(0, runningCount)
     }
 
-    private fun runFrpTest(
+    private fun kairosTest(
         timeout: Duration = 3.seconds,
         block: suspend TestScope.(KairosNetwork) -> Unit,
     ) {

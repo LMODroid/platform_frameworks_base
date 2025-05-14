@@ -17,7 +17,6 @@
 package com.android.systemui.kairos
 
 import com.android.systemui.kairos.internal.CompletableLazy
-import com.android.systemui.kairos.internal.EventsImpl
 import com.android.systemui.kairos.internal.Init
 import com.android.systemui.kairos.internal.InitScope
 import com.android.systemui.kairos.internal.Network
@@ -28,7 +27,7 @@ import com.android.systemui.kairos.internal.StateSource
 import com.android.systemui.kairos.internal.activated
 import com.android.systemui.kairos.internal.constInit
 import com.android.systemui.kairos.internal.constState
-import com.android.systemui.kairos.internal.filterImpl
+import com.android.systemui.kairos.internal.distinctChanges
 import com.android.systemui.kairos.internal.flatMapStateImpl
 import com.android.systemui.kairos.internal.init
 import com.android.systemui.kairos.internal.mapImpl
@@ -247,21 +246,15 @@ internal constructor(
     internal val state = run {
         val changes = input.impl
         val state: StateSource<T> = StateSource(initialValue, nameData)
-        val mapImpl =
-            mapImpl(upstream = { changes.activated() }, nameData + "forceValue") { it, _ ->
-                it!!.value
-            }
-        val calm: EventsImpl<T> =
-            filterImpl(nameData + "calm", { mapImpl }) { new ->
-                new != state.getCurrentWithEpoch(evalScope = this).first
-            }
+        val forced = mapImpl({ changes.activated() }, nameData + "forced") { it, _ -> it!!.value }
+        val calm = distinctChanges({ forced }, nameData + "calm", state)
         @Suppress("DeferredResultUnused")
         network.transaction("MutableState.init") {
             calm.activate(evalScope = this, downstream = Schedulable.S(state))?.let {
                 (connection, needsEval) ->
                 state.upstreamConnection = connection
                 if (needsEval) {
-                    schedule(state)
+                    state.schedule(0, this)
                 }
             }
         }
