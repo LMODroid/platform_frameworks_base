@@ -5289,10 +5289,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // until the runnable actually executes.
             mScreenLockTimeout.setLockOptions(options);
         }
-        mHandler.post(mScreenLockTimeout);
-        synchronized (mScreenLockTimeout) {
-            mLockNowPending = true;
-        }
+        mScreenLockTimeout.run();
     }
 
     // TODO (b/113840485): Move this logic to DisplayPolicy when lockscreen supports multi-display.
