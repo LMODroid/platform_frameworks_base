@@ -50,7 +50,6 @@ import com.android.systemui.security.data.repository.SecurityRepository
 import com.android.systemui.security.data.repository.SecurityRepositoryImpl
 import com.android.systemui.settings.FakeUserTracker
 import com.android.systemui.settings.UserTracker
-import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.statusbar.policy.DeviceProvisionedController
 import com.android.systemui.statusbar.policy.FakeSecurityController
 import com.android.systemui.statusbar.policy.FakeUserInfoController
@@ -67,8 +66,6 @@ import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.settings.FakeGlobalSettings
 import com.android.systemui.util.settings.GlobalSettings
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 
@@ -80,7 +77,6 @@ class FooterActionsTestUtils(
     private val context: Context,
     private val testableLooper: TestableLooper,
     private val scheduler: TestCoroutineScheduler,
-    private val applicationCoroutineScope: CoroutineScope,
 ) {
     private val mockActivityStarter: ActivityStarter = mock<ActivityStarter>()
 
@@ -101,13 +97,11 @@ class FooterActionsTestUtils(
         falsingManager: FalsingManager = FalsingManagerFake(),
         globalActionsDialogLite: GlobalActionsDialogLite = mock(),
         showPowerButton: Boolean = true,
-        shadeMode: ShadeMode,
     ): FooterActionsViewModel {
         return createFooterActionsViewModel(
             context,
             footerActionsInteractor,
             textFeedbackInteractor,
-            MutableStateFlow(shadeMode),
             falsingManager,
             globalActionsDialogLite,
             mockActivityStarter,
@@ -188,7 +182,7 @@ class FooterActionsTestUtils(
         )
     }
 
-    fun toggleTextFeedbackRepository(): ToggleTextFeedbackRepository {
+    private fun toggleTextFeedbackRepository(): ToggleTextFeedbackRepository {
         return ToggleTextFeedbackRepository()
     }
 

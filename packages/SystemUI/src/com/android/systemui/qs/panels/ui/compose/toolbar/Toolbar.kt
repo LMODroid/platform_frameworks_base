@@ -24,20 +24,34 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
+import com.android.compose.animation.Expandable
+import com.android.systemui.common.shared.model.Icon
+import com.android.systemui.common.ui.compose.load
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.development.ui.compose.BuildNumber
 import com.android.systemui.development.ui.viewmodel.BuildNumberViewModel
 import com.android.systemui.lifecycle.rememberViewModel
-import com.android.systemui.qs.footer.ui.compose.IconButton
+import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsButtonViewModel
 import com.android.systemui.qs.panels.ui.compose.toolbar.Toolbar.TransitionKeys.SecurityInfoKey
 import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackContentViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.ToolbarViewModel
+import com.android.systemui.qs.ui.compose.borderOnFocus
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -73,8 +87,7 @@ fun Toolbar(viewModel: ToolbarViewModel, modifier: Modifier = Modifier) {
         }
 
         IconButton(
-            { viewModel.powerButtonViewModel },
-            useModifierBasedExpandable = true,
+            viewModel.powerButtonViewModel,
             Modifier.sysuiResTag("pm_lite").minimumInteractiveComponentSize(),
         )
     }
@@ -90,9 +103,9 @@ private fun SharedTransitionScope.StandardToolbarLayout(
     Row(modifier) {
         // User switcher button
         IconButton(
-            model = { viewModel.userSwitcherViewModel },
-            useModifierBasedExpandable = true,
+            model = viewModel.userSwitcherViewModel,
             Modifier.sysuiResTag("multi_user_switch").minimumInteractiveComponentSize(),
+            iconColor = Color.Unspecified,
         )
 
         // Edit mode button
@@ -104,7 +117,6 @@ private fun SharedTransitionScope.StandardToolbarLayout(
         // Settings button
         IconButton(
             model = viewModel.settingsButtonViewModel,
-            useModifierBasedExpandable = true,
             Modifier.sysuiResTag("settings_button_container").minimumInteractiveComponentSize(),
         )
 
@@ -125,6 +137,39 @@ private fun SharedTransitionScope.StandardToolbarLayout(
             buildNumberViewModelFactory = viewModel.buildNumberViewModelFactory,
             modifier = Modifier.weight(1f),
         )
+    }
+}
+
+/** A button with an icon. */
+@Composable
+private fun IconButton(
+    model: FooterActionsButtonViewModel?,
+    modifier: Modifier = Modifier,
+    iconColor: Color = MaterialTheme.colorScheme.onSurface,
+) {
+    if (model == null) {
+        return
+    }
+    Expandable(
+        color = Color.Unspecified,
+        shape = CircleShape,
+        onClick = model.onClick,
+        modifier =
+            modifier.borderOnFocus(MaterialTheme.colorScheme.secondary, CornerSize(percent = 50)),
+        useModifierBasedImplementation = true,
+    ) {
+        ToolbarIcon(icon = model.icon, modifier = Modifier.size(24.dp), tint = iconColor)
+    }
+}
+
+// TODO(b/394738023): Use com.android.systemui.common.ui.compose.Icon instead.
+@Composable
+private fun ToolbarIcon(icon: Icon, modifier: Modifier = Modifier, tint: Color) {
+    val contentDescription = icon.contentDescription?.load()
+    when (icon) {
+        is Icon.Loaded ->
+            Icon(icon.drawable.toBitmap().asImageBitmap(), contentDescription, modifier, tint)
+        is Icon.Resource -> Icon(painterResource(icon.res), contentDescription, modifier, tint)
     }
 }
 

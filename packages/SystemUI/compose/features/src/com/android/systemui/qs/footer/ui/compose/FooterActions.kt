@@ -42,6 +42,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -147,7 +148,6 @@ fun FooterActions(
         mutableStateOf<FooterActionsForegroundServicesButtonViewModel?>(null)
     }
     var userSwitcher by remember { mutableStateOf<FooterActionsButtonViewModel?>(null) }
-    var power by remember { mutableStateOf(viewModel.initialPower()) }
 
     var textFeedback by remember {
         mutableStateOf<TextFeedbackViewModel>(TextFeedbackViewModel.NoFeedback)
@@ -172,7 +172,6 @@ fun FooterActions(
             launch { viewModel.security.collect { security = it } }
             launch { viewModel.foregroundServices.collect { foregroundServices = it } }
             launch { viewModel.userSwitcher.collect { userSwitcher = it } }
-            launch { viewModel.power.collect { power = it } }
             launch { viewModel.textFeedback.collect { textFeedback = it } }
         }
     }
@@ -237,7 +236,11 @@ fun FooterActions(
                 useModifierBasedExpandable,
                 Modifier.sysuiResTag("settings_button_container"),
             )
-            IconButton({ power }, useModifierBasedExpandable, Modifier.sysuiResTag("pm_lite"))
+            IconButton(
+                { viewModel.power },
+                useModifierBasedExpandable,
+                Modifier.sysuiResTag("pm_lite"),
+            )
         }
     }
 }
@@ -310,7 +313,7 @@ private fun RowScope.ForegroundServicesButton(
 
 /** A button with an icon. */
 @Composable
-fun IconButton(
+private fun IconButton(
     model: () -> FooterActionsButtonViewModel?,
     useModifierBasedExpandable: Boolean,
     modifier: Modifier = Modifier,
@@ -321,21 +324,16 @@ fun IconButton(
 
 /** A button with an icon. */
 @Composable
-fun IconButton(
+private fun IconButton(
     model: FooterActionsButtonViewModel,
     useModifierBasedExpandable: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val colors = buttonColorsForModel(model)
-    Expandable(
+    CircleExpandable(
         color = colors.background,
-        shape = CircleShape,
         onClick = model.onClick,
-        modifier =
-            modifier.borderOnFocus(
-                color = MaterialTheme.colorScheme.secondary,
-                CornerSize(percent = 50),
-            ),
+        modifier = modifier,
         useModifierBasedImplementation = useModifierBasedExpandable,
     ) {
         FooterIcon(model.icon, Modifier.size(20.dp), colors.icon)
@@ -372,16 +370,11 @@ private fun NumberButton(
     val interactionSource = remember { MutableInteractionSource() }
 
     val colors = numberButtonColors()
-    Expandable(
+    CircleExpandable(
         color = colors.background,
-        shape = CircleShape,
         onClick = onClick,
         interactionSource = interactionSource,
-        modifier =
-            modifier.borderOnFocus(
-                color = MaterialTheme.colorScheme.secondary,
-                CornerSize(percent = 50),
-            ),
+        modifier = modifier,
         useModifierBasedImplementation = useModifierBasedExpandable,
     ) {
         Box(Modifier.size(40.dp)) {
@@ -411,6 +404,34 @@ private fun NumberButton(
     }
 }
 
+@Composable
+private fun CircleExpandable(
+    color: Color,
+    modifier: Modifier = Modifier,
+    contentColor: Color = contentColorFor(color),
+    borderStroke: BorderStroke? = null,
+    onClick: ((Expandable) -> Unit)? = null,
+    interactionSource: MutableInteractionSource? = null,
+    useModifierBasedImplementation: Boolean,
+    content: @Composable (Expandable) -> Unit,
+) {
+    Expandable(
+        color = color,
+        contentColor = contentColor,
+        borderStroke = borderStroke,
+        shape = CircleShape,
+        onClick = onClick,
+        interactionSource = interactionSource,
+        modifier =
+            modifier.borderOnFocus(
+                color = MaterialTheme.colorScheme.secondary,
+                cornerSize = CornerSize(percent = 50),
+            ),
+        useModifierBasedImplementation = useModifierBasedImplementation,
+        content = content,
+    )
+}
+
 /** A dot that indicates new changes. */
 @Composable
 private fun NewChangesDot(modifier: Modifier = Modifier) {
@@ -433,15 +454,11 @@ private fun TextButton(
     modifier: Modifier = Modifier,
 ) {
     val colors = textButtonColors()
-    Expandable(
-        shape = CircleShape,
+    CircleExpandable(
         color = colors.background,
         contentColor = colors.content,
         borderStroke = colors.border,
-        modifier =
-            modifier
-                .padding(horizontal = 4.dp)
-                .borderOnFocus(color = MaterialTheme.colorScheme.secondary, CornerSize(50)),
+        modifier = modifier.padding(horizontal = 4.dp),
         onClick = onClick,
         useModifierBasedImplementation = useModifierBasedExpandable,
     ) {
@@ -507,13 +524,8 @@ private fun numberButtonColors(): TextButtonColors {
 private fun buttonColorsForModel(footerAction: FooterActionsButtonViewModel): ButtonColors {
     return if (QsInCompose.isEnabled && notificationShadeBlur()) {
         when (footerAction) {
-            is FooterActionsButtonViewModel.PowerActionViewModel -> {
-                if (footerAction.isOnDualShade) {
-                    FooterActionsDefaults.inactiveButtonColors()
-                } else {
-                    FooterActionsDefaults.activeButtonColors()
-                }
-            }
+            is FooterActionsButtonViewModel.PowerActionViewModel ->
+                FooterActionsDefaults.activeButtonColors()
             is FooterActionsButtonViewModel.SettingsActionViewModel ->
                 FooterActionsDefaults.inactiveButtonColors()
             is FooterActionsButtonViewModel.UserSwitcherViewModel ->

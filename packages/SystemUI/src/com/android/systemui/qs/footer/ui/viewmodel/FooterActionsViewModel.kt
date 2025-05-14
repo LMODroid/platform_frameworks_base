@@ -24,7 +24,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
 import com.android.app.tracing.coroutines.launchTraced as launch
-import com.android.settingslib.Utils
 import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
@@ -46,8 +45,6 @@ import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackContentViewModel.
 import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackViewModel
 import com.android.systemui.res.R
 import com.android.systemui.shade.ShadeDisplayAware
-import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
-import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.util.icuMessageFormat
 import javax.inject.Inject
 import javax.inject.Named
@@ -82,8 +79,9 @@ class FooterActionsViewModel(
     val settings: FooterActionsButtonViewModel,
 
     /** The model for the power button. */
-    val power: Flow<FooterActionsButtonViewModel?>,
-    val initialPower: () -> FooterActionsButtonViewModel?,
+    val power: FooterActionsButtonViewModel?,
+
+    /** The model for the text feedback. */
     val textFeedback: Flow<TextFeedbackViewModel>,
 
     /**
@@ -121,7 +119,6 @@ class FooterActionsViewModel(
         @ShadeDisplayAware private val context: Context,
         private val falsingManager: FalsingManager,
         private val footerActionsInteractor: FooterActionsInteractor,
-        private val shadeModeInteractor: ShadeModeInteractor,
         private val globalActionsDialogLiteProvider: Provider<GlobalActionsDialogLite>,
         private val activityStarter: ActivityStarter,
         private val textFeedbackInteractor: TextFeedbackInteractor,
@@ -149,7 +146,6 @@ class FooterActionsViewModel(
                 context,
                 footerActionsInteractor,
                 textFeedbackInteractor,
-                shadeModeInteractor.shadeMode,
                 falsingManager,
                 globalActionsDialogLite,
                 activityStarter,
@@ -175,7 +171,6 @@ class FooterActionsViewModel(
                 context,
                 footerActionsInteractor,
                 textFeedbackInteractor,
-                shadeModeInteractor.shadeMode,
                 falsingManager,
                 globalActionsDialogLite,
                 activityStarter,
@@ -189,7 +184,6 @@ fun createFooterActionsViewModel(
     @ShadeDisplayAware appContext: Context,
     footerActionsInteractor: FooterActionsInteractor,
     textFeedbackInteractor: TextFeedbackInteractor,
-    shadeMode: StateFlow<ShadeMode>,
     falsingManager: FalsingManager,
     globalActionsDialogLite: GlobalActionsDialogLite,
     activityStarter: ActivityStarter,
@@ -287,13 +281,13 @@ fun createFooterActionsViewModel(
     val userSwitcher =
         userSwitcherViewModel(qsThemedContext, footerActionsInteractor, ::onUserSwitcherClicked)
 
-    val settings = settingsButtonViewModel(qsThemedContext, ::onSettingsButtonClicked)
+    val settings = SettingsActionViewModel(qsThemedContext, ::onSettingsButtonClicked)
 
     val power =
         if (showPowerButton) {
-            powerButtonViewModel(qsThemedContext, ::onPowerButtonClicked, shadeMode)
+            PowerActionViewModel(qsThemedContext, ::onPowerButtonClicked)
         } else {
-            flowOf(null)
+            null
         }
 
     val textFeedback =
@@ -311,12 +305,6 @@ fun createFooterActionsViewModel(
         power = power,
         observeDeviceMonitoringDialogRequests = ::observeDeviceMonitoringDialogRequests,
         textFeedback = textFeedback,
-        initialPower =
-            if (showPowerButton) {
-                { powerButtonViewModel(qsThemedContext, ::onPowerButtonClicked, shadeMode.value) }
-            } else {
-                { null }
-            },
     )
 }
 
@@ -392,65 +380,12 @@ fun userSwitcherButtonViewModel(
     onUserSwitcherClicked: (Expandable) -> Unit,
 ): FooterActionsButtonViewModel {
     val icon = status.currentUserImage!!
+    val contentDescription =
+        status.currentUserName?.let { user ->
+            qsThemedContext.getString(R.string.accessibility_quick_settings_user, user)
+        }
     return UserSwitcherViewModel(
-        icon =
-            Icon.Loaded(
-                icon,
-                ContentDescription.Loaded(
-                    userSwitcherContentDescription(qsThemedContext, status.currentUserName)
-                ),
-            ),
-        iconTintFallback = null,
-        backgroundColorFallback = R.attr.shadeInactive,
+        icon = Icon.Loaded(icon, ContentDescription.Loaded(contentDescription)),
         onClick = onUserSwitcherClicked,
-    )
-}
-
-private fun userSwitcherContentDescription(
-    qsThemedContext: Context,
-    currentUser: String?,
-): String? {
-    return currentUser?.let { user ->
-        qsThemedContext.getString(R.string.accessibility_quick_settings_user, user)
-    }
-}
-
-fun settingsButtonViewModel(
-    qsThemedContext: Context,
-    onSettingsButtonClicked: (Expandable) -> Unit,
-): FooterActionsButtonViewModel {
-    return SettingsActionViewModel(
-        iconTintFallback =
-            Utils.getColorAttrDefaultColor(qsThemedContext, R.attr.onShadeInactiveVariant),
-        backgroundColorFallback = R.attr.shadeInactive,
-        onClick = onSettingsButtonClicked,
-    )
-}
-
-fun powerButtonViewModel(
-    qsThemedContext: Context,
-    onPowerButtonClicked: (Expandable) -> Unit,
-    shadeMode: Flow<ShadeMode>,
-): Flow<FooterActionsButtonViewModel?> {
-    return shadeMode.map { mode ->
-        powerButtonViewModel(qsThemedContext, onPowerButtonClicked, mode)
-    }
-}
-
-fun powerButtonViewModel(
-    qsThemedContext: Context,
-    onPowerButtonClicked: (Expandable) -> Unit,
-    shadeMode: ShadeMode,
-): FooterActionsButtonViewModel {
-    val isDualShade = shadeMode is ShadeMode.Dual
-    return PowerActionViewModel(
-        isOnDualShade = isDualShade,
-        iconTintFallback =
-            Utils.getColorAttrDefaultColor(
-                qsThemedContext,
-                if (isDualShade) R.attr.onShadeInactiveVariant else R.attr.onShadeActive,
-            ),
-        backgroundColorFallback = if (isDualShade) R.attr.shadeInactive else R.attr.shadeActive,
-        onClick = onPowerButtonClicked,
     )
 }

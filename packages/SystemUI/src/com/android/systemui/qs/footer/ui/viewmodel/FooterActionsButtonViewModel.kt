@@ -18,7 +18,9 @@ package com.android.systemui.qs.footer.ui.viewmodel
 
 import android.annotation.AttrRes
 import android.annotation.ColorInt
+import android.content.Context
 import androidx.compose.runtime.Stable
+import com.android.settingslib.Utils
 import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
@@ -38,16 +40,15 @@ sealed interface FooterActionsButtonViewModel {
 
     data class UserSwitcherViewModel(
         override val icon: Icon,
-        @ColorInt override val iconTintFallback: Int?,
-        @AttrRes override val backgroundColorFallback: Int,
         override val onClick: (Expandable) -> Unit,
     ) : FooterActionsButtonViewModel {
         override val id: Int = R.id.multi_user_switch
+        @ColorInt override val iconTintFallback: Int? = null
+        @AttrRes override val backgroundColorFallback: Int = R.attr.shadeInactive
     }
 
     data class SettingsActionViewModel(
-        @ColorInt override val iconTintFallback: Int?,
-        @AttrRes override val backgroundColorFallback: Int,
+        private val context: Context,
         override val onClick: (Expandable) -> Unit,
     ) : FooterActionsButtonViewModel {
         override val id: Int = R.id.settings_button_container
@@ -56,12 +57,14 @@ sealed interface FooterActionsButtonViewModel {
                 R.drawable.ic_qs_footer_settings,
                 ContentDescription.Resource(R.string.accessibility_quick_settings_settings),
             )
+        @ColorInt
+        override val iconTintFallback: Int =
+            Utils.getColorAttrDefaultColor(context, R.attr.onShadeInactiveVariant)
+        @AttrRes override val backgroundColorFallback: Int = R.attr.shadeInactive
     }
 
     data class PowerActionViewModel(
-        val isOnDualShade: Boolean,
-        @ColorInt override val iconTintFallback: Int?,
-        @AttrRes override val backgroundColorFallback: Int,
+        private val context: Context,
         override val onClick: (Expandable) -> Unit,
     ) : FooterActionsButtonViewModel {
         override val id: Int = R.id.pm_lite
@@ -70,5 +73,9 @@ sealed interface FooterActionsButtonViewModel {
                 R.drawable.ic_qs_footer_power,
                 ContentDescription.Resource(R.string.accessibility_quick_settings_power_menu),
             )
+        @ColorInt
+        override val iconTintFallback: Int =
+            Utils.getColorAttrDefaultColor(context, R.attr.onShadeActive)
+        @AttrRes override val backgroundColorFallback: Int = R.attr.shadeActive
     }
 }

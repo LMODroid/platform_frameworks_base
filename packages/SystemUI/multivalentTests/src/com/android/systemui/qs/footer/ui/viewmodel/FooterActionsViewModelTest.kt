@@ -48,7 +48,6 @@ import com.android.systemui.qs.tiles.base.shared.model.FakeQSTileConfigProvider
 import com.android.systemui.qs.tiles.base.shared.model.QSTileConfigProvider
 import com.android.systemui.res.R
 import com.android.systemui.security.data.model.SecurityModel
-import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.statusbar.connectivity.ConnectivityModule
 import com.android.systemui.statusbar.policy.FakeSecurityController
 import com.android.systemui.statusbar.policy.FakeUserInfoController
@@ -85,13 +84,7 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
     @Before
     fun setUp() {
-        utils =
-            FooterActionsTestUtils(
-                context,
-                TestableLooper.get(this),
-                testScope.testScheduler,
-                testScope.backgroundScope,
-            )
+        utils = FooterActionsTestUtils(context, TestableLooper.get(this), testScope.testScheduler)
     }
 
     private fun runTest(block: suspend TestScope.() -> Unit) {
@@ -100,8 +93,7 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
     @Test
     fun settingsButton() = runTest {
-        val underTest =
-            utils.footerActionsViewModel(showPowerButton = false, shadeMode = ShadeMode.Single)
+        val underTest = utils.footerActionsViewModel(showPowerButton = false)
         val settings = underTest.settings
 
         assertThat(settings.icon)
@@ -119,25 +111,22 @@ class FooterActionsViewModelTest : SysuiTestCase() {
     @Test
     fun powerButton() = runTest {
         // Without power button.
-        val underTestWithoutPower =
-            utils.footerActionsViewModel(showPowerButton = false, shadeMode = ShadeMode.Single)
-        val withoutPower by collectLastValue(underTestWithoutPower.power)
-        assertThat(withoutPower).isNull()
+        val underTestWithoutPower = utils.footerActionsViewModel(showPowerButton = false)
+        assertThat(underTestWithoutPower.power).isNull()
 
         // With power button.
-        val underTestWithPower =
-            utils.footerActionsViewModel(showPowerButton = true, shadeMode = ShadeMode.Single)
-        val power by collectLastValue(underTestWithPower.power)
-        assertThat(power).isNotNull()
-        assertThat(checkNotNull(power).icon)
+        val underTestWithPower = utils.footerActionsViewModel(showPowerButton = true)
+        assertThat(underTestWithPower.power).isNotNull()
+        assertThat(checkNotNull(underTestWithPower.power).icon)
             .isEqualTo(
                 Icon.Resource(
                     R.drawable.ic_qs_footer_power,
                     ContentDescription.Resource(R.string.accessibility_quick_settings_power_menu),
                 )
             )
-        assertThat(checkNotNull(power).backgroundColorFallback).isEqualTo(R.attr.shadeActive)
-        assertThat(checkNotNull(power).iconTintFallback)
+        assertThat(checkNotNull(underTestWithPower.power).backgroundColorFallback)
+            .isEqualTo(R.attr.shadeActive)
+        assertThat(checkNotNull(underTestWithPower.power).iconTintFallback)
             .isEqualTo(Utils.getColorAttrDefaultColor(themedContext, R.attr.onShadeActive))
     }
 
@@ -159,7 +148,6 @@ class FooterActionsViewModelTest : SysuiTestCase() {
         val underTest =
             utils.footerActionsViewModel(
                 showPowerButton = false,
-                shadeMode = ShadeMode.Single,
                 footerActionsInteractor =
                     utils.footerActionsInteractor(
                         userSwitcherRepository =
@@ -229,13 +217,12 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
         val underTest =
             utils.footerActionsViewModel(
-                shadeMode = ShadeMode.Single,
                 footerActionsInteractor =
                     utils.footerActionsInteractor(
                         qsSecurityFooterUtils = qsSecurityFooterUtils,
                         securityRepository =
                             utils.securityRepository(securityController = securityController),
-                    ),
+                    )
             )
 
         // Collect the security model into currentSecurity.
@@ -288,14 +275,13 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
         val underTest =
             utils.footerActionsViewModel(
-                shadeMode = ShadeMode.Single,
                 footerActionsInteractor =
                     utils.footerActionsInteractor(
                         qsSecurityFooterUtils = qsSecurityFooterUtils,
                         securityRepository = utils.securityRepository(securityController),
                         foregroundServicesRepository =
                             utils.foregroundServicesRepository(fgsManagerController),
-                    ),
+                    )
             )
 
         // Collect the security model into currentSecurity.
@@ -362,12 +348,11 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
         val underTest =
             utils.footerActionsViewModel(
-                shadeMode = ShadeMode.Single,
                 footerActionsInteractor =
                     utils.footerActionsInteractor(
                         qsSecurityFooterUtils = qsSecurityFooterUtils,
                         broadcastDispatcher = broadcastDispatcher,
-                    ),
+                    )
             )
 
         val job = launch { underTest.observeDeviceMonitoringDialogRequests(mock()) }
@@ -380,7 +365,7 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
     @Test
     fun alpha_inSplitShade_followsExpansion() {
-        val underTest = utils.footerActionsViewModel(shadeMode = ShadeMode.Split)
+        val underTest = utils.footerActionsViewModel()
 
         underTest.onQuickSettingsExpansionChanged(0f, isInSplitShade = true)
         assertThat(underTest.alpha.value).isEqualTo(0f)
@@ -400,7 +385,7 @@ class FooterActionsViewModelTest : SysuiTestCase() {
 
     @Test
     fun alpha_inSingleShade_followsExpansion_with_0_9_delay() {
-        val underTest = utils.footerActionsViewModel(shadeMode = ShadeMode.Single)
+        val underTest = utils.footerActionsViewModel()
         val floatTolerance = 0.01f
 
         underTest.onQuickSettingsExpansionChanged(0f, isInSplitShade = false)
@@ -430,10 +415,7 @@ class FooterActionsViewModelTest : SysuiTestCase() {
         val textFeedbackInteractor =
             utils.textFeedbackInteractor(qsTileConfigProvider = qsTileConfigProvider)
         val underTest =
-            utils.footerActionsViewModel(
-                textFeedbackInteractor = textFeedbackInteractor,
-                shadeMode = ShadeMode.Single,
-            )
+            utils.footerActionsViewModel(textFeedbackInteractor = textFeedbackInteractor)
 
         val textFeedback by collectLastValue(underTest.textFeedback)
 
@@ -480,7 +462,6 @@ class FooterActionsViewModelTest : SysuiTestCase() {
                         securityRepository = utils.securityRepository(securityController),
                         qsSecurityFooterUtils = qsSecurityFooterUtils,
                     ),
-                shadeMode = ShadeMode.Single,
             )
 
         val textFeedback by collectLastValue(underTest.textFeedback)

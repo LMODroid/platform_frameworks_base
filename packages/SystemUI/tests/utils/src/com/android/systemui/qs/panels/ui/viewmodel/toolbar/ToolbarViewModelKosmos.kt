@@ -23,7 +23,6 @@ import com.android.systemui.globalactions.globalActionsDialogLite
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.qs.footerActionsInteractor
 import com.android.systemui.qs.panels.ui.viewmodel.textFeedbackContentViewModelFactory
-import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 
 val Kosmos.toolbarViewModelFactory by
     Kosmos.Fixture {
@@ -36,7 +35,6 @@ val Kosmos.toolbarViewModelFactory by
                     footerActionsInteractor,
                     { globalActionsDialogLite },
                     falsingInteractor,
-                    shadeModeInteractor,
                     applicationContext,
                 )
             }

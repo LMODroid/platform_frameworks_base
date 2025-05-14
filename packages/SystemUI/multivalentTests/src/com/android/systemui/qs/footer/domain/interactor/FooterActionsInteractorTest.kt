@@ -60,13 +60,7 @@ class FooterActionsInteractorTest : SysuiTestCase() {
 
     @Before
     fun setUp() {
-        utils =
-            FooterActionsTestUtils(
-                context,
-                TestableLooper.get(this),
-                testScope.testScheduler,
-                testScope.backgroundScope,
-            )
+        utils = FooterActionsTestUtils(context, TestableLooper.get(this), testScope.testScheduler)
     }
 
     @Test
