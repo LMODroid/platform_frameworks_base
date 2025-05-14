@@ -24,23 +24,20 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.development.ui.compose.BuildNumber
+import com.android.systemui.development.ui.viewmodel.BuildNumberViewModel
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.qs.footer.ui.compose.IconButton
 import com.android.systemui.qs.panels.ui.compose.toolbar.Toolbar.TransitionKeys.SecurityInfoKey
+import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackContentViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.TextFeedbackViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.ToolbarViewModel
-import com.android.systemui.qs.ui.compose.borderOnFocus
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -91,24 +88,27 @@ private fun SharedTransitionScope.StandardToolbarLayout(
     modifier: Modifier = Modifier,
 ) {
     Row(modifier) {
+        // User switcher button
+        IconButton(
+            model = { viewModel.userSwitcherViewModel },
+            useModifierBasedExpandable = true,
+            Modifier.sysuiResTag("multi_user_switch").minimumInteractiveComponentSize(),
+        )
+
+        // Edit mode button
         // TODO(b/410843063): Support the tooltip in DualShade
         val editModeButtonViewModel =
             rememberViewModel("Toolbar") { viewModel.editModeButtonViewModelFactory.create() }
         EditModeButton(editModeButtonViewModel, tooltipEnabled = false)
 
+        // Settings button
         IconButton(
-            viewModel.settingsButtonViewModel,
+            model = viewModel.settingsButtonViewModel,
             useModifierBasedExpandable = true,
             Modifier.sysuiResTag("settings_button_container").minimumInteractiveComponentSize(),
         )
 
-        viewModel.userSwitcherViewModel?.let {
-            IconButton(
-                it,
-                useModifierBasedExpandable = true,
-                Modifier.sysuiResTag("multi_user_switch").minimumInteractiveComponentSize(),
-            )
-        }
+        // Security info button
         SecurityInfo(
             viewModel = viewModel.securityInfoViewModel,
             showCollapsed = true,
@@ -119,35 +119,38 @@ private fun SharedTransitionScope.StandardToolbarLayout(
                 ),
         )
 
+        // Text feedback chip / build number
+        ToolbarTextFeedback(
+            viewModelFactory = viewModel.textFeedbackContentViewModelFactory,
+            buildNumberViewModelFactory = viewModel.buildNumberViewModelFactory,
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun ToolbarTextFeedback(
+    viewModelFactory: TextFeedbackContentViewModel.Factory,
+    buildNumberViewModelFactory: BuildNumberViewModel.Factory,
+    modifier: Modifier,
+) {
+    Box(modifier = modifier) {
         val context = LocalContext.current
-        val textFeedbackViewModel =
+        val viewModel =
             rememberViewModel("Toolbar.TextFeedbackViewModel", context) {
-                viewModel.textFeedbackContentViewModelFactory.create(context)
+                viewModelFactory.create(context)
             }
+        val hasTextFeedback = viewModel.textFeedback !is TextFeedbackViewModel.NoFeedback
 
-        Box(modifier = Modifier.weight(1f)) {
-            val hasTextFeedback =
-                textFeedbackViewModel.textFeedback !is TextFeedbackViewModel.NoFeedback
-
-            Crossfade(
-                targetState = hasTextFeedback,
-                modifier = Modifier.align(Alignment.Center),
-                label = "Toolbar.ShowTextFeedback",
-            ) { showTextFeedback ->
-                if (showTextFeedback) {
-                    TextFeedback(textFeedbackViewModel.textFeedback, Modifier.wrapContentSize())
-                } else {
-                    BuildNumber(
-                        viewModelFactory = viewModel.buildNumberViewModelFactory,
-                        textColor = MaterialTheme.colorScheme.onSurface,
-                        modifier =
-                            Modifier.borderOnFocus(
-                                    color = MaterialTheme.colorScheme.secondary,
-                                    cornerSize = CornerSize(1.dp),
-                                )
-                                .wrapContentSize(),
-                    )
-                }
+        Crossfade(
+            targetState = hasTextFeedback,
+            modifier = Modifier.align(Alignment.Center),
+            label = "Toolbar.ShowTextFeedback",
+        ) { showTextFeedback ->
+            if (showTextFeedback) {
+                TextFeedback(model = viewModel.textFeedback)
+            } else {
+                BuildNumber(viewModelFactory = buildNumberViewModelFactory)
             }
         }
     }

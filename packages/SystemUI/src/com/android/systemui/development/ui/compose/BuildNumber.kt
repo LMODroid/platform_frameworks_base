@@ -20,6 +20,7 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
@@ -32,16 +33,18 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import com.android.systemui.communal.ui.compose.extensions.detectLongPressGesture
 import com.android.systemui.development.ui.viewmodel.BuildNumberViewModel
 import com.android.systemui.lifecycle.rememberViewModel
+import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
 
 @Composable
 fun BuildNumber(
     viewModelFactory: BuildNumberViewModel.Factory,
-    textColor: Color,
     modifier: Modifier = Modifier,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
 ) {
     val viewModel = rememberViewModel(traceName = "BuildNumber") { viewModelFactory.create() }
 
@@ -56,6 +59,10 @@ fun BuildNumber(
             style = MaterialTheme.typography.bodySmall,
             modifier =
                 modifier
+                    .borderOnFocus(
+                        color = MaterialTheme.colorScheme.secondary,
+                        cornerSize = CornerSize(1.dp),
+                    )
                     .focusable()
                     .wrapContentWidth()
                     // Using this instead of combinedClickable because this node should not support

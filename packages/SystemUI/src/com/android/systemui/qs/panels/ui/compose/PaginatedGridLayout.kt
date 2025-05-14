@@ -23,12 +23,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -58,7 +56,6 @@ import com.android.systemui.qs.panels.ui.compose.toolbar.EditModeButton
 import com.android.systemui.qs.panels.ui.viewmodel.PaginatedGridViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.TileViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.EditModeButtonViewModel
-import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
 import javax.inject.Inject
 
@@ -190,16 +187,7 @@ private fun FooterBar(
         horizontalArrangement = spacedBy(8.dp),
     ) {
         Row(Modifier.weight(1f)) {
-            BuildNumber(
-                viewModelFactory = buildNumberViewModelFactory,
-                textColor = MaterialTheme.colorScheme.onSurface,
-                modifier =
-                    Modifier.borderOnFocus(
-                            color = MaterialTheme.colorScheme.secondary,
-                            cornerSize = CornerSize(1.dp),
-                        )
-                        .wrapContentSize(),
-            )
+            BuildNumber(viewModelFactory = buildNumberViewModelFactory)
             Spacer(modifier = Modifier.weight(1f))
         }
         PagerDots(
