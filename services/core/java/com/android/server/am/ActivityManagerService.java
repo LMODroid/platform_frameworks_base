@@ -14704,9 +14704,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                 Slog.w(TAG, "registerReceiverWithFeature: no app for " + caller);
                 return null;
             }
-            if (callerApp.info.uid != SYSTEM_UID
-                    && !callerApp.getPkgList().containsKey(callerPackage)
-                    && !"android".equals(callerPackage)) {
+            if (!UserHandle.isCore(callerApp.info.uid)
+                    && !callerApp.getPkgList().containsKey(callerPackage)) {
                 throw new SecurityException("Given caller package " + callerPackage
                         + " is not running in process " + callerApp);
             }
