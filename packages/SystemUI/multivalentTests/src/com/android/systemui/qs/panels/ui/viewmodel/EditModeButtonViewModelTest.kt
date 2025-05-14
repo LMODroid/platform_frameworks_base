@@ -172,6 +172,8 @@ class EditModeButtonViewModelTest : SysuiTestCase() {
     ): EditModeButtonViewModel {
         headlessSystemUserMode = fakeHeadlessSystemUserMode
         fakeHeadlessSystemUserMode.setIsHeadlessSystemUser(isHeadlessSystemUser)
-        return editModeButtonViewModelFactory.create().apply { activateIn(testScope) }
+        return editModeButtonViewModelFactory.create(ignoreTestHarness = true).apply {
+            activateIn(testScope)
+        }
     }
 }

@@ -27,7 +27,7 @@ import com.android.systemui.user.domain.interactor.selectedUserInteractor
 val Kosmos.editModeButtonViewModelFactory by
     Kosmos.Fixture {
         object : EditModeButtonViewModel.Factory {
-            override fun create(): EditModeButtonViewModel {
+            override fun create(ignoreTestHarness: Boolean): EditModeButtonViewModel {
                 return EditModeButtonViewModel(
                     editModeViewModel,
                     falsingInteractor,
@@ -35,6 +35,7 @@ val Kosmos.editModeButtonViewModelFactory by
                     headlessSystemUserMode,
                     qsPreferencesInteractor,
                     selectedUserInteractor,
+                    ignoreTestHarness,
                 )
             }
         }

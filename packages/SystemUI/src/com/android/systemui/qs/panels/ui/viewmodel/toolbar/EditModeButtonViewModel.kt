@@ -16,6 +16,7 @@
 
 package com.android.systemui.qs.panels.ui.viewmodel.toolbar
 
+import android.app.ActivityManager
 import androidx.compose.runtime.getValue
 import com.android.systemui.Flags.hsuBehaviorChanges
 import com.android.systemui.classifier.domain.interactor.FalsingInteractor
@@ -28,6 +29,7 @@ import com.android.systemui.qs.panels.domain.interactor.QSPreferencesInteractor
 import com.android.systemui.qs.panels.ui.viewmodel.EditModeViewModel
 import com.android.systemui.user.domain.interactor.HeadlessSystemUserMode
 import com.android.systemui.user.domain.interactor.SelectedUserInteractor
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.flowOf
@@ -42,9 +44,17 @@ constructor(
     private val hsum: HeadlessSystemUserMode,
     private val qsPreferencesInteractor: QSPreferencesInteractor,
     selectedUserInteractor: SelectedUserInteractor,
+    @Assisted private val ignoreTestHarness: Boolean,
 ) : ExclusiveActivatable() {
 
     private val hydrator = Hydrator("editModeButtonViewModel.hydrator")
+
+    /**
+     * Avoid showing the tooltip when the shade is opened in test harness, as the tooltip will block
+     * the first user input after being displayed.
+     */
+    private val runningInTestHarness =
+        !ignoreTestHarness && ActivityManager.isRunningInUserTestHarness()
 
     val isEditButtonVisible: Boolean by
         hydrator.hydratedStateOf(
@@ -60,7 +70,7 @@ constructor(
         hydrator.hydratedStateOf(
             traceName = "showTooltip",
             source =
-                if (QSEditModeTooltip.isEnabled) {
+                if (QSEditModeTooltip.isEnabled && !runningInTestHarness) {
                     qsPreferencesInteractor.editTooltipShown.map {
                         // Show the tooltip if it wasn't shown before
                         !it
@@ -87,6 +97,6 @@ constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(): EditModeButtonViewModel
+        fun create(ignoreTestHarness: Boolean = false): EditModeButtonViewModel
     }
 }
