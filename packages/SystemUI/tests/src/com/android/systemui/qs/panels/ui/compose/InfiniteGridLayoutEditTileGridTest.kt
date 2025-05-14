@@ -147,14 +147,14 @@ class InfiniteGridLayoutEditTileGridTest : SysuiTestCase() {
                 .inOrder()
 
             // Perform first undo
-            composeRule.onNodeWithText("Undo").performClick()
+            composeRule.onNodeWithContentDescription("Undo").performClick()
             // Assert we're back to the first move state
             assertThat(currentTilesInteractor.currentTilesSpecs.map { it.spec })
                 .containsExactlyElementsIn(stateOnFirstMove)
                 .inOrder()
 
             // Perform second undo
-            composeRule.onNodeWithText("Undo").performClick()
+            composeRule.onNodeWithContentDescription("Undo").performClick()
             // Assert we're back to the initial state
             assertThat(currentTilesInteractor.currentTilesSpecs.map { it.spec })
                 .containsExactlyElementsIn(TestEditTiles.map { it.spec })
@@ -189,12 +189,12 @@ class InfiniteGridLayoutEditTileGridTest : SysuiTestCase() {
             assertThat(latest!!.find { it.tile.tileSpec == "mictoggle" }).isNotNull()
 
             // Perform first undo
-            composeRule.onNodeWithText("Undo").performClick()
+            composeRule.onNodeWithContentDescription("Undo").performClick()
             // Assert that mictoggle is no longer current
             assertThat(latest!!.find { it.tile.tileSpec == "mictoggle" }).isNull()
 
             // Perform second undo
-            composeRule.onNodeWithText("Undo").performClick()
+            composeRule.onNodeWithContentDescription("Undo").performClick()
             // Assert that rotation is no longer current
             assertThat(latest!!.find { it.tile.tileSpec == "rotation" }).isNull()
         }
@@ -225,12 +225,12 @@ class InfiniteGridLayoutEditTileGridTest : SysuiTestCase() {
             assertThat(latest!!.find { it.tile.tileSpec == "bt" }).isNull()
 
             // Perform first undo
-            composeRule.onNodeWithText("Undo").performClick()
+            composeRule.onNodeWithContentDescription("Undo").performClick()
             // Assert that bluetooth is current
             assertThat(latest!!.find { it.tile.tileSpec == "bt" }).isNotNull()
 
             // Perform second undo
-            composeRule.onNodeWithText("Undo").performClick()
+            composeRule.onNodeWithContentDescription("Undo").performClick()
             // Assert that internet is current
             assertThat(latest!!.find { it.tile.tileSpec == "internet" }).isNotNull()
         }
@@ -266,11 +266,11 @@ class InfiniteGridLayoutEditTileGridTest : SysuiTestCase() {
             assertLargeTiles(setOf("bt", "dnd", "cast", "flashlight"))
 
             // Perform first undo
-            composeRule.onNodeWithText("Undo").performClick()
+            composeRule.onNodeWithContentDescription("Undo").performClick()
             assertLargeTiles(setOf("bt", "dnd", "cast"))
 
             // Perform second undo
-            composeRule.onNodeWithText("Undo").performClick()
+            composeRule.onNodeWithContentDescription("Undo").performClick()
             assertLargeTiles(setOf("internet", "bt", "dnd", "cast"))
             assertThat(dynamicIconTilesViewModel.largeTilesState.value.map { it.spec })
                 .containsExactly("internet", "bt", "dnd", "cast")

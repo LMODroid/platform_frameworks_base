@@ -201,12 +201,12 @@ class EditModeTest : SysuiTestCase() {
         composeRule.onNodeWithText("tileF").performClick() // Tap to add
         composeRule.waitForIdle()
 
-        composeRule.onNodeWithText("Undo").assertExists()
+        composeRule.onNodeWithContentDescription("Undo").assertExists()
 
-        composeRule.onNodeWithText("Undo").performClick() // Undo addition
+        composeRule.onNodeWithContentDescription("Undo").performClick() // Undo addition
         composeRule.waitForIdle()
 
-        composeRule.onNodeWithText("Undo").assertDoesNotExist()
+        composeRule.onNodeWithContentDescription("Undo").assertDoesNotExist()
     }
 
     private fun ComposeContentTestRule.assertCurrentTilesGridContainsExactly(specs: List<String>) =

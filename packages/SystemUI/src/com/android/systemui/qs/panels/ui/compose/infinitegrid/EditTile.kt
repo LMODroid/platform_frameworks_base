@@ -82,6 +82,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -280,26 +281,22 @@ fun DefaultEditTileGrid(
         topBar = {
             EditModeTopBar(onStopEditing = onStopEditing, modifier = Modifier.statusBarsPadding()) {
                 AnimatedVisibility(snapshotViewModel.canUndo, enter = fadeIn(), exit = fadeOut()) {
-                    TextButton(
+                    IconButton(
                         enabled = snapshotViewModel.canUndo,
                         onClick = {
                             selectionState.unSelect()
                             snapshotViewModel.undo()
                         },
                         colors =
-                            ButtonDefaults.textButtonColors(
+                            IconButtonDefaults.iconButtonColors(
                                 containerColor = MaterialTheme.colorScheme.primary,
                                 contentColor = MaterialTheme.colorScheme.onPrimary,
                             ),
                     ) {
                         Icon(
                             Icons.AutoMirrored.Default.Undo,
-                            contentDescription = null,
-                            modifier = Modifier.padding(end = 8.dp),
-                        )
-                        Text(
-                            text = stringResource(id = com.android.internal.R.string.undo),
-                            style = MaterialTheme.typography.labelLarge,
+                            contentDescription =
+                                stringResource(id = com.android.internal.R.string.undo),
                         )
                     }
                 }
@@ -523,7 +520,12 @@ private fun EditGridHeader(
 
 @Composable
 private fun EditGridCenteredText(text: String, modifier: Modifier = Modifier) {
-    Text(text = text, style = MaterialTheme.typography.titleSmall, modifier = modifier)
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleSmall,
+        textAlign = TextAlign.Center,
+        modifier = modifier,
+    )
 }
 
 @Composable
