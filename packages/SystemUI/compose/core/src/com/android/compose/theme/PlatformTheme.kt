@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
+
 package com.android.compose.theme
 
 import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
@@ -57,7 +61,11 @@ fun PlatformTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Compos
         }
     val windowSizeClass = calculateWindowSizeClass()
 
-    MaterialTheme(colorScheme = colorScheme, typography = typography) {
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = typography,
+        motionScheme = ExpressiveMotionScheme,
+    ) {
         CompositionLocalProvider(
             LocalAndroidColorScheme provides androidColorScheme,
             LocalWindowSizeClass provides windowSizeClass,
@@ -91,3 +99,5 @@ private fun platformColorScheme(isDarkTheme: Boolean, context: Context): ColorSc
             )
     }
 }
+
+private val ExpressiveMotionScheme = MotionScheme.expressive()
