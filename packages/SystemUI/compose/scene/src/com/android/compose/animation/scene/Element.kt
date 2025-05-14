@@ -103,6 +103,7 @@ internal class Element(val key: ElementKey) {
          * we are idle on this content.
          */
         var targetSize by mutableStateOf(SizeUnspecified)
+        var targetCoordinates: LayoutCoordinates? by mutableStateOf(null)
         var targetOffset by mutableStateOf(Offset.Unspecified)
 
         /** The last state this element had in this content. */
@@ -375,6 +376,7 @@ internal class ElementNode(
                 // this content when idle.
                 coordinates?.let { coords ->
                     with(layoutImpl.lookaheadScope) {
+                        stateInContent.targetCoordinates = lookaheadScopeCoordinates
                         stateInContent.targetOffset =
                             lookaheadScopeCoordinates.localLookaheadPositionOf(coords)
                     }

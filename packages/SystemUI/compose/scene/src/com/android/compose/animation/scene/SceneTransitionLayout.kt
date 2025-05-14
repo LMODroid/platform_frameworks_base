@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.PointerType
+import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.LookaheadScope
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -175,6 +176,13 @@ interface ElementStateScope {
      * element when idle, or `null` if the element is not composed and placed in that content (yet).
      */
     fun ElementKey.targetOffset(content: ContentKey): Offset?
+
+    /**
+     * Return the *target* layout coordinates of [this] element in the given [content], i.e. the
+     * LayoutCoordinates of the element when idle, or `null` if the element is not composed and
+     * placed in that content (yet).
+     */
+    fun ElementKey.targetCoordinates(content: ContentKey): LayoutCoordinates?
 
     /**
      * Return the *target* size of [this] content, i.e. the size of the content when idle, or `null`

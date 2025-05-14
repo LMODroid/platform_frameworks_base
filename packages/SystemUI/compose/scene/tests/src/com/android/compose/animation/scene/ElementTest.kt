@@ -1490,6 +1490,7 @@ class ElementTest {
 
         assertThat(bState.targetSize).isNotEqualTo(Element.SizeUnspecified)
         assertThat(bState.targetOffset).isNotEqualTo(Offset.Unspecified)
+        assertThat(bState.targetCoordinates).isNotEqualTo(null)
     }
 
     @Test
