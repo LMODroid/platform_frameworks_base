@@ -92,7 +92,6 @@ import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.LowestZIndexContentPicker
 import com.android.compose.animation.scene.SceneTransitionLayoutState
 import com.android.compose.animation.scene.content.state.TransitionState
-import com.android.compose.gesture.NestedScrollableBound
 import com.android.compose.gesture.effect.OffsetOverscrollEffect
 import com.android.compose.gesture.effect.rememberOffsetOverscrollEffect
 import com.android.compose.modifiers.thenIf
@@ -596,7 +595,7 @@ fun ContentScope.NotificationScrollingStack(
         ) {
             Column(
                 modifier =
-                    Modifier.disableSwipesWhenScrolling(NestedScrollableBound.BottomRight)
+                    Modifier.disableSwipesWhenScrolling()
                         .thenIf(supportNestedScrolling) {
                             Modifier.nestedScroll(scrimNestedScrollConnection)
                         }
