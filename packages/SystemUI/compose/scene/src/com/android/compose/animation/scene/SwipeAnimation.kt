@@ -433,7 +433,9 @@ internal class SwipeAnimation<T : ContentKey>(
             return initialVelocity - result.endState.velocity
         }
 
-        val motionSpatialSpec = spec ?: layoutState.motionScheme.defaultSpatialSpec()
+        // TODO(b/417444347): Use the default or fast spatial spec for small STLs, or make it a
+        // parameter of the transitions spec.
+        val motionSpatialSpec = spec ?: layoutState.motionScheme.slowSpatialSpec()
         animatable.animateTo(
             targetValue = targetOffset,
             animationSpec = motionSpatialSpec,
