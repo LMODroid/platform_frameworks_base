@@ -333,8 +333,8 @@ public class NotificationShadeWindowViewController implements Dumpable {
         return mView.findViewById(R.id.keyguard_message_area);
     }
 
-    private Boolean logDownDispatch(MotionEvent ev, String msg, Boolean result) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+    private Boolean logDownOrFalseResultDispatch(MotionEvent ev, String msg, Boolean result) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN || Boolean.FALSE.equals(result)) {
             mShadeLogger.logShadeWindowDispatch(ev, msg, result);
         }
         return result;
@@ -381,7 +381,7 @@ public class NotificationShadeWindowViewController implements Dumpable {
             @Override
             public Boolean handleDispatchTouchEvent(MotionEvent ev) {
                 if (mStatusBarViewController == null) { // Fix for b/192490822
-                    return logDownDispatch(ev,
+                    return logDownOrFalseResultDispatch(ev,
                             "Ignoring touch while statusBarView not yet set", false);
                 }
                 boolean isDown = ev.getActionMasked() == MotionEvent.ACTION_DOWN;
@@ -396,7 +396,7 @@ public class NotificationShadeWindowViewController implements Dumpable {
                 // Reset manual touch dispatch state here but make sure the UP/CANCEL event still
                 // gets delivered.
                 if (!isCancel && mService.shouldIgnoreTouch()) {
-                    return logDownDispatch(ev, "touch ignored by CS", false);
+                    return logDownOrFalseResultDispatch(ev, "touch ignored by CS", false);
                 }
 
                 if (isDown) {
@@ -410,14 +410,14 @@ public class NotificationShadeWindowViewController implements Dumpable {
                     mDownEvent = null;
                 }
                 if (mTouchCancelled) {
-                    return logDownDispatch(ev, "touch cancelled", false);
+                    return logDownOrFalseResultDispatch(ev, "touch cancelled", false);
                 }
                 if (mExpandAnimationRunning) {
                     if (isDown && mClock.uptimeMillis() > mLaunchAnimationTimeout) {
                         Log.wtf(TAG, "NSWVC: launch animation timed out");
                         setExpandAnimationRunning(false);
                     } else {
-                        return logDownDispatch(ev, "expand animation running", false);
+                        return logDownOrFalseResultDispatch(ev, "expand animation running", false);
                     }
                 }
 
@@ -429,7 +429,7 @@ public class NotificationShadeWindowViewController implements Dumpable {
                 }
 
                 if (mIsOcclusionTransitionRunning) {
-                    return logDownDispatch(ev, "occlusion transition running", false);
+                    return logDownOrFalseResultDispatch(ev, "occlusion transition running", false);
                 }
 
                 mFalsingCollector.onTouchEvent(ev);
@@ -443,7 +443,8 @@ public class NotificationShadeWindowViewController implements Dumpable {
                 if (!SceneContainerFlag.isEnabled()
                         && mGlanceableHubContainerController.onTouchEvent(ev)) {
                     // GlanceableHubContainerController is only used pre-flexiglass.
-                    return logDownDispatch(ev, "dispatched to glanceable hub container", true);
+                    return logDownOrFalseResultDispatch(ev,
+                            "dispatched to glanceable hub container", true);
                 }
                 if (mBrightnessMirror != null
                         && mBrightnessMirror.getVisibility() == View.VISIBLE) {
@@ -451,7 +452,7 @@ public class NotificationShadeWindowViewController implements Dumpable {
                     // you can't touch anything other than the brightness slider while the mirror is
                     // showing and the rest of the panel is transparent.
                     if (ev.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
-                        return logDownDispatch(ev, "disallowed new pointer", false);
+                        return logDownOrFalseResultDispatch(ev, "disallowed new pointer", false);
                     }
                 }
                 if (isDown) {
@@ -470,7 +471,7 @@ public class NotificationShadeWindowViewController implements Dumpable {
                     expandingBelowNotch = true;
                 }
                 if (expandingBelowNotch) {
-                    return logDownDispatch(ev,
+                    return logDownOrFalseResultDispatch(ev,
                             "expand below notch. sending touch to status bar",
                             mStatusBarViewController.sendTouchToView(ev));
                 }
@@ -483,10 +484,11 @@ public class NotificationShadeWindowViewController implements Dumpable {
                         if (!mPrimaryBouncerInteractor.isBouncerShowing()) {
                             if (mStatusBarWindowStateController.windowIsShowing()) {
                                 mIsTrackingBarGesture = true;
-                                return logDownDispatch(ev, "sending touch to status bar",
+                                return logDownOrFalseResultDispatch(ev,
+                                        "sending touch to status bar",
                                         mStatusBarViewController.sendTouchToView(ev));
                             } else {
-                                return logDownDispatch(ev, "hidden or hiding", true);
+                                return logDownOrFalseResultDispatch(ev, "hidden or hiding", true);
                             }
                         } else {
                             mShadeLogger.d("NSWVC: bouncer showing");
@@ -499,13 +501,14 @@ public class NotificationShadeWindowViewController implements Dumpable {
                     if (isUp || isCancel) {
                         mIsTrackingBarGesture = false;
                     }
-                    return logDownDispatch(ev, "sending bar gesture to status bar",
+                    return logDownOrFalseResultDispatch(ev, "sending bar gesture to status bar",
                             sendToStatusBar);
                 }
                 if (isDown) {
                     mShadeLogger.logNoTouchDispatch(mIsTrackingBarGesture, mExpandAnimationRunning);
                 }
-                return logDownDispatch(ev, "no custom touch dispatch of down event", null);
+                return logDownOrFalseResultDispatch(ev, "no custom touch dispatch of down event",
+                        null);
             }
 
             @Override
