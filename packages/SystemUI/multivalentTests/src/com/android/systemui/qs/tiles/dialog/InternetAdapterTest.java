@@ -26,6 +26,7 @@ import androidx.test.filters.SmallTest;
 
 import com.android.systemui.Flags;
 import com.android.systemui.SysuiTestCase;
+import com.android.systemui.flags.SceneContainerFlagParameterizationKt;
 import com.android.systemui.qs.flags.QsDetailedView;
 import com.android.systemui.qs.flags.QsWifiConfig;
 import com.android.systemui.res.R;
@@ -87,8 +88,12 @@ public class InternetAdapterTest extends SysuiTestCase {
 
     @Parameters(name = "{0}")
     public static List<FlagsParameterization> getParams() {
-        return allCombinationsOf(Flags.FLAG_QS_WIFI_CONFIG,
-                Flags.FLAG_QS_TILE_DETAILED_VIEW);
+        List<FlagsParameterization> aconfigCombinations = allCombinationsOf(
+                Flags.FLAG_QS_WIFI_CONFIG,
+                Flags.FLAG_QS_TILE_DETAILED_VIEW
+        );
+
+        return SceneContainerFlagParameterizationKt.andSceneContainer(aconfigCombinations);
     }
 
     public InternetAdapterTest(FlagsParameterization flags) {
@@ -106,6 +111,11 @@ public class InternetAdapterTest extends SysuiTestCase {
         when(mWifiEntry.getKey()).thenReturn(WIFI_KEY);
         when(mWifiEntry.getTitle()).thenReturn(WIFI_TITLE);
         when(mWifiEntry.getSummary(false)).thenReturn(WIFI_SUMMARY);
+
+        // Stub mutate() for mock Drawables
+        when(mWifiDrawable.mutate()).thenReturn(mWifiDrawable);
+        when(mGearIcon.mutate()).thenReturn(mGearIcon);
+        when(mLockIcon.mutate()).thenReturn(mLockIcon);
 
         mInternetAdapter = new InternetAdapter(mInternetDetailsContentController, mScope,
                 QsDetailedView.isEnabled());
