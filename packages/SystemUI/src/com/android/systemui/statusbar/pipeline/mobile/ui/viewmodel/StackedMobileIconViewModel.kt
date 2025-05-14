@@ -45,6 +45,7 @@ interface StackedMobileIconViewModel {
     val networkTypeIcon: Icon.Resource?
     /** [Context] to use when loading the [networkTypeIcon] */
     val mobileContext: Context?
+    val roaming: Boolean
     val isIconVisible: Boolean
 }
 
@@ -147,6 +148,27 @@ constructor(
             initialValue = null,
         )
 
+    override val roaming: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isRoaming",
+            source =
+                _isIconVisible.flatMapLatest { isVisible ->
+                    if (isVisible) {
+                            iconViewModelFlow.flatMapLatest { viewModels ->
+                                viewModels.firstOrNull()?.roaming ?: flowOf(false)
+                            }
+                        } else {
+                            flowOf(false)
+                        }
+                        .logDiffsForTable(
+                            tableLogBuffer = tableLogger,
+                            columnName = COL_ROAMING,
+                            initialValue = false,
+                        )
+                },
+            initialValue = false,
+        )
+
     override val isIconVisible: Boolean by
         hydrator.hydratedStateOf(
             traceName = "isIconVisible",
@@ -180,5 +202,6 @@ constructor(
 
     private companion object {
         const val COL_IS_ICON_VISIBLE = "isIconVisible"
+        const val COL_ROAMING = "roam"
     }
 }

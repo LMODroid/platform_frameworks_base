@@ -213,6 +213,32 @@ class StackedMobileIconViewModelTest : SysuiTestCase() {
             assertThat(underTest.mobileContext).isEqualTo(contextSub2)
         }
 
+    @Test
+    @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
+    fun roaming_primaryConnectionIsRoaming_true() =
+        kosmos.runTest {
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            fakeMobileIconsInteractor.activeMobileDataSubscriptionId.value = SUB_1.subscriptionId
+            val intr1 = fakeMobileIconsInteractor.getInteractorForSubId(SUB_1.subscriptionId)!!
+
+            intr1.isRoaming.value = true
+
+            assertThat(underTest.roaming).isTrue()
+        }
+
+    @Test
+    @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
+    fun roaming_secondaryConnectionIsRoaming_false() =
+        kosmos.runTest {
+            fakeMobileIconsInteractor.filteredSubscriptions.value = listOf(SUB_1, SUB_2)
+            fakeMobileIconsInteractor.activeMobileDataSubscriptionId.value = SUB_1.subscriptionId
+            val intr2 = fakeMobileIconsInteractor.getInteractorForSubId(SUB_2.subscriptionId)!!
+
+            intr2.isRoaming.value = true
+
+            assertThat(underTest.roaming).isFalse()
+        }
+
     private fun setIconLevel(subId: Int, level: Int) {
         with(kosmos.fakeMobileIconsInteractor.getInteractorForSubId(subId)!!) {
             signalLevelIcon.value =

@@ -95,6 +95,13 @@ constructor(
             initialValue = null,
         )
 
+    override val roaming: Boolean by
+        hydratedComposeStateOf(
+            name = "roaming",
+            source = iconList.flatMap { icons -> icons.firstOrNull()?.roaming ?: stateOf(false) },
+            initialValue = false,
+        )
+
     override val isIconVisible: Boolean
         get() = isStackable && dualSim != null
 
