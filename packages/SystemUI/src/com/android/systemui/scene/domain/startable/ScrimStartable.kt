@@ -31,6 +31,8 @@ import com.android.systemui.keyguard.domain.interactor.BiometricUnlockInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.keyguard.shared.model.BiometricUnlockMode
 import com.android.systemui.keyguard.shared.model.BiometricUnlockModel
+import com.android.systemui.power.domain.interactor.PowerInteractor
+import com.android.systemui.power.shared.model.ScreenPowerState
 import com.android.systemui.scene.domain.interactor.SceneContainerOcclusionInteractor
 import com.android.systemui.scene.domain.interactor.SceneInteractor
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
@@ -66,6 +68,7 @@ constructor(
     private val alternateBouncerInteractor: AlternateBouncerInteractor,
     brightnessMirrorShowingInteractor: BrightnessMirrorShowingInteractorPassThrough,
     private val dozeServiceHost: DozeServiceHost,
+    private val powerInteractor: PowerInteractor,
 ) : CoreStartable {
 
     @VisibleForTesting
@@ -205,6 +208,16 @@ constructor(
         applicationScope.launch {
             scrimState.filterNotNull().collect { scrimState ->
                 scrimController.transitionTo(scrimState)
+            }
+        }
+
+        applicationScope.launch {
+            powerInteractor.screenPowerState.collect { powerState ->
+                when (powerState) {
+                    ScreenPowerState.SCREEN_ON -> scrimController.onScreenTurnedOn()
+                    ScreenPowerState.SCREEN_OFF -> scrimController.onScreenTurnedOff()
+                    else -> Unit
+                }
             }
         }
     }

@@ -2898,6 +2898,11 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
         @Override
         public void onScreenTurnedOn() {
+            if (SceneContainerFlag.isEnabled()) {
+                // Already handled in ScrimStartable when the scene framework is enabled.
+                return;
+            }
+
             mScrimController.onScreenTurnedOn();
         }
 
@@ -2905,7 +2910,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         public void onScreenTurnedOff() {
             Trace.beginSection("CentralSurfaces#onScreenTurnedOff");
             mFalsingCollector.onScreenOff();
-            mScrimController.onScreenTurnedOff();
+            if (!SceneContainerFlag.isEnabled()) {
+                mScrimController.onScreenTurnedOff();
+            }
             if (mCloseQsBeforeScreenOff) {
                 mQsController.closeQs();
                 mCloseQsBeforeScreenOff = false;
