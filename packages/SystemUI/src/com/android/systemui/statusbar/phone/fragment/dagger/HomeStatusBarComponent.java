@@ -68,7 +68,11 @@ public interface HomeStatusBarComponent {
 
     /**
      * Performs initialization logic after {@link HomeStatusBarComponent} has been constructed.
+     *
+     * @deprecated Startables are not started (or stopped) when [StatusBarRootModernization] is
+     * enabled.
      */
+    @Deprecated
     interface Startable {
         /** */
         void start();

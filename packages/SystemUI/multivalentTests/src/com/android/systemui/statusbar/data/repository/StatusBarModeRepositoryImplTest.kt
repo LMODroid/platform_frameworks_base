@@ -17,6 +17,8 @@
 package com.android.systemui.statusbar.data.repository
 
 import android.graphics.Rect
+import android.platform.test.annotations.DisableFlags
+import android.platform.test.annotations.EnableFlags
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
@@ -30,6 +32,7 @@ import com.android.internal.view.AppearanceRegion
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.statusbar.CommandQueue
+import com.android.systemui.statusbar.core.StatusBarRootModernization
 import com.android.systemui.statusbar.data.model.StatusBarMode
 import com.android.systemui.statusbar.layout.BoundsPair
 import com.android.systemui.statusbar.layout.LetterboxAppearance
@@ -54,6 +57,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 
 @SmallTest
@@ -70,18 +74,15 @@ class StatusBarModeRepositoryImplTest : SysuiTestCase() {
         }
     private val ongoingCallRepository = kosmos.ongoingCallRepository
 
-    private val underTest =
+    private val underTest by lazy {
         StatusBarModePerDisplayRepositoryImpl(
-                testScope.backgroundScope,
-                DISPLAY_ID,
-                commandQueue,
-                letterboxAppearanceCalculator,
-                ongoingCallRepository,
-            )
-            .apply {
-                this.start()
-                this.onStatusBarViewInitialized(homeStatusBarComponent)
-            }
+            testScope.backgroundScope,
+            DISPLAY_ID,
+            commandQueue,
+            letterboxAppearanceCalculator,
+            ongoingCallRepository,
+        )
+    }
 
     private val commandQueueCallback: CommandQueue.Callbacks
         get() {
@@ -97,7 +98,34 @@ class StatusBarModeRepositoryImplTest : SysuiTestCase() {
             return callbackCaptor.value
         }
 
-    @Before fun setUp() {}
+    @Before
+    fun setUp() {
+        underTest.apply {
+            this.start()
+            this.onStatusBarViewInitialized(homeStatusBarComponent)
+        }
+    }
+
+    @Test
+    fun start_boundsProviderStarted() {
+        verify(statusBarBoundsProvider).start()
+    }
+
+    @Test
+    @EnableFlags(StatusBarRootModernization.FLAG_NAME)
+    fun stop_flagOn_boundsProviderStopped() {
+        underTest.stop()
+
+        verify(statusBarBoundsProvider).stop()
+    }
+
+    @Test
+    @DisableFlags(StatusBarRootModernization.FLAG_NAME)
+    fun stop_flagOff_boundsProviderNotStopped() {
+        underTest.stop()
+
+        verify(statusBarBoundsProvider, never()).stop()
+    }
 
     @Test
     fun isTransientShown_commandQueueShow_wrongDisplayId_notUpdated() {
