@@ -7475,4 +7475,6 @@
     <!-- Biometrics fingerprint frr notification target activity component name, it shall be customized by OEMs -->
     <string translatable="false" name="config_fingerprintFrrTargetComponent"></string>
 
+    <!-- Whether the system package installer supports the material design. -->
+    <bool name="config_enableMaterialDesignInPackageInstaller">true</bool>
 </resources>

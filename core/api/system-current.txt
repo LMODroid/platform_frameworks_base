@@ -486,6 +486,7 @@ package android {
   public static final class R.bool {
     field public static final int config_enableDefaultNotes = 17891338; // 0x111000a
     field public static final int config_enableDefaultNotesForWorkProfile = 17891339; // 0x111000b
+    field @FlaggedApi("android.content.pm.use_pia_v2") public static final int config_enableMaterialDesignInPackageInstaller;
     field public static final int config_enableQrCodeScannerOnLockScreen = 17891336; // 0x1110008
     field public static final int config_safetyProtectionEnabled = 17891337; // 0x1110009
     field public static final int config_sendPackageName = 17891328; // 0x1110000

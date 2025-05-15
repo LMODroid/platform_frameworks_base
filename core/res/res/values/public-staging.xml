@@ -267,6 +267,9 @@
   </staging-public-group>
 
   <staging-public-group type="bool" first-id="0x01a30000">
+    <!-- @FlaggedApi(android.content.pm.Flags.FLAG_USE_PIA_V2)
+        @hide @SystemApi -->
+    <public name="config_enableMaterialDesignInPackageInstaller" />
   </staging-public-group>
 
   <staging-public-group type="fraction" first-id="0x01a20000">
