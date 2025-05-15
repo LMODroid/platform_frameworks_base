@@ -38,12 +38,15 @@ constructor(private val editModeViewModel: EditModeViewModel) : UserActionsViewM
     override suspend fun hydrateActions(setActions: (Map<UserAction, UserActionResult>) -> Unit) {
         editModeViewModel.isEditing
             .map { isEditing ->
+                val hideQuickSettings = HideOverlay(Overlays.QuickSettingsShade)
                 buildMap {
-                    put(Swipe.Up, HideOverlay(Overlays.QuickSettingsShade))
-                    // When editing, back should go back to QS from edit mode (i.e. remain in the
-                    // same overlay).
-                    if (!isEditing) {
-                        put(Back, HideOverlay(Overlays.QuickSettingsShade))
+                    if (isEditing) {
+                        // When editing, the back gesture is handled outside of this view-model.
+                        // TODO(b/418003378): Back should go back to the QS grid layout.
+                        put(Swipe.Up(fromSource = SceneContainerArea.BottomEdge), hideQuickSettings)
+                    } else {
+                        put(Back, hideQuickSettings)
+                        put(Swipe.Up, hideQuickSettings)
                     }
                     put(
                         Swipe.Down(fromSource = SceneContainerArea.TopEdgeStartHalf),

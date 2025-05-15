@@ -53,22 +53,13 @@ constructor(private val qsSceneAdapter: QSSceneAdapter, sceneBackInteractor: Sce
 
     override suspend fun hydrateActions(setActions: (Map<UserAction, UserActionResult>) -> Unit) {
         combine(qsSceneAdapter.isCustomizerShowing, backScene) { isCustomizing, backScene ->
-                buildMap<UserAction, UserActionResult> {
-                    if (isCustomizing) {
-                        // TODO(b/332749288) Empty map so there are no back handlers and back can
-                        // close
-                        // customizer
-
-                        // TODO(b/330200163) Add an Up from Bottom to be able to collapse the shade
-                        // while customizing
-                    } else {
+                buildMap {
+                    // Disable "back" and "swipe up to dismiss" gestures while customizing.
+                    if (!isCustomizing) {
                         put(Back, UserActionResult(backScene))
                         put(Swipe.Up, UserActionResult(backScene))
-                        put(
-                            Swipe.Up(fromSource = Edge.Bottom),
-                            UserActionResult(SceneFamilies.Home),
-                        )
                     }
+                    put(Swipe.Up(fromSource = Edge.Bottom), UserActionResult(SceneFamilies.Home))
                 }
             }
             .collect { actions -> setActions(actions) }

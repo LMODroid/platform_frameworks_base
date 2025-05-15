@@ -27,6 +27,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.kosmos.testScope
+import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.qs.panels.ui.viewmodel.editModeViewModel
 import com.android.systemui.scene.shared.model.Overlays
@@ -43,7 +44,7 @@ import org.junit.runner.RunWith
 @EnableSceneContainer
 class QuickSettingsShadeOverlayActionsViewModelTest : SysuiTestCase() {
 
-    private val kosmos = testKosmos()
+    private val kosmos = testKosmos().useUnconfinedTestDispatcher()
     private val testScope = kosmos.testScope
 
     private val underTest = kosmos.quickSettingsShadeOverlayActionsViewModel
@@ -67,8 +68,7 @@ class QuickSettingsShadeOverlayActionsViewModelTest : SysuiTestCase() {
             underTest.activateIn(this)
             assertThat(isEditing).isFalse()
 
-            assertThat((actions?.get(Back) as? HideOverlay)?.overlay)
-                .isEqualTo(Overlays.QuickSettingsShade)
+            assertThat(actions?.get(Back)).isEqualTo(HideOverlay(Overlays.QuickSettingsShade))
         }
 
     @Test
@@ -80,6 +80,29 @@ class QuickSettingsShadeOverlayActionsViewModelTest : SysuiTestCase() {
             kosmos.editModeViewModel.startEditing()
 
             assertThat(actions?.get(Back)).isNull()
+        }
+
+    @Test
+    fun upAboveEdge_whileEditing_doesNotHideShade() =
+        testScope.runTest {
+            val actions by collectLastValue(underTest.actions)
+            underTest.activateIn(this)
+
+            kosmos.editModeViewModel.startEditing()
+
+            assertThat(actions?.get(Swipe.Up)).isNull()
+        }
+
+    @Test
+    fun upFromEdge_whileEditing_hidesShade() =
+        testScope.runTest {
+            val actions by collectLastValue(underTest.actions)
+            underTest.activateIn(this)
+
+            kosmos.editModeViewModel.startEditing()
+
+            val userAction = Swipe.Up(fromSource = SceneContainerArea.BottomEdge)
+            assertThat(actions?.get(userAction)).isEqualTo(HideOverlay(Overlays.QuickSettingsShade))
         }
 
     @Test
