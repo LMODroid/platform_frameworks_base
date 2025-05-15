@@ -417,43 +417,44 @@ internal class SwipeAnimation<T : ContentKey>(
         // TODO(b/417444347): Use the default or fast spatial spec for small STLs, or make it a
         // parameter of the transitions spec.
         val animationSpec = spec ?: layoutState.motionScheme.slowSpatialSpec()
-        if (
-            willDecayReachBounds &&
-                willDecayFasterThanAnimating(
-                    animationSpec,
-                    decayAnimationSpec,
-                    initialOffset,
-                    targetOffset,
-                    initialVelocity,
-                )
-        ) {
-            val result = animatable.animateDecay(initialVelocity, decayAnimationSpec)
-            check(animatable.value == targetOffset) {
-                buildString {
-                    appendLine(
-                        "animatable.value = ${animatable.value} != $targetOffset = targetOffset"
+        val result =
+            if (
+                willDecayReachBounds &&
+                    willDecayFasterThanAnimating(
+                        animationSpec,
+                        decayAnimationSpec,
+                        initialOffset,
+                        targetOffset,
+                        initialVelocity,
                     )
-                    appendLine("  initialOffset=$initialOffset")
-                    appendLine("  targetOffset=$targetOffset")
-                    appendLine("  initialVelocity=$initialVelocity")
-                    appendLine("  decayOffset=$decayOffset")
-                    appendLine(
-                        "  animateDecay result: reason=${result.endReason} " +
-                            "value=${result.endState.value} velocity=${result.endState.velocity}"
-                    )
+            ) {
+                animatable.animateDecay(initialVelocity, decayAnimationSpec).also { result ->
+                    check(animatable.value == targetOffset) {
+                        buildString {
+                            appendLine(
+                                "animatable.value=${animatable.value} != $targetOffset=targetOffset"
+                            )
+                            appendLine("  initialOffset=$initialOffset")
+                            appendLine("  targetOffset=$targetOffset")
+                            appendLine("  initialVelocity=$initialVelocity")
+                            appendLine("  decayOffset=$decayOffset")
+                            appendLine(
+                                "  animateDecay result: reason=${result.endReason} " +
+                                    "value=${result.endState.value} " +
+                                    "velocity=${result.endState.velocity}"
+                            )
+                        }
+                    }
                 }
+            } else {
+                animatable.animateTo(
+                    targetValue = targetOffset,
+                    animationSpec = animationSpec,
+                    initialVelocity = initialVelocity,
+                )
             }
-            return initialVelocity - result.endState.velocity
-        }
 
-        animatable.animateTo(
-            targetValue = targetOffset,
-            animationSpec = animationSpec,
-            initialVelocity = initialVelocity,
-        )
-
-        // We consumed the whole velocity.
-        return initialVelocity
+        return initialVelocity - result.endState.velocity
     }
 
     private fun canChangeContent(targetContent: ContentKey): Boolean {
