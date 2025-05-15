@@ -221,7 +221,14 @@ sealed class BatteryViewModel(
         hydrator.hydratedStateOf(
             traceName = "timeRemainingEstimate",
             initialValue = null,
-            source = interactor.batteryTimeRemainingEstimate,
+            source =
+                interactor.isCharging.flatMapLatest { charging ->
+                    if (charging) {
+                        flowOf(null)
+                    } else {
+                        interactor.batteryTimeRemainingEstimate
+                    }
+                },
         )
 
     override suspend fun onActivated(): Nothing {
