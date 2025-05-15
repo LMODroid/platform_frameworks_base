@@ -141,6 +141,7 @@ fun SceneContainer(
                     cuj = transition.cuj,
                 )
             },
+            deferTransitionProgress = true,
         )
 
     DisposableEffect(state) {
