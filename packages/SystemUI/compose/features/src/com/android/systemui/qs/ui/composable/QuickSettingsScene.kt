@@ -45,6 +45,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.overscroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -311,6 +312,7 @@ private fun ContentScope.QuickSettingsScene(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier =
                 Modifier.fillMaxSize()
+                    .overscroll(verticalOverscrollEffect)
                     .padding(
                         top = topPadding.coerceAtLeast(0.dp),
                         bottom = bottomPadding.coerceAtLeast(0.dp),
