@@ -22,9 +22,7 @@
     304,
     320,
     336,
-    352,
-    368,
-    384
+    352
   ],
   "features": [
     {
@@ -33,14 +31,6 @@
       "data_points": [
         {
           "type": "not_found"
-        },
-        {
-          "x": 5.2,
-          "y": 5.2
-        },
-        {
-          "x": 5.2,
-          "y": 5.2
         },
         {
           "x": 5.2,
@@ -157,71 +147,63 @@
         },
         {
           "width": 150,
-          "height": 58.4
+          "height": 63.6
         },
         {
           "width": 150,
-          "height": 104.4
+          "height": 116.4
         },
         {
           "width": 150,
-          "height": 146
+          "height": 161.2
         },
         {
           "width": 150,
-          "height": 181.6
+          "height": 197.2
         },
         {
           "width": 150,
-          "height": 210.4
+          "height": 225.2
         },
         {
           "width": 150,
-          "height": 233.2
+          "height": 246.8
         },
         {
           "width": 150,
-          "height": 251.2
+          "height": 262.4
         },
         {
           "width": 150,
-          "height": 264.4
+          "height": 274
         },
         {
           "width": 150,
-          "height": 274.8
+          "height": 282.4
         },
         {
           "width": 150,
-          "height": 282
+          "height": 288.4
         },
         {
           "width": 150,
-          "height": 287.6
+          "height": 292.4
         },
         {
           "width": 150,
-          "height": 291.2
+          "height": 294.8
         },
         {
           "width": 150,
-          "height": 294
+          "height": 296.4
         },
         {
           "width": 150,
-          "height": 295.6
+          "height": 297.6
         },
         {
           "width": 150,
-          "height": 297.2
-        },
-        {
-          "width": 150,
-          "height": 298
-        },
-        {
-          "width": 150,
-          "height": 298.8
+          "height": 298.4
         },
         {
           "width": 150,
@@ -258,8 +240,6 @@
         0.97577035,
         0.98520935,
         0.9910494,
-        1,
-        1,
         1,
         1,
         1,
