@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,15 @@
 
 package com.android.systemui.qs.panels.domain.interactor
 
-import com.android.internal.logging.uiEventLoggerFake
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.applicationCoroutineScope
-import com.android.systemui.log.core.FakeLogBuffer
-import com.android.systemui.qs.panels.data.repository.defaultLargeTilesRepository
-import com.android.systemui.qs.pipeline.domain.interactor.currentTilesInteractor
+import com.android.systemui.qs.panels.data.repository.largeTileSpanRepository
 
-val Kosmos.iconTilesInteractor by
+val Kosmos.largeTileSpanInteractor by
     Kosmos.Fixture {
-        IconTilesInteractor(
-            defaultLargeTilesRepository,
-            currentTilesInteractor,
-            qsPreferencesInteractor,
-            uiEventLoggerFake,
-            largeTileSpanInteractor,
-            FakeLogBuffer.Factory.create(),
+        LargeTileSpanInteractor(
             applicationCoroutineScope,
+            largeTileSpanRepository,
+            qsColumnsInteractor,
         )
     }

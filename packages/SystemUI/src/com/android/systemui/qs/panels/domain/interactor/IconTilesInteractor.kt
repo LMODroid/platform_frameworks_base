@@ -23,7 +23,6 @@ import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.core.LogLevel
 import com.android.systemui.qs.QSEditEvent
 import com.android.systemui.qs.panels.data.repository.DefaultLargeTilesRepository
-import com.android.systemui.qs.panels.data.repository.LargeTileSpanRepository
 import com.android.systemui.qs.panels.shared.model.PanelsLog
 import com.android.systemui.qs.pipeline.domain.interactor.CurrentTilesInteractor
 import com.android.systemui.qs.pipeline.shared.TileSpec
@@ -44,7 +43,7 @@ constructor(
     private val currentTilesInteractor: CurrentTilesInteractor,
     private val preferencesInteractor: QSPreferencesInteractor,
     private val uiEventLogger: UiEventLogger,
-    largeTilesSpanRepo: LargeTileSpanRepository,
+    largeTilesSpanInteractor: LargeTileSpanInteractor,
     @PanelsLog private val logBuffer: LogBuffer,
     @Application private val applicationScope: CoroutineScope,
 ) {
@@ -54,7 +53,7 @@ constructor(
             .onEach { logChange(it) }
             .stateIn(applicationScope, SharingStarted.Eagerly, repo.defaultLargeTiles)
 
-    val largeTilesSpan: StateFlow<Int> = largeTilesSpanRepo.span
+    val largeTilesSpan: StateFlow<Int> = largeTilesSpanInteractor.span
 
     fun isIconTile(spec: TileSpec): Boolean = !largeTilesSpecs.value.contains(spec)
 
