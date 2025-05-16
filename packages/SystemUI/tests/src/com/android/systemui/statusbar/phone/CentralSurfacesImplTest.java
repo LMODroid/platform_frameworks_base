@@ -994,18 +994,35 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     }
 
     @Test
-    public void testOnStartedWakingUp_isNotDozing() {
+    @DisableSceneContainer
+    public void testOnStartedWakingUp_isNotDozing_withoutSceneContainer() {
+        testOnStartedWakingUp_isNotDozing(true);
+    }
+
+    @Test
+    @EnableSceneContainer
+    public void testOnStartedWakingUp_isNotDozing_withSceneContainer() {
+        // When the scene framework is enabled, the ShadeController implementation does nothing when
+        // told to instantly expand the shade.
+        testOnStartedWakingUp_isNotDozing(/* verifyNpvcExpandInvocations= */ false);
+    }
+
+    private void testOnStartedWakingUp_isNotDozing(boolean verifyNpvcExpandInvocations) {
         mCentralSurfaces.setBarStateForTest(StatusBarState.KEYGUARD);
         when(mStatusBarStateController.isKeyguardRequested()).thenReturn(true);
         when(mDozeServiceHost.getDozingRequested()).thenReturn(true);
         mCentralSurfaces.updateIsKeyguard();
-        // TODO: mNotificationPanelView.expand(false) gets called twice. Should be once.
-        verify(mNotificationPanelViewController, times(2)).expand(eq(false));
-        clearInvocations(mNotificationPanelViewController);
+        if (verifyNpvcExpandInvocations) {
+            // TODO: mNotificationPanelView.expand(false) gets called twice. Should be once.
+            verify(mNotificationPanelViewController, times(2)).expand(eq(false));
+            clearInvocations(mNotificationPanelViewController);
+        }
 
         mCentralSurfaces.mWakefulnessObserver.onStartedWakingUp();
         verify(mDozeServiceHost, never()).stopDozing();
-        verify(mNotificationPanelViewController).expand(eq(false));
+        if (verifyNpvcExpandInvocations) {
+            verify(mNotificationPanelViewController).expand(eq(false));
+        }
         mCentralSurfaces.mWakefulnessObserver.onFinishedWakingUp();
         verify(mDozeServiceHost).stopDozing();
     }
@@ -1043,6 +1060,9 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     }
 
     @Test
+    // When the scene framework is enabled, setting the "leave open" bit is handled in
+    // SceneContainerStartable
+    @DisableSceneContainer
     public void deviceStateChange_unfolded_shadeOpen_setsLeaveOpenOnKeyguardHide() {
         setFoldedStates(FOLD_STATE_FOLDED.getIdentifier());
         setGoToSleepStates(FOLD_STATE_FOLDED.getIdentifier());
@@ -1080,6 +1100,9 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     }
 
     @Test
+    // When the scene framework is enabled, closing QS based on screen power happens in
+    // SceneContainerStartable
+    @DisableSceneContainer
     public void deviceStateChange_unfolded_shadeExpanding_onKeyguard_closesQS() {
         setFoldedStates(FOLD_STATE_FOLDED.getIdentifier());
         setGoToSleepStates(FOLD_STATE_FOLDED.getIdentifier());
@@ -1093,6 +1116,9 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     }
 
     @Test
+    // When the scene framework is enabled, closing QS based on screen power happens in
+    // SceneContainerStartable
+    @DisableSceneContainer
     public void deviceStateChange_unfolded_shadeExpanded_onKeyguard_closesQS() {
         setFoldedStates(FOLD_STATE_FOLDED.getIdentifier());
         setGoToSleepStates(FOLD_STATE_FOLDED.getIdentifier());
