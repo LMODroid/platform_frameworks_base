@@ -109,4 +109,15 @@ class BatteryInteractorTest : SysuiTestCase() {
 
             assertThat(latest).isEqualTo(BatteryAttributionModel.Charging)
         }
+
+    @Test
+    fun incompatibleCharging_notConsideredCharging() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.isCharging)
+
+            batteryController.fake._isPluggedIn = true
+            batteryController.fake._isIncompatibleCharging = true
+
+            assertThat(latest).isFalse()
+        }
 }

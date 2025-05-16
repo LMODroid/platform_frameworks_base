@@ -54,6 +54,9 @@ interface BatteryRepository {
     /** Battery defender means the device is plugged in but not charging to protect the battery */
     val isBatteryDefenderEnabled: Flow<Boolean>
 
+    /** True if the system has detected an incompatible charger (and thus is not charging) */
+    val isIncompatibleCharging: Flow<Boolean>
+
     /** The current level [0-100] */
     val level: Flow<Int?>
 
@@ -110,6 +113,14 @@ constructor(
                             }
                         }
 
+                        override fun onIsIncompatibleChargingChanged(
+                            isIncompatibleCharging: Boolean
+                        ) {
+                            trySend { prev ->
+                                prev.copy(isIncompatibleCharging = isIncompatibleCharging)
+                            }
+                        }
+
                         override fun onBatteryUnknownStateChanged(isUnknown: Boolean) {
                             // If the state is unknown, then all other fields are invalid
                             trySend { prev ->
@@ -135,6 +146,8 @@ constructor(
     override val isPowerSaveEnabled = batteryState.map { it.isPowerSaveEnabled }
 
     override val isBatteryDefenderEnabled = batteryState.map { it.isBatteryDefenderEnabled }
+
+    override val isIncompatibleCharging = batteryState.map { it.isIncompatibleCharging }
 
     override val level = batteryState.map { it.level }
 
@@ -177,4 +190,5 @@ private data class BatteryCallbackState(
     val isPowerSaveEnabled: Boolean = false,
     val isBatteryDefenderEnabled: Boolean = false,
     val isStateUnknown: Boolean = false,
+    val isIncompatibleCharging: Boolean = false,
 )

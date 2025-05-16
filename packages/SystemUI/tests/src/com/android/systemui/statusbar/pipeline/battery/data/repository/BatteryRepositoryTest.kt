@@ -155,4 +155,18 @@ class BatteryRepositoryTest : SysuiTestCase() {
 
             assertThat(latest).isEqualTo("test time remaining")
         }
+
+    @Test
+    fun incompatibleCharging() =
+        kosmos.runTest {
+            batteryController.fake._isIncompatibleCharging = true
+
+            val latest by collectLastValue(underTest.isIncompatibleCharging)
+
+            assertThat(latest).isTrue()
+
+            batteryController.fake._isIncompatibleCharging = false
+
+            assertThat(latest).isFalse()
+        }
 }
