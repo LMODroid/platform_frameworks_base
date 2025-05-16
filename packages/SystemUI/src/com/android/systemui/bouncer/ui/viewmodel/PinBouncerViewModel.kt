@@ -248,33 +248,27 @@ constructor(
      * @return `true` when the [KeyEvent] was consumed as user input on bouncer; `false` otherwise.
      */
     override fun onKeyEvent(type: KeyEventType, keyCode: Int): Boolean {
-        return when (type) {
-            KeyEventType.KeyUp -> {
-                if (isConfirmKey(keyCode)) {
-                    onAuthenticateButtonClicked()
-                    true
-                } else {
-                    false
-                }
+        if (isConfirmKey(keyCode)) {
+            if (type == KeyEventType.KeyUp) {
+                onAuthenticateButtonClicked()
             }
-            KeyEventType.KeyDown -> {
-                when (keyCode) {
-                    KEYCODE_DEL -> {
-                        onBackspaceButtonClicked()
-                        true
-                    }
-                    in KEYCODE_0..KEYCODE_9 -> {
-                        onPinButtonClicked(keyCode - KEYCODE_0)
-                        true
-                    }
-                    in KEYCODE_NUMPAD_0..KEYCODE_NUMPAD_9 -> {
-                        onPinButtonClicked(keyCode - KEYCODE_NUMPAD_0)
-                        true
-                    }
-                    else -> {
-                        false
-                    }
-                }
+            return true
+        }
+
+        if (type != KeyEventType.KeyDown) return false
+
+        return when (keyCode) {
+            KEYCODE_DEL -> {
+                onBackspaceButtonClicked()
+                true
+            }
+            in KEYCODE_0..KEYCODE_9 -> {
+                onPinButtonClicked(keyCode - KEYCODE_0)
+                true
+            }
+            in KEYCODE_NUMPAD_0..KEYCODE_NUMPAD_9 -> {
+                onPinButtonClicked(keyCode - KEYCODE_NUMPAD_0)
+                true
             }
             else -> false
         }

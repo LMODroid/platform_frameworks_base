@@ -22,6 +22,7 @@ import android.view.KeyEvent.KEYCODE_0
 import android.view.KeyEvent.KEYCODE_4
 import android.view.KeyEvent.KEYCODE_A
 import android.view.KeyEvent.KEYCODE_DEL
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.KeyEvent.KEYCODE_NUMPAD_0
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -45,8 +46,6 @@ import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.testKosmos
 import com.google.android.msdl.data.model.MSDLToken
 import com.google.common.truth.Truth.assertThat
-import kotlin.random.Random
-import kotlin.random.nextInt
 import kotlin.test.assertTrue
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -453,37 +452,64 @@ class PinBouncerViewModelTest : SysuiTestCase() {
         testScope.runTest {
             val pin by collectLastValue(underTest.pinInput.map { it.getPin() })
             lockDeviceAndOpenPinBouncer()
-            val random = Random(System.currentTimeMillis())
-            // Generate a random 4 digit PIN
-            val expectedPin =
-                with(random) { arrayOf(nextInt(0..9), nextInt(0..9), nextInt(0..9), nextInt(0..9)) }
+            val expectedPin = FakeAuthenticationRepository.WRONG_PIN.take(4).toTypedArray()
 
             // Enter the PIN using NUM pad and normal number keyboard events
-            underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_0 + expectedPin[0])
-            underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_0 + expectedPin[0])
-
-            underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_NUMPAD_0 + expectedPin[1])
-            underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_NUMPAD_0 + expectedPin[1])
-
-            underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_0 + expectedPin[2])
-            underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_0 + expectedPin[2])
+            pressKey(KEYCODE_0 + expectedPin[0])
+            pressKey(KEYCODE_NUMPAD_0 + expectedPin[1])
+            pressKey(KEYCODE_0 + expectedPin[2])
 
             // Enter an additional digit in between and delete it
-            underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_4)
-            underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_4)
-
-            // Delete that additional digit
-            underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_DEL)
-            underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_DEL)
+            pressKey(KEYCODE_4)
+            pressKey(KEYCODE_DEL)
 
             // Try entering a non digit character, this should be ignored.
-            underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_A)
-            underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_A)
+            pressKey(KEYCODE_A)
 
-            underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_NUMPAD_0 + expectedPin[3])
-            underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_NUMPAD_0 + expectedPin[3])
+            pressKey(KEYCODE_NUMPAD_0 + expectedPin[3])
 
-            assertThat(pin).containsExactly(*expectedPin)
+            assertThat(pin).containsExactly(*expectedPin).inOrder()
+        }
+
+    @Test
+    fun onKeyboardInput_submitOnEnter_wrongPin() =
+        kosmos.runTest {
+            val pin by collectLastValue(underTest.pinInput.map { it.getPin() })
+            val authResult by collectLastValue(authenticationInteractor.onAuthenticationResult)
+            fakeAuthenticationRepository.setAutoConfirmFeatureEnabled(false)
+            lockDeviceAndOpenPinBouncer()
+
+            val wrongPin = FakeAuthenticationRepository.WRONG_PIN.toTypedArray()
+
+            wrongPin.forEach { pressKey(KEYCODE_0 + it) }
+
+            assertThat(pin).containsExactly(*wrongPin).inOrder()
+
+            assertThat(underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_ENTER)).isTrue()
+            assertThat(underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_ENTER)).isTrue()
+
+            assertThat(authResult).isFalse()
+            assertThat(pin).isEmpty()
+        }
+
+    @Test
+    fun onKeyboardInput_submitOnEnter_correctPin() =
+        kosmos.runTest {
+            val pin by collectLastValue(underTest.pinInput.map { it.getPin() })
+            val authResult by collectLastValue(authenticationInteractor.onAuthenticationResult)
+            fakeAuthenticationRepository.setAutoConfirmFeatureEnabled(false)
+            lockDeviceAndOpenPinBouncer()
+
+            val correctPin = FakeAuthenticationRepository.DEFAULT_PIN.toTypedArray()
+
+            correctPin.forEach { pressKey(KEYCODE_0 + it) }
+
+            assertThat(pin).containsExactly(*correctPin).inOrder()
+
+            assertThat(underTest.onKeyEvent(KeyEventType.KeyDown, KEYCODE_ENTER)).isTrue()
+            assertThat(underTest.onKeyEvent(KeyEventType.KeyUp, KEYCODE_ENTER)).isTrue()
+
+            assertThat(authResult).isTrue()
         }
 
     @Test
@@ -546,6 +572,11 @@ class PinBouncerViewModelTest : SysuiTestCase() {
     private fun TestScope.lockDeviceAndOpenPinBouncer() {
         kosmos.fakeAuthenticationRepository.setAuthenticationMethod(AuthenticationMethodModel.Pin)
         showBouncer()
+    }
+
+    private fun pressKey(keyCode: Int) {
+        underTest.onKeyEvent(KeyEventType.KeyDown, keyCode)
+        underTest.onKeyEvent(KeyEventType.KeyUp, keyCode)
     }
 
     companion object {
