@@ -27,7 +27,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -55,6 +54,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
@@ -229,8 +229,12 @@ fun ContentScope.CollapsedShadeHeader(
                     if (isSplitShade) {
                         ShadeCarrierGroup(viewModel = viewModel)
                     }
-                    SystemIconChip(
-                        onClick = viewModel::onSystemIconChipClicked.takeIf { isSplitShade }
+                    HighlightChip(
+                        onClick = {
+                            if (isSplitShade) {
+                                viewModel.onSystemIconChipClicked()
+                            }
+                        }
                     ) {
                         val paddingEnd =
                             with(LocalDensity.current) {
@@ -308,7 +312,7 @@ fun ContentScope.ExpandedShadeHeader(
                     textColor = colorAttr(android.R.attr.textColorPrimary),
                     modifier = Modifier.widthIn(max = 90.dp),
                 )
-                SystemIconChip {
+                HighlightChip {
                     val paddingEnd =
                         with(LocalDensity.current) {
                             (if (NewStatusBarIcons.isEnabled) 3.sp else 6.sp).toDp()
@@ -349,31 +353,26 @@ fun ContentScope.OverlayShadeHeader(
     CutoutAwareShadeHeader(
         modifier = modifier,
         startContent = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-            ) {
-                if (showClock) {
-                    Clock(
-                        onClick = viewModel::onClockClicked,
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                    )
-                }
-                NotificationsChip(
-                    onClick = viewModel::onNotificationIconChipClicked,
+            Box(modifier = Modifier.padding(horizontal = horizontalPadding)) {
+                HighlightChip(
                     backgroundColor = notificationsHighlight.backgroundColor,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    onClick = viewModel::onNotificationIconChipClicked,
                     modifier =
-                        Modifier.bouncy(
-                            isEnabled = viewModel.animateNotificationsChipBounce,
-                            onBoundsChange = { bounds ->
-                                viewModel.onDualShadeEducationElementBoundsChange(
-                                    element = DualShadeEducationElement.Notifications,
-                                    bounds = bounds,
-                                )
-                            },
-                        ),
+                        Modifier.align(Alignment.CenterStart)
+                            .bouncy(
+                                isEnabled = viewModel.animateNotificationsChipBounce,
+                                onBoundsChange = { bounds ->
+                                    viewModel.onDualShadeEducationElementBoundsChange(
+                                        element = DualShadeEducationElement.Notifications,
+                                        bounds = bounds,
+                                    )
+                                },
+                            ),
                 ) {
+                    if (showClock) {
+                        Clock(textColor = notificationsHighlight.foregroundColor)
+                    }
                     VariableDayDate(
                         longerDateText = viewModel.longerDateText,
                         shorterDateText = viewModel.shorterDateText,
@@ -388,7 +387,7 @@ fun ContentScope.OverlayShadeHeader(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             ) {
-                SystemIconChip(
+                HighlightChip(
                     backgroundColor = quickSettingsHighlight.backgroundColor,
                     onClick = viewModel::onSystemIconChipClicked,
                     modifier =
@@ -505,9 +504,10 @@ private fun CutoutAwareShadeHeader(
 
 @Composable
 private fun ContentScope.Clock(
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
     scale: Float = 1f,
+    textColor: Color? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
 
@@ -522,6 +522,7 @@ private fun ContentScope.Clock(
                         null,
                     )
                 },
+                update = { view -> textColor?.let { view.setTextColor(it.toArgb()) } },
                 modifier =
                     modifier
                         // use graphicsLayer instead of Modifier.scale to anchor transform to the
@@ -538,7 +539,7 @@ private fun ContentScope.Clock(
                                     0.5f,
                                 )
                         }
-                        .clickable { onClick() },
+                        .thenIf(onClick != null) { Modifier.clickable { onClick?.invoke() } },
             )
         }
     }
@@ -775,41 +776,25 @@ private fun ContentScope.StatusIcons(
 }
 
 @Composable
-private fun NotificationsChip(
-    onClick: () -> Unit,
+private fun HighlightChip(
     modifier: Modifier = Modifier,
-    backgroundColor: Color,
-    content: @Composable BoxScope.() -> Unit,
+    backgroundColor: Color = Color.Unspecified,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    onClick: () -> Unit = {},
+    content: @Composable RowScope.() -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    Box(
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = horizontalArrangement,
         modifier =
             modifier
+                .clip(RoundedCornerShape(25.dp))
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
                     onClick = onClick,
                 )
-                .background(backgroundColor, RoundedCornerShape(25.dp))
-                .padding(horizontal = ChipPaddingHorizontal, vertical = ChipPaddingVertical)
-    ) {
-        content()
-    }
-}
-
-@Composable
-private fun SystemIconChip(
-    modifier: Modifier = Modifier,
-    backgroundColor: Color = Color.Unspecified,
-    onClick: (() -> Unit)? = null,
-    content: @Composable RowScope.() -> Unit,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier =
-            modifier
-                .clip(RoundedCornerShape(25.dp))
-                .thenIf(onClick != null) { Modifier.clickable(onClick = { onClick?.invoke() }) }
                 .thenIf(backgroundColor != Color.Unspecified) {
                     Modifier.background(backgroundColor)
                         .padding(horizontal = ChipPaddingHorizontal, vertical = ChipPaddingVertical)
