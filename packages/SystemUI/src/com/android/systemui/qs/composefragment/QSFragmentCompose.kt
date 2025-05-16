@@ -124,6 +124,7 @@ import com.android.systemui.keyboard.shortcut.ui.composable.ProvideShortcutHelpe
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.lifecycle.setSnapshotBinding
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.media.controls.ui.controller.MediaViewLogger
 import com.android.systemui.media.controls.ui.view.MediaHost
 import com.android.systemui.plugins.qs.QS
 import com.android.systemui.plugins.qs.QSContainerController
@@ -148,6 +149,7 @@ import com.android.systemui.qs.ui.composable.QuickSettingsShade.systemGestureExc
 import com.android.systemui.qs.ui.composable.QuickSettingsTheme
 import com.android.systemui.res.R
 import com.android.systemui.util.LifecycleFragment
+import com.android.systemui.util.animation.MeasurementInput
 import com.android.systemui.util.animation.UniqueObjectHostView
 import com.android.systemui.util.asIndenting
 import com.android.systemui.util.children
@@ -176,6 +178,7 @@ constructor(
     @QSFragmentComposeClippingTableLog private val qsClippingTableLogBuffer: TableLogBuffer,
     private val dumpManager: DumpManager,
     @Background private val backgroundDispatcher: CoroutineDispatcher,
+    private val mediaLogger: MediaViewLogger,
 ) : LifecycleFragment(), QS, Dumpable {
 
     private val scrollListener = MutableStateFlow<QS.ScrollListener?>(null)
@@ -737,6 +740,7 @@ constructor(
                                 // (b/383085298)
                                 modifier = Modifier.requiredHeightIn(max = Dp.Infinity),
                                 mediaHost = viewModel.qqsMediaHost,
+                                mediaLogger = mediaLogger,
                             )
                         }
                     }
@@ -890,6 +894,7 @@ constructor(
                                 if (viewModel.qsMediaVisible) {
                                     MediaObject(
                                         mediaHost = viewModel.qsMediaHost,
+                                        mediaLogger = mediaLogger,
                                         update = { translationY = viewModel.qsMediaTranslationY },
                                     )
                                 }
@@ -1349,6 +1354,7 @@ private fun Modifier.gesturesDisabled(disabled: Boolean) =
 private fun MediaObject(
     mediaHost: MediaHost,
     modifier: Modifier = Modifier,
+    mediaLogger: MediaViewLogger,
     update: UniqueObjectHostView.() -> Unit = {},
 ) {
     Box {
@@ -1368,10 +1374,16 @@ private fun MediaObject(
                 // Update layout params if host view bounds are higher than its child.
                 val height = mediaHost.hostView.height
                 val width = mediaHost.hostView.width
+                var measure = false
                 mediaHost.hostView.children.forEach { child ->
                     if (child is FrameLayout && (height > child.height || width > child.width)) {
+                        measure = true
                         child.layoutParams = FrameLayout.LayoutParams(width, height)
                     }
+                }
+                if (measure) {
+                    mediaHost.hostView.measurementManager.onMeasure(MeasurementInput(width, height))
+                    mediaLogger.logMediaSize("update size in compose", width, height)
                 }
             },
             onReset = {},
