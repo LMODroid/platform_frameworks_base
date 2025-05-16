@@ -210,7 +210,7 @@ constructor(
         clockInteractor.launchClockActivity()
     }
 
-    /** Notifies that the system icons container was clicked. */
+    /** Notifies that the notification icons container was clicked. */
     fun onNotificationIconChipClicked() {
         if (!shadeModeInteractor.isDualShade) {
             return
@@ -222,6 +222,7 @@ constructor(
                 loggingReason = loggingReason,
                 transitionKey = SlightlyFasterShadeCollapse,
             )
+            onClockClicked()
         } else {
             shadeInteractor.expandNotificationsShade(loggingReason)
         }

@@ -181,9 +181,10 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun onNotificationIconChipClicked_lockedOnNotifShade_collapsesShadeToLockscreen() =
+    fun onNotificationIconChipClicked_lockedOnNotifShade_collapsesShadeToLockscreen_opensClock() =
         testScope.runTest {
             setupDualShadeState(scene = Scenes.Lockscreen, overlay = Overlays.NotificationsShade)
+            val activityStarter = kosmos.activityStarter
             val currentScene by collectLastValue(sceneInteractor.currentScene)
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
@@ -191,6 +192,11 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
 
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
             assertThat(currentOverlays).isEmpty()
+            verify(activityStarter)
+                .postStartActivityDismissingKeyguard(
+                    argThat(IntentMatcherAction(AlarmClock.ACTION_SHOW_ALARMS)),
+                    anyInt(),
+                )
         }
 
     @Test
@@ -208,9 +214,10 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun onNotificationIconChipClicked_unlockedOnNotifShade_collapsesShadeToGone() =
+    fun onNotificationIconChipClicked_unlockedOnNotifShade_collapsesShadeToGone_opensClock() =
         testScope.runTest {
             setupDualShadeState(scene = Scenes.Gone, overlay = Overlays.NotificationsShade)
+            val activityStarter = kosmos.activityStarter
             val currentScene by collectLastValue(sceneInteractor.currentScene)
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
 
@@ -218,6 +225,11 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
 
             assertThat(currentScene).isEqualTo(Scenes.Gone)
             assertThat(currentOverlays).isEmpty()
+            verify(activityStarter)
+                .postStartActivityDismissingKeyguard(
+                    argThat(IntentMatcherAction(AlarmClock.ACTION_SHOW_ALARMS)),
+                    anyInt(),
+                )
         }
 
     @Test
