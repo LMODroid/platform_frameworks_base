@@ -53,31 +53,32 @@ constructor(animationFlow: KeyguardTransitionAnimationFlow, blurConfig: BlurConf
                 edge = Edge.create(from = ALTERNATE_BOUNCER, to = PRIMARY_BOUNCER)
             )
 
-    private val alphaForAnimationStep: (Float) -> Float =
-        when {
-            SceneContainerFlag.isEnabled -> { step ->
-                    1f - Math.min((step / TO_BOUNCER_FADE_FRACTION), 1f)
-                }
-            else -> { step -> 1f - step }
-        }
-
     private val alphaFlow =
         transitionAnimation.sharedFlow(
             duration = FromAlternateBouncerTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
-            onStep = alphaForAnimationStep,
+            onStep =
+                when {
+                    SceneContainerFlag.isEnabled -> { step ->
+                            1f - Math.min((step / TO_BOUNCER_FADE_FRACTION), 1f)
+                        }
+
+                    else -> { step -> 1f - step }
+                },
         )
 
-    val lockscreenAlpha: Flow<Float> = if (Flags.bouncerUiRevamp()) alphaFlow else emptyFlow()
+    val lockscreenAlpha: Flow<Float> =
+        if (Flags.bouncerUiRevamp()) transitionAnimation.immediatelyTransitionTo(0f)
+        else emptyFlow()
 
     val notificationAlpha: Flow<Float> =
         if (Flags.bouncerUiRevamp()) {
             transitionAnimation.sharedFlowWithShade(
-                duration = FromAlternateBouncerTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
-                onStep = { step, isShadeExpanded ->
+                duration = 1.milliseconds,
+                onStep = { _, isShadeExpanded ->
                     if (isShadeExpanded) {
                         1f
                     } else if (Flags.bouncerUiRevamp()) {
-                        alphaForAnimationStep(step)
+                        0f
                     } else {
                         null
                     }
