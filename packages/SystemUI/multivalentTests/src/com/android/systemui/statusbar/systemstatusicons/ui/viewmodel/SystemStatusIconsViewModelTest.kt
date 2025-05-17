@@ -20,12 +20,16 @@ import android.bluetooth.BluetoothProfile
 import android.content.testableContext
 import android.media.AudioManager
 import android.platform.test.annotations.EnableFlags
+import android.view.Display
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.notification.modes.TestModeBuilder
 import com.android.settingslib.volume.shared.model.RingerMode
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.display.data.repository.display
+import com.android.systemui.display.data.repository.displayRepository
+import com.android.systemui.keyguard.data.repository.fakeKeyguardRepository
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
@@ -65,6 +69,7 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
 
     private lateinit var slotAirplane: String
     private lateinit var slotBluetooth: String
+    private lateinit var slotConnectedDisplay: String
     private lateinit var slotEthernet: String
     private lateinit var slotMute: String
     private lateinit var slotVibrate: String
@@ -75,6 +80,8 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
     fun setUp() {
         slotAirplane = context.getString(com.android.internal.R.string.status_bar_airplane)
         slotBluetooth = context.getString(com.android.internal.R.string.status_bar_bluetooth)
+        slotConnectedDisplay =
+            context.getString(com.android.internal.R.string.status_bar_connected_display)
         slotEthernet = context.getString(com.android.internal.R.string.status_bar_ethernet)
         slotMute = context.getString(com.android.internal.R.string.status_bar_mute)
         slotVibrate = context.getString(com.android.internal.R.string.status_bar_volume)
@@ -173,23 +180,36 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
 
             showZenMode()
             showBluetooth()
+            showConnectedDisplay()
             showAirplaneMode()
             showEthernet()
             showVibrate()
-            showWifi()
 
             assertThat(underTest.activeSlotNames)
-                .containsExactly(slotAirplane, slotBluetooth, slotEthernet, slotVibrate, slotZen)
+                .containsExactly(
+                    slotAirplane,
+                    slotBluetooth,
+                    slotConnectedDisplay,
+                    slotEthernet,
+                    slotVibrate,
+                    slotZen,
+                )
                 .inOrder()
 
             // The [mute,vibrate] and [ethernet, wifi] icons can not be shown at the same time so we
-            // have to test it
-            // separately.
+            // have to test it separately.
             showMute() // This will make vibrate inactive
             showWifi() // This will make ethernet inactive
 
             assertThat(underTest.activeSlotNames)
-                .containsExactly(slotAirplane, slotBluetooth, slotMute, slotWifi, slotZen)
+                .containsExactly(
+                    slotAirplane,
+                    slotBluetooth,
+                    slotConnectedDisplay,
+                    slotMute,
+                    slotWifi,
+                    slotZen,
+                )
                 .inOrder()
         }
 
@@ -211,6 +231,19 @@ class SystemStatusIconsViewModelTest : SysuiTestCase() {
                     whenever(isConnected).thenReturn(true)
                     whenever(maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
                 }
+            )
+        )
+    }
+
+    private suspend fun Kosmos.showConnectedDisplay(isSecure: Boolean = false) {
+        fakeKeyguardRepository.setKeyguardShowing(!isSecure)
+        displayRepository.setDefaultDisplayOff(false)
+        val flags = if (isSecure) Display.FLAG_SECURE else 0
+        displayRepository.addDisplay(
+            display(
+                type = Display.TYPE_EXTERNAL,
+                flags = flags,
+                id = (displayRepository.displays.value.maxOfOrNull { it.displayId } ?: 0) + 1,
             )
         )
     }

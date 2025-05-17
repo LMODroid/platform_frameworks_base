@@ -24,6 +24,7 @@ import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.AirplaneModeIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.BluetoothIconViewModel
+import com.android.systemui.statusbar.systemstatusicons.connecteddisplay.ui.viewmodel.ConnectedDisplayIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.domain.interactor.OrderedIconSlotNamesInteractor
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.EthernetIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.MuteIconViewModel
@@ -51,6 +52,7 @@ constructor(
     orderedIconSlotNamesInteractor: OrderedIconSlotNamesInteractor,
     airplaneModeIconViewModelFactory: AirplaneModeIconViewModel.Factory,
     bluetoothIconViewModelFactory: BluetoothIconViewModel.Factory,
+    connectedDisplayIconViewModelFactory: ConnectedDisplayIconViewModel.Factory,
     ethernetIconViewModelFactory: EthernetIconViewModel.Factory,
     muteIconViewModelFactory: MuteIconViewModel.Factory,
     vibrateIconViewModelFactory: VibrateIconViewModel.Factory,
@@ -66,6 +68,9 @@ constructor(
 
     private val airplaneModeIcon by lazy { airplaneModeIconViewModelFactory.create(context) }
     private val bluetoothIcon by lazy { bluetoothIconViewModelFactory.create(context) }
+    private val connectedDisplayIcon by lazy {
+        connectedDisplayIconViewModelFactory.create(context)
+    }
     private val ethernetIcon by lazy { ethernetIconViewModelFactory.create(context) }
     private val muteIcon by lazy { muteIconViewModelFactory.create(context) }
     private val vibrateIcon by lazy { vibrateIconViewModelFactory.create(context) }
@@ -76,6 +81,7 @@ constructor(
         listOf(
             airplaneModeIcon,
             bluetoothIcon,
+            connectedDisplayIcon,
             ethernetIcon,
             muteIcon,
             vibrateIcon,
@@ -104,9 +110,11 @@ constructor(
 
     override suspend fun onActivated(): Nothing {
         coroutineScope {
+            launch { hydrator.activate() }
+
             launch { airplaneModeIcon.activate() }
             launch { bluetoothIcon.activate() }
-            launch { hydrator.activate() }
+            launch { connectedDisplayIcon.activate() }
             launch { ethernetIcon.activate() }
             launch { muteIcon.activate() }
             launch { vibrateIcon.activate() }
