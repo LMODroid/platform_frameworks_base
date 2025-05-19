@@ -109,14 +109,19 @@ constructor(
                 },
                 userVolumeUpdates,
             ) { isDisabledByZenMode, model, icon, currentVolumeUpdate ->
-                val shouldIgnoreUpdates =
+                val isInGracePeriod =
                     currentVolumeUpdate != null &&
                         getTimestampMillis() - currentVolumeUpdate.timestampMillis <
                             VOLUME_UPDATE_GRACE_PERIOD
+                val isMinimumVolume = model.levelMin == currentVolumeUpdate?.level
                 VolumeDialogSliderStateModel(
                     value =
-                        if (currentVolumeUpdate != null && shouldIgnoreUpdates) {
-                            currentVolumeUpdate.newVolumeLevel
+                        if (currentVolumeUpdate != null && isInGracePeriod) {
+                            if (isMinimumVolume) {
+                                model.levelMin.toFloat()
+                            } else {
+                                currentVolumeUpdate.volume
+                            }
                         } else {
                             model.level.toFloat()
                         },
@@ -131,7 +136,7 @@ constructor(
 
     init {
         userVolumeUpdates
-            .mapNotNull { it?.newVolumeLevel?.roundToInt() }
+            .mapNotNull { it?.level }
             .distinctUntilChanged()
             .mapLatest { volume ->
                 interactor.setStreamVolume(volume)
@@ -144,7 +149,7 @@ constructor(
         if (fromUser) {
             visibilityInteractor.resetDismissTimeout()
             userVolumeUpdates.value =
-                VolumeUpdate(newVolumeLevel = volume, timestampMillis = getTimestampMillis())
+                VolumeUpdate(volume = volume, timestampMillis = getTimestampMillis())
         }
     }
 
@@ -190,5 +195,9 @@ constructor(
 
     private fun getTimestampMillis(): Long = systemClock.uptimeMillis()
 
-    private data class VolumeUpdate(val newVolumeLevel: Float, val timestampMillis: Long)
+    private data class VolumeUpdate(val volume: Float, val timestampMillis: Long) {
+
+        val level: Int
+            get() = volume.roundToInt()
+    }
 }

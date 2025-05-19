@@ -37,6 +37,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
@@ -83,6 +84,7 @@ fun Slider(
     },
 ) {
     require(stepDistance >= 0f) { "stepDistance must not be negative" }
+    val coroutineScope = rememberCoroutineScope()
     var animationJob: Job? by remember { mutableStateOf(null) }
     val sliderState = remember(valueRange) { SliderState(value = value, valueRange = valueRange) }
     LaunchedEffect(value) {
@@ -123,6 +125,19 @@ fun Slider(
     sliderState.onValueChangeFinished = {
         hapticsViewModel?.onValueChangeEnded()
         onValueChangeFinished?.invoke(sliderState.value)
+        if (sliderState.value != value) {
+            animationJob?.cancel()
+            animationJob =
+                coroutineScope.launchTraced("Slider#animateValue") {
+                    animate(
+                        initialValue = sliderState.value,
+                        targetValue = value,
+                        animationSpec = animationSpec,
+                    ) { animatedValue, _ ->
+                        sliderState.value = animatedValue
+                    }
+                }
+        }
     }
     sliderState.onValueChange = valueChange
 
