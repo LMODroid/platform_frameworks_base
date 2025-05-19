@@ -1104,7 +1104,7 @@ class WindowManagerLockscreenVisibilityInteractorTest : SysuiTestCase() {
             assertThat(lockscreenVisibility).isFalse()
 
             kosmos.setSceneTransition(Transition(from = Scenes.Gone, to = Scenes.Lockscreen))
-            assertThat(lockscreenVisibility).isFalse()
+            assertThat(lockscreenVisibility).isTrue()
 
             kosmos.setSceneTransition(Idle(Scenes.Lockscreen))
             kosmos.sceneInteractor.changeScene(Scenes.Lockscreen, "")

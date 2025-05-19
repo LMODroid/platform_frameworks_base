@@ -18,6 +18,7 @@ package com.android.systemui.keyguard.domain.interactor
 
 import com.android.compose.animation.scene.ObservableTransitionState.Idle
 import com.android.compose.animation.scene.ObservableTransitionState.Transition
+import com.android.compose.animation.scene.SceneKey
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.deviceentry.domain.interactor.DeviceEntryInteractor
 import com.android.systemui.keyguard.data.repository.KeyguardTransitionRepository
@@ -205,27 +206,62 @@ constructor(
                         sceneInteractor.get().transitionState.flatMapLatestConflated {
                             when (it) {
                                 is Idle ->
-                                    when (it.currentScene) {
-                                        in keyguardContent -> flowOf(true)
-                                        in nonKeyguardContent -> flowOf(false)
-                                        in keyguardAgnosticContent -> isDeviceNotEnteredDirectly
-                                        else ->
-                                            throw IllegalStateException(
-                                                "Unknown scene: ${it.currentScene}"
-                                            )
-                                    }
-                                is Transition ->
                                     when {
-                                        it.isTransitioningSets(from = keyguardContent) ->
+                                        // If idle on one of the keyguard scenes, report that the
+                                        // keyguard is visible.
+                                        it.currentScene in keyguardScenes -> flowOf(true)
+                                        // If showing the bouncer overlay, report that the keyguard
+                                        // is visible.
+                                        it.currentOverlays.contains(Overlays.Bouncer) ->
                                             flowOf(true)
-                                        it.isTransitioningSets(from = nonKeyguardContent) ->
-                                            flowOf(false)
-                                        it.isTransitioningSets(from = keyguardAgnosticContent) ->
+                                        // If showing a shade scene, report that the keyguard is
+                                        // visible if the device hasn't been entered yet.
+                                        it.currentScene in shadeScenes -> isDeviceNotEnteredDirectly
+                                        // If idle on any other scene, report that the keyguard is
+                                        // not visible.
+                                        else -> flowOf(false)
+                                    }
+
+                                is Transition.ChangeScene ->
+                                    when {
+                                        // If transitioning between two scenes and any one of the
+                                        // two scenes is one of the keyguard scenes, report that the
+                                        // keyguard is visible.
+                                        it.fromScene in keyguardScenes -> flowOf(true)
+                                        it.toScene in keyguardScenes -> flowOf(true)
+                                        // If transitioning between two non-keyguard scenes but the
+                                        // bouncer overlay is showing, report that the keyguard is
+                                        // visible.
+                                        it.currentOverlays.contains(Overlays.Bouncer) ->
+                                            flowOf(true)
+                                        // If transitioning between two shade scenes and the bouncer
+                                        // overlay is not showing, report that the keyguard is
+                                        // visible if the device hasn't yet been entered.
+                                        it.fromScene in shadeScenes && it.toScene in shadeScenes ->
                                             isDeviceNotEnteredDirectly
+                                        // In all other cases, report that the keyguard isn't
+                                        // visible.
+                                        else -> flowOf(false)
+                                    }
+
+                                is Transition.OverlayTransition ->
+                                    when {
+                                        // If showing, hiding, or replacing an overlay and the
+                                        // current scene under those overlays is one of the keyguard
+                                        // scenes, report that the keyguard is showing.
+                                        it.currentScene in keyguardScenes -> flowOf(true)
+                                        // While animating away the bouncer overlay, report that the
+                                        // keyguard is still being shown.
+                                        it.fromContent == Overlays.Bouncer -> flowOf(true)
+                                        // While animating in the bouncer overlay, report that the
+                                        // keyguard is still being shown.
+                                        it.toContent == Overlays.Bouncer -> flowOf(true)
+                                        // In all other cases, report that the keyguard is visible
+                                        // while the bouncer overlay is visible.
                                         else ->
-                                            throw IllegalStateException(
-                                                "Unknown content: ${it.fromContent}"
-                                            )
+                                            it.currentOverlays.map { currentOverlays ->
+                                                currentOverlays.contains(Overlays.Bouncer)
+                                            }
                                     }
                             }
                         },
@@ -341,25 +377,11 @@ constructor(
          * Content that is part of the keyguard and are shown when the device is locked or when the
          * keyguard still needs to be dismissed.
          */
-        val keyguardContent =
-            setOf(Scenes.Lockscreen, Overlays.Bouncer, Scenes.Communal, Scenes.Dream)
+        val keyguardScenes: Set<SceneKey> = setOf(Scenes.Lockscreen, Scenes.Communal, Scenes.Dream)
 
         /**
-         * Content that doesn't belong in the keyguard family and cannot show when the device is
-         * locked or when the keyguard still needs to be dismissed.
+         * Scenes that show "shade" like content and can show whether the device is entered or not.
          */
-        private val nonKeyguardContent = setOf(Scenes.Gone)
-
-        /**
-         * Content that can show regardless of device lock or keyguard dismissal states. Other
-         * sources of state need to be consulted to know whether the device has been entered or not.
-         */
-        private val keyguardAgnosticContent =
-            setOf(
-                Scenes.Shade,
-                Scenes.QuickSettings,
-                Overlays.NotificationsShade,
-                Overlays.QuickSettingsShade,
-            )
+        private val shadeScenes: Set<SceneKey> = setOf(Scenes.Shade, Scenes.QuickSettings)
     }
 }
