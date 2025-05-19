@@ -92,8 +92,8 @@ interface NotificationScrollView {
     /** Set a consumer for accessibility actions to be handled by the placeholder. */
     fun setAccessibilityScrollEventConsumer(consumer: Consumer<AccessibilityScrollEvent>?)
 
-    /** Set a consumer for current gesture overscroll events */
-    fun setCurrentGestureOverscrollConsumer(consumer: Consumer<Boolean>?)
+    /** Set a consumer for current gesture expanding notification events */
+    fun setCurrentGestureExpandingNotificationConsumer(consumer: Consumer<Boolean>?)
 
     /** Set a consumer for current gesture in guts events */
     fun setCurrentGestureInGutsConsumer(consumer: Consumer<Boolean>?)

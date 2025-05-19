@@ -1317,9 +1317,10 @@ public class NotificationStackScrollLayout
     }
 
     @Override
-    public void setCurrentGestureOverscrollConsumer(@Nullable Consumer<Boolean> consumer) {
+    public void setCurrentGestureExpandingNotificationConsumer(
+            @Nullable Consumer<Boolean> consumer) {
         if (SceneContainerFlag.isUnexpectedlyInLegacyMode()) return;
-        mScrollViewFields.setCurrentGestureOverscrollConsumer(consumer);
+        mScrollViewFields.setCurrentGestureExpandingNotificationConsumer(consumer);
     }
 
     @Override
@@ -3657,13 +3658,13 @@ public class NotificationStackScrollLayout
             if (action == MotionEvent.ACTION_DOWN && !isTouchInGuts) {
                 mController.closeControlsDueToOutsideTouch();
             }
-            if (mIsBeingDragged) {
+            if (mIsBeingDragged || mExpandingNotification) {
                 boolean isUpOrCancel = action == ACTION_UP || action == ACTION_CANCEL;
                 if (mSendingTouchesToSceneFramework) {
                     MotionEvent adjustedEvent = MotionEvent.obtain(ev);
                     adjustedEvent.setLocation(ev.getRawX(), ev.getRawY());
-                    mScrollViewFields.sendCurrentGestureOverscroll(
-                            getExpandedInThisMotion() && !isUpOrCancel);
+                    mScrollViewFields.sendCurrentGestureExpandingNotification(
+                            mExpandingNotification && !isUpOrCancel);
                     mController.sendTouchToSceneFramework(adjustedEvent);
                     adjustedEvent.recycle();
                 } else if (!isUpOrCancel) {
@@ -3674,14 +3675,15 @@ public class NotificationStackScrollLayout
                     downEvent.setAction(MotionEvent.ACTION_DOWN);
                     downEvent.setLocation(ev.getRawX(), ev.getRawY());
                     mScrollViewFields.sendCurrentGestureInGuts(isTouchInGuts);
-                    mScrollViewFields.sendCurrentGestureOverscroll(getExpandedInThisMotion());
+                    mScrollViewFields.sendCurrentGestureExpandingNotification(
+                            mExpandingNotification);
                     mController.sendTouchToSceneFramework(downEvent);
                     downEvent.recycle();
                 }
 
                 if (isUpOrCancel) {
                     mScrollViewFields.sendCurrentGestureInGuts(false);
-                    mScrollViewFields.sendCurrentGestureOverscroll(false);
+                    mScrollViewFields.sendCurrentGestureExpandingNotification(false);
                     setIsBeingDragged(false);
                 }
             }
@@ -5930,11 +5932,6 @@ public class NotificationStackScrollLayout
         return mExpandingNotification;
     }
 
-    @VisibleForTesting
-    void setExpandingNotification(boolean isExpanding) {
-        mExpandingNotification = isExpanding;
-    }
-
     boolean getDisallowScrollingInThisMotion() {
         return mDisallowScrollingInThisMotion;
     }
@@ -5945,11 +5942,6 @@ public class NotificationStackScrollLayout
 
     boolean getExpandedInThisMotion() {
         return mExpandedInThisMotion;
-    }
-
-    @VisibleForTesting
-    void setExpandedInThisMotion(boolean expandedInThisMotion) {
-        mExpandedInThisMotion = expandedInThisMotion;
     }
 
     boolean getDisallowDismissInThisMotion() {

@@ -125,7 +125,9 @@ constructor(
 
             launchAndDispose {
                 view.setSyntheticScrollConsumer(viewModel.syntheticScrollConsumer)
-                view.setCurrentGestureOverscrollConsumer(viewModel.currentGestureOverscrollConsumer)
+                view.setCurrentGestureExpandingNotificationConsumer(
+                    viewModel.currentGestureExpandingNotifConsumer
+                )
                 view.setCurrentGestureInGutsConsumer(viewModel.currentGestureInGutsConsumer)
                 view.setRemoteInputRowBottomBoundConsumer(
                     viewModel.remoteInputRowBottomBoundConsumer
@@ -140,7 +142,7 @@ constructor(
                 }
                 DisposableHandle {
                     view.setSyntheticScrollConsumer(null)
-                    view.setCurrentGestureOverscrollConsumer(null)
+                    view.setCurrentGestureExpandingNotificationConsumer(null)
                     view.setCurrentGestureInGutsConsumer(null)
                     view.setRemoteInputRowBottomBoundConsumer(null)
                     view.setAccessibilityScrollEventConsumer(null)

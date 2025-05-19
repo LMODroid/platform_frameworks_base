@@ -97,8 +97,8 @@ constructor(
      * Whether the current touch gesture is overscroll. If true, it means the NSSL has already
      * consumed part of the gesture.
      */
-    val isCurrentGestureOverscroll: Flow<Boolean> =
-        viewHeightRepository.isCurrentGestureOverscroll.asStateFlow()
+    val isCurrentGestureExpandingNotif: Flow<Boolean> =
+        viewHeightRepository.isCurrentGestureExpandingNotification.asStateFlow()
 
     /** Whether we should close any notification guts that are currently open. */
     val shouldCloseGuts: Flow<Boolean> =
@@ -163,9 +163,9 @@ constructor(
         placeholderRepository.accessibilityScrollEventConsumer = consumer
     }
 
-    /** Sets whether the current touch gesture is overscroll. */
-    fun setCurrentGestureOverscroll(isOverscroll: Boolean) {
-        viewHeightRepository.isCurrentGestureOverscroll.value = isOverscroll
+    /** Sets whether the current touch gesture is being used to expand a notification. */
+    fun setCurrentGestureExpandingNotif(isExpanding: Boolean) {
+        viewHeightRepository.isCurrentGestureExpandingNotification.value = isExpanding
     }
 
     fun setCurrentGestureInGuts(isInGuts: Boolean) {

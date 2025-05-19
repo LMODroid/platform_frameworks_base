@@ -62,9 +62,10 @@ class ScrollViewFields {
 
     /**
      * When a gesture is consumed internally by NSSL but needs to be handled by other elements (such
-     * as the notif scrim) as overscroll, we can notify the placeholder through here.
+     * as the notif scrim), we can notify the placeholder through here.
      */
-    var currentGestureOverscrollConsumer: Consumer<Boolean>? = null
+    var currentGestureExpandingNotificationConsumer: Consumer<Boolean>? = null
+
     /**
      * When a gesture is on open notification guts, which means scene container should not close the
      * guts off of this gesture, we can notify the placeholder through here.
@@ -81,9 +82,9 @@ class ScrollViewFields {
     fun sendSyntheticScroll(syntheticScroll: Float) =
         syntheticScrollConsumer?.accept(syntheticScroll)
 
-    /** send [isCurrentGestureOverscroll] to the [currentGestureOverscrollConsumer], if present. */
-    fun sendCurrentGestureOverscroll(isCurrentGestureOverscroll: Boolean) =
-        currentGestureOverscrollConsumer?.accept(isCurrentGestureOverscroll)
+    /** send [isExpanding] to the [currentGestureExpandingNotificationConsumer], if present. */
+    fun sendCurrentGestureExpandingNotification(isExpanding: Boolean) =
+        currentGestureExpandingNotificationConsumer?.accept(isExpanding)
 
     /** send [isCurrentGestureInGuts] to the [currentGestureInGutsConsumer], if present. */
     fun sendCurrentGestureInGuts(isCurrentGestureInGuts: Boolean) =

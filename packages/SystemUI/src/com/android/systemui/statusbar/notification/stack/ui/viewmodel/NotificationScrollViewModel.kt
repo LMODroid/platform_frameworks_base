@@ -311,12 +311,9 @@ constructor(
     val accessibilityScrollEventConsumer: (AccessibilityScrollEvent) -> Unit =
         stackAppearanceInteractor::sendAccessibilityScrollEvent
 
-    /**
-     * Receives whether the current touch gesture is overscroll as it has already been consumed by
-     * the stack.
-     */
-    val currentGestureOverscrollConsumer: (Boolean) -> Unit =
-        stackAppearanceInteractor::setCurrentGestureOverscroll
+    /** Receives whether the current touch gesture is has already been consumed by the stack. */
+    val currentGestureExpandingNotifConsumer: (Boolean) -> Unit =
+        stackAppearanceInteractor::setCurrentGestureExpandingNotif
 
     /** Receives whether the current touch gesture is inside any open guts. */
     val currentGestureInGutsConsumer: (Boolean) -> Unit =

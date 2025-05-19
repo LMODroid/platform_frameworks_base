@@ -90,14 +90,14 @@ constructor(
         )
 
     /**
-     * Whether the current touch gesture is overscroll. If true, it means the NSSL has already
-     * consumed part of the gesture.
+     * Whether the current gesture is expanding a Notification. If true, the NSSL has already
+     * consumed the swipe amount to increase the Notification's size.
      */
-    val isCurrentGestureOverscroll: Boolean by
+    val isCurrentGestureExpandingNotification: Boolean by
         hydrator.hydratedStateOf(
-            traceName = "isCurrentGestureOverscroll",
+            traceName = "isCurrentGestureExpandingNotif",
             initialValue = false,
-            source = interactor.isCurrentGestureOverscroll
+            source = interactor.isCurrentGestureExpandingNotif,
         )
 
     /** DEBUG: whether the placeholder should be made slightly visible for positional debugging. */

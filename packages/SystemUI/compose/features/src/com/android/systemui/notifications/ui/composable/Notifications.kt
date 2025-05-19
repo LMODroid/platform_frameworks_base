@@ -70,6 +70,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.boundsInWindow
@@ -95,6 +96,9 @@ import com.android.compose.animation.scene.content.state.TransitionState
 import com.android.compose.gesture.effect.OffsetOverscrollEffect
 import com.android.compose.gesture.effect.rememberOffsetOverscrollEffect
 import com.android.compose.modifiers.thenIf
+import com.android.compose.nestedscroll.OnStopScope
+import com.android.compose.nestedscroll.PriorityNestedScrollConnection
+import com.android.compose.nestedscroll.ScrollController
 import com.android.internal.jank.InteractionJankMonitor
 import com.android.internal.jank.InteractionJankMonitor.CUJ_NOTIFICATION_SHADE_SCROLL_FLING
 import com.android.systemui.common.ui.compose.windowinsets.LocalScreenCornerRadius
@@ -460,13 +464,7 @@ fun ContentScope.NotificationScrollingStack(
     }
 
     val scrimNestedScrollConnection =
-        shadeSession.rememberSession(
-            key = "ScrimConnection",
-            scrimOffset,
-            minScrimTop,
-            viewModel.isCurrentGestureOverscroll,
-            density,
-        ) {
+        shadeSession.rememberSession(key = "ScrimConnection", scrimOffset, minScrimTop, density) {
             val flingSpec: DecayAnimationSpec<Float> = splineBasedDecay(density)
             val flingBehavior = NotificationScrimFlingBehavior(flingSpec)
             NotificationScrimNestedScrollConnection(
@@ -479,8 +477,47 @@ fun ContentScope.NotificationScrollingStack(
                 maxScrimOffset = 0f,
                 contentHeight = { stackHeight.intValue.toFloat() },
                 minVisibleScrimHeight = minVisibleScrimHeight,
-                isCurrentGestureOverscroll = { viewModel.isCurrentGestureOverscroll },
                 flingBehavior = flingBehavior,
+            )
+        }
+
+    val swipeToExpandNotificationScrollConnection =
+        shadeSession.rememberSession(
+            key = "SwipeToExpandNotificationScrollConnection",
+            scrimOffset,
+            minScrimTop,
+            density,
+            viewModel.isCurrentGestureExpandingNotification,
+        ) {
+            PriorityNestedScrollConnection(
+                orientation = Orientation.Vertical,
+                canStartPreScroll = { _, _, _ -> false },
+                canStartPostScroll = { _, _, _ -> viewModel.isCurrentGestureExpandingNotification },
+                onStart = { firstScroll ->
+                    object : ScrollController {
+                        override fun onScroll(
+                            deltaScroll: Float,
+                            source: NestedScrollSource,
+                        ): Float {
+                            return if (viewModel.isCurrentGestureExpandingNotification) {
+                                // consume all the amount, when this swipe is expanding a
+                                // notification
+                                deltaScroll
+                            } else {
+                                // don't consume anything, when the expansion is done
+                                0f
+                            }
+                        }
+
+                        override fun onCancel() {
+                            // No-op
+                        }
+
+                        override fun canStopOnPreFling(): Boolean = false
+
+                        override suspend fun OnStopScope.onStop(initialVelocity: Float): Float = 0f
+                    }
+                },
             )
         }
 
@@ -596,6 +633,7 @@ fun ContentScope.NotificationScrollingStack(
             Column(
                 modifier =
                     Modifier.disableSwipesWhenScrolling()
+                        .nestedScroll(swipeToExpandNotificationScrollConnection)
                         .thenIf(supportNestedScrolling) {
                             Modifier.nestedScroll(scrimNestedScrollConnection)
                         }
