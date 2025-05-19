@@ -193,6 +193,22 @@ class SceneLogger @Inject constructor(@SceneFrameworkLog private val logBuffer: 
         )
     }
 
+    fun logVisibilityRejection(to: Boolean, reason: String) {
+        fun asWord(isVisible: Boolean): String {
+            return if (isVisible) "visible" else "invisible"
+        }
+
+        logBuffer.log(
+            tag = TAG,
+            level = LogLevel.INFO,
+            messageInitializer = {
+                str1 = asWord(to)
+                str2 = reason
+            },
+            messagePrinter = { "REJECTED visibility change to $str1 with reason: $str2" },
+        )
+    }
+
     fun logRemoteUserInputStarted(reason: String) {
         logBuffer.log(
             tag = TAG,

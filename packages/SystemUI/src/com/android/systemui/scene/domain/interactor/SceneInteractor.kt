@@ -470,11 +470,12 @@ constructor(
     fun setVisible(isVisible: Boolean, loggingReason: String) {
         val wasVisible = repository.isVisible.value
         if (wasVisible == isVisible) {
+            logger.logVisibilityRejection(to = isVisible, reason = loggingReason)
             return
         }
 
         logger.logVisibilityChange(from = wasVisible, to = isVisible, reason = loggingReason)
-        return repository.setVisible(isVisible)
+        repository.setVisible(isVisible)
     }
 
     /**
