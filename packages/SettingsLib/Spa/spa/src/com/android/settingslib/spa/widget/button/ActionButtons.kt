@@ -96,41 +96,41 @@ fun ActionButtons(actionButtons: List<ActionButton>) {
 @Composable
 private fun RowScope.ActionButton(actionButton: ActionButton) {
     if (isSpaExpressiveEnabled) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            FilledTonalButton(
-                onClick = actionButton.onClick,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(100.dp)),
-                enabled = actionButton.enabled,
-                // Because buttons could appear, disappear or change positions, reset the interaction source
-                // to prevent highlight the wrong button.
-                interactionSource = remember(actionButton) { MutableInteractionSource() },
-                shape = RectangleShape,
-                colors = ButtonDefaults.filledTonalButtonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    disabledContainerColor = MaterialTheme.colorScheme.surface,
-                ),
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
-            ) {
+        FilledTonalButton(
+            onClick = actionButton.onClick,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(100.dp)),
+            enabled = actionButton.enabled,
+            // Because buttons could appear, disappear or change positions, reset the interaction source
+            // to prevent highlight the wrong button.
+            interactionSource = remember(actionButton) { MutableInteractionSource() },
+            shape = RectangleShape,
+            colors = ButtonDefaults.filledTonalButtonColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.surface,
+            ),
+            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     imageVector = actionButton.imageVector,
                     contentDescription = null,
                     modifier = Modifier.size(SettingsDimension.itemIconSize),
                 )
-            }
-            Box(
-                modifier = Modifier
-                    .padding(top = 6.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = actionButton.text,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleSmall,
-                )
+                Box(
+                    modifier = Modifier
+                        .padding(top = 6.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = actionButton.text,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                }
             }
         }
     } else {
