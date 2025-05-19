@@ -21,7 +21,8 @@ import com.android.compose.animation.scene.Swipe
 import com.android.compose.animation.scene.UserAction
 import com.android.compose.animation.scene.UserActionResult
 import com.android.compose.animation.scene.UserActionResult.HideOverlay
-import com.android.compose.animation.scene.UserActionResult.ReplaceByOverlay
+import com.android.compose.animation.scene.UserActionResult.ShowOverlay
+import com.android.compose.animation.scene.UserActionResult.ShowOverlay.HideCurrentOverlays
 import com.android.systemui.qs.panels.ui.viewmodel.EditModeViewModel
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.ui.viewmodel.SceneContainerArea
@@ -50,7 +51,11 @@ constructor(private val editModeViewModel: EditModeViewModel) : UserActionsViewM
                     }
                     put(
                         Swipe.Down(fromSource = SceneContainerArea.TopEdgeStartHalf),
-                        ReplaceByOverlay(Overlays.NotificationsShade),
+                        ShowOverlay(
+                            Overlays.NotificationsShade,
+                            hideCurrentOverlays =
+                                HideCurrentOverlays.Some(Overlays.QuickSettingsShade),
+                        ),
                     )
                 }
             }
