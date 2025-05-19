@@ -28,6 +28,7 @@ import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.B
 import com.android.systemui.statusbar.systemstatusicons.connecteddisplay.ui.viewmodel.ConnectedDisplayIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.domain.interactor.OrderedIconSlotNamesInteractor
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.EthernetIconViewModel
+import com.android.systemui.statusbar.systemstatusicons.hotspot.ui.viewmodel.HotspotIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.MuteIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.VibrateIconViewModel
 import com.android.systemui.statusbar.systemstatusicons.wifi.ui.viewmodel.WifiIconViewModel
@@ -55,6 +56,7 @@ constructor(
     bluetoothIconViewModelFactory: BluetoothIconViewModel.Factory,
     connectedDisplayIconViewModelFactory: ConnectedDisplayIconViewModel.Factory,
     ethernetIconViewModelFactory: EthernetIconViewModel.Factory,
+    hotspotIconViewModelFactory: HotspotIconViewModel.Factory,
     muteIconViewModelFactory: MuteIconViewModel.Factory,
     nextAlarmIconViewModelFactory: NextAlarmIconViewModel.Factory,
     vibrateIconViewModelFactory: VibrateIconViewModel.Factory,
@@ -74,6 +76,7 @@ constructor(
         connectedDisplayIconViewModelFactory.create(context)
     }
     private val ethernetIcon by lazy { ethernetIconViewModelFactory.create(context) }
+    private val hotspotIcon by lazy { hotspotIconViewModelFactory.create(context) }
     private val muteIcon by lazy { muteIconViewModelFactory.create(context) }
     private val nextAlarmIcon by lazy { nextAlarmIconViewModelFactory.create(context) }
     private val vibrateIcon by lazy { vibrateIconViewModelFactory.create(context) }
@@ -86,6 +89,7 @@ constructor(
             bluetoothIcon,
             connectedDisplayIcon,
             ethernetIcon,
+            hotspotIcon,
             muteIcon,
             nextAlarmIcon,
             vibrateIcon,
@@ -120,6 +124,7 @@ constructor(
             launch { bluetoothIcon.activate() }
             launch { connectedDisplayIcon.activate() }
             launch { ethernetIcon.activate() }
+            launch { hotspotIcon.activate() }
             launch { muteIcon.activate() }
             launch { nextAlarmIcon.activate() }
             launch { vibrateIcon.activate() }

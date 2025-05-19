@@ -23,6 +23,7 @@ import com.android.systemui.statusbar.systemstatusicons.alarm.ui.viewmodel.nextA
 import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.bluetoothIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.connecteddisplay.ui.viewmodel.connectedDisplayIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel.ethernetIconViewModelFactory
+import com.android.systemui.statusbar.systemstatusicons.hotspot.ui.viewmodel.hotspotIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.muteIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.vibrateIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.wifi.ui.viewmodel.wifiIconViewModelFactory
@@ -39,6 +40,7 @@ val Kosmos.systemStatusIconsViewModelFactory by
                     bluetoothIconViewModelFactory = bluetoothIconViewModelFactory,
                     connectedDisplayIconViewModelFactory = connectedDisplayIconViewModelFactory,
                     ethernetIconViewModelFactory = ethernetIconViewModelFactory,
+                    hotspotIconViewModelFactory = hotspotIconViewModelFactory,
                     muteIconViewModelFactory = muteIconViewModelFactory,
                     nextAlarmIconViewModelFactory = nextAlarmIconViewModelFactory,
                     vibrateIconViewModelFactory = vibrateIconViewModelFactory,
