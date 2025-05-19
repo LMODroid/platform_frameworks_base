@@ -330,12 +330,16 @@ constructor(
 
                 override fun onMetadataChanged(metadata: MediaMetadata?) {
                     val duration = metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L
-                    updateMediaModelInState(dataModel) { model ->
-                        val canBeScrubbed =
-                            controller.playbackState?.state != PlaybackState.STATE_NONE &&
-                                duration > 0L
-                        model.copy(canBeScrubbed = canBeScrubbed, durationMs = duration)
-                    }
+                    currentMedia
+                        .find { it.instanceId == dataModel.instanceId }
+                        ?.let { latestModel ->
+                            updateMediaModelInState(latestModel) { model ->
+                                val canBeScrubbed =
+                                    controller.playbackState?.state != PlaybackState.STATE_NONE &&
+                                        duration > 0L
+                                model.copy(canBeScrubbed = canBeScrubbed, durationMs = duration)
+                            }
+                        }
                 }
 
                 override fun onSessionDestroyed() {
