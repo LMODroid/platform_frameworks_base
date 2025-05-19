@@ -69,6 +69,7 @@ import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.approachLayout
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.onLayoutRectChanged
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInRoot
@@ -83,6 +84,7 @@ import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
 import androidx.compose.ui.util.fastRoundToInt
@@ -190,6 +192,7 @@ constructor(
     private val composeViewPositionOnScreen = Rect()
     private val scrollState = ScrollState(0)
     private val locationTemp = IntArray(2)
+    private var bottomBarPositionInRoot = IntRect(IntOffset(0, 0), 0)
     private val containerView: FrameLayoutTouchPassthrough?
         get() = view as? FrameLayoutTouchPassthrough
 
@@ -249,6 +252,10 @@ constructor(
                 viewModel::emitMotionEventForFalsingSwipeNested,
                 qsClippingTableLogBuffer,
                 backgroundDispatcher,
+                isInBottomReservedArea = { x, y ->
+                    viewModel.isEditing &&
+                        bottomBarPositionInRoot.contains(IntOffset(x.toInt(), y.toInt()))
+                },
             )
         frame.addView(
             composeView,
@@ -387,7 +394,23 @@ constructor(
             }
 
             scene(SceneKeys.EditMode) {
-                Element(SceneKeys.EditMode.rootElementKey, Modifier) { EditModeElement() }
+                Box(Modifier.fillMaxSize()) {
+                    Element(SceneKeys.EditMode.rootElementKey, Modifier) { EditModeElement() }
+                    /*
+                     * This provides the position of the bottom nav bar wrt to the root. As it's
+                     * full screen (and the container view has the same bounds) this can be used to
+                     * filter out touches in this bottom bar, and allow the shade to process them
+                     * if necessary.
+                     */
+                    Spacer(
+                        Modifier
+                            // default debounce 64ms (4+ frames of stability)
+                            .onLayoutRectChanged { bottomBarPositionInRoot = it.boundsInRoot }
+                            .align(Alignment.BottomCenter)
+                            .fillMaxWidth()
+                            .windowInsetsBottomHeight(WindowInsets.systemBars)
+                    )
+                }
             }
         }
     }
@@ -1121,10 +1144,12 @@ private const val EDIT_MODE_TIME_MILLIS = 500
 
 /**
  * Performs different touch handling based on the state of the ComposeView:
- * * Ignore touches below the value returned by [clippingTopProvider], when clipping is enabled, as
- *   per [clippingEnabledProvider].
+ * * Ignore touches below the value returned by [clipData.second.top], when clipping is enabled, as
+ *   per [clipData.first].
  * * Intercept touches that would overscroll QS forward and instead allow them to be used to close
  *   the shade.
+ * * Ignore touches in [isInBottomReservedArea] (bottom area when editing). This allows the shade to
+ *   close on bottom swipes when editing when using gesture nav.
  */
 private class FrameLayoutTouchPassthrough(
     context: Context,
@@ -1132,6 +1157,7 @@ private class FrameLayoutTouchPassthrough(
     private val emitMotionEventForFalsing: () -> Unit,
     private val logBuffer: TableLogBuffer,
     private val backgroundDispatcher: CoroutineDispatcher,
+    private val isInBottomReservedArea: (Float, Float) -> Boolean,
 ) : FrameLayout(context) {
 
     init {
@@ -1222,6 +1248,8 @@ private class FrameLayoutTouchPassthrough(
         outLocalPoint: PointF?,
     ): Boolean {
         return if (clipEnabled && y + translationY > clipParams.top) {
+            false
+        } else if (isInBottomReservedArea(x, y)) { // no translation as it's relative to root
             false
         } else {
             super.isTransformedTouchPointInView(x, y, child, outLocalPoint)
