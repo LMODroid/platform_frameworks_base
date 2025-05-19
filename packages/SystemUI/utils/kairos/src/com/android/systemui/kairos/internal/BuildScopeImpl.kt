@@ -39,7 +39,6 @@ import com.android.systemui.kairos.internal.util.childScope
 import com.android.systemui.kairos.internal.util.invokeOnCancel
 import com.android.systemui.kairos.internal.util.launchImmediate
 import com.android.systemui.kairos.launchEffect
-import com.android.systemui.kairos.observeSync
 import com.android.systemui.kairos.skipNext
 import com.android.systemui.kairos.takeUntil
 import com.android.systemui.kairos.util.Maybe
@@ -81,7 +80,7 @@ internal class BuildScopeImpl(
         get() = coroutineScope.coroutineContext.job
 
     override val kairosNetwork: LocalNetwork by lazy {
-        LocalNetwork(nameData, network, coroutineScope, stateScope.aliveLazy)
+        LocalNetwork(nameData, network, coroutineScope, stateScope.deathSignalLazy)
     }
 
     override fun <T> events(
@@ -312,7 +311,7 @@ internal class BuildScopeImpl(
                             asyncNameData,
                             network = this@BuildScopeImpl.network,
                             scope = this@newScope,
-                            aliveLazy = childStateScope.aliveLazy,
+                            deathSignalLazy = childStateScope.deathSignalLazy,
                         )
                     val scope =
                         object : KairosCoroutineScope, CoroutineScope by this@newScope {
@@ -327,7 +326,7 @@ internal class BuildScopeImpl(
                     nameData,
                     network = this@BuildScopeImpl.network,
                     scope = childScope,
-                    aliveLazy = this@BuildScopeImpl.stateScope.aliveLazy,
+                    deathSignalLazy = this@BuildScopeImpl.stateScope.deathSignalLazy,
                 )
         }
 
@@ -401,9 +400,7 @@ internal class BuildScopeImpl(
                         (newCoroutineScope.coroutineContext.job as CompletableJob).complete()
                     }
                 )
-                observeSync(nameData + "observeLifetime", alive) {
-                    if (!it) newCoroutineScope.cancel()
-                }
+                deathSignal.observeSync(nameData + "observeLifetime") { newCoroutineScope.cancel() }
             }
     }
 
@@ -437,7 +434,7 @@ private fun EvalScope.reenterBuildScope(
                 outerScope.stateScope.nameData,
                 outerScope.stateScope.createdEpoch,
                 evalScope = this,
-                aliveLazy = outerScope.stateScope.aliveLazy,
+                deathSignalLazy = outerScope.stateScope.deathSignalLazy,
             ),
         coroutineScope,
     )

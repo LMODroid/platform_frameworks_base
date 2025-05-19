@@ -167,7 +167,7 @@ internal class LocalNetwork(
     val nameData: NameData,
     private val network: Network,
     private val scope: CoroutineScope,
-    private val aliveLazy: Lazy<State<Boolean>>,
+    private val deathSignalLazy: Lazy<Events<Any>>,
 ) : KairosNetwork {
 
     init {
@@ -208,7 +208,13 @@ internal class LocalNetwork(
         BuildScopeImpl(
             nameData,
             epoch,
-            stateScope = StateScopeImpl(nameData, epoch, evalScope = this, aliveLazy = aliveLazy),
+            stateScope =
+                StateScopeImpl(
+                    nameData,
+                    epoch,
+                    evalScope = this,
+                    deathSignalLazy = deathSignalLazy,
+                ),
             coroutineScope = coroutineScope,
         )
 
@@ -276,7 +282,7 @@ internal constructor(private val network: Network, private val scope: CoroutineS
         FullNameTag(lazyOf("root"), "launchKairosNetwork"),
         network,
         scope,
-        lazyOf(stateOf(true)),
+        lazyOf(emptyEvents),
     )
 
 /** Constructs a new [RootKairosNetwork] in the given [CoroutineScope] and [CoalescingPolicy]. */
