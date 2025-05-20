@@ -705,8 +705,8 @@ constructor(
         isUserSwitcherEnabled: Boolean,
     ): UserModel? {
         return when {
-            // When the user switcher is not enabled in settings, we only show the primary user.
-            !isUserSwitcherEnabled && !userInfo.isPrimary -> null
+            // When the user switcher is not enabled in settings, we only show the current user.
+            !isUserSwitcherEnabled && userInfo.id != selectedUserId -> null
             // We avoid showing disabled users.
             !userInfo.isEnabled -> null
             // We meet the conditions to return the UserModel.

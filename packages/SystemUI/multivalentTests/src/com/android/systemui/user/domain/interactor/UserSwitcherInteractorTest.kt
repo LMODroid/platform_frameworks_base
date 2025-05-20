@@ -1046,8 +1046,13 @@ class UserSwitcherInteractorTest : SysuiTestCase() {
             userRepository.setUserInfos(userInfos)
             userRepository.setSelectedUserInfo(userInfos[1])
             userRepository.setSettings(UserSwitcherSettingsModel(isUserSwitcherEnabled = false))
+
             val selectedUser = collectLastValue(underTest.selectedUser)
-            assertThat(selectedUser()).isNotNull()
+            assertUser(selectedUser(), id = 1, isSelected = true)
+
+            val users = collectLastValue(underTest.users)
+            assertThat(users()?.size == 1).isTrue()
+            assertUser(users()?.firstOrNull(), id = 1, isSelected = true)
         }
     }
 
