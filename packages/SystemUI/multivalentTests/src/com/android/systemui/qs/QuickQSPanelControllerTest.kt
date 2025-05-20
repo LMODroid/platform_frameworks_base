@@ -19,9 +19,10 @@ package com.android.systemui.qs
 import android.content.res.Configuration
 import android.platform.test.annotations.DisableFlags
 import android.platform.test.annotations.EnableFlags
+import android.platform.test.flag.junit.FlagsParameterization
+import android.testing.TestableLooper.RunWithLooper
 import android.view.ContextThemeWrapper
 import android.view.ViewTreeObserver
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.internal.logging.MetricsLogger
 import com.android.internal.logging.testing.UiEventLoggerFake
@@ -29,6 +30,7 @@ import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.flags.DisableSceneContainer
+import com.android.systemui.flags.andSceneContainer
 import com.android.systemui.haptics.qs.QSLongPressEffect
 import com.android.systemui.media.controls.domain.pipeline.interactor.MediaCarouselInteractor
 import com.android.systemui.media.controls.ui.view.MediaHost
@@ -57,10 +59,13 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when` as whenever
 import org.mockito.MockitoAnnotations
+import platform.test.runner.parameterized.ParameterizedAndroidJunit4
+import platform.test.runner.parameterized.Parameters
 
 @SmallTest
-@RunWith(AndroidJUnit4::class)
-class QuickQSPanelControllerTest : SysuiTestCase() {
+@RunWith(ParameterizedAndroidJunit4::class)
+@RunWithLooper(setAsMainLooper = true)
+class QuickQSPanelControllerTest(flags: FlagsParameterization) : SysuiTestCase() {
 
     @Mock private lateinit var quickQSPanel: QuickQSPanel
     @Mock private lateinit var qsHost: QSHost
@@ -86,6 +91,18 @@ class QuickQSPanelControllerTest : SysuiTestCase() {
     private var usingCollapsedLandscapeMedia = true
 
     private lateinit var controller: TestQuickQSPanelController
+
+    companion object {
+        @JvmStatic
+        @Parameters(name = "{0}")
+        fun getParams(): List<FlagsParameterization> {
+            return FlagsParameterization.allCombinationsOf().andSceneContainer()
+        }
+    }
+
+    init {
+        mSetFlagsRule.setFlagsParameterization(flags)
+    }
 
     @Before
     fun setUp() {
