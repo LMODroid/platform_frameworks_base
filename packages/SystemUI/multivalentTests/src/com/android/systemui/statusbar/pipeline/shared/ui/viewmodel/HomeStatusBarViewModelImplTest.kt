@@ -1841,6 +1841,134 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
             assertThat(latest).containsExactly("icon1", "icon2")
         }
 
+    @Test
+    @DisableSceneContainer
+    fun launcherToDream_sceneFlagOff_noStatusBarViewsShown() =
+        kosmos.runTest {
+            val clockVisible by collectLastValue(underTest.isClockVisible)
+            val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
+
+            // Gone to dreaming transition starts
+            keyguardInteractor.setDreaming(true)
+            fakeKeyguardTransitionRepository.sendTransitionSteps(
+                from = KeyguardState.GONE,
+                to = KeyguardState.DREAMING,
+                throughTransitionState = TransitionState.STARTED,
+                testScope = testScope,
+            )
+
+            assertThat(clockVisible!!.visibility).isEqualTo(View.INVISIBLE)
+            assertThat(notifIconsVisible!!.visibility).isEqualTo(View.GONE)
+            assertThat(systemInfoVisible!!.baseVisibility.visibility).isEqualTo(View.GONE)
+        }
+
+    @Test
+    @EnableSceneContainer
+    fun launcherToDream_sceneFlagOn_noStatusBarViewsShown() =
+        kosmos.runTest {
+            val clockVisible by collectLastValue(underTest.isClockVisible)
+            val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
+
+            sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
+
+            assertThat(clockVisible!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(notifIconsVisible!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(systemInfoVisible!!.baseVisibility.visibility).isEqualTo(View.VISIBLE)
+
+            sceneContainerRepository.instantlyTransitionTo(Scenes.Dream)
+
+            assertThat(clockVisible!!.visibility).isEqualTo(View.INVISIBLE)
+            assertThat(notifIconsVisible!!.visibility).isEqualTo(View.GONE)
+            assertThat(systemInfoVisible!!.baseVisibility.visibility).isEqualTo(View.GONE)
+        }
+
+    @Test
+    @DisableSceneContainer
+    fun dreamingToLauncher_sceneFlagOff_statusBarViewsShown() =
+        kosmos.runTest {
+            val clockVisible by collectLastValue(underTest.isClockVisible)
+            val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
+
+            // Dream stops and returns to launcher
+            keyguardInteractor.setDreaming(false)
+            fakeKeyguardTransitionRepository.sendTransitionSteps(
+                from = KeyguardState.DREAMING,
+                to = KeyguardState.GONE,
+                testScope = testScope,
+            )
+
+            assertThat(clockVisible!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(notifIconsVisible!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(systemInfoVisible!!.baseVisibility.visibility).isEqualTo(View.VISIBLE)
+        }
+
+    @Test
+    @DisableSceneContainer
+    fun finishedInDreaming_noStatusBarViewsShown() =
+        kosmos.runTest {
+            val clockVisible by collectLastValue(underTest.isClockVisible)
+            val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
+
+            // Transition from gone to dreaming finishes.
+            keyguardInteractor.setDreaming(true)
+            fakeKeyguardTransitionRepository.sendTransitionSteps(
+                from = KeyguardState.GONE,
+                to = KeyguardState.DREAMING,
+                testScope = testScope,
+            )
+
+            assertThat(clockVisible!!.visibility).isEqualTo(View.INVISIBLE)
+            assertThat(notifIconsVisible!!.visibility).isEqualTo(View.GONE)
+            assertThat(systemInfoVisible!!.baseVisibility.visibility).isEqualTo(View.GONE)
+        }
+
+    @Test
+    @EnableSceneContainer
+    fun dreamingToLauncher_sceneFlagOn_statusBarViewsShown() =
+        kosmos.runTest {
+            val clockVisible by collectLastValue(underTest.isClockVisible)
+            val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
+
+            sceneContainerRepository.instantlyTransitionTo(Scenes.Dream)
+
+            assertThat(clockVisible!!.visibility).isEqualTo(View.INVISIBLE)
+            assertThat(notifIconsVisible!!.visibility).isEqualTo(View.GONE)
+            assertThat(systemInfoVisible!!.baseVisibility.visibility).isEqualTo(View.GONE)
+
+            sceneContainerRepository.instantlyTransitionTo(Scenes.Gone)
+
+            assertThat(clockVisible!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(notifIconsVisible!!.visibility).isEqualTo(View.VISIBLE)
+            assertThat(systemInfoVisible!!.baseVisibility.visibility).isEqualTo(View.VISIBLE)
+        }
+
+    @Test
+    @DisableSceneContainer
+    fun startsDreaming_fromLockscreen_noStatusBarViewsShown() =
+        kosmos.runTest {
+            val clockVisible by collectLastValue(underTest.isClockVisible)
+            val notifIconsVisible by collectLastValue(underTest.isNotificationIconContainerVisible)
+            val systemInfoVisible by collectLastValue(underTest.systemInfoCombinedVis)
+
+            // Starts transitioning to dream from any state other than launcher (lock screen)
+            keyguardInteractor.setDreaming(true)
+            fakeKeyguardTransitionRepository.sendTransitionSteps(
+                from = KeyguardState.LOCKSCREEN,
+                to = KeyguardState.DREAMING,
+                throughTransitionState = TransitionState.STARTED,
+                testScope = testScope,
+            )
+            // home status bar should remain hidden
+            assertThat(clockVisible!!.visibility).isEqualTo(View.INVISIBLE)
+            assertThat(notifIconsVisible!!.visibility).isEqualTo(View.GONE)
+            assertThat(systemInfoVisible!!.baseVisibility.visibility).isEqualTo(View.GONE)
+        }
+
     private fun activeNotificationsStore(notifications: List<ActiveNotificationModel>) =
         ActiveNotificationsStore.Builder()
             .apply { notifications.forEach(::addIndividualNotif) }

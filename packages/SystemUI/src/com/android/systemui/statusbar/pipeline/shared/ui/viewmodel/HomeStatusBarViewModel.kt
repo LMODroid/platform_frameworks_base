@@ -324,6 +324,21 @@ constructor(
             hasShade && isShadeVisibleOnAnyDisplay
         }
 
+    /** Whether keyguard is transitioning from Gone to Dreaming. */
+    private val isTransitioningFromGoneToDream: Flow<Boolean> =
+        keyguardTransitionInteractor
+            .isInTransition(
+                Edge.create(from = Scenes.Gone, to = DREAMING),
+                edgeWithoutSceneContainer = Edge.create(from = GONE, to = DREAMING),
+            )
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLogger,
+                columnName = COL_GONE_TO_DREAM,
+                initialValue = false,
+            )
+            .flowOn(bgDispatcher)
+
     private val isHomeStatusBarAllowedByScene: Flow<Boolean> =
         combine(
                 sceneInteractor.currentScene,
@@ -426,7 +441,8 @@ constructor(
                 isHomeStatusBarAllowed,
                 keyguardInteractor.isSecureCameraActive,
                 headsUpNotificationInteractor.statusBarHeadsUpStatus,
-            ) { isHomeStatusBarAllowed, isSecureCameraActive, headsUpState ->
+                isTransitioningFromGoneToDream,
+            ) { isHomeStatusBarAllowed, isSecureCameraActive, headsUpState, isGoneToDream ->
                 val showForHeadsUp =
                     if (StatusBarNoHunBehavior.isEnabled) {
                         false
@@ -442,7 +458,11 @@ constructor(
                 // the icons and tells us to hide them. To ensure that this high-visibility
                 // animation is smooth, keep the icons hidden during a camera launch. See
                 // b/257292822.
-                showForHeadsUp || (isHomeStatusBarAllowed && !isSecureCameraActive)
+                // Similar to launching the camera: when dream is launched, the icons are
+                // momentarily visible because the dream animation has finished, but SysUI has not
+                // been informed that the dream is full-screen. See b/273314977.
+                showForHeadsUp ||
+                    (isHomeStatusBarAllowed && !isSecureCameraActive && !isGoneToDream)
             }
             .distinctUntilChanged()
             .logDiffsForTable(
@@ -646,6 +666,7 @@ constructor(
 
     companion object {
         private const val COL_LOCK_TO_OCCLUDED = "Lock->Occluded"
+        private const val COL_GONE_TO_DREAM = "Gone->Dreaming"
         private const val COL_ALLOWED_LEGACY = "allowedLegacy"
         private const val COL_ALLOWED_BY_SCENE = "allowedByScene"
         private const val COL_SHADE_EXPANDED_ENOUGH = "shadeExpandedEnough"
