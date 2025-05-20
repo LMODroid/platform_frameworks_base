@@ -104,9 +104,9 @@ private fun PreferenceDivider() {
     Box(
         if (isSpaExpressiveEnabled) {
             Modifier.padding(
-                    start = SettingsDimension.paddingSmall,
-                    end = SettingsDimension.paddingExtraSmall6,
-                )
+                start = SettingsDimension.paddingSmall,
+                end = SettingsDimension.extraSmall6,
+            )
                 .size(width = 1.dp, height = SettingsDimension.itemDividerHeight)
                 .background(color = MaterialTheme.colorScheme.outline)
         } else {

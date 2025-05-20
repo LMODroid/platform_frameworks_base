@@ -145,7 +145,7 @@ private fun Title(title: String, maxLines: Int = Int.MAX_VALUE) {
             Modifier
                 .padding(
                     start =
-                    if (isSpaExpressiveEnabled) SettingsDimension.paddingExtraSmall
+                    if (isSpaExpressiveEnabled) SettingsDimension.extraSmall2
                     else SettingsDimension.itemPaddingAround,
                     end = SettingsDimension.itemPaddingEnd,
                 )

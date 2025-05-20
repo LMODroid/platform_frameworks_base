@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Stars
 import androidx.compose.material.icons.outlined.Stars
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -80,7 +79,7 @@ fun SuggestionCard(model: SuggestionCardModel) {
                     .clip(SettingsShape.CornerExtraLarge1)
                     .background(MaterialTheme.colorScheme.secondaryContainer)
                     .then(model.onClick?.let { Modifier.clickable(onClick = it) } ?: Modifier)
-                    .padding(SettingsDimension.paddingExtraSmall6),
+                    .padding(SettingsDimension.extraSmall6),
         ) {
             SuggestionCardIcon(model.imageVector)
             Spacer(Modifier.padding(SettingsDimension.paddingSmall))

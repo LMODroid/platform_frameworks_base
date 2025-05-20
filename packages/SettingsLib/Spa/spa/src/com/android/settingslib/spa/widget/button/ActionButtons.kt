@@ -103,7 +103,7 @@ private fun RowScope.ActionButton(actionButton: ActionButton) {
     if (isSpaExpressiveEnabled) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             IconButton(actionButton)
-            Spacer(Modifier.height(SettingsDimension.paddingExtraSmall3))
+            Spacer(Modifier.height(SettingsDimension.extraSmall3))
             Text(
                 text = actionButton.text,
                 modifier = Modifier.clearAndSetSemantics {}, // semantics set in IconButton

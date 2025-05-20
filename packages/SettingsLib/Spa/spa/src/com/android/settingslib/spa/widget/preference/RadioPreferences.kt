@@ -84,7 +84,7 @@ fun Radio2(
         Spacer(
             modifier =
                 Modifier.width(
-                    if (isSpaExpressiveEnabled) SettingsDimension.paddingExtraSmall6
+                    if (isSpaExpressiveEnabled) SettingsDimension.extraSmall6
                     else SettingsDimension.itemDividerHeight
                 )
         )

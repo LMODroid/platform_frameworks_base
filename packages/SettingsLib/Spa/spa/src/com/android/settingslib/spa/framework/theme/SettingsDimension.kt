@@ -20,14 +20,17 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.dp
 
 object SettingsDimension {
+    val extraSmall2 = 4.dp
+    val extraSmall3 = 6.dp
+    val extraSmall4 = 8.dp
+    val extraSmall5 = 10.dp
+    val extraSmall6 = 12.dp
+    val small1 = 16.dp
+    val small4 = 24.dp
+
     val paddingTiny = 2.dp
-    val paddingExtraSmall = 4.dp
     val paddingExtraSmall1 = 6.dp
-    val paddingExtraSmall3 = 6.dp
-    val paddingExtraSmall5 = 10.dp
-    val paddingExtraSmall6 = 12.dp
     val paddingSmall = if (isSpaExpressiveEnabled) 8.dp else 4.dp
-    val paddingSmall1 = 16.dp
     val paddingLarge = 16.dp
     val paddingExtraLarge = 24.dp
     val paddingExtraLarge1 = 28.dp
@@ -43,7 +46,7 @@ object SettingsDimension {
     val itemIconContainerSize = 72.dp
     val itemPaddingStart = if (isSpaExpressiveEnabled) paddingLarge else paddingExtraLarge
     val itemPaddingEnd = paddingLarge
-    val itemPaddingVertical = if (isSpaExpressiveEnabled) paddingExtraSmall6 else paddingLarge
+    val itemPaddingVertical = if (isSpaExpressiveEnabled) extraSmall6 else paddingLarge
     val itemPadding = PaddingValues(
         start = itemPaddingStart,
         top = itemPaddingVertical,

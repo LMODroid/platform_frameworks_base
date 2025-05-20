@@ -14,22 +14,26 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
+
 package com.android.settingslib.spa.widget.preference
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,12 +42,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import com.android.settingslib.spa.framework.theme.SettingsDimension
-import com.android.settingslib.spa.framework.theme.toMediumWeight
 import com.android.settingslib.spa.framework.util.annotatedStringResource
 
 /** The widget model for [TopIntroPreference] widget. */
@@ -68,9 +70,10 @@ fun TopIntroPreference(model: TopIntroPreferenceModel) {
         // TopIntroPreference content.
         Column(
             modifier =
-                Modifier.padding(
-                        horizontal = SettingsDimension.paddingExtraLarge,
-                        vertical = SettingsDimension.paddingSmall,
+                Modifier
+                    .padding(
+                        horizontal = SettingsDimension.small4,
+                        vertical = SettingsDimension.extraSmall4,
                     )
                     .animateContentSize()
         ) {
@@ -82,55 +85,56 @@ fun TopIntroPreference(model: TopIntroPreferenceModel) {
             if (expanded) TopIntroAnnotatedText(model.labelText)
         }
 
-        // TopIntroPreference collapse bar.
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        CollapseBar(model, expanded) { expanded = it }
+    }
+}
+
+@Composable
+private fun CollapseBar(
+    model: TopIntroPreferenceModel,
+    expanded: Boolean,
+    onExpandedChange: (Boolean) -> Unit,
+) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable { onExpandedChange(!expanded) }
+                .padding(
+                    top = SettingsDimension.extraSmall4,
+                    bottom = SettingsDimension.small1,
+                    start = SettingsDimension.small4,
+                    end = SettingsDimension.small4,
+                ),
+    ) {
+        Icon(
+            imageVector =
+                if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+            contentDescription = null,
             modifier =
-                Modifier.fillMaxWidth()
-                    .clickable(onClick = { expanded = !expanded })
-                    .padding(
-                        top = SettingsDimension.paddingSmall,
-                        bottom = SettingsDimension.paddingLarge,
-                        start = SettingsDimension.paddingExtraLarge,
-                        end = SettingsDimension.paddingExtraLarge,
-                    ),
-        ) {
-            Icon(
-                imageVector =
-                    if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                contentDescription = null,
-                modifier =
-                    Modifier.size(SettingsDimension.itemIconSize)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHighest),
-            )
-            Text(
-                text = if (expanded) model.collapseText else model.expandText,
-                modifier = Modifier.padding(start = SettingsDimension.paddingSmall),
-                style = MaterialTheme.typography.bodyLarge.toMediumWeight(),
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        }
+                Modifier
+                    .size(SettingsDimension.itemIconSize)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+        )
+        Spacer(Modifier.width(SettingsDimension.extraSmall4))
+        Text(
+            text = if (expanded) model.collapseText else model.expandText,
+            style = MaterialTheme.typography.bodyLargeEmphasized,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
     }
 }
 
 @Composable
 private fun TopIntroAnnotatedText(@StringRes id: Int?) {
-    if (id != null) {
-        Box(
-            Modifier.padding(
-                top = SettingsDimension.paddingExtraSmall5,
-                bottom = SettingsDimension.paddingExtraSmall5,
-                end = SettingsDimension.paddingLarge,
-            )
-        ) {
-            Text(
-                text = annotatedStringResource(id),
-                style = MaterialTheme.typography.bodyLarge.toMediumWeight(),
-                color = MaterialTheme.colorScheme.primary,
-            )
-        }
-    }
+    if (id == null) return
+    Text(
+        text = annotatedStringResource(id),
+        modifier = Modifier.padding(vertical = SettingsDimension.extraSmall5),
+        style = MaterialTheme.typography.bodyLargeEmphasized,
+        color = MaterialTheme.colorScheme.primary,
+    )
 }
 
 @Preview
@@ -140,7 +144,7 @@ private fun TopIntroPreferencePreview() {
         object : TopIntroPreferenceModel {
             override val text =
                 "Additional text needed for the page. This can sit on the right side of the screen in 2 column.\n" +
-                    "Example collapsed text area that you will not see until you expand this block."
+                        "Example collapsed text area that you will not see until you expand this block."
             override val expandText = "Expand"
             override val collapseText = "Collapse"
             override val labelText = androidx.appcompat.R.string.abc_prepend_shortcut_label

@@ -58,11 +58,11 @@ private fun BackAction(contentDescription: String, onClick: () -> Unit) {
         modifier =
             if (isSpaExpressiveEnabled)
                 Modifier.padding(
-                        start = SettingsDimension.paddingExtraSmall5,
-                        end = SettingsDimension.paddingSmall,
-                        top = SettingsDimension.paddingExtraSmall,
-                        bottom = SettingsDimension.paddingExtraSmall,
-                    )
+                    start = SettingsDimension.extraSmall5,
+                    end = SettingsDimension.paddingSmall,
+                    top = SettingsDimension.extraSmall2,
+                    bottom = SettingsDimension.extraSmall2,
+                )
                     .size(SettingsDimension.actionIconSize)
                     .clip(SettingsShape.CornerExtraLarge)
             else Modifier,

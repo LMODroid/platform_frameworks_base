@@ -96,7 +96,7 @@ internal fun BaseIcon(icon: @Composable (() -> Unit)?, modifier: Modifier, paddi
             ) {
                 icon()
             }
-            Spacer(modifier = Modifier.width(width = SettingsDimension.paddingExtraSmall6))
+            Spacer(modifier = Modifier.width(width = SettingsDimension.extraSmall6))
         }
     } else {
         if (icon != null) {
