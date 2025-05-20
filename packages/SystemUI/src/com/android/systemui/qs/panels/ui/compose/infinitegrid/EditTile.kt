@@ -125,9 +125,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.AnnotatedString
@@ -978,7 +980,18 @@ private fun AvailableTileGridCell(
             modifier
                 .graphicsLayer { this.alpha = alpha }
                 .clickable(enabled = !cell.isCurrent, onClick = onClick, onClickLabel = clickLabel)
-                .semantics { stateDescription?.let { this.stateDescription = it } },
+                .semantics {
+                    if (stateDescription != null) {
+                        this.stateDescription = stateDescription
+                    } else {
+                        // This is needed due to b/418803616. When a clickable element that doesn't
+                        // have semantics is slightly out of bounds of a scrollable container, it
+                        // will be found by talkback. Because the text is off screen, it will say
+                        // "Unlabelled". Instead, give it a role (that is also meaningful when on
+                        // screen), and it will be skipped when not visible.
+                        this.role = Role.Button
+                    }
+                },
     ) {
         Box(Modifier.fillMaxWidth().height(TileHeight)) {
             val draggableModifier =
