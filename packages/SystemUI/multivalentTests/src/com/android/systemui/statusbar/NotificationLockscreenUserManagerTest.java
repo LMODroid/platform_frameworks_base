@@ -73,6 +73,7 @@ import android.util.SparseArray;
 import androidx.test.filters.SmallTest;
 
 import com.android.internal.widget.LockPatternUtils;
+import com.android.systemui.flags.SceneContainerFlagParameterizationKt;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.deviceentry.domain.interactor.DeviceUnlockedInteractor;
@@ -128,10 +129,11 @@ public class NotificationLockscreenUserManagerTest extends SysuiTestCase {
 
     @Parameters(name = "{0}")
     public static List<FlagsParameterization> getParams() {
-        return FlagsParameterization.allCombinationsOf(
+        List<FlagsParameterization> aconfigCombinations = FlagsParameterization.allCombinationsOf(
                 FLAG_ALLOW_PRIVATE_PROFILE,
                 FLAG_KEYGUARD_PRIVATE_NOTIFICATIONS,
                 FLAG_ENABLE_PRIVATE_SPACE_FEATURES);
+        return SceneContainerFlagParameterizationKt.andSceneContainer(aconfigCombinations);
     }
 
     public NotificationLockscreenUserManagerTest(FlagsParameterization flags) {
