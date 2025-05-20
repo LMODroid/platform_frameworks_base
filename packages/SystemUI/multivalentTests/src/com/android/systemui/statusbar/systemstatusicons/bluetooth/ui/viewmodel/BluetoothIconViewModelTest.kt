@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel
 
 import android.bluetooth.BluetoothProfile
+import android.content.testableContext
 import android.platform.test.annotations.EnableFlags
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
@@ -33,11 +34,9 @@ import com.android.systemui.statusbar.policy.bluetooth.data.repository.bluetooth
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 @SmallTest
@@ -46,18 +45,15 @@ import org.mockito.kotlin.whenever
 class BluetoothIconViewModelTest : SysuiTestCase() {
 
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
-    @Mock private lateinit var cachedDevice: CachedBluetoothDevice
-    private lateinit var underTest: BluetoothIconViewModel
-
-    @Before
-    fun setUp() {
-        MockitoAnnotations.openMocks(this)
-        whenever(cachedDevice.isConnected).thenReturn(true)
-        whenever(cachedDevice.maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
-
-        underTest = kosmos.bluetoothIconViewModelFactory.create()
-        underTest.activateIn(kosmos.testScope)
-    }
+    private val cachedDevice =
+        mock<CachedBluetoothDevice>().apply {
+            whenever(isConnected).thenReturn(true)
+            whenever(maxConnectionState).thenReturn(BluetoothProfile.STATE_CONNECTED)
+        }
+    private val underTest =
+        kosmos.bluetoothIconViewModelFactory.create(kosmos.testableContext).apply {
+            activateIn(kosmos.testScope)
+        }
 
     @Test
     fun icon_bluetoothNotConnected_outputsNull() =

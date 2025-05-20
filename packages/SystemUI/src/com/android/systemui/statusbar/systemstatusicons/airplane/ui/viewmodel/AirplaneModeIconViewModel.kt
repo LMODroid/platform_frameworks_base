@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
@@ -25,6 +26,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.pipeline.airplane.domain.interactor.AirplaneModeInteractor
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconViewModel
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.combine
@@ -33,13 +35,17 @@ import kotlinx.coroutines.flow.combine
  * View model for the airplane mode system status icon. Emits an airplane icon when airplane mode is
  * active and the icon should be shown. Null icon otherwise.
  */
-class AirplaneModeIconViewModel @AssistedInject constructor(interactor: AirplaneModeInteractor) :
+class AirplaneModeIconViewModel
+@AssistedInject
+constructor(@Assisted context: Context, interactor: AirplaneModeInteractor) :
     SystemStatusIconViewModel, ExclusiveActivatable() {
     init {
         /* check if */ SystemStatusIconsInCompose.isUnexpectedlyInLegacyMode()
     }
 
     private val hydrator = Hydrator("AirplaneModeIconViewModel.hydrator")
+
+    override val slotName = context.getString(com.android.internal.R.string.status_bar_airplane)
 
     override val icon: Icon? by
         hydrator.hydratedStateOf(
@@ -67,6 +73,6 @@ class AirplaneModeIconViewModel @AssistedInject constructor(interactor: Airplane
 
     @AssistedFactory
     interface Factory {
-        fun create(): AirplaneModeIconViewModel
+        fun create(context: Context): AirplaneModeIconViewModel
     }
 }

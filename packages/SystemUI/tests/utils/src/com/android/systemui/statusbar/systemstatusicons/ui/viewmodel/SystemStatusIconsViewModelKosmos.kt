@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.ui.viewmodel
 
+import android.content.Context
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel.airplaneModeIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel.bluetoothIconViewModelFactory
@@ -24,21 +25,19 @@ import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.mute
 import com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel.vibrateIconViewModelFactory
 import com.android.systemui.statusbar.systemstatusicons.zenmode.ui.viewmodel.zenModeIconViewModelFactory
 
-val Kosmos.systemStatusIconsViewModel by
-    Kosmos.Fixture {
-        SystemStatusIconsViewModel(
-            airplaneModeIconViewModelFactory = airplaneModeIconViewModelFactory,
-            bluetoothIconViewModelFactory = bluetoothIconViewModelFactory,
-            ethernetIconViewModelFactory = ethernetIconViewModelFactory,
-            zenModeIconViewModelFactory = zenModeIconViewModelFactory,
-            muteIconViewModelFactory = muteIconViewModelFactory,
-            vibrateIconViewModelFactory = vibrateIconViewModelFactory,
-        )
-    }
-
 val Kosmos.systemStatusIconsViewModelFactory by
     Kosmos.Fixture {
         object : SystemStatusIconsViewModel.Factory {
-            override fun create(): SystemStatusIconsViewModel = systemStatusIconsViewModel
+            override fun create(context: Context): SystemStatusIconsViewModel =
+                SystemStatusIconsViewModel(
+                    context = context,
+                    orderedIconSlotNamesInteractor = orderedIconSlotNamesInteractor,
+                    airplaneModeIconViewModelFactory = airplaneModeIconViewModelFactory,
+                    bluetoothIconViewModelFactory = bluetoothIconViewModelFactory,
+                    ethernetIconViewModelFactory = ethernetIconViewModelFactory,
+                    muteIconViewModelFactory = muteIconViewModelFactory,
+                    vibrateIconViewModelFactory = vibrateIconViewModelFactory,
+                    zenModeIconViewModelFactory = zenModeIconViewModelFactory,
+                )
         }
     }

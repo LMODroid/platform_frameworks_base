@@ -20,6 +20,8 @@ import com.android.systemui.common.shared.model.Icon
 
 /** Common interface for all system status icon view models. */
 interface SystemStatusIconViewModel {
+    /** The associated slot in the status bar that this icon should be displayed on. */
+    val slotName: String
     /**
      * [Icon] to be displayed on the right side of the status bar. This should be implemented as a
      * hydrated value by individual system status icon view models.

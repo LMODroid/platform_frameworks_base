@@ -16,15 +16,14 @@
 
 package com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel
 
+import android.content.Context
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.statusbar.policy.bluetooth.domain.interactor.bluetoothConnectionStatusInteractor
-
-private val Kosmos.bluetoothIconViewModel: BluetoothIconViewModel by
-    Kosmos.Fixture { BluetoothIconViewModel(bluetoothConnectionStatusInteractor) }
 
 val Kosmos.bluetoothIconViewModelFactory: BluetoothIconViewModel.Factory by
     Kosmos.Fixture {
         object : BluetoothIconViewModel.Factory {
-            override fun create(): BluetoothIconViewModel = bluetoothIconViewModel
+            override fun create(context: Context) =
+                BluetoothIconViewModel(context, bluetoothConnectionStatusInteractor)
         }
     }

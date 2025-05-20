@@ -21,12 +21,12 @@ import android.graphics.drawable.Drawable
 import androidx.compose.runtime.getValue
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
-import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.statusbar.policy.domain.interactor.ZenModeInteractor
 import com.android.systemui.statusbar.policy.domain.model.ZenModeInfo
 import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconViewModel
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.map
@@ -37,10 +37,12 @@ import kotlinx.coroutines.flow.map
  */
 class ZenModeIconViewModel
 @AssistedInject
-constructor(interactor: ZenModeInteractor, @Application private val context: Context) :
+constructor(@Assisted private val context: Context, interactor: ZenModeInteractor) :
     SystemStatusIconViewModel, ExclusiveActivatable() {
 
     private val hydrator: Hydrator = Hydrator("ZenModeIconViewModel.hydrator")
+
+    override val slotName = context.getString(com.android.internal.R.string.status_bar_zen)
 
     override val icon: Icon? by
         hydrator.hydratedStateOf(
@@ -75,6 +77,6 @@ constructor(interactor: ZenModeInteractor, @Application private val context: Con
 
     @AssistedFactory
     interface Factory {
-        fun create(): ZenModeIconViewModel
+        fun create(context: Context): ZenModeIconViewModel
     }
 }

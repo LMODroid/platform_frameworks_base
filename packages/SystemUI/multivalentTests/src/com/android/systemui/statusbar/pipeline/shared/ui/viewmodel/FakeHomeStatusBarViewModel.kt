@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.pipeline.shared.ui.viewmodel
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.RectF
@@ -86,7 +87,7 @@ class FakeHomeStatusBarViewModel(
 
     override val systemStatusIconsViewModelFactory: SystemStatusIconsViewModel.Factory =
         object : SystemStatusIconsViewModel.Factory {
-            override fun create(): SystemStatusIconsViewModel =
+            override fun create(context: Context): SystemStatusIconsViewModel =
                 mock(SystemStatusIconsViewModel::class.java)
         }
 

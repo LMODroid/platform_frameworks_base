@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.systemstatusicons.zenmode.ui.viewmodel
 
 import android.app.AutomaticZenRule
+import android.content.testableContext
 import android.graphics.drawable.TestStubDrawable
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
@@ -43,7 +44,9 @@ class ZenModeIconViewModelTest : SysuiTestCase() {
 
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
     private var underTest: ZenModeIconViewModel =
-        kosmos.zenModeIconViewModelFactory.create().apply { activateIn(kosmos.testScope) }
+        kosmos.zenModeIconViewModelFactory.create(kosmos.testableContext).apply {
+            activateIn(kosmos.testScope)
+        }
 
     @Before
     fun setUp() {

@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel
 
+import android.content.testableContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.settingslib.AccessibilityContentDescriptions
@@ -32,7 +33,6 @@ import com.android.systemui.statusbar.pipeline.shared.data.repository.connectivi
 import com.android.systemui.statusbar.pipeline.shared.data.repository.fake
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -45,12 +45,10 @@ class EthernetIconViewModelTest : SysuiTestCase() {
         kosmos.connectivityRepository.fake
     }
 
-    private val underTest = kosmos.ethernetIconViewModelFactory.create()
-
-    @Before
-    fun setUp() {
-        underTest.activateIn(kosmos.testScope)
-    }
+    private val underTest =
+        kosmos.ethernetIconViewModelFactory.create(kosmos.testableContext).apply {
+            activateIn(kosmos.testScope)
+        }
 
     @Test
     fun icon_default_validated() =

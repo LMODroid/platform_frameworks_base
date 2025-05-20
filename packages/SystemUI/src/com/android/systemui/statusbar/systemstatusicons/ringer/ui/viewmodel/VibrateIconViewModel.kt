@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel
 
+import android.content.Context
 import android.media.AudioManager
 import androidx.compose.runtime.getValue
 import com.android.settingslib.volume.domain.interactor.AudioVolumeInteractor
@@ -27,6 +28,7 @@ import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconViewModel
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.map
@@ -35,7 +37,9 @@ import kotlinx.coroutines.flow.map
  * View model for the vibrate system status icon. Emits an icon when the ringer is set to vibrate.
  * Null icon otherwise.
  */
-class VibrateIconViewModel @AssistedInject constructor(interactor: AudioVolumeInteractor) :
+class VibrateIconViewModel
+@AssistedInject
+constructor(@Assisted context: Context, interactor: AudioVolumeInteractor) :
     SystemStatusIconViewModel, ExclusiveActivatable() {
 
     init {
@@ -43,6 +47,8 @@ class VibrateIconViewModel @AssistedInject constructor(interactor: AudioVolumeIn
     }
 
     private val hydrator = Hydrator("VibrateIconViewModel.hydrator")
+
+    override val slotName = context.getString(com.android.internal.R.string.status_bar_volume)
 
     override val icon: Icon? by
         hydrator.hydratedStateOf(
@@ -68,6 +74,6 @@ class VibrateIconViewModel @AssistedInject constructor(interactor: AudioVolumeIn
 
     @AssistedFactory
     interface Factory {
-        fun create(): VibrateIconViewModel
+        fun create(context: Context): VibrateIconViewModel
     }
 }

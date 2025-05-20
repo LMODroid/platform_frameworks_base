@@ -16,16 +16,14 @@
 
 package com.android.systemui.statusbar.systemstatusicons.zenmode.ui.viewmodel
 
-import android.content.applicationContext
+import android.content.Context
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.statusbar.policy.domain.interactor.zenModeInteractor
-
-private val Kosmos.zenModeIconViewModel: ZenModeIconViewModel by
-    Kosmos.Fixture { ZenModeIconViewModel(zenModeInteractor, applicationContext) }
 
 val Kosmos.zenModeIconViewModelFactory: ZenModeIconViewModel.Factory by
     Kosmos.Fixture {
         object : ZenModeIconViewModel.Factory {
-            override fun create(): ZenModeIconViewModel = zenModeIconViewModel
+            override fun create(context: Context): ZenModeIconViewModel =
+                ZenModeIconViewModel(context, zenModeInteractor)
         }
     }

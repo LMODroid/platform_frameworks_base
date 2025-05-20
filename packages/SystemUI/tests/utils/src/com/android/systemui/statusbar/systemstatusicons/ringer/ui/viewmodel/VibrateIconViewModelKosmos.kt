@@ -16,15 +16,14 @@
 
 package com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel
 
+import android.content.Context
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.volume.domain.interactor.audioVolumeInteractor
-
-private val Kosmos.vibrateIconViewModel: VibrateIconViewModel by
-    Kosmos.Fixture { VibrateIconViewModel(audioVolumeInteractor) }
 
 val Kosmos.vibrateIconViewModelFactory: VibrateIconViewModel.Factory by
     Kosmos.Fixture {
         object : VibrateIconViewModel.Factory {
-            override fun create(): VibrateIconViewModel = vibrateIconViewModel
+            override fun create(context: Context): VibrateIconViewModel =
+                VibrateIconViewModel(context, audioVolumeInteractor)
         }
     }

@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.bluetooth.ui.viewmodel
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
@@ -25,6 +26,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.policy.bluetooth.domain.interactor.BluetoothConnectionStatusInteractor
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconViewModel
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.map
@@ -35,13 +37,15 @@ import kotlinx.coroutines.flow.map
  */
 class BluetoothIconViewModel
 @AssistedInject
-constructor(interactor: BluetoothConnectionStatusInteractor) :
+constructor(@Assisted context: Context, interactor: BluetoothConnectionStatusInteractor) :
     SystemStatusIconViewModel, ExclusiveActivatable() {
     init {
         SystemStatusIconsInCompose.expectInNewMode()
     }
 
     private val hydrator = Hydrator("BluetoothIconViewModel.hydrator")
+
+    override val slotName = context.getString(com.android.internal.R.string.status_bar_bluetooth)
 
     override val icon: Icon? by
         hydrator.hydratedStateOf(
@@ -67,6 +71,6 @@ constructor(interactor: BluetoothConnectionStatusInteractor) :
 
     @AssistedFactory
     interface Factory {
-        fun create(): BluetoothIconViewModel
+        fun create(context: Context): BluetoothIconViewModel
     }
 }

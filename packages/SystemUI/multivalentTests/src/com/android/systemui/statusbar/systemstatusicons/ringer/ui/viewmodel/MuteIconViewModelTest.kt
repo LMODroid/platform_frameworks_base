@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel
 
+import android.content.testableContext
 import android.media.AudioManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
@@ -31,7 +32,6 @@ import com.android.systemui.res.R
 import com.android.systemui.testKosmos
 import com.android.systemui.volume.data.repository.fakeAudioRepository
 import com.google.common.truth.Truth.assertThat
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -40,12 +40,10 @@ import org.junit.runner.RunWith
 class MuteIconViewModelTest : SysuiTestCase() {
 
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
-    private val underTest = kosmos.muteIconViewModelFactory.create()
-
-    @Before
-    fun setUp() {
-        underTest.activateIn(kosmos.testScope)
-    }
+    private val underTest =
+        kosmos.muteIconViewModelFactory.create(kosmos.testableContext).apply {
+            activateIn(kosmos.testScope)
+        }
 
     @Test
     fun icon_ringerModeNormal_null() =

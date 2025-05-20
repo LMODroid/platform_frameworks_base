@@ -16,15 +16,14 @@
 
 package com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel
 
+import android.content.Context
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.statusbar.pipeline.airplane.domain.interactor.airplaneModeInteractor
-
-private val Kosmos.airplaneModeIconViewModel: AirplaneModeIconViewModel by
-    Kosmos.Fixture { AirplaneModeIconViewModel(airplaneModeInteractor) }
 
 val Kosmos.airplaneModeIconViewModelFactory: AirplaneModeIconViewModel.Factory by
     Kosmos.Fixture {
         object : AirplaneModeIconViewModel.Factory {
-            override fun create(): AirplaneModeIconViewModel = airplaneModeIconViewModel
+            override fun create(context: Context) =
+                AirplaneModeIconViewModel(context, airplaneModeInteractor)
         }
     }

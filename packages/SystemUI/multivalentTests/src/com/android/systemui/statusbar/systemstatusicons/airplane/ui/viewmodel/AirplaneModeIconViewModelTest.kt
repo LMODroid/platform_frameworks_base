@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.airplane.ui.viewmodel
 
+import android.content.testableContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
@@ -32,7 +33,6 @@ import com.android.systemui.statusbar.pipeline.shared.data.repository.connectivi
 import com.android.systemui.statusbar.pipeline.shared.data.repository.fake
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -41,7 +41,7 @@ import org.junit.runner.RunWith
 class AirplaneModeIconViewModelTest : SysuiTestCase() {
 
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
-    private val underTest = kosmos.airplaneModeIconViewModelFactory.create()
+
     private val fakeConnectivityRepository = kosmos.connectivityRepository.fake
     private val expectedAirplaneIcon =
         Icon.Resource(
@@ -49,10 +49,10 @@ class AirplaneModeIconViewModelTest : SysuiTestCase() {
             contentDescription = ContentDescription.Resource(R.string.accessibility_airplane_mode),
         )
 
-    @Before
-    fun setUp() {
-        underTest.activateIn(kosmos.testScope)
-    }
+    private val underTest =
+        kosmos.airplaneModeIconViewModelFactory.create(kosmos.testableContext).apply {
+            activateIn(kosmos.testScope)
+        }
 
     @Test
     fun icon_notAirplaneMode_outputsNull() =

@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.ringer.ui.viewmodel
 
+import android.content.Context
 import android.media.AudioManager
 import androidx.compose.runtime.getValue
 import com.android.settingslib.volume.domain.interactor.AudioVolumeInteractor
@@ -27,6 +28,7 @@ import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconViewModel
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.map
@@ -35,7 +37,9 @@ import kotlinx.coroutines.flow.map
  * View model for the "ringer silent" system status icon. Emits an icon when the ringer is silenced.
  * Null icon otherwise.
  */
-class MuteIconViewModel @AssistedInject constructor(interactor: AudioVolumeInteractor) :
+class MuteIconViewModel
+@AssistedInject
+constructor(@Assisted context: Context, interactor: AudioVolumeInteractor) :
     SystemStatusIconViewModel, ExclusiveActivatable() {
 
     init {
@@ -44,6 +48,7 @@ class MuteIconViewModel @AssistedInject constructor(interactor: AudioVolumeInter
 
     private val hydrator = Hydrator("MuteIconViewModel.hydrator")
 
+    override val slotName = context.getString(com.android.internal.R.string.status_bar_mute)
     override val icon: Icon? by
         hydrator.hydratedStateOf(
             traceName = "SystemStatus.muteIcon",
@@ -68,6 +73,6 @@ class MuteIconViewModel @AssistedInject constructor(interactor: AudioVolumeInter
 
     @AssistedFactory
     interface Factory {
-        fun create(): MuteIconViewModel
+        fun create(context: Context): MuteIconViewModel
     }
 }

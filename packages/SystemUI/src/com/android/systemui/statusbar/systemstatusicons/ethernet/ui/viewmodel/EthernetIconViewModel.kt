@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.systemstatusicons.ethernet.ui.viewmodel
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.lifecycle.ExclusiveActivatable
@@ -23,6 +24,7 @@ import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.statusbar.pipeline.ethernet.domain.EthernetInteractor
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
 import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatusIconViewModel
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
@@ -30,7 +32,9 @@ import dagger.assisted.AssistedInject
  * View model for the ethernet system status icon. Emits an icon when ethernet is connected and the
  * default connection. Null icon otherwise.
  */
-class EthernetIconViewModel @AssistedInject constructor(interactor: EthernetInteractor) :
+class EthernetIconViewModel
+@AssistedInject
+constructor(@Assisted context: Context, interactor: EthernetInteractor) :
     SystemStatusIconViewModel, ExclusiveActivatable() {
 
     init {
@@ -38,6 +42,8 @@ class EthernetIconViewModel @AssistedInject constructor(interactor: EthernetInte
     }
 
     private val hydrator = Hydrator("EthernetIconViewModel.hydrator")
+
+    override val slotName = context.getString(com.android.internal.R.string.status_bar_ethernet)
 
     override val icon: Icon? by
         hydrator.hydratedStateOf(traceName = null, initialValue = null, source = interactor.icon)
@@ -48,6 +54,6 @@ class EthernetIconViewModel @AssistedInject constructor(interactor: EthernetInte
 
     @AssistedFactory
     interface Factory {
-        fun create(): EthernetIconViewModel
+        fun create(context: Context): EthernetIconViewModel
     }
 }

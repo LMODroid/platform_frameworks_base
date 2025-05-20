@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.lifecycle.rememberViewModel
@@ -33,9 +34,11 @@ import com.android.systemui.statusbar.systemstatusicons.ui.viewmodel.SystemStatu
  */
 @Composable
 fun SystemStatusIcons(viewModelFactory: SystemStatusIconsViewModel.Factory, isDark: IsAreaDark) {
-    val viewModel = rememberViewModel(traceName = "SystemStatusIcons") { viewModelFactory.create() }
+    val context = LocalContext.current
+    val viewModel =
+        rememberViewModel(traceName = "SystemStatusIcons") { viewModelFactory.create(context) }
 
-    for (icon in viewModel.icons) {
+    viewModel.icons.forEach { icon ->
         // TODO(407622922): Use isDark to color the icon.
         // TODO(414653733): Make sure icons are sized uniformly.
         Icon(icon = icon, modifier = Modifier.size(20.dp).padding(1.dp), tint = Color.Red)
