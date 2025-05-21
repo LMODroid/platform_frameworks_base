@@ -103,6 +103,7 @@ import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.dagger.KeyguardStatusBarViewComponent;
 import com.android.systemui.DejankUtils;
 import com.android.systemui.Dumpable;
+import com.android.systemui.Flags;
 import com.android.systemui.Gefingerpoken;
 import com.android.systemui.bouncer.domain.interactor.AlternateBouncerInteractor;
 import com.android.systemui.classifier.Classifier;
@@ -1917,7 +1918,7 @@ public final class NotificationPanelViewController implements
                 || expandedHeight > mHeadsUpStartHeight);
         if (goingBetweenClosedShadeAndExpandedQs && qsShouldExpandWithHeadsUp) {
             float qsExpansionFraction;
-            if (mSplitShadeEnabled) {
+            if (mSplitShadeEnabled && !Flags.bouncerUiRevamp()) {
                 qsExpansionFraction = 1;
             } else if (isKeyguardShowing()) {
                 // On Keyguard, interpolate the QS expansion linearly to the panel expansion
