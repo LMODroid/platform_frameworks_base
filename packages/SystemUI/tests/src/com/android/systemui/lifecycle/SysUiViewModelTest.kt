@@ -23,6 +23,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.ui.viewmodel.FakeSysUiViewModel
 import com.android.systemui.util.Assert
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.awaitCancellation

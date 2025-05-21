@@ -28,18 +28,97 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
-import com.android.systemui.ui.viewmodel.FakeSysUiViewModel
+import com.android.systemui.kosmos.testScope
+import com.android.systemui.testKosmos
+import com.android.systemui.ui.viewmodel.FakeHydratedViewModel
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
-class HydratorTest : SysuiTestCase() {
+class HydratedActivatableTest : SysuiTestCase() {
 
     @get:Rule val composeRule = createComposeRule()
+
+    private val kosmos = testKosmos()
+    private val testScope = kosmos.testScope
+
+    private val underTest = FakeHydratedViewModel()
+
+    @Test
+    fun activate() =
+        testScope.runTest {
+            assertThat(underTest.activationCount).isEqualTo(0)
+            assertThat(underTest.cancellationCount).isEqualTo(0)
+
+            underTest.activateIn(testScope)
+            runCurrent()
+            assertThat(underTest.activationCount).isEqualTo(1)
+            assertThat(underTest.cancellationCount).isEqualTo(0)
+        }
+
+    @Test
+    fun activate_andCancel() =
+        testScope.runTest {
+            assertThat(underTest.activationCount).isEqualTo(0)
+            assertThat(underTest.cancellationCount).isEqualTo(0)
+
+            val job = Job()
+            underTest.activateIn(testScope, context = job)
+            runCurrent()
+            assertThat(underTest.activationCount).isEqualTo(1)
+            assertThat(underTest.cancellationCount).isEqualTo(0)
+
+            job.cancel()
+            runCurrent()
+            assertThat(underTest.activationCount).isEqualTo(1)
+            assertThat(underTest.cancellationCount).isEqualTo(1)
+        }
+
+    @Test
+    fun activate_afterCancellation() =
+        testScope.runTest {
+            assertThat(underTest.activationCount).isEqualTo(0)
+            assertThat(underTest.cancellationCount).isEqualTo(0)
+
+            val job = Job()
+            underTest.activateIn(testScope, context = job)
+            runCurrent()
+            assertThat(underTest.activationCount).isEqualTo(1)
+            assertThat(underTest.cancellationCount).isEqualTo(0)
+
+            job.cancel()
+            runCurrent()
+            assertThat(underTest.activationCount).isEqualTo(1)
+            assertThat(underTest.cancellationCount).isEqualTo(1)
+
+            underTest.activateIn(testScope)
+            runCurrent()
+            assertThat(underTest.activationCount).isEqualTo(2)
+            assertThat(underTest.cancellationCount).isEqualTo(1)
+        }
+
+    @Test(expected = IllegalStateException::class)
+    fun activate_whileActive_throws() =
+        testScope.runTest {
+            assertThat(underTest.activationCount).isEqualTo(0)
+            assertThat(underTest.cancellationCount).isEqualTo(0)
+
+            underTest.activateIn(testScope)
+            runCurrent()
+            assertThat(underTest.activationCount).isEqualTo(1)
+            assertThat(underTest.cancellationCount).isEqualTo(0)
+
+            underTest.activateIn(testScope)
+            runCurrent()
+        }
 
     @Test
     fun hydratedStateOf() {
@@ -51,7 +130,7 @@ class HydratorTest : SysuiTestCase() {
             if (keepAlive) {
                 val viewModel =
                     rememberViewModel("test") {
-                        FakeSysUiViewModel(
+                        FakeHydratedViewModel(
                             upstreamFlow = upstreamFlow,
                             upstreamStateFlow = upstreamStateFlow,
                         )
