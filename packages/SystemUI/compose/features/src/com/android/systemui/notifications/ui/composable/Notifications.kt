@@ -99,8 +99,8 @@ import com.android.compose.modifiers.thenIf
 import com.android.compose.nestedscroll.OnStopScope
 import com.android.compose.nestedscroll.PriorityNestedScrollConnection
 import com.android.compose.nestedscroll.ScrollController
+import com.android.internal.jank.Cuj.CUJ_NOTIFICATION_SHADE_SCROLL_FLING
 import com.android.internal.jank.InteractionJankMonitor
-import com.android.internal.jank.InteractionJankMonitor.CUJ_NOTIFICATION_SHADE_SCROLL_FLING
 import com.android.systemui.common.ui.compose.windowinsets.LocalScreenCornerRadius
 import com.android.systemui.res.R
 import com.android.systemui.scene.session.ui.composable.SaveableSession
