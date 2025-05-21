@@ -497,7 +497,10 @@ private fun BesideUserSwitcherLayout(
                 .motionTestValues { animatedAlpha(animatedOffset) exportAs MotionTestValues.alpha }
         }
 
-        UserSwitcher(viewModel = viewModel, modifier = Modifier.weight(1f).swappable())
+        UserSwitcher(
+            viewModel = viewModel,
+            modifier = Modifier.fillMaxHeight().weight(1f).swappable(),
+        )
 
         FoldAware(
             modifier = Modifier.weight(1f).swappable(inversed = true).testTag("FoldAware"),
