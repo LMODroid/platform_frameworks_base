@@ -17,8 +17,10 @@
 package com.android.systemui.flashlight.ui.viewmodel
 
 import androidx.compose.runtime.getValue
+import com.android.internal.logging.UiEventLogger
 import com.android.systemui.flashlight.domain.interactor.FlashlightInteractor
 import com.android.systemui.flashlight.shared.logger.FlashlightLogger
+import com.android.systemui.flashlight.shared.logger.FlashlightUiEvent
 import com.android.systemui.flashlight.shared.model.FlashlightModel
 import com.android.systemui.haptics.slider.compose.ui.SliderHapticsViewModel
 import com.android.systemui.lifecycle.ExclusiveActivatable
@@ -35,6 +37,7 @@ constructor(
     val hapticsViewModelFactory: SliderHapticsViewModel.Factory,
     private val flashlightInteractor: FlashlightInteractor,
     private val logger: FlashlightLogger,
+    private val uiEventLogger: UiEventLogger,
 ) : ExclusiveActivatable() {
     private val hydrator = Hydrator("FlashlightSliderViewModel.hydrator")
 
@@ -65,6 +68,8 @@ constructor(
             )
             return
         }
+
+        uiEventLogger.logWithPosition(FlashlightUiEvent.FLASHLIGHT_SLIDER_SET_LEVEL, 0, null, value)
 
         if (value == 0) {
             flashlightInteractor.setEnabled(false)

@@ -20,10 +20,12 @@ import android.hardware.camera2.CameraManager.TorchCallback
 import android.platform.test.annotations.EnableFlags
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.internal.logging.uiEventLoggerFake
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.camera.cameraManager
 import com.android.systemui.flashlight.data.repository.startFlashlightRepository
 import com.android.systemui.flashlight.domain.interactor.flashlightInteractor
+import com.android.systemui.flashlight.shared.logger.FlashlightUiEvent
 import com.android.systemui.flashlight.shared.model.FlashlightModel
 import com.android.systemui.kosmos.runCurrent
 import com.android.systemui.kosmos.runTest
@@ -62,7 +64,7 @@ class FlashlightSliderViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun setLevel_updatesState() =
+    fun setLevel_updatesStateAndLogsUiEvents() =
         kosmos.runTest {
             runCurrent()
             assertThat(underTest.currentFlashlightLevel!!.level).isEqualTo(DEFAULT_LEVEL)
@@ -73,10 +75,20 @@ class FlashlightSliderViewModelTest : SysuiTestCase() {
             assertThat(underTest.currentFlashlightLevel).isNotNull()
             assertThat(underTest.currentFlashlightLevel!!.level).isEqualTo(1)
 
+            assertThat(uiEventLoggerFake.logs.size).isEqualTo(1)
+            assertThat(uiEventLoggerFake.eventId(0))
+                .isEqualTo(FlashlightUiEvent.FLASHLIGHT_SLIDER_SET_LEVEL.id)
+            assertThat(uiEventLoggerFake.logs[0].position).isEqualTo(1) // value 1 logged
+
             underTest.setFlashlightLevel(2)
             runCurrent()
 
             assertThat(underTest.currentFlashlightLevel!!.level).isEqualTo(2)
+
+            assertThat(uiEventLoggerFake.logs.size).isEqualTo(2)
+            assertThat(uiEventLoggerFake.eventId(1))
+                .isEqualTo(FlashlightUiEvent.FLASHLIGHT_SLIDER_SET_LEVEL.id)
+            assertThat(uiEventLoggerFake.logs[1].position).isEqualTo(2)
         }
 
     @Test

@@ -16,6 +16,7 @@
 
 package com.android.systemui.flashlight.ui.viewmodel
 
+import com.android.internal.logging.uiEventLogger
 import com.android.systemui.flashlight.domain.interactor.flashlightInteractor
 import com.android.systemui.flashlight.shared.logger.flashlightLogger
 import com.android.systemui.haptics.slider.sliderHapticsViewModelFactory
@@ -34,5 +35,6 @@ private val Kosmos.flashlightSliderViewModel: FlashlightSliderViewModel by
             sliderHapticsViewModelFactory,
             flashlightInteractor,
             flashlightLogger,
+            uiEventLogger,
         )
     }
