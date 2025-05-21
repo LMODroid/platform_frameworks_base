@@ -123,7 +123,11 @@ constructor(
                                 currentVolumeUpdate.volume
                             }
                         } else {
-                            model.level.toFloat()
+                            if (model.muted) {
+                                model.levelMin.toFloat()
+                            } else {
+                                model.level.toFloat()
+                            }
                         },
                     isDisabled = isDisabledByZenMode,
                     valueRange = model.levelMin.toFloat()..model.levelMax.toFloat(),
