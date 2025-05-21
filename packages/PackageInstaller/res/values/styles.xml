@@ -16,18 +16,6 @@
   -->
 <resources>
 
-    <style name="Theme.PackageInstaller.AlertDialog" parent="@android:style/Theme.DeviceDefault.Light.Dialog.Alert">
-        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Button.Colored</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Button.Outlined</item>
-        <item name="android:buttonBarStyle">@style/Widget.PackageInstaller.ButtonBar</item>
-        <item name="android:windowTitleStyle">@style/Widget.PackageInstaller.WindowTitle</item>
-    </style>
-
-    <style name="Theme.PackageInstaller.AlertDialog.Variant">
-        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Button</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Button</item>
-    </style>
-
     <style name="Widget.PackageInstaller.Button" parent="android:Widget.DeviceDefault.Button">
         <item name="android:textColor">?android:attr/colorAccent</item>
         <item name="android:background">@null</item>

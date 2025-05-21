@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 
+import com.android.packageinstaller.R
 import com.android.packageinstaller.v2.model.PackageUtil.localLogv
 import com.android.packageinstaller.v2.model.UninstallAborted
 import com.android.packageinstaller.v2.model.UninstallFailed
@@ -48,7 +49,7 @@ class UninstallLaunch : FragmentActivity(), UninstallActionListener {
             UninstallLaunch::class.java.packageName + ".callingPkgUid"
         @JvmField val EXTRA_CALLING_ACTIVITY_NAME =
             UninstallLaunch::class.java.packageName + ".callingActivityName"
-        val LOG_TAG = UninstallLaunch::class.java.simpleName
+        private val LOG_TAG = UninstallLaunch::class.java.simpleName
         private const val TAG_DIALOG = "dialog"
         private const val ARGS_SAVED_INTENT = "saved_intent"
     }
@@ -63,6 +64,11 @@ class UninstallLaunch : FragmentActivity(), UninstallActionListener {
         // Never restore any state, esp. never create any fragments. The data in the fragment might
         // be stale, if e.g. the app was uninstalled while the activity was destroyed.
         super.onCreate(null)
+
+        // The base theme inherits a deviceDefault theme. Applying a material style on the base
+        // theme to support the material design.
+        Log.d(LOG_TAG, "Apply material design")
+        theme.applyStyle(R.style.Theme_AlertDialogActivity_Material, /* force= */ true)
 
         fragmentManager = supportFragmentManager
         notificationManager = getSystemService(NotificationManager::class.java)

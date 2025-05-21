@@ -25,11 +25,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Process
 import android.provider.Settings
+import android.util.Log
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import com.android.packageinstaller.R
 import com.android.packageinstaller.v2.model.UnarchiveAborted
 import com.android.packageinstaller.v2.model.UnarchiveError
 import com.android.packageinstaller.v2.model.UnarchiveRepository
@@ -48,6 +50,9 @@ class UnarchiveLaunch : FragmentActivity(), UnarchiveActionListener {
         @JvmField val EXTRA_CALLING_PKG_NAME: String =
             UnarchiveLaunch::class.java.packageName + ".callingPkgName"
         val TAG: String = UnarchiveLaunch::class.java.simpleName
+
+        private val LOG_TAG = UnarchiveLaunch::class.java.simpleName
+
         private const val TAG_DIALOG = "dialog"
 
         private const val ACTION_UNARCHIVE_DIALOG: String =
@@ -65,6 +70,11 @@ class UnarchiveLaunch : FragmentActivity(), UnarchiveActionListener {
             WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS
         )
         super.onCreate(savedInstanceState)
+
+        // The base theme inherits a deviceDefault theme. Applying a material style on the base
+        // theme to support the material design.
+        Log.d(LOG_TAG, "Apply material design")
+        theme.applyStyle(R.style.Theme_AlertDialogActivity_Material, /* force= */ true)
 
         fragmentManager = supportFragmentManager
 

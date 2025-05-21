@@ -61,7 +61,7 @@ public class AnonymousSourceFragment extends DialogFragment {
         customMessage.setVisibility(View.VISIBLE);
 
         mDialog = new AlertDialog.Builder(
-                requireContext(), R.style.Theme_PackageInstaller_AlertDialog_Variant)
+                requireContext(), R.style.Theme_MaterialAlertDialog_Variant)
                 .setTitle(R.string.title_anonymous_source_warning)
                 .setView(dialogView)
                 .setPositiveButton(R.string.button_continue,

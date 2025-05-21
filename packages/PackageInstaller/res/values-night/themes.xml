@@ -24,10 +24,4 @@
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 
-    <style name="Theme.PackageInstaller"
-        parent="@android:style/Theme.DeviceDefault.Dialog.Alert">
-        <item name="android:alertDialogTheme">@style/Theme.PackageInstaller.AlertDialog</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
 </resources>

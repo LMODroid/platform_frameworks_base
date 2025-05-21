@@ -47,8 +47,7 @@
 
         <activity android:name=".v2.ui.InstallLaunch"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:theme="@style/Theme.PackageInstaller"/>
+            android:exported="false"/>
 
         <activity android:name=".InstallStart"
                 android:exported="true"
@@ -121,9 +120,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:noHistory="true"
-            android:exported="false"
-            android:theme="@style/Theme.PackageInstaller">
-        </activity>
+            android:exported="false" />
 
         <receiver android:name=".common.UninstallEventReceiver"
             android:permission="android.permission.INSTALL_PACKAGES"
@@ -180,7 +177,6 @@
 
         <activity android:name=".v2.ui.UnarchiveLaunch"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/Theme.PackageInstaller"
             android:exported="false"/>
     </application>
 

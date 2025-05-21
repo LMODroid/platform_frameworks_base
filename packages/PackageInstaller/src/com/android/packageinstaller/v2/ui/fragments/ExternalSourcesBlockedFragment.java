@@ -100,7 +100,7 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
         mDialog = new AlertDialog.Builder(
-                    requireContext(), R.style.Theme_PackageInstaller_AlertDialog_Variant)
+                    requireContext(), R.style.Theme_MaterialAlertDialog_Variant)
                 .setTitle(R.string.title_unknown_source_blocked)
                 .setView(dialogView)
                 .setPositiveButton(R.string.external_sources_settings,

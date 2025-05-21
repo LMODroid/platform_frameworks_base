@@ -24,10 +24,20 @@
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 
-    <style name="Theme.PackageInstaller"
-        parent="@android:style/Theme.DeviceDefault.Light.Dialog.Alert">
-        <item name="android:alertDialogTheme">@style/Theme.PackageInstaller.AlertDialog</item>
-        <item name="android:windowNoTitle">true</item>
+    <style name="Theme.AlertDialogActivity.Material" >
+        <item name="android:alertDialogTheme">@style/Theme.MaterialAlertDialog</item>
+    </style>
+
+    <style name="Theme.MaterialAlertDialog" parent="@style/Theme.AlertDialogActivity">
+        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Button.Colored</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Button.Outlined</item>
+        <item name="android:buttonBarStyle">@style/Widget.PackageInstaller.ButtonBar</item>
+        <item name="android:windowTitleStyle">@style/Widget.PackageInstaller.WindowTitle</item>
+    </style>
+
+    <style name="Theme.MaterialAlertDialog.Variant">
+        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Button</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Button</item>
     </style>
 
 </resources>

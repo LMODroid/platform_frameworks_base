@@ -82,6 +82,12 @@ class InstallLaunch : FragmentActivity(), InstallActionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        // The base theme inherits a deviceDefault theme. Applying a material style on the base
+        // theme to support the material design.
+        Log.d(LOG_TAG, "Apply material design")
+        theme.applyStyle(R.style.Theme_AlertDialogActivity_Material, /* force= */ true)
+
         fragmentManager = supportFragmentManager
         appOpsManager = getSystemService(AppOpsManager::class.java)
         installRepository = InstallRepository(applicationContext)
