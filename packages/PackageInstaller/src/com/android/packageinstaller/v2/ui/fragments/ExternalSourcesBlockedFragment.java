@@ -25,10 +25,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -90,12 +89,13 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
 
         View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
 
+        dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
+        ((ImageView) dialogView.requireViewById(R.id.app_icon))
+                .setImageDrawable(mDialogData.getAppIcon());
+        ((TextView) dialogView.requireViewById(R.id.app_label)).setText(mDialogData.getAppLabel());
+
         TextView customMessage = dialogView.requireViewById(R.id.custom_message);
-        String sourceBlockedString =
-                getString(R.string.message_external_source_blocked, mDialogData.getAppLabel());
-        Spanned styledSourceBlockedString =
-                Html.fromHtml(sourceBlockedString, Html.FROM_HTML_MODE_LEGACY);
-        customMessage.setText(styledSourceBlockedString);
+        customMessage.setText(R.string.message_external_source_blocked);
         customMessage.setVisibility(View.VISIBLE);
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);

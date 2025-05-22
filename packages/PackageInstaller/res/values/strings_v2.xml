@@ -19,8 +19,8 @@
     <!-- TODO(b/274120822): Add product configs for required strings -->
 
     <!-- Dialog Titles -->
-    <string name="title_unknown_source_blocked">Permission needed</string>
-    <string name="title_anonymous_source_warning">Install from unknown source?</string>
+    <string name="title_unknown_source_blocked">Install unknown apps</string>
+    <string name="title_anonymous_source_warning">Install unknown app?</string>
     <string name="title_install_blocked">Install blocked</string>
 
     <string name="title_install_staging">Preparing to install app&#8230;</string>
@@ -70,8 +70,42 @@
 
     <!-- Dialog Messages -->
     <string name="message_update_owner_change">This app normally receives updates from &lt;b><xliff:g id="existing_update_owner">%1$s</xliff:g>&lt;/b>. By updating from a different source, you may receive future updates from any source on your tablet. App functionality may change.</string>
-    <string name="message_external_source_blocked">To protect your phone and data, &lt;b><xliff:g id="installer_app_label">%1$s</xliff:g>&lt;/b> needs permission to install unknown apps. You can change this in Settings.</string>
-    <string name="message_anonymous_source_warning"> Your phone and personal data are more vulnerable to attack by unknown apps. By installing this app, you agree that you are responsible for any damage to your phone or loss of data that may result from its use.</string>
+
+    <!-- Text to show in warning dialog on the tablet when the app source is not trusted [CHAR LIMIT=NONE] -->
+    <string name="message_external_source_blocked" product="tablet">For your security, your tablet currently isn’t allowed to install unknown apps from this source. You can change this in Settings.</string>
+
+    <!-- Text to show in warning dialog on the tv when the app source is not trusted [CHAR LIMIT=NONE] -->
+    <string name="message_external_source_blocked" product="tv">For your security, your TV currently isn’t allowed to install unknown apps from this source. You can change this in Settings.</string>
+
+    <!-- Text to show in warning dialog on the wear when the app source is not trusted [CHAR LIMIT=NONE] -->
+    <string name="message_external_source_blocked" product="watch">For your security, your watch currently isn’t allowed to install unknown apps from this source. You can change this in Settings.</string>
+
+    <!-- Text to show in warning dialog on the phone when the app source is not trusted [CHAR LIMIT=NONE] -->
+    <string name="message_external_source_blocked" product="default">For your security, your phone currently isn’t allowed to install unknown apps from this source. You can change this in Settings.</string>
+
+    <!-- Text to show in warning dialog on the phone when the app source cannot be identified [CHAR LIMIT=NONE] -->
+    <string name="message_anonymous_source_warning" product="default">
+        Your phone and personal data are more vulnerable
+        to attack by unknown apps. By installing this app, you
+        agree that you are responsible for any damage to your
+        phone or loss of data that may result from its use.
+    </string>
+
+    <!-- Text to show in warning dialog on the tablet when the app source cannot be identified [CHAR LIMIT=NONE] -->
+    <string name="message_anonymous_source_warning" product="tablet">
+        Your tablet and personal data are more vulnerable
+        to attack by unknown apps. By installing this app, you
+        agree that you are responsible for any damage to your
+        tablet or loss of data that may result from its use.
+    </string>
+
+    <!-- Text to show in warning dialog on the tv when the app source cannot be identified [CHAR LIMIT=NONE] -->
+    <string name="message_anonymous_source_warning" product="tv">
+        Your TV and personal data are more vulnerable
+        to attack by unknown apps. By installing this app, you
+        agree that you are responsible for any damage to your
+        TV or loss of data that may result from its use.
+    </string>
 
     <string name="message_install_failed_blocked">This app was blocked from being installed</string>
     <string name="message_install_failed_conflict">This app conflicts with an app already on your device</string>
