@@ -24,6 +24,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.android.app.tracing.coroutines.runBlockingTraced as runBlocking
 import com.android.internal.logging.MetricsLogger
 import com.android.systemui.animation.Expandable
 import com.android.systemui.dagger.qualifiers.Background
@@ -50,7 +51,6 @@ import com.android.systemui.qs.tiles.impl.flashlight.ui.mapper.FlashlightTileMap
 import com.android.systemui.res.R
 import javax.inject.Inject
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 /** Quick settings tile: Control flashlight */
 class FlashlightTileWithLevel
