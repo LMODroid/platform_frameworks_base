@@ -71,6 +71,7 @@ import com.android.systemui.scene.shared.model.FakeSceneDataSource
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.scene.shared.model.fakeSceneDataSource
+import com.android.systemui.shade.domain.interactor.enableSingleShade
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.DevicePostureController
 import com.android.systemui.statusbar.policy.DeviceProvisionedController
@@ -91,6 +92,7 @@ import com.android.systemui.util.time.FakeSystemClock
 import com.android.systemui.window.domain.interactor.windowRootViewBlurInteractor
 import com.google.common.truth.Truth
 import junit.framework.Assert
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runCurrent
@@ -113,6 +115,7 @@ import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 @RunWithLooper
@@ -832,6 +835,8 @@ class KeyguardSecurityContainerControllerTest : SysuiTestCase() {
     @EnableSceneContainer
     fun dismissesKeyguard_whenSceneChangesToGone() =
         kosmos.testScope.runTest {
+            kosmos.enableSingleShade()
+            runCurrent()
             // Collect sceneInteractor.currentOverlays so that show/hideOverlay receive updated
             // overlay state during validation
             val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
