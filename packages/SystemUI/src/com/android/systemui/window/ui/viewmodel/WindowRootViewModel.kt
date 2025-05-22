@@ -100,19 +100,7 @@ constructor(
      * composited with the alpha channels from the surfaces below while rendering.
      */
     val isSurfaceOpaque =
-        combine(blurInteractor.isBlurCurrentlySupported, shadeInteractor.isAnyFullyExpanded) {
-                blurSupported,
-                anyShadeFullyExpanded ->
-                if (blurSupported) {
-                    // scrims will be opaque when shade is fully expanded
-                    // Fall back to old behavior when shade blur is not enabled.
-                    !Flags.notificationShadeBlur() && anyShadeFullyExpanded
-                } else {
-                    anyShadeFullyExpanded
-                }
-            }
-            .distinctUntilChanged()
-            .logIfPossible("isSurfaceOpaque")
+        if (Flags.notificationShadeBlur()) flowOf(false) else shadeInteractor.isAnyFullyExpanded
 
     fun onBlurApplied(blurRadius: Int, isOpaque: Boolean) {
         if (isLoggable) {
