@@ -95,8 +95,9 @@ internal class MuxDeferredNode<W, K, V>(
     }
 
     override fun doDeactivate() {
+        check(downstreamSet.isEmpty()) { "cannot deactivate a node with downstreams" }
         // Update lifecycle
-        if (lifecycle.lifecycleState !is MuxLifecycleState.Active) return@doDeactivate
+        if (lifecycle.lifecycleState !is MuxLifecycleState.Active) return
         lifecycle.lifecycleState = MuxLifecycleState.Inactive(spec)
         // Process branch nodes
         switchedIn.forEach { _, branchNode ->
@@ -109,7 +110,7 @@ internal class MuxDeferredNode<W, K, V>(
     // MOVE phase
     //  - no more node evaluations are occurring. all depth recalculations are deferred to the end
     //    of this phase.
-    fun performMove(logIndent: Int, evalScope: EvalScope) {
+    fun performMove(evalScope: EvalScope) {
         val patch = patchData ?: return
         patchData = null
 
@@ -191,9 +192,7 @@ internal class MuxDeferredNode<W, K, V>(
     }
 
     fun removeDirectPatchNode(scheduler: Scheduler) {
-        if (
-            depthTracker.removeIndirectUpstream(depth = 0) or depthTracker.setIsIndirectRoot(false)
-        ) {
+        if (depthTracker.setIsIndirectRoot(false)) {
             depthTracker.schedule(scheduler, this)
         }
         patches = null

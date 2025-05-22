@@ -22,7 +22,6 @@ import com.android.systemui.kairos.internal.Network
 import com.android.systemui.kairos.internal.NoScope
 import com.android.systemui.kairos.internal.StateScopeImpl
 import com.android.systemui.kairos.internal.util.childScope
-import com.android.systemui.kairos.internal.util.invokeOnCancel
 import com.android.systemui.kairos.util.FullNameTag
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.NameTag
@@ -180,10 +179,11 @@ internal class LocalNetwork(
     override suspend fun activateSpec(name: NameTag?, spec: BuildSpec<*>): Unit = coroutineScope {
         val nameData = name.toNameData("KairosNetwork.activateSpec")
         lateinit var completionHandle: DisposableHandle
-        val childEndSignal =
-            conflatedMutableEvents<Unit>(nameData.mapName { "$it-specEndSignal" }).apply {
-                invokeOnCancel { emit(Unit) }
-            }
+        val childEndSignal = conflatedMutableEvents<Unit>(nameData.mapName { "$it-specEndSignal" })
+        coroutineContext.job.invokeOnCompletion {
+            completionHandle.dispose()
+            childEndSignal.emit(Unit)
+        }
         val job =
             launch(start = CoroutineStart.LAZY) {
                 network

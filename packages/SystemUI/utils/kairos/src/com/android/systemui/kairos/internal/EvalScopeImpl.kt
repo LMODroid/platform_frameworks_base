@@ -54,32 +54,24 @@ internal class EvalScopeImpl(networkScope: NetworkScope, deferScope: DeferScope)
     override val now: Events<Unit> by lazy {
         var result by EventsLoop<Unit>()
         val switchOff = result.mapCheap { emptyEvents }
-        val nameTag = nameTag { "now(epoc=$epoch)" }.toNameData("now")
+        val nameTag = nameTag { "now(epoch=$epoch)" }.toNameData("TransactionScope.now")
         result =
             StateInit(
                     constInit(
                         nameTag,
                         activatedStateSource(
-                            nameTag,
+                            nameTag + "switchedIn",
                             this,
                             { switchOff.init.connect(evalScope = this) },
-                            lazyOf(
-                                EventsInit(
-                                    constInit(
-                                        nameTag,
-                                        EventsImplCheap {
-                                            ActivationResult(
-                                                connection = NodeConnection(AlwaysNode, AlwaysNode),
-                                                needsEval = true,
-                                            )
-                                        },
-                                    )
-                                )
-                            ),
+                            lazyOf(EventsInit(constInit(nameTag + "always", alwaysImpl))),
                         ),
                     )
                 )
-                .switchEvents(nameTag + "onlyOnce")
+                .switchEvents(nameTag)
         result
     }
+}
+
+private val alwaysImpl = EventsImplCheap {
+    ActivationResult(connection = NodeConnection(AlwaysNode, AlwaysNode), needsEval = true)
 }

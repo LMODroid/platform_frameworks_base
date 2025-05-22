@@ -66,8 +66,6 @@ internal sealed class MuxNode<W, K, V>(
     /**
      * Adds a downstream schedulable to this mux node, such that when this mux node emits a value,
      * it will be scheduled for evaluation within this same transaction.
-     *
-     * Must only be called when [mutex] is acquired.
      */
     fun addDownstreamLocked(downstream: Schedulable) {
         downstreamSet.add(downstream)

@@ -39,6 +39,7 @@ import com.android.systemui.kairos.internal.util.childScope
 import com.android.systemui.kairos.internal.util.invokeOnCancel
 import com.android.systemui.kairos.internal.util.launchImmediate
 import com.android.systemui.kairos.launchEffect
+import com.android.systemui.kairos.mergeLeft
 import com.android.systemui.kairos.skipNext
 import com.android.systemui.kairos.takeUntil
 import com.android.systemui.kairos.util.Maybe
@@ -241,9 +242,7 @@ internal class BuildScopeImpl(
     ): DisposableHandle {
         val subRef = AtomicReference<Maybe<Output<A>>?>(null)
         val childScope: CoroutineScope = coroutineScope.childScope(context)
-        var cancelHandle: DisposableHandle? = null
         val handle = DisposableHandle {
-            cancelHandle?.dispose()
             subRef.getAndSet(Absent)?.let { output ->
                 if (output is Present) {
                     @Suppress("DeferredResultUnused")
@@ -253,8 +252,6 @@ internal class BuildScopeImpl(
                 }
             }
         }
-        // When our scope is cancelled, deactivate this observer.
-        cancelHandle = childScope.coroutineContext.job.invokeOnCompletion { handle.dispose() }
         val effectScope: EffectScope = effectScope(childScope, nameData + "effectScope")
         val outputNode =
             Output<A>(
@@ -269,7 +266,11 @@ internal class BuildScopeImpl(
         // Defer, in case any EventsLoops / StateLoops still need to be set
         deferAction {
             // Check for immediate cancellation
-            if (subRef.get() != null) return@deferAction
+            if (subRef.get() != null) {
+                childScope.cancel()
+                return@deferAction
+            }
+            // Stop observing when this scope dies
             truncateToScope(this@observeInternal, nameData + "truncateToScope")
                 .init
                 .connect(evalScope = stateScope.evalScope)
@@ -277,7 +278,7 @@ internal class BuildScopeImpl(
                 ?.let { (conn, needsEval) ->
                     outputNode.upstream = conn
                     if (!subRef.compareAndSet(null, Maybe.present(outputNode))) {
-                        // Job's already been cancelled, schedule deactivation
+                        // Handle's already been disposed, schedule deactivation
                         scheduleDeactivation(outputNode)
                     } else if (needsEval) {
                         outputNode.schedule(0, evalScope = stateScope.evalScope)
@@ -369,10 +370,10 @@ internal class BuildScopeImpl(
                 },
             )
         emitterAndScope = constructEvents(inputNode)
-        return truncateToScope(
-            takeUntil(nameData + "takeUntilStopped", emitterAndScope.first, stopEmitter),
-            nameData + "scopeLifetimeBound",
-        )
+        // Deactivate once scope dies, or once [builder] completes.
+        val deactivateSignal: Events<Any> =
+            mergeLeft(nameData + "deactivateSignal", deathSignal, stopEmitter)
+        return takeUntil(nameData + "takeUntilStopped", emitterAndScope.first, deactivateSignal)
     }
 
     private fun newStopEmitter(nameData: NameData): CoalescingMutableEvents<Unit, Unit> =
@@ -385,39 +386,42 @@ internal class BuildScopeImpl(
 
     fun childBuildScope(newEnd: Events<Any>, nameData: NameData): BuildScopeImpl {
         val newCoroutineScope: CoroutineScope = coroutineScope.childScope()
-        return BuildScopeImpl(
-                nameData,
-                epoch,
-                stateScope = stateScope.childStateScope(newEnd, nameData),
-                coroutineScope = newCoroutineScope,
-            )
-            .apply {
-                // Ensure that once this transaction is done, the new child scope enters the
-                // completing state (kept alive so long as there are child jobs).
-                scheduleOutput(
-                    OneShot(nameData + "completeJob") {
-                        // TODO: don't like this cast
-                        (newCoroutineScope.coroutineContext.job as CompletableJob).complete()
-                    }
-                )
-                deathSignal.observeSync(nameData + "observeLifetime") { newCoroutineScope.cancel() }
-            }
+        val newChildBuildScope = newChildBuildScope(newCoroutineScope, newEnd, nameData)
+        // When the end signal emits, cancel all running coroutines in the new scope
+        newChildBuildScope.deathSignal.observeSync(nameData + "observeLifetime") {
+            newCoroutineScope.cancel()
+        }
+        return newChildBuildScope
     }
 
     private fun mutableChildBuildScope(
         childNameData: NameData,
         coroutineContext: CoroutineContext,
     ): BuildScopeImpl {
-        val childScope = coroutineScope.childScope(coroutineContext)
-        val stopEmitter =
-            newStopEmitter(childNameData + "stopEmitter").apply {
-                childScope.invokeOnCancel { emit(Unit) }
+        val stopEmitter = newStopEmitter(childNameData + "stopEmitter")
+        val newCoroutineScope = coroutineScope.childScope(coroutineContext)
+        // If the job is cancelled, emit the stop signal
+        newCoroutineScope.coroutineContext.job.invokeOnCompletion { stopEmitter.emit(Unit) }
+        return newChildBuildScope(newCoroutineScope, stopEmitter, nameData)
+    }
+
+    private fun newChildBuildScope(
+        newCoroutineScope: CoroutineScope,
+        newEnd: Events<Any>,
+        nameData: NameData,
+    ): BuildScopeImpl {
+        // Ensure that once this transaction is done, the new child scope enters the completing
+        // state (kept alive so long as there are child jobs).
+        scheduleOutput(
+            OneShot(nameData + "completeJob") {
+                (newCoroutineScope.coroutineContext.job as CompletableJob).complete()
             }
+        )
         return BuildScopeImpl(
-            childNameData,
+            nameData,
             epoch,
-            stateScope = stateScope.childStateScope(stopEmitter, childNameData),
-            coroutineScope = childScope,
+            stateScope = stateScope.childStateScope(newEnd, nameData),
+            coroutineScope = newCoroutineScope,
         )
     }
 }

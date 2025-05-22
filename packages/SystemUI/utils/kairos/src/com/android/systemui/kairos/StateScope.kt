@@ -1370,9 +1370,9 @@ internal fun <A> StateScope.nextOnly(nameData: NameData, events: Events<A>): Eve
         events
     } else {
         EventsLoop<A>().apply {
-            val shutoff = mapCheap(nameData + "shutoff") { emptyEvents }
-            val state = holdState(nameData + "state", shutoff, events)
-            loopback = state.switchEvents(nameData)
+            val shutOff = mapCheap(nameData + "shutOff") { emptyEvents }
+            val switchedIn = holdState(nameData + "switchedIn", shutOff, events)
+            loopback = switchedIn.switchEvents(nameData)
         }
     }
 
@@ -1381,7 +1381,7 @@ internal fun <A> StateScope.skipNext(nameData: NameData, events: Events<A>): Eve
         events
     } else {
         val turnOn = nextOnly(nameData + "onlyOne", events).mapCheap(nameData + "turnOn") { events }
-        holdState(nameData + "state", turnOn, emptyEvents).switchEvents(nameData)
+        holdState(nameData + "switchedIn", turnOn, emptyEvents).switchEvents(nameData)
     }
 
 internal fun <A> StateScope.takeUntil(

@@ -854,11 +854,10 @@ internal fun BuildScope.effect(
  * Generally, you should prefer [effect] over this method.
  *
  * ```
- *   fun BuildScope.effectImmediate(
- *       context: CoroutineContext = EmptyCoroutineContext,
- *       block: EffectScope.() -> Unit,
+ *   fun BuildScope.effectSync(
+ *       block: TransactionEffectScope.() -> Unit,
  *   ): Job =
- *       launchScope(context) { now.observeImmediate { block() } }
+ *       launchScope { now.observeSync { block() } }
  * ```
  *
  * @see effect

@@ -233,7 +233,7 @@ internal class Network(
     private fun evalMuxMovers(logIndent: Int, evalScope: EvalScope) {
         while (muxMovers.isNotEmpty()) {
             val toMove = muxMovers.removeFirst()
-            toMove.performMove(logIndent, evalScope)
+            toMove.performMove(evalScope)
         }
     }
 
