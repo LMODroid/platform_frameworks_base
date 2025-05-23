@@ -19,14 +19,13 @@ package com.android.systemui.shade.domain.interactor
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
-import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.flags.EnableSceneContainer
-import com.android.systemui.kosmos.testScope
+import com.android.systemui.kosmos.collectLastValue
+import com.android.systemui.kosmos.runTest
+import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -35,58 +34,52 @@ import org.junit.runner.RunWith
 @EnableSceneContainer
 class ShadeModeInteractorImplTest : SysuiTestCase() {
 
-    private val kosmos = testKosmos()
-    private val testScope = kosmos.testScope
+    private val kosmos = testKosmos().useUnconfinedTestDispatcher()
 
-    private lateinit var underTest: ShadeModeInteractor
-
-    @Before
-    fun setUp() {
-        underTest = kosmos.shadeModeInteractor
-    }
+    private val underTest: ShadeModeInteractor by lazy { kosmos.shadeModeInteractor }
 
     @Test
     fun legacyShadeMode_narrowScreen_singleShade() =
-        testScope.runTest {
+        kosmos.runTest {
             val shadeMode by collectLastValue(underTest.shadeMode)
-            kosmos.enableSingleShade()
+            enableSingleShade()
 
             assertThat(shadeMode).isEqualTo(ShadeMode.Single)
         }
 
     @Test
     fun legacyShadeMode_wideScreen_splitShade() =
-        testScope.runTest {
+        kosmos.runTest {
             val shadeMode by collectLastValue(underTest.shadeMode)
-            kosmos.enableSplitShade()
+            enableSplitShade()
 
             assertThat(shadeMode).isEqualTo(ShadeMode.Split)
         }
 
     @Test
     fun shadeMode_wideScreen_isDual() =
-        testScope.runTest {
+        kosmos.runTest {
             val shadeMode by collectLastValue(underTest.shadeMode)
-            kosmos.enableDualShade(wideLayout = true)
+            enableDualShade(wideLayout = true)
 
             assertThat(shadeMode).isEqualTo(ShadeMode.Dual)
         }
 
     @Test
     fun shadeMode_narrowScreen_isDual() =
-        testScope.runTest {
+        kosmos.runTest {
             val shadeMode by collectLastValue(underTest.shadeMode)
-            kosmos.enableDualShade(wideLayout = false)
+            enableDualShade(wideLayout = false)
 
             assertThat(shadeMode).isEqualTo(ShadeMode.Dual)
         }
 
     @Test
     fun isDualShade_settingEnabledSceneContainerEnabled_returnsTrue() =
-        testScope.runTest {
+        kosmos.runTest {
             // TODO(b/391578667): Add a test case for user switching once the bug is fixed.
             val shadeMode by collectLastValue(underTest.shadeMode)
-            kosmos.enableDualShade()
+            enableDualShade()
 
             assertThat(shadeMode).isEqualTo(ShadeMode.Dual)
             assertThat(underTest.isDualShade).isTrue()
@@ -94,9 +87,9 @@ class ShadeModeInteractorImplTest : SysuiTestCase() {
 
     @Test
     fun isDualShade_settingDisabled_returnsFalse() =
-        testScope.runTest {
+        kosmos.runTest {
             val shadeMode by collectLastValue(underTest.shadeMode)
-            kosmos.disableDualShade()
+            disableDualShade()
 
             assertThat(shadeMode).isNotEqualTo(ShadeMode.Dual)
             assertThat(underTest.isDualShade).isFalse()
