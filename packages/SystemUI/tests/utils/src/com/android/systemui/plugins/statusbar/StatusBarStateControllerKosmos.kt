@@ -30,13 +30,13 @@ import com.android.systemui.shade.domain.interactor.shadeInteractor
 import com.android.systemui.statusbar.FakeStatusBarStateController
 import com.android.systemui.statusbar.StatusBarStateControllerImpl
 import com.android.systemui.statusbar.SysuiStatusBarStateController
-import com.android.systemui.util.mockito.mock
+import com.android.systemui.util.kotlin.javaAdapter
 
 var Kosmos.statusBarStateController: SysuiStatusBarStateController by
     Kosmos.Fixture {
         StatusBarStateControllerImpl(
             uiEventLogger,
-            mock(),
+            javaAdapter,
             { keyguardInteractor },
             { keyguardTransitionInteractor },
             { shadeInteractor },
