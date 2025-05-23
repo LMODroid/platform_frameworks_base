@@ -77,6 +77,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -863,6 +864,8 @@ private fun UserSwitcher(viewModel: BouncerOverlayContentViewModel, modifier: Mo
 
     val selectedUserImage by viewModel.selectedUserImage.collectAsStateWithLifecycle(null)
     val dropdownItems by viewModel.userSwitcherDropdown.collectAsStateWithLifecycle(emptyList())
+    val userSwitcherIconSize = dimensionResource(R.dimen.bouncer_user_switcher_icon_size)
+    val dropDownWidth = userSwitcherIconSize + UserSwitcherDropdownExtraWidth
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -873,7 +876,7 @@ private fun UserSwitcher(viewModel: BouncerOverlayContentViewModel, modifier: Mo
             Image(
                 bitmap = it.asImageBitmap(),
                 contentDescription = null,
-                modifier = Modifier.size(SelectedUserImageSize).sysuiResTag("user_icon"),
+                modifier = Modifier.size(userSwitcherIconSize).sysuiResTag("user_icon"),
             )
         }
 
@@ -888,7 +891,7 @@ private fun UserSwitcher(viewModel: BouncerOverlayContentViewModel, modifier: Mo
                         Modifier
                             // Remove the built-in padding applied inside PlatformButton:
                             .padding(vertical = 0.dp)
-                            .width(UserSwitcherDropdownWidth)
+                            .width(dropDownWidth)
                             .height(UserSwitcherDropdownHeight),
                     colors =
                         ButtonDefaults.buttonColors(
@@ -917,6 +920,7 @@ private fun UserSwitcher(viewModel: BouncerOverlayContentViewModel, modifier: Mo
                 UserSwitcherDropdownMenu(
                     isExpanded = isDropdownExpanded,
                     items = dropdownItems,
+                    dropDownWidth = dropDownWidth,
                     onDismissed = { setDropdownExpanded(false) },
                 )
             }
@@ -932,6 +936,7 @@ private fun UserSwitcher(viewModel: BouncerOverlayContentViewModel, modifier: Mo
 private fun UserSwitcherDropdownMenu(
     isExpanded: Boolean,
     items: List<BouncerOverlayContentViewModel.UserSwitcherDropdownItemViewModel>,
+    dropDownWidth: Dp,
     onDismissed: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -948,7 +953,7 @@ private fun UserSwitcherDropdownMenu(
             expanded = isExpanded,
             onDismissRequest = onDismissed,
             offset = DpOffset(x = 0.dp, y = -UserSwitcherDropdownHeight),
-            modifier = Modifier.width(UserSwitcherDropdownWidth).sysuiResTag("user_list_dropdown"),
+            modifier = Modifier.width(dropDownWidth).sysuiResTag("user_list_dropdown"),
         ) {
             items.forEach { userSwitcherDropdownItem ->
                 DropdownMenuItem(
@@ -1004,8 +1009,7 @@ private fun animatedAlpha(offset: Float): Float {
     return max(0f, (a * (abs(offset) - m).pow(2) + b).toFloat())
 }
 
-private val SelectedUserImageSize = 190.dp
-private val UserSwitcherDropdownWidth = SelectedUserImageSize + 2 * 29.dp
+private val UserSwitcherDropdownExtraWidth = 2 * 29.dp
 private val UserSwitcherDropdownHeight = 60.dp
 
 private object SceneKeys {

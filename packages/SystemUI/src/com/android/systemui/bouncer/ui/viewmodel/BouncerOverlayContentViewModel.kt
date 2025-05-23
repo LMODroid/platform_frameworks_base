@@ -39,6 +39,7 @@ import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.keyguard.domain.interactor.KeyguardDismissActionInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardMediaKeyInteractor
 import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.res.R
 import com.android.systemui.user.ui.viewmodel.UserSwitcherViewModel
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -171,7 +172,13 @@ constructor(
 
             launch {
                 userSwitcher.selectedUser
-                    .map { it.image.toBitmap() }
+                    .map {
+                        val iconSize =
+                            applicationContext.resources.getDimensionPixelSize(
+                                R.dimen.bouncer_user_switcher_icon_size
+                            )
+                        it.image.toBitmap(iconSize, iconSize)
+                    }
                     .collect { _selectedUserImage.value = it }
             }
 

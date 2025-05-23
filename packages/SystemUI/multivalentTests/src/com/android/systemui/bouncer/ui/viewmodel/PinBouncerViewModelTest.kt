@@ -515,14 +515,6 @@ class PinBouncerViewModelTest : SysuiTestCase() {
         }
 
     @Test
-<<<<<<< HEAD
-    @EnableFlags(com.android.systemui.Flags.FLAG_COMPOSE_BOUNCER)
-    @DisableFlags(com.android.systemui.Flags.FLAG_SCENE_CONTAINER)
-    fun onDigitButtonDown_avoidGesture_invoked() =
-        testScope.runTest {
-            lockDeviceAndOpenPinBouncer()
-
-=======
     @EnableFlags(Flags.FLAG_PIN_INPUT_FIELD_STYLED_FOCUS_STATE)
     fun inputFieldStyledEnabled_onKeyboardConnectedTrue_isPinDisplayBorderVisibleTrue() =
         kosmos.runTest {
@@ -562,7 +554,6 @@ class PinBouncerViewModelTest : SysuiTestCase() {
     @EnableFlags(Flags.FLAG_MSDL_FEEDBACK)
     fun onDigiButtonDown_deliversKeyStandardToken() =
         kosmos.runTest {
->>>>>>> adc636ea3583 (Flexiglass: Add border for keyguard pin input when keyboard is supported)
             underTest.onDigitButtonDown(null)
 
             assertTrue(kosmos.fakeFalsingCollector.wasLastGestureAvoided())
