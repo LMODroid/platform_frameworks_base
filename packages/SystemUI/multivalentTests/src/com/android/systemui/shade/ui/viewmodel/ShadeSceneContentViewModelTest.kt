@@ -24,14 +24,16 @@ import com.android.compose.animation.scene.ObservableTransitionState
 import com.android.compose.animation.scene.SceneKey
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.authentication.data.repository.fakeAuthenticationRepository
-import com.android.systemui.authentication.shared.model.AuthenticationMethodModel
+import com.android.systemui.authentication.shared.model.AuthenticationMethodModel.Pin
 import com.android.systemui.common.ui.data.repository.fakeConfigurationRepository
-import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
 import com.android.systemui.deviceentry.domain.interactor.deviceUnlockedInteractor
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.keyguard.data.repository.fakeDeviceEntryFingerprintAuthRepository
 import com.android.systemui.keyguard.shared.model.SuccessFingerprintAuthenticationStatus
+import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.kosmos.collectLastValue
+import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
@@ -40,7 +42,6 @@ import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.res.R
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.shared.model.Scenes
-import com.android.systemui.shade.domain.interactor.disableDualShade
 import com.android.systemui.shade.domain.interactor.enableDualShade
 import com.android.systemui.shade.domain.interactor.enableSingleShade
 import com.android.systemui.shade.domain.interactor.enableSplitShade
@@ -54,8 +55,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -67,22 +66,19 @@ import org.junit.runner.RunWith
 class ShadeSceneContentViewModelTest : SysuiTestCase() {
 
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
-    private val testScope = kosmos.testScope
 
     private val underTest: ShadeSceneContentViewModel by lazy { kosmos.shadeSceneContentViewModel }
 
     @Before
     fun setUp() {
-        underTest.activateIn(testScope)
-        kosmos.disableDualShade()
+        underTest.activateIn(kosmos.testScope)
     }
 
     @Test
     fun isEmptySpaceClickable_deviceUnlocked_false() =
-        testScope.runTest {
-            kosmos.fakeAuthenticationRepository.setAuthenticationMethod(
-                AuthenticationMethodModel.Pin
-            )
+        kosmos.runTest {
+            enableSingleShade()
+            fakeAuthenticationRepository.setAuthenticationMethod(Pin)
             setDeviceEntered(true)
 
             assertThat(underTest.isEmptySpaceClickable).isFalse()
@@ -90,21 +86,19 @@ class ShadeSceneContentViewModelTest : SysuiTestCase() {
 
     @Test
     fun isEmptySpaceClickable_deviceLockedSecurely_true() =
-        testScope.runTest {
-            kosmos.fakeAuthenticationRepository.setAuthenticationMethod(
-                AuthenticationMethodModel.Pin
-            )
+        kosmos.runTest {
+            enableSingleShade()
+            fakeAuthenticationRepository.setAuthenticationMethod(Pin)
 
             assertThat(underTest.isEmptySpaceClickable).isTrue()
         }
 
     @Test
     fun onEmptySpaceClicked_deviceLockedSecurely_switchesToLockscreen() =
-        testScope.runTest {
-            val currentScene by collectLastValue(kosmos.sceneInteractor.currentScene)
-            kosmos.fakeAuthenticationRepository.setAuthenticationMethod(
-                AuthenticationMethodModel.Pin
-            )
+        kosmos.runTest {
+            enableSingleShade()
+            val currentScene by collectLastValue(sceneInteractor.currentScene)
+            fakeAuthenticationRepository.setAuthenticationMethod(Pin)
 
             underTest.onEmptySpaceClicked()
 
@@ -113,36 +107,38 @@ class ShadeSceneContentViewModelTest : SysuiTestCase() {
 
     @Test
     fun addAndRemoveMedia_mediaVisibilityIsUpdated() =
-        testScope.runTest {
+        kosmos.runTest {
+            enableSingleShade()
             val userMedia = MediaData(active = true)
 
             assertThat(underTest.isMediaVisible).isFalse()
 
-            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
+            mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
 
             assertThat(underTest.isMediaVisible).isTrue()
 
-            kosmos.mediaFilterRepository.removeCurrentUserMediaEntry(userMedia.instanceId)
+            mediaFilterRepository.removeCurrentUserMediaEntry(userMedia.instanceId)
 
             assertThat(underTest.isMediaVisible).isFalse()
         }
 
     @Test
     fun shadeMode() =
-        testScope.runTest {
-            kosmos.enableSplitShade()
+        kosmos.runTest {
+            enableSplitShade()
             assertThat(underTest.shadeMode).isEqualTo(ShadeMode.Split)
 
-            kosmos.enableSingleShade()
+            enableSingleShade()
             assertThat(underTest.shadeMode).isEqualTo(ShadeMode.Single)
 
-            kosmos.enableDualShade()
+            enableDualShade()
             assertThat(underTest.shadeMode).isEqualTo(ShadeMode.Dual)
         }
 
     @Test
     fun unfoldTransitionProgress() =
-        testScope.runTest {
+        kosmos.runTest {
+            enableSingleShade()
             val maxTranslation = prepareConfiguration()
             val translations by
                 collectLastValue(
@@ -154,7 +150,7 @@ class ShadeSceneContentViewModelTest : SysuiTestCase() {
                     }
                 )
 
-            val unfoldProvider = kosmos.fakeUnfoldTransitionProgressProvider
+            val unfoldProvider = fakeUnfoldTransitionProgressProvider
             unfoldProvider.onTransitionStarted()
             assertThat(translations?.start).isEqualTo(0f)
             assertThat(translations?.end).isEqualTo(-0f)
@@ -177,36 +173,34 @@ class ShadeSceneContentViewModelTest : SysuiTestCase() {
 
     @Test
     fun disable2QuickSettings_isQsEnabledIsFalse() =
-        testScope.runTest {
+        kosmos.runTest {
             assertThat(underTest.isQsEnabled).isTrue()
 
-            kosmos.fakeDisableFlagsRepository.disableFlags.update {
+            fakeDisableFlagsRepository.disableFlags.update {
                 it.copy(disable2 = DISABLE2_QUICK_SETTINGS)
             }
 
             assertThat(underTest.isQsEnabled).isFalse()
         }
 
-    private fun prepareConfiguration(): Int {
+    private fun Kosmos.prepareConfiguration(): Int {
         val configuration = context.resources.configuration
         configuration.setLayoutDirection(Locale.US)
-        kosmos.fakeConfigurationRepository.onConfigurationChange(configuration)
+        fakeConfigurationRepository.onConfigurationChange(configuration)
         val maxTranslation = 10
-        kosmos.fakeConfigurationRepository.setDimensionPixelSize(
+        fakeConfigurationRepository.setDimensionPixelSize(
             R.dimen.notification_side_paddings,
             maxTranslation,
         )
         return maxTranslation
     }
 
-    private fun TestScope.setDeviceEntered(isEntered: Boolean) {
+    private fun Kosmos.setDeviceEntered(isEntered: Boolean) {
         if (isEntered) {
             // Unlock the device marking the device has entered.
             val isDeviceUnlocked by
-                collectLastValue(
-                    kosmos.deviceUnlockedInteractor.deviceUnlockStatus.map { it.isUnlocked }
-                )
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
+                collectLastValue(deviceUnlockedInteractor.deviceUnlockStatus.map { it.isUnlocked })
+            fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
             assertThat(isDeviceUnlocked).isTrue()
@@ -215,9 +209,9 @@ class ShadeSceneContentViewModelTest : SysuiTestCase() {
         assertThat(kosmos.deviceEntryInteractor.isDeviceEntered.value).isEqualTo(isEntered)
     }
 
-    private fun setScene(key: SceneKey) {
-        kosmos.sceneInteractor.changeScene(key, "test")
-        kosmos.sceneInteractor.setTransitionState(flowOf(ObservableTransitionState.Idle(key)))
+    private fun Kosmos.setScene(key: SceneKey) {
+        sceneInteractor.changeScene(key, "test")
+        sceneInteractor.setTransitionState(flowOf(ObservableTransitionState.Idle(key)))
     }
 
     private data class Translations(val start: Float, val end: Float)
