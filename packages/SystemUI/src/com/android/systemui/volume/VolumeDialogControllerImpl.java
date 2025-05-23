@@ -427,12 +427,21 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         mWorker.obtainMessage(W.SET_STREAM_MUTE, stream, mute ? 1 : 0).sendToTarget();
     }
 
-    public void setStreamVolume(int stream, int level) {
-        mWorker.obtainMessage(W.SET_STREAM_VOLUME, stream, level).sendToTarget();
+    public void setStreamVolume(int stream, int level, boolean sync) {
+        if (sync) {
+            onSetStreamVolumeW(stream, level);
+        }
+        else{
+            mWorker.obtainMessage(W.SET_STREAM_VOLUME, stream, level).sendToTarget();
+        }
     }
 
-    public void setActiveStream(int stream) {
-        mWorker.obtainMessage(W.SET_ACTIVE_STREAM, stream, 0).sendToTarget();
+    public void setActiveStream(int stream, boolean sync) {
+       if (sync) {
+            onSetActiveStreamW(stream);
+        } else {
+           mWorker.obtainMessage(W.SET_ACTIVE_STREAM, stream, 0).sendToTarget();
+       }
     }
 
     public void setEnableDialogs(boolean volumeUi, boolean safetyWarning) {

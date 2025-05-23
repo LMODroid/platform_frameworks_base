@@ -1122,7 +1122,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             if (row.stream != AudioSystem.STREAM_ACCESSIBILITY && !row.isAppVolume) {
                 row.icon.setOnClickListener(v -> {
                     Events.writeEvent(Events.EVENT_ICON_CLICK, row.stream, row.iconState);
-                    mController.setActiveStream(row.stream);
+                    mController.setActiveStream(row.stream, false);
                     if (row.stream == AudioManager.STREAM_RING) {
                         final boolean hasVibrator = mController.hasVibrator();
                         if (mState.ringerModeInternal == AudioManager.RINGER_MODE_NORMAL) {
@@ -1131,19 +1131,19 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                             } else {
                                 final boolean wasZero = row.ss.level == 0;
                                 mController.setStreamVolume(stream,
-                                        wasZero ? row.lastAudibleLevel : 0);
+                                        wasZero ? row.lastAudibleLevel : 0, false);
                             }
                         } else {
                             mController.setRingerMode(
                                     AudioManager.RINGER_MODE_NORMAL, false);
                             if (row.ss.level == 0) {
-                                mController.setStreamVolume(stream, 1);
+                                mController.setStreamVolume(stream, 1, false);
                             }
                         }
                     } else {
                         final boolean vmute = row.ss.level == row.ss.levelMin;
                         mController.setStreamVolume(stream,
-                                vmute ? row.lastAudibleLevel : row.ss.levelMin);
+                                vmute ? row.lastAudibleLevel : row.ss.levelMin, false);
                     }
                     row.userAttempt = 0;  // reset the grace period, slider updates immediately
                 });
@@ -1635,7 +1635,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 } else {
                     newRingerMode = AudioManager.RINGER_MODE_NORMAL;
                     if (ss.level == 0) {
-                        mController.setStreamVolume(AudioManager.STREAM_RING, 1);
+                        mController.setStreamVolume(AudioManager.STREAM_RING, 1, false);
                     }
                 }
 
@@ -3210,8 +3210,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 mRow.userAttempt = SystemClock.uptimeMillis();
                 if (mRow.requestedLevel != userLevel) {
                     mActiveAppRowPackage = null;
-                    mController.setActiveStream(mRow.stream);
-                    mController.setStreamVolume(mRow.stream, userLevel);
+                    mController.setActiveStream(mRow.stream, false);
+                    mController.setStreamVolume(mRow.stream, userLevel, false);
                     mRow.requestedLevel = userLevel;
                     Events.writeEvent(Events.EVENT_TOUCH_LEVEL_CHANGED, mRow.stream,
                             userLevel);

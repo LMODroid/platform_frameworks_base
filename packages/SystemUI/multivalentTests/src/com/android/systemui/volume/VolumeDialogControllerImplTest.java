@@ -318,7 +318,7 @@ public class VolumeDialogControllerImplTest extends SysuiTestCase {
     @Test
     public void testSetStreamVolume_setSecondaryDeviceVolume() {
         mVolumeController.setStreamVolume(
-                VolumeDialogControllerImpl.DYNAMIC_STREAM_BROADCAST, /* level= */ 100);
+                VolumeDialogControllerImpl.DYNAMIC_STREAM_BROADCAST, /* level= */ 100, false);
         Objects.requireNonNull(TestableLooper.get(this)).processAllMessages();
         mTestScope.getTestScheduler().advanceUntilIdle();
 

@@ -46,8 +46,8 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 
 /*
@@ -142,7 +142,7 @@ constructor(
         userVolumeUpdates
             .mapNotNull { it?.level }
             .distinctUntilChanged()
-            .mapLatest { volume ->
+            .onEach { volume ->
                 interactor.setStreamVolume(volume)
                 Events.writeEvent(Events.EVENT_TOUCH_LEVEL_CHANGED, model.first().stream, volume)
             }
