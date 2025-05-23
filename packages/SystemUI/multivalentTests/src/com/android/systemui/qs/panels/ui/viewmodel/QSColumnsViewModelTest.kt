@@ -23,9 +23,10 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.ui.data.repository.configurationRepository
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.kosmos.runCurrent
+import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testCase
 import com.android.systemui.kosmos.testScope
+import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager.Companion.LOCATION_QQS
 import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager.Companion.LOCATION_QS
@@ -40,15 +41,15 @@ import com.android.systemui.shade.domain.interactor.disableDualShade
 import com.android.systemui.shade.domain.interactor.enableDualShade
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 class QSColumnsViewModelTest : SysuiTestCase() {
+
     private val kosmos =
-        testKosmos().apply {
+        testKosmos().useUnconfinedTestDispatcher().apply {
             usingMediaInComposeFragment = true
             testCase.context.orCreateTestableResources.addOverride(
                 R.integer.quick_settings_infinite_grid_num_columns,
@@ -67,145 +68,119 @@ class QSColumnsViewModelTest : SysuiTestCase() {
 
     @Test
     fun mediaLocationNull_singleOrSplit_alwaysSingleShadeColumns() =
-        with(kosmos) {
-            testScope.runTest {
-                val underTest = qsColumnsViewModelFactory.create(null)
-                underTest.activateIn(testScope)
-                kosmos.disableDualShade()
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(null)
+            underTest.activateIn(testScope)
+            disableDualShade()
 
-                setConfigurationForMediaInRow(mediaInRow = false)
+            setConfigurationForMediaInRow(mediaInRow = false)
 
-                makeMediaVisible(LOCATION_QQS, visible = true)
-                makeMediaVisible(LOCATION_QS, visible = true)
-                runCurrent()
+            makeMediaVisible(LOCATION_QQS, visible = true)
+            makeMediaVisible(LOCATION_QS, visible = true)
 
-                assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
+            assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
 
-                setConfigurationForMediaInRow(mediaInRow = true)
-                runCurrent()
+            setConfigurationForMediaInRow(mediaInRow = true)
 
-                assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
-            }
+            assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
         }
 
     @Test
     @EnableSceneContainer
     fun mediaLocationNull_dualShade_alwaysDualShadeColumns() =
-        with(kosmos) {
-            testScope.runTest {
-                val underTest = qsColumnsViewModelFactory.create(null)
-                underTest.activateIn(testScope)
-                kosmos.enableDualShade()
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(null)
+            underTest.activateIn(testScope)
+            enableDualShade()
 
-                setConfigurationForMediaInRow(mediaInRow = false)
+            setConfigurationForMediaInRow(mediaInRow = false)
 
-                makeMediaVisible(LOCATION_QQS, visible = true)
-                makeMediaVisible(LOCATION_QS, visible = true)
-                runCurrent()
+            makeMediaVisible(LOCATION_QQS, visible = true)
+            makeMediaVisible(LOCATION_QS, visible = true)
 
-                assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
+            assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
 
-                setConfigurationForMediaInRow(mediaInRow = true)
-                runCurrent()
+            setConfigurationForMediaInRow(mediaInRow = true)
 
-                assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
-            }
+            assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
         }
 
     @Test
     @EnableSceneContainer
     fun mediaLocationQS_dualShade_alwaysDualShadeColumns() =
-        with(kosmos) {
-            testScope.runTest {
-                val underTest = qsColumnsViewModelFactory.create(LOCATION_QS)
-                underTest.activateIn(testScope)
-                kosmos.enableDualShade()
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(LOCATION_QS)
+            underTest.activateIn(testScope)
+            enableDualShade()
 
-                setConfigurationForMediaInRow(mediaInRow = false)
+            setConfigurationForMediaInRow(mediaInRow = false)
 
-                makeMediaVisible(LOCATION_QS, visible = true)
-                runCurrent()
+            makeMediaVisible(LOCATION_QS, visible = true)
 
-                assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
+            assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
 
-                setConfigurationForMediaInRow(mediaInRow = true)
-                runCurrent()
+            setConfigurationForMediaInRow(mediaInRow = true)
 
-                assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
-            }
+            assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
         }
 
     @Test
     @EnableSceneContainer
     fun mediaLocationQQS_dualShade_alwaysDualShadeColumns() =
-        with(kosmos) {
-            testScope.runTest {
-                val underTest = qsColumnsViewModelFactory.create(LOCATION_QQS)
-                underTest.activateIn(testScope)
-                kosmos.enableDualShade()
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(LOCATION_QQS)
+            underTest.activateIn(testScope)
+            enableDualShade()
 
-                setConfigurationForMediaInRow(mediaInRow = false)
+            setConfigurationForMediaInRow(mediaInRow = false)
 
-                makeMediaVisible(LOCATION_QQS, visible = true)
-                runCurrent()
+            makeMediaVisible(LOCATION_QQS, visible = true)
 
-                assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
+            assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
 
-                setConfigurationForMediaInRow(mediaInRow = true)
-                runCurrent()
+            setConfigurationForMediaInRow(mediaInRow = true)
 
-                assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
-            }
+            assertThat(underTest.columns).isEqualTo(DUAL_SHADE_COLUMNS)
         }
 
     @Test
     fun mediaLocationQS_singleOrSplit_halfColumnsOnCorrectConfigurationAndVisible() =
-        with(kosmos) {
-            testScope.runTest {
-                val underTest = qsColumnsViewModelFactory.create(LOCATION_QS)
-                underTest.activateIn(testScope)
-                kosmos.disableDualShade()
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(LOCATION_QS)
+            underTest.activateIn(testScope)
+            disableDualShade()
 
-                setConfigurationForMediaInRow(mediaInRow = false)
-                runCurrent()
+            setConfigurationForMediaInRow(mediaInRow = false)
 
-                assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
+            assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
 
-                setConfigurationForMediaInRow(mediaInRow = true)
-                runCurrent()
+            setConfigurationForMediaInRow(mediaInRow = true)
 
-                assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
+            assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
 
-                makeMediaVisible(LOCATION_QS, visible = true)
-                runCurrent()
+            makeMediaVisible(LOCATION_QS, visible = true)
 
-                assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS / 2)
-            }
+            assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS / 2)
         }
 
     @Test
     fun mediaLocationQQS_singleOrSplit_halfColumnsOnCorrectConfigurationAndVisible() =
-        with(kosmos) {
-            testScope.runTest {
-                val underTest = qsColumnsViewModelFactory.create(LOCATION_QQS)
-                underTest.activateIn(testScope)
-                kosmos.disableDualShade()
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(LOCATION_QQS)
+            underTest.activateIn(testScope)
+            disableDualShade()
 
-                setConfigurationForMediaInRow(mediaInRow = false)
-                runCurrent()
+            setConfigurationForMediaInRow(mediaInRow = false)
 
-                assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
+            assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
 
-                setConfigurationForMediaInRow(mediaInRow = true)
-                runCurrent()
+            setConfigurationForMediaInRow(mediaInRow = true)
 
-                assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
+            assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS)
 
-                makeMediaVisible(LOCATION_QQS, visible = true)
-                runCurrent()
+            makeMediaVisible(LOCATION_QQS, visible = true)
 
-                assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS / 2)
-            }
+            assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS / 2)
         }
 
     companion object {
