@@ -290,6 +290,16 @@ flag {
 }
 
 flag {
+    name: "notification_shade_close_waits_for_child_animations"
+    namespace: "systemui"
+    description: "Improve the locked-shade close animation after dismissing a single notification."
+    bug: "388298358"
+    metadata {
+       purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "scene_container"
     namespace: "systemui"
     description: "Enables the scene container framework go/flexiglass."
