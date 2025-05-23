@@ -19,14 +19,22 @@ package com.android.systemui.statusbar.pipeline.battery.domain.interactor
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.statusbar.pipeline.battery.data.repository.BatteryRepository
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SysUISingleton
 class BatteryInteractor @Inject constructor(repo: BatteryRepository) {
-    /** The current level in the range of [0-100] */
-    val level = repo.level.filterNotNull()
+    /** The current level in the range of [0-100], or null if we don't know the level yet */
+    val level =
+        combine(repo.isStateUnknown, repo.level) { unknown, level ->
+            if (unknown) {
+                null
+            } else {
+                level
+            }
+        }
 
     /** Whether the battery has been fully charged */
     val isFull = level.map { isBatteryFull(it) }
@@ -47,7 +55,7 @@ class BatteryInteractor @Inject constructor(repo: BatteryRepository) {
      * The critical level (see [CRITICAL_LEVEL]) defines the level below which we might want to
      * display an error UI. E.g., show the battery as red.
      */
-    val isCritical = level.map { it <= CRITICAL_LEVEL }
+    val isCritical = level.map { it != null && it <= CRITICAL_LEVEL }
 
     /** @see [BatteryRepository.isStateUnknown] for docs. The battery cannot be detected */
     val isStateUnknown = repo.isStateUnknown
@@ -69,8 +77,14 @@ class BatteryInteractor @Inject constructor(repo: BatteryRepository) {
      * This flow can be used to canonically describe the battery state charging state.
      */
     val batteryAttributionType =
-        combine(isCharging, powerSave, isBatteryDefenderEnabled) { charging, powerSave, defend ->
-            if (powerSave) {
+        combine(isCharging, powerSave, isBatteryDefenderEnabled, isStateUnknown) {
+            charging,
+            powerSave,
+            defend,
+            unknown ->
+            if (unknown) {
+                BatteryAttributionModel.Unknown
+            } else if (powerSave) {
                 BatteryAttributionModel.PowerSave
             } else if (defend) {
                 BatteryAttributionModel.Defend
@@ -88,7 +102,7 @@ class BatteryInteractor @Inject constructor(repo: BatteryRepository) {
         /** Level below which we consider to be critically low */
         private const val CRITICAL_LEVEL = 20
 
-        fun isBatteryFull(level: Int) = level >= 100
+        fun isBatteryFull(level: Int?) = level != null && level >= 100
     }
 }
 
@@ -97,4 +111,5 @@ enum class BatteryAttributionModel {
     Defend,
     PowerSave,
     Charging,
+    Unknown,
 }

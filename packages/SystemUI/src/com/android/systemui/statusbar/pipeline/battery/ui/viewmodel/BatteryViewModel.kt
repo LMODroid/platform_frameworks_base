@@ -27,6 +27,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.pipeline.battery.domain.interactor.BatteryAttributionModel.Charging
 import com.android.systemui.statusbar.pipeline.battery.domain.interactor.BatteryAttributionModel.Defend
 import com.android.systemui.statusbar.pipeline.battery.domain.interactor.BatteryAttributionModel.PowerSave
+import com.android.systemui.statusbar.pipeline.battery.domain.interactor.BatteryAttributionModel.Unknown
 import com.android.systemui.statusbar.pipeline.battery.domain.interactor.BatteryInteractor
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryColors
 import com.android.systemui.statusbar.pipeline.battery.shared.ui.BatteryFrame
@@ -79,7 +80,7 @@ sealed class BatteryViewModel(
 
     /** A [List<BatteryGlyph>] representation of the current [level] */
     private val levelGlyphs: Flow<List<BatteryGlyph>> =
-        interactor.level.map { it.glyphRepresentation() }
+        interactor.level.map { it?.glyphRepresentation() ?: emptyList() }
 
     private val _glyphList: Flow<List<BatteryGlyph>> =
         shouldShowPercent.flatMapLatest {
@@ -110,6 +111,8 @@ sealed class BatteryViewModel(
                 PowerSave -> BatteryGlyph.Plus
 
                 Defend -> BatteryGlyph.Defend
+
+                Unknown -> BatteryGlyph.Question
 
                 else -> null
             }
@@ -170,16 +173,9 @@ sealed class BatteryViewModel(
             traceName = "contentDescription",
             initialValue = ContentDescription.Loaded(null),
             source =
-                combine(
-                    interactor.batteryAttributionType,
-                    interactor.isStateUnknown,
-                    interactor.level,
-                ) { attr, isUnknown, level ->
-                    when {
-                        isUnknown ->
-                            ContentDescription.Resource(R.string.accessibility_battery_unknown)
-
-                        attr == Defend -> {
+                combine(interactor.batteryAttributionType, interactor.level) { attr, level ->
+                    when (attr) {
+                        Defend -> {
                             val descr =
                                 context.getString(
                                     R.string.accessibility_battery_level_charging_paused,
@@ -188,8 +184,7 @@ sealed class BatteryViewModel(
 
                             ContentDescription.Loaded(descr)
                         }
-
-                        attr == Charging -> {
+                        Charging -> {
                             val descr =
                                 context.getString(
                                     R.string.accessibility_battery_level_charging,
@@ -197,8 +192,7 @@ sealed class BatteryViewModel(
                                 )
                             ContentDescription.Loaded(descr)
                         }
-
-                        attr == PowerSave -> {
+                        PowerSave -> {
                             val descr =
                                 context.getString(
                                     R.string.accessibility_battery_level_battery_saver_with_percent,
@@ -206,7 +200,10 @@ sealed class BatteryViewModel(
                                 )
                             ContentDescription.Loaded(descr)
                         }
-
+                        Unknown -> {
+                            val descr = context.getString(R.string.accessibility_battery_unknown)
+                            ContentDescription.Loaded(descr)
+                        }
                         else -> {
                             val descr =
                                 context.getString(R.string.accessibility_battery_level, level)
@@ -338,7 +335,14 @@ constructor(interactor: BatteryInteractor, @Application context: Context) :
         hydrator.hydratedStateOf(
             traceName = "batteryPercent",
             initialValue = null,
-            source = interactor.level.map { NumberFormat.getPercentInstance().format(it / 100f) },
+            source =
+                interactor.level.map { level ->
+                    if (level == null) {
+                        null
+                    } else {
+                        NumberFormat.getPercentInstance().format(level / 100f)
+                    }
+                },
         )
 
     private val _attributionAsList: Flow<List<BatteryGlyph>> =

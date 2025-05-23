@@ -68,7 +68,7 @@ fun BatteryCanvas(
     innerWidth: Float,
     innerHeight: Float,
     glyphs: List<BatteryGlyph>,
-    level: Int,
+    level: Int?,
     isFull: Boolean,
     colorsProvider: () -> BatteryColors,
     modifier: Modifier = Modifier,
@@ -110,13 +110,15 @@ fun BatteryCanvas(
                     }
                 drawPath(path.path, bgColor)
                 // Then draw the body, clipped to the fill level
-                clipRect(0f, 0f, level.scaledLevel(), innerHeight) {
-                    drawRoundRect(
-                        color = colors.fill,
-                        topLeft = Offset.Zero,
-                        size = Size(width = innerWidth, height = innerHeight),
-                        cornerRadius = CornerRadius(2f),
-                    )
+                if (level != null && level > 0) {
+                    clipRect(0f, 0f, level.scaledLevel(), innerHeight) {
+                        drawRoundRect(
+                            color = colors.fill,
+                            topLeft = Offset.Zero,
+                            size = Size(width = innerWidth, height = innerHeight),
+                            cornerRadius = CornerRadius(2f),
+                        )
+                    }
                 }
             }
 
@@ -190,7 +192,7 @@ fun UnifiedBattery(
 @Composable
 fun BatteryLayout(
     attribution: BatteryGlyph?,
-    levelProvider: () -> Int,
+    levelProvider: () -> Int?,
     isFullProvider: () -> Boolean,
     glyphsProvider: () -> List<BatteryGlyph>,
     colorsProvider: () -> BatteryColors,
@@ -329,7 +331,7 @@ class BatteryMeasurePolicy : MeasurePolicy {
 @Composable
 fun BatteryBody(
     pathSpec: PathSpec,
-    levelProvider: () -> Int,
+    levelProvider: () -> Int?,
     glyphsProvider: () -> List<BatteryGlyph>,
     isFullProvider: () -> Boolean,
     colorsProvider: () -> BatteryColors,
@@ -368,24 +370,26 @@ fun BatteryBody(
                 // 2. draw body
                 drawPath(pathSpec.path, color)
 
-                // 3. clip the fill to the level
-                clipRect(
-                    left = 0f,
-                    top = 0f,
-                    right = level.scaledLevel(),
-                    bottom = BatteryFrame.innerHeight,
-                ) {
-                    // 4 Draw the rounded rect fill fully, it'll be clipped above
-                    drawRoundRect(
-                        color = colors.fill,
-                        topLeft = Offset.Zero,
-                        size =
-                            Size(
-                                width = BatteryFrame.innerWidth,
-                                height = BatteryFrame.innerHeight,
-                            ),
-                        CornerRadius(x = 4f),
-                    )
+                // 3. clip the fill to the level if we have it
+                if (level != null && level > 0) {
+                    clipRect(
+                        left = 0f,
+                        top = 0f,
+                        right = level.scaledLevel(),
+                        bottom = BatteryFrame.innerHeight,
+                    ) {
+                        // 4. Draw the rounded rect fill fully, it'll be clipped above
+                        drawRoundRect(
+                            color = colors.fill,
+                            topLeft = Offset.Zero,
+                            size =
+                                Size(
+                                    width = BatteryFrame.innerWidth,
+                                    height = BatteryFrame.innerHeight,
+                                ),
+                            CornerRadius(x = BatteryFrame.cornerRadius),
+                        )
+                    }
                 }
             }
 

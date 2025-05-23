@@ -75,6 +75,9 @@ object BatteryFrame {
 
     /** The height of the drawable that is usable for inside elements */
     const val innerHeight = 13f
+
+    /** Corner radius for the battery body */
+    const val cornerRadius = 4f
 }
 
 /**

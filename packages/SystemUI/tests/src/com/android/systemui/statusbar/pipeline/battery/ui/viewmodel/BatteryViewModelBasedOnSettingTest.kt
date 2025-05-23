@@ -229,4 +229,21 @@ class BatteryViewModelBasedOnSettingTest : SysuiTestCase() {
 
             assertThat(underTest.attribution).isNull()
         }
+
+    @Test
+    fun stateUnknown_usesQuestionMarkGlyph() =
+        kosmos.runTest {
+            batteryController.fake._isStateUnknown = true
+
+            assertThat(underTest.attribution).isEqualTo(BatteryGlyph.Question)
+        }
+
+    @Test
+    fun stateUnknown_levelIsNull() =
+        kosmos.runTest {
+            batteryController.fake._level = 41
+            batteryController.fake._isStateUnknown = true
+
+            assertThat(underTest.level).isNull()
+        }
 }
