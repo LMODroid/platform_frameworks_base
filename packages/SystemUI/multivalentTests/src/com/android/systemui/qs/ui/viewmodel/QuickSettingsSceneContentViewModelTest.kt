@@ -21,8 +21,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
-import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.flags.EnableSceneContainer
+import com.android.systemui.kosmos.collectLastValue
+import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
 import com.android.systemui.lifecycle.activateIn
@@ -31,7 +32,6 @@ import com.android.systemui.media.controls.domain.pipeline.interactor.mediaCarou
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.qs.FooterActionsController
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsViewModel
-import com.android.systemui.qs.ui.adapter.FakeQSSceneAdapter
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.domain.startable.sceneContainerStartable
 import com.android.systemui.scene.shared.model.Scenes
@@ -45,7 +45,6 @@ import com.android.systemui.util.mockito.any
 import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -59,36 +58,33 @@ import org.mockito.Mockito.verify
 class QuickSettingsSceneContentViewModelTest : SysuiTestCase() {
 
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
-    private val testScope = kosmos.testScope
-    private val qsFlexiglassAdapter = FakeQSSceneAdapter({ mock() })
     private val footerActionsViewModel = mock<FooterActionsViewModel>()
-    private val footerActionsViewModelFactory =
-        mock<FooterActionsViewModel.Factory> {
-            whenever(create(any<LifecycleOwner>())).thenReturn(footerActionsViewModel)
-        }
     private val footerActionsController = mock<FooterActionsController>()
-
-    private val sceneContainerStartable = kosmos.sceneContainerStartable
-    private val sceneInteractor by lazy { kosmos.sceneInteractor }
 
     private lateinit var underTest: QuickSettingsSceneContentViewModel
 
     @Before
     fun setUp() {
-        sceneContainerStartable.start()
-        underTest =
-            QuickSettingsSceneContentViewModel(
-                brightnessMirrorViewModelFactory = kosmos.brightnessMirrorViewModelFactory,
-                shadeHeaderViewModelFactory = kosmos.shadeHeaderViewModelFactory,
-                qsSceneAdapter = qsFlexiglassAdapter,
-                footerActionsViewModelFactory = footerActionsViewModelFactory,
-                footerActionsController = footerActionsController,
-                mediaCarouselInteractor = kosmos.mediaCarouselInteractor,
-                shadeModeInteractor = kosmos.shadeModeInteractor,
-                sceneInteractor = sceneInteractor,
-            )
-        underTest.activateIn(testScope)
-        kosmos.disableDualShade()
+        with(kosmos) {
+            sceneContainerStartable.start()
+            val footerActionsViewModelFactory =
+                mock<FooterActionsViewModel.Factory> {
+                    whenever(create(any<LifecycleOwner>())).thenReturn(footerActionsViewModel)
+                }
+            underTest =
+                QuickSettingsSceneContentViewModel(
+                    brightnessMirrorViewModelFactory = brightnessMirrorViewModelFactory,
+                    shadeHeaderViewModelFactory = shadeHeaderViewModelFactory,
+                    qsSceneAdapter = fakeQsSceneAdapter,
+                    footerActionsViewModelFactory = footerActionsViewModelFactory,
+                    footerActionsController = footerActionsController,
+                    mediaCarouselInteractor = mediaCarouselInteractor,
+                    shadeModeInteractor = shadeModeInteractor,
+                    sceneInteractor = sceneInteractor,
+                )
+            underTest.activateIn(testScope)
+            disableDualShade()
+        }
     }
 
     @Test
@@ -101,38 +97,38 @@ class QuickSettingsSceneContentViewModelTest : SysuiTestCase() {
 
     @Test
     fun addAndRemoveMedia_mediaVisibilityIsUpdated() =
-        testScope.runTest {
+        kosmos.runTest {
             val userMedia = MediaData(active = true)
 
             assertThat(underTest.isMediaVisible).isFalse()
 
-            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
+            mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
 
             assertThat(underTest.isMediaVisible).isTrue()
 
-            kosmos.mediaFilterRepository.removeCurrentUserMediaEntry(userMedia.instanceId)
+            mediaFilterRepository.removeCurrentUserMediaEntry(userMedia.instanceId)
 
             assertThat(underTest.isMediaVisible).isFalse()
         }
 
     @Test
     fun addInactiveMedia_mediaVisibilityIsUpdated() =
-        testScope.runTest {
+        kosmos.runTest {
             val userMedia = MediaData(active = false)
 
             assertThat(underTest.isMediaVisible).isFalse()
 
-            kosmos.mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
+            mediaFilterRepository.addCurrentUserMediaEntry(userMedia)
 
             assertThat(underTest.isMediaVisible).isTrue()
         }
 
     @Test
     fun shadeModeChange_switchToShadeScene() =
-        testScope.runTest {
+        kosmos.runTest {
             val scene by collectLastValue(sceneInteractor.currentScene)
 
-            kosmos.enableSplitShade()
+            enableSplitShade()
 
             assertThat(scene).isEqualTo(Scenes.Shade)
         }
