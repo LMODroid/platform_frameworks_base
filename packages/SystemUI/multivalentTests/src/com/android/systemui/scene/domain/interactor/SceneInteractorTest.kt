@@ -46,6 +46,7 @@ import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.scene.shared.model.fakeSceneDataSource
 import com.android.systemui.shade.domain.interactor.disableDualShade
 import com.android.systemui.shade.domain.interactor.enableDualShade
+import com.android.systemui.shade.domain.interactor.enableSingleShade
 import com.android.systemui.statusbar.disableflags.data.repository.fakeDisableFlagsRepository
 import com.android.systemui.statusbar.disableflags.shared.model.DisableFlagsModel
 import com.android.systemui.testKosmos
@@ -99,6 +100,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun changeScene() =
         kosmos.runTest {
+            enableSingleShade()
             val currentScene by collectLastValue(underTest.currentScene)
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
 
@@ -109,7 +111,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun changeScene_sameScene_hidesOverlays() =
         kosmos.runTest {
-            kosmos.enableDualShade()
+            enableDualShade()
             val currentScene by collectLastValue(underTest.currentScene)
             val currentOverlays by collectLastValue(underTest.currentOverlays)
             underTest.showOverlay(Overlays.NotificationsShade, "reason")
@@ -124,7 +126,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun changeScene_sameScene_requestToKeepOverlays_keepsOverlays() =
         kosmos.runTest {
-            kosmos.enableDualShade()
+            enableDualShade()
             val currentScene by collectLastValue(underTest.currentScene)
             val currentOverlays by collectLastValue(underTest.currentOverlays)
             underTest.showOverlay(Overlays.NotificationsShade, "reason")
@@ -142,7 +144,7 @@ class SceneInteractorTest : SysuiTestCase() {
             val currentScene by collectLastValue(underTest.currentScene)
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
 
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
+            fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
 
@@ -159,7 +161,7 @@ class SceneInteractorTest : SysuiTestCase() {
         kosmos.runTest {
             val currentScene by collectLastValue(underTest.currentScene)
             val transitionTo by collectLastValue(underTest.transitioningTo)
-            kosmos.sceneContainerRepository.setTransitionState(
+            sceneContainerRepository.setTransitionState(
                 flowOf(
                     ObservableTransitionState.Transition(
                         fromScene = Scenes.Gone,
@@ -202,7 +204,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun snapToScene_toUnknownScene_hidesOverlays() =
         kosmos.runTest {
-            kosmos.enableDualShade()
+            enableDualShade()
             val currentScene by collectLastValue(underTest.currentScene)
             val currentOverlays by collectLastValue(underTest.currentOverlays)
             underTest.showOverlay(Overlays.NotificationsShade, "reason")
@@ -219,6 +221,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun snapToScene() =
         kosmos.runTest {
+            enableSingleShade()
             val currentScene by collectLastValue(underTest.currentScene)
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
 
@@ -229,7 +232,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun snapToScene_sameScene_hidesOverlays() =
         kosmos.runTest {
-            kosmos.enableDualShade()
+            enableDualShade()
             val currentScene by collectLastValue(underTest.currentScene)
             val currentOverlays by collectLastValue(underTest.currentOverlays)
             underTest.showOverlay(Overlays.NotificationsShade, "reason")
@@ -244,7 +247,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun snapToScene_sameScene_requestToKeepOverlays_keepsOverlays() =
         kosmos.runTest {
-            kosmos.enableDualShade()
+            enableDualShade()
             val currentScene by collectLastValue(underTest.currentScene)
             val currentOverlays by collectLastValue(underTest.currentOverlays)
             underTest.showOverlay(Overlays.NotificationsShade, "reason")
@@ -262,7 +265,7 @@ class SceneInteractorTest : SysuiTestCase() {
             val currentScene by collectLastValue(underTest.currentScene)
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
 
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
+            fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
 
@@ -281,12 +284,13 @@ class SceneInteractorTest : SysuiTestCase() {
 
             underTest.snapToScene(SceneFamilies.Home, loggingReason = "reason")
 
-            assertThat(currentScene).isEqualTo(kosmos.homeSceneFamilyResolver.resolvedScene.value)
+            assertThat(currentScene).isEqualTo(homeSceneFamilyResolver.resolvedScene.value)
         }
 
     @Test
     fun sceneChanged_inDataSource() =
         kosmos.runTest {
+            enableSingleShade()
             val currentScene by collectLastValue(underTest.currentScene)
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
 
@@ -298,6 +302,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun transitionState() =
         kosmos.runTest {
+            enableSingleShade()
             val sceneContainerRepository = kosmos.sceneContainerRepository
             val transitionState =
                 MutableStateFlow<ObservableTransitionState>(
@@ -328,14 +333,13 @@ class SceneInteractorTest : SysuiTestCase() {
 
             sceneContainerRepository.setTransitionState(null)
             assertThat(reflectedTransitionState)
-                .isEqualTo(
-                    ObservableTransitionState.Idle(kosmos.sceneContainerConfig.initialSceneKey)
-                )
+                .isEqualTo(ObservableTransitionState.Idle(sceneContainerConfig.initialSceneKey))
         }
 
     @Test
     fun transitioningTo_sceneChange() =
         kosmos.runTest {
+            enableSingleShade()
             val transitionState =
                 MutableStateFlow<ObservableTransitionState>(
                     ObservableTransitionState.Idle(underTest.currentScene.value)
@@ -419,10 +423,8 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun isTransitionUserInputOngoing_idle_false() =
         kosmos.runTest {
-            val transitionState =
-                MutableStateFlow<ObservableTransitionState>(
-                    ObservableTransitionState.Idle(Scenes.Shade)
-                )
+            enableSingleShade()
+            val transitionState = flowOf(ObservableTransitionState.Idle(Scenes.Shade))
             val isTransitionUserInputOngoing by
                 collectLastValue(underTest.isTransitionUserInputOngoing)
             underTest.setTransitionState(transitionState)
@@ -433,8 +435,9 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun isTransitionUserInputOngoing_transition_true() =
         kosmos.runTest {
+            enableSingleShade()
             val transitionState =
-                MutableStateFlow<ObservableTransitionState>(
+                flowOf(
                     ObservableTransitionState.Transition(
                         fromScene = Scenes.Shade,
                         toScene = Scenes.Lockscreen,
@@ -454,6 +457,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun isTransitionUserInputOngoing_updateMidTransition_false() =
         kosmos.runTest {
+            enableSingleShade()
             val transitionState =
                 MutableStateFlow<ObservableTransitionState>(
                     ObservableTransitionState.Transition(
@@ -487,6 +491,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun isTransitionUserInputOngoing_updateOnIdle_false() =
         kosmos.runTest {
+            enableSingleShade()
             val transitionState =
                 MutableStateFlow<ObservableTransitionState>(
                     ObservableTransitionState.Transition(
@@ -540,7 +545,7 @@ class SceneInteractorTest : SysuiTestCase() {
     fun resolveSceneFamily_home() =
         kosmos.runTest {
             assertThat(underTest.resolveSceneFamily(SceneFamilies.Home).first())
-                .isEqualTo(kosmos.homeSceneFamilyResolver.resolvedScene.value)
+                .isEqualTo(homeSceneFamilyResolver.resolvedScene.value)
         }
 
     @Test
@@ -555,10 +560,10 @@ class SceneInteractorTest : SysuiTestCase() {
         kosmos.runTest {
             val transitionValue by collectLastValue(underTest.transitionProgress(Scenes.Gone))
 
-            kosmos.setSceneTransition(Idle(Scenes.Gone))
+            setSceneTransition(Idle(Scenes.Gone))
             assertThat(transitionValue).isEqualTo(1f)
 
-            kosmos.setSceneTransition(Idle(Scenes.Lockscreen))
+            setSceneTransition(Idle(Scenes.Lockscreen))
             assertThat(transitionValue).isEqualTo(0f)
         }
 
@@ -568,7 +573,7 @@ class SceneInteractorTest : SysuiTestCase() {
             val transitionValue by collectLastValue(underTest.transitionProgress(Scenes.Gone))
             val progress = MutableStateFlow(0f)
 
-            kosmos.setSceneTransition(
+            setSceneTransition(
                 Transition(from = Scenes.Lockscreen, to = Scenes.Gone, progress = progress)
             )
             assertThat(transitionValue).isEqualTo(0f)
@@ -576,13 +581,13 @@ class SceneInteractorTest : SysuiTestCase() {
             progress.value = 0.4f
             assertThat(transitionValue).isEqualTo(0.4f)
 
-            kosmos.setSceneTransition(
+            setSceneTransition(
                 Transition(from = Scenes.Gone, to = Scenes.Lockscreen, progress = progress)
             )
             progress.value = 0.7f
             assertThat(transitionValue).isEqualTo(0.3f)
 
-            kosmos.setSceneTransition(
+            setSceneTransition(
                 Transition(from = Scenes.Lockscreen, to = Scenes.Shade, progress = progress)
             )
             progress.value = 0.9f
@@ -594,7 +599,7 @@ class SceneInteractorTest : SysuiTestCase() {
         kosmos.runTest {
             val currentScene by collectLastValue(underTest.currentScene)
             assertThat(currentScene).isEqualTo(Scenes.Lockscreen)
-            kosmos.keyguardEnabledInteractor.notifyKeyguardEnabled(false)
+            keyguardEnabledInteractor.notifyKeyguardEnabled(false)
 
             underTest.changeScene(Scenes.Gone, "")
 
@@ -638,6 +643,7 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun changeScene_toDisabledScene_doesNothing() =
         kosmos.runTest {
+            enableSingleShade()
             val currentScene by collectLastValue(underTest.currentScene)
             val disabledScene = Scenes.Shade
             fakeDisableFlagsRepository.disableFlags.value =
@@ -776,7 +782,7 @@ class SceneInteractorTest : SysuiTestCase() {
         kosmos.runTest {
             val currentScene by collectLastValue(underTest.currentScene)
             // Unlock so transitioning to the Gone scene becomes possible.
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
+            fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
             underTest.changeScene(toScene = Scenes.Gone, loggingReason = "")
@@ -854,7 +860,7 @@ class SceneInteractorTest : SysuiTestCase() {
         kosmos.runTest {
             val topmostContent by collectLastValue(underTest.topmostContent)
 
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
+            fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
 
@@ -870,11 +876,11 @@ class SceneInteractorTest : SysuiTestCase() {
     @Test
     fun topmostContent_sceneChange_withOverlay() =
         kosmos.runTest {
-            kosmos.enableDualShade()
+            enableDualShade()
 
             val topmostContent by collectLastValue(underTest.topmostContent)
 
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
+            fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
 
@@ -895,7 +901,7 @@ class SceneInteractorTest : SysuiTestCase() {
 
             val topmostContent by collectLastValue(underTest.topmostContent)
 
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
+            fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
 
@@ -916,7 +922,7 @@ class SceneInteractorTest : SysuiTestCase() {
 
             val topmostContent by collectLastValue(underTest.topmostContent)
 
-            kosmos.fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
+            fakeDeviceEntryFingerprintAuthRepository.setAuthenticationStatus(
                 SuccessFingerprintAuthenticationStatus(0, true)
             )
 
