@@ -20,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.android.compose.animation.scene.ContentScope
 import com.android.systemui.qs.panels.ui.viewmodel.TileGridViewModel
+import com.android.systemui.qs.ui.composable.QuickSettingsShade
+import com.android.systemui.scene.shared.flag.SceneContainerFlag
 
 @Composable
 fun ContentScope.TileGrid(
@@ -29,6 +31,17 @@ fun ContentScope.TileGrid(
 ) {
     val gridLayout = viewModel.gridLayout
     val tiles = viewModel.tileViewModels
-
-    with(gridLayout) { TileGrid(tiles, modifier, listening) }
+    with(gridLayout) {
+        TileGrid(
+            tiles = tiles,
+            modifier = modifier,
+            listening = listening,
+            revealEffectContainer =
+                if (SceneContainerFlag.isUnexpectedlyInLegacyMode()) {
+                    null
+                } else {
+                    QuickSettingsShade.Elements.Panel
+                },
+        )
+    }
 }

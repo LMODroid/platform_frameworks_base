@@ -76,6 +76,7 @@ import com.android.compose.animation.Expandable
 import com.android.compose.animation.bounceable
 import com.android.compose.animation.rememberExpandableController
 import com.android.compose.animation.scene.ContentScope
+import com.android.compose.animation.scene.ElementKey
 import com.android.compose.modifiers.thenIf
 import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.mechanics.compose.modifier.verticalFadeContentReveal
@@ -101,7 +102,6 @@ import com.android.systemui.qs.panels.ui.viewmodel.toIconProvider
 import com.android.systemui.qs.panels.ui.viewmodel.toUiState
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.tileimpl.QSTileImpl
-import com.android.systemui.qs.ui.composable.QuickSettingsShade
 import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
 import kotlinx.coroutines.CoroutineScope
@@ -143,7 +143,7 @@ fun ContentScope.Tile(
     isVisible: () -> Boolean = { true },
     requestToggleTextFeedback: (TileSpec) -> Unit = {},
     detailsViewModel: DetailsViewModel?,
-    verticalFadeContentReveal: Boolean = false,
+    revealEffectContainer: ElementKey? = null,
 ) {
     trace(tile.traceName) {
         val currentBounceableInfo by rememberUpdatedState(bounceableInfo)
@@ -252,11 +252,11 @@ fun ContentScope.Tile(
                 iconOnly = iconOnly,
                 isDualTarget = isDualTarget,
                 modifier =
-                    if (verticalFadeContentReveal) {
+                    if (revealEffectContainer != null) {
                         Modifier.verticalFadeContentReveal(
                             contentScope = this,
                             motionBuilderContext = rememberMotionBuilderContext(),
-                            container = QuickSettingsShade.Elements.Panel,
+                            container = revealEffectContainer,
                         )
                     } else {
                         Modifier

@@ -19,6 +19,7 @@ package com.android.systemui.qs.panels.ui.compose
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.android.compose.animation.scene.ContentScope
+import com.android.compose.animation.scene.ElementKey
 import com.android.systemui.qs.panels.shared.model.SizedTile
 import com.android.systemui.qs.panels.shared.model.TileRow
 import com.android.systemui.qs.panels.ui.viewmodel.EditTileViewModel
@@ -37,6 +38,7 @@ interface GridLayout {
         tiles: List<TileViewModel>,
         modifier: Modifier,
         listening: () -> Boolean,
+        revealEffectContainer: ElementKey? = null,
     )
 
     @Composable
