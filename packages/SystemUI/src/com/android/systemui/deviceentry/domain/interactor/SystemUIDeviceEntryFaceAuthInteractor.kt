@@ -238,7 +238,13 @@ constructor(
             sceneInteractor
                 .get()
                 .transitionState
-                .filter { it.isTransitioning(from = Scenes.Lockscreen, to = Scenes.Shade) }
+                .filter {
+                    it.isTransitioning(from = Scenes.Lockscreen, to = Scenes.Shade) ||
+                        it.isTransitioning(
+                            from = Scenes.Lockscreen,
+                            to = Overlays.NotificationsShade,
+                        )
+                }
                 .distinctUntilChanged()
                 .onEach { onShadeExpansionStarted() }
                 .launchIn(applicationScope)
