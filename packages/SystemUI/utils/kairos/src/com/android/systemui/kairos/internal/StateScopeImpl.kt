@@ -32,7 +32,6 @@ import com.android.systemui.kairos.groupByKey
 import com.android.systemui.kairos.init
 import com.android.systemui.kairos.mapCheap
 import com.android.systemui.kairos.mergeLeft
-import com.android.systemui.kairos.skipNext
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.NameData
 import com.android.systemui.kairos.util.NameTag
@@ -116,7 +115,7 @@ internal class StateScopeImpl(
                             val newName =
                                 nameData.mapName { "$it[key=$k, epoch=$epoch, init=false]" }
                             val newEnd: Events<Maybe<Stateful<A>>> =
-                                skipNext(newName + "newEnd", eventsByKey[k])
+                                eventsByKey[k].skipNextUnsafe(newName + "newEnd")
                             val newScope = childStateScope(newEnd, newName)
                             newScope.stateful()
                         }
@@ -152,7 +151,7 @@ internal class StateScopeImpl(
             deathSignalLazy =
                 lazy {
                     mergeLeft(nameData + "mergedDeathSignal", deathSignal, childEndSignal)
-                        .nextOnlyUnsafe(nameData + "firstEndSignal")
+                        .nextOnlyUnsafe(nameData + "deathSignal")
                 },
         )
 
@@ -199,6 +198,27 @@ private fun <A> Events<A>.nextOnlyUnsafe(nameData: NameData): Events<A> =
                     )
                 )
         }
+    }
+
+internal fun <A> Events<A>.skipNextUnsafe(nameData: NameData): Events<A> =
+    if (this == emptyEvents) {
+        this
+    } else {
+        val onlyOne = nextOnlyUnsafe(nameData + "onlyOne")
+        val turnOn =
+            mapImpl({ onlyOne.init.connect(this) }, nameData + "turnOn") { _, _ ->
+                this@skipNextUnsafe.init.connect(this)
+            }
+        EventsInit(
+            constInit(
+                nameData,
+                switchDeferredImplSingle(
+                    nameData,
+                    getStorage = { neverImpl },
+                    getPatches = { turnOn },
+                ),
+            )
+        )
     }
 
 private fun <A> Events<A>.holdStateDeferredUnsafe(

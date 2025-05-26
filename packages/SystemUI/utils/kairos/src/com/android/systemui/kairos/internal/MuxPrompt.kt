@@ -16,11 +16,11 @@
 
 package com.android.systemui.kairos.internal
 
+import androidx.collection.ScatterSet
 import com.android.systemui.kairos.internal.store.MutableMapK
 import com.android.systemui.kairos.internal.store.SingletonMapK
 import com.android.systemui.kairos.internal.store.asSingle
 import com.android.systemui.kairos.internal.store.singleOf
-import com.android.systemui.kairos.internal.util.LogIndent
 import com.android.systemui.kairos.internal.util.fastForEach
 import com.android.systemui.kairos.internal.util.hashString
 import com.android.systemui.kairos.internal.util.logDuration
@@ -49,8 +49,8 @@ internal class MuxPromptNode<W, K, V>(
             // If there's a patch, process it.
             patch?.let {
                 val needsReschedule = processPatch(patch, evalScope)
-                // We may need to reschedule if newly-switched-in nodes have not yet been
-                // visited within this transaction.
+                // We may need to reschedule if newly-switched-in nodes have not yet been visited
+                // within this transaction.
                 val depthIncreased = depthTracker.dirty_depthIncreased()
                 if (needsReschedule || depthIncreased) {
                     if (depthIncreased) {
@@ -64,24 +64,18 @@ internal class MuxPromptNode<W, K, V>(
 
             // If we don't need to reschedule, or there wasn't a patch at all, then we proceed
             // with merging pre-switch and post-switch results
-            val hasResult = results.isNotEmpty()
-            val compactDownstream = depthTracker.isDirty()
-            if (hasResult || compactDownstream) {
-                if (compactDownstream) {
-                    adjustDownstreamDepths(evalScope)
-                }
-                if (hasResult) {
-                    transactionCache.put(evalScope, results)
-                    if (!scheduleAll(currentLogIndent, downstreamSet, evalScope)) {
-                        evalScope.scheduleDeactivation(this@MuxPromptNode)
-                    }
+            adjustDownstreamDepths(evalScope)
+            if (results.isNotEmpty()) {
+                transactionCache.put(evalScope, results)
+                if (!scheduleAll(currentLogIndent, downstreamSet, evalScope)) {
+                    evalScope.scheduleDeactivation(this@MuxPromptNode)
                 }
             }
         }
     }
 
     // side-effect: this will populate `upstreamData` with any immediately available results
-    private fun LogIndent.processPatch(
+    private fun processPatch(
         patch: Iterable<Map.Entry<K, Maybe<EventsImpl<V>>>>,
         evalScope: EvalScope,
     ): Boolean {
@@ -178,7 +172,7 @@ internal class MuxPromptNode<W, K, V>(
             depthTracker.applyChanges(
                 evalScope.scheduler,
                 downstreamSet,
-                muxNode = this@MuxPromptNode,
+                owner = this@MuxPromptNode,
             )
         }
     }
@@ -207,7 +201,7 @@ internal class MuxPromptNode<W, K, V>(
     fun removeIndirectPatchNode(
         scheduler: Scheduler,
         oldDepth: Int,
-        indirectSet: Set<MuxDeferredNode<*, *, *>>,
+        indirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         patches = null
         if (
@@ -247,7 +241,7 @@ internal class MuxPromptNode<W, K, V>(
         override fun moveIndirectUpstreamToDirect(
             scheduler: Scheduler,
             oldIndirectDepth: Int,
-            oldIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+            oldIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
             newDirectDepth: Int,
         ) {
             this@MuxPromptNode.moveIndirectUpstreamToDirect(
@@ -262,8 +256,8 @@ internal class MuxPromptNode<W, K, V>(
             scheduler: Scheduler,
             oldDepth: Int,
             newDepth: Int,
-            removals: Set<MuxDeferredNode<*, *, *>>,
-            additions: Set<MuxDeferredNode<*, *, *>>,
+            removals: ScatterSet<MuxDeferredNode<*, *, *>>,
+            additions: ScatterSet<MuxDeferredNode<*, *, *>>,
         ) {
             this@MuxPromptNode.adjustIndirectUpstream(
                 scheduler,
@@ -278,7 +272,7 @@ internal class MuxPromptNode<W, K, V>(
             scheduler: Scheduler,
             oldDirectDepth: Int,
             newIndirectDepth: Int,
-            newIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+            newIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
         ) {
             this@MuxPromptNode.moveDirectUpstreamToIndirect(
                 scheduler,
@@ -295,7 +289,7 @@ internal class MuxPromptNode<W, K, V>(
         override fun removeIndirectUpstream(
             scheduler: Scheduler,
             depth: Int,
-            indirectSet: Set<MuxDeferredNode<*, *, *>>,
+            indirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
         ) {
             this@MuxPromptNode.removeIndirectPatchNode(scheduler, depth, indirectSet)
         }
@@ -345,7 +339,7 @@ private class MuxPromptActivator<W, K, V>(
     override fun activate(
         evalScope: EvalScope,
         lifecycle: MuxLifecycle<W, K, V>,
-    ): Pair<MuxNode<W, K, V>, (() -> Unit)?>? {
+    ): Pair<MuxNode<W, K, V>, Nothing?>? {
         // Initialize mux node and switched-in connections.
         val movingNode =
             MuxPromptNode(nameData, lifecycle, this).apply {
@@ -382,7 +376,7 @@ private class MuxPromptActivator<W, K, V>(
                     }
                 }
                 // Reset all depth adjustments, since no downstream has been notified
-                depthTracker.reset()
+                depthTracker.reset(null)
             }
 
         // Schedule for evaluation if any switched-in nodes or the patches node have

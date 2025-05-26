@@ -16,6 +16,7 @@
 
 package com.android.systemui.kairos.internal
 
+import androidx.collection.ScatterSet
 import com.android.systemui.kairos.internal.store.HashMapK
 import com.android.systemui.kairos.internal.store.MapHolder
 import com.android.systemui.kairos.internal.store.MapK
@@ -76,7 +77,7 @@ internal class DemuxNode<W, K, A>(
     override fun moveIndirectUpstreamToDirect(
         scheduler: Scheduler,
         oldIndirectDepth: Int,
-        oldIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+        oldIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
         newDirectDepth: Int,
     ) {
         branchNodeByKey.forEach { _, branchNode ->
@@ -93,8 +94,8 @@ internal class DemuxNode<W, K, A>(
         scheduler: Scheduler,
         oldDepth: Int,
         newDepth: Int,
-        removals: Set<MuxDeferredNode<*, *, *>>,
-        additions: Set<MuxDeferredNode<*, *, *>>,
+        removals: ScatterSet<MuxDeferredNode<*, *, *>>,
+        additions: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         branchNodeByKey.forEach { _, branchNode ->
             branchNode.downstreamSet.adjustIndirectUpstream(
@@ -111,7 +112,7 @@ internal class DemuxNode<W, K, A>(
         scheduler: Scheduler,
         oldDirectDepth: Int,
         newIndirectDepth: Int,
-        newIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+        newIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         branchNodeByKey.forEach { _, branchNode ->
             branchNode.downstreamSet.moveDirectUpstreamToIndirect(
@@ -126,7 +127,7 @@ internal class DemuxNode<W, K, A>(
     override fun removeIndirectUpstream(
         scheduler: Scheduler,
         depth: Int,
-        indirectSet: Set<MuxDeferredNode<*, *, *>>,
+        indirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         lifecycle.lifecycleState = DemuxLifecycleState.Dead
         branchNodeByKey.forEach { _, branchNode ->

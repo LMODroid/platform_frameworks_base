@@ -16,6 +16,7 @@
 
 package com.android.systemui.kairos.internal
 
+import androidx.collection.ScatterSet
 import com.android.systemui.kairos.internal.store.MapHolder
 import com.android.systemui.kairos.internal.store.MapK
 import com.android.systemui.kairos.internal.store.MutableMapK
@@ -111,7 +112,7 @@ internal sealed class MuxNode<W, K, V>(
     fun moveIndirectUpstreamToDirect(
         scheduler: Scheduler,
         oldIndirectDepth: Int,
-        oldIndirectRoots: Set<MuxDeferredNode<*, *, *>>,
+        oldIndirectRoots: ScatterSet<MuxDeferredNode<*, *, *>>,
         newDepth: Int,
     ) {
         if (
@@ -127,8 +128,8 @@ internal sealed class MuxNode<W, K, V>(
         scheduler: Scheduler,
         oldDepth: Int,
         newDepth: Int,
-        removals: Set<MuxDeferredNode<*, *, *>>,
-        additions: Set<MuxDeferredNode<*, *, *>>,
+        removals: ScatterSet<MuxDeferredNode<*, *, *>>,
+        additions: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         if (
             depthTracker.addIndirectUpstream(oldDepth, newDepth) or
@@ -146,7 +147,7 @@ internal sealed class MuxNode<W, K, V>(
         scheduler: Scheduler,
         oldDepth: Int,
         newDepth: Int,
-        newIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+        newIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         if (
             depthTracker.addIndirectUpstream(oldDepth = null, newDepth) or
@@ -170,7 +171,7 @@ internal sealed class MuxNode<W, K, V>(
     fun removeIndirectUpstream(
         scheduler: Scheduler,
         oldDepth: Int,
-        indirectSet: Set<MuxDeferredNode<*, *, *>>,
+        indirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
         key: K,
     ) {
         switchedIn.remove(key)
@@ -219,7 +220,7 @@ internal sealed class MuxNode<W, K, V>(
         override fun moveIndirectUpstreamToDirect(
             scheduler: Scheduler,
             oldIndirectDepth: Int,
-            oldIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+            oldIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
             newDirectDepth: Int,
         ) {
             this@MuxNode.moveIndirectUpstreamToDirect(
@@ -234,8 +235,8 @@ internal sealed class MuxNode<W, K, V>(
             scheduler: Scheduler,
             oldDepth: Int,
             newDepth: Int,
-            removals: Set<MuxDeferredNode<*, *, *>>,
-            additions: Set<MuxDeferredNode<*, *, *>>,
+            removals: ScatterSet<MuxDeferredNode<*, *, *>>,
+            additions: ScatterSet<MuxDeferredNode<*, *, *>>,
         ) {
             this@MuxNode.adjustIndirectUpstream(scheduler, oldDepth, newDepth, removals, additions)
         }
@@ -244,7 +245,7 @@ internal sealed class MuxNode<W, K, V>(
             scheduler: Scheduler,
             oldDirectDepth: Int,
             newIndirectDepth: Int,
-            newIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+            newIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
         ) {
             this@MuxNode.moveDirectUpstreamToIndirect(
                 scheduler,
@@ -261,7 +262,7 @@ internal sealed class MuxNode<W, K, V>(
         override fun removeIndirectUpstream(
             scheduler: Scheduler,
             depth: Int,
-            indirectSet: Set<MuxDeferredNode<*, *, *>>,
+            indirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
         ) {
             removeIndirectUpstream(scheduler, depth, indirectSet, key)
         }
@@ -303,9 +304,16 @@ internal class MuxLifecycle<W, K, V>(var lifecycleState: MuxLifecycleState<W, K,
                             }
                     }
                     ?.let { (node, postActivate) ->
-                        postActivate?.invoke()
-                        node.addDownstreamLocked(downstream)
-                        ActivationResult(connection = NodeConnection(node, node), needsEval = false)
+                        if (postActivate?.invoke() == false && node.switchedIn.isEmpty()) {
+                            lifecycleState = MuxLifecycleState.Dead
+                            null
+                        } else {
+                            node.addDownstreamLocked(downstream)
+                            ActivationResult(
+                                connection = NodeConnection(node, node),
+                                needsEval = false,
+                            )
+                        }
                     }
             }
         }
@@ -327,7 +335,7 @@ internal interface MuxActivator<W, K, V> {
     fun activate(
         evalScope: EvalScope,
         lifecycle: MuxLifecycle<W, K, V>,
-    ): Pair<MuxNode<W, K, V>, (() -> Unit)?>?
+    ): Pair<MuxNode<W, K, V>, (() -> Boolean)?>?
 }
 
 @Suppress("NOTHING_TO_INLINE")
@@ -389,7 +397,7 @@ internal fun <W, K, V> MuxNode<W, K, V>.initializeDepth() {
             )
             depthTracker.updateIndirectRoots(
                 additions = conn.depthTracker.snapshotIndirectRoots,
-                butNot = null,
+                butNot = this as? MuxDeferredNode<*, *, *>,
             )
         }
     }

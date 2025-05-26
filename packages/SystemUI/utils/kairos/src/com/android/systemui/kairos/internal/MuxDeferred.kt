@@ -16,6 +16,7 @@
 
 package com.android.systemui.kairos.internal
 
+import androidx.collection.ScatterSet
 import com.android.systemui.kairos.internal.store.MapK
 import com.android.systemui.kairos.internal.store.MutableArrayMapK
 import com.android.systemui.kairos.internal.store.MutableMapK
@@ -69,7 +70,7 @@ internal class MuxDeferredNode<W, K, V>(
                         depthTracker.applyChanges(
                             evalScope.scheduler,
                             downstreamSet,
-                            muxNode = this@MuxDeferredNode,
+                            owner = this@MuxDeferredNode,
                         )
                     }
                 }
@@ -98,6 +99,7 @@ internal class MuxDeferredNode<W, K, V>(
         check(downstreamSet.isEmpty()) { "cannot deactivate a node with downstreams" }
         // Update lifecycle
         if (lifecycle.lifecycleState !is MuxLifecycleState.Active) return
+        check(!depthTracker.isDirty()) { "cannot deactivate with dirty depth tracker" }
         lifecycle.lifecycleState = MuxLifecycleState.Inactive(spec)
         // Process branch nodes
         switchedIn.forEach { _, branchNode ->
@@ -201,7 +203,7 @@ internal class MuxDeferredNode<W, K, V>(
     fun removeIndirectPatchNode(
         scheduler: Scheduler,
         depth: Int,
-        indirectSet: Set<MuxDeferredNode<*, *, *>>,
+        indirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         // indirectly connected patches forward the indirectSet
         if (
@@ -216,7 +218,7 @@ internal class MuxDeferredNode<W, K, V>(
     fun moveIndirectPatchNodeToDirect(
         scheduler: Scheduler,
         oldIndirectDepth: Int,
-        oldIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+        oldIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         // directly connected patches are stored as an indirect singleton set of the patchNode
         if (
@@ -231,7 +233,7 @@ internal class MuxDeferredNode<W, K, V>(
     fun moveDirectPatchNodeToIndirect(
         scheduler: Scheduler,
         newIndirectDepth: Int,
-        newIndirectSet: Set<MuxDeferredNode<*, *, *>>,
+        newIndirectSet: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         // indirectly connected patches forward the indirectSet
         if (
@@ -247,8 +249,8 @@ internal class MuxDeferredNode<W, K, V>(
         scheduler: Scheduler,
         oldDepth: Int,
         newDepth: Int,
-        removals: Set<MuxDeferredNode<*, *, *>>,
-        additions: Set<MuxDeferredNode<*, *, *>>,
+        removals: ScatterSet<MuxDeferredNode<*, *, *>>,
+        additions: ScatterSet<MuxDeferredNode<*, *, *>>,
     ) {
         // indirectly connected patches forward the indirectSet
         if (
@@ -317,7 +319,7 @@ private class MuxDeferredActivator<W, K, V>(
     override fun activate(
         evalScope: EvalScope,
         lifecycle: MuxLifecycle<W, K, V>,
-    ): Pair<MuxNode<W, K, V>, (() -> Unit)?>? {
+    ): Pair<MuxNode<W, K, V>, (() -> Boolean)?> {
         // Initialize mux node and switched-in connections.
         val muxNode =
             MuxDeferredNode(nameData, lifecycle, this).apply {
@@ -328,7 +330,7 @@ private class MuxDeferredActivator<W, K, V>(
                 // a direct connection to patches. We will update downstream nodes later if this
                 // turns out to be a lie.
                 depthTracker.setIsIndirectRoot(true)
-                depthTracker.reset()
+                depthTracker.reset(this)
             }
 
         // Schedule for evaluation if any switched-in nodes have already emitted within
@@ -338,7 +340,7 @@ private class MuxDeferredActivator<W, K, V>(
         }
 
         return muxNode to
-            fun() {
+            fun(): Boolean {
                 // Setup patches connection; deferring allows for a recursive connection, where
                 // muxNode is downstream of itself via patches.
                 val (patchesConn, needsEval) =
@@ -346,11 +348,12 @@ private class MuxDeferredActivator<W, K, V>(
                         ?: run {
                             // Turns out we can't connect to patches, so update our depth
                             muxNode.depthTracker.setIsIndirectRoot(false)
-                            return
+                            muxNode.depthTracker.reset(muxNode)
+                            return false
                         }
                 muxNode.patches = patchesConn
 
-                if (!patchesConn.schedulerUpstream.depthTracker.snapshotIsDirect) {
+                if (!patchesConn.depthTracker.snapshotIsDirect) {
                     // Turns out patches is indirect, so we are not a root. Update depth and
                     // propagate.
                     if (
@@ -360,7 +363,8 @@ private class MuxDeferredActivator<W, K, V>(
                                 newDepth = patchesConn.depthTracker.snapshotIndirectDepth,
                             ) or
                             muxNode.depthTracker.updateIndirectRoots(
-                                additions = patchesConn.depthTracker.snapshotIndirectRoots
+                                additions = patchesConn.depthTracker.snapshotIndirectRoots,
+                                butNot = muxNode,
                             )
                     ) {
                         muxNode.depthTracker.schedule(evalScope.scheduler, muxNode)
@@ -372,6 +376,8 @@ private class MuxDeferredActivator<W, K, V>(
                     muxNode.patchData = patchesConn.getPushEvent(0, evalScope)
                     evalScope.scheduleMuxMover(muxNode)
                 }
+
+                return true
             }
     }
 

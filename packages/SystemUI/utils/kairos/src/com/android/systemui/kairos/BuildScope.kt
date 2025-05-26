@@ -836,7 +836,7 @@ internal fun BuildScope.effect(
     nameData: NameData,
     context: CoroutineContext = EmptyCoroutineContext,
     block: EffectScope.() -> Unit,
-): Job = launchScope(nameData + "launch", context) { now.observe(name = nameData) { block() } }
+): Job = launchScope(nameData + "launchScope", context) { now.observe(name = nameData) { block() } }
 
 /**
  * Performs a side-effect in a safe manner w/r/t the current Kairos transaction.

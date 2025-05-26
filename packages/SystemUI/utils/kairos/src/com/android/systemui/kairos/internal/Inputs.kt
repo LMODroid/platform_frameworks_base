@@ -38,7 +38,8 @@ internal class InputNode<A>(
     private val epoch
         get() = transactionCache.epoch
 
-    override val depthTracker: DepthTracker = DepthTracker()
+    override val depthTracker: DepthTracker
+        get() = InputTracker
 
     override fun hasCurrentValue(logIndent: Int, evalScope: EvalScope): Boolean =
         epoch == evalScope.epoch
@@ -108,7 +109,8 @@ internal fun <A> InputNode<A>.activated() = EventsImplCheap { downstream ->
 
 internal data object AlwaysNode : PushNode<Unit> {
 
-    override val depthTracker = DepthTracker()
+    override val depthTracker
+        get() = InputTracker
 
     override fun hasCurrentValue(logIndent: Int, evalScope: EvalScope): Boolean = true
 

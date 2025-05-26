@@ -40,7 +40,6 @@ import com.android.systemui.kairos.internal.util.invokeOnCancel
 import com.android.systemui.kairos.internal.util.launchImmediate
 import com.android.systemui.kairos.launchEffect
 import com.android.systemui.kairos.mergeLeft
-import com.android.systemui.kairos.skipNext
 import com.android.systemui.kairos.takeUntil
 import com.android.systemui.kairos.util.Maybe
 import com.android.systemui.kairos.util.Maybe.Absent
@@ -219,7 +218,7 @@ internal class BuildScopeImpl(
                             val newName =
                                 nameData.mapName { "$it[key=$k, epoch=$epoch, init = false]" }
                             val newEnd: Events<Maybe<BuildSpec<A>>> =
-                                skipNext(newName + "newEnd", eventsByKey[k])
+                                eventsByKey[k].skipNextUnsafe(newName + "newEnd")
                             val newScope = childBuildScope(newEnd, newName)
                             newScope.spec()
                         }
@@ -388,8 +387,18 @@ internal class BuildScopeImpl(
         val newCoroutineScope: CoroutineScope = coroutineScope.childScope()
         val newChildBuildScope = newChildBuildScope(newCoroutineScope, newEnd, nameData)
         // When the end signal emits, cancel all running coroutines in the new scope
-        newChildBuildScope.deathSignal.observeSync(nameData + "observeLifetime") {
-            newCoroutineScope.cancel()
+        val outputNode =
+            Output<Any>(nameData + "observeLifetime", onEmit = { newCoroutineScope.cancel() })
+        deferAction {
+            newChildBuildScope.deathSignal.init
+                .connect(stateScope.evalScope)
+                .activate(stateScope.evalScope, outputNode.schedulable)
+                ?.let { (conn, needsEval) ->
+                    outputNode.upstream = conn
+                    if (needsEval) {
+                        outputNode.schedule(0, evalScope = stateScope.evalScope)
+                    }
+                }
         }
         return newChildBuildScope
     }
@@ -402,7 +411,7 @@ internal class BuildScopeImpl(
         val newCoroutineScope = coroutineScope.childScope(coroutineContext)
         // If the job is cancelled, emit the stop signal
         newCoroutineScope.coroutineContext.job.invokeOnCompletion { stopEmitter.emit(Unit) }
-        return newChildBuildScope(newCoroutineScope, stopEmitter, nameData)
+        return newChildBuildScope(newCoroutineScope, stopEmitter, childNameData)
     }
 
     private fun newChildBuildScope(
