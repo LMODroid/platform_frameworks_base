@@ -471,12 +471,11 @@ public class StackScrollAlgorithm {
                 if (v instanceof EmptyShadeView) {
                     emptyShadeVisible = true;
                 }
-                if (v instanceof FooterView footerView) {
+                if (!SceneContainerFlag.isEnabled() && v instanceof FooterView footerView) {
                     if (emptyShadeVisible || notGoneIndex == 0) {
                         // if the empty shade is visible or the footer is the first visible
                         // view, we're in a transitory state so let's leave the footer alone.
-                        if (Flags.notificationsFooterVisibilityFix()
-                                && !SceneContainerFlag.isEnabled()) {
+                        if (Flags.notificationsFooterVisibilityFix()) {
                             // ...except for the hidden state, to prevent it from flashing on
                             // the screen (this piece is copied from updateChild, and is not
                             // necessary in flexiglass).
