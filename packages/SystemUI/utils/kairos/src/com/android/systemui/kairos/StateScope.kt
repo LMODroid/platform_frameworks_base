@@ -631,12 +631,11 @@ interface StateScope : TransactionScope {
      * stopped. Stopping will end all state accumulation; any [States][State] returned from this
      * scope will no longer update.
      */
-    fun <A> childStateScope(stop: Events<*>, stateful: Stateful<A>): DeferredValue<A> =
-        childStateScope(
-            nameTag("StateScope.childStateScope").toNameData("StateScope.childStateScope"),
-            stop,
-            stateful,
-        )
+    fun <A> childStateScope(
+        stop: Events<*>,
+        name: NameTag? = null,
+        stateful: Stateful<A>,
+    ): DeferredValue<A>
 
     /**
      * Returns an [Events] that emits values from the original [Events] up to and including a value
@@ -1369,11 +1368,7 @@ internal fun <A> StateScope.nextOnly(nameData: NameData, events: Events<A>): Eve
     if (events === emptyEvents) {
         events
     } else {
-        EventsLoop<A>().apply {
-            val shutOff = mapCheap(nameData + "shutOff") { emptyEvents }
-            val switchedIn = holdState(nameData + "switchedIn", shutOff, events)
-            loopback = switchedIn.switchEvents(nameData)
-        }
+        takeUntil(nameData, events, events)
     }
 
 internal fun <A> StateScope.skipNext(nameData: NameData, events: Events<A>): Events<A> =
@@ -1392,24 +1387,11 @@ internal fun <A> StateScope.takeUntil(
     if (stop === emptyEvents) {
         events
     } else {
-        val turnOff =
-            nextOnly(nameData + "onlyOne", stop).mapCheap(nameData + "turnOff") { emptyEvents }
-        holdState(nameData + "state", turnOff, events).switchEvents(nameData)
+        childStateScope(stop, nameData) {
+                holdState(nameData + "forTruncate", emptyEvents, events).switchEvents(nameData)
+            }
+            .defer()
     }
-
-internal fun <A> StateScope.childStateScope(
-    nameData: NameData,
-    stop: Events<*>,
-    stateful: Stateful<A>,
-): DeferredValue<A> {
-    val turnOff =
-        nextOnly(nameData + "onlyOne", stop).mapCheap(nameData + "turnOff") {
-            mapOf(Unit to maybeOf<Stateful<A>>())
-        }
-    val (_, init: DeferredValue<Map<Unit, A>>) =
-        applyLatestStatefulForKey(nameData, turnOff, init = mapOf(Unit to stateful), numKeys = 1)
-    return deferredStateScope { init.value.getValue(Unit) }
-}
 
 internal fun <A> StateScope.takeUntil(
     nameData: NameData,

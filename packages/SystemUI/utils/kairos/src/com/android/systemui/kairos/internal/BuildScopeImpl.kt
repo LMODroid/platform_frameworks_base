@@ -370,7 +370,7 @@ internal class BuildScopeImpl(
             )
         emitterAndScope = constructEvents(inputNode)
         // Deactivate once scope dies, or once [builder] completes.
-        val deactivateSignal: Events<Any> =
+        val deactivateSignal: Events<*> =
             mergeLeft(nameData + "deactivateSignal", deathSignal, stopEmitter)
         return takeUntil(nameData + "takeUntilStopped", emitterAndScope.first, deactivateSignal)
     }
@@ -388,7 +388,7 @@ internal class BuildScopeImpl(
         val newChildBuildScope = newChildBuildScope(newCoroutineScope, newEnd, nameData)
         // When the end signal emits, cancel all running coroutines in the new scope
         val outputNode =
-            Output<Any>(nameData + "observeLifetime", onEmit = { newCoroutineScope.cancel() })
+            Output<Any?>(nameData + "observeLifetime", onEmit = { newCoroutineScope.cancel() })
         deferAction {
             newChildBuildScope.deathSignal.init
                 .connect(stateScope.evalScope)

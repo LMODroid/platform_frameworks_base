@@ -30,7 +30,7 @@ internal interface InitScope {
 internal interface EvalScope : NetworkScope, DeferScope, TransactionScope
 
 internal interface InternalStateScope : EvalScope, StateScope {
-    val deathSignal: Events<Any>
+    val deathSignal: Events<*>
 
     fun <A> truncateToScope(events: Events<A>, nameData: NameData): Events<A>
 }

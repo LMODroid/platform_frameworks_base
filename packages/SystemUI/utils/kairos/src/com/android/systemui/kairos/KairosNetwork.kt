@@ -166,7 +166,7 @@ internal class LocalNetwork(
     val nameData: NameData,
     private val network: Network,
     private val scope: CoroutineScope,
-    private val deathSignalLazy: Lazy<Events<Any>>,
+    private val deathSignalLazy: Lazy<Events<*>>,
 ) : KairosNetwork {
 
     init {

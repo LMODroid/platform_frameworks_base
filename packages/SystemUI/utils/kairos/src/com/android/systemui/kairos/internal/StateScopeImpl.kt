@@ -45,14 +45,14 @@ internal class StateScopeImpl(
     val nameData: NameData,
     val createdEpoch: Long,
     val evalScope: EvalScope,
-    val deathSignalLazy: Lazy<Events<Any>>,
+    val deathSignalLazy: Lazy<Events<*>>,
 ) : InternalStateScope, EvalScope by evalScope {
 
     init {
         nameData.forceInit()
     }
 
-    override val deathSignal: Events<Any> by deathSignalLazy
+    override val deathSignal: Events<*> by deathSignalLazy
 
     override fun <A> deferredStateScope(block: StateScope.() -> A): DeferredValue<A> =
         DeferredValue(deferAsync { block() })
@@ -143,7 +143,15 @@ internal class StateScopeImpl(
         )
     }
 
-    fun childStateScope(childEndSignal: Events<Any>, nameData: NameData) =
+    override fun <A> childStateScope(
+        stop: Events<*>,
+        name: NameTag?,
+        stateful: Stateful<A>,
+    ): DeferredValue<A> =
+        childStateScope(stop, name.toNameData("StateScope.childStateScope"))
+            .deferredStateScope(stateful)
+
+    fun childStateScope(childEndSignal: Events<*>, nameData: NameData) =
         StateScopeImpl(
             nameData,
             epoch,
