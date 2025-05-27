@@ -41,6 +41,7 @@ abstract class HydratedActivatable : Activatable {
         coroutineScope {
             launch { hydrator.activate() }
             onActivated()
+            awaitCancellation()
         }
     }
 
@@ -56,21 +57,18 @@ abstract class HydratedActivatable : Activatable {
      *
      * Implementations could follow this pattern:
      * ```kotlin
-     * override suspend fun onActivated(): Nothing {
+     * override suspend fun onActivated() {
      *     coroutineScope {
      *         launch { ... }
      *         launch { ... }
      *         launch { ... }
-     *         awaitCancellation()
      *     }
      * }
      * ```
      *
      * @see activate
      */
-    protected open suspend fun onActivated(): Nothing {
-        awaitCancellation()
-    }
+    protected open suspend fun onActivated() {}
 
     /** @see [Hydrator.hydratedStateOf] */
     protected fun <T> StateFlow<T>.hydratedStateOf(traceName: String): State<T> =

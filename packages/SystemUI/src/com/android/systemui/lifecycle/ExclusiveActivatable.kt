@@ -17,6 +17,7 @@
 package com.android.systemui.lifecycle
 
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.awaitCancellation
 
 /**
  * A base [Activatable] that can only be activated by a single owner (hence "exclusive"). A previous
@@ -41,6 +42,7 @@ abstract class ExclusiveActivatable : Activatable {
             onActivated()
         } finally {
             isActive = false
+            awaitCancellation()
         }
     }
 
@@ -56,17 +58,16 @@ abstract class ExclusiveActivatable : Activatable {
      *
      * Implementations could follow this pattern:
      * ```kotlin
-     * override suspend fun onActivated(): Nothing {
+     * override suspend fun onActivated() {
      *     coroutineScope {
      *         launch { ... }
      *         launch { ... }
      *         launch { ... }
-     *         awaitCancellation()
      *     }
      * }
      * ```
      *
      * @see activate
      */
-    protected abstract suspend fun onActivated(): Nothing
+    protected abstract suspend fun onActivated()
 }
