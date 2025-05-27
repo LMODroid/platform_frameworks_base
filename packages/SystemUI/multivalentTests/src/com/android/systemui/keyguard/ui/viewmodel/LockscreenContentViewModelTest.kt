@@ -238,15 +238,15 @@ class LockscreenContentViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         hasNotifications: Boolean = false,
         shadeLayoutWide: Boolean? = null,
     ) {
-        val isShadeLayoutWide by collectLastValue(kosmos.shadeRepository.isShadeLayoutWide)
-        val collectedClockSize by collectLastValue(kosmos.keyguardClockInteractor.clockSize)
-        val collectedShadeMode by collectLastValue(kosmos.shadeModeInteractor.shadeMode)
+        val isShadeLayoutWide by collectLastValue(shadeRepository.isShadeLayoutWide)
+        val collectedClockSize by collectLastValue(keyguardClockInteractor.clockSize)
+        val collectedShadeMode by collectLastValue(shadeModeInteractor.shadeMode)
         val areAnyNotificationsPresent by
             collectLastValue(kosmos.activeNotificationsInteractor.areAnyNotificationsPresent)
         when (shadeMode) {
-            ShadeMode.Dual -> kosmos.enableDualShade(wideLayout = shadeLayoutWide)
-            ShadeMode.Single -> kosmos.enableSingleShade()
-            ShadeMode.Split -> kosmos.enableSplitShade()
+            ShadeMode.Dual -> enableDualShade(wideLayout = shadeLayoutWide)
+            ShadeMode.Single -> enableSingleShade()
+            ShadeMode.Split -> enableSplitShade()
         }
         fakeKeyguardClockRepository.setShouldForceSmallClock(clockSize == ClockSize.SMALL)
         fakeKeyguardClockRepository.setClockSize(clockSize)
@@ -273,12 +273,12 @@ class LockscreenContentViewModelTest(flags: FlagsParameterization) : SysuiTestCa
         assertThat(areAnyNotificationsPresent).isEqualTo(hasNotifications)
     }
 
-    private fun prepareConfiguration(): Int {
+    private fun Kosmos.prepareConfiguration(): Int {
         val configuration = context.resources.configuration
         configuration.setLayoutDirection(Locale.US)
-        kosmos.fakeConfigurationRepository.onConfigurationChange(configuration)
+        fakeConfigurationRepository.onConfigurationChange(configuration)
         val maxTranslation = 10
-        kosmos.fakeConfigurationRepository.setDimensionPixelSize(
+        fakeConfigurationRepository.setDimensionPixelSize(
             R.dimen.notification_side_paddings,
             maxTranslation,
         )
