@@ -73,7 +73,7 @@ import kotlinx.coroutines.flow.mapLatest
 class ShadeHeaderViewModel
 @AssistedInject
 constructor(
-    @ShadeDisplayAware context: Context,
+    @ShadeDisplayAware private val context: Context,
     private val activityStarter: ActivityStarter,
     private val sceneInteractor: SceneInteractor,
     private val shadeInteractor: ShadeInteractor,
@@ -207,7 +207,14 @@ constructor(
 
     /** Notifies that the clock was clicked. */
     fun onClockClicked() {
-        clockInteractor.launchClockActivity()
+        if (shadeModeInteractor.isDualShade && isDesktopFeatureSetEnabled()) {
+            toggleNotificationShade(
+                loggingReason = "ShadeHeaderViewModel.onClockChipClicked",
+                launchClockActivityOnCollapse = false,
+            )
+        } else {
+            clockInteractor.launchClockActivity()
+        }
     }
 
     /** Notifies that the notification icons container was clicked. */
@@ -215,14 +222,29 @@ constructor(
         if (!shadeModeInteractor.isDualShade) {
             return
         }
-        val loggingReason = "ShadeHeaderViewModel.onNotificationIconChipClicked"
+        toggleNotificationShade(
+            loggingReason = "ShadeHeaderViewModel.onNotificationIconChipClicked",
+            launchClockActivityOnCollapse = !isDesktopFeatureSetEnabled(),
+        )
+    }
+
+    private fun isDesktopFeatureSetEnabled(): Boolean {
+        return context.resources.getBoolean(R.bool.config_enableDesktopFeatureSet)
+    }
+
+    private fun toggleNotificationShade(
+        loggingReason: String,
+        launchClockActivityOnCollapse: Boolean,
+    ) {
         val currentOverlays = sceneInteractor.currentOverlays.value
         if (Overlays.NotificationsShade in currentOverlays) {
             shadeInteractor.collapseNotificationsShade(
                 loggingReason = loggingReason,
                 transitionKey = SlightlyFasterShadeCollapse,
             )
-            onClockClicked()
+            if (launchClockActivityOnCollapse) {
+                clockInteractor.launchClockActivity()
+            }
         } else {
             shadeInteractor.expandNotificationsShade(loggingReason)
         }

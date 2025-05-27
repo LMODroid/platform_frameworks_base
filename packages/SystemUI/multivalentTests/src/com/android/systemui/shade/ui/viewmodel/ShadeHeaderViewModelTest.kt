@@ -23,6 +23,7 @@ import com.android.systemui.plugins.activityStarter
 import com.android.systemui.privacy.PrivacyApplication
 import com.android.systemui.privacy.PrivacyItem
 import com.android.systemui.privacy.PrivacyType
+import com.android.systemui.res.R
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
@@ -77,9 +78,11 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun onClockClicked_launchesClock() =
+    fun onClockClicked_enableDesktopFeatureSetFalse_launchesClock() =
         testScope.runTest {
+            overrideResource(R.bool.config_enableDesktopFeatureSet, false)
             val activityStarter = kosmos.activityStarter
+
             underTest.onClockClicked()
 
             verify(activityStarter)
@@ -87,6 +90,65 @@ class ShadeHeaderViewModelTest : SysuiTestCase() {
                     argThat(IntentMatcherAction(AlarmClock.ACTION_SHOW_ALARMS)),
                     anyInt(),
                 )
+        }
+
+    @Test
+    fun onClockClicked_enableDesktopFeatureSetTrueAndSingleShade_launchesClock() =
+        testScope.runTest {
+            overrideResource(R.bool.config_enableDesktopFeatureSet, true)
+            val activityStarter = kosmos.activityStarter
+
+            underTest.onClockClicked()
+
+            verify(activityStarter)
+                .postStartActivityDismissingKeyguard(
+                    argThat(IntentMatcherAction(AlarmClock.ACTION_SHOW_ALARMS)),
+                    anyInt(),
+                )
+        }
+
+    @Test
+    fun onClockClicked_enableDesktopFeatureSetTrueAndDualShade_openNotifShade() =
+        testScope.runTest {
+            overrideResource(R.bool.config_enableDesktopFeatureSet, true)
+            setupDualShadeState(scene = Scenes.Gone)
+            val currentScene by collectLastValue(sceneInteractor.currentScene)
+            val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
+
+            underTest.onClockClicked()
+
+            assertThat(currentScene).isEqualTo(Scenes.Gone)
+            assertThat(currentOverlays).contains(Overlays.NotificationsShade)
+            assertThat(currentOverlays).doesNotContain(Overlays.QuickSettingsShade)
+        }
+
+    @Test
+    fun onClockClicked_enableDesktopFeatureSetTrueOnNotifShade_closesShade() =
+        testScope.runTest {
+            overrideResource(R.bool.config_enableDesktopFeatureSet, true)
+            setupDualShadeState(scene = Scenes.Gone, overlay = Overlays.NotificationsShade)
+            val currentScene by collectLastValue(sceneInteractor.currentScene)
+            val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
+
+            underTest.onClockClicked()
+
+            assertThat(currentScene).isEqualTo(Scenes.Gone)
+            assertThat(currentOverlays).isEmpty()
+        }
+
+    @Test
+    fun onClockClicked_enableDesktopFeatureSetTrueOnQSShade_openNotifShade() =
+        testScope.runTest {
+            overrideResource(R.bool.config_enableDesktopFeatureSet, true)
+            setupDualShadeState(scene = Scenes.Gone, overlay = Overlays.QuickSettingsShade)
+            val currentScene by collectLastValue(sceneInteractor.currentScene)
+            val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
+
+            underTest.onClockClicked()
+
+            assertThat(currentScene).isEqualTo(Scenes.Gone)
+            assertThat(currentOverlays).contains(Overlays.NotificationsShade)
+            assertThat(currentOverlays).doesNotContain(Overlays.QuickSettingsShade)
         }
 
     @Test
