@@ -108,4 +108,25 @@ abstract class HydratedActivatable(
     /** @see [Hydrator.hydratedStateOf] */
     protected fun <T> Flow<T>.hydratedStateOf(traceName: String, initialValue: T): State<T> =
         hydrator.hydratedStateOf(traceName, initialValue, this)
+
+    /**
+     * Returns a [Hydrator.StateDelegateProvider] which will automatically set the [traceName]. Use
+     * with the `by` keyword.
+     *
+     * Usage: `val myState by hydratedStateOf()`
+     *
+     * @see [Hydrator.hydratedStateOf]
+     */
+    protected fun <T> StateFlow<T>.hydratedStateOf() = hydrator.hydratedStateOf(this)
+
+    /**
+     * Returns a [Hydrator.StateDelegateProvider] which will automatically set the [traceName]. Use
+     * with the `by` keyword.
+     *
+     * Usage: `val myState by hydratedStateOf(initialValue)`
+     *
+     * @see [Hydrator.hydratedStateOf]
+     */
+    protected fun <T> Flow<T>.hydratedStateOf(initialValue: T) =
+        hydrator.hydratedStateOf(initialValue, this)
 }
