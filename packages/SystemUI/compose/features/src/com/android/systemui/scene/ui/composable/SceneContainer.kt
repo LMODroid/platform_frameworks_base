@@ -144,6 +144,8 @@ fun SceneContainer(
             deferTransitionProgress = true,
         )
 
+    LaunchedEffect(Unit) { viewModel.onInitialComposition() }
+
     DisposableEffect(state) {
         val dataSource = SceneTransitionLayoutDataSource(state, coroutineScope)
         dataSourceDelegator.setDelegate(dataSource)

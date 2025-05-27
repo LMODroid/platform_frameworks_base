@@ -11,6 +11,7 @@ import com.android.systemui.keyguard.ui.viewmodel.lightRevealScrimViewModel
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.power.domain.interactor.powerInteractor
+import com.android.systemui.scene.domain.interactor.onBootTransitionInteractor
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.shared.logger.sceneLogger
 import com.android.systemui.scene.shared.model.Overlays
@@ -106,6 +107,7 @@ val Kosmos.sceneContainerViewModelFactory by Fixture {
                 keyguardInteractor = keyguardInteractor,
                 burnIn = aodBurnInViewModel,
                 clock = keyguardClockViewModel,
+                onBootTransitionInteractor = onBootTransitionInteractor,
                 dualShadeEducationalTooltipsViewModelFactory =
                     dualShadeEducationalTooltipsViewModelFactory,
             )

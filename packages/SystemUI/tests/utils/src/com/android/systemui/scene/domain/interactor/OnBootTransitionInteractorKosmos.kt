@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,17 @@
  * limitations under the License.
  */
 
-package com.android.systemui.keyguard.domain.interactor
+package com.android.systemui.scene.domain.interactor
 
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
-import com.android.systemui.keyguard.data.repository.keyguardTransitionRepository
 import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.kosmos.applicationCoroutineScope
-import com.android.systemui.scene.domain.interactor.onBootTransitionInteractor
 import com.android.systemui.statusbar.policy.domain.interactor.deviceProvisioningInteractor
 
-val Kosmos.keyguardTransitionBootInteractor: KeyguardTransitionBootInteractor by
+val Kosmos.onBootTransitionInteractor: OnBootTransitionInteractor by
     Kosmos.Fixture {
-        KeyguardTransitionBootInteractor(
-            scope = applicationCoroutineScope,
+        OnBootTransitionInteractor(
             deviceEntryInteractor = deviceEntryInteractor,
             deviceProvisioningInteractor = deviceProvisioningInteractor,
-            keyguardTransitionInteractor = keyguardTransitionInteractor,
-            repository = keyguardTransitionRepository,
-            internalTransitionInteractor = internalKeyguardTransitionInteractor,
-            onBootTransitionInteractor = onBootTransitionInteractor,
+            sceneInteractor = sceneInteractor,
         )
     }

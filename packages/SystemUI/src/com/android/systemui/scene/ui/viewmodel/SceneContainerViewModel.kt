@@ -38,6 +38,7 @@ import com.android.systemui.keyguard.ui.viewmodel.LightRevealScrimViewModel
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.power.domain.interactor.PowerInteractor
+import com.android.systemui.scene.domain.interactor.OnBootTransitionInteractor
 import com.android.systemui.scene.domain.interactor.SceneInteractor
 import com.android.systemui.scene.shared.logger.SceneLogger
 import com.android.systemui.scene.shared.model.Overlays
@@ -64,6 +65,7 @@ constructor(
     private val sceneInteractor: SceneInteractor,
     private val falsingInteractor: FalsingInteractor,
     private val powerInteractor: PowerInteractor,
+    private val onBootTransitionInteractor: OnBootTransitionInteractor,
     shadeModeInteractor: ShadeModeInteractor,
     private val remoteInputInteractor: RemoteInputInteractor,
     private val logger: SceneLogger,
@@ -319,6 +321,11 @@ constructor(
         unfiltered: Flow<Map<UserAction, UserActionResult>>
     ): Flow<Map<UserAction, UserActionResult>> {
         return sceneInteractor.filteredUserActions(unfiltered)
+    }
+
+    /** Immediately changes the initial scene if necessary. */
+    suspend fun onInitialComposition() {
+        onBootTransitionInteractor.maybeChangeInitialScene()
     }
 
     /**
