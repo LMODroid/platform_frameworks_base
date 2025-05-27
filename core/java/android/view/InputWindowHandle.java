@@ -69,6 +69,7 @@ public final class InputWindowHandle {
             InputConfig.CLONE,
             InputConfig.SENSITIVE_FOR_PRIVACY,
             InputConfig.DISPLAY_TOPOLOGY_AWARE,
+            InputConfig.DO_NOT_PILFER,
     })
     public @interface InputConfigFlags {}
 

@@ -34,6 +34,7 @@ import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static android.content.res.Configuration.ORIENTATION_UNDEFINED;
 import static android.os.Build.VERSION_CODES.N;
+import static android.os.InputConstants.DEFAULT_DISPATCHING_TIMEOUT_MILLIS;
 import static android.os.Trace.TRACE_TAG_WINDOW_MANAGER;
 import static android.util.DisplayMetrics.DENSITY_DEFAULT;
 import static android.util.RotationUtils.deltaRotation;
@@ -186,6 +187,7 @@ import android.os.Debug;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.IBinder;
+import android.os.InputConfig;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.RemoteCallbackList;
@@ -218,8 +220,10 @@ import android.view.IDecorViewGestureListener;
 import android.view.IDisplayWindowInsetsController;
 import android.view.ISystemGestureExclusionListener;
 import android.view.IWindow;
+import android.view.InputApplicationHandle;
 import android.view.InputChannel;
 import android.view.InputDevice;
+import android.view.InputWindowHandle;
 import android.view.InsetsSource;
 import android.view.InsetsState;
 import android.view.MagnificationSpec;
@@ -252,6 +256,7 @@ import com.android.internal.protolog.ProtoLog;
 import com.android.internal.util.ToBooleanFunction;
 import com.android.internal.util.function.pooled.PooledLambda;
 import com.android.internal.util.function.pooled.PooledPredicate;
+import com.android.server.input.InputManagerService;
 import com.android.server.inputmethod.InputMethodManagerInternal;
 import com.android.server.policy.WindowManagerPolicy;
 import com.android.server.wm.utils.RegionUtils;
@@ -334,6 +339,12 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
      * over the entire display.
      */
     private SurfaceControl mInputOverlayLayer;
+
+    /**
+     * A special input overlay layer that is always created for each display that receives all
+     * pointer input on the display.
+     */
+    private SurfaceControl mPointerEventDispatcherOverlayLayer;
 
     /** A surfaceControl specifically for accessibility overlays. */
     private SurfaceControl mA11yOverlayLayer;
@@ -1342,6 +1353,13 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             transaction.reparent(mInputOverlayLayer, mSurfaceControl);
         }
 
+        if (mPointerEventDispatcherOverlayLayer == null) {
+            final var name = "PointerEventDispatcherOverlay" + mDisplayId;
+            mPointerEventDispatcherOverlayLayer =
+                    b.setName(name).setParent(mInputOverlayLayer).build();
+            configurePointerEventDispatcherOverlayLayer(transaction, name);
+        }
+
         if (mA11yOverlayLayer == null) {
             mA11yOverlayLayer =
                     b.setName("Accessibility Overlays").setParent(mSurfaceControl).build();
@@ -1356,8 +1374,32 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
                 .show(mOverlayLayer)
                 .setLayer(mInputOverlayLayer, Integer.MAX_VALUE - 1)
                 .show(mInputOverlayLayer)
+                .show(mPointerEventDispatcherOverlayLayer)
                 .setLayer(mA11yOverlayLayer, Integer.MAX_VALUE - 2)
                 .show(mA11yOverlayLayer);
+    }
+
+    private void configurePointerEventDispatcherOverlayLayer(SurfaceControl.Transaction transaction,
+            String name) {
+        final var handle = new InputWindowHandle(
+                new InputApplicationHandle(null, name, DEFAULT_DISPATCHING_TIMEOUT_MILLIS),
+                mDisplayId);
+        handle.name = name;
+        handle.token = mPointerEventDispatcher.getToken();
+        handle.layoutParamsType = WindowManager.LayoutParams.TYPE_SECURE_SYSTEM_OVERLAY;
+        handle.dispatchingTimeoutMillis = DEFAULT_DISPATCHING_TIMEOUT_MILLIS;
+        handle.ownerPid = WindowManagerService.MY_PID;
+        handle.ownerUid = WindowManagerService.MY_UID;
+        handle.scaleFactor = 1.0f;
+        handle.replaceTouchableRegionWithCrop(null /* use this surface's bounds */);
+        handle.inputConfig =
+                InputConfig.NOT_FOCUSABLE | InputConfig.SPY | InputConfig.DO_NOT_PILFER;
+        handle.setTrustedOverlay(transaction, mPointerEventDispatcherOverlayLayer, true);
+        transaction
+                .setInputWindowInfo(mPointerEventDispatcherOverlayLayer, handle)
+                .setLayer(mPointerEventDispatcherOverlayLayer,
+                        InputManagerService.INPUT_OVERLAY_POINTER_EVENT_DISPATCHER)
+                .setCrop(mPointerEventDispatcherOverlayLayer, null /* crop to parent surface */);
     }
 
     DisplayRotationReversionController getRotationReversionController() {

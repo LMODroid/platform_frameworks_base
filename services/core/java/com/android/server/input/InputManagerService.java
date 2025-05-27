@@ -455,6 +455,9 @@ public class InputManagerService extends IInputManager.Stub
     // system gestures (e.g. navigation bar, edge-back, etc) while there is an active
     // handwriting session.
     public static final int INPUT_OVERLAY_LAYER_HANDWRITING_SURFACE = 2;
+    // The layer where the pointer event dispatcher is added by WindowManager to get an
+    // uninterrupted stream of all pointer events on each display.
+    public static final int INPUT_OVERLAY_POINTER_EVENT_DISPATCHER = Integer.MAX_VALUE;
 
 
     private final String mVelocityTrackerStrategy;
