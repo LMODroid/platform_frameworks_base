@@ -28,7 +28,7 @@ abstract class ExclusiveActivatable : Activatable {
 
     private val _isActive = AtomicBoolean(false)
 
-    protected var isActive: Boolean
+    var isActive: Boolean
         get() = _isActive.get()
         private set(value) {
             _isActive.set(value)
@@ -40,9 +40,9 @@ abstract class ExclusiveActivatable : Activatable {
 
         try {
             onActivated()
+            awaitCancellation()
         } finally {
             isActive = false
-            awaitCancellation()
         }
     }
 

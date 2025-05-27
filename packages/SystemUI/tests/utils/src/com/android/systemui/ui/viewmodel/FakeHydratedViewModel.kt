@@ -30,7 +30,7 @@ class FakeHydratedViewModel(
     private val onDeactivation: () -> Unit = {},
     upstreamFlow: Flow<Boolean> = flowOf(true),
     upstreamStateFlow: StateFlow<Boolean> = MutableStateFlow(true).asStateFlow(),
-) : HydratedActivatable() {
+) : HydratedActivatable(enableEnqueuedActivations = true) {
     var activationCount = 0
     var cancellationCount = 0
 
@@ -38,6 +38,9 @@ class FakeHydratedViewModel(
         upstreamFlow.hydratedStateOf(traceName = "test", initialValue = true)
 
     val stateBackedByStateFlow: Boolean by upstreamStateFlow.hydratedStateOf(traceName = "test")
+
+    fun publicEnqueueOnActivatedScope(runnable: suspend () -> Unit) =
+        enqueueOnActivatedScope(runnable)
 
     override suspend fun onActivated(): Nothing {
         activationCount++

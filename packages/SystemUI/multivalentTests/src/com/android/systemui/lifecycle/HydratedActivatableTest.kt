@@ -32,15 +32,19 @@ import com.android.systemui.kosmos.testScope
 import com.android.systemui.testKosmos
 import com.android.systemui.ui.viewmodel.FakeHydratedViewModel
 import com.google.common.truth.Truth.assertThat
+import kotlin.coroutines.EmptyCoroutineContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class HydratedActivatableTest : SysuiTestCase() {
@@ -162,4 +166,48 @@ class HydratedActivatableTest : SysuiTestCase() {
             .assertTextEquals("upstreamStateFlow=false")
         composeRule.onNode(hasTestTag("upstreamFlow")).assertTextEquals("upstreamFlow=true")
     }
+
+    @Test
+    fun enqueueBeforeActivation_reactivated() =
+        testScope.runTest {
+            var runCount = 0
+
+            // Not executed because Activatable is not active
+            assertThat(underTest.publicEnqueueOnActivatedScope { runCount++ }).isNull()
+            runCurrent()
+
+            val job =
+                testScope.backgroundScope.launch(EmptyCoroutineContext) { underTest.activate() }
+            runCurrent()
+
+            // This counts
+            underTest.publicEnqueueOnActivatedScope { runCount++ }
+            runCurrent()
+
+            assertThat(runCount).isEqualTo(1)
+
+            // These are put into the channel but they are never executed as the job is canceled
+            // before execution happened. When we reactivate the Activatable a new Channel is
+            // setup so these are not getting replayed.
+            underTest.publicEnqueueOnActivatedScope { runCount++ }
+            underTest.publicEnqueueOnActivatedScope { runCount++ }
+            job.cancel()
+            runCurrent()
+
+            assertThat(runCount).isEqualTo(1)
+
+            // Not executed because Activatable is not active
+            assertThat(underTest.publicEnqueueOnActivatedScope { runCount++ }).isNull()
+            underTest.activateIn(testScope)
+            runCurrent()
+
+            // This counts, all invocations are buffered and executed
+            underTest.publicEnqueueOnActivatedScope { runCount++ }
+            underTest.publicEnqueueOnActivatedScope { runCount++ }
+            underTest.publicEnqueueOnActivatedScope { runCount++ }
+            underTest.publicEnqueueOnActivatedScope { runCount++ }
+            runCurrent()
+
+            assertThat(runCount).isEqualTo(5)
+        }
 }

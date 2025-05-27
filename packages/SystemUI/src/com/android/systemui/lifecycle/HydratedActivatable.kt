@@ -18,30 +18,48 @@ package com.android.systemui.lifecycle
 
 import androidx.compose.runtime.State
 import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
+import kotlinx.coroutines.channels.ChannelResult
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
- * An [Activatable] which manages an internal [Hydrator] which is activated accordingly. Adds
- * convenience methods to easily transform upstream [Flow]s into downstream snapshot-backed [State]s
- * based on the [Hydrator].
- *
- * The activation of this is also guaranteed to be exclusive since the [Hydrator] is an
- * [ExclusiveActivatable] itself.
+ * An [Activatable] with convenience methods to easily transform upstream [Flow]s into downstream
+ * snapshot-backed [State]s. Also allows non-suspend code to run suspend code.
  *
  * @see [ExclusiveActivatable]
  */
-abstract class HydratedActivatable : Activatable {
+abstract class HydratedActivatable(
+    /** Enable this to use [enqueueOnActivatedScope] */
+    val enableEnqueuedActivations: Boolean = false
+) : Activatable {
 
     private val hydrator = Hydrator("${this::class.simpleName}.hydrator")
+
+    private var requestChannel: Channel<suspend () -> Unit>? = null
 
     final override suspend fun activate(): Nothing {
         coroutineScope {
             launch { hydrator.activate() }
-            onActivated()
-            awaitCancellation()
+
+            if (enableEnqueuedActivations) {
+                launch {
+                    requestChannel = Channel<suspend () -> Unit>(BUFFERED)
+                    requestChannel!!.receiveAsFlow().collect { it.invoke() }
+                }
+            }
+
+            try {
+                onActivated()
+                awaitCancellation()
+            } finally {
+                requestChannel?.cancel()
+                requestChannel = null
+            }
         }
     }
 
@@ -69,6 +87,19 @@ abstract class HydratedActivatable : Activatable {
      * @see activate
      */
     protected open suspend fun onActivated() {}
+
+    /**
+     * Queues [block] for execution on the activated scope. Requests are executed sequentially.
+     *
+     * @return [null] when the [Activatable] is not active. Otherwise, returns the [ChannelResult].
+     *   A success Channel result means the request is queued but it does not guarantee that [block]
+     *   will be executed as the Activatable can still be deactivated before [block] had a chance to
+     *   be processed.
+     */
+    protected fun enqueueOnActivatedScope(block: suspend () -> Unit): ChannelResult<Unit>? {
+        if (!enableEnqueuedActivations) error("enableEnqueuedActivations needs to be enabled.")
+        return requestChannel?.trySend(block)
+    }
 
     /** @see [Hydrator.hydratedStateOf] */
     protected fun <T> StateFlow<T>.hydratedStateOf(traceName: String): State<T> =
