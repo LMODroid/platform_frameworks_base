@@ -42,8 +42,8 @@ import java.util.concurrent.atomic.AtomicReference
 import kotlin.reflect.KProperty
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * A series of values of type [A] available at discrete points in time.
@@ -352,12 +352,14 @@ internal constructor(
         coroutineScope {
             var jobOrNull: Job? = null
             val newEmit =
-                async(start = CoroutineStart.LAZY) {
+                launch(start = CoroutineStart.LAZY) {
                     jobOrNull?.join()
+                    jobOrNull = null
                     network.transaction("MutableEvents.emit") { impl.visit(this, value) }.await()
                 }
             jobOrNull = storage.getAndSet(newEmit)
-            newEmit.await()
+            newEmit.join()
+            storage.compareAndExchange(newEmit, null)
         }
     }
 }
