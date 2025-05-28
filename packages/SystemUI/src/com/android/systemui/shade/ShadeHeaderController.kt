@@ -52,6 +52,7 @@ import com.android.compose.theme.PlatformTheme
 import com.android.keyguard.AlphaOptimizedLinearLayout
 import com.android.settingslib.Utils
 import com.android.systemui.Dumpable
+import com.android.systemui.Flags.notificationShadeBlur
 import com.android.systemui.animation.ShadeInterpolation
 import com.android.systemui.battery.BatteryMeterView
 import com.android.systemui.battery.BatteryMeterView.MODE_ESTIMATE
@@ -340,7 +341,11 @@ constructor(
             override fun onDensityOrFontScaleChanged() {
                 clock.setTextAppearance(R.style.TextAppearance_QS_Status)
                 date.setTextAppearance(R.style.TextAppearance_QS_Status)
-                mShadeCarrierGroup.updateTextAppearance(R.style.TextAppearance_QS_Status)
+                mShadeCarrierGroup.updateTextAppearanceAndTint(
+                    R.style.TextAppearance_QS_Status,
+                    getFgColor(),
+                    getBgColor(),
+                )
                 loadConstraints()
                 header.minHeight =
                     resources.getDimensionPixelSize(R.dimen.large_screen_shade_header_min_height)
@@ -353,7 +358,11 @@ constructor(
             override fun onThemeChanged() {
                 clock.setTextAppearance(R.style.TextAppearance_QS_Status)
                 date.setTextAppearance(R.style.TextAppearance_QS_Status)
-                mShadeCarrierGroup.updateTextAppearance(R.style.TextAppearance_QS_Status)
+                mShadeCarrierGroup.updateTextAppearanceAndTint(
+                    R.style.TextAppearance_QS_Status,
+                    getFgColor(),
+                    getBgColor(),
+                )
                 updateResources()
                 updateColors()
             }
@@ -414,6 +423,20 @@ constructor(
 
         privacyIconsController.onParentVisible()
     }
+
+    private fun getBgColor() =
+        if (notificationShadeBlur()) {
+            header.context.getColor(com.android.internal.R.color.materialColorSurfaceDim)
+        } else {
+            android.graphics.Color.BLACK
+        }
+
+    private fun getFgColor() =
+        if (notificationShadeBlur()) {
+            header.context.getColor(com.android.internal.R.color.materialColorOnSurface)
+        } else {
+            android.graphics.Color.WHITE
+        }
 
     private fun createBatteryComposeView(): ComposeView {
         return if (RudimentaryBattery.isEnabled) {
@@ -538,7 +561,11 @@ constructor(
     private fun updateColors() {
         clock.setTextAppearance(R.style.TextAppearance_QS_Status)
         date.setTextAppearance(R.style.TextAppearance_QS_Status)
-        mShadeCarrierGroup.updateTextAppearance(R.style.TextAppearance_QS_Status)
+        mShadeCarrierGroup.updateTextAppearanceAndTint(
+            R.style.TextAppearance_QS_Status,
+            getFgColor(),
+            getBgColor(),
+        )
     }
 
     private fun updateCarrierGroupPadding() {
@@ -766,8 +793,8 @@ constructor(
     @VisibleForTesting internal fun simulateViewDetached() = this.onViewDetached()
 
     private data class Colors(
-        @ColorInt val fgColor: Int = Color.TRANSPARENT,
-        @ColorInt val bgColor: Int = Color.TRANSPARENT
+        @ColorInt val fgColor: Int = android.graphics.Color.TRANSPARENT,
+        @ColorInt val bgColor: Int = android.graphics.Color.TRANSPARENT
     )
 
     inner class CustomizerAnimationListener(private val enteringCustomizing: Boolean) :

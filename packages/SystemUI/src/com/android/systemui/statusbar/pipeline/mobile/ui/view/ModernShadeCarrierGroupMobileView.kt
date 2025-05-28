@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.pipeline.mobile.ui.view
 
+import android.annotation.StyleRes
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -39,6 +40,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+interface ModernShadeCarrierGroupMobileViewBinding {
+    fun setStyleAndTint(@StyleRes style: Int, fgColor: Int, bgColor: Int)
+}
+
 /**
  * ViewGroup containing a mobile carrier name and icon in the Shade Header. Can be multiple
  * instances as children under [ShadeCarrierGroup]
@@ -47,6 +52,16 @@ class ModernShadeCarrierGroupMobileView(context: Context, attrs: AttributeSet?) 
     LinearLayout(context, attrs) {
 
     var subId: Int = -1
+
+    private lateinit var binding: ModernShadeCarrierGroupMobileViewBinding
+
+    /**
+     * Update the appearance of the mobile carrier group. The text itself can use the text
+     * appearance resId, but the mobile icon needs to know specifically about fg/bg colors.
+     */
+    fun setStyleAndTint(@StyleRes styleResId: Int, fgColor: Int, bgColor: Int) {
+        binding.setStyleAndTint(style = styleResId, fgColor = fgColor, bgColor = bgColor)
+    }
 
     override fun toString(): String {
         return "ModernShadeCarrierGroupMobileView(" +
@@ -92,7 +107,19 @@ class ModernShadeCarrierGroupMobileView(context: Context, attrs: AttributeSet?) 
                     logger.logNewViewBinding(this, viewModel)
 
                     val textView = requireViewById<AutoMarqueeTextView>(R.id.mobile_carrier_text)
-                    ShadeCarrierBinder.bind(textView, viewModel)
+                    val shadeCarrierBinding = ShadeCarrierBinder.bind(textView, viewModel)
+
+                    binding =
+                        object : ModernShadeCarrierGroupMobileViewBinding {
+                            override fun setStyleAndTint(
+                                @StyleRes style: Int,
+                                fgColor: Int,
+                                bgColor: Int,
+                            ) {
+                                iconView.setStaticDrawableColor(fgColor, bgColor)
+                                shadeCarrierBinding.setTextAppearance(style)
+                            }
+                        }
                 }
         }
 

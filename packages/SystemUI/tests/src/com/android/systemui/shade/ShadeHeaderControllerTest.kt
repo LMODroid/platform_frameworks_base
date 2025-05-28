@@ -70,7 +70,6 @@ import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.any
 import com.android.systemui.util.mockito.argumentCaptor
 import com.android.systemui.util.mockito.capture
-import com.android.systemui.util.mockito.eq
 import com.android.systemui.util.mockito.mock
 import com.google.common.truth.Truth.assertThat
 import dagger.Lazy
@@ -91,6 +90,7 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when` as whenever
 import org.mockito.junit.MockitoJUnit
+import org.mockito.kotlin.eq
 
 private val EMPTY_CHANGES = ConstraintsChanges()
 
@@ -305,7 +305,10 @@ class ShadeHeaderControllerTest : SysuiTestCase() {
 
         verify(clock).setTextAppearance(R.style.TextAppearance_QS_Status)
         verify(date).setTextAppearance(R.style.TextAppearance_QS_Status)
-        verify(carrierGroup).updateTextAppearance(R.style.TextAppearance_QS_Status)
+        val fgColor = context.getColor(com.android.internal.R.color.materialColorOnSurface)
+        val bgColor = context.getColor(com.android.internal.R.color.materialColorSurfaceDim)
+        verify(carrierGroup)
+            .updateTextAppearanceAndTint(R.style.TextAppearance_QS_Status, fgColor, bgColor)
     }
 
     @Test
