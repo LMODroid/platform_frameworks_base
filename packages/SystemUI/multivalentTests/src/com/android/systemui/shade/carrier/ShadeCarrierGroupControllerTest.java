@@ -59,6 +59,7 @@ import com.android.systemui.statusbar.pipeline.mobile.ui.MobileUiAdapter;
 import com.android.systemui.statusbar.pipeline.mobile.ui.MobileUiAdapterKairos;
 import com.android.systemui.statusbar.pipeline.mobile.ui.MobileViewLogger;
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsViewModel;
+import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsViewModelKairos;
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.ShadeCarrierGroupMobileIconViewModel;
 import com.android.systemui.util.CarrierConfigTracker;
 import com.android.systemui.util.kotlin.FlowProviderKt;
@@ -184,7 +185,13 @@ public class ShadeCarrierGroupControllerTest extends LeakCheckedTest {
                 mStatusBarPipelineFlags,
                 mock(CoroutineScope.class),
                 mock(KairosNetwork.class),
-                () -> mock(MobileUiAdapterKairos.class))
+                () -> {
+                    MobileUiAdapterKairos uiAdapter = mock(MobileUiAdapterKairos.class);
+                    MobileIconsViewModelKairos viewModel = mock(MobileIconsViewModelKairos.class);
+                    when(uiAdapter.getMobileIconsViewModel()).thenReturn(viewModel);
+                    when(viewModel.getLogger()).thenReturn(mMobileViewLogger);
+                    return uiAdapter;
+                })
                 .setShadeCarrierGroup(mShadeCarrierGroup)
                 .build();
 
