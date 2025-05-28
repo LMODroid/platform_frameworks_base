@@ -68,7 +68,7 @@ constructor(
                 is TextFeedbackModel.NoFeedback -> TextFeedbackViewModel.NoFeedback
                 is TextFeedbackModel.TextFeedback ->
                     TextFeedbackViewModel.LoadedTextFeedback(
-                        label = context.getString(nameResId),
+                        text = context.getString(nameResId),
                         icon =
                             Icon.Loaded(
                                 context.getDrawable(iconResId)!!.also {
@@ -82,7 +82,7 @@ constructor(
                             ),
                     )
                 is TextFeedbackModel.LoadedTextFeedback ->
-                    TextFeedbackViewModel.LoadedTextFeedback(label = label, icon = icon)
+                    TextFeedbackViewModel.LoadedTextFeedback(text = label, icon = icon)
             }
         }
     }

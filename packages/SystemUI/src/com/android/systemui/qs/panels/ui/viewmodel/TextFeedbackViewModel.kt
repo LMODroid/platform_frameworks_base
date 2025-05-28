@@ -16,13 +16,21 @@
 
 package com.android.systemui.qs.panels.ui.viewmodel
 
+import android.content.Context
 import androidx.compose.runtime.Stable
+import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.Icon
+import com.android.systemui.qs.footer.ui.viewmodel.FooterTextButtonViewModel
 
 @Stable
 sealed interface TextFeedbackViewModel {
 
     data object NoFeedback : TextFeedbackViewModel
 
-    data class LoadedTextFeedback(val label: String, val icon: Icon.Loaded) : TextFeedbackViewModel
+    data class LoadedTextFeedback(
+        override val text: String,
+        override val icon: Icon.Loaded,
+        override val onClick: ((Context, Expandable) -> Unit)? = null,
+        override val hasNewChanges: Boolean = false,
+    ) : TextFeedbackViewModel, FooterTextButtonViewModel
 }

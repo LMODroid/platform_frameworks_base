@@ -370,7 +370,7 @@ fun foregroundServicesButtonViewModel(
         text = text,
         displayText = securityModel == null && textFeedbackModel == TextFeedbackModel.NoFeedback,
         hasNewChanges = hasNewChanges,
-        onForegroundServiceButtonClicked,
+        onClick = { _, expandable -> onForegroundServiceButtonClicked(expandable) },
     )
 }
 

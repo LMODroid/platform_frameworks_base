@@ -58,7 +58,7 @@ fun TextFeedback(model: TextFeedbackViewModel, modifier: Modifier = Modifier) {
                 tint = MaterialTheme.colorScheme.onSurface,
             )
             Text(
-                text = model.label,
+                text = model.text,
                 color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.labelMedium,
                 overflow = TextOverflow.Ellipsis,

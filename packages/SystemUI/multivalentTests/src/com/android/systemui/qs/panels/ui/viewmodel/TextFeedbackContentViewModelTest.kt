@@ -61,7 +61,7 @@ class TextFeedbackContentViewModelTest : SysuiTestCase() {
                 assertThat(underTest.textFeedback)
                     .isEqualTo(
                         TextFeedbackViewModel.LoadedTextFeedback(
-                            label = context.getString(qsAirplaneModeTileConfig.uiConfig.labelRes),
+                            text = context.getString(qsAirplaneModeTileConfig.uiConfig.labelRes),
                             icon =
                                 Icon.Loaded(
                                     context.getDrawable(

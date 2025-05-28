@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,14 @@
 package com.android.systemui.qs.footer.ui.viewmodel
 
 import android.content.Context
+import androidx.compose.runtime.Stable
 import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.Icon
-import com.android.systemui.res.R
 
-/** A ViewModel for the foreground services button. */
-data class FooterActionsForegroundServicesButtonViewModel(
-    val foregroundServicesCount: Int,
-    override val text: String,
-    val displayText: Boolean,
-    override val hasNewChanges: Boolean,
-    override val onClick: (Context, Expandable) -> Unit,
-    override val icon: Icon = Icon.Resource(R.drawable.ic_qs_footer_info, contentDescription = null),
-) : FooterTextButtonViewModel
+@Stable
+interface FooterTextButtonViewModel {
+    val icon: Icon
+    val text: String
+    val onClick: ((Context, Expandable) -> Unit)?
+    val hasNewChanges: Boolean
+}
