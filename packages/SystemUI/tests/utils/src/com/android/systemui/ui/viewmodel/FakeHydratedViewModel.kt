@@ -17,7 +17,6 @@
 package com.android.systemui.ui.viewmodel
 
 import com.android.systemui.lifecycle.HydratedActivatable
-import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,14 +39,13 @@ class FakeHydratedViewModel(
     fun publicEnqueueOnActivatedScope(runnable: suspend () -> Unit) =
         enqueueOnActivatedScope(runnable)
 
-    override suspend fun onActivated(): Nothing {
+    override suspend fun onActivated() {
         activationCount++
         onActivation()
-        try {
-            awaitCancellation()
-        } finally {
-            cancellationCount++
-            onDeactivation()
-        }
+    }
+
+    override suspend fun onDeactivated() {
+        cancellationCount++
+        onDeactivation()
     }
 }

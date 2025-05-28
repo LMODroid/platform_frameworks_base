@@ -43,6 +43,7 @@ abstract class ExclusiveActivatable : Activatable {
             awaitCancellation()
         } finally {
             isActive = false
+            onDeactivated()
         }
     }
 
@@ -50,13 +51,7 @@ abstract class ExclusiveActivatable : Activatable {
      * Notifies that the [Activatable] has been activated.
      *
      * Serves as an entrypoint to kick off coroutine work that the object requires in order to keep
-     * its state fresh and/or perform side-effects.
-     *
-     * The method suspends and doesn't return until all work required by the object is finished. In
-     * most cases, it's expected for the work to remain ongoing forever so this method will forever
-     * suspend its caller until the coroutine that called it is canceled.
-     *
-     * Implementations could follow this pattern:
+     * its state fresh and/or perform side-effects. Implementations could follow this pattern:
      * ```kotlin
      * override suspend fun onActivated() {
      *     coroutineScope {
@@ -69,5 +64,8 @@ abstract class ExclusiveActivatable : Activatable {
      *
      * @see activate
      */
-    protected abstract suspend fun onActivated()
+    protected open suspend fun onActivated() {}
+
+    /** Notifies that the [Activatable] has been deactivated. */
+    protected open suspend fun onDeactivated() {}
 }
