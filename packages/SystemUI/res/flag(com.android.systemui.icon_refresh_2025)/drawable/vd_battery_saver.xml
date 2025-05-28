@@ -24,9 +24,9 @@
         android:name="root_group"
         android:pivotX="32"
         android:pivotY="32"
-        android:scaleX="0.87"
-        android:scaleY="0.87"
-        android:translateX="-20.2"
+        android:scaleX="0.79"
+        android:scaleY="0.79"
+        android:translateX="-20"
         android:translateY="-20">
         <path
             android:name="icon"
