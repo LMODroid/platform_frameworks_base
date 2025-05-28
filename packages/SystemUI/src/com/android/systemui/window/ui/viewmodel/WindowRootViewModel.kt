@@ -83,10 +83,11 @@ constructor(
                 if (blurSupported) {
                     combine(
                         keyguardInteractor.isKeyguardShowing,
+                        blurInteractor.isTrackingShadeMotion,
                         shadeInteractor.isUserInteracting,
                         shadeInteractor.isAnyExpanded,
-                    ) { keyguardShowing, userDraggingShade, anyExpanded ->
-                        keyguardShowing || userDraggingShade || anyExpanded
+                    ) { keyguardShowing, isTrackingShadeMotion, userDraggingShade, anyExpanded ->
+                        keyguardShowing || isTrackingShadeMotion || userDraggingShade || anyExpanded
                     }
                 } else {
                     flowOf(false)
