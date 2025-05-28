@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.notification.stack.ui.viewbinder
 
 import android.util.Log
+import com.android.app.tracing.coroutines.flow.collectLatestTraced
 import com.android.app.tracing.coroutines.flow.collectTraced
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.Flags
@@ -97,6 +98,14 @@ constructor(
                 launch { viewModel.blurRadius(maxBlurRadius).collect(view::setBlurRadius) }
             }
 
+            launch {
+                viewModel
+                    .getLockscreenDisplayConfig(view::calculateMaxNotifications)
+                    .collectLatestTraced { (isOnLockscreen, maxNotifications) ->
+                        view.setOnLockscreen(isOnLockscreen)
+                        view.setMaxDisplayedNotifications(maxNotifications)
+                    }
+            }
             launch {
                 viewModel.isShowingStackOnLockscreen.collectTraced {
                     view.setShowingStackOnLockscreen(it)

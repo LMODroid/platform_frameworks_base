@@ -38,6 +38,8 @@ import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
 import com.android.systemui.shade.shared.model.ShadeMode
 import com.android.systemui.statusbar.domain.interactor.RemoteInputInteractor
+import com.android.systemui.statusbar.notification.stack.domain.interactor.LockscreenDisplayConfig
+import com.android.systemui.statusbar.notification.stack.domain.interactor.LockscreenNotificationDisplayConfigInteractor
 import com.android.systemui.statusbar.notification.stack.domain.interactor.NotificationStackAppearanceInteractor
 import com.android.systemui.statusbar.notification.stack.shared.model.AccessibilityScrollEvent
 import com.android.systemui.statusbar.notification.stack.shared.model.ShadeScrimClipping
@@ -69,6 +71,7 @@ class NotificationScrollViewModel
 constructor(
     dumpManager: DumpManager,
     private val stackAppearanceInteractor: NotificationStackAppearanceInteractor,
+    private val lockscreenAppearanceInteractor: LockscreenNotificationDisplayConfigInteractor,
     shadeInteractor: ShadeInteractor,
     shadeModeInteractor: ShadeModeInteractor,
     bouncerInteractor: BouncerInteractor,
@@ -236,6 +239,23 @@ constructor(
 
     /** Whether we should close any open notification guts. */
     val shouldCloseGuts: Flow<Boolean> = stackAppearanceInteractor.shouldCloseGuts
+
+    /**
+     * When on keyguard, there is limited space to display notifications so calculate how many could
+     * be shown. Otherwise, there is no limit since the vertical space will be scrollable.
+     *
+     * When expanding or when the user is interacting with the shade, keep the count stable; do not
+     * emit a value.
+     */
+    fun getLockscreenDisplayConfig(
+        calculateMaxNotifications: (Int, Boolean) -> Int
+    ): Flow<LockscreenDisplayConfig> {
+        return lockscreenAppearanceInteractor.getLockscreenDisplayConfig {
+            availableSpace,
+            useExtraShelfSpace ->
+            calculateMaxNotifications(availableSpace, useExtraShelfSpace)
+        }
+    }
 
     /** Whether the Notification Stack is visibly on the lockscreen scene. */
     val isShowingStackOnLockscreen: Flow<Boolean> =

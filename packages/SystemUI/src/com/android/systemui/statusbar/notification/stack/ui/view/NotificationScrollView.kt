@@ -110,6 +110,18 @@ interface NotificationScrollView {
     /** sets the current QS expand fraction */
     fun setQsExpandFraction(expandFraction: Float)
 
+    /**
+     * Returns the number of max Notifications that can be fitted in the given space without
+     * clipping their height.
+     */
+    fun calculateMaxNotifications(space: Int, useExtraShelfSpace: Boolean): Int
+
+    /** Set the max number of notifications that can be displayed. */
+    fun setMaxDisplayedNotifications(maxDisplayedNotifications: Int)
+
+    /** TBD what is the diff here exactly? */
+    fun setOnLockscreen(onLockScreen: Boolean)
+
     /** set whether we are idle on the lockscreen scene */
     fun setShowingStackOnLockscreen(showingStackOnLockscreen: Boolean)
 

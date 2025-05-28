@@ -25,11 +25,13 @@ import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.shade.domain.interactor.shadeInteractor
 import com.android.systemui.shade.domain.interactor.shadeModeInteractor
 import com.android.systemui.statusbar.domain.interactor.remoteInputInteractor
+import com.android.systemui.statusbar.notification.stack.domain.interactor.lockscreenNotificationDisplayConfigInteractor
 import com.android.systemui.statusbar.notification.stack.domain.interactor.notificationStackAppearanceInteractor
 
 val Kosmos.notificationScrollViewModel by Fixture {
     NotificationScrollViewModel(
         dumpManager = dumpManager,
+        lockscreenAppearanceInteractor = lockscreenNotificationDisplayConfigInteractor,
         stackAppearanceInteractor = notificationStackAppearanceInteractor,
         shadeInteractor = shadeInteractor,
         shadeModeInteractor = shadeModeInteractor,
