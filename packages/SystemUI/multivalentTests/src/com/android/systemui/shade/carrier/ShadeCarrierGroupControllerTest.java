@@ -18,6 +18,9 @@ package com.android.systemui.shade.carrier;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static kotlinx.coroutines.test.TestCoroutineDispatchersKt.UnconfinedTestDispatcher;
+import static kotlinx.coroutines.test.TestScopeKt.TestScope;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
@@ -47,6 +50,7 @@ import androidx.test.filters.SmallTest;
 
 import com.android.keyguard.CarrierTextManager;
 import com.android.systemui.kairos.KairosNetwork;
+import com.android.systemui.kairos.StateKt;
 import com.android.systemui.log.core.FakeLogBuffer;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.statusbar.connectivity.IconState;
@@ -61,12 +65,12 @@ import com.android.systemui.statusbar.pipeline.mobile.ui.MobileViewLogger;
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsViewModel;
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsViewModelKairos;
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.ShadeCarrierGroupMobileIconViewModel;
+import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.ShadeCarrierGroupMobileIconViewModelKairos;
 import com.android.systemui.util.CarrierConfigTracker;
 import com.android.systemui.util.kotlin.FlowProviderKt;
 import com.android.systemui.utils.leaks.LeakCheckedTest;
 import com.android.systemui.utils.os.FakeHandler;
 
-import kotlinx.coroutines.CoroutineScope;
 import kotlinx.coroutines.flow.MutableStateFlow;
 
 import org.junit.Before;
@@ -183,13 +187,19 @@ public class ShadeCarrierGroupControllerTest extends LeakCheckedTest {
                 mMobileUiAdapter,
                 mMobileContextProvider,
                 mStatusBarPipelineFlags,
-                mock(CoroutineScope.class),
+                TestScope(UnconfinedTestDispatcher(null, null)),
                 mock(KairosNetwork.class),
                 () -> {
                     MobileUiAdapterKairos uiAdapter = mock(MobileUiAdapterKairos.class);
                     MobileIconsViewModelKairos viewModel = mock(MobileIconsViewModelKairos.class);
+                    ShadeCarrierGroupMobileIconViewModelKairos shadeCarrierGroupIconViewModel =
+                            mock(ShadeCarrierGroupMobileIconViewModelKairos.class);
                     when(uiAdapter.getMobileIconsViewModel()).thenReturn(viewModel);
                     when(viewModel.getLogger()).thenReturn(mMobileViewLogger);
+                    when(viewModel.shadeCarrierGroupIcon(anyInt()))
+                            .thenReturn(shadeCarrierGroupIconViewModel);
+                    when(shadeCarrierGroupIconViewModel.isVisible())
+                            .thenReturn(StateKt.stateOf(true));
                     return uiAdapter;
                 })
                 .setShadeCarrierGroup(mShadeCarrierGroup)
