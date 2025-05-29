@@ -38,6 +38,8 @@ import com.android.systemui.classifier.fakeFalsingCollector
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.haptics.msdl.bouncerHapticPlayer
 import com.android.systemui.haptics.msdl.fakeMSDLPlayer
+import com.android.systemui.keyboard.data.repository.keyboardRepository
+import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.lifecycle.activateIn
 import com.android.systemui.res.R
@@ -513,12 +515,54 @@ class PinBouncerViewModelTest : SysuiTestCase() {
         }
 
     @Test
+<<<<<<< HEAD
     @EnableFlags(com.android.systemui.Flags.FLAG_COMPOSE_BOUNCER)
     @DisableFlags(com.android.systemui.Flags.FLAG_SCENE_CONTAINER)
     fun onDigitButtonDown_avoidGesture_invoked() =
         testScope.runTest {
             lockDeviceAndOpenPinBouncer()
 
+=======
+    @EnableFlags(Flags.FLAG_PIN_INPUT_FIELD_STYLED_FOCUS_STATE)
+    fun inputFieldStyledEnabled_onKeyboardConnectedTrue_isPinDisplayBorderVisibleTrue() =
+        kosmos.runTest {
+            keyboardRepository.setIsAnyKeyboardConnected(true)
+            val isPinDisplayBorderVisible by collectLastValue(underTest.isPinDisplayBorderVisible)
+            assertThat(isPinDisplayBorderVisible).isTrue()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_PIN_INPUT_FIELD_STYLED_FOCUS_STATE)
+    fun inputFieldStyledEnabled_onKeyboardConnectedFalse_isPinDisplayBorderVisibleFalse() =
+        kosmos.runTest {
+            keyboardRepository.setIsAnyKeyboardConnected(false)
+            val isPinDisplayBorderVisible by collectLastValue(underTest.isPinDisplayBorderVisible)
+            assertThat(isPinDisplayBorderVisible).isFalse()
+        }
+
+    @Test
+    @DisableFlags(Flags.FLAG_PIN_INPUT_FIELD_STYLED_FOCUS_STATE)
+    fun inputFieldStyledDisabled_onKeyboardConnectedTrue_isPinDisplayBorderVisibleFalse() =
+        kosmos.runTest {
+            keyboardRepository.setIsAnyKeyboardConnected(true)
+            val isPinDisplayBorderVisible by collectLastValue(underTest.isPinDisplayBorderVisible)
+            assertThat(isPinDisplayBorderVisible).isFalse()
+        }
+
+    @Test
+    @DisableFlags(Flags.FLAG_PIN_INPUT_FIELD_STYLED_FOCUS_STATE)
+    fun inputFieldStyledDisabled_onKeyboardConnectedFalse_isPinDisplayBorderVisibleFalse() =
+        kosmos.runTest {
+            keyboardRepository.setIsAnyKeyboardConnected(false)
+            val isPinDisplayBorderVisible by collectLastValue(underTest.isPinDisplayBorderVisible)
+            assertThat(isPinDisplayBorderVisible).isFalse()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_MSDL_FEEDBACK)
+    fun onDigiButtonDown_deliversKeyStandardToken() =
+        kosmos.runTest {
+>>>>>>> adc636ea3583 (Flexiglass: Add border for keyguard pin input when keyboard is supported)
             underTest.onDigitButtonDown(null)
 
             assertTrue(kosmos.fakeFalsingCollector.wasLastGestureAvoided())

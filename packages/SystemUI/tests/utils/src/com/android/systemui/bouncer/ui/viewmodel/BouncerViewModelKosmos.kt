@@ -18,6 +18,7 @@ package com.android.systemui.bouncer.ui.viewmodel
 
 import android.app.admin.devicePolicyManager
 import android.content.applicationContext
+import com.android.keyguard.domain.interactor.keyguardKeyboardInteractor
 import com.android.systemui.authentication.domain.interactor.authenticationInteractor
 import com.android.systemui.authentication.shared.model.AuthenticationMethodModel
 import com.android.systemui.bouncer.domain.interactor.bouncerActionButtonInteractor
@@ -83,6 +84,7 @@ val Kosmos.pinBouncerViewModelFactory by Fixture {
                 applicationContext = applicationContext,
                 interactor = bouncerInteractor,
                 simBouncerInteractor = simBouncerInteractor,
+                keyguardKeyboardInteractor = keyguardKeyboardInteractor,
                 isInputEnabled = isInputEnabled,
                 onIntentionalUserInput = onIntentionalUserInput,
                 authenticationMethod = authenticationMethod,

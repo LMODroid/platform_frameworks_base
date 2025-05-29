@@ -31,14 +31,17 @@ import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -68,6 +71,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.PlatformOutlinedButton
 import com.android.compose.animation.Easings
+import com.android.compose.modifiers.thenIf
 import com.android.keyguard.PinShapeAdapter
 import com.android.systemui.bouncer.ui.viewmodel.EntryToken.Digit
 import com.android.systemui.bouncer.ui.viewmodel.PinBouncerViewModel
@@ -87,6 +91,18 @@ fun PinInputDisplay(viewModel: PinBouncerViewModel, modifier: Modifier = Modifie
     val hintedPinLength: Int? by viewModel.hintedPinLength.collectAsStateWithLifecycle()
     val shapeAnimations = rememberShapeAnimations(viewModel.pinShapes)
 
+    val isPinDisplayBorderVisible by
+        viewModel.isPinDisplayBorderVisible.collectAsStateWithLifecycle(initialValue = false)
+    val borderColor = colorResource(R.color.bouncer_password_focus_color)
+    val pinInputHeight = dimensionResource(id = R.dimen.keyguard_password_field_height)
+    val pinInputWidth = dimensionResource(id = R.dimen.keyguard_password_field_width)
+    val pinInputModifier =
+        modifier.thenIf(isPinDisplayBorderVisible) {
+            Modifier.border(width = 3.dp, color = borderColor, shape = RoundedCornerShape(16.dp))
+                .height(pinInputHeight)
+                .width(pinInputWidth)
+        }
+
     // The display comes in two different flavors:
     // 1) hinting: shows a circle (◦) per expected pin input, and dot (●) per entered digit.
     //    This has a fixed width, and uses two distinct types of AVDs to animate the addition and
@@ -99,8 +115,8 @@ fun PinInputDisplay(viewModel: PinBouncerViewModel, modifier: Modifier = Modifie
     // unifying into a single, more complex implementation.
 
     when (val length = hintedPinLength) {
-        null -> RegularPinInputDisplay(viewModel, shapeAnimations, modifier)
-        else -> HintingPinInputDisplay(viewModel, shapeAnimations, length, modifier)
+        null -> RegularPinInputDisplay(viewModel, shapeAnimations, pinInputModifier)
+        else -> HintingPinInputDisplay(viewModel, shapeAnimations, length, pinInputModifier)
     }
 }
 
