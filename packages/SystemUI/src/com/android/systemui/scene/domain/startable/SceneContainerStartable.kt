@@ -464,10 +464,8 @@ constructor(
                     when {
                         isAlternateBouncerVisible -> {
                             // When the device becomes unlocked when the alternate bouncer is
-                            // showing, always hide the alternate bouncer and notify dismiss
-                            // succeeded
+                            // showing, always hide the alternate bouncer
                             alternateBouncerInteractor.hide()
-                            dismissCallbackRegistry.notifyDismissSucceeded()
 
                             // ... and go to Gone or stay on the current scene
                             if (
@@ -483,11 +481,9 @@ constructor(
                             }
                         }
                         isOnPrimaryBouncer -> {
-                            // When the device becomes unlocked in primary Bouncer,
-                            // notify dismiss succeeded and remain in current scene or switch to
-                            // Gone.
-                            dismissCallbackRegistry.notifyDismissSucceeded()
-                            // if transition is a scene change, take the destination scene
+                            // When the device becomes unlocked in primary bouncer, transition to
+                            // Gone or remain in the current scene. If transition is a scene change,
+                            // take the destination scene.
                             val targetScene = renderedScenes.last()
                             if (
                                 targetScene == Scenes.Lockscreen ||

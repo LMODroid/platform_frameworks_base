@@ -19,6 +19,7 @@ package com.android.systemui.keyguard.domain.interactor
 import android.app.trust.TrustManager
 import android.os.DeadObjectException
 import android.os.RemoteException
+import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.internal.policy.IKeyguardStateCallback
 import com.android.systemui.CoreStartable
 import com.android.systemui.bouncer.domain.interactor.SimBouncerInteractor
@@ -33,8 +34,6 @@ import com.android.systemui.user.domain.interactor.SelectedUserInteractor
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collectLatest
-import com.android.app.tracing.coroutines.launchTraced as launch
 import kotlinx.coroutines.withContext
 
 /**
@@ -61,67 +60,79 @@ constructor(
     private val callbacks = mutableListOf<IKeyguardStateCallback>()
 
     override fun start() {
-        if (!KeyguardWmStateRefactor.isEnabled || SceneContainerFlag.isEnabled) {
+        if (!KeyguardWmStateRefactor.isEnabled) {
             return
         }
 
-        applicationScope.launch {
-            wmLockscreenVisibilityInteractor.lockscreenVisibility.collectLatest { visible ->
-                val iterator = callbacks.iterator()
-                withContext(backgroundDispatcher) {
-                    while (iterator.hasNext()) {
-                        val callback = iterator.next()
-                        try {
-                            callback.onShowingStateChanged(
-                                visible,
-                                selectedUserInteractor.getSelectedUserId(),
-                            )
-                            callback.onInputRestrictedStateChanged(visible)
+        if (SceneContainerFlag.isEnabled) {
+            // In flexiglass, only the dismiss callback success is tied to the ATMS lockscreen
+            // visibility. All other state callbacks are triggered via SceneContainerStartable.
+            applicationScope.launch {
+                wmLockscreenVisibilityInteractor.lockscreenVisibility.collect { visible ->
+                    if (!visible) {
+                        dismissCallbackRegistry.notifyDismissSucceeded()
+                    }
+                }
+            }
+        } else {
+            applicationScope.launch {
+                wmLockscreenVisibilityInteractor.lockscreenVisibility.collect { visible ->
+                    val iterator = callbacks.iterator()
+                    withContext(backgroundDispatcher) {
+                        while (iterator.hasNext()) {
+                            val callback = iterator.next()
+                            try {
+                                callback.onShowingStateChanged(
+                                    visible,
+                                    selectedUserInteractor.getSelectedUserId(),
+                                )
+                                callback.onInputRestrictedStateChanged(visible)
 
-                            trustManager.reportKeyguardShowingChanged()
+                                trustManager.reportKeyguardShowingChanged()
 
-                            if (!visible) {
-                                dismissCallbackRegistry.notifyDismissSucceeded()
-                            }
-                        } catch (e: RemoteException) {
-                            if (e is DeadObjectException) {
-                                iterator.remove()
+                                if (!visible) {
+                                    dismissCallbackRegistry.notifyDismissSucceeded()
+                                }
+                            } catch (e: RemoteException) {
+                                if (e is DeadObjectException) {
+                                    iterator.remove()
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        applicationScope.launch {
-            trustInteractor.isTrusted.collectLatest { isTrusted ->
-                val iterator = callbacks.iterator()
-                withContext(backgroundDispatcher) {
-                    while (iterator.hasNext()) {
-                        val callback = iterator.next()
-                        try {
-                            callback.onTrustedChanged(isTrusted)
-                        } catch (e: RemoteException) {
-                            if (e is DeadObjectException) {
-                                iterator.remove()
+            applicationScope.launch {
+                trustInteractor.isTrusted.collect { isTrusted ->
+                    val iterator = callbacks.iterator()
+                    withContext(backgroundDispatcher) {
+                        while (iterator.hasNext()) {
+                            val callback = iterator.next()
+                            try {
+                                callback.onTrustedChanged(isTrusted)
+                            } catch (e: RemoteException) {
+                                if (e is DeadObjectException) {
+                                    iterator.remove()
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        applicationScope.launch {
-            simBouncerInteractor.isAnySimSecure.collectLatest { isSimSecured ->
-                val iterator = callbacks.iterator()
-                withContext(backgroundDispatcher) {
-                    while (iterator.hasNext()) {
-                        val callback = iterator.next()
-                        try {
-                            callback.onSimSecureStateChanged(isSimSecured)
-                        } catch (e: RemoteException) {
-                            if (e is DeadObjectException) {
-                                iterator.remove()
+            applicationScope.launch {
+                simBouncerInteractor.isAnySimSecure.collect { isSimSecured ->
+                    val iterator = callbacks.iterator()
+                    withContext(backgroundDispatcher) {
+                        while (iterator.hasNext()) {
+                            val callback = iterator.next()
+                            try {
+                                callback.onSimSecureStateChanged(isSimSecured)
+                            } catch (e: RemoteException) {
+                                if (e is DeadObjectException) {
+                                    iterator.remove()
+                                }
                             }
                         }
                     }

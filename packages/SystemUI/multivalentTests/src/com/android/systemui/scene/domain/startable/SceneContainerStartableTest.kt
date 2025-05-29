@@ -2241,35 +2241,6 @@ class SceneContainerStartableTest : SysuiTestCase() {
         }
 
     @Test
-    fun notifyKeyguardDismissCallbacks_whenUnlockingFromBouncer_onDismissSucceeded() =
-        testScope.runTest {
-            val currentSceneKey by collectLastValue(sceneInteractor.currentScene)
-            val currentOverlays by collectLastValue(sceneInteractor.currentOverlays)
-            prepareState(
-                authenticationMethod = AuthenticationMethodModel.Pin,
-                isDeviceUnlocked = false,
-                initialSceneKey = Scenes.Lockscreen,
-                initialOverlays = setOf(Overlays.Bouncer),
-            )
-            assertThat(currentSceneKey).isEqualTo(Scenes.Lockscreen)
-            assertThat(currentOverlays).contains(Overlays.Bouncer)
-            underTest.start()
-
-            // run all pending dismiss succeeded/cancelled calls from setup:
-            runCurrent()
-            kosmos.fakeExecutor.runAllReady()
-
-            val dismissCallback: IKeyguardDismissCallback = mock()
-            kosmos.dismissCallbackRegistry.addCallback(dismissCallback)
-
-            updateFingerprintAuthStatus(isSuccess = true)
-            runCurrent()
-            kosmos.fakeExecutor.runAllReady()
-
-            verify(dismissCallback).onDismissSucceeded()
-        }
-
-    @Test
     fun notifyKeyguardDismissCallbacks_whenLeavingBouncer_onDismissCancelled() =
         testScope.runTest {
             val isUnlocked by collectLastValue(kosmos.deviceEntryInteractor.isUnlocked)

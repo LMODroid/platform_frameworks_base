@@ -71,6 +71,7 @@ class KeyguardStateCallbackInteractorTest : SysuiTestCase() {
     }
 
     @Test
+    @DisableSceneContainer
     fun test_addCallback_passesInitialValues() =
         testScope.runTest {
             underTest.addCallback(callback)
@@ -109,6 +110,7 @@ class KeyguardStateCallbackInteractorTest : SysuiTestCase() {
         }
 
     @Test
+    @DisableSceneContainer
     fun test_lockscreenVisibility_reportsKeyguardShowingChanged() =
         testScope.runTest {
             underTest.addCallback(callback)
