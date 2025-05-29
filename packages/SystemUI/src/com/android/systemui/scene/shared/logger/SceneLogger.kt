@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 class SceneLogger @Inject constructor(@SceneFrameworkLog private val logBuffer: LogBuffer) {
 
-    fun logFrameworkEnabled(isEnabled: Boolean, reason: String? = null) {
+    fun logFrameworkEnabled(isEnabled: Boolean) {
         fun asWord(isEnabled: Boolean): String {
             return if (isEnabled) "enabled" else "disabled"
         }
@@ -36,13 +36,8 @@ class SceneLogger @Inject constructor(@SceneFrameworkLog private val logBuffer: 
         logBuffer.log(
             tag = TAG,
             level = if (isEnabled) LogLevel.INFO else LogLevel.WARNING,
-            messageInitializer = {
-                bool1 = isEnabled
-                str1 = reason
-            },
-            messagePrinter = {
-                "Scene framework is ${asWord(bool1)}${if (str1 != null) " $str1" else ""}"
-            },
+            messageInitializer = { bool1 = isEnabled },
+            messagePrinter = { "Scene framework is ${asWord(bool1)}" },
         )
     }
 
