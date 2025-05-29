@@ -69,6 +69,7 @@ import androidx.annotation.WorkerThread;
 
 import com.android.app.viewcapture.ViewCaptureAwareWindowManager;
 import com.android.internal.logging.UiEventLogger;
+import com.android.internal.util.ArrayUtils;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.settingslib.DeviceInfoUtils;
@@ -408,7 +409,16 @@ public class InternetDialogController implements AccessPointController.AccessPoi
 
     @VisibleForTesting
     protected int getDefaultDataSubscriptionId() {
-        return mSubscriptionManager.getDefaultDataSubscriptionId();
+        int dds = mSubscriptionManager.getDefaultDataSubscriptionId();
+        if (dds == SubscriptionManager.INVALID_SUBSCRIPTION_ID
+                || !mSubscriptionManager.isActiveSubscriptionId(dds)) {
+            Log.d(TAG, "DDS " + dds + "is invalid or inactive, fallback to first active subId");
+            final int[] activeSubIds = mSubscriptionManager.getActiveSubscriptionIdList();
+            if (!ArrayUtils.isEmpty(activeSubIds)) {
+                dds = activeSubIds[0];
+            }
+        }
+        return dds;
     }
 
     @VisibleForTesting
@@ -993,7 +1003,7 @@ public class InternetDialogController implements AccessPointController.AccessPoi
         int dds = getDefaultDataSubscriptionId();
         if (dds == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
             mHasActiveSubIdOnDds = false;
-            Log.d(TAG, "DDS is INVALID_SUBSCRIPTION_ID");
+            Log.d(TAG, "DDS is still INVALID_SUBSCRIPTION_ID");
             return;
         }
         SubscriptionInfo ddsSubInfo = mSubscriptionManager.getActiveSubscriptionInfo(dds);
