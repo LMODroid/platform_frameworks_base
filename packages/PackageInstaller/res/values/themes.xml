@@ -24,20 +24,29 @@
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 
-    <style name="Theme.AlertDialogActivity.Material" >
-        <item name="android:alertDialogTheme">@style/Theme.MaterialAlertDialog</item>
+    <style name="Theme.AlertDialogActivity.Material" parent="Theme.Material3.DynamicColors.DayNight">
+        <!-- TODO (b/274120822): Remove this attribute when we replace all dialogs to MaterialAlertDialog -->
+        <item name="android:alertDialogTheme">@style/Theme.MaterialAlertDialog.System</item>
+        <item name="materialAlertDialogTheme">@style/Theme.MaterialAlertDialog</item>
     </style>
 
-    <style name="Theme.MaterialAlertDialog" parent="@style/Theme.AlertDialogActivity">
+    <!-- TODO (b/274120822): Remove this theme when we replace all dialogs to MaterialAlertDialog -->
+    <style name="Theme.MaterialAlertDialog.System" parent="@style/Theme.AlertDialogActivity">
         <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Button.Colored</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Button.Outlined</item>
         <item name="android:buttonBarStyle">@style/Widget.PackageInstaller.ButtonBar</item>
         <item name="android:windowTitleStyle">@style/Widget.PackageInstaller.WindowTitle</item>
     </style>
 
-    <style name="Theme.MaterialAlertDialog.Variant">
-        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Button</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Button</item>
+    <style name="Theme.MaterialAlertDialog" parent="@style/ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Material.Button.Colored</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Material.Button.Outlined</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/Widget.PackageInstaller.Material.WindowTitle</item>
+    </style>
+
+    <style name="Theme.MaterialAlertDialog.Variant" parent="@style/Theme.MaterialAlertDialog.System">
+        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Material.Button</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Material.Button</item>
     </style>
 
     <style name="Theme.UninstallerActivity"

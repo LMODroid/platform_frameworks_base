@@ -30,8 +30,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.android.packageinstaller.R;
 import com.android.packageinstaller.v2.model.InstallStage;
-import com.android.packageinstaller.v2.model.PackageUtil;
 import com.android.packageinstaller.v2.ui.InstallActionListener;
+import com.android.packageinstaller.v2.ui.UiUtil;
 
 public class InstallStagingFragment extends DialogFragment {
 
@@ -52,11 +52,8 @@ public class InstallStagingFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Log.i(LOG_TAG, "Creating " + LOG_TAG);
 
-        int layoutId = R.layout.install_fragment_layout;
-        if (PackageUtil.isMaterialDesignEnabled(requireContext())) {
-            layoutId = R.layout.install_fragment_material_layout;
-        }
-        View dialogView = getLayoutInflater().inflate(layoutId, null);
+        View dialogView = getLayoutInflater().inflate(
+                UiUtil.getInstallationLayoutResId(requireContext()), null);
         dialogView.requireViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
 
         mDialog = new AlertDialog.Builder(requireContext())

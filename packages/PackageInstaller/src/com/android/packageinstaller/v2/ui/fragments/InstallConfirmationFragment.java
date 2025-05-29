@@ -22,7 +22,6 @@ import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_EXISTING_OW
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_IS_UPDATING;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_NEW_OWNER;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,6 +30,7 @@ import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +42,7 @@ import com.android.packageinstaller.R;
 import com.android.packageinstaller.v2.model.InstallUserActionRequired;
 import com.android.packageinstaller.v2.model.PackageUtil.AppSnippet;
 import com.android.packageinstaller.v2.ui.InstallActionListener;
+import com.android.packageinstaller.v2.ui.UiUtil;
 
 /**
  * Dialog to show when the requesting user confirmation for installing an app.
@@ -53,7 +54,7 @@ public class InstallConfirmationFragment extends DialogFragment {
     @NonNull
     private InstallActionListener mInstallActionListener;
     @NonNull
-    private AlertDialog mDialog;
+    private Dialog mDialog;
 
     public InstallConfirmationFragment() {
         // Required for DialogFragment
@@ -93,7 +94,8 @@ public class InstallConfirmationFragment extends DialogFragment {
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
 
-        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        View dialogView = getLayoutInflater().inflate(
+                UiUtil.getInstallationLayoutResId(requireContext()), null);
         dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
         ((ImageView) dialogView.requireViewById(R.id.app_icon))
             .setImageDrawable(mDialogData.getAppIcon());
@@ -123,16 +125,12 @@ public class InstallConfirmationFragment extends DialogFragment {
             positiveBtnTextRes = R.string.button_install;
         }
 
-        mDialog = new AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setView(dialogView)
-            .setPositiveButton(positiveBtnTextRes,
+        mDialog = UiUtil.getAlertDialog(requireContext(), title, dialogView,
+                positiveBtnTextRes, R.string.button_cancel,
                 (dialogInt, which) -> mInstallActionListener.onPositiveResponse(
-                    InstallUserActionRequired.USER_ACTION_REASON_INSTALL_CONFIRMATION))
-            .setNegativeButton(R.string.button_cancel,
+                        InstallUserActionRequired.USER_ACTION_REASON_INSTALL_CONFIRMATION),
                 (dialogInt, which) -> mInstallActionListener.onNegativeResponse(
-                    mDialogData.getStageCode()))
-            .create();
+                                mDialogData.getStageCode()));
 
         return mDialog;
     }
@@ -146,7 +144,10 @@ public class InstallConfirmationFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
+        Button button = UiUtil.getAlertDialogPositiveButton(mDialog);
+        if (button != null) {
+            button.setFilterTouchesWhenObscured(true);
+        }
     }
 
     @Override
@@ -154,13 +155,19 @@ public class InstallConfirmationFragment extends DialogFragment {
         super.onPause();
         // This prevents tapjacking since an overlay activity started in front of Pia will
         // cause Pia to be paused.
-        mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+        Button button = UiUtil.getAlertDialogPositiveButton(mDialog);
+        if (button != null) {
+            button.setEnabled(false);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
+        Button button = UiUtil.getAlertDialogPositiveButton(mDialog);
+        if (button != null) {
+            button.setEnabled(true);
+        }
     }
 
     private void setDialogData(Bundle args) {
