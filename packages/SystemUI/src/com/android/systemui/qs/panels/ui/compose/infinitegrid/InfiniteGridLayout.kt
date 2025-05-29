@@ -31,7 +31,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.util.fastMap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentScope
-import com.android.compose.animation.scene.ElementKey
 import com.android.mechanics.compose.modifier.verticalTactileSurfaceReveal
 import com.android.mechanics.spec.builder.rememberMotionBuilderContext
 import com.android.systemui.dagger.SysUISingleton
@@ -74,7 +73,6 @@ constructor(
         tiles: List<TileViewModel>,
         modifier: Modifier,
         listening: () -> Boolean,
-        revealEffectContainer: ElementKey?,
     ) {
         val viewModel =
             rememberViewModel(traceName = "InfiniteGridLayout.TileGrid") {
@@ -111,6 +109,7 @@ constructor(
         val scope = rememberCoroutineScope()
         val spans by remember(sizedTiles) { derivedStateOf { sizedTiles.fastMap { it.width } } }
 
+        val isDualShade = viewModel.isDualShade
         val motionBuilderContext = rememberMotionBuilderContext()
         val marginBottom =
             with(LocalDensity.current) { QuickSettingsShade.Dimensions.Padding.toPx() }
@@ -145,17 +144,17 @@ constructor(
                     isVisible = listening,
                     requestToggleTextFeedback = textFeedbackViewModel::requestShowFeedback,
                     modifier =
-                        if (revealEffectContainer != null) {
+                        if (isDualShade) {
                             Modifier.verticalTactileSurfaceReveal(
                                 contentScope = this@TileGrid,
                                 motionBuilderContext = motionBuilderContext,
-                                container = revealEffectContainer,
+                                container = QuickSettingsShade.Elements.Panel,
                                 deltaY = -marginBottom,
                             )
                         } else {
                             Modifier
                         },
-                    revealEffectContainer = revealEffectContainer,
+                    verticalFadeContentReveal = isDualShade,
                 )
             }
         }

@@ -16,7 +16,12 @@
 
 package com.android.systemui.qs.panels.ui.viewmodel
 
+import androidx.compose.runtime.getValue
+import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.qs.panels.ui.dialog.QSResetDialogDelegate
+import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
+import com.android.systemui.shade.shared.model.ShadeMode
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
@@ -28,9 +33,21 @@ constructor(
     val squishinessViewModel: TileSquishinessViewModel,
     val snapshotViewModelFactory: InfiniteGridSnapshotViewModel.Factory,
     val resetDialogDelegateFactory: QSResetDialogDelegate.Factory,
-) {
+    val shadeModeInteractor: ShadeModeInteractor,
+) : ExclusiveActivatable() {
+    private val hydrator = Hydrator("InfiniteGridViewModel.hydrator")
+
     @AssistedFactory
     interface Factory {
         fun create(): InfiniteGridViewModel
+    }
+
+    private val shadeMode by hydrator.hydratedStateOf("shadeMode", shadeModeInteractor.shadeMode)
+
+    val isDualShade: Boolean
+        get() = shadeMode == ShadeMode.Dual
+
+    override suspend fun onActivated(): Nothing {
+        hydrator.activate()
     }
 }

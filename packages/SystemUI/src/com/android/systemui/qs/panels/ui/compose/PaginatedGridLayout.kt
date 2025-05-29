@@ -41,7 +41,6 @@ import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import com.android.compose.animation.scene.ContentScope
-import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.content.state.TransitionState
 import com.android.compose.modifiers.padding
 import com.android.systemui.common.ui.compose.PagerDots
@@ -71,7 +70,6 @@ constructor(
         tiles: List<TileViewModel>,
         modifier: Modifier,
         listening: () -> Boolean,
-        revealEffectContainer: ElementKey?,
     ) {
         val viewModel =
             rememberViewModel(traceName = "PaginatedGridLayout-TileGrid") {
