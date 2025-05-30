@@ -40,4 +40,9 @@
         <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Button</item>
     </style>
 
+    <style name="Theme.UninstallerActivity"
+        parent="@style/Theme.AlertDialogActivity">
+    </style>
+
+
 </resources>

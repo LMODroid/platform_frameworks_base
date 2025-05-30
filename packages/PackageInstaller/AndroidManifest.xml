@@ -104,6 +104,7 @@
                 android:exported="false" />
 
         <activity android:name=".UninstallerActivity"
+                android:theme="@style/Theme.UninstallerActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:excludeFromRecents="true"
                 android:noHistory="true"
