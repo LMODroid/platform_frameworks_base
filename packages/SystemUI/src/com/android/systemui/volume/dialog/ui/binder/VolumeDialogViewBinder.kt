@@ -49,8 +49,8 @@ import kotlin.math.ceil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -162,7 +162,8 @@ constructor(
         var junkListener: DynamicAnimation.OnAnimationUpdateListener? = null
 
         visibilityModel
-            .mapLatest {
+            .conflate()
+            .onEach {
                 when (it) {
                     is VolumeDialogVisibilityModel.Visible -> {
                         tracer.traceVisibilityEnd(it)
