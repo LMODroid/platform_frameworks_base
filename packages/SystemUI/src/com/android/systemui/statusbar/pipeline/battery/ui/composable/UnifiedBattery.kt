@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -42,9 +43,12 @@ import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.layout.onLayoutRectChanged
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.util.fastFirst
 import androidx.compose.ui.util.fastFirstOrNull
 import com.android.systemui.common.ui.compose.load
@@ -301,24 +305,69 @@ class BatteryMeasurePolicy : MeasurePolicy {
         }
         val totalHeight = batterySize.height.roundToInt()
         return layout(totalWidth, totalHeight) {
-            batteryFramePlaceable.place(0, 0)
+            if (layoutDirection == LayoutDirection.Rtl) {
+                val (offsetX, placeable) =
+                    when {
+                        // Attr overlaps the battery frame by 20% of its own width
+                        attrPlaceable != null ->
+                            (attrPlaceable.width * (1 - attrOverlap)).roundToInt() to attrPlaceable
 
-            attrPlaceable?.apply {
-                // Overlap the attribution by 20% of its width
-                val xOffset = batteryFramePlaceable.width - (0.2 * width).roundToInt()
-                val yOffset =
-                    ((batteryFramePlaceable.height - attrPlaceable.height) / 2f).roundToInt()
-                place(xOffset, yOffset)
-            }
+                        // Cap has exactly 1dp (scaled) of space after it
+                        capPlaceable != null ->
+                            capPlaceable.width + scale.roundToInt() to capPlaceable
 
-            capPlaceable?.apply {
-                // Cap is offset by exactly 1dp (scaled)
-                val xOffset = batteryFramePlaceable.width + scale.roundToInt()
-                val yOffset =
-                    ((batteryFramePlaceable.height - capPlaceable.height) / 2f).roundToInt()
-                place(xOffset, yOffset)
+                        else -> 0 to null
+                    }
+
+                // Place the battery frame first so the layers are in the right order
+                batteryFramePlaceable.place(offsetX, 0)
+
+                // Then place the cap or attribution. In RTL, it always is left-aligned
+                placeable?.apply {
+                    placeCenteredVertically(
+                        placeable = this,
+                        containerHeight = batteryFramePlaceable.height,
+                        xOffset = 0,
+                    )
+                }
+            } else {
+                batteryFramePlaceable.place(0, 0)
+
+                val (xOffset, placeable) =
+                    when {
+                        attrPlaceable != null ->
+                            (batteryFramePlaceable.width - (attrOverlap * attrPlaceable.width))
+                                .roundToInt() to attrPlaceable
+                        capPlaceable != null ->
+                            (batteryFramePlaceable.width + scale.roundToInt()) to capPlaceable
+                        else -> 0 to null
+                    }
+
+                placeable?.apply {
+                    placeCenteredVertically(
+                        placeable = this,
+                        containerHeight = batteryFramePlaceable.height,
+                        xOffset = xOffset,
+                    )
+                }
             }
         }
+    }
+
+    private fun Placeable.PlacementScope.placeCenteredVertically(
+        placeable: Placeable,
+        containerHeight: Int,
+        xOffset: Int,
+    ) {
+        placeable.place(x = xOffset, y = placeable.centerYOffset(containerHeight))
+    }
+
+    private fun Placeable.centerYOffset(outerHeight: Int) =
+        ((outerHeight - height) / 2f).roundToInt()
+
+    companion object {
+        // Overlap the attribution by 20%
+        private const val attrOverlap = 0.2f
     }
 }
 
@@ -339,6 +388,7 @@ fun BatteryBody(
     contentDescription: String = "",
 ) {
     Canvas(modifier = modifier, contentDescription = contentDescription) {
+        val rtl = layoutDirection == LayoutDirection.Rtl
         val level = levelProvider()
         val colors = colorsProvider()
 
@@ -373,9 +423,9 @@ fun BatteryBody(
                 // 3. clip the fill to the level if we have it
                 if (level != null && level > 0) {
                     clipRect(
-                        left = 0f,
+                        left = if (!rtl) 0f else BatteryFrame.innerWidth - level.scaledLevel(),
                         top = 0f,
-                        right = level.scaledLevel(),
+                        right = if (!rtl) level.scaledLevel() else BatteryFrame.innerWidth,
                         bottom = BatteryFrame.innerHeight,
                     ) {
                         // 4. Draw the rounded rect fill fully, it'll be clipped above
@@ -418,11 +468,12 @@ fun BatteryCap(
     modifier: Modifier = Modifier,
 ) {
     val pathSpec = BatteryFrame.capPathSpec
-    Canvas(modifier = modifier) {
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    Canvas(modifier = modifier.scale(scaleX = if (rtl) -1f else 1f, scaleY = 1f)) {
         val colors = colorsProvider()
         val isFull = isFullProvider()
         val s = pathSpec.scaleTo(size.width, size.height)
-        scale(scale = s, pivot = Offset.Zero) {
+        scale(s, pivot = Offset.Zero) {
             val color = if (isFull) colors.fill else colors.backgroundOnly
             drawPath(pathSpec.path, color = color)
         }
@@ -436,6 +487,7 @@ fun BatteryAttribution(
     modifier: Modifier = Modifier,
 ) {
     val stroke = remember { Stroke(width = 2f) }
+    // Do not RTL the attribution, because they are text-like. '?' shouldn't be flipped, for example
     Canvas(modifier = modifier) {
         val s = attr.scaleTo(size.width, size.height)
         val colors = colorsProvider()
