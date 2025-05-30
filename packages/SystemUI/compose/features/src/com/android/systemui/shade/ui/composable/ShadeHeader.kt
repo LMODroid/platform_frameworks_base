@@ -675,7 +675,7 @@ private fun ShadeCarrierGroupKairos(
                 val scope = rememberCoroutineScope()
                 AndroidView(
                     factory = { context ->
-                        ModernShadeCarrierGroupMobileView.constructAndBind(
+                        ModernShadeCarrierGroupMobileView.constructAndBindKairos(
                                 context = context,
                                 logger = iconsViewModel.logger,
                                 slot = "mobile_carrier_shade_group",

@@ -129,7 +129,7 @@ class ModernShadeCarrierGroupMobileView(context: Context, attrs: AttributeSet?) 
          */
         @ExperimentalKairosApi
         @JvmStatic
-        fun constructAndBind(
+        fun constructAndBindKairos(
             context: Context,
             logger: MobileViewLogger,
             slot: String,
@@ -171,14 +171,21 @@ class ModernShadeCarrierGroupMobileView(context: Context, attrs: AttributeSet?) 
 
                     val textView =
                         view.requireViewById<AutoMarqueeTextView>(R.id.mobile_carrier_text)
-                    launch {
+                    val (shadeCarrierBinding, _) =
                         ShadeCarrierBinderKairos.bind(
                             subscriptionId,
                             textView,
                             buildSpec { viewModel },
                             kairosNetwork,
+                            this,
                         )
-                    }
+                    view.binding =
+                        object : ModernShadeCarrierGroupMobileViewBinding {
+                            override fun setStyleAndTint(style: Int, fgColor: Int, bgColor: Int) {
+                                iconView.setStaticDrawableColor(fgColor, bgColor)
+                                shadeCarrierBinding.setTextAppearance(style)
+                            }
+                        }
                 }
         }
     }

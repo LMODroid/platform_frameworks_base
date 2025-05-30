@@ -289,7 +289,7 @@ public class ShadeCarrierGroupController {
                         mMobileContextProvider.getMobileContextForSub(iconData.subId, mContext);
 
                 Pair<ModernShadeCarrierGroupMobileView, Job> viewAndJob =
-                        ModernShadeCarrierGroupMobileView.constructAndBind(
+                        ModernShadeCarrierGroupMobileView.constructAndBindKairos(
                                 mobileContext,
                                 mobileIconsViewModel.getLogger(),
                                 "mobile_carrier_shade_group",
