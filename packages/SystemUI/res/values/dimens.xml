@@ -2209,18 +2209,18 @@
     <dimen name="volume_dialog_background_corner_radius">30dp</dimen>
     <!-- top margin covers half the ringer button + components spacing -->
     <dimen name="volume_dialog_background_top_margin">-28dp</dimen>
-    <dimen name="volume_dialog_background_margin">10dp</dimen>
-    <dimen name="volume_dialog_background_margin_negative">-10dp</dimen>
+    <dimen name="volume_dialog_background_margin">6dp</dimen>
+    <dimen name="volume_dialog_background_margin_negative">-6dp</dimen>
 
     <dimen name="volume_dialog_window_margin">12dp</dimen>
-    <dimen name="volume_dialog_components_spacing">10dp</dimen>
+    <dimen name="volume_dialog_components_spacing">4dp</dimen>
     <dimen name="volume_dialog_floating_sliders_spacing">8dp</dimen>
     <dimen name="volume_dialog_floating_sliders_vertical_padding_negative">
         @dimen/volume_dialog_background_margin_negative
     </dimen>
     <dimen name="volume_dialog_floating_sliders_horizontal_padding">4dp</dimen>
     <dimen name="volume_dialog_floating_sliders_vertical_padding">10dp</dimen>
-    <dimen name="volume_dialog_button_size">40dp</dimen>
+    <dimen name="volume_dialog_button_size">48dp</dimen>
     <dimen name="volume_dialog_slider_width">52dp</dimen>
     <dimen name="volume_dialog_slider_height">254dp</dimen>
     <!--
@@ -2234,9 +2234,6 @@
     <dimen name="volume_dialog_background_square_corner_radius">12dp</dimen>
 
     <dimen name="volume_dialog_ringer_drawer_button_size">@dimen/volume_dialog_button_size</dimen>
-    <dimen name="volume_dialog_ringer_drawer_buttons_spacing">
-        @dimen/volume_dialog_components_spacing
-    </dimen>
     <dimen name="volume_dialog_ringer_drawer_button_icon_radius">10dp</dimen>
     <dimen name="volume_dialog_ringer_selected_button_background_radius">20dp</dimen>
 
