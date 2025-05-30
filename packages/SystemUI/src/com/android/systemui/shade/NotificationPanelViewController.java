@@ -1413,6 +1413,11 @@ public final class NotificationPanelViewController implements
         if (mQsController.getExpanded()) {
             mQsController.flingQs(0, FLING_COLLAPSE);
         } else {
+            if (!SceneContainerFlag.isEnabled() && Flags.bouncerUiRevamp()) {
+                // Mark the bit that indicates that shade is going to expand when shade is opened
+                // through AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS
+                mWindowRootViewBlurInteractor.setTrackingShadeMotion(true);
+            }
             expand(true /* animate */);
         }
     }
