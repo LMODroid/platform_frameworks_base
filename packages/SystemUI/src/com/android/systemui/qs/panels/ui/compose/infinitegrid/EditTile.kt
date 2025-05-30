@@ -222,6 +222,8 @@ private fun EditModeTopBar(
                 text = stringResource(id = R.string.qs_edit_tiles),
                 style = MaterialTheme.typography.titleLargeEmphasized,
                 modifier = Modifier.padding(start = 24.dp),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2,
             )
         },
         navigationIcon = {
