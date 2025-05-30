@@ -108,6 +108,7 @@ class ButtonComponent(
                         } else {
                             MaterialTheme.colorScheme.onSurface
                         },
+                    useModifierBasedImplementation = true,
                     onClick = { onClick(it, gravity) },
                 ) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

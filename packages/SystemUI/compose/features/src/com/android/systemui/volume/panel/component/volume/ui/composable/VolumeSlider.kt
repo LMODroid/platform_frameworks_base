@@ -218,12 +218,12 @@ fun VolumeSlider(
                     MaterialIcon(
                         painter = painterResource(R.drawable.ic_error_outline),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.size(16.dp),
                     )
                     Text(
                         text = disabledMessage,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.basicMarquee().clearAndSetSemantics {},
                     )

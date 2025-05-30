@@ -68,10 +68,7 @@ constructor(
         content: @Composable (SystemUIDialog) -> Unit,
     ) {
         val dialog =
-            dialogFactory.create(
-                theme = R.style.Theme_VolumePanel_Popup,
-                dialogGravity = gravity,
-            ) {
+            dialogFactory.create(theme = R.style.Theme_VolumePanel_Popup, dialogGravity = gravity) {
                 PopupComposable(it, title, content)
             }
         val controller = expandable?.dialogTransitionController()
@@ -97,7 +94,7 @@ constructor(
                 Box(
                     modifier =
                         Modifier.padding(horizontal = 80.dp).fillMaxWidth().wrapContentHeight(),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     title(dialog)
                 }
@@ -105,7 +102,7 @@ constructor(
                 Box(
                     modifier =
                         Modifier.padding(horizontal = 16.dp).fillMaxWidth().wrapContentHeight(),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     content(dialog)
                 }
@@ -116,8 +113,8 @@ constructor(
                 onClick = { dialog.dismiss() },
                 colors =
                     IconButtonDefaults.iconButtonColors(
-                        contentColor = MaterialTheme.colorScheme.outline
-                    )
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
             ) {
                 Icon(
                     painterResource(R.drawable.ic_close),
