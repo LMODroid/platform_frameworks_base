@@ -32,6 +32,7 @@ import androidx.annotation.VisibleForTesting;
 
 import com.android.settingslib.Utils;
 import com.android.settingslib.graph.SignalDrawable;
+import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.pipeline.mobile.ui.view.ModernShadeCarrierGroupMobileView;
 import com.android.systemui.util.LargeScreenUtils;
@@ -50,6 +51,8 @@ public class ShadeCarrier extends LinearLayout {
     private CellSignalState mLastSignalState;
     private boolean mMobileSignalInitialized = false;
     private boolean mIsSingleCarrier;
+    private int mColor = DarkIconDispatcher.DEFAULT_ICON_TINT;
+    private int mContrastColor = DarkIconDispatcher.DEFAULT_INVERSE_ICON_TINT;
 
     public ShadeCarrier(Context context) {
         super(context);
@@ -89,6 +92,7 @@ public class ShadeCarrier extends LinearLayout {
     /** Adds a ModernStatusBarMobileView to the ViewGroup. */
     public void addModernMobileView(ModernShadeCarrierGroupMobileView mobileView) {
         mModernMobileView = mobileView;
+        mModernMobileView.updateColors(mColor, mContrastColor);
         mMobileGroup.setVisibility(View.GONE);
         mSpacer.setVisibility(View.GONE);
         mCarrierText.setVisibility(View.GONE);
@@ -151,11 +155,14 @@ public class ShadeCarrier extends LinearLayout {
                         com.android.settingslib.R.string.not_default_data_content_description));
     }
 
-    public void updateColors(int color, ColorStateList colorStateList) {
+    public void updateColors(int color, int contrastColor) {
+        ColorStateList colorStateList = ColorStateList.valueOf(color);
         mMobileRoaming.setImageTintList(colorStateList);
         mMobileSignal.setImageTintList(colorStateList);
+        mColor = color;
+        mContrastColor = contrastColor;
         if (mModernMobileView != null) {
-            mModernMobileView.updateTextColor(color);
+            mModernMobileView.updateColors(color, contrastColor);
         }
     }
 
