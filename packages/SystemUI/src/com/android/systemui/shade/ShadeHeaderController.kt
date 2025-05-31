@@ -18,6 +18,7 @@ package com.android.systemui.shade
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.annotation.ColorInt
 import android.annotation.IdRes
 import android.app.PendingIntent
 import android.app.StatusBarManager
@@ -178,7 +179,13 @@ constructor(
     private var cutout: DisplayCutout? = null
     private var lastInsets: WindowInsets? = null
     private var nextAlarmIntent: PendingIntent? = null
-    private var textColorPrimary = Color.TRANSPARENT
+    private var colors = Colors()
+        set(value) {
+            if (field != value) {
+                field = value
+                onColorsChanged()
+            }
+        }
 
     private val showBatteryEstimate = MutableStateFlow(false)
 
@@ -355,13 +362,14 @@ constructor(
     override fun onInit() {
         variableDateViewControllerFactory.create(date as VariableDateView).init()
 
-        val fgColor =
-            Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorPrimary)
-        val bgColor =
-            Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorPrimaryInverse)
+        // colors are set by updateResources()
+        // val fgColor =
+        //     Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorPrimary)
+        // val bgColor =
+        //     Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorPrimaryInverse)
 
         iconManager = tintedIconManagerFactory.create(iconContainer, StatusBarLocation.QS)
-        iconManager.setTint(fgColor, bgColor)
+        // iconManager.setTint(fgColor, bgColor)
 
         if (!NewStatusBarIcons.isEnabled) {
             batteryMeterViewController.init()
@@ -370,11 +378,11 @@ constructor(
             batteryMeterViewController.ignoreTunerUpdates()
 
             batteryIcon.isVisible = true
-            batteryIcon.updateColors(
-                fgColor /* foreground */,
-                bgColor /* background */,
-                fgColor, /* single tone (current default) */
-            )
+            // batteryIcon.updateColors(
+            //     fgColor /* foreground */,
+            //     bgColor /* background */,
+            //     fgColor, /* single tone (current default) */
+            // )
         } else {
             // Configure the compose battery view
             val batteryComposeView =
@@ -641,24 +649,23 @@ constructor(
         header.setPadding(padding, header.paddingTop, padding, header.paddingBottom)
         updateQQSPaddings()
         qsBatteryModeController.updateResources()
+        colors = Colors(
+            fgColor = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary),
+            bgColor =
+                Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimaryInverse)
+        )
+    }
 
-        val fillColor = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary)
-        val inverseColor = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimaryInverse)
-        iconManager.setTint(fillColor, inverseColor)
-        val textColor = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary)
-        val colorStateList = Utils.getColorAttr(context, android.R.attr.textColorPrimary)
-        if (textColor != textColorPrimary) {
-            val textColorSecondary = Utils.getColorAttrDefaultColor(context,
-                    android.R.attr.textColorSecondary)
-            textColorPrimary = textColor
-            if (iconManager != null) {
-                iconManager.setTint(textColor, inverseColor)
-            }
-            clock.setTextColor(textColorPrimary)
-            date.setTextColor(textColorPrimary)
-            mShadeCarrierGroup.updateColors(textColorPrimary, colorStateList)
-            batteryIcon.updateColors(textColorPrimary, textColorSecondary, textColorPrimary)
-        }
+    private fun onColorsChanged() {
+        iconManager.setTint(colors.fgColor, colors.bgColor)
+        clock.setTextColor(colors.fgColor)
+        date.setTextColor(colors.fgColor)
+        mShadeCarrierGroup.updateColors(colors.fgColor, colors.bgColor)
+        batteryIcon.updateColors(
+            colors.fgColor /* foreground */,
+            colors.bgColor /* background */,
+            colors.fgColor /* single tone (current default) */
+        )
     }
 
     private fun updateQQSPaddings() {
@@ -708,6 +715,11 @@ constructor(
     }
 
     @VisibleForTesting internal fun simulateViewDetached() = this.onViewDetached()
+
+    private data class Colors(
+        @ColorInt val fgColor: Int = Color.TRANSPARENT,
+        @ColorInt val bgColor: Int = Color.TRANSPARENT
+    )
 
     inner class CustomizerAnimationListener(private val enteringCustomizing: Boolean) :
         AnimatorListenerAdapter() {
