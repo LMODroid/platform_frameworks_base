@@ -253,6 +253,7 @@ public class DemoStatusIcons extends StatusIconContainer implements DemoMode, Da
 
         // mobile always goes at the end
         mModernMobileViews.add(view);
+        view.setStaticDrawableColor(mColor, mContrastColor);
         addView(view, getChildCount(), createLayoutParams());
     }
 
