@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.pipeline.battery.ui.composable
 
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -67,6 +68,7 @@ fun BatteryWithEstimate(
                     color = textColor,
                     style = MaterialTheme.typography.bodyMediumEmphasized,
                     maxLines = 1,
+                    modifier = Modifier.basicMarquee(iterations = 1),
                 )
             }
         }
