@@ -119,7 +119,6 @@ import static com.android.server.wm.WindowManagerPolicyProto.WINDOW_MANAGER_DRAW
 import static com.android.systemui.shared.Flags.enableLppSqueezeEffect;
 
 import static com.libremobileos.util.DeviceKeysConstants.*;
-import static com.android.window.flags.Flags.delegateBackGestureToShell;
 
 import android.accessibilityservice.AccessibilityService;
 import android.annotation.Nullable;
@@ -4781,9 +4780,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 KeyGestureEvent.KEY_GESTURE_TYPE_GLOBAL_ACTIONS,
                 KeyGestureEvent.KEY_GESTURE_TYPE_TV_TRIGGER_BUG_REPORT
         ));
-        if (!delegateBackGestureToShell()) {
-            supportedGestures.add(KeyGestureEvent.KEY_GESTURE_TYPE_BACK);
-        }
         if (enableTalkbackAndMagnifierKeyGestures()) {
             supportedGestures.add(KeyGestureEvent.KEY_GESTURE_TYPE_TOGGLE_TALKBACK);
         }
@@ -4867,12 +4863,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     } catch (RemoteException e) {
                         Slog.d(TAG, "Error taking bugreport", e);
                     }
-                }
-                break;
-            case KeyGestureEvent.KEY_GESTURE_TYPE_BACK:
-                if (!delegateBackGestureToShell() && complete) {
-                    injectBackGesture(SystemClock.uptimeMillis(),
-                            getTargetDisplayIdForKeyGestureEvent(event));
                 }
                 break;
             case KeyGestureEvent.KEY_GESTURE_TYPE_MULTI_WINDOW_NAVIGATION:

@@ -1205,9 +1205,6 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
     }
 
     private void registerBackGestureDelegate() {
-        if (!Flags.delegateBackGestureToShell()) {
-            return;
-        }
         mInputManager.registerKeyGestureEventHandler(List.of(KeyGestureEvent.KEY_GESTURE_TYPE_BACK),
                 (event, focussedToken) -> {
                     if (event.getKeyGestureType() == KeyGestureEvent.KEY_GESTURE_TYPE_BACK) {
