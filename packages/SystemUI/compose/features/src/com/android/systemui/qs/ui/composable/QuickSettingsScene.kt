@@ -56,6 +56,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
@@ -77,6 +78,8 @@ import com.android.compose.animation.scene.content.state.TransitionState
 import com.android.compose.modifiers.thenIf
 import com.android.compose.windowsizeclass.LocalWindowSizeClass
 import com.android.internal.jank.InteractionJankMonitor
+import com.android.systemui.brightness.ui.compose.BrightnessSliderContainer
+import com.android.systemui.brightness.ui.compose.ContainerColors
 import com.android.systemui.common.ui.compose.windowinsets.CutoutLocation
 import com.android.systemui.common.ui.compose.windowinsets.LocalDisplayCutout
 import com.android.systemui.compose.modifiers.sysuiResTag
@@ -94,6 +97,7 @@ import com.android.systemui.notifications.ui.composable.HeadsUpNotificationSpace
 import com.android.systemui.notifications.ui.composable.NotificationScrollingStack
 import com.android.systemui.notifications.ui.composable.NotificationStackCutoffGuideline
 import com.android.systemui.qs.footer.ui.compose.FooterActionsWithAnimatedVisibility
+import com.android.systemui.qs.shared.ui.ElementKeys
 import com.android.systemui.qs.ui.composable.QuickSettings.SharedValues.MediaLandscapeTopOffset
 import com.android.systemui.qs.ui.composable.QuickSettings.SharedValues.MediaOffset.InQS
 import com.android.systemui.qs.ui.viewmodel.QuickSettingsSceneContentViewModel
@@ -146,10 +150,6 @@ constructor(
     override fun ContentScope.Content(modifier: Modifier) {
         val viewModel =
             rememberViewModel("QuickSettingsScene-viewModel") { contentViewModelFactory.create() }
-        val headerViewModel =
-            rememberViewModel("QuickSettingsScene-headerViewModel") {
-                viewModel.shadeHeaderViewModelFactory.create()
-            }
         val brightnessMirrorViewModel =
             rememberViewModel("QuickSettingsScene-brightnessMirrorViewModel") {
                 viewModel.brightnessMirrorViewModelFactory.create()
@@ -161,7 +161,7 @@ constructor(
         QuickSettingsScene(
             notificationStackScrollView = notificationStackScrollView.get(),
             viewModel = viewModel,
-            headerViewModel = headerViewModel,
+            headerViewModel = viewModel.qsContainerViewModel.shadeHeaderViewModel,
             brightnessMirrorViewModel = brightnessMirrorViewModel,
             notificationsPlaceholderViewModel = notificationsPlaceholderViewModel,
             mediaCarouselController = mediaCarouselController,
@@ -207,18 +207,6 @@ private fun ContentScope.QuickSettingsScene(
 
     val shadeHorizontalPadding =
         dimensionResource(id = R.dimen.notification_panel_margin_horizontal)
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        BrightnessMirror(
-            viewModel = brightnessMirrorViewModel,
-            qsSceneAdapter = viewModel.qsSceneAdapter,
-            modifier =
-                Modifier.thenIf(cutoutLocation != CutoutLocation.CENTER) {
-                        Modifier.displayCutoutPadding()
-                    }
-                    .align(Alignment.TopCenter),
-        )
-    }
 
     val shouldPunchHoleBehindScrim =
         layoutState.isTransitioningBetween(Scenes.Gone, Scenes.QuickSettings) ||
@@ -366,39 +354,56 @@ private fun ContentScope.QuickSettingsScene(
                             CollapsedShadeHeader(viewModel = headerViewModel, isSplitShade = false)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    // This view has its own horizontal padding
-                    val content: @Composable () -> Unit = {
-                        QuickSettings(
-                            viewModel.qsSceneAdapter,
-                            { viewModel.qsSceneAdapter.qsHeight },
-                            isSplitShade = false,
-                            modifier = Modifier.layoutId(QSMediaMeasurePolicy.LayoutId.QS),
+                    Column(modifier = Modifier.element(ElementKeys.QuickSettingsContent)) {
+                        BrightnessSliderContainer(
+                            viewModel.qsContainerViewModel.brightnessSliderViewModel,
+                            containerColors =
+                                ContainerColors(
+                                    Color.Transparent,
+                                    ContainerColors.defaultContainerColor,
+                                ),
+                            modifier = Modifier.padding(
+                                horizontal =
+                                    dimensionResource(id = R.dimen.qs_horizontal_margin)
+                            )
                         )
+                        // This view has its own horizontal padding
+                        val content: @Composable () -> Unit = {
+                            QuickSettings(
+                                viewModel.qsSceneAdapter,
+                                { viewModel.qsSceneAdapter.qsHeight },
+                                isSplitShade = false,
+                                modifier = Modifier.layoutId(QSMediaMeasurePolicy.LayoutId.QS),
+                            )
 
-                        MediaCarousel(
-                            isVisible = isMediaVisible,
-                            mediaHost = mediaHost,
-                            modifier =
-                                Modifier.fillMaxWidth()
-                                    .layoutId(QSMediaMeasurePolicy.LayoutId.Media)
-                                    .padding(
-                                        horizontal =
-                                            dimensionResource(id = R.dimen.qs_horizontal_margin)
-                                    ),
-                            carouselController = mediaCarouselController,
-                        )
-                    }
-                    val landscapeQsMediaMeasurePolicy = remember {
-                        QSMediaMeasurePolicy(
-                            { viewModel.qsSceneAdapter.qsHeight },
-                            { mediaOffset.roundToPx() },
-                        )
-                    }
-                    Column(modifier = Modifier.padding(horizontal = shadeHorizontalPadding)) {
-                        if (mediaInRow) {
-                            Layout(content = content, measurePolicy = landscapeQsMediaMeasurePolicy)
-                        } else {
-                            content()
+                            MediaCarousel(
+                                isVisible = isMediaVisible,
+                                mediaHost = mediaHost,
+                                modifier =
+                                    Modifier.fillMaxWidth()
+                                        .layoutId(QSMediaMeasurePolicy.LayoutId.Media)
+                                        .padding(
+                                            horizontal =
+                                                dimensionResource(id = R.dimen.qs_horizontal_margin)
+                                        ),
+                                carouselController = mediaCarouselController,
+                            )
+                        }
+                        val landscapeQsMediaMeasurePolicy = remember {
+                            QSMediaMeasurePolicy(
+                                { viewModel.qsSceneAdapter.qsHeight },
+                                { mediaOffset.roundToPx() },
+                            )
+                        }
+                        Column(modifier = Modifier.padding(horizontal = shadeHorizontalPadding)) {
+                            if (mediaInRow) {
+                                Layout(
+                                    content = content,
+                                    measurePolicy = landscapeQsMediaMeasurePolicy
+                                )
+                            } else {
+                                content()
+                            }
                         }
                     }
                 }
