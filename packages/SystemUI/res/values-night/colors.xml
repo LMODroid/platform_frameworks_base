@@ -21,6 +21,11 @@
     <!-- The dark background color behind the shade -->
     <color name="shade_scrim_background_dark">@android:color/transparent</color>
 
+    <!-- The main FG tint for shade header items -->
+    <!-- Only applicable when com.android.systemui.shade_header_blur_font_color is enabled -->
+    <color name="shade_header_text_color" android:featureFlag="com.android.systemui.shade_header_blur_font_color">#FFFFFFFF</color>
+    <color name="shade_header_text_color_bg" android:featureFlag="com.android.systemui.shade_header_blur_font_color">#FF000000</color>
+
     <!-- The color of the legacy notifications with customs backgrounds (gingerbread and lollipop.)
     It's fine to override this color since at that point the shade was dark. -->
     <color name="notification_legacy_background_color">@color/GM2_grey_900</color>

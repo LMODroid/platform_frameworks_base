@@ -305,8 +305,8 @@ class ShadeHeaderControllerTest : SysuiTestCase() {
 
         verify(clock).setTextAppearance(R.style.TextAppearance_QS_Status)
         verify(date).setTextAppearance(R.style.TextAppearance_QS_Status)
-        val fgColor = context.getColor(com.android.internal.R.color.materialColorOnSurface)
-        val bgColor = context.getColor(com.android.internal.R.color.materialColorSurfaceDim)
+        val fgColor = context.getColor(R.color.shade_header_text_color)
+        val bgColor = context.getColor(R.color.shade_header_text_color_bg)
         verify(carrierGroup)
             .updateTextAppearanceAndTint(R.style.TextAppearance_QS_Status, fgColor, bgColor)
     }
