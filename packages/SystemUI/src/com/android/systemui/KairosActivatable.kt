@@ -18,8 +18,10 @@ package com.android.systemui
 
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.BuildSpec
+import com.android.systemui.kairos.CoalescingPolicy
 import com.android.systemui.kairos.Events
 import com.android.systemui.kairos.EventsLoop
 import com.android.systemui.kairos.ExperimentalKairosApi
@@ -41,6 +43,7 @@ import dagger.multibindings.IntoMap
 import dagger.multibindings.Multibinds
 import javax.inject.Inject
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -189,7 +192,16 @@ private constructor(
     constructor(
         @Application appScope: CoroutineScope,
         activatables: dagger.Lazy<Set<@JvmSuppressWildcards KairosActivatable>>,
-    ) : this(appScope, activatables, appScope.launchKairosNetwork())
+        @Background bgDispatcher: CoroutineDispatcher,
+    ) : this(
+        appScope = appScope,
+        activatables = activatables,
+        unwrappedNetwork =
+            appScope.launchKairosNetwork(
+                context = bgDispatcher,
+                coalescingPolicy = CoalescingPolicy.Eager,
+            ),
+    )
 
     private val started = CompletableDeferred<Unit>()
 

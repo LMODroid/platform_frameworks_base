@@ -67,6 +67,7 @@ object MobileIconBinderKairos {
     ): Pair<ModernStatusBarViewBinding, Job> {
         val binding =
             ModernStatusBarViewBindingKairosImpl(subId, kairosNetwork, initialVisibilityState)
+        val mobileDrawable = SignalDrawable(view.context)
         return binding to
             scope.launch {
                 kairosNetwork.activateSpec(
@@ -74,6 +75,7 @@ object MobileIconBinderKairos {
                 ) {
                     bind(
                         view = view,
+                        mobileDrawable = mobileDrawable,
                         viewModel = viewModel.applySpec(),
                         logger = logger,
                         binding = binding,
@@ -135,6 +137,7 @@ object MobileIconBinderKairos {
     @ExperimentalKairosApi
     private fun BuildScope.bind(
         view: ViewGroup,
+        mobileDrawable: SignalDrawable,
         viewModel: LocationBasedMobileViewModelKairos,
         logger: MobileViewLogger,
         binding: ModernStatusBarViewBindingKairosImpl,
@@ -152,7 +155,6 @@ object MobileIconBinderKairos {
         val networkTypeView = view.requireViewById<ImageView>(R.id.mobile_type)
         val networkTypeContainer = view.requireViewById<FrameLayout>(R.id.mobile_type_container)
         val iconView = view.requireViewById<ImageView>(R.id.mobile_signal)
-        val mobileDrawable = SignalDrawable(view.context)
         val roamingView = view.requireViewById<ImageView>(R.id.mobile_roaming)
         val roamingSpace = view.requireViewById<Space>(R.id.mobile_roaming_space)
         val dotView = view.requireViewById<StatusBarIconView>(R.id.status_bar_dot)

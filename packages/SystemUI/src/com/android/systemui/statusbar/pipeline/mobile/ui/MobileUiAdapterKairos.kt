@@ -20,6 +20,7 @@ import com.android.systemui.Dumpable
 import com.android.systemui.Flags
 import com.android.systemui.KairosActivatable
 import com.android.systemui.dagger.SysUISingleton
+import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.kairos.BuildScope
 import com.android.systemui.kairos.ExperimentalKairosApi
@@ -36,6 +37,7 @@ import dagger.multibindings.ElementsIntoSet
 import java.io.PrintWriter
 import javax.inject.Inject
 import javax.inject.Provider
+import kotlinx.coroutines.CoroutineDispatcher
 
 /**
  * This class is intended to provide a context to collect on the
@@ -54,6 +56,7 @@ constructor(
     val mobileIconsViewModel: MobileIconsViewModelKairos,
     private val logger: MobileViewLogger,
     dumpManager: DumpManager,
+    @Main private val mainDispatcher: CoroutineDispatcher,
 ) : KairosActivatable, Dumpable {
 
     init {
@@ -74,8 +77,10 @@ constructor(
         combine(mobileIconsViewModel.subscriptionIds, mobileIconsViewModel.isStackable) { a, b ->
                 Pair(a, b)
             }
-            .observe(name = nameTag("MobileUiAdapterKairos.notifyIconController")) {
-                (subIds, isStackable) ->
+            .observe(
+                coroutineContext = mainDispatcher,
+                name = nameTag("MobileUiAdapterKairos.notifyIconController"),
+            ) { (subIds, isStackable) ->
                 logger.logUiAdapterSubIdsSentToIconController(subIds, isStackable)
                 lastValue = subIds
                 if (isStackable) {

@@ -145,7 +145,9 @@ internal class BuildScopeImpl(
         block: EffectScope.(A) -> Unit,
     ): DisposableHandle {
         val nameData = name.toNameData("Events.observe")
-        val interceptor = coroutineContext[ContinuationInterceptor]
+        val interceptor =
+            coroutineContext[ContinuationInterceptor]
+                ?: coroutineScope.coroutineContext[ContinuationInterceptor]
         return observeInternal(nameData, coroutineContext) { effectScope, output ->
             scheduleDispatchedOutput(interceptor = interceptor) { effectScope.block(output) }
         }
