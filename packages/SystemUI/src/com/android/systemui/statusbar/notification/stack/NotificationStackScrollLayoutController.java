@@ -1559,7 +1559,7 @@ public class NotificationStackScrollLayoutController implements Dumpable {
      * Set the maximum number of notifications that can currently be displayed
      */
     public void setMaxDisplayedNotifications(int maxNotifications) {
-        if (SceneContainerFlag.isUnexpectedlyInLegacyMode()) return;
+        SceneContainerFlag.assertInLegacyMode();
         mNotificationListContainer.setMaxDisplayedNotifications(maxNotifications);
     }
 
