@@ -107,7 +107,7 @@ interface CommunalSettingsRepository {
 }
 
 @SysUISingleton
-class CommunalSettingsRepositoryImpl
+open class CommunalSettingsRepositoryImpl
 @Inject
 constructor(
     @Background private val bgDispatcher: CoroutineDispatcher,

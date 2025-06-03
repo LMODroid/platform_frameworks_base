@@ -26,6 +26,9 @@ import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.util.settings.fakeSettings
 
+// Kosmos flag that can be overridden in tests.
+var Kosmos.forceCommunalV2FlagState: Boolean? by Kosmos.Fixture { null }
+
 val Kosmos.communalDefaultBackground: CommunalBackgroundType by
     Kosmos.Fixture {
         if (Flags.glanceableHubBlurredBackground()) {
@@ -37,13 +40,22 @@ val Kosmos.communalDefaultBackground: CommunalBackgroundType by
 
 val Kosmos.communalSettingsRepository: CommunalSettingsRepository by
     Kosmos.Fixture {
-        CommunalSettingsRepositoryImpl(
-            bgDispatcher = testDispatcher,
-            resources = mainResources,
-            featureFlagsClassic = featureFlagsClassic,
-            secureSettings = fakeSettings,
-            broadcastDispatcher = broadcastDispatcher,
-            devicePolicyManager = devicePolicyManager,
-            defaultBackgroundType = communalDefaultBackground,
-        )
+        object :
+            CommunalSettingsRepositoryImpl(
+                bgDispatcher = testDispatcher,
+                resources = mainResources,
+                featureFlagsClassic = featureFlagsClassic,
+                userAwareSecureSettingsRepository = userAwareSecureSettingsRepository,
+                broadcastDispatcher = broadcastDispatcher,
+                devicePolicyManager = devicePolicyManager,
+                defaultBackgroundType = communalDefaultBackground,
+            ) {
+            override fun getV2FlagEnabled(): Boolean {
+                return if (forceCommunalV2FlagState != null) {
+                    forceCommunalV2FlagState as Boolean
+                } else {
+                    super.getV2FlagEnabled()
+                }
+            }
+        }
     }
