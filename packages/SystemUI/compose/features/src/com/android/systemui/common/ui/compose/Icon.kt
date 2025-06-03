@@ -30,17 +30,52 @@ import com.android.systemui.common.shared.model.Icon
  * Icon composable that draws [icon] using [tint].
  *
  * Note: You can use [Color.Unspecified] to disable the tint and keep the original icon colors.
+ *
  * Note: Some drawables aren't compatible with [rememberDrawablePainter], used here for
  * [Icon.Loaded] icons, and won't be resized from their intrinsic size (b/394738023).
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Icon(icon: Icon, modifier: Modifier = Modifier, tint: Color = LocalContentColor.current) {
     val contentDescription = icon.contentDescription?.load()
     when (icon) {
         is Icon.Loaded -> {
-            Icon(rememberDrawablePainter(icon.drawable), { tint }, contentDescription, modifier)
+            Icon(rememberDrawablePainter(icon.drawable), contentDescription, modifier, tint)
         }
-        is Icon.Resource -> Icon(painterResource(icon.res), { tint }, contentDescription, modifier)
+        is Icon.Resource -> {
+            Icon(painterResource(icon.res), contentDescription, modifier, tint)
+        }
+    }
+}
+
+/**
+ * Icon composable that draws [icon] using [tint]. Pass null [tint] to use the default tint color.
+ *
+ * Note: You can use [Color.Unspecified] to disable the tint and keep the original icon colors.
+ *
+ * Note: Some drawables aren't compatible with [rememberDrawablePainter], used here for
+ * [Icon.Loaded] icons, and won't be resized from their intrinsic size (b/394738023).
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Icon(icon: Icon, tint: (() -> Color)?, modifier: Modifier = Modifier) {
+    val localContentColor = LocalContentColor.current
+    val contentDescription = icon.contentDescription?.load()
+    when (icon) {
+        is Icon.Loaded -> {
+            Icon(
+                rememberDrawablePainter(icon.drawable),
+                tint ?: { localContentColor },
+                contentDescription,
+                modifier,
+            )
+        }
+        is Icon.Resource -> {
+            Icon(
+                painterResource(icon.res),
+                tint ?: { localContentColor },
+                contentDescription,
+                modifier,
+            )
+        }
     }
 }

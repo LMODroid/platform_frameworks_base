@@ -163,7 +163,11 @@ fun VolumeSlider(
                                     { iconsState ->
                                         SliderIcon(
                                             icon = {
-                                                Icon(icon = icon, modifier = Modifier.size(24.dp))
+                                                Icon(
+                                                    icon = icon,
+                                                    tint = null,
+                                                    modifier = Modifier.size(24.dp),
+                                                )
                                             },
                                             isVisible = !iconsState.isInactiveTrackEndIconVisible,
                                         )
@@ -174,7 +178,11 @@ fun VolumeSlider(
                                     { iconsState ->
                                         SliderIcon(
                                             icon = {
-                                                Icon(icon = icon, modifier = Modifier.size(24.dp))
+                                                Icon(
+                                                    icon = icon,
+                                                    tint = null,
+                                                    modifier = Modifier.size(24.dp),
+                                                )
                                             },
                                             isVisible = iconsState.isInactiveTrackEndIconVisible,
                                         )
