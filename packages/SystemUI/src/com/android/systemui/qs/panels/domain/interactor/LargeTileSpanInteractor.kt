@@ -17,7 +17,7 @@
 package com.android.systemui.qs.panels.domain.interactor
 
 import com.android.systemui.dagger.SysUISingleton
-import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.qs.panels.data.repository.LargeTileSpanRepository
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.stateIn
 class LargeTileSpanInteractor
 @Inject
 constructor(
-    @Application scope: CoroutineScope,
+    @Background scope: CoroutineScope,
     private val repo: LargeTileSpanRepository,
     columnsInteractor: QSColumnsInteractor,
 ) {

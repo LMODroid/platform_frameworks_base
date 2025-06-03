@@ -18,7 +18,7 @@ package com.android.systemui.qs.panels.domain.interactor
 
 import com.android.internal.logging.UiEventLogger
 import com.android.systemui.dagger.SysUISingleton
-import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.log.LogBuffer
 import com.android.systemui.log.core.LogLevel
 import com.android.systemui.qs.QSEditEvent
@@ -45,13 +45,13 @@ constructor(
     private val uiEventLogger: UiEventLogger,
     largeTilesSpanInteractor: LargeTileSpanInteractor,
     @PanelsLog private val logBuffer: LogBuffer,
-    @Application private val applicationScope: CoroutineScope,
+    @Background private val scope: CoroutineScope,
 ) {
 
     val largeTilesSpecs =
         preferencesInteractor.largeTilesSpecs
             .onEach { logChange(it) }
-            .stateIn(applicationScope, SharingStarted.Eagerly, repo.defaultLargeTiles)
+            .stateIn(scope, SharingStarted.Eagerly, repo.defaultLargeTiles)
 
     val largeTilesSpan: StateFlow<Int> = largeTilesSpanInteractor.span
 
