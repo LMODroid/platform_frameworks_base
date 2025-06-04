@@ -45,8 +45,8 @@
     </style>
 
     <style name="Theme.MaterialAlertDialog.Variant" parent="@style/Theme.MaterialAlertDialog.System">
-        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Material.Button</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Material.Button</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.PackageInstaller.Material.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.PackageInstaller.Material.Button</item>
     </style>
 
     <style name="Theme.UninstallerActivity"

@@ -20,13 +20,13 @@ import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_ACTION_REAS
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_APP_SNIPPET;
 import static com.android.packageinstaller.v2.model.PackageUtil.ARGS_SOURCE_PKG;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,9 +36,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.android.packageinstaller.R;
 import com.android.packageinstaller.v2.model.InstallUserActionRequired;
-import com.android.packageinstaller.v2.model.PackageUtil;
 import com.android.packageinstaller.v2.model.PackageUtil.AppSnippet;
 import com.android.packageinstaller.v2.ui.InstallActionListener;
+import com.android.packageinstaller.v2.ui.UiUtil;
 
 /**
  * Dialog to show when the installing app is an unknown source and needs AppOp grant to install
@@ -52,7 +52,7 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
     @NonNull
     private InstallActionListener mInstallActionListener;
     @NonNull
-    private AlertDialog mDialog;
+    private Dialog mDialog;
 
     public ExternalSourcesBlockedFragment() {
         // Required for DialogFragment
@@ -88,7 +88,8 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         setDialogData(requireArguments());
 
-        View dialogView = getLayoutInflater().inflate(R.layout.install_fragment_layout, null);
+        View dialogView = getLayoutInflater().inflate(
+                UiUtil.getInstallationLayoutResId(requireContext()), null);
 
         dialogView.requireViewById(R.id.app_snippet).setVisibility(View.VISIBLE);
         ((ImageView) dialogView.requireViewById(R.id.app_icon))
@@ -101,24 +102,14 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
 
         Log.i(LOG_TAG, "Creating " + LOG_TAG + "\n" + mDialogData);
 
-        int themeResId = 0;
-        // The base theme inherits a deviceDefault theme. Applying a material style on the base
-        // theme to support the material design.
-        if (PackageUtil.isMaterialDesignEnabled(requireContext())) {
-            Log.d(LOG_TAG, "Apply material design");
-            themeResId = R.style.Theme_MaterialAlertDialog_Variant;
-        }
-
-        mDialog = new AlertDialog.Builder(requireContext(), themeResId)
-                .setTitle(R.string.title_unknown_source_blocked)
-                .setView(dialogView)
-                .setPositiveButton(R.string.external_sources_settings,
-                        (dialog, which) -> mInstallActionListener.sendUnknownAppsIntent(
-                            mDialogData.getUnknownSourcePackageName()))
-                .setNegativeButton(R.string.cancel,
-                        (dialog, which) -> mInstallActionListener.onNegativeResponse(
-                                mDialogData.getStageCode()))
-                .create();
+        mDialog = UiUtil.getAlertDialog(requireContext(),
+                getString(R.string.title_unknown_source_blocked), dialogView,
+                R.string.external_sources_settings, R.string.cancel,
+                (dialog, which) -> mInstallActionListener.sendUnknownAppsIntent(
+                        mDialogData.getUnknownSourcePackageName()),
+                (dialog, which) -> mInstallActionListener.onNegativeResponse(
+                        mDialogData.getStageCode()),
+                UiUtil.getTextButtonThemeResId(requireContext()));
         return mDialog;
     }
 
@@ -131,7 +122,10 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
+        Button button = UiUtil.getAlertDialogPositiveButton(mDialog);
+        if (button != null) {
+            button.setFilterTouchesWhenObscured(true);
+        }
     }
 
     @Override
@@ -139,13 +133,19 @@ public class ExternalSourcesBlockedFragment extends DialogFragment {
         super.onPause();
         // This prevents tapjacking since an overlay activity started in front of Pia will
         // cause Pia to be paused.
-        mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+        Button button = UiUtil.getAlertDialogPositiveButton(mDialog);
+        if (button != null) {
+            button.setEnabled(false);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
+        Button button = UiUtil.getAlertDialogPositiveButton(mDialog);
+        if (button != null) {
+            button.setEnabled(true);
+        }
     }
 
     private void setDialogData(Bundle args) {

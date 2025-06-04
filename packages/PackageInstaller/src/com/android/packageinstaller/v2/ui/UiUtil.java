@@ -49,6 +49,14 @@ public class UiUtil {
         }
     }
 
+    /** If material design is enabled, return the material theme resource id of the text button.
+     * Otherwise, return {@code 0} to use the default theme.
+     */
+    public static int getTextButtonThemeResId(@NonNull Context context) {
+        return PackageUtil.isMaterialDesignEnabled(context)
+                ? R.style.Theme_MaterialAlertDialog_Variant : 0;
+    }
+
     /**
      * Gets the positive button in the {@code dialog}. Returns null if the specified
      * button does not exist or the dialog has not yet been fully created.
@@ -84,15 +92,28 @@ public class UiUtil {
             @NonNull View contentView, int positiveBtnTextResId, int negativeBtnTextResId,
             @Nullable DialogInterface.OnClickListener positiveBtnListener,
             @Nullable DialogInterface.OnClickListener negativeBtnListener) {
+        return getAlertDialog(context, title, contentView, positiveBtnTextResId,
+                negativeBtnTextResId, positiveBtnListener, negativeBtnListener,
+                /* themeResId= */ 0);
+    }
+
+    /**
+     * If material design is enabled, return the MaterialAlertDialog. Otherwise, return the
+     * system AlertDialog.
+     */
+    public static Dialog getAlertDialog(@NonNull Context context,
+            @NonNull String title, @NonNull View contentView, int positiveBtnTextResId,
+            int negativeBtnTextResId, @Nullable DialogInterface.OnClickListener positiveBtnListener,
+            @Nullable DialogInterface.OnClickListener negativeBtnListener, int themeResId) {
         if (PackageUtil.isMaterialDesignEnabled(context)) {
-            return new MaterialAlertDialogBuilder(context)
+            return new MaterialAlertDialogBuilder(context, themeResId)
                     .setTitle(title)
                     .setView(contentView)
                     .setPositiveButton(positiveBtnTextResId, positiveBtnListener)
                     .setNegativeButton(negativeBtnTextResId, negativeBtnListener)
                     .create();
         } else {
-            return new AlertDialog.Builder(context)
+            return new AlertDialog.Builder(context, themeResId)
                     .setTitle(title)
                     .setView(contentView)
                     .setPositiveButton(positiveBtnTextResId, positiveBtnListener)
