@@ -98,8 +98,10 @@ import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.settingslib.Utils;
 import com.android.settingslib.drawable.CircleFramedDrawable;
+import com.android.systemui.Flags;
 import com.android.systemui.FontStyles;
 import com.android.systemui.Gefingerpoken;
+import com.android.systemui.bouncer.ui.BouncerColors;
 import com.android.systemui.classifier.FalsingA11yDelegate;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.res.R;
@@ -853,8 +855,13 @@ public class KeyguardSecurityContainer extends ConstraintLayout {
         if (mTransparentModeEnabled) {
             setBackgroundColor(Color.TRANSPARENT);
         } else {
-            setBackgroundColor(
-                    getContext().getColor(com.android.internal.R.color.materialColorSurfaceDim));
+            if (Flags.bouncerUiRevamp2()) {
+                setBackgroundColor(BouncerColors.surfaceColor(mContext, false));
+            } else {
+                setBackgroundColor(
+                        getContext().getColor(
+                                com.android.internal.R.color.materialColorSurfaceDim));
+            }
         }
         invalidate();
     }

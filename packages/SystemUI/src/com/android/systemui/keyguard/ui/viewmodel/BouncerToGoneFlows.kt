@@ -24,6 +24,7 @@ import com.android.app.animation.Interpolators.EMPHASIZED_ACCELERATE
 import com.android.systemui.Flags
 import com.android.systemui.bouncer.domain.interactor.PrimaryBouncerInteractor
 import com.android.systemui.bouncer.shared.flag.ComposeBouncerFlags
+import com.android.systemui.bouncer.ui.BouncerColors.surfaceColor
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.keyguard.domain.interactor.KeyguardDismissActionInteractor
 import com.android.systemui.keyguard.shared.model.Edge
@@ -37,7 +38,6 @@ import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import com.android.systemui.shade.ui.ShadeColors.notificationScrim
 import com.android.systemui.shade.ui.ShadeColors.shadePanel
 import com.android.systemui.statusbar.SysuiStatusBarStateController
-import com.android.systemui.statusbar.phone.ScrimController
 import com.android.systemui.window.domain.interactor.WindowRootViewBlurInteractor
 import dagger.Lazy
 import javax.inject.Inject
@@ -199,8 +199,7 @@ constructor(
             blurSupported = isBlurCurrentlySupported,
             withScrim = true
         ))
-        val bouncerBehindAlpha =
-            if (isBlurCurrentlySupported) ScrimController.TRANSPARENT_BOUNCER_SCRIM_ALPHA else 1.0f
+        val bouncerBehindAlpha = colorAlpha(context.surfaceColor(isBlurCurrentlySupported))
         return when {
             Flags.bouncerUiRevamp() && Flags.notificationShadeBlur() -> {
                 defaultValue.copy(

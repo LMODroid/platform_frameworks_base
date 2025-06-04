@@ -59,6 +59,7 @@ import com.android.systemui.Dumpable;
 import com.android.systemui.Flags;
 import com.android.systemui.animation.ShadeInterpolation;
 import com.android.systemui.bouncer.shared.constants.KeyguardBouncerConstants;
+import com.android.systemui.bouncer.ui.BouncerColors;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dock.DockManager;
@@ -185,7 +186,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                     return BUSY_SCRIM_ALPHA;
                 }
             }
-            return TRANSPARENT_BOUNCER_SCRIM_ALPHA;
+            return Color.alpha(BouncerColors.surfaceColor(mContext, true)) / 255.0f;
         } else {
             return BUSY_SCRIM_ALPHA;
         }
@@ -259,8 +260,6 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     private float mAdditionalScrimBehindAlphaKeyguard = 0f;
     // Combined scrim behind keyguard alpha of default scrim + additional scrim
     private float mScrimBehindAlphaKeyguard = KEYGUARD_SCRIM_ALPHA;
-
-    public static final float TRANSPARENT_BOUNCER_SCRIM_ALPHA = 0.54f;
 
     private float mRawPanelExpansionFraction;
     private float mPanelScrimMinFraction;
@@ -539,6 +538,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         debugLog("blur support changed to " + isBlurSupported + " for current scrim state: "
                 + mState.name());
         if (Flags.bouncerUiRevamp()) {
+            updateThemeColors();
             for (ScrimState state : ScrimState.values()) {
                 state.setDefaultScrimAlpha(getDefaultScrimAlpha(true));
             }
@@ -1658,10 +1658,15 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         final boolean isBackgroundLight = !ContrastColorUtil.isColorDark(background);
         mColors.setSupportsDarkText(isBackgroundLight);
 
-        int surface = mContext.getColor(
-                com.android.internal.R.color.materialColorSurface);
+        int surface;
+        if (Flags.bouncerUiRevamp()) {
+            surface = BouncerColors.surfaceColor(mContext, isBlurCurrentlySupported());
+        } else {
+            surface = mContext.getColor(
+                    com.android.internal.R.color.materialColorSurface);
+        }
         for (ScrimState state : ScrimState.values()) {
-            state.setSurfaceColor(surface);
+            state.setBouncerSurfaceColor(surface);
             state.setShadePanelColor(getShadePanelColor());
             state.setNotificationScrimColor(getNotificationsScrimColor());
         }

@@ -295,4 +295,9 @@
     <!-- Low light Dream -->
     <color name="low_light_clock_background_color">#000000</color>
     <color name="low_light_clock_text_color">#CCCCCC</color>
+
+    <!-- BG color for confirm and backspace button in non-auto confirm PIN bouncer.   -->
+    <color name="pin_bouncer_action_button_bg">@androidprv:color/surface_effect_0</color>
+    <!-- Bouncer background when blur is not enabled.   -->
+    <color name="bouncer_fallback_bg">@android:color/system_accent2_200</color>
 </resources>

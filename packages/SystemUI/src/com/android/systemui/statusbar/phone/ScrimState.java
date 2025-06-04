@@ -29,8 +29,6 @@ import com.android.systemui.statusbar.notification.stack.StackStateAnimator;
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi;
 
-import java.util.function.Supplier;
-
 /**
  * Possible states of the ScrimController state machine.
  */
@@ -125,28 +123,28 @@ public enum ScrimState {
         @Override
         public void prepare(ScrimState previousState) {
             if (Flags.bouncerUiRevamp()) {
-                mBehindAlpha = mDefaultScrimAlpha;
+                mBehindAlpha = ScrimState.getColorAlpha(mBouncerSurfaceColor);
                 mNotifAlpha = 0f;
-                mBehindTint = mNotifTint = mSurfaceColor;
+                mBehindTint = mNotifTint = mBouncerSurfaceColor;
                 mFrontAlpha = 0f;
                 return;
             }
             mBehindAlpha = mClipQsScrim ? 1 : mDefaultScrimAlpha;
-            mBehindTint = mSurfaceColor;
+            mBehindTint = mBouncerSurfaceColor;
             mNotifAlpha = mClipQsScrim ? mDefaultScrimAlpha : 0;
             mNotifTint = Color.TRANSPARENT;
             mFrontAlpha = 0f;
         }
 
         @Override
-        public void setSurfaceColor(int surfaceColor) {
-            super.setSurfaceColor(surfaceColor);
+        public void setBouncerSurfaceColor(int surfaceColor) {
+            super.setBouncerSurfaceColor(surfaceColor);
             if (Flags.bouncerUiRevamp()) {
-                mBehindTint = mNotifTint = mSurfaceColor;
+                mBehindTint = mNotifTint = mBouncerSurfaceColor;
                 return;
             }
             if (!mClipQsScrim) {
-                mBehindTint = mSurfaceColor;
+                mBehindTint = mBouncerSurfaceColor;
             }
         }
     },
@@ -168,8 +166,8 @@ public enum ScrimState {
                     mNotifAlpha = 0f;
                     mBehindAlpha = 0f;
                 }
-                mFrontAlpha = mDefaultScrimAlpha;
-                mFrontTint = mSurfaceColor;
+                mFrontAlpha = ScrimState.getColorAlpha(mBouncerSurfaceColor);
+                mFrontTint = mBouncerSurfaceColor;
                 return;
             }
             // Using previousState values makes SHADE_LOCKED -> BOUNCER_SCRIMMED smoother with no visual breakage
@@ -521,7 +519,7 @@ public enum ScrimState {
     int mFrontTint = Color.TRANSPARENT;
     int mBehindTint = Color.TRANSPARENT;
     int mNotifTint = Color.TRANSPARENT;
-    int mSurfaceColor = Color.TRANSPARENT;
+    int mBouncerSurfaceColor = Color.TRANSPARENT;
 
     int mShadePanelColor = Color.TRANSPARENT;
     int mNotificationScrimColor = Color.TRANSPARENT;
@@ -640,8 +638,8 @@ public enum ScrimState {
         mDefaultScrimAlpha = defaultScrimAlpha;
     }
 
-    public void setSurfaceColor(int surfaceColor) {
-        mSurfaceColor = surfaceColor;
+    public void setBouncerSurfaceColor(int surfaceColor) {
+        mBouncerSurfaceColor = surfaceColor;
     }
 
     public void setShadePanelColor(int shadePanelColor) {
