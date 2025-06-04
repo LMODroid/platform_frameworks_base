@@ -81,7 +81,7 @@ constructor(
         context.resources.getDimensionPixelSize(R.dimen.volume_dialog_slider_vertical_margin)
     }
 
-    fun CoroutineScope.bind(dialog: Dialog) {
+    fun CoroutineScope.bind(dialog: Dialog, isVolumeDialogVertical: Boolean = true) {
         // Root view of the Volume Dialog.
         val root: ViewGroup = dialog.requireViewById(R.id.volume_dialog)
         val mainSliderContainer: View? = root.findViewById(R.id.volume_dialog_main_slider_container)
@@ -129,10 +129,17 @@ constructor(
                         right = insetsValues.right,
                         bottom = insetsValues.bottom,
                     )
-                    mainSliderContainer?.updateMargin(
-                        top = mainSliderVerticalMargin - view.paddingTop,
-                        bottom = mainSliderVerticalMargin - view.paddingBottom,
-                    )
+                    if (isVolumeDialogVertical) {
+                        mainSliderContainer?.updateMargin(
+                            top = mainSliderVerticalMargin - view.paddingTop,
+                            bottom = mainSliderVerticalMargin - view.paddingBottom,
+                        )
+                    } else {
+                        mainSliderContainer?.updateMargin(
+                            left = mainSliderVerticalMargin - view.paddingLeft,
+                            right = mainSliderVerticalMargin - view.paddingRight,
+                        )
+                    }
                     WindowInsets.CONSUMED
                 }
                 .awaitCancellationThenDispose()

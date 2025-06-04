@@ -40,6 +40,7 @@ import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.haptics.slider.SliderHapticFeedbackFilter
 import com.android.systemui.haptics.slider.compose.ui.SliderHapticsViewModel
 import com.android.systemui.res.R
+import com.android.systemui.volume.dialog.domain.interactor.DesktopAudioTileDetailsFeatureInteractor
 import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderScope
 import com.android.systemui.volume.dialog.sliders.ui.compose.SliderTrack
 import com.android.systemui.volume.dialog.sliders.ui.viewmodel.VolumeDialogOverscrollViewModel
@@ -61,8 +62,11 @@ constructor(
     private val viewModel: VolumeDialogSliderViewModel,
     private val overscrollViewModel: VolumeDialogOverscrollViewModel,
     private val hapticsViewModelFactory: SliderHapticsViewModel.Factory,
+    private val desktopAudioTileDetailsFeatureInteractor: DesktopAudioTileDetailsFeatureInteractor,
 ) {
     fun bind(view: View) {
+        // Use horizontal volume dialog if the audio tile details view is enabled
+        val isVolumeDialogVertical = !desktopAudioTileDetailsFeatureInteractor.isEnabled()
         val sliderComposeView: ComposeView = view.requireViewById(R.id.volume_dialog_slider)
         sliderComposeView.setContent {
             PlatformTheme {
@@ -70,6 +74,7 @@ constructor(
                     viewModel = viewModel,
                     overscrollViewModel = overscrollViewModel,
                     hapticsViewModelFactory = hapticsViewModelFactory,
+                    isVolumeDialogVertical = isVolumeDialogVertical,
                 )
             }
         }
@@ -82,6 +87,7 @@ private fun VolumeDialogSlider(
     viewModel: VolumeDialogSliderViewModel,
     overscrollViewModel: VolumeDialogOverscrollViewModel,
     hapticsViewModelFactory: SliderHapticsViewModel.Factory,
+    isVolumeDialogVertical: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val colors =
@@ -119,7 +125,7 @@ private fun VolumeDialogSlider(
         onValueChangeFinished = { viewModel.onSliderChangeFinished(it) },
         isEnabled = !sliderStateModel.isDisabled,
         isReverseDirection = true,
-        isVertical = true,
+        isVertical = isVolumeDialogVertical,
         colors = colors,
         interactionSource = interactionSource,
         haptics =
@@ -127,7 +133,12 @@ private fun VolumeDialogSlider(
                 hapticsViewModelFactory = hapticsViewModelFactory,
                 hapticConfigs =
                     VolumeHapticsConfigsProvider.continuousConfigs(SliderHapticFeedbackFilter()),
-                orientation = Orientation.Vertical,
+                orientation =
+                    if (isVolumeDialogVertical) {
+                        Orientation.Vertical
+                    } else {
+                        Orientation.Horizontal
+                    },
             ),
         stepDistance = 1f,
         track = { sliderState ->
@@ -135,7 +146,7 @@ private fun VolumeDialogSlider(
                 sliderState,
                 colors = colors,
                 isEnabled = !sliderStateModel.isDisabled,
-                isVertical = true,
+                isVertical = isVolumeDialogVertical,
                 activeTrackEndIcon = { iconsState ->
                     SliderIcon(
                         icon = {
@@ -168,7 +179,12 @@ private fun VolumeDialogSlider(
                 interactionSource = interactions,
                 enabled = !sliderStateModel.isDisabled,
                 colors = colors,
-                thumbSize = DpSize(52.dp, 4.dp),
+                thumbSize =
+                    if (isVolumeDialogVertical) {
+                        DpSize(52.dp, 4.dp)
+                    } else {
+                        DpSize(4.dp, 52.dp)
+                    },
             )
         },
         accessibilityParams = AccessibilityParams(contentDescription = sliderStateModel.label),
