@@ -50,6 +50,7 @@ import android.view.WindowManager;
 import androidx.test.filters.SmallTest;
 
 import com.android.internal.colorextraction.ColorExtractor;
+import com.android.systemui.Flags;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.biometrics.AuthController;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -472,6 +473,38 @@ public class NotificationShadeWindowControllerImplTest extends SysuiTestCase {
         final WindowManager.LayoutParams lp = lpList.get(lpList.size() - 1);
         assertThat(lp.preferredMaxDisplayRefreshRate).isEqualTo(0);
         assertThat(lp.preferredMinDisplayRefreshRate).isEqualTo(0);
+    }
+
+    @EnableFlags(Flags.FLAG_INSTANT_HIDE_SHADE)
+    @Test
+    public void afterActivityLaunch_rootViewInvisible() {
+        // GIVEN the panel is visible
+        mNotificationShadeWindowController.setPanelVisible(true);
+        verify(mNotificationShadeWindowView).setVisibility(eq(View.VISIBLE));
+
+        // WHEN the shade is force-hidden at the end of an activity launch
+        mNotificationShadeWindowController.setLaunchingActivity(true);
+        mNotificationShadeWindowController.setForceHideAfterActivityLaunch(true);
+
+        // THEN the panel is invisible
+        verify(mNotificationShadeWindowView).setVisibility(eq(View.INVISIBLE));
+    }
+
+    @EnableFlags(Flags.FLAG_INSTANT_HIDE_SHADE)
+    @Test
+    public void setKeyguardFadingAway_doesNothing_whenForceHidden() {
+        // GIVEN the panel is visible force-hidden at the end of an activity launch
+        mNotificationShadeWindowController.setLaunchingActivity(true);
+        mNotificationShadeWindowController.setForceHideAfterActivityLaunch(true);
+        verify(mNotificationShadeWindowView).setVisibility(eq(View.INVISIBLE));
+        reset(mNotificationShadeWindowView);
+
+        // WHEN keyguard is fading away, followed by the panel not being force-hidden anymore
+        mNotificationShadeWindowController.setKeyguardFadingAway(true);
+        mNotificationShadeWindowController.setLaunchingActivity(false);
+
+        // THEN the panel remains invisible
+        verify(mNotificationShadeWindowView, never()).setVisibility(eq(View.VISIBLE));
     }
 
     @Test

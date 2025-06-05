@@ -48,6 +48,7 @@ class NotificationShadeWindowState(
     // TODO: forceUserActivity seems to be unused, delete?
     @JvmField var forceUserActivity: Boolean = false,
     @JvmField var launchingActivityFromNotification: Boolean = false,
+    @JvmField var forceHideAfterActivityLaunch: Boolean = false,
     @JvmField var mediaBackdropShowing: Boolean = false,
     @JvmField var windowNotTouchable: Boolean = false,
     @JvmField var componentsForcingTopUi: MutableSet<String> = mutableSetOf(),

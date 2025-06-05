@@ -62,6 +62,7 @@ import com.android.app.animation.Interpolators
 import com.android.internal.annotations.VisibleForTesting
 import com.android.internal.policy.ScreenDecorationsUtils
 import com.android.systemui.Flags.activityTransitionUseLargestWindow
+import com.android.systemui.Flags.instantHideShade
 import com.android.systemui.Flags.moveTransitionAnimationLayer
 import com.android.systemui.Flags.translucentOccludingActivityFix
 import com.android.systemui.animation.TransitionAnimator.Companion.assertLongLivedReturnAnimations
@@ -1584,7 +1585,7 @@ constructor(
 
                     override fun onTransitionAnimationEnd(isExpandingFullyAbove: Boolean) {
                         listener?.onTransitionAnimationEnd()
-                        iCallback?.invoke()
+                        if (!instantHideShade()) iCallback?.invoke()
 
                         if (DEBUG_TRANSITION_ANIMATION) {
                             Log.d(
@@ -1595,6 +1596,8 @@ constructor(
                             )
                         }
                         delegate.onTransitionAnimationEnd(isExpandingFullyAbove)
+
+                        if (instantHideShade()) iCallback?.invoke()
                     }
 
                     override fun onTransitionAnimationProgress(

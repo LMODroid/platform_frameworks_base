@@ -43,6 +43,7 @@ import android.view.WindowManagerGlobal;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.Dumpable;
+import com.android.systemui.Flags;
 import com.android.systemui.biometrics.AuthController;
 import com.android.systemui.bouncer.shared.flag.ComposeBouncerFlags;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -502,11 +503,19 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
                 || state.headsUpNotificationShowing
                 || state.scrimsVisibility != ScrimController.TRANSPARENT)
                 || state.launchingActivityFromNotification;
+
+        if (Flags.instantHideShade() && state.launchingActivityFromNotification
+                && state.forceHideAfterActivityLaunch) {
+            // If we're at the end of a launch animation, we must force the window to be hidden to
+            // avoid flickers caused by async state updates.
+            isExpanded = false;
+        }
+
         mLogger.logIsExpanded(isExpanded, state.forceWindowCollapsed,
                 state.isKeyguardShowingAndNotOccluded(), state.panelVisible,
                 state.keyguardFadingAway, state.bouncerShowing, state.headsUpNotificationShowing,
                 state.scrimsVisibility != ScrimController.TRANSPARENT,
-                state.launchingActivityFromNotification);
+                state.launchingActivityFromNotification, state.forceHideAfterActivityLaunch);
         return isExpanded;
     }
 
@@ -764,6 +773,14 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
 
     @Override
     public void setKeyguardFadingAway(boolean keyguardFadingAway) {
+        if (Flags.instantHideShade()
+                && keyguardFadingAway && mCurrentState.forceHideAfterActivityLaunch) {
+            // If we're force-hiding the window at the end of an activity launch, we should not mark
+            // it as fading away, or we might end up in the wrong state once the force-hiding flag
+            // is reset.
+            return;
+        }
+
         mCurrentState.keyguardFadingAway = keyguardFadingAway;
         apply(mCurrentState);
     }
@@ -788,6 +805,14 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
     @Override
     public void setLaunchingActivity(boolean launching) {
         mCurrentState.launchingActivityFromNotification = launching;
+        // Whenever we start or end a launch, reset the hide value.
+        mCurrentState.forceHideAfterActivityLaunch = false;
+        apply(mCurrentState);
+    }
+
+    @Override
+    public void setForceHideAfterActivityLaunch(boolean forceHideAfterActivityLaunch) {
+        mCurrentState.forceHideAfterActivityLaunch = forceHideAfterActivityLaunch;
         apply(mCurrentState);
     }
 

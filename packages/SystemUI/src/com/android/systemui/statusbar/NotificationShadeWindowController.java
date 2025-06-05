@@ -109,6 +109,9 @@ public interface NotificationShadeWindowController extends RemoteInputController
         return false;
     }
 
+    /** Sets whether to force the shade to be invisible after a launch animation. */
+    default void setForceHideAfterActivityLaunch(boolean forceHideAfterActivityLaunch) {}
+
     /** Sets the state of whether the scrim is visible or not. */
     default void setScrimsVisibility(int scrimsVisibility) {}
 
