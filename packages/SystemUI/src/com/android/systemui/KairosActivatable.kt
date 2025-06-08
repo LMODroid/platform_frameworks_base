@@ -42,6 +42,7 @@ import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 import dagger.multibindings.Multibinds
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -184,14 +185,14 @@ private class KairosBuilderImpl @Inject constructor() : KairosBuilder {
 class KairosCoreStartable
 private constructor(
     private val appScope: CoroutineScope,
-    private val activatables: dagger.Lazy<Set<@JvmSuppressWildcards KairosActivatable>>,
+    private val activatables: Provider<Set<@JvmSuppressWildcards KairosActivatable>>,
     private val unwrappedNetwork: RootKairosNetwork,
 ) : CoreStartable, KairosNetwork by unwrappedNetwork {
 
     @Inject
     constructor(
         @Application appScope: CoroutineScope,
-        activatables: dagger.Lazy<Set<@JvmSuppressWildcards KairosActivatable>>,
+        activatables: Provider<Set<@JvmSuppressWildcards KairosActivatable>>,
         @Background bgDispatcher: CoroutineDispatcher,
     ) : this(
         appScope = appScope,
@@ -207,8 +208,11 @@ private constructor(
 
     override fun start() {
         appScope.launch {
+            // Many of our Dagger-provided classes are not safe to init off of the main thread, so
+            // query the [Provider] here outside of [activateSpec].
+            val activatableSet = activatables.get()
             unwrappedNetwork.activateSpec(nameTag("KairosCoreStartable")) {
-                for (activatable in activatables.get()) {
+                for (activatable in activatableSet) {
                     activatable.run { activate() }
                 }
                 effect(name = nameTag("KairosCoreStartable::notifyStarted")) {
