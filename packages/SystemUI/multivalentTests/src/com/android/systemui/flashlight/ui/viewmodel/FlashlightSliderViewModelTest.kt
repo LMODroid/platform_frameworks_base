@@ -31,6 +31,7 @@ import com.android.systemui.kosmos.runCurrent
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.lifecycle.activateIn
+import com.android.systemui.res.R
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
@@ -160,7 +161,7 @@ class FlashlightSliderViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun updateInteractor_updatesState() =
+    fun updateInteractor_updatesLevel() =
         kosmos.runTest {
             flashlightInteractor.setEnabled(true)
             runCurrent()
@@ -194,6 +195,32 @@ class FlashlightSliderViewModelTest : SysuiTestCase() {
 
             assertThat(underTest.currentFlashlightLevel!!.enabled).isEqualTo(true)
             assertThat(underTest.currentFlashlightLevel!!.level).isEqualTo(MAX_LEVEL)
+        }
+
+    @Test
+    fun flashlightIsAdjustable_turnsTrueAfterInitialization() =
+        kosmos.runTest {
+            assertThat(underTest.isFlashlightAdjustable).isFalse()
+
+            runCurrent()
+
+            assertThat(underTest.isFlashlightAdjustable).isTrue()
+        }
+
+    @Test
+    fun testCorrectFlashlightIconForDifferentPercentages() =
+        kosmos.runTest {
+            assertThat(FlashlightSliderViewModel.getIconForPercentage(0f))
+                .isEqualTo(R.drawable.vd_flashlight_off)
+
+            assertThat(FlashlightSliderViewModel.getIconForPercentage(1f))
+                .isEqualTo(R.drawable.vd_flashlight_on)
+
+            assertThat(FlashlightSliderViewModel.getIconForPercentage(99f))
+                .isEqualTo(R.drawable.vd_flashlight_on)
+
+            assertThat(FlashlightSliderViewModel.getIconForPercentage(100f))
+                .isEqualTo(R.drawable.vd_flashlight_on)
         }
 
     private companion object {

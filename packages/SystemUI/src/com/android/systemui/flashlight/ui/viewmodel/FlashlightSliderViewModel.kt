@@ -16,15 +16,22 @@
 
 package com.android.systemui.flashlight.ui.viewmodel
 
+import android.content.Context
+import androidx.annotation.DrawableRes
+import androidx.annotation.FloatRange
 import androidx.compose.runtime.getValue
 import com.android.internal.logging.UiEventLogger
+import com.android.systemui.common.shared.model.Icon
+import com.android.systemui.common.shared.model.asIcon
 import com.android.systemui.flashlight.domain.interactor.FlashlightInteractor
 import com.android.systemui.flashlight.shared.logger.FlashlightLogger
 import com.android.systemui.flashlight.shared.logger.FlashlightUiEvent
 import com.android.systemui.flashlight.shared.model.FlashlightModel
+import com.android.systemui.graphics.ImageLoader
 import com.android.systemui.haptics.slider.compose.ui.SliderHapticsViewModel
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
+import com.android.systemui.res.R
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.filterIsInstance
@@ -38,6 +45,7 @@ constructor(
     private val flashlightInteractor: FlashlightInteractor,
     private val logger: FlashlightLogger,
     private val uiEventLogger: UiEventLogger,
+    private val imageLoader: ImageLoader,
 ) : ExclusiveActivatable() {
     private val hydrator = Hydrator("FlashlightSliderViewModel.hydrator")
 
@@ -45,11 +53,10 @@ constructor(
         hydrator.hydratedStateOf(
             "currentFlashlightLevel",
             flashlightInteractor.state.value as? FlashlightModel.Available.Level,
-            // TODO (b/413736768): disable slider if flashlight becomes un-adjustable mid-slide!
             flashlightInteractor.state.filterIsInstance(FlashlightModel.Available.Level::class),
         )
 
-    private val isFlashlightAdjustable: Boolean by
+    val isFlashlightAdjustable: Boolean by
         hydrator.hydratedStateOf(
             "isFlashlightAdjustable",
             flashlightInteractor.state.value is FlashlightModel.Available.Level,
@@ -82,8 +89,28 @@ constructor(
         }
     }
 
+    suspend fun loadImage(@DrawableRes resId: Int, context: Context): Icon.Loaded {
+        return imageLoader
+            .loadDrawable(
+                android.graphics.drawable.Icon.createWithResource(context, resId),
+                maxHeight = 200,
+                maxWidth = 200,
+            )!!
+            .asIcon(null, resId)
+    }
+
     @AssistedFactory
     interface Factory {
         fun create(): FlashlightSliderViewModel
+    }
+
+    companion object {
+        @DrawableRes
+        fun getIconForPercentage(@FloatRange(0.0, 100.0) percentage: Float): Int {
+            return when {
+                percentage == 0f -> R.drawable.vd_flashlight_off
+                else -> R.drawable.vd_flashlight_on
+            }
+        }
     }
 }
