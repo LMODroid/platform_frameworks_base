@@ -3915,6 +3915,7 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         switch (mAttrs.type) {
             case TYPE_NOTIFICATION_SHADE:
             case TYPE_STATUS_BAR:
+            case TYPE_STATUS_BAR_ADDITIONAL:
             case TYPE_NAVIGATION_BAR:
             case TYPE_WALLPAPER:
                 return false;
