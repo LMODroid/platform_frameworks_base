@@ -92,6 +92,8 @@ public class KeyguardServiceDelegate {
         public boolean bootCompleted;
         public int screenState;
         public int interactiveState;
+        boolean doKeyguardTimeoutRequested;
+        Bundle doKeyguardTimeoutRequestedOptions;
 
         private void reset() {
             // Assume keyguard is showing and secure until we know for sure. This is here in
@@ -223,6 +225,12 @@ public class KeyguardServiceDelegate {
             }
             if (mKeyguardState.dreaming) {
                 mKeyguardService.onDreamingStarted();
+            }
+            if (mKeyguardState.doKeyguardTimeoutRequested) {
+                mKeyguardService.doKeyguardTimeout(
+                        mKeyguardState.doKeyguardTimeoutRequestedOptions);
+                mKeyguardState.doKeyguardTimeoutRequested = false;
+                mKeyguardState.doKeyguardTimeoutRequestedOptions = null;
             }
         }
 
@@ -407,6 +415,11 @@ public class KeyguardServiceDelegate {
     public void doKeyguardTimeout(Bundle options) {
         if (mKeyguardService != null) {
             mKeyguardService.doKeyguardTimeout(options);
+        } else {
+            mKeyguardState.doKeyguardTimeoutRequested = true;
+            if (options != null) {
+                mKeyguardState.doKeyguardTimeoutRequestedOptions = options;
+            }
         }
     }
 
