@@ -22,7 +22,7 @@ import static android.view.MotionEvent.TOOL_TYPE_FINGER;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_EXCLUDE_FROM_SCREEN_MAGNIFICATION;
 
 import static com.android.systemui.Flags.edgebackGestureHandlerGetRunningTasksBackground;
-import static com.android.systemui.Flags.predictiveBackDelayWmTransition;
+import static com.android.window.flags.Flags.predictiveBackDelayWmTransition;
 import static com.android.systemui.classifier.Classifier.BACK_GESTURE;
 import static com.android.systemui.navigationbar.gestural.Utilities.isTrackpadThreeFingerSwipe;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_TOUCHPAD_GESTURES_DISABLED;

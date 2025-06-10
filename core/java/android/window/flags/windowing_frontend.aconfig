@@ -536,3 +536,12 @@ flag {
     }
 }
 
+flag {
+    name: "predictive_back_delay_wm_transition"
+    namespace: "windowing_frontend"
+    description: "Separate the predictive back transition request from start navigation"
+    bug: "301195601"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}

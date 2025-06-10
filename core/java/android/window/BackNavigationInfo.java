@@ -81,13 +81,6 @@ public final class BackNavigationInfo implements Parcelable {
     public static final String KEY_NAVIGATION_FINISHED = "NavigationFinished";
 
     /**
-     * Key to access the boolean value passed in {#mOnBackNavigationDone} result bundle
-     * that represents if back gesture has been triggered.
-     * @hide
-     */
-    public static final String KEY_GESTURE_FINISHED = "GestureFinished";
-
-    /**
      * Touch gestured has transferred to embedded window, Shell should pilfer pointers so the
      * embedded won't receive motion events.
      * @hide

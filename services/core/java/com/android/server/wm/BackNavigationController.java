@@ -98,6 +98,10 @@ class BackNavigationController {
     private final ArrayList<WindowContainer> mTmpOpenApps = new ArrayList<>();
     private final ArrayList<WindowContainer> mTmpCloseApps = new ArrayList<>();
 
+    // This will be set if the back navigation is in progress before the Shell request predictive
+    // back animation.
+    private AnimationHandler.ScheduleAnimationBuilder mCurrentAnimationBuilder;
+
     // This will be set if the back navigation is in progress and the current transition is still
     // running. The pending animation builder will do the animation stuff includes creating leashes,
     // re-parenting leashes and set launch behind, etc. Will be handled when transition finished.
@@ -148,6 +152,21 @@ class BackNavigationController {
             result.putInt(BackNavigationInfo.KEY_DISPLAY_ID, displayId);
             mGestureRequest.sendResult(result);
             return true;
+        }
+    }
+
+    /**
+     * Set up the necessary leashes for predictive back animation based on previous
+     * startBackNavigation state.
+     */
+    void startPredictiveBackAnimation() {
+        synchronized (mWindowManagerService.mGlobalLock) {
+            if (mCurrentAnimationBuilder == null) {
+                return;
+            }
+            final AnimationHandler.ScheduleAnimationBuilder tmp = mCurrentAnimationBuilder;
+            mCurrentAnimationBuilder = null;
+            scheduleAnimationInner(tmp);
         }
     }
 
@@ -461,12 +480,10 @@ class BackNavigationController {
                                 removedWindowContainer);
                 mBackAnimationInProgress = builder != null;
                 if (mBackAnimationInProgress) {
-                    if (removedWindowContainer.mTransitionController.inTransition()) {
-                        ProtoLog.w(WM_DEBUG_BACK_PREVIEW,
-                                "Pending back animation due to another animation is running");
-                        mPendingAnimationBuilder = builder;
+                    if (Flags.predictiveBackDelayWmTransition()) {
+                        mCurrentAnimationBuilder = builder;
                     } else {
-                        scheduleAnimation(builder);
+                        scheduleAnimationInner(builder);
                     }
                 }
             }
@@ -901,6 +918,10 @@ class BackNavigationController {
             if (isMonitorAnimationOrTransition() && canCancelAnimations()) {
                 clearBackAnimations(true /* cancel */);
             }
+            if (mCurrentAnimationBuilder != null) {
+                notifyAnimationCanceled(mCurrentAnimationBuilder);
+                mCurrentAnimationBuilder = null;
+            }
             cancelPendingAnimation();
         }
     }
@@ -1131,13 +1152,18 @@ class BackNavigationController {
         if (mPendingAnimationBuilder == null) {
             return;
         }
+        notifyAnimationCanceled(mPendingAnimationBuilder);
+        mPendingAnimationBuilder = null;
+        mNavigationMonitor.stopMonitorTransition();
+    }
+
+    private static void notifyAnimationCanceled(
+            @NonNull AnimationHandler.ScheduleAnimationBuilder builder) {
         try {
-            mPendingAnimationBuilder.mBackAnimationAdapter.getRunner().onAnimationCancelled();
+            builder.mBackAnimationAdapter.getRunner().onAnimationCancelled();
         } catch (RemoteException e) {
             Slog.e(TAG, "Remote animation gone", e);
         }
-        mPendingAnimationBuilder = null;
-        mNavigationMonitor.stopMonitorTransition();
     }
 
     /**
@@ -2215,6 +2241,16 @@ class BackNavigationController {
         }
     }
 
+    private void scheduleAnimationInner(AnimationHandler.ScheduleAnimationBuilder builder) {
+        if (mWindowManagerService.mAtmService.getTransitionController().inTransition()) {
+            ProtoLog.w(WM_DEBUG_BACK_PREVIEW,
+                    "Pending back animation due to another animation is running");
+            mPendingAnimationBuilder = builder;
+        } else {
+            scheduleAnimation(builder);
+        }
+    }
+
     private void onBackNavigationDone(Bundle result, int backType) {
         if (result == null) {
             return;
@@ -2232,6 +2268,7 @@ class BackNavigationController {
                 // All animation should be done, clear any un-send animation.
                 mPendingAnimation = null;
                 mPendingAnimationBuilder = null;
+                mCurrentAnimationBuilder = null;
             }
         }
     }

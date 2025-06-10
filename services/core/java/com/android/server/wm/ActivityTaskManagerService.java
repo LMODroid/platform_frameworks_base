@@ -1895,6 +1895,18 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     }
 
     @Override
+    public void startPredictiveBackAnimation() {
+        mAmInternal.enforceCallingPermission(START_TASKS_FROM_RECENTS,
+                "startPredictiveBackAnimation()");
+        final long origId = Binder.clearCallingIdentity();
+        try {
+            mBackNavigationController.startPredictiveBackAnimation();
+        } finally {
+            Binder.restoreCallingIdentity(origId);
+        }
+    }
+
+    @Override
     public BackNavigationInfo startBackNavigation(
             RemoteCallback navigationObserver, BackAnimationAdapter adapter) {
         mAmInternal.enforceCallingPermission(START_TASKS_FROM_RECENTS,

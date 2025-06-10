@@ -382,6 +382,12 @@ interface IActivityTaskManager {
             in RemoteCallback navigationObserver, in BackAnimationAdapter adaptor);
 
     /**
+     * This setups the leashed for sysui to animate the current back gesture.
+     * Only valid after startBackNavigation.
+     */
+    void startPredictiveBackAnimation();
+
+    /**
      * registers a callback to be invoked when a background activity launch is aborted.
      *
      * @param observer callback to be registered.
