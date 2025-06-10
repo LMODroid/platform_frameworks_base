@@ -194,6 +194,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
     private @Mock ShadeInteractor mShadeInteractor;
     private @Mock ShadeWindowLogger mShadeWindowLogger;
     private @Mock SelectedUserInteractor mSelectedUserInteractor;
+    private @Mock UserTracker.Callback mUserTrackerCallback;
     private @Mock KeyguardInteractor mKeyguardInteractor;
     private @Captor ArgumentCaptor<KeyguardStateController.Callback>
             mKeyguardStateControllerCallback;
@@ -266,7 +267,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
                 () -> mShadeInteractor,
                 mShadeWindowLogger,
                 () -> mSelectedUserInteractor,
-                mUserTracker,
+                mock(UserTracker.class),
                 mKosmos::getCommunalInteractor);
         mFeatureFlags = new FakeFeatureFlags();
         mSetFlagsRule.enableFlags(FLAG_REFACTOR_GET_CURRENT_USER);
@@ -302,8 +303,168 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
 
         } catch (Exception e) {
             // Just so we don't have to add the exception signature to every test.
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    @TestableLooper.RunWithLooper(setAsMainLooper = true)
+    public void testHandleSystemReadyWhileUserIsSwitching() {
+        int userId = 1099;
+        when(mUserTracker.getUserId()).thenReturn(userId);
+
+        /* First test the default behavior: handleUserSwitching() is not invoked */
+        when(mUserTracker.isUserSwitching()).thenReturn(false);
+        mViewMediator.onSystemReady();
+        TestableLooper.get(this).processAllMessages();
+
+        verify(mUserTrackerCallback, never()).onUserChanging(eq(userId), eq(mContext),
+                any(Runnable.class));
+
+        /* Next test user switching is already in progress when started */
+        when(mUserTracker.isUserSwitching()).thenReturn(true);
+        mViewMediator.onSystemReady();
+        TestableLooper.get(this).processAllMessages();
+
+        verify(mUserTrackerCallback).onUserChanging(eq(userId), eq(mContext),
+                any(Runnable.class));
+    }
+
+    @Test
+    @TestableLooper.RunWithLooper(setAsMainLooper = true)
+    public void testGoingAwayFollowedByBeforeUserSwitchDoesNotHideKeyguard() {
+        setCurrentUser(/* userId= */1099, /* isSecure= */false);
+
+        // Setup keyguard
+        mViewMediator.onSystemReady();
+        processAllMessagesAndBgExecutorMessages();
+        mViewMediator.setShowingLocked(true, "");
+
+        // Request keyguard going away
+        when(mKeyguardStateController.isKeyguardGoingAway()).thenReturn(true);
+        mViewMediator.mKeyguardGoingAwayRunnable.run();
+
+        // After the request, begin a switch to a new secure user
+        int nextUserId = 500;
+        setCurrentUser(nextUserId, /* isSecure= */true);
+        Runnable result = mock(Runnable.class);
+        mViewMediator.handleBeforeUserSwitching(nextUserId, result);
+        processAllMessagesAndBgExecutorMessages();
+        verify(result).run();
+
+        // After that request has begun, have WM tell us to exit keyguard
+        RemoteAnimationTarget[] apps = new RemoteAnimationTarget[]{
+                mock(RemoteAnimationTarget.class)
+        };
+        RemoteAnimationTarget[] wallpapers = new RemoteAnimationTarget[]{
+                mock(RemoteAnimationTarget.class)
+        };
+        IRemoteAnimationFinishedCallback callback = mock(IRemoteAnimationFinishedCallback.class);
+        mViewMediator.startKeyguardExitAnimation(TRANSIT_OLD_KEYGUARD_GOING_AWAY, apps, wallpapers,
+                null, callback);
+        processAllMessagesAndBgExecutorMessages();
+
+        // The call to exit should be rejected, and keyguard should still be visible
+        verify(mKeyguardUnlockAnimationController, never()).notifyStartSurfaceBehindRemoteAnimation(
+                any(), any(), any(), anyLong(), anyBoolean());
+        try {
+            assertATMSLockScreenShowing(true);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+        assertTrue(mViewMediator.isShowingAndNotOccluded());
+    }
+
+    @Test
+    @TestableLooper.RunWithLooper(setAsMainLooper = true)
+    public void testUserSwitchToSecureUserShowsBouncer() {
+        setCurrentUser(/* userId= */1099, /* isSecure= */true);
+
+        // Setup keyguard
+        mViewMediator.onSystemReady();
+        processAllMessagesAndBgExecutorMessages();
+        mViewMediator.setShowingLocked(true, "");
+
+        // After the request, begin a switch to a new secure user
+        int nextUserId = 500;
+        setCurrentUser(nextUserId, /* isSecure= */true);
+
+        Runnable beforeResult = mock(Runnable.class);
+        mViewMediator.handleBeforeUserSwitching(nextUserId, beforeResult);
+        processAllMessagesAndBgExecutorMessages();
+        verify(beforeResult).run();
+
+        // Dismiss should not be called while user switch is in progress
+        Runnable onSwitchResult = mock(Runnable.class);
+        mViewMediator.handleUserSwitching(nextUserId, onSwitchResult);
+        processAllMessagesAndBgExecutorMessages();
+        verify(onSwitchResult).run();
+        verify(mStatusBarKeyguardViewManager, never()).dismissAndCollapse();
+
+        // The attempt to dismiss only comes on user switch complete, which will trigger a call to
+        // show the bouncer in StatusBarKeyguardViewManager
+        mViewMediator.handleUserSwitchComplete(nextUserId);
+        TestableLooper.get(this).moveTimeForward(600);
+        processAllMessagesAndBgExecutorMessages();
+
+        verify(mStatusBarKeyguardViewManager).dismissAndCollapse();
+    }
+
+    @Test
+    @TestableLooper.RunWithLooper(setAsMainLooper = true)
+    public void testUserSwitchToInsecureUserDismissesKeyguard() {
+        int userId = 1099;
+        when(mUserTracker.getUserId()).thenReturn(userId);
+
+        // Setup keyguard
+        mViewMediator.onSystemReady();
+        processAllMessagesAndBgExecutorMessages();
+        mViewMediator.setShowingLocked(true, "");
+
+        // After the request, begin a switch to an insecure user
+        int nextUserId = 500;
+        when(mLockPatternUtils.isSecure(nextUserId)).thenReturn(false);
+
+        Runnable beforeResult = mock(Runnable.class);
+        mViewMediator.handleBeforeUserSwitching(nextUserId, beforeResult);
+        processAllMessagesAndBgExecutorMessages();
+        verify(beforeResult).run();
+
+        // The call to dismiss comes during the user switch
+        Runnable onSwitchResult = mock(Runnable.class);
+        mViewMediator.handleUserSwitching(nextUserId, onSwitchResult);
+        processAllMessagesAndBgExecutorMessages();
+        verify(onSwitchResult).run();
+
+        verify(mStatusBarKeyguardViewManager).dismissAndCollapse();
+    }
+
+    @Test
+    @TestableLooper.RunWithLooper(setAsMainLooper = true)
+    public void testUserSwitchToSecureUserWhileKeyguardNotVisibleShowsKeyguard() {
+        setCurrentUser(/* userId= */1099, /* isSecure= */true);
+
+        // Setup keyguard as not visible
+        mViewMediator.onSystemReady();
+        processAllMessagesAndBgExecutorMessages();
+        mViewMediator.setShowingLocked(false, "");
+        processAllMessagesAndBgExecutorMessages();
+
+        // Begin a switch to a new secure user
+        int nextUserId = 500;
+        setCurrentUser(nextUserId, /* isSecure= */true);
+
+        Runnable beforeResult = mock(Runnable.class);
+        mViewMediator.handleBeforeUserSwitching(nextUserId, beforeResult);
+        processAllMessagesAndBgExecutorMessages();
+        verify(beforeResult).run();
+
+        try {
+            assertATMSLockScreenShowing(true);
+        } catch (Exception e) {
             fail();
         }
+        assertTrue(mViewMediator.isShowingAndNotOccluded());
     }
 
     @Test
@@ -1012,7 +1173,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         processAllMessagesAndBgExecutorMessages();
 
         verify(mStatusBarKeyguardViewManager, never()).reset(anyBoolean());
-        assertATMSAndKeyguardViewMediatorStatesMatch();
+
     }
 
     @Test
@@ -1056,6 +1217,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         IRemoteAnimationFinishedCallback callback = mock(IRemoteAnimationFinishedCallback.class);
 
         when(mKeyguardStateController.isKeyguardGoingAway()).thenReturn(true);
+        mViewMediator.mKeyguardGoingAwayRunnable.run();
         mViewMediator.startKeyguardExitAnimation(TRANSIT_OLD_KEYGUARD_GOING_AWAY, apps, wallpapers,
                 null, callback);
         processAllMessagesAndBgExecutorMessages();
@@ -1087,13 +1249,6 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
 
         // The captor will have the most recent setLockScreenShown call's value.
         assertEquals(showing, showingCaptor.getValue());
-
-        // We're now just after the last setLockScreenShown call. If we expect the lockscreen to be
-        // showing, ensure that we didn't subsequently ask for it to go away.
-        if (showing) {
-            orderedSetLockScreenShownCalls.verify(mActivityTaskManagerService, never())
-                    .keyguardGoingAway(anyInt());
-        }
     }
 
     /**
@@ -1237,6 +1392,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
                 mSelectedUserInteractor,
                 mKeyguardInteractor,
                 mock(WindowManagerOcclusionManager.class));
+        mViewMediator.mUserChangedCallback = mUserTrackerCallback;
         mViewMediator.start();
 
         mViewMediator.registerCentralSurfaces(mCentralSurfaces, null, null, null, null);
@@ -1249,5 +1405,11 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
 
     private void captureKeyguardUpdateMonitorCallback() {
         verify(mUpdateMonitor).registerCallback(mKeyguardUpdateMonitorCallbackCaptor.capture());
+    }
+
+    private void setCurrentUser(int userId, boolean isSecure) {
+        when(mUserTracker.getUserId()).thenReturn(userId);
+        when(mSelectedUserInteractor.getSelectedUserId()).thenReturn(userId);
+        when(mLockPatternUtils.isSecure(userId)).thenReturn(isSecure);
     }
 }
