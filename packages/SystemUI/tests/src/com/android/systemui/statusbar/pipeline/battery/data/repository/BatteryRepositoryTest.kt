@@ -30,6 +30,7 @@ import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useStandardTestDispatcher
+import com.android.systemui.log.table.logcatTableLogBuffer
 import com.android.systemui.shared.settings.data.repository.fakeSystemSettingsRepository
 import com.android.systemui.shared.settings.data.repository.systemSettingsRepository
 import com.android.systemui.statusbar.policy.batteryController
@@ -58,6 +59,7 @@ class BatteryRepositoryTest : SysuiTestCase() {
                 testDispatcher,
                 batteryController,
                 systemSettingsRepository,
+                logcatTableLogBuffer(this, "BatteryTableLog"),
             )
         }
 

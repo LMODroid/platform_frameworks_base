@@ -22,7 +22,10 @@ import com.android.systemui.Flags
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
+import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.log.table.logDiffsForTable
 import com.android.systemui.shared.settings.data.repository.SystemSettingsRepository
+import com.android.systemui.statusbar.pipeline.dagger.BatteryTableLog
 import com.android.systemui.statusbar.policy.BatteryController
 import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import javax.inject.Inject
@@ -37,6 +40,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -93,6 +97,7 @@ constructor(
     @Background bgDispatcher: CoroutineDispatcher,
     private val controller: BatteryController,
     settingsRepository: SystemSettingsRepository,
+    @BatteryTableLog tableLog: TableLogBuffer,
 ) : BatteryRepository {
     private fun <T> flaggedCallbackFlow(block: suspend ProducerScope<T>.() -> Unit): Flow<T> {
         if (Flags.statusBarBatteryNoConflation()) {
@@ -154,17 +159,79 @@ constructor(
             .flowOn(bgDispatcher)
             .stateIn(scope, SharingStarted.Lazily, BatteryCallbackState())
 
-    override val isPluggedIn = batteryState.map { it.isPluggedIn }
+    override val isPluggedIn =
+        batteryState
+            .map { it.isPluggedIn }
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLog,
+                columnName = COL_PLUGGED_IN,
+                initialValue = batteryState.value.isPluggedIn,
+            )
+            .stateIn(scope, SharingStarted.WhileSubscribed(), batteryState.value.isPluggedIn)
 
-    override val isPowerSaveEnabled = batteryState.map { it.isPowerSaveEnabled }
+    override val isPowerSaveEnabled =
+        batteryState
+            .map { it.isPowerSaveEnabled }
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLog,
+                columnName = COL_POWER_SAVE,
+                initialValue = batteryState.value.isPowerSaveEnabled,
+            )
+            .stateIn(scope, SharingStarted.WhileSubscribed(), batteryState.value.isPowerSaveEnabled)
 
-    override val isBatteryDefenderEnabled = batteryState.map { it.isBatteryDefenderEnabled }
+    override val isBatteryDefenderEnabled =
+        batteryState
+            .map { it.isBatteryDefenderEnabled }
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLog,
+                columnName = COL_DEFEND,
+                initialValue = batteryState.value.isBatteryDefenderEnabled,
+            )
+            .stateIn(
+                scope,
+                SharingStarted.WhileSubscribed(),
+                batteryState.value.isBatteryDefenderEnabled,
+            )
 
-    override val isIncompatibleCharging = batteryState.map { it.isIncompatibleCharging }
+    override val isIncompatibleCharging =
+        batteryState
+            .map { it.isIncompatibleCharging }
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLog,
+                columnName = COL_INCOMPATIBLE_CHARGING,
+                initialValue = batteryState.value.isIncompatibleCharging,
+            )
+            .stateIn(
+                scope,
+                SharingStarted.WhileSubscribed(),
+                batteryState.value.isIncompatibleCharging,
+            )
 
-    override val level = batteryState.map { it.level }
+    override val level =
+        batteryState
+            .map { it.level }
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLog,
+                columnName = COL_LEVEL,
+                initialValue = batteryState.value.level,
+            )
+            .stateIn(scope, SharingStarted.WhileSubscribed(), batteryState.value.level)
 
-    override val isStateUnknown = batteryState.map { it.isStateUnknown }
+    override val isStateUnknown =
+        batteryState
+            .map { it.isStateUnknown }
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLog,
+                columnName = COL_UNKNOWN,
+                initialValue = batteryState.value.isStateUnknown,
+            )
+            .stateIn(scope, SharingStarted.WhileSubscribed(), batteryState.value.isStateUnknown)
 
     override val isShowBatteryPercentSettingEnabled = run {
         val default =
@@ -174,6 +241,12 @@ constructor(
         settingsRepository
             .boolSetting(name = Settings.System.SHOW_BATTERY_PERCENT, defaultValue = default)
             .flowOn(bgDispatcher)
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLog,
+                columnName = COL_SHOW_PERCENT_SETTING,
+                initialValue = default,
+            )
             .stateIn(scope, SharingStarted.Lazily, default)
     }
 
@@ -186,13 +259,33 @@ constructor(
         }
     }
 
-    override val batteryTimeRemainingEstimate: Flow<String?> = estimate.flowOn(bgDispatcher)
+    override val batteryTimeRemainingEstimate: Flow<String?> =
+        estimate
+            .flowOn(bgDispatcher)
+            .distinctUntilChanged()
+            .logDiffsForTable(
+                tableLogBuffer = tableLog,
+                columnName = COL_TIME_REMAINING_EST,
+                initialValue = null,
+            )
+            .stateIn(scope, SharingStarted.WhileSubscribed(), null)
 
     private suspend fun fetchEstimate() = suspendCancellableCoroutine { continuation ->
         val callback =
             BatteryController.EstimateFetchCompletion { estimate -> continuation.resume(estimate) }
 
         controller.getEstimatedTimeRemainingString(callback)
+    }
+
+    companion object {
+        private const val COL_PLUGGED_IN = "pluggedIn"
+        private const val COL_POWER_SAVE = "powerSave"
+        private const val COL_DEFEND = "defend"
+        private const val COL_INCOMPATIBLE_CHARGING = "incompatibleCharging"
+        private const val COL_LEVEL = "level"
+        private const val COL_UNKNOWN = "unknown"
+        private const val COL_SHOW_PERCENT_SETTING = "showPercentSetting"
+        private const val COL_TIME_REMAINING_EST = "timeRemainingEstimate"
     }
 }
 

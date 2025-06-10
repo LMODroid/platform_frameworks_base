@@ -337,6 +337,13 @@ abstract class StatusBarPipelineModule {
             return factory.create("StackedMobileIconTableLog", 100)
         }
 
+        @Provides
+        @SysUISingleton
+        @BatteryTableLog
+        fun provideBatteryTableLog(factory: TableLogBufferFactory): TableLogBuffer {
+            return factory.create("BatteryTableLog", 100)
+        }
+
         const val FIRST_MOBILE_SUB_SHOWING_NETWORK_TYPE_ICON =
             "FirstMobileSubShowingNetworkTypeIcon"
     }
