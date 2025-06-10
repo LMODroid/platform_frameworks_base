@@ -23,6 +23,7 @@ import static android.app.ActivityManagerInternal.ALLOW_FULL_ONLY;
 import static android.app.ActivityManagerInternal.ALLOW_NON_FULL;
 import static android.app.ActivityManagerInternal.ALLOW_NON_FULL_IN_PROFILE;
 import static android.app.ActivityManagerInternal.ALLOW_PROFILES_OR_NON_FULL;
+import static android.app.KeyguardManager.LOCK_ON_USER_SWITCH_CALLBACK;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.testing.DexmakerShareClassLoaderRule.runWithDexmakerShareClassLoader;
 
@@ -481,29 +482,6 @@ public class UserControllerTest {
         mInjector.mHandler.clearAllRecordedMessages();
         // Verify that continueUserSwitch worked as expected
         continueAndCompleteUserSwitch(userState, oldUserId, newUserId);
-        verify(mInjector, times(0)).dismissKeyguard(any());
-        verify(mInjector, times(1)).dismissUserSwitchingDialog(any());
-        continueUserSwitchAssertions(oldUserId, TEST_USER_ID, false, false);
-        verifySystemUserVisibilityChangesNeverNotified();
-    }
-
-    @Test
-    public void testContinueUserSwitchDismissKeyguard() {
-        when(mInjector.mKeyguardManagerMock.isDeviceSecure(anyInt())).thenReturn(false);
-        mUserController.setInitialConfig(/* userSwitchUiEnabled= */ true,
-                /* maxRunningUsers= */ 3, /* delayUserDataLocking= */ false,
-                /* backgroundUserScheduledStopTimeSecs= */ -1);
-        // Start user -- this will update state of mUserController
-        mUserController.startUser(TEST_USER_ID, USER_START_MODE_FOREGROUND);
-        Message reportMsg = mInjector.mHandler.getMessageForCode(REPORT_USER_SWITCH_MSG);
-        assertNotNull(reportMsg);
-        UserState userState = (UserState) reportMsg.obj;
-        int oldUserId = reportMsg.arg1;
-        int newUserId = reportMsg.arg2;
-        mInjector.mHandler.clearAllRecordedMessages();
-        // Verify that continueUserSwitch worked as expected
-        continueAndCompleteUserSwitch(userState, oldUserId, newUserId);
-        verify(mInjector, times(1)).dismissKeyguard(any());
         verify(mInjector, times(1)).dismissUserSwitchingDialog(any());
         continueUserSwitchAssertions(oldUserId, TEST_USER_ID, false, false);
         verifySystemUserVisibilityChangesNeverNotified();
@@ -1430,11 +1408,11 @@ public class UserControllerTest {
         // and the thread is still alive
         assertTrue(threadStartUser.isAlive());
 
-        // mock send the keyguard shown event
-        ArgumentCaptor<ActivityTaskManagerInternal.ScreenObserver> captor = ArgumentCaptor.forClass(
-                ActivityTaskManagerInternal.ScreenObserver.class);
-        verify(mInjector.mActivityTaskManagerInternal).registerScreenObserver(captor.capture());
-        captor.getValue().onKeyguardStateChanged(true);
+        // mock the binder response for the user switch completion
+        ArgumentCaptor<Bundle> captor = ArgumentCaptor.forClass(Bundle.class);
+        verify(mInjector.mWindowManagerMock).lockNow(captor.capture());
+        IRemoteCallback.Stub.asInterface(captor.getValue().getBinder(
+                LOCK_ON_USER_SWITCH_CALLBACK)).sendResult(null);
 
         // verify the switch now moves on...
         Thread.sleep(1000);
@@ -1624,7 +1602,6 @@ public class UserControllerTest {
         private final IStorageManager mStorageManagerMock;
         private final UserManagerInternal mUserManagerInternalMock;
         private final WindowManagerService mWindowManagerMock;
-        private final ActivityTaskManagerInternal mActivityTaskManagerInternal;
         private final PowerManagerInternal mPowerManagerInternal;
         private final KeyguardManager mKeyguardManagerMock;
         private final LockPatternUtils mLockPatternUtilsMock;
@@ -1645,7 +1622,6 @@ public class UserControllerTest {
             mUserManagerMock = mock(UserManagerService.class);
             mUserManagerInternalMock = mock(UserManagerInternal.class);
             mWindowManagerMock = mock(WindowManagerService.class);
-            mActivityTaskManagerInternal = mock(ActivityTaskManagerInternal.class);
             mStorageManagerMock = mock(IStorageManager.class);
             mPowerManagerInternal = mock(PowerManagerInternal.class);
             mKeyguardManagerMock = mock(KeyguardManager.class);
@@ -1708,11 +1684,6 @@ public class UserControllerTest {
         }
 
         @Override
-        ActivityTaskManagerInternal getActivityTaskManagerInternal() {
-            return mActivityTaskManagerInternal;
-        }
-
-        @Override
         PowerManagerInternal getPowerManagerInternal() {
             return mPowerManagerInternal;
         }
@@ -1757,11 +1728,6 @@ public class UserControllerTest {
         @Override
         protected IStorageManager getStorageManager() {
             return mStorageManagerMock;
-        }
-
-        @Override
-        protected void dismissKeyguard(Runnable runnable) {
-            runnable.run();
         }
 
         @Override

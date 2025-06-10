@@ -109,6 +109,9 @@ open class UserTrackerImpl internal constructor(
             return userProfiles.first { it.id == user }
         }
 
+    override var isUserSwitching = false
+        protected set
+
     /**
      * Returns a [List<UserInfo>] of all profiles associated with the current user.
      *
@@ -198,6 +201,7 @@ open class UserTrackerImpl internal constructor(
             }
 
             override fun onUserSwitching(newUserId: Int, reply: IRemoteCallback?) {
+                isUserSwitching = true
                 if (isBackgroundUserSwitchEnabled) {
                     userSwitchingJob?.cancel()
                     userSwitchingJob = appScope.launch(backgroundContext) {
@@ -212,6 +216,7 @@ open class UserTrackerImpl internal constructor(
             }
 
             override fun onUserSwitchComplete(newUserId: Int) {
+                isUserSwitching = false
                 if (isBackgroundUserSwitchEnabled) {
                     afterUserSwitchingJob?.cancel()
                     afterUserSwitchingJob = appScope.launch(backgroundContext) {
