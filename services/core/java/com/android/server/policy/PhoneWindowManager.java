@@ -2277,6 +2277,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KILL_APP:
                 ActionUtils.killForegroundApp(mContext, mCurrentUserId);
                 break;
+            case PLAY_PAUSE_MUSIC:
+                triggerVirtualKeypress(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
+                break;
             default:
                 break;
         }
