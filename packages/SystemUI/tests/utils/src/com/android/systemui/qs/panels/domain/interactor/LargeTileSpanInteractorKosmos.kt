@@ -17,14 +17,7 @@
 package com.android.systemui.qs.panels.domain.interactor
 
 import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.kosmos.applicationCoroutineScope
 import com.android.systemui.qs.panels.data.repository.largeTileSpanRepository
 
 val Kosmos.largeTileSpanInteractor by
-    Kosmos.Fixture {
-        LargeTileSpanInteractor(
-            applicationCoroutineScope,
-            largeTileSpanRepository,
-            qsColumnsInteractor,
-        )
-    }
+    Kosmos.Fixture { LargeTileSpanInteractor(largeTileSpanRepository) }

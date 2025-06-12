@@ -30,7 +30,6 @@ import com.android.systemui.qs.pipeline.shared.metricSpec
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 
@@ -43,7 +42,6 @@ constructor(
     private val currentTilesInteractor: CurrentTilesInteractor,
     private val preferencesInteractor: QSPreferencesInteractor,
     private val uiEventLogger: UiEventLogger,
-    largeTilesSpanInteractor: LargeTileSpanInteractor,
     @PanelsLog private val logBuffer: LogBuffer,
     @Background private val scope: CoroutineScope,
 ) {
@@ -52,8 +50,6 @@ constructor(
         preferencesInteractor.largeTilesSpecs
             .onEach { logChange(it) }
             .stateIn(scope, SharingStarted.Eagerly, repo.defaultLargeTiles)
-
-    val largeTilesSpan: StateFlow<Int> = largeTilesSpanInteractor.span
 
     fun isIconTile(spec: TileSpec): Boolean = !largeTilesSpecs.value.contains(spec)
 

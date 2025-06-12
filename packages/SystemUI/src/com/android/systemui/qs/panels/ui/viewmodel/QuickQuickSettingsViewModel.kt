@@ -70,11 +70,8 @@ constructor(
             source = quickQuickSettingsRowInteractor.rows,
         )
 
-    private val largeTilesSpan by
-        hydrator.hydratedStateOf(
-            traceName = "largeTilesSpan",
-            source = iconTilesViewModel.largeTilesSpan,
-        )
+    private val largeTilesSpan: Int
+        get() = qsColumnsViewModel.largeSpan
 
     private val currentTiles by
         hydrator.hydratedStateOf(traceName = "currentTiles", source = tilesInteractor.currentTiles)

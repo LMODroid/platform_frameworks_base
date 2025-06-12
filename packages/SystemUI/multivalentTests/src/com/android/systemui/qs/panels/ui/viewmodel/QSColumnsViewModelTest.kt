@@ -16,11 +16,13 @@
 
 package com.android.systemui.qs.panels.ui.viewmodel
 
+import android.content.res.Configuration
 import android.content.res.mainResources
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.ui.data.repository.configurationRepository
+import com.android.systemui.common.ui.data.repository.fakeConfigurationRepository
 import com.android.systemui.flags.EnableSceneContainer
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.runTest
@@ -62,6 +64,10 @@ class QSColumnsViewModelTest : SysuiTestCase() {
             testCase.context.orCreateTestableResources.addOverride(
                 R.integer.quick_settings_split_shade_num_columns,
                 SINGLE_SPLIT_SHADE_COLUMNS,
+            )
+            testCase.context.orCreateTestableResources.addOverride(
+                R.integer.quick_settings_infinite_grid_tile_max_width,
+                4,
             )
             qsColumnsRepository = QSColumnsRepository(mainResources, configurationRepository)
         }
@@ -181,6 +187,106 @@ class QSColumnsViewModelTest : SysuiTestCase() {
             makeMediaVisible(LOCATION_QQS, visible = true)
 
             assertThat(underTest.columns).isEqualTo(SINGLE_SPLIT_SHADE_COLUMNS / 2)
+        }
+
+    @Test
+    fun largeSpan_normalTiles_ignoreColumns() =
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(LOCATION_QQS)
+            underTest.activateIn(testScope)
+
+            // Set extra large tiles to false
+            val configuration = Configuration().apply { this.fontScale = 1f }
+            context.orCreateTestableResources.overrideConfiguration(configuration)
+            fakeConfigurationRepository.onConfigurationChange()
+
+            // Not using extra large tiles means that we stay to the default width of 2, regardless
+            // of columns
+            assertThat(underTest.largeSpan).isEqualTo(2)
+
+            setColumns(10)
+            assertThat(underTest.largeSpan).isEqualTo(2)
+        }
+
+    @Test
+    fun largeSpan_extraLargeTiles_tracksColumns() =
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(LOCATION_QQS)
+            underTest.activateIn(testScope)
+
+            // Set extra large tiles to true
+            val configuration = Configuration().apply { this.fontScale = 2f }
+            context.orCreateTestableResources.overrideConfiguration(configuration)
+            fakeConfigurationRepository.onConfigurationChange()
+
+            // Using extra large tiles with a max width of 4 means that we change the width to the
+            // same as the columns if equal or under 4, otherwise we divide it in half
+            assertThat(underTest.largeSpan).isEqualTo(4)
+
+            setColumns(2)
+            assertThat(underTest.largeSpan).isEqualTo(2)
+
+            setColumns(6)
+            assertThat(underTest.largeSpan).isEqualTo(3)
+
+            setColumns(8)
+            assertThat(underTest.largeSpan).isEqualTo(4)
+        }
+
+    @Test
+    fun largeSpan_extraLargeTiles_tracksMaxWidth() =
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(LOCATION_QQS)
+            underTest.activateIn(testScope)
+
+            // Set extra large tiles to true
+            val configuration = Configuration().apply { this.fontScale = 2f }
+            context.orCreateTestableResources.overrideConfiguration(configuration)
+            fakeConfigurationRepository.onConfigurationChange()
+
+            // Using extra large tiles with 4 columns means that we change the width to be 4, unless
+            // we're using a max width lower than 4 in which case divide it in half
+            assertThat(underTest.largeSpan).isEqualTo(4)
+
+            setMaxWidth(3)
+            assertThat(underTest.largeSpan).isEqualTo(2)
+
+            setMaxWidth(6)
+            assertThat(underTest.largeSpan).isEqualTo(4)
+
+            setMaxWidth(8)
+            assertThat(underTest.largeSpan).isEqualTo(4)
+        }
+
+    @Test
+    fun largeSpan_tracksExtraLargeTiles() =
+        kosmos.runTest {
+            val underTest = qsColumnsViewModelFactory.create(LOCATION_QQS)
+            underTest.activateIn(testScope)
+
+            // Set extra large tiles to false
+            val configuration = Configuration().apply { this.fontScale = 1f }
+            context.orCreateTestableResources.overrideConfiguration(configuration)
+            fakeConfigurationRepository.onConfigurationChange()
+
+            assertThat(underTest.largeSpan).isEqualTo(2)
+
+            // Set extra large tiles to true
+            configuration.fontScale = 2f
+            fakeConfigurationRepository.onConfigurationChange()
+            assertThat(underTest.largeSpan).isEqualTo(4)
+        }
+
+    private fun setColumns(columns: Int) =
+        setValueInConfig(columns, R.integer.quick_settings_infinite_grid_num_columns)
+
+    private fun setMaxWidth(width: Int) =
+        setValueInConfig(width, R.integer.quick_settings_infinite_grid_tile_max_width)
+
+    private fun setValueInConfig(value: Int, id: Int) =
+        with(kosmos) {
+            testCase.context.orCreateTestableResources.addOverride(id, value)
+            fakeConfigurationRepository.onConfigurationChange()
         }
 
     companion object {

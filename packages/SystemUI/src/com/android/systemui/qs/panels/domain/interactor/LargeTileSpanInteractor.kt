@@ -17,60 +17,15 @@
 package com.android.systemui.qs.panels.domain.interactor
 
 import com.android.systemui.dagger.SysUISingleton
-import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.qs.panels.data.repository.LargeTileSpanRepository
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.Flow
 
 @SysUISingleton
-class LargeTileSpanInteractor
-@Inject
-constructor(
-    @Background scope: CoroutineScope,
-    private val repo: LargeTileSpanRepository,
-    columnsInteractor: QSColumnsInteractor,
-) {
+class LargeTileSpanInteractor @Inject constructor(repo: LargeTileSpanRepository) {
+    val useExtraLargeTiles: Flow<Boolean> = repo.useExtraLargeTiles
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val span: StateFlow<Int> =
-        repo.useExtraLargeTiles
-            .flatMapLatest { useExtraLargeTiles ->
-                if (useExtraLargeTiles) {
-                    combine(columnsInteractor.columns, repo.tileMaxWidth, ::largeTileWidth)
-                } else {
-                    flowOf(repo.defaultTileMaxWidth)
-                }
-            }
-            .stateIn(
-                scope,
-                SharingStarted.WhileSubscribed(),
-                initialLargeTileWidth(
-                    repo.currentUseExtraLargeTiles,
-                    columnsInteractor.columns.value,
-                    repo.currentTileMaxWidth,
-                ),
-            )
+    val tileMaxWidth: Flow<Int> = repo.tileMaxWidth
 
-    private fun initialLargeTileWidth(
-        useExtraLargeTiles: Boolean,
-        columns: Int,
-        largeTileMaxWidth: Int,
-    ): Int {
-        return if (useExtraLargeTiles) {
-            largeTileWidth(columns, largeTileMaxWidth)
-        } else {
-            repo.defaultTileMaxWidth
-        }
-    }
-
-    private fun largeTileWidth(columns: Int, largeTileMaxWidth: Int): Int {
-        return if (columns > largeTileMaxWidth) columns / 2 else columns
-    }
+    val defaultTileMaxWidth: Int = repo.defaultTileMaxWidth
 }

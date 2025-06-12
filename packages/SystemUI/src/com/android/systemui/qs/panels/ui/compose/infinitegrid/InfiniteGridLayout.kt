@@ -37,7 +37,6 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.grid.ui.compose.VerticalSpannedGrid
 import com.android.systemui.haptics.msdl.qs.TileHapticsViewModelFactoryProvider
 import com.android.systemui.lifecycle.rememberViewModel
-import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager.Companion.LOCATION_QS
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.EditTileListState
 import com.android.systemui.qs.panels.ui.compose.PaginatableGridLayout
@@ -63,7 +62,7 @@ class InfiniteGridLayout
 constructor(
     private val detailsViewModel: DetailsViewModel,
     private val iconTilesViewModel: IconTilesViewModel,
-    private val viewModelFactory: InfiniteGridViewModel.Factory,
+    override val viewModelFactory: InfiniteGridViewModel.Factory,
     private val textFeedbackContentViewModelFactory: TextFeedbackContentViewModel.Factory,
     private val tileHapticsViewModelFactoryProvider: TileHapticsViewModelFactoryProvider,
 ) : PaginatableGridLayout {
@@ -78,14 +77,6 @@ constructor(
             rememberViewModel(traceName = "InfiniteGridLayout.TileGrid") {
                 viewModelFactory.create()
             }
-        val iconTilesViewModel =
-            rememberViewModel(traceName = "InfiniteGridLayout.TileGrid") {
-                viewModel.dynamicIconTilesViewModelFactory.create()
-            }
-        val columnsWithMediaViewModel =
-            rememberViewModel(traceName = "InfiniteGridLAyout.TileGrid") {
-                viewModel.columnsWithMediaViewModelFactory.create(LOCATION_QS)
-            }
 
         val context = LocalContext.current
         val textFeedbackViewModel =
@@ -93,9 +84,9 @@ constructor(
                 textFeedbackContentViewModelFactory.create(context)
             }
 
-        val columns = columnsWithMediaViewModel.columns
-        val largeTiles by iconTilesViewModel.largeTilesState
-        val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
+        val columns = viewModel.columnsWithMediaViewModel.columns
+        val largeTilesSpan = viewModel.columnsWithMediaViewModel.largeSpan
+        val largeTiles by viewModel.iconTilesViewModel.largeTilesState
         // Tiles or largeTiles may be updated while this is composed, so listen to any changes
         val sizedTiles =
             remember(tiles, largeTiles, largeTilesSpan) {
@@ -175,10 +166,6 @@ constructor(
             rememberViewModel(traceName = "InfiniteGridLayout.EditTileGrid") {
                 viewModelFactory.create()
             }
-        val iconTilesViewModel =
-            rememberViewModel(traceName = "InfiniteGridLayout.EditTileGrid") {
-                viewModel.dynamicIconTilesViewModelFactory.create()
-            }
         val columnsViewModel =
             rememberViewModel(traceName = "InfiniteGridLayout.EditTileGrid") {
                 viewModel.columnsWithMediaViewModelFactory.createWithoutMediaTracking()
@@ -200,8 +187,8 @@ constructor(
                 }
             }
         val columns = columnsViewModel.columns
-        val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
-        val largeTiles by iconTilesViewModel.largeTilesState
+        val largeTilesSpan = columnsViewModel.largeSpan
+        val largeTiles by viewModel.iconTilesViewModel.largeTilesState
 
         val currentTiles by rememberUpdatedState(tiles.filter { it.isCurrent })
         val listState =
@@ -249,23 +236,5 @@ constructor(
                 }
             }
         }
-    }
-
-    override fun splitIntoPages(
-        tiles: List<TileViewModel>,
-        rows: Int,
-        columns: Int,
-    ): List<List<TileViewModel>> {
-
-        return PaginatableGridLayout.splitInRows(
-                tiles.map { SizedTileImpl(it, it.spec.width()) },
-                columns,
-            )
-            .chunked(rows)
-            .map { it.flatten().map { it.tile } }
-    }
-
-    private fun TileSpec.width(largeSize: Int = iconTilesViewModel.largeTilesSpan.value): Int {
-        return if (iconTilesViewModel.isIconTile(this)) 1 else largeSize
     }
 }

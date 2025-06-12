@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.android.systemui.qs.panels.ui.compose
+package com.android.systemui.qs.panels.ui.viewmodel
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
-import com.android.systemui.qs.panels.ui.viewmodel.MockTileViewModel
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
@@ -28,24 +27,19 @@ import org.junit.runner.RunWith
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
-class PaginatableGridLayoutTest : SysuiTestCase() {
+@android.platform.test.annotations.EnabledOnRavenwood
+class PaginatableViewModelTest : SysuiTestCase() {
     @Test
     fun correctRows_gapsAtEnd() {
         val columns = 6
 
         val sizedTiles =
-            listOf(
-                largeTile(),
-                extraLargeTile(),
-                largeTile(),
-                smallTile(),
-                largeTile(),
-            )
+            listOf(largeTile(), extraLargeTile(), largeTile(), smallTile(), largeTile())
 
         // [L L] [XL XL XL]
         // [L L] [S] [L L]
 
-        val rows = PaginatableGridLayout.splitInRows(sizedTiles, columns)
+        val rows = PaginatableViewModel.splitInRows(sizedTiles, columns)
 
         assertThat(rows).hasSize(2)
         assertThat(rows[0]).isEqualTo(sizedTiles.take(2))
@@ -56,16 +50,11 @@ class PaginatableGridLayoutTest : SysuiTestCase() {
     fun correctRows_fullLastRow_noEmptyRow() {
         val columns = 6
 
-        val sizedTiles =
-            listOf(
-                largeTile(),
-                extraLargeTile(),
-                smallTile(),
-            )
+        val sizedTiles = listOf(largeTile(), extraLargeTile(), smallTile())
 
         // [L L] [XL XL XL] [S]
 
-        val rows = PaginatableGridLayout.splitInRows(sizedTiles, columns)
+        val rows = PaginatableViewModel.splitInRows(sizedTiles, columns)
 
         assertThat(rows).hasSize(1)
         assertThat(rows[0]).isEqualTo(sizedTiles)

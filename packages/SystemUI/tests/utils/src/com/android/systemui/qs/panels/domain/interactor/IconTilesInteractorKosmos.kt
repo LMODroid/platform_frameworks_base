@@ -30,7 +30,6 @@ val Kosmos.iconTilesInteractor by
             currentTilesInteractor,
             qsPreferencesInteractor,
             uiEventLoggerFake,
-            largeTileSpanInteractor,
             FakeLogBuffer.Factory.create(),
             applicationCoroutineScope,
         )

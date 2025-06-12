@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.media.controls.ui.controller.MediaLocation
+import com.android.systemui.qs.panels.domain.interactor.LargeTileSpanInteractor
 import com.android.systemui.qs.panels.domain.interactor.QSColumnsInteractor
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -40,6 +41,7 @@ class QSColumnsViewModel
 constructor(
     interactor: QSColumnsInteractor,
     mediaInRowInLandscapeViewModelFactory: MediaInRowInLandscapeViewModel.Factory,
+    private val largeTileSpanInteractor: LargeTileSpanInteractor,
     @Assisted @MediaLocation mediaLocation: Int?,
 ) : ExclusiveActivatable() {
 
@@ -52,6 +54,28 @@ constructor(
             columnsWithoutMedia
         }
     }
+
+    private val maxSpan by
+        hydrator.hydratedStateOf(
+            traceName = "maxSpan",
+            source = largeTileSpanInteractor.tileMaxWidth,
+            initialValue = largeTileSpanInteractor.defaultTileMaxWidth,
+        )
+
+    private val useExtraLargeTiles by
+        hydrator.hydratedStateOf(
+            traceName = "useExtraLargeTiles",
+            source = largeTileSpanInteractor.useExtraLargeTiles,
+            initialValue = false,
+        )
+
+    val largeSpan: Int
+        get() =
+            if (useExtraLargeTiles) {
+                if (columns > maxSpan) columns / 2 else columns
+            } else {
+                largeTileSpanInteractor.defaultTileMaxWidth
+            }
 
     private val mediaInRowInLandscapeViewModel =
         mediaLocation?.let { mediaInRowInLandscapeViewModelFactory.create(it) }

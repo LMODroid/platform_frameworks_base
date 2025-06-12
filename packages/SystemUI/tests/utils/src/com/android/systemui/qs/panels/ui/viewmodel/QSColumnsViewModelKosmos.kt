@@ -17,6 +17,7 @@
 package com.android.systemui.qs.panels.ui.viewmodel
 
 import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.qs.panels.domain.interactor.largeTileSpanInteractor
 import com.android.systemui.qs.panels.domain.interactor.qsColumnsInteractor
 
 val Kosmos.qsColumnsViewModelFactory by
@@ -26,6 +27,7 @@ val Kosmos.qsColumnsViewModelFactory by
                 return QSColumnsViewModel(
                     qsColumnsInteractor,
                     mediaInRowInLandscapeViewModelFactory,
+                    largeTileSpanInteractor,
                     mediaLocation,
                 )
             }

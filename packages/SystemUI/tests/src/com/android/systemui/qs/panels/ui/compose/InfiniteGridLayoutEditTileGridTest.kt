@@ -39,6 +39,7 @@ import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
+import com.android.systemui.qs.composefragment.dagger.usingMediaInComposeFragment
 import com.android.systemui.qs.panels.data.repository.defaultLargeTilesRepository
 import com.android.systemui.qs.panels.domain.interactor.iconTilesInteractor
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.infiniteGridLayout
@@ -62,6 +63,7 @@ class InfiniteGridLayoutEditTileGridTest : SysuiTestCase() {
         testKosmos().useUnconfinedTestDispatcher().apply {
             currentTilesInteractor.setTiles(TestEditTiles)
             editModeViewModel.startEditing()
+            usingMediaInComposeFragment = false
         }
 
     private val Kosmos.underTest by Kosmos.Fixture { infiniteGridLayout }
