@@ -682,7 +682,9 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
     }
 
     void assignRootTaskOrdering(SurfaceControl.Transaction t) {
-        if (getParent() == null) {
+        if (!mTransitionController.mBuildingTransitionLayers
+                && mTransitionController.isShellTransitionsEnabled()) {
+            // All root tasks can be organized, so handle them centrally by shell transitions.
             return;
         }
         mTmpAlwaysOnTopChildren.clear();
