@@ -115,7 +115,11 @@ public class NotificationsQuickSettingsContainer extends ConstraintLayout
 
     public void setQSContainerPaddingBottom(int paddingBottom) {
         mLastQSPaddingBottom = paddingBottom;
-        if (!QSComposeFragment.isEnabled()) {
+        if (QSComposeFragment.isEnabled()) {
+            if (mQs != null) {
+                mQs.setQSContentPaddingBottom(paddingBottom);
+            }
+        } else {
             if (mQSContainer != null) {
                 mQSContainer.setPadding(
                         mQSContainer.getPaddingLeft(),
@@ -124,6 +128,14 @@ public class NotificationsQuickSettingsContainer extends ConstraintLayout
                         paddingBottom
                 );
             }
+        }
+    }
+
+    public void setQSNegativeMarginBottom(int margin) {
+        if (QSComposeFragment.isEnabled() && mQSContainer != null) {
+            MarginLayoutParams params = (MarginLayoutParams) mQSContainer.getLayoutParams();
+            params.bottomMargin = -margin;
+            mQSContainer.setLayoutParams(params);
         }
     }
 

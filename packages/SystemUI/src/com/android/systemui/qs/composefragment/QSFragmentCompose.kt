@@ -57,6 +57,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -196,6 +197,7 @@ constructor(
     private val scrollState = ScrollState(0)
     private val locationTemp = IntArray(2)
     private var bottomBarPositionInRoot = IntRect(IntOffset(0, 0), 0)
+    private var bottomContentPadding by mutableIntStateOf(0)
     private val containerView: FrameLayoutTouchPassthrough?
         get() = view as? FrameLayoutTouchPassthrough
 
@@ -633,6 +635,10 @@ constructor(
         return qqsVisible.value
     }
 
+    override fun setQSContentPaddingBottom(padding: Int) {
+        bottomContentPadding = padding
+    }
+
     private fun setListenerCollections() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -931,7 +937,7 @@ constructor(
                     }
                 }
             }
-            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
+            Spacer(Modifier.height { bottomContentPadding }.fillMaxWidth())
         }
     }
 
@@ -1001,6 +1007,7 @@ constructor(
             }
             println("QQS visible", qqsVisible.value)
             println("Always composed", alwaysCompose)
+            println("bottom QS padding", bottomContentPadding)
             if (::viewModel.isInitialized) {
                 printSection("View Model") { viewModel.dump(this@run, args) }
             }
