@@ -422,7 +422,8 @@ class BackNavigationController {
                     if ((prevTask.inMultiWindowMode() && prevParent != currParent)
                             // Do not animate to translucent task, it could be trampoline.
                             || hasTranslucentActivity(currentActivity, prevActivities)
-                            || !allActivitiesHaveWindow(prevActivities)) {
+                            || !allActivitiesHaveWindow(prevActivities)
+                            || !allActivitiesHaveProcesses(prevActivities)) {
                         backType = BackNavigationInfo.TYPE_CALLBACK;
                     } else {
                         removedWindowContainer = prevTask;

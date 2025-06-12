@@ -209,9 +209,18 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         assertThat(typeToString(backNavigationInfo.getType()))
                 .isEqualTo(typeToString(BackNavigationInfo.TYPE_CROSS_TASK));
 
+        // Reset drawing status to test no process
+        backNavigationInfo.onBackNavigationFinished(false);
+        mBackNavigationController.clearBackAnimations(true);
+        doReturn(false).when(recordA).hasProcess();
+        backNavigationInfo = startBackNavigation();
+        assertThat(typeToString(backNavigationInfo.getType()))
+                .isEqualTo(typeToString(BackNavigationInfo.TYPE_CALLBACK));
+
         // Reset drawing status to test no window activity.
         backNavigationInfo.onBackNavigationFinished(false);
         mBackNavigationController.clearBackAnimations(true);
+        doReturn(true).when(recordA).hasProcess();
         doReturn(null).when(recordA).findMainWindow();
         backNavigationInfo = startBackNavigation();
         assertThat(typeToString(backNavigationInfo.getType()))
