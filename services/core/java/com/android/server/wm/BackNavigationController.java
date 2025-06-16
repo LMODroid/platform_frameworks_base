@@ -930,15 +930,13 @@ class BackNavigationController {
                     changedActivity = next;
                 }
             }
-            if (Flags.unifyBackNavigationTransition()) {
-                for (int i = mAnimationHandler.mOpenAnimAdaptor.mAdaptors.length - 1; i >= 0; --i) {
-                    collectAnimatableTarget(transition, switchType,
-                            mAnimationHandler.mOpenAnimAdaptor.mAdaptors[i].mTarget,
-                            false /* isTop */);
-                }
+            for (int i = mAnimationHandler.mOpenAnimAdaptor.mAdaptors.length - 1; i >= 0; --i) {
                 collectAnimatableTarget(transition, switchType,
-                        mAnimationHandler.mCloseAdaptor.mTarget, true /* isTop */);
+                        mAnimationHandler.mOpenAnimAdaptor.mAdaptors[i].mTarget,
+                        false /* isTop */);
             }
+            collectAnimatableTarget(transition, switchType,
+                    mAnimationHandler.mCloseAdaptor.mTarget, true /* isTop */);
             if (collectTask && switchType == AnimationHandler.TASK_SWITCH) {
                 final Task topTask = mAnimationHandler.mOpenAnimAdaptor.mAdaptors[0].getTopTask();
                 if (topTask != null) {
@@ -1917,39 +1915,34 @@ class BackNavigationController {
 
             private Transition prepareTransitionIfNeeded(ActivityRecord[] visibleOpenActivities,
                     WindowContainer promoteToClose, WindowContainer[] promoteToOpen) {
-                if (Flags.unifyBackNavigationTransition()) {
-                    if (mCloseTarget.asWindowState() != null) {
-                        return null;
-                    }
-                    final ArrayList<ActivityRecord> makeVisibles = new ArrayList<>();
-                    for (int i = visibleOpenActivities.length - 1; i >= 0; --i) {
-                        final ActivityRecord activity = visibleOpenActivities[i];
-                        if (activity.mLaunchTaskBehind || activity.isVisibleRequested()) {
-                            continue;
-                        }
-                        makeVisibles.add(activity);
-                    }
-                    final TransitionController tc = visibleOpenActivities[0].mTransitionController;
-                    final Transition prepareOpen = tc.createTransition(
-                            TRANSIT_PREPARE_BACK_NAVIGATION);
-                    tc.collect(promoteToClose);
-                    prepareOpen.setBackGestureAnimation(promoteToClose, true /* isTop */);
-                    for (int i = promoteToOpen.length - 1; i >= 0; --i) {
-                        tc.collect(promoteToOpen[i]);
-                        prepareOpen.setBackGestureAnimation(promoteToOpen[i], false /* isTop */);
-                    }
-                    if (!makeVisibles.isEmpty()) {
-                        setLaunchBehind(visibleOpenActivities);
-                    }
-                    tc.requestStartTransition(prepareOpen,
-                            null /*startTask */, null /* remoteTransition */,
-                            null /* displayChange */);
-                    prepareOpen.setReady(mCloseTarget, true);
-                    return prepareOpen;
-                } else if (mSnapshot == null) {
-                    return setLaunchBehind(visibleOpenActivities);
+                if (mCloseTarget.asWindowState() != null) {
+                    return null;
                 }
-                return null;
+                final ArrayList<ActivityRecord> makeVisibles = new ArrayList<>();
+                for (int i = visibleOpenActivities.length - 1; i >= 0; --i) {
+                    final ActivityRecord activity = visibleOpenActivities[i];
+                    if (activity.mLaunchTaskBehind || activity.isVisibleRequested()) {
+                        continue;
+                    }
+                    makeVisibles.add(activity);
+                }
+                final TransitionController tc = visibleOpenActivities[0].mTransitionController;
+                final Transition prepareOpen = tc.createTransition(
+                        TRANSIT_PREPARE_BACK_NAVIGATION);
+                tc.collect(promoteToClose);
+                prepareOpen.setBackGestureAnimation(promoteToClose, true /* isTop */);
+                for (int i = promoteToOpen.length - 1; i >= 0; --i) {
+                    tc.collect(promoteToOpen[i]);
+                    prepareOpen.setBackGestureAnimation(promoteToOpen[i], false /* isTop */);
+                }
+                if (!makeVisibles.isEmpty()) {
+                    setLaunchBehind(visibleOpenActivities);
+                }
+                tc.requestStartTransition(prepareOpen,
+                        null /*startTask */, null /* remoteTransition */,
+                        null /* displayChange */);
+                prepareOpen.setReady(mCloseTarget, true);
+                return prepareOpen;
             }
 
             /**
@@ -2134,7 +2127,7 @@ class BackNavigationController {
         return false;
     }
 
-    private static Transition setLaunchBehind(@NonNull ActivityRecord[] activities) {
+    private static void setLaunchBehind(@NonNull ActivityRecord[] activities) {
         final ArrayList<ActivityRecord> affects = new ArrayList<>();
         for (int i = activities.length - 1; i >= 0; --i) {
             final ActivityRecord activity = activities[i];
@@ -2144,12 +2137,8 @@ class BackNavigationController {
             affects.add(activity);
         }
         if (affects.isEmpty()) {
-            return null;
+            return;
         }
-
-        final TransitionController tc = activities[0].mTransitionController;
-        final Transition prepareOpen = !Flags.unifyBackNavigationTransition()
-                && !tc.isCollecting() ? tc.createTransition(TRANSIT_PREPARE_BACK_NAVIGATION) : null;
 
         for (int i = affects.size() - 1; i >= 0; --i) {
             final ActivityRecord activity = affects.get(i);
@@ -2166,18 +2155,6 @@ class BackNavigationController {
                 activity.makeVisibleIfNeeded(null /* starting */, true /* notifyToClient */);
             }
         }
-        if (prepareOpen != null) {
-            if (prepareOpen.hasChanges()) {
-                tc.requestStartTransition(prepareOpen,
-                        null /*startTask */, null /* remoteTransition */,
-                        null /* displayChange */);
-                prepareOpen.setReady(affects.get(0), true);
-                return prepareOpen;
-            } else {
-                prepareOpen.abort();
-            }
-        }
-        return null;
     }
 
     private static void restoreLaunchBehind(@NonNull ActivityRecord activity, boolean cancel,
