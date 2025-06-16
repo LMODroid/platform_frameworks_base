@@ -16,6 +16,8 @@
 
 package com.android.systemui.qs.panels.ui.compose.toolbar
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -39,9 +41,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -104,7 +108,7 @@ fun EditModeButton(
 
         TooltipBox(
             modifier = modifier,
-            positionProvider = rememberTooltipPositionProvider(),
+            positionProvider = rememberTooltipPositionProvider(WindowInsets.displayCutout),
             state = tooltipState,
             focusable = false,
             onDismissRequest = {
@@ -165,14 +169,22 @@ fun EditModeButton(
 /**
  * Variant of [TooltipDefaults.rememberTooltipPositionProvider] that favors placing the tooltip
  * below the anchor if there's enough space.
+ *
+ * @param windowInsets [WindowInsets] to manually consider when positioning the tooltip.
+ * @param spacingBetweenTooltipAndAnchor the padding between the tooltip and its target.
  */
 @Composable
 private fun rememberTooltipPositionProvider(
-    spacingBetweenTooltipAndAnchor: Dp = SpacingBetweenTooltipAndAnchor
+    windowInsets: WindowInsets,
+    spacingBetweenTooltipAndAnchor: Dp = SpacingBetweenTooltipAndAnchor,
 ): PopupPositionProvider {
+    // We grab the top window inset and remove it manually from the position as it is not consumed
+    // in the QS panel (b/424438896)
+    val topInset = windowInsets.getTop(LocalDensity.current)
+
     val tooltipAnchorSpacing =
         with(LocalDensity.current) { spacingBetweenTooltipAndAnchor.roundToPx() }
-    return remember(tooltipAnchorSpacing) {
+    return remember(tooltipAnchorSpacing, topInset) {
         object : PopupPositionProvider {
             override fun calculatePosition(
                 anchorBounds: IntRect,
@@ -199,9 +211,9 @@ private fun rememberTooltipPositionProvider(
                 // Tooltip prefers to be below the anchor,
                 // but if this causes the tooltip to be outside the window
                 // then we place it above the anchor
-                var y = anchorBounds.bottom + tooltipAnchorSpacing
+                var y = anchorBounds.bottom + tooltipAnchorSpacing - topInset
                 if (y + popupContentSize.height > windowSize.height) {
-                    y = anchorBounds.top - popupContentSize.height - tooltipAnchorSpacing
+                    y = anchorBounds.top - popupContentSize.height - tooltipAnchorSpacing - topInset
                 }
                 return IntOffset(x, y)
             }
