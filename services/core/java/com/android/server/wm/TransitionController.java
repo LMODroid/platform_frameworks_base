@@ -1116,20 +1116,6 @@ class TransitionController {
         final boolean isPlaying = !mPlayingTransitions.isEmpty();
         Slog.e(TAG, "Set visible without transition " + wc + " playing=" + isPlaying
                 + " caller=" + caller);
-        if (mAtm.mWindowManager.mFlags.mEnsureSurfaceVisibility) {
-            return;
-        }
-        if (!isPlaying) {
-            WindowContainer.enforceSurfaceVisible(wc);
-            return;
-        }
-        // Update surface visibility after the playing transitions are finished, so the last
-        // visibility won't be replaced by the finish transaction of transition.
-        mStateValidators.add(() -> {
-            if (wc.isVisibleRequested()) {
-                WindowContainer.enforceSurfaceVisible(wc);
-            }
-        });
     }
 
     /**

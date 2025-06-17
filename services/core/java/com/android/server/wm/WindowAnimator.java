@@ -310,9 +310,6 @@ public class WindowAnimator {
      * caller has invoked {@link #scheduleAnimation}.
      */
     void addSurfaceVisibilityUpdate(WindowContainer<?> wc) {
-        if (!mService.mFlags.mEnsureSurfaceVisibility) {
-            return;
-        }
         if (!mPendingVisibilityUpdates.contains(wc)) {
             mPendingVisibilityUpdates.add(wc);
         }

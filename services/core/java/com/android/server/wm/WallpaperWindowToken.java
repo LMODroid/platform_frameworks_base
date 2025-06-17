@@ -86,22 +86,6 @@ class WallpaperWindowToken extends WindowToken {
         t.setVisibility(mSurfaceControl, isVisible());
     }
 
-    @Override
-    public void prepareSurfaces() {
-        super.prepareSurfaces();
-
-        if (mWmService.mFlags.mEnsureSurfaceVisibility) {
-            return;
-        }
-        // Similar to Task.prepareSurfaces, outside of transitions we need to apply visibility
-        // changes directly. In transitions the transition player will take care of applying the
-        // visibility change.
-        if (!mTransitionController.isCollecting(this)
-                && !mTransitionController.isPlayingTarget(this)) {
-            getPendingTransaction().setVisibility(mSurfaceControl, isVisible());
-        }
-    }
-
     /**
      * Controls whether this wallpaper shows underneath the keyguard or is hidden and only
      * revealed once keyguard is dismissed.

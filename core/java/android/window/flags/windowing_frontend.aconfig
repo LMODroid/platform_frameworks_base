@@ -30,17 +30,6 @@ flag {
 }
 
 flag {
-  name: "respect_hierarchy_surface_visibility"
-  namespace: "windowing_frontend"
-  description: "Ensure consistent surface visibility with window hierarchy"
-  bug: "383241933"
-  is_fixed_read_only: true
-  metadata {
-    purpose: PURPOSE_BUGFIX
-  }
-}
-
-flag {
   name: "use_cached_insets_for_display_switch"
   namespace: "windowing_frontend"
   description: "Reduce intermediate insets changes for display switch"

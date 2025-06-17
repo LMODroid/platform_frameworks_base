@@ -271,7 +271,6 @@ public class TaskSnapshotControllerTest extends WindowTestsBase {
         mAppWindow.mWinAnimator.mLastAlpha = 1f;
         spyOn(mAppWindow.mWinAnimator);
         doReturn(true).when(mAppWindow.mWinAnimator).getShown();
-        doReturn(true).when(mAppWindow.mActivityRecord).isSurfaceShowing();
 
         final TaskSnapshot.Builder builder =
                 new TaskSnapshot.Builder();

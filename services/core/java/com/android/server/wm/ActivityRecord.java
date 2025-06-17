@@ -216,7 +216,6 @@ import static com.android.server.wm.StartingData.AFTER_TRANSACTION_IDLE;
 import static com.android.server.wm.StartingData.AFTER_TRANSACTION_REMOVE_DIRECTLY;
 import static com.android.server.wm.StartingData.AFTER_TRANSITION_FINISH;
 import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_APP_TRANSITION;
-import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_PREDICT_BACK;
 import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_WINDOW_ANIMATION;
 import static com.android.server.wm.TaskFragment.TASK_FRAGMENT_VISIBILITY_VISIBLE;
 import static com.android.server.wm.TaskPersister.DEBUG;
@@ -666,9 +665,6 @@ final class ActivityRecord extends WindowToken {
      * @see #currentLaunchCanTurnScreenOn()
      */
     private boolean mCurrentLaunchCanTurnScreenOn = true;
-
-    /** Whether our surface was set to be showing in the last call to {@link #prepareSurfaces} */
-    boolean mLastSurfaceShowing;
 
     /**
      * The activity is opaque and fills the entire space of this task.
@@ -7193,37 +7189,11 @@ final class ActivityRecord extends WindowToken {
 
     @Override
     void prepareSurfaces() {
-        if (mWmService.mFlags.mEnsureSurfaceVisibility) {
-            // Input sink surface is not a part of animation, so apply in a steady state
-            // (non-sync) with pending transaction.
-            if (mVisible && mSyncState == SYNC_STATE_NONE) {
-                mActivityRecordInputSink.applyChangesToSurfaceIfChanged(getPendingTransaction());
-            }
-            super.prepareSurfaces();
-            return;
+        // Input sink surface is not a part of animation, so apply in a steady state
+        // (non-sync) with pending transaction.
+        if (mVisible && mSyncState == SYNC_STATE_NONE) {
+            mActivityRecordInputSink.applyChangesToSurfaceIfChanged(getPendingTransaction());
         }
-        final boolean isDecorSurfaceBoosted =
-                getTask() != null && getTask().isDecorSurfaceBoosted();
-        final boolean show = (isVisible()
-                // Ensure that the activity content is hidden when the decor surface is boosted to
-                // prevent UI redressing attack.
-                && !isDecorSurfaceBoosted)
-                || isAnimating(PARENTS, ANIMATION_TYPE_APP_TRANSITION
-                        | ANIMATION_TYPE_PREDICT_BACK);
-
-        if (mSurfaceControl != null) {
-            if (show && !mLastSurfaceShowing) {
-                getSyncTransaction().show(mSurfaceControl);
-            } else if (!show && mLastSurfaceShowing) {
-                getSyncTransaction().hide(mSurfaceControl);
-            }
-            // Input sink surface is not a part of animation, so just apply in a steady state
-            // (non-sync) with pending transaction.
-            if (show && mSyncState == SYNC_STATE_NONE) {
-                mActivityRecordInputSink.applyChangesToSurfaceIfChanged(getPendingTransaction());
-            }
-        }
-        mLastSurfaceShowing = show;
         super.prepareSurfaces();
     }
 
@@ -7234,13 +7204,6 @@ final class ActivityRecord extends WindowToken {
                 // prevent UI redressing attack.
                 && (task == null || !task.isDecorSurfaceBoosted());
         t.setVisibility(mSurfaceControl, visible);
-    }
-
-    /**
-     * @return Whether our {@link #getSurfaceControl} is currently showing.
-     */
-    boolean isSurfaceShowing() {
-        return mLastSurfaceShowing;
     }
 
     public @TransitionOldType int getTransit() {
@@ -9207,7 +9170,6 @@ final class ActivityRecord extends WindowToken {
     void dumpDebug(ProtoOutputStream proto, @WindowTracingLogLevel int logLevel) {
         writeNameToProto(proto, NAME);
         super.dumpDebug(proto, WINDOW_TOKEN, logLevel);
-        proto.write(LAST_SURFACE_SHOWING, mLastSurfaceShowing);
         proto.write(IS_ANIMATING, isAnimating(TRANSITION | PARENTS | CHILDREN,
                 ANIMATION_TYPE_APP_TRANSITION | ANIMATION_TYPE_WINDOW_ANIMATION));
         proto.write(FILLS_PARENT, fillsParent());
@@ -9485,14 +9447,8 @@ final class ActivityRecord extends WindowToken {
     }
 
     boolean canCaptureSnapshot() {
-        if (mWmService.mFlags.mEnsureSurfaceVisibility) {
-            if (!mVisible) {
-                return false;
-            }
-        } else {
-            if (!isSurfaceShowing() || findMainWindow() == null) {
-                return false;
-            }
+        if (!mVisible) {
+            return false;
         }
         return forAllWindows(
                 // Ensure at least one window for the top app is visible before attempting to
