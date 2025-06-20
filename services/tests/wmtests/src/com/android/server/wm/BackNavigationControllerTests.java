@@ -248,9 +248,9 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         testCase.windowFront.mAttrs.windowAnimations = 0x10;
         spyOn(mDisplayContent.mTransitionAnimation);
         doReturn(0xffff00AB).when(mDisplayContent.mTransitionAnimation)
-                .getAnimationResId(any(), anyInt(), anyInt());
+                .getAnimationResId(any(), anyInt());
         doReturn(0xffff00CD).when(mDisplayContent.mTransitionAnimation)
-                .getDefaultAnimationResId(anyInt(), anyInt());
+                .getDefaultAnimationResId(anyInt());
 
         BackNavigationInfo backNavigationInfo = startBackNavigation();
         assertWithMessage("BackNavigationInfo").that(backNavigationInfo).isNotNull();

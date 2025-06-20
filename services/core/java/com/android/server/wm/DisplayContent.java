@@ -4630,7 +4630,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
                 t.show(mImeSurface);
                 if (DEBUG_IME_VISIBILITY) {
                     EventLog.writeEvent(IMF_SHOW_IME_SCREENSHOT, mImeTarget.toString(),
-                            dc.mInputMethodWindow.mTransitFlags, mImeSurfacePosition.toString());
+                            0 /* unused transition flags */, mImeSurfacePosition.toString());
                 }
             } else if (!isValidSnapshot) {
                 removeImeSurface(t);

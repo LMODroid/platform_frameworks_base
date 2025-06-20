@@ -24,7 +24,6 @@ import static android.view.RemoteAnimationTarget.MODE_OPENING;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_APP_PROGRESS_GENERATION_ALLOWED;
 import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 import static android.view.WindowManager.TRANSIT_CHANGE;
-import static android.view.WindowManager.TRANSIT_OLD_NONE;
 import static android.view.WindowManager.TRANSIT_PREPARE_BACK_NAVIGATION;
 import static android.window.DesktopExperienceFlags.ENABLE_INDEPENDENT_BACK_IN_PROJECTED;
 import static android.window.SystemOverrideOnBackInvokedCallback.OVERRIDE_FINISH_AND_REMOVE_TASK;
@@ -763,11 +762,10 @@ class BackNavigationController {
             final int attr = com.android.internal.R.styleable
                     .WindowAnimation_activityCloseExitAnimation;
             final int appResId = transitionAnimation.getAnimationResId(
-                    window.mAttrs, attr, TRANSIT_OLD_NONE);
+                    window.mAttrs, attr);
             if (ResourceId.isValid(appResId)) {
                 if (sDefaultAnimationResId == 0) {
-                    sDefaultAnimationResId = transitionAnimation.getDefaultAnimationResId(attr,
-                            TRANSIT_OLD_NONE);
+                    sDefaultAnimationResId = transitionAnimation.getDefaultAnimationResId(attr);
                 }
                 return sDefaultAnimationResId != appResId;
             }

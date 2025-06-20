@@ -84,7 +84,6 @@ import android.view.SurfaceControl;
 import android.view.SurfaceControl.Builder;
 import android.view.SurfaceControlViewHost;
 import android.view.WindowManager;
-import android.view.WindowManager.TransitionOldType;
 import android.window.IWindowContainerToken;
 import android.window.WindowContainerToken;
 
@@ -256,17 +255,6 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
      * selected to suppress an animation, and remove this flag.
      */
     boolean mLaunchTaskBehind;
-
-    /**
-     * If we are running an animation, this determines the transition type.
-     */
-    @TransitionOldType int mTransit;
-
-    /**
-     * If we are running an animation, this determines the flags during this animation. Must be a
-     * bitwise combination of AppTransition.TRANSIT_FLAG_* constants.
-     */
-    int mTransitFlags;
 
     protected final Rect mTmpRect = new Rect();
     final Rect mTmpPrevBounds = new Rect();
@@ -1231,8 +1219,6 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
      * e.g. {@code isAnimating(TRANSITION | PARENT)} returns {@code true} if either this
      * container itself or one of its parents is running an animation or waiting for an app
      * transition.
-     *
-     * Note that TRANSITION propagates to parents and children as well.
      *
      * @param flags The combination of bitmask flags to specify targets and condition for
      *              checking animating status.
@@ -3106,8 +3092,6 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
      * e.g. {@code isAnimating(TRANSITION | PARENT)} returns {@code true} if either this
      * container itself or one of its parents is running an animation or waiting for an app
      * transition.
-     *
-     * Note that TRANSITION propagates to parents and children as well.
      *
      * @param flags The combination of bitmask flags to specify targets and condition for
      *              checking animating status.

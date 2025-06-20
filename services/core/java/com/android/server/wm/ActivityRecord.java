@@ -323,7 +323,6 @@ import android.view.SurfaceControl.Transaction;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
-import android.view.WindowManager.TransitionOldType;
 import android.window.ActivityWindowInfo;
 import android.window.ITaskFragmentOrganizer;
 import android.window.RemoteTransition;
@@ -7205,11 +7204,6 @@ final class ActivityRecord extends WindowToken {
                 && (task == null || !task.isDecorSurfaceBoosted());
         t.setVisibility(mSurfaceControl, visible);
     }
-
-    public @TransitionOldType int getTransit() {
-        return mTransit;
-    }
-
 
     void registerRemoteAnimations(RemoteAnimationDefinition definition) {
         mRemoteAnimationDefinition = definition;
