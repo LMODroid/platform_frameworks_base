@@ -80,6 +80,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.compose.modifiers.padding
+import com.android.compose.modifiers.sliderPercentage
 import com.android.compose.modifiers.thenIf
 import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.compose.ui.graphics.drawInOverlay
@@ -221,6 +222,9 @@ fun BrightnessSlider(
                 .sysuiResTag("slider")
                 .semantics(mergeDescendants = true) {
                     this.text = AnnotatedString(contentDescription)
+                }
+                .sliderPercentage {
+                    (value - valueRange.first).toFloat() / (valueRange.last - valueRange.first)
                 }
                 .thenIf(isRestricted) {
                     Modifier.clickable {

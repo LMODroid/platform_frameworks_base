@@ -60,6 +60,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.android.compose.modifiers.sliderPercentage
 import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.systemui.biometrics.Utils.toBitmap
 import com.android.systemui.common.shared.model.Icon
@@ -188,7 +189,12 @@ fun DualIconSlider(
                 onStop(value)
             }
         },
-        modifier = modifier.sysuiResTag("slider"),
+        modifier =
+            modifier
+                .sliderPercentage {
+                    (value - valueRange.first).toFloat() / (valueRange.last - valueRange.first)
+                }
+                .sysuiResTag("slider"),
         interactionSource = interactionSource,
         thumb = {
             SliderDefaults.Thumb(
