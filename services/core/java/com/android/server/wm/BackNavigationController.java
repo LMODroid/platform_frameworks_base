@@ -1449,7 +1449,7 @@ class BackNavigationController {
                 }
             }
             if (mCloseAdaptor != null) {
-                mCloseAdaptor.mTarget.cancelAnimation();
+                mCloseAdaptor.cleanUp();
                 mCloseAdaptor = null;
             }
             if (mOpenAnimAdaptor != null) {
@@ -1609,6 +1609,9 @@ class BackNavigationController {
                 if (mCloseTransaction != null) {
                     mCloseTransaction.apply();
                     mCloseTransaction = null;
+                }
+                if (mRemoteAnimationTarget != null) {
+                    mRemoteAnimationTarget.release();
                 }
 
                 mPreparedOpenTransition = null;
@@ -1775,6 +1778,13 @@ class BackNavigationController {
                     return tf.getTask();
                 }
                 return null;
+            }
+
+            void cleanUp() {
+                mTarget.cancelAnimation();
+                if (mAnimationTarget != null) {
+                    mAnimationTarget.release();
+                }
             }
 
             @Override

@@ -3480,6 +3480,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             mOverlayLayer.release();
             mInputOverlayLayer.release();
             mA11yOverlayLayer.release();
+            mPointerEventDispatcherOverlayLayer.release();
             mInputMonitor.onDisplayRemoved();
             mWmService.mDisplayNotificationController.dispatchDisplayRemoved(this);
             mDisplayRotation.onDisplayRemoved();

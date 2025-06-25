@@ -324,6 +324,16 @@ public class RemoteAnimationTarget implements Parcelable {
         rotationChange = in.readInt();
     }
 
+    /**
+     * Releases any resources held by this animation target.
+     * @hide
+     */
+    public void release() {
+        if (leash != null) {
+            leash.release();
+        }
+    }
+
     public void setShowBackdrop(boolean shouldShowBackdrop) {
         showBackdrop = shouldShowBackdrop;
     }
