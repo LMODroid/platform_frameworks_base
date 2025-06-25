@@ -28,6 +28,7 @@ import android.util.Log
 import android.util.MathUtils
 import android.view.CrossWindowBlurListeners
 import android.view.CrossWindowBlurListeners.CROSS_WINDOW_BLUR_SUPPORTED
+import android.view.SurfaceControl
 import android.view.SyncRtSurfaceTransactionApplier
 import android.view.ViewRootImpl
 import androidx.annotation.VisibleForTesting
@@ -73,6 +74,9 @@ constructor(
     init {
         dumpManager.registerDumpable(this)
     }
+
+    @VisibleForTesting
+    open fun createTransaction(): SurfaceControl.Transaction = SurfaceControl.Transaction()
 
     /** Translates a ratio from 0 to 1 to a blur radius in pixels. */
     fun blurRadiusOfRatio(ratio: Float): Float {
@@ -163,22 +167,38 @@ constructor(
 
     @SuppressLint("MissingPermission")
     private fun earlyWakeupStart(
-        builder: SyncRtSurfaceTransactionApplier.SurfaceParams.Builder,
+        builder: SyncRtSurfaceTransactionApplier.SurfaceParams.Builder?,
         traceMethodName: String,
     ) {
         v("earlyWakeupStart from $traceMethodName")
         Trace.asyncTraceForTrackBegin(TRACE_TAG_APP, TRACK_NAME, traceMethodName, 0)
-        builder.withEarlyWakeupStart()
+        if (builder != null) {
+            builder.withEarlyWakeupStart()
+        } else {
+            Log.w(
+                TAG,
+                "surfaceControl is not valid, using immediate transaction to set early wakeup",
+            )
+            createTransaction().use { it.setEarlyWakeupStart().apply() }
+        }
         earlyWakeupEnabled = true
     }
 
     @SuppressLint("MissingPermission")
     private fun earlyWakeupEnd(
-        builder: SyncRtSurfaceTransactionApplier.SurfaceParams.Builder,
+        builder: SyncRtSurfaceTransactionApplier.SurfaceParams.Builder?,
         loggingContext: String,
     ) {
         v("earlyWakeupEnd from $loggingContext")
-        builder.withEarlyWakeupEnd()
+        if (builder != null) {
+            builder.withEarlyWakeupEnd()
+        } else {
+            Log.w(
+                TAG,
+                "surfaceControl is not valid, using immediate transaction to reset early wakeup",
+            )
+            createTransaction().use { it.setEarlyWakeupEnd().apply() }
+        }
         Trace.asyncTraceForTrackEnd(TRACE_TAG_APP, TRACK_NAME, 0)
         earlyWakeupEnabled = false
     }
@@ -227,13 +247,16 @@ constructor(
         persistentEarlyWakeupRequired = persistentWakeup
         if (viewRootImpl == null || !supportsBlursOnWindows()) return
 
-        updateTransactionApplier(viewRootImpl)
         val builder =
-            SyncRtSurfaceTransactionApplier.SurfaceParams.Builder(viewRootImpl.surfaceControl)
+            if (!Flags.instantHideShade() || viewRootImpl.surfaceControl?.isValid == true) {
+                updateTransactionApplier(viewRootImpl)
+                SyncRtSurfaceTransactionApplier.SurfaceParams.Builder(viewRootImpl.surfaceControl)
+            } else {
+                null
+            }
         if (persistentEarlyWakeupRequired) {
             if (earlyWakeupEnabled) return
             earlyWakeupStart(builder, "setEarlyWakeup")
-            transactionApplier.scheduleApply(builder.build())
         } else {
             if (!earlyWakeupEnabled) return
             if (lastAppliedBlur > 0) {
@@ -245,8 +268,8 @@ constructor(
                 )
             }
             earlyWakeupEnd(builder, "resetEarlyWakeup")
-            transactionApplier.scheduleApply(builder.build())
         }
+        builder?.let { transactionApplier.scheduleApply(it.build()) }
     }
 
     companion object {
