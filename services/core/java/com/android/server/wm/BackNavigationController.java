@@ -101,9 +101,13 @@ class BackNavigationController {
     // back animation.
     private AnimationHandler.ScheduleAnimationBuilder mCurrentAnimationBuilder;
 
-    // This will be set if the back navigation is in progress and the current transition is still
-    // running. The pending animation builder will do the animation stuff includes creating leashes,
-    // re-parenting leashes and set launch behind, etc. Will be handled when transition finished.
+    /**
+     * This will be set if the back navigation is in progress and the current transition is still
+     * running. The pending animation builder will do the animation stuff includes creating leashes,
+     * re-parenting leashes and set launch behind, etc. Will be handled when transition finished.
+     *
+     * @deprecated Remove after Flags#predictive_back_intercept_transition
+     */
     private AnimationHandler.ScheduleAnimationBuilder mPendingAnimationBuilder;
 
     private static int sDefaultAnimationResId;
@@ -261,6 +265,13 @@ class BackNavigationController {
                 ProtoLog.d(WM_DEBUG_BACK_PREVIEW,
                         "Focused window didn't have a valid surface drawn.");
                 return null;
+            }
+
+            if (Flags.predictiveBackInterceptTransition()
+                    && window.mTransitionController.inTransition()) {
+                infoBuilder.setType(BackNavigationInfo.TYPE_IN_TRANSITION);
+                ProtoLog.d(WM_DEBUG_BACK_PREVIEW, "A transition is happening.");
+                return infoBuilder.build();
             }
 
             final ArrayList<EmbeddedWindowController.EmbeddedWindow> embeddedWindows = wmService
@@ -2243,7 +2254,8 @@ class BackNavigationController {
     }
 
     private void scheduleAnimationInner(AnimationHandler.ScheduleAnimationBuilder builder) {
-        if (mWindowManagerService.mAtmService.getTransitionController().inTransition()) {
+        if (!Flags.predictiveBackInterceptTransition()
+                && mWindowManagerService.mAtmService.getTransitionController().inTransition()) {
             ProtoLog.w(WM_DEBUG_BACK_PREVIEW,
                     "Pending back animation due to another animation is running");
             mPendingAnimationBuilder = builder;

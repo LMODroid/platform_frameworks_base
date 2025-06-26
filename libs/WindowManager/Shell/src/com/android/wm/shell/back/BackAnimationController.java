@@ -164,6 +164,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
      * (and navigation) associated with {@link #mCurrentTracker} have not yet finished.
      */
     private BackTouchTracker mQueuedTracker = new BackTouchTracker();
+    private final TransitionIdleRunner mTransitionIdleRunner = new TransitionIdleRunner();
 
     private final BackTransitionObserver mBackTransitionObserver =
             new BackTransitionObserver();
@@ -481,24 +482,30 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
             tryPilferPointers();
         }
 
-        if (predictiveBackDelayWmTransition()) {
-            mShellExecutor.execute(() -> {
-                if (shouldDispatchToAnimator()) {
-                    try {
-                        mActivityTaskManager.startPredictiveBackAnimation();
-                    } catch (RemoteException r) {
-                        Log.e(TAG, "Failed to start predictive animation", r);
-                        finishBackNavigation(mCurrentTracker.getTriggerBack());
-                        return;
-                    }
-                    final int backType = mBackNavigationInfo.getType();
-                    if (!mShellBackAnimationRegistry.startGesture(backType)) {
-                        mActiveCallback = null;
-                    }
-                    requestTopUi(true, backType);
-                }
-            });
+        startPredictiveBackAnimationIfNeeded();
+    }
+
+    private void startPredictiveBackAnimationIfNeeded() {
+        if (!predictiveBackDelayWmTransition() || !mThresholdCrossed) {
+            return;
         }
+        mShellExecutor.execute(() -> {
+            if (!shouldDispatchToAnimator()) {
+                return;
+            }
+            try {
+                mActivityTaskManager.startPredictiveBackAnimation();
+            } catch (RemoteException r) {
+                Log.e(TAG, "Failed to start predictive animation", r);
+                finishBackNavigation(mCurrentTracker.getTriggerBack());
+                return;
+            }
+            final int backType = mBackNavigationInfo.getType();
+            if (!mShellBackAnimationRegistry.startGesture(backType)) {
+                mActiveCallback = null;
+            }
+            requestTopUi(true, backType);
+        });
     }
 
     private boolean isAppProgressGenerationAllowed() {
@@ -635,6 +642,22 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         }
     }
 
+    private class TransitionIdleRunner implements Runnable {
+        boolean mIsEnable;
+
+        @Override
+        public void run() {
+            if (!mIsEnable || !mCurrentTracker.isActive()) {
+                return;
+            }
+            ProtoLog.d(WM_SHELL_BACK_PREVIEW, "Gesture hasn't finish after transition "
+                    + "idle, start back navigation again.");
+            mIsEnable = false;
+            startBackNavigation(mCurrentTracker);
+            startPredictiveBackAnimationIfNeeded();
+        }
+    }
+
     private void onBackNavigationInfoReceived(@Nullable BackNavigationInfo backNavigationInfo,
             @NonNull BackTouchTracker touchTracker) {
         ProtoLog.d(WM_SHELL_BACK_PREVIEW, "Received backNavigationInfo:%s", backNavigationInfo);
@@ -646,6 +669,13 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
             return;
         }
         final int backType = backNavigationInfo.getType();
+        if (backType == BackNavigationInfo.TYPE_IN_TRANSITION) {
+            mBackNavigationInfo = null;
+            tryPilferPointers();
+            mTransitionIdleRunner.mIsEnable = true;
+            mTransitions.runOnIdle(() -> mShellExecutor.execute(mTransitionIdleRunner));
+            return;
+        }
         final boolean shouldDispatchToAnimator = shouldDispatchToAnimator();
         if (shouldDispatchToAnimator) {
             if (!predictiveBackDelayWmTransition()) {
@@ -889,6 +919,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         mPointersPilfered = false;
         mBackGestureStarted = false;
         activeTouchTracker.setState(BackTouchTracker.TouchTrackerState.FINISHED);
+        mTransitionIdleRunner.mIsEnable = false;
 
         if (mPostCommitAnimationInProgress) {
             ProtoLog.w(WM_SHELL_BACK_PREVIEW, "Animation is still running");

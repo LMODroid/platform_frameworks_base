@@ -82,6 +82,7 @@ import android.window.WindowContainerToken;
 import androidx.annotation.Nullable;
 import androidx.test.filters.SmallTest;
 
+import com.android.window.flags.Flags;
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.ShellTestCase;
 import com.android.wm.shell.TestShellExecutor;
@@ -275,6 +276,19 @@ public class BackAnimationControllerTest extends ShellTestCase {
                     + BackNavigationInfo.typeToString(type), result.mBackNavigationDone);
             assertTrue("TriggerBack should have been true", result.mTriggerBack);
         }
+    }
+
+    @EnableFlags(Flags.FLAG_PREDICTIVE_BACK_INTERCEPT_TRANSITION)
+    @Test
+    public void noStartInTransition() throws RemoteException {
+        registerAnimation(BackNavigationInfo.TYPE_RETURN_TO_HOME);
+        createNavigationInfo(BackNavigationInfo.TYPE_IN_TRANSITION,
+                /* enableAnimation = */ true,
+                /* isAnimationCallback = */ false);
+
+        doStartEvents(0, 100);
+        verify(mAppCallback, never()).onBackStarted(any());
+        verify(mTransitions).runOnIdle(any());
     }
 
     @Test

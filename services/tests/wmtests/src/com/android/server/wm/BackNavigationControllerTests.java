@@ -241,6 +241,23 @@ public class BackNavigationControllerTests extends WindowTestsBase {
                 .isEqualTo(typeToString(BackNavigationInfo.TYPE_RETURN_TO_HOME));
     }
 
+    @EnableFlags(Flags.FLAG_PREDICTIVE_BACK_INTERCEPT_TRANSITION)
+    @Test
+    public void noBackInTransition() {
+        Task taskA = createTask(mDefaultDisplay);
+        ActivityRecord recordA = createActivityRecord(taskA);
+        Mockito.doNothing().when(recordA).reparentSurfaceControl(any(), any());
+        doReturn(false).when(taskA).showToCurrentUser();
+
+        withSystemCallback(createTopTaskWithActivity());
+        final TransitionController transitionController = mAtm.getTransitionController();
+        doReturn(true).when(transitionController).inTransition();
+        BackNavigationInfo backNavigationInfo = startBackNavigation();
+        assertWithMessage("BackNavigationInfo").that(backNavigationInfo).isNotNull();
+        assertThat(typeToString(backNavigationInfo.getType()))
+                .isEqualTo(typeToString(BackNavigationInfo.TYPE_IN_TRANSITION));
+    }
+
     @Test
     public void backTypeCrossActivityWithCustomizeExitAnimation() {
         CrossActivityTestCase testCase = createTopTaskWithTwoActivities();

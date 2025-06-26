@@ -534,3 +534,13 @@ flag {
       purpose: PURPOSE_BUGFIX
     }
 }
+
+flag {
+    name: "predictive_back_intercept_transition"
+    namespace: "windowing_frontend"
+    description: "Allows back gesture to intercept a running transition."
+    bug: "426448018"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
