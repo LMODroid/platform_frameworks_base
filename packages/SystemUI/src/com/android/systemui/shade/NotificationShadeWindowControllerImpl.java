@@ -498,10 +498,12 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
     }
 
     private boolean isExpanded(NotificationShadeWindowState state) {
+        boolean areScrimsNotTransparent = state.scrimsVisibility != ScrimController.TRANSPARENT;
+        boolean shouldScrimVisibilityKeepWindowVisible = !Flags.scrimFix();
         boolean isExpanded = !state.forceWindowCollapsed && (state.isKeyguardShowingAndNotOccluded()
                 || state.panelVisible || state.keyguardFadingAway || state.bouncerShowing
                 || state.headsUpNotificationShowing
-                || state.scrimsVisibility != ScrimController.TRANSPARENT)
+                || (shouldScrimVisibilityKeepWindowVisible && areScrimsNotTransparent))
                 || state.launchingActivityFromNotification;
 
         if (Flags.instantHideShade() && state.launchingActivityFromNotification

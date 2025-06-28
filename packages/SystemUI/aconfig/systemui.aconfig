@@ -1829,6 +1829,16 @@ flag {
 }
 
 flag {
+    name: "scrim_fix"
+    namespace: "systemui"
+    description: "Fix "
+    bug: "414874982"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "bouncer_ui_revamp_2"
     namespace: "systemui"
     description: "Updates to button animations and font changes for bouncer, bouncer_ui_revamp will cover only the blur changes."
