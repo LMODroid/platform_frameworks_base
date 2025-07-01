@@ -33,6 +33,7 @@ import static com.android.internal.jank.InteractionJankMonitor.CUJ_PREDICTIVE_BA
 import static com.android.window.flags.Flags.predictiveBackDelayWmTransition;
 import static com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_BACK_PREVIEW;
 
+import android.animation.ValueAnimator;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
@@ -111,6 +112,9 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
      * Max duration to wait for an animation to finish before triggering the real back.
      */
     private static final long MAX_ANIMATION_DURATION = 2000;
+    private long mMaxAnimationDuration = MAX_ANIMATION_DURATION;
+    // Note: Must keep a reference when register to ValueAnimator.
+    private final ValueAnimator.DurationScaleChangeListener mAnimationScaleChangeListener;
     private final LatencyTracker mLatencyTracker;
     @ShellMainThread private final Handler mHandler;
 
@@ -166,7 +170,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
 
     private final Runnable mAnimationTimeoutRunnable = () -> {
         ProtoLog.w(WM_SHELL_BACK_PREVIEW, "Animation didn't finish in %d ms. Resetting...",
-                MAX_ANIMATION_DURATION);
+                mMaxAnimationDuration);
         finishBackAnimation();
     };
 
@@ -286,6 +290,8 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         mTransitions.registerObserver(mBackTransitionObserver);
         mBackTransitionObserver.setBackTransitionHandler(mBackTransitionHandler);
         updateTouchableArea();
+        mAnimationScaleChangeListener = scale -> mShellExecutor.execute(
+                this::updateAnimationScale);
     }
 
     private void onInit() {
@@ -295,6 +301,14 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         mShellCommandHandler.addDumpCallback(this::dump, this);
         mShellController.addConfigurationChangeListener(this);
         registerBackGestureDelegate();
+        ValueAnimator.registerDurationScaleChangeListener(mAnimationScaleChangeListener);
+        updateAnimationScale();
+    }
+
+    private void updateAnimationScale() {
+        final float scale = Math.max(Math.min(ValueAnimator.getDurationScale(), 20), 1);
+        final double result = scale * MAX_ANIMATION_DURATION;
+        mMaxAnimationDuration = Math.round(result);
     }
 
     public BackAnimation getBackAnimationImpl() {
@@ -909,7 +923,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
             ProtoLog.w(WM_SHELL_BACK_PREVIEW, "Gesture released, but animation didn't ready.");
             // Supposed it is in post commit animation state, and start the timeout to watch
             // if the animation is ready.
-            mShellExecutor.executeDelayed(mAnimationTimeoutRunnable, MAX_ANIMATION_DURATION);
+            mShellExecutor.executeDelayed(mAnimationTimeoutRunnable, mMaxAnimationDuration);
             return;
         }
         startPostCommitAnimation();
@@ -939,7 +953,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         mShellExecutor.removeCallbacks(mAnimationTimeoutRunnable);
         ProtoLog.d(WM_SHELL_BACK_PREVIEW, "BackAnimationController: startPostCommitAnimation()");
         mPostCommitAnimationInProgress = true;
-        mShellExecutor.executeDelayed(mAnimationTimeoutRunnable, MAX_ANIMATION_DURATION);
+        mShellExecutor.executeDelayed(mAnimationTimeoutRunnable, mMaxAnimationDuration);
 
         // The next callback should be {@link #onBackAnimationFinished}.
         if (mCurrentTracker.getTriggerBack()) {
