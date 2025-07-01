@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Launch
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.DisabledByDefault
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -101,13 +102,19 @@ fun ActionButtons(actionButtons: List<ActionButton>) {
 @Composable
 private fun RowScope.ActionButton(actionButton: ActionButton) {
     if (isSpaExpressiveEnabled) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                .weight(1f)
+        ) {
             IconButton(actionButton)
             Spacer(Modifier.height(SettingsDimension.extraSmall3))
             Text(
                 text = actionButton.text,
-                modifier = Modifier.clearAndSetSemantics {}, // semantics set in IconButton
+                modifier = Modifier
+                    .clearAndSetSemantics {} // semantics set in IconButton
+                    .padding(horizontal = 8.dp),
                 style = MaterialTheme.typography.titleSmallEmphasized,
+                textAlign = TextAlign.Center,
             )
         }
     } else {
@@ -200,6 +207,10 @@ private fun ActionButtonsPreview() {
                 ActionButton(text = "Open", imageVector = Icons.AutoMirrored.Outlined.Launch) {},
                 ActionButton(text = "Uninstall", imageVector = Icons.Outlined.Delete) {},
                 ActionButton(text = "Force stop", imageVector = Icons.Outlined.WarningAmber) {},
+                ActionButton(
+                    text = "long long long long text",
+                    imageVector = Icons.Outlined.DisabledByDefault
+                ) {},
             )
         )
     }
