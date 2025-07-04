@@ -503,6 +503,7 @@ constructor(
 
     private fun onHeaderStateChanged() {
         updateTransition()
+        updateIgnoredSlots()
     }
 
     /**
@@ -569,7 +570,11 @@ constructor(
 
     private fun updateIgnoredSlots() {
         // switching from QQS to QS state halfway through the transition
-        if (singleCarrier || qsExpandedFraction < 0.5) {
+        // show mobile statusbar icons if we are either:
+        // - single carrier (shade carrier group shows only carrier text)
+        // - expanded to qqs in regular header (portrait mobile). in large screen header (landscape)
+        // the shade carrier group is shown at all times since there is plenty of space for it.
+        if (singleCarrier || (!largeScreenActive && qsExpandedFraction < 0.5)) {
             iconContainer.removeIgnoredSlots(carrierIconSlots)
         } else {
             iconContainer.addIgnoredSlots(carrierIconSlots)
