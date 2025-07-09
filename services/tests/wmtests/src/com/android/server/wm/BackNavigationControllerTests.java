@@ -565,6 +565,21 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         assertThat(backNavigationInfo.getOnBackInvokedCallback()).isEqualTo(appCallback);
     }
 
+    @Test
+    public void backTypeCallbackWhenInterceptBackPressedOnRootTask() {
+        Task task = createTopTaskWithActivity();
+        IOnBackInvokedCallback appCallback = withAppCallback(task);
+
+        spyOn(mAtm.mTaskOrganizerController);
+        Mockito.doReturn(true).when(
+                mAtm.mTaskOrganizerController).shouldInterceptBackPressedOnRootTask(eq(task));
+        BackNavigationInfo backNavigationInfo = startBackNavigation();
+        assertThat(typeToString(backNavigationInfo.getType()))
+                .isEqualTo(typeToString(BackNavigationInfo.TYPE_CALLBACK));
+        // The callback should be replaced.
+        assertThat(backNavigationInfo.getOnBackInvokedCallback()).isNotEqualTo(appCallback);
+    }
+
     // TODO (b/259427810) Remove this test when we figure out new API
     @Test
     public void backAnimationSkipSharedElementTransition() {
