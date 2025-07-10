@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.permission.PermissionGroupUsage
 import android.permission.PermissionManager
+import android.os.UserHandle
 import android.safetycenter.SafetyCenterManager
 import android.view.View
 import androidx.annotation.WorkerThread
@@ -26,6 +27,7 @@ import java.util.concurrent.Executor
 import javax.inject.Inject
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.settings.UserTracker
 import com.android.systemui.statusbar.policy.DeviceProvisionedController
 
 interface ChipVisibilityListener {
@@ -56,7 +58,8 @@ class HeaderPrivacyIconsController @Inject constructor(
     private val appOpsController: AppOpsController,
     private val broadcastDispatcher: BroadcastDispatcher,
     private val safetyCenterManager: SafetyCenterManager,
-    private val deviceProvisionedController: DeviceProvisionedController
+    private val deviceProvisionedController: DeviceProvisionedController,
+    private val userTracker: UserTracker,
 ) {
 
     var chipVisibilityListener: ChipVisibilityListener? = null
@@ -156,7 +159,7 @@ class HeaderPrivacyIconsController @Inject constructor(
 
     private fun showSafetyCenter() {
         backgroundExecutor.execute {
-            val usage = ArrayList(permGroupUsage())
+            val usage = permGroupUsage()
             privacyLogger.logUnfilteredPermGroupUsage(usage)
             val startSafetyCenter = Intent(Intent.ACTION_VIEW_SAFETY_CENTER_QS)
             startSafetyCenter.putParcelableArrayListExtra(PermissionManager.EXTRA_PERMISSION_USAGES,
@@ -170,8 +173,20 @@ class HeaderPrivacyIconsController @Inject constructor(
     }
 
     @WorkerThread
-    private fun permGroupUsage(): List<PermissionGroupUsage> {
-        return permissionManager.getIndicatorAppOpUsageData(appOpsController.isMicMuted)
+    fun permGroupUsage(): ArrayList<PermissionGroupUsage> {
+        val usages =
+            ArrayList(permissionManager.getIndicatorAppOpUsageData(appOpsController.isMicMuted))
+        val invalidUserUsages = mutableListOf<PermissionGroupUsage>()
+        val userProfiles = userTracker.userProfiles
+        for (usage in usages) {
+            val userId = UserHandle.getUserId(usage.uid)
+            if (usage.isPhoneCall || userProfiles.any { it.id == userId }) {
+                continue
+            }
+            invalidUserUsages.add(usage)
+        }
+        usages.removeAll(invalidUserUsages)
+        return usages
     }
 
     fun onParentInvisible() {
