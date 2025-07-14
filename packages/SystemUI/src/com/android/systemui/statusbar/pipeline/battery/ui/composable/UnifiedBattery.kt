@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -227,6 +227,7 @@ fun BatteryLayout(
                 BatteryCap(
                     colorsProvider = colorsProvider,
                     isFullProvider = isFullProvider,
+                    glyphsProvider = glyphsProvider,
                     modifier = Modifier.layoutId(BatteryMeasurePolicy.LayoutId.Cap),
                 )
             }
@@ -387,12 +388,13 @@ fun BatteryBody(
     modifier: Modifier = Modifier,
     contentDescription: String = "",
 ) {
+    val colors = colorsProvider()
+    val glyphs = glyphsProvider()
+    val frameColor = rememberBatteryFrameColor(isFullProvider(), glyphs.isNotEmpty(), colors)
+
     Canvas(modifier = modifier, contentDescription = contentDescription) {
         val rtl = layoutDirection == LayoutDirection.Rtl
         val level = levelProvider()
-        val colors = colorsProvider()
-
-        val glyphs = glyphsProvider()
         val totalGlyphWidth =
             if (glyphs.isEmpty()) {
                 0f
@@ -406,21 +408,13 @@ fun BatteryBody(
         val s = pathSpec.scaleTo(size.width, size.height)
         scale(scale = s, pivot = Offset.Zero) {
             if (isFullProvider()) {
-                // If the battery is full, we just show the fill color for the whole path
-                drawPath(pathSpec.path, colors.fill)
+                // If full, the frameColor is already the fill color.
+                drawPath(pathSpec.path, frameColor)
             } else {
-                // Else, clip the fill at the desired level
-                // 1. select body color
-                val color =
-                    if (glyphs.isNotEmpty()) {
-                        colors.backgroundWithGlyph
-                    } else {
-                        colors.backgroundOnly
-                    }
-                // 2. draw body
-                drawPath(pathSpec.path, color)
+                // 1. Draw body background
+                drawPath(pathSpec.path, frameColor)
 
-                // 3. clip the fill to the level if we have it
+                // 2. clip the fill to the level if we have it
                 if (level != null && level > 0) {
                     clipRect(
                         left = if (!rtl) 0f else BatteryFrame.innerWidth - level.scaledLevel(),
@@ -428,7 +422,7 @@ fun BatteryBody(
                         right = if (!rtl) level.scaledLevel() else BatteryFrame.innerWidth,
                         bottom = BatteryFrame.innerHeight,
                     ) {
-                        // 4. Draw the rounded rect fill fully, it'll be clipped above
+                        // 3. Draw the rounded rect fill fully, it'll be clipped above
                         drawRoundRect(
                             color = colors.fill,
                             topLeft = Offset.Zero,
@@ -465,18 +459,20 @@ fun BatteryBody(
 fun BatteryCap(
     colorsProvider: () -> BatteryColors,
     isFullProvider: () -> Boolean,
+    glyphsProvider: () -> List<BatteryGlyph>,
     modifier: Modifier = Modifier,
 ) {
     val pathSpec = BatteryFrame.capPathSpec
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val colors = colorsProvider()
+    val isFull = isFullProvider()
+    val hasGlyphs = glyphsProvider().isNotEmpty()
+
+    val color = rememberBatteryFrameColor(isFull, hasGlyphs, colors)
+
     Canvas(modifier = modifier.scale(scaleX = if (rtl) -1f else 1f, scaleY = 1f)) {
-        val colors = colorsProvider()
-        val isFull = isFullProvider()
         val s = pathSpec.scaleTo(size.width, size.height)
-        scale(s, pivot = Offset.Zero) {
-            val color = if (isFull) colors.fill else colors.backgroundOnly
-            drawPath(pathSpec.path, color = color)
-        }
+        scale(s, pivot = Offset.Zero) { drawPath(pathSpec.path, color = color) }
     }
 }
 
@@ -499,6 +495,22 @@ fun BatteryAttribution(
                 blendMode = BlendMode.Clear,
             )
             drawPath(attr.path, color = colors.attribution)
+        }
+    }
+}
+
+/** Determines the correct color for the battery frame (body and cap) based on its state. */
+@Composable
+private fun rememberBatteryFrameColor(
+    isFull: Boolean,
+    hasGlyphs: Boolean,
+    colors: BatteryColors,
+): Color {
+    return remember(isFull, hasGlyphs, colors) {
+        when {
+            isFull -> colors.fill
+            hasGlyphs -> colors.backgroundWithGlyph
+            else -> colors.backgroundOnly
         }
     }
 }
