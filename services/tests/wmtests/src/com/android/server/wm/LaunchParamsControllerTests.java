@@ -525,6 +525,26 @@ public class LaunchParamsControllerTests extends WindowTestsBase {
         assertEquals(expected, task.mLastNonFullscreenBounds);
     }
 
+    /**
+     * Tests that the preferred root task is propagated through the controller.
+     */
+    @Test
+    public void testPreferredRootTaskPropagation() {
+        final Task preferredRootTask = new TaskBuilder(mAtm.mTaskSupervisor).build();
+        final LaunchParams params = new LaunchParams();
+        params.mPreferredRootTask = preferredRootTask;
+        final InstrumentedPositioner positioner = new InstrumentedPositioner(RESULT_DONE, params);
+
+        mController.registerModifier(positioner);
+
+        final LaunchParams result = new LaunchParams();
+
+        mController.calculate(null /*task*/, null /*layout*/, null /*activity*/, null /*source*/,
+                null /*options*/, null /*request*/, PHASE_BOUNDS, result);
+
+        assertEquals(preferredRootTask, result.mPreferredRootTask);
+    }
+
     public static class InstrumentedPositioner implements LaunchParamsModifier {
 
         private final int mReturnVal;

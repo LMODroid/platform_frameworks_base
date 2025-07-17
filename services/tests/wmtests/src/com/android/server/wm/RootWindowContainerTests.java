@@ -1262,6 +1262,30 @@ public class RootWindowContainerTests extends WindowTestsBase {
     }
 
     @Test
+    public void testGetOrCreateRootTask_withPreferredRootTask_returnsPreferredRootTask() {
+        // Arrange: Create a preferred root task and set it in the launch parameters.
+        final Task preferredRootTask = new TaskBuilder(mSupervisor).build();
+        final ActivityRecord activity = new ActivityBuilder(mAtm).build();
+
+        final LaunchParamsController.LaunchParams launchParams =
+                new LaunchParamsController.LaunchParams();
+        launchParams.mPreferredRootTask = preferredRootTask;
+
+        // Act: Call the method under test.
+        final Task resultTask = mRootWindowContainer.getOrCreateRootTask(
+                activity,
+                null /* options */,
+                null /* candidateTask */,
+                null /* sourceTask */,
+                true /* onTop */,
+                launchParams,
+                0 /* launchFlags */);
+
+        // Assert: Verify that the returned task is the preferred one.
+        assertEquals(preferredRootTask, resultTask);
+    }
+
+    @Test
     public void testSwitchUser_missingHomeRootTask() {
         final Task fullscreenTask = mRootWindowContainer.getDefaultTaskDisplayArea().createRootTask(
                 WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_STANDARD, true /* onTop */);

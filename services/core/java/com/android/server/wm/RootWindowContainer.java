@@ -3066,6 +3066,11 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             }
         }
 
+        final Task candidateRoot = launchParams != null ? launchParams.mPreferredRootTask : null;
+        if (candidateRoot != null && canLaunchOnDisplay(r, candidateRoot)) {
+            return candidateRoot;
+        }
+
         // Next preference goes to the task id set in the activity options.
         if (options != null) {
             final int candidateTaskId = options.getLaunchTaskId();
