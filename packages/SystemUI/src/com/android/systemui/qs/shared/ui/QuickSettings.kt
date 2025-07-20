@@ -26,6 +26,7 @@ object QuickSettings {
         val QuickSettingsContent = ElementKey("QuickSettingsContent")
         val GridAnchor = ElementKey("QuickSettingsGridAnchor")
         val FooterActions = ElementKey("QuickSettingsFooterActions")
+        val BrightnessSlider = ElementKey("BrightnessSlider")
 
         fun TileSpec.toElementKey() = ElementKey(this.spec, TileIdentity(this))
 
