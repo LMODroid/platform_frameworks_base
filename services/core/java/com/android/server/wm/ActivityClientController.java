@@ -1706,7 +1706,9 @@ class ActivityClientController extends IActivityClientController.Stub {
 
         // The given Activity is the relative Task root if its TaskFragment is a companion
         // TaskFragment to the taskRoot (i.e. the taskRoot TF will be finished together).
-        return taskRoot.getTaskFragment().getCompanionTaskFragment() == taskFragment;
+        final TaskFragment taskRootTf = taskRoot.getTaskFragment();
+        return taskRootTf.getCompanionTaskFragment() == taskFragment
+                && taskRootTf.shouldBeFinishedWithCompanionTaskFragment();
     }
 
     private static boolean isTopActivityInTaskFragment(ActivityRecord activity) {

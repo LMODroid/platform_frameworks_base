@@ -1960,6 +1960,79 @@ public class TaskFragmentOrganizerControllerTest extends WindowTestsBase {
                 SecurityException.class);
     }
 
+    @Test
+    public void testApplyTransaction_setCompanionTaskFragment_noCompanionActivity() {
+        final Task task = createTask(mDisplayContent);
+        mTaskFragment = new TaskFragmentBuilder(mAtm)
+                .setParentTask(task)
+                .setFragmentToken(mFragmentToken)
+                .setOrganizer(mOrganizer)
+                .createActivityCount(1)
+                .build();
+        mWindowOrganizerController.mLaunchTaskFragments.put(mFragmentToken, mTaskFragment);
+        final IBinder fragmentToken2 = new Binder();
+        final TaskFragment taskFragment2 = new TaskFragmentBuilder(mAtm)
+                .setParentTask(task)
+                .setFragmentToken(fragmentToken2)
+                .setOrganizer(mOrganizer)
+                .build();
+        mWindowOrganizerController.mLaunchTaskFragments.put(fragmentToken2, taskFragment2);
+
+        mTransaction.setCompanionTaskFragment(mFragmentToken, fragmentToken2,
+                null /* toBeFinishedActivity */);
+        mOrganizer.applyTransaction(mTransaction, TASK_FRAGMENT_TRANSIT_CHANGE,
+                false /* shouldApplyIndependently */);
+
+        assertApplyTransactionAllowed(mTransaction);
+
+        assertEquals(taskFragment2, mTaskFragment.getCompanionTaskFragment());
+        assertNull(mTaskFragment.getCompanionToBeFinishedActivity());
+        assertTrue(mTaskFragment.shouldBeFinishedWithCompanionTaskFragment());
+
+        assertNull(taskFragment2.getCompanionTaskFragment());
+        assertNull(taskFragment2.getCompanionToBeFinishedActivity());
+        assertFalse(taskFragment2.shouldBeFinishedWithCompanionTaskFragment());
+    }
+
+    @EnableFlags(com.android.window.flags.Flags.FLAG_TASK_FRAGMENT_COMPANION_ACTIVITY)
+    @Test
+    public void testApplyTransaction_setCompanionTaskFragment_withCompanionActivity() {
+        final Task task = createTask(mDisplayContent);
+        mTaskFragment = new TaskFragmentBuilder(mAtm)
+                .setParentTask(task)
+                .setFragmentToken(mFragmentToken)
+                .setOrganizer(mOrganizer)
+                .createActivityCount(1)
+                .build();
+        mWindowOrganizerController.mLaunchTaskFragments.put(mFragmentToken, mTaskFragment);
+        final IBinder fragmentToken2 = new Binder();
+        final TaskFragment taskFragment2 = new TaskFragmentBuilder(mAtm)
+                .setParentTask(task)
+                .setFragmentToken(fragmentToken2)
+                .setOrganizer(mOrganizer)
+                .createActivityCount(2)
+                .build();
+        mWindowOrganizerController.mLaunchTaskFragments.put(fragmentToken2, taskFragment2);
+        final ActivityRecord activity1 = mTaskFragment.getTopNonFinishingActivity();
+        final ActivityRecord activity2 = taskFragment2.getTopNonFinishingActivity();
+
+        mTransaction.setCompanionTaskFragment(mFragmentToken, fragmentToken2, activity1.token);
+        mTransaction.setCompanionTaskFragment(fragmentToken2, mFragmentToken,
+                activity2.token);
+        mOrganizer.applyTransaction(mTransaction, TASK_FRAGMENT_TRANSIT_CHANGE,
+                false /* shouldApplyIndependently */);
+
+        assertApplyTransactionAllowed(mTransaction);
+
+        assertEquals(taskFragment2, mTaskFragment.getCompanionTaskFragment());
+        assertEquals(activity1.token, mTaskFragment.getCompanionToBeFinishedActivity());
+        assertTrue(mTaskFragment.shouldBeFinishedWithCompanionTaskFragment());
+
+        assertEquals(mTaskFragment, taskFragment2.getCompanionTaskFragment());
+        assertEquals(activity2.token, taskFragment2.getCompanionToBeFinishedActivity());
+        assertFalse(taskFragment2.shouldBeFinishedWithCompanionTaskFragment());
+    }
+
     @NonNull
     private ActivityRecord setupUntrustedEmbeddingPipReparent() {
         final int pid = Binder.getCallingPid();

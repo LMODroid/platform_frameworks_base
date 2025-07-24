@@ -391,7 +391,7 @@ public class TaskFragmentTest extends WindowTestsBase {
         taskFragment0.setBounds(taskFragmentBounds);
         taskFragment0.setAdjacentTaskFragments(
                 new TaskFragment.AdjacentSet(taskFragment0, taskFragment1));
-        taskFragment0.setCompanionTaskFragment(taskFragment1);
+        taskFragment0.setCompanionTaskFragment(taskFragment1, null /* toBeFinishedActivity */);
         taskFragment0.setAnimationParams(new TaskFragmentAnimationParams.Builder()
                 .setAnimationBackgroundColor(Color.GREEN)
                 .build());

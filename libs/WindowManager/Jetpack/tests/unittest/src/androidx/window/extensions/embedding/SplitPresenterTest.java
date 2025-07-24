@@ -229,16 +229,16 @@ public class SplitPresenterTest {
         final TaskFragmentContainer container1 = createTfContainer(mController, mActivity);
 
         mPresenter.setCompanionTaskFragment(mTransaction, container0.getTaskFragmentToken(),
-                container1.getTaskFragmentToken());
+                container1.getTaskFragmentToken(), mActivity.getActivityToken());
         verify(mTransaction).setCompanionTaskFragment(container0.getTaskFragmentToken(),
-                container1.getTaskFragmentToken());
+                container1.getTaskFragmentToken(), mActivity.getActivityToken());
 
         // No request to set the same adjacent TaskFragments.
         clearInvocations(mTransaction);
         mPresenter.setCompanionTaskFragment(mTransaction, container0.getTaskFragmentToken(),
-                container1.getTaskFragmentToken());
+                container1.getTaskFragmentToken(), mActivity.getActivityToken());
 
-        verify(mTransaction, never()).setCompanionTaskFragment(any(), any());
+        verify(mTransaction, never()).setCompanionTaskFragment(any(), any(), any());
     }
 
     @Test

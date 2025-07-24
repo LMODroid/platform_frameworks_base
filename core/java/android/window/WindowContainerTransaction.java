@@ -1127,8 +1127,11 @@ public final class WindowContainerTransaction implements Parcelable {
     /**
      * Sets the TaskFragment {@code fragmentToken} to have a companion TaskFragment
      * {@code companionFragmentToken}.
-     * This indicates that the organizer will remove the TaskFragment when the companion
-     * TaskFragment is removed.
+     *
+     * If {@code toBeFinishedActivity} is {@code null}, this indicates that the organizer will
+     * remove the TaskFragment when the companion TaskFragment is removed; otherwise, the organizer
+     * will finish the {@code toBeFinishedActivity} when the companion TaskFragment is removed
+     * unless it is the last activity in the TaskFragment.
      *
      * @param fragmentToken client assigned unique token to create TaskFragment with specified
      *                      in {@link TaskFragmentCreationParams#getFragmentToken()}.
@@ -1137,14 +1140,19 @@ public final class WindowContainerTransaction implements Parcelable {
      *                               {@link TaskFragmentCreationParams#getFragmentToken()}.
      *                               If it is {@code null}, the transaction will reset the companion
      *                               TaskFragment.
+     * @param toBeFinishedActivity   Activity token. If non-{@code null}, it indicates that the
+     *                               organizer will only remove this activity when the companion
+     *                               TaskFragment is removed. The request TaskFragment will only be
+     *                               removed when this activity is the last running activity in it.
      * @hide
      */
     @NonNull
     public WindowContainerTransaction setCompanionTaskFragment(@NonNull IBinder fragmentToken,
-            @Nullable IBinder companionFragmentToken) {
+            @Nullable IBinder companionFragmentToken, @Nullable IBinder toBeFinishedActivity) {
         final TaskFragmentOperation operation = new TaskFragmentOperation.Builder(
                 OP_TYPE_SET_COMPANION_TASK_FRAGMENT)
                 .setSecondaryFragmentToken(companionFragmentToken)
+                .setActivityToken(toBeFinishedActivity)
                 .build();
         return addTaskFragmentOperation(fragmentToken, operation);
     }

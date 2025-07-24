@@ -192,3 +192,14 @@ flag {
     description: "Metrics for Activity Embedding usage in WM Extensions"
     bug: "399465821"
 }
+
+flag {
+    namespace: "windowing_sdk"
+    name: "task_fragment_companion_activity"
+    description: "Track the activity to be finished with tf in core"
+    bug: "433459536"
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}

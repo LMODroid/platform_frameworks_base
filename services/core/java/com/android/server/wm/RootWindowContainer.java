@@ -2131,7 +2131,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
                         return;
                     }
                     tf.clearAdjacentTaskFragments();
-                    tf.setCompanionTaskFragment(null /* companionTaskFragment */);
+                    tf.clearCompanionTaskFragment();
                     tf.setAnimationParams(TaskFragmentAnimationParams.DEFAULT);
                     if (tf.getTopNonFinishingActivity() != null) {
                         // When the Task is entering picture-in-picture, we should clear all

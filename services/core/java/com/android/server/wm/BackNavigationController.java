@@ -615,21 +615,41 @@ class BackNavigationController {
             if (!currTF.hasAdjacentTaskFragment()) {
                 final TaskFragment nextTF = findNextTaskFragment(currentTask, currTF);
                 if (isSecondCompanionToFirst(currTF, nextTF)) {
-                    // TF is isStacked, search bottom activity from companion TF.
-                    //
-                    // Sample hierarchy: search for underPrevious if any.
-                    //     Current TF
-                    //     Companion TF (bottomActivityInCompanion)
-                    //     Bottom Activity not inside companion TF (underPrevious)
-                    // find bottom activity in Companion TF.
-                    final ActivityRecord bottomActivityInCompanion = nextTF.getActivity(
-                            (below) -> !below.finishing, false /* traverseTopToBottom */);
-                    final ActivityRecord underPrevious = currentTask.getActivity(
-                            (below) -> !below.finishing, bottomActivityInCompanion,
-                            false /*includeBoundary*/, true /*traverseTopToBottom*/);
-                    if (underPrevious != null) {
-                        outPrevActivities.add(underPrevious);
-                        addPreviousAdjacentActivityIfExist(underPrevious, outPrevActivities);
+                    if (nextTF.shouldBeFinishedWithCompanionTaskFragment()) {
+                        // TF is stacked, search bottom activity from companion TF.
+                        //
+                        // Sample hierarchy: search for underPrevious if any.
+                        //     Current TF
+                        //     Companion TF (bottomActivityInCompanion)
+                        //     Bottom Activity not inside companion TF (underPrevious)
+                        // find bottom activity in Companion TF.
+                        final ActivityRecord bottomActivityInCompanion = nextTF.getActivity(
+                                (below) -> !below.finishing, false /* traverseTopToBottom */);
+                        final ActivityRecord underPrevious = currentTask.getActivity(
+                                (below) -> !below.finishing, bottomActivityInCompanion,
+                                false /*includeBoundary*/, true /*traverseTopToBottom*/);
+                        if (underPrevious != null) {
+                            outPrevActivities.add(underPrevious);
+                            addPreviousAdjacentActivityIfExist(underPrevious, outPrevActivities);
+                        }
+                    } else {
+                        // TF is stacked, there is a companion TF, but only one activity of it will
+                        // be finished together. Search the top activity in it that will not be
+                        // finished.
+                        //
+                        // Sample hierarchy:
+                        //     Current TF
+                        //     Companion TF
+                        //         Companion Activity (to be finished)
+                        //         Top Activity that will not be finished
+                        final IBinder toBeFinishedActivityToken =
+                                nextTF.getCompanionToBeFinishedActivity();
+                        final ActivityRecord topActivityInCompanion = nextTF.getActivity(
+                                (below) -> !below.finishing
+                                        && !below.token.equals(toBeFinishedActivityToken));
+                        if (topActivityInCompanion != null) {
+                            outPrevActivities.add(topActivityInCompanion);
+                        }
                     }
                     return true;
                 }
@@ -645,7 +665,8 @@ class BackNavigationController {
                     return true;
                 });
                 final TaskFragment adjacentTF = tmpAdjacent[0];
-                if (isSecondCompanionToFirst(currTF, adjacentTF)) {
+                if (isSecondCompanionToFirst(currTF, adjacentTF)
+                        && adjacentTF.shouldBeFinishedWithCompanionTaskFragment()) {
                     // The two TFs are adjacent (visually displayed side-by-side), search if any
                     // activity below the lowest one.
                     final WindowContainer commonParent = currTF.getParent();

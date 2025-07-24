@@ -246,9 +246,21 @@ class TaskFragment extends WindowContainer<WindowContainer> {
      * Unlike the {@link #mAdjacentTaskFragments}, the companion TaskFragment is not always visually
      * adjacent to this one, but this TaskFragment will be removed by the organizer if the
      * companion TaskFragment is removed.
+     *
+     * Note: if {@link #mCompanionTaskFragment} is non-{@code null}, the organizer will only remove
+     * that Activity instead unless that Activity is the last Activity in this TaskFragment.
      */
     @Nullable
     private TaskFragment mCompanionTaskFragment;
+
+    /**
+     * When this is non-{@code null} while {@link #mCompanionTaskFragment} is set, only this
+     * Activity will be removed by the organizer if the companion TaskFragment is removed, unless
+     * this is the last Activity in this TaskFragment, in which case this TaskFragment will also be
+     * removed.
+     */
+    @Nullable
+    private IBinder mCompanionToBeFinishedActivity;
 
     /**
      * Prevents duplicate calls to onTaskFragmentAppeared.
@@ -454,12 +466,40 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         adjacentTaskFragments.setAsAdjacent();
     }
 
-    void setCompanionTaskFragment(@Nullable TaskFragment companionTaskFragment) {
-        mCompanionTaskFragment = companionTaskFragment;
+    void clearCompanionTaskFragment() {
+        mCompanionTaskFragment = null;
+        mCompanionToBeFinishedActivity = null;
     }
 
+    void setCompanionTaskFragment(@Nullable TaskFragment companionTaskFragment,
+            @Nullable IBinder toBeFinishedActivity) {
+        mCompanionTaskFragment = companionTaskFragment;
+        if (Flags.taskFragmentCompanionActivity()) {
+            mCompanionToBeFinishedActivity = toBeFinishedActivity;
+        }
+    }
+
+    @Nullable
     TaskFragment getCompanionTaskFragment() {
         return mCompanionTaskFragment;
+    }
+
+    @Nullable
+    IBinder getCompanionToBeFinishedActivity() {
+        return mCompanionToBeFinishedActivity;
+    }
+
+    boolean shouldBeFinishedWithCompanionTaskFragment() {
+        if (getCompanionTaskFragment() == null) {
+            return false;
+        }
+        if (getCompanionToBeFinishedActivity() == null) {
+            return true;
+        }
+        // Only the mCompanionToBeFinishedActivity activity will be finished with the companion TF,
+        // unless the mCompanionToBeFinishedActivity is the only activity in this TF.
+        return getNonFinishingActivityCount() == 1
+                && getTopNonFinishingActivity().token.equals(getCompanionToBeFinishedActivity());
     }
 
     void clearAdjacentTaskFragments() {
@@ -3209,7 +3249,7 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         }
         task.forAllLeafTaskFragments(taskFragment -> {
             if (taskFragment.getCompanionTaskFragment() == this) {
-                taskFragment.setCompanionTaskFragment(null /* companionTaskFragment */);
+                taskFragment.clearCompanionTaskFragment();
             }
         }, false /* traverseTopToBottom */);
     }

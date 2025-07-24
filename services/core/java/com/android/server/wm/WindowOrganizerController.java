@@ -1736,7 +1736,9 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                 final TaskFragment companionTaskFragment = companionFragmentToken != null
                         ? mLaunchTaskFragments.get(companionFragmentToken)
                         : null;
-                taskFragment.setCompanionTaskFragment(companionTaskFragment);
+                final IBinder toBeFinishedActivity = operation.getActivityToken();
+                taskFragment.setCompanionTaskFragment(companionTaskFragment,
+                        companionFragmentToken != null ? toBeFinishedActivity : null);
                 break;
             }
             case OP_TYPE_SET_ANIMATION_PARAMS: {

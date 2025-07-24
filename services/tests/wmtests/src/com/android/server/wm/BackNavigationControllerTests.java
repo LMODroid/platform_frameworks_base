@@ -371,21 +371,21 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         outPrevActivities.clear();
 
         // Stacked + top companion to bottom but bottom didn't => predict for previous activity
-        tf2.setCompanionTaskFragment(tf1);
+        tf2.setCompanionTaskFragment(tf1, null /* toBeFinishedActivity */);
         predictable = BackNavigationController.getAnimatablePrevActivities(task, topAr,
                 outPrevActivities);
         assertTrue(outPrevActivities.contains(prevAr));
         assertTrue(predictable);
-        tf2.setCompanionTaskFragment(null);
+        tf2.clearCompanionTaskFragment();
         outPrevActivities.clear();
 
         // Stacked + next companion to top => predict for previous task
-        tf1.setCompanionTaskFragment(tf2);
+        tf1.setCompanionTaskFragment(tf2, null /* toBeFinishedActivity */);
         predictable = BackNavigationController.getAnimatablePrevActivities(task, topAr,
                 outPrevActivities);
         assertTrue(outPrevActivities.isEmpty());
         assertTrue(predictable);
-        tf1.setCompanionTaskFragment(null);
+        tf1.clearCompanionTaskFragment();
 
         // Adjacent + no companion => unable to predict
         // TF1 | TF2
@@ -400,14 +400,14 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         assertFalse(predictable);
 
         // Adjacent + companion => predict for previous task
-        tf1.setCompanionTaskFragment(tf2);
+        tf1.setCompanionTaskFragment(tf2, null /* toBeFinishedActivity */);
         predictable = BackNavigationController.getAnimatablePrevActivities(task, topAr,
                 outPrevActivities);
         assertTrue(outPrevActivities.isEmpty());
         assertTrue(predictable);
-        tf1.setCompanionTaskFragment(null);
+        tf1.clearCompanionTaskFragment();
 
-        tf2.setCompanionTaskFragment(tf1);
+        tf2.setCompanionTaskFragment(tf1, null /* toBeFinishedActivity */);
         predictable = BackNavigationController.getAnimatablePrevActivities(task, prevAr,
                 outPrevActivities);
         assertTrue(outPrevActivities.isEmpty());
@@ -415,8 +415,8 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         // reset
         tf1.clearAdjacentTaskFragments();
         tf2.clearAdjacentTaskFragments();
-        tf1.setCompanionTaskFragment(null);
-        tf2.setCompanionTaskFragment(null);
+        tf1.clearCompanionTaskFragment();
+        tf2.clearCompanionTaskFragment();
 
         final TaskFragment tf3 = new TaskFragmentBuilder(mAtm)
                 .createActivityCount(2)
@@ -454,22 +454,57 @@ public class BackNavigationControllerTests extends WindowTestsBase {
         // TF3
         // TF2
         // TF1
-        tf3.setCompanionTaskFragment(tf4);
+        tf3.setCompanionTaskFragment(tf4, null /* toBeFinishedActivity */);
         topAr = tf4.getTopMostActivity();
         predictable = BackNavigationController.getAnimatablePrevActivities(task, topAr,
                 outPrevActivities);
         assertTrue(outPrevActivities.contains(tf2.getTopMostActivity()));
         assertTrue(predictable);
         outPrevActivities.clear();
-        tf3.setCompanionTaskFragment(null);
+        tf3.clearCompanionTaskFragment();
 
         // Stacked +  top companion to next but next one didn't => predict for previous activity.
-        tf4.setCompanionTaskFragment(tf3);
+        tf4.setCompanionTaskFragment(tf3, null /* toBeFinishedActivity */);
         topAr = tf4.getTopMostActivity();
         predictable = BackNavigationController.getAnimatablePrevActivities(task, topAr,
                 outPrevActivities);
         assertTrue(outPrevActivities.contains(tf3.getTopMostActivity()));
         assertTrue(predictable);
+    }
+
+    @EnableFlags(Flags.FLAG_TASK_FRAGMENT_COMPANION_ACTIVITY)
+    @Test
+    public void backTypeCrossActivityInTaskFragment_withCompanionActivity() {
+        final Task task = createTask(mDefaultDisplay);
+        final TaskFragment tf1 = new TaskFragmentBuilder(mAtm)
+                .setParentTask(task)
+                .createActivityCount(2)
+                .build();
+        final TaskFragment tf2 = createTaskFragmentWithActivity(task);
+        final ArrayList<ActivityRecord> outPrevActivities = new ArrayList<>();
+
+        ActivityRecord prevTopAr = tf1.getTopMostActivity();
+        ActivityRecord prevBottomAr = tf1.getBottomMostActivity();
+        ActivityRecord topAr = tf2.getTopMostActivity();
+        boolean predictable;
+
+        // Stacked + next companion to top activity => predict for previous bottom activity
+        tf1.setCompanionTaskFragment(tf2, prevTopAr.token);
+        predictable = BackNavigationController.getAnimatablePrevActivities(task, topAr,
+                outPrevActivities);
+        assertTrue(outPrevActivities.contains(prevBottomAr));
+        assertTrue(predictable);
+        outPrevActivities.clear();
+        tf1.clearCompanionTaskFragment();
+
+        // Adjacent + companion activity => unable to predict
+        tf1.setAdjacentTaskFragments(new TaskFragment.AdjacentSet(tf1, tf2));
+        tf1.setCompanionTaskFragment(tf2, prevTopAr.token);
+        predictable = BackNavigationController.getAnimatablePrevActivities(task, topAr,
+                outPrevActivities);
+        assertTrue(outPrevActivities.isEmpty());
+        assertFalse(predictable);
+        tf1.clearCompanionTaskFragment();
     }
 
     @Test
