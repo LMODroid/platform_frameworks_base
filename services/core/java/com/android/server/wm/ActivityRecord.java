@@ -10152,6 +10152,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         proto.write(IS_USER_FULLSCREEN_OVERRIDE_ENABLED,
                 mAppCompatController.getAppCompatAspectRatioOverrides()
                         .isUserFullscreenOverrideEnabled());
+        mAppCompatController.dumpDebug(proto);
     }
 
     @Override

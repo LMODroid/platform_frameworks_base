@@ -17,10 +17,13 @@ package com.android.server.wm;
 
 import static android.view.WindowManager.PROPERTY_COMPAT_ALLOW_SAFE_REGION_LETTERBOXING;
 
+import static com.android.server.wm.ActivityRecordProto.SAFE_REGION_BOUNDS;
+
 import android.annotation.NonNull;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Rect;
+import android.util.proto.ProtoOutputStream;
 
 import java.io.PrintWriter;
 import java.util.function.BooleanSupplier;
@@ -162,6 +165,13 @@ class AppCompatSafeRegionPolicy {
         }
         if (!allowSafeRegionLetterboxing()) {
             pw.println(prefix + " allowSafeRegionLetterboxing=false");
+        }
+    }
+
+    public void dumpDebug(@NonNull ProtoOutputStream proto) {
+        // Only record if safe region bounds are not null.
+        if (getLatestSafeRegionBounds() != null) {
+            getLatestSafeRegionBounds().dumpDebug(proto, SAFE_REGION_BOUNDS);
         }
     }
 }
