@@ -175,6 +175,7 @@ class LocationBasedMobileIconViewModelKairosTest : SysuiTestCase() {
                 NUM_LEVELS,
                 showExclamationMark = false,
                 carrierNetworkChange = false,
+                showRoaming = false,
             )
         }
     }

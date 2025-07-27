@@ -172,6 +172,9 @@ constructor(
 
     override val isRoamingForceHidden: StateFlow<Boolean> = MutableStateFlow(false)
 
+    override val isMobileHdForceHidden: StateFlow<Boolean> = MutableStateFlow(false)
+    override val isVoWifiForceHidden: StateFlow<Boolean> = MutableStateFlow(false)
+
     override fun getMobileConnectionInteractorForSubId(subId: Int): MobileIconInteractor =
         object : MobileIconInteractor {
             override val tableLogBuffer: TableLogBuffer =
@@ -194,6 +197,11 @@ constructor(
             override val isSingleCarrier: Flow<Boolean> = latest { isSingleCarrier }
             override val isRoaming: Flow<Boolean> = latest { isRoaming }
             override val isRoamingForceHidden: Flow<Boolean> = latest { isRoamingForceHidden }
+            override val isMobileHd: StateFlow<Boolean> = MutableStateFlow(false)
+            override val isMobileHdForceHidden: Flow<Boolean> =
+                latest { isMobileHdForceHidden }
+            override val isVoWifi: StateFlow<Boolean> = MutableStateFlow(false)
+            override val isVoWifiForceHidden: Flow<Boolean> = latest { isVoWifiForceHidden }
             override val isForceHidden: Flow<Boolean> = latest { isForceHidden }
             override val isAllowedDuringAirplaneMode: Flow<Boolean> = latest {
                 isAllowedDuringAirplaneMode
