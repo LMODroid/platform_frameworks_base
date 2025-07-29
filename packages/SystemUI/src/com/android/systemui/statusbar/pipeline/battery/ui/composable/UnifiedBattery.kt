@@ -388,13 +388,16 @@ fun BatteryBody(
     modifier: Modifier = Modifier,
     contentDescription: String = "",
 ) {
-    val colors = colorsProvider()
-    val glyphs = glyphsProvider()
-    val frameColor = rememberBatteryFrameColor(isFullProvider(), glyphs.isNotEmpty(), colors)
-
     Canvas(modifier = modifier, contentDescription = contentDescription) {
         val rtl = layoutDirection == LayoutDirection.Rtl
+
         val level = levelProvider()
+        val colors = colorsProvider()
+        val glyphs = glyphsProvider()
+        val isFull = isFullProvider()
+        val frameColor =
+            getBatteryFrameColor(isFull = isFull, hasGlyphs = glyphs.isNotEmpty(), colors = colors)
+
         val totalGlyphWidth =
             if (glyphs.isEmpty()) {
                 0f
@@ -407,7 +410,7 @@ fun BatteryBody(
 
         val s = pathSpec.scaleTo(size.width, size.height)
         scale(scale = s, pivot = Offset.Zero) {
-            if (isFullProvider()) {
+            if (isFull) {
                 // If full, the frameColor is already the fill color.
                 drawPath(pathSpec.path, frameColor)
             } else {
@@ -464,13 +467,13 @@ fun BatteryCap(
 ) {
     val pathSpec = BatteryFrame.capPathSpec
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
-    val colors = colorsProvider()
-    val isFull = isFullProvider()
-    val hasGlyphs = glyphsProvider().isNotEmpty()
-
-    val color = rememberBatteryFrameColor(isFull, hasGlyphs, colors)
 
     Canvas(modifier = modifier.scale(scaleX = if (rtl) -1f else 1f, scaleY = 1f)) {
+        val colors = colorsProvider()
+        val isFull = isFullProvider()
+        val hasGlyphs = glyphsProvider().isNotEmpty()
+        val color = getBatteryFrameColor(isFull = isFull, hasGlyphs = hasGlyphs, colors = colors)
+
         val s = pathSpec.scaleTo(size.width, size.height)
         scale(s, pivot = Offset.Zero) { drawPath(pathSpec.path, color = color) }
     }
@@ -500,17 +503,14 @@ fun BatteryAttribution(
 }
 
 /** Determines the correct color for the battery frame (body and cap) based on its state. */
-@Composable
-private fun rememberBatteryFrameColor(
+private fun getBatteryFrameColor(
     isFull: Boolean,
     hasGlyphs: Boolean,
     colors: BatteryColors,
 ): Color {
-    return remember(isFull, hasGlyphs, colors) {
-        when {
-            isFull -> colors.fill
-            hasGlyphs -> colors.backgroundWithGlyph
-            else -> colors.backgroundOnly
-        }
+    return when {
+        isFull -> colors.fill
+        hasGlyphs -> colors.backgroundWithGlyph
+        else -> colors.backgroundOnly
     }
 }
