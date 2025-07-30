@@ -26,7 +26,6 @@ import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 import static android.view.WindowManager.TRANSIT_CHANGE;
 import static android.view.WindowManager.TRANSIT_PREPARE_BACK_NAVIGATION;
 import static android.window.DesktopExperienceFlags.ENABLE_INDEPENDENT_BACK_IN_PROJECTED;
-import static android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT;
 import static android.window.SystemOverrideOnBackInvokedCallback.OVERRIDE_FINISH_AND_REMOVE_TASK;
 import static android.window.SystemOverrideOnBackInvokedCallback.OVERRIDE_UNDEFINED;
 
@@ -61,11 +60,8 @@ import android.view.RemoteAnimationTarget;
 import android.view.SurfaceControl;
 import android.view.WindowInsets;
 import android.window.BackAnimationAdapter;
-import android.window.BackMotionEvent;
 import android.window.BackNavigationInfo;
 import android.window.IBackAnimationFinishedCallback;
-import android.window.IBackAnimationHandoffHandler;
-import android.window.IOnBackInvokedCallback;
 import android.window.IWindowlessStartingSurfaceCallback;
 import android.window.OnBackInvokedCallbackInfo;
 import android.window.SystemOverrideOnBackInvokedCallback;
@@ -78,7 +74,6 @@ import com.android.internal.protolog.ProtoLog;
 import com.android.window.flags.Flags;
 
 import java.io.PrintWriter;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -177,62 +172,6 @@ class BackNavigationController {
         }
     }
 
-    class OnInterceptBackInvokedCallback extends IOnBackInvokedCallback.Stub {
-        @NonNull
-        final WeakReference<ActivityRecord> mActivityRecordRef;
-        @Nullable
-        final WeakReference<IOnBackInvokedCallback> mFallbackCallbackRef;
-
-        OnInterceptBackInvokedCallback(@NonNull ActivityRecord r,
-                @Nullable IOnBackInvokedCallback fallback) {
-            mActivityRecordRef = new WeakReference<>(r);
-            mFallbackCallbackRef = fallback != null ? new WeakReference<>(fallback) : null;
-        }
-
-        @Override
-        public void onBackInvoked() {
-            synchronized (mWindowManagerService.mGlobalLock) {
-                final ActivityRecord r = mActivityRecordRef.get();
-                boolean handled = false;
-                if (r != null) {
-                    handled = mWindowManagerService.mAtmService.mTaskOrganizerController
-                            .handleInterceptBackPressedOnTaskRoot(r);
-                }
-                if (handled || mFallbackCallbackRef == null) {
-                    return;
-                }
-
-                // Try the fallback callback if the back event was not handled.
-                final IOnBackInvokedCallback fallbackCallback = mFallbackCallbackRef.get();
-                if (fallbackCallback != null) {
-                    try {
-                        fallbackCallback.onBackInvoked();
-                    } catch (RemoteException ex) {
-                        Slog.w(TAG, "Failed invoking fallback callback for back");
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void onBackCancelled() {}
-
-        @Override
-        public void onBackProgressed(BackMotionEvent backMotionEvent) {
-        }
-
-        @Override
-        public void onBackStarted(BackMotionEvent backEvent) {
-        }
-
-        @Override
-        public void setTriggerBack(boolean triggerBack) {
-        }
-
-        @Override
-        public void setHandoffHandler(IBackAnimationHandoffHandler unused) {
-        }
-    }
     /**
      * Set up the necessary leashes and build a {@link BackNavigationInfo} instance for an upcoming
      * back gesture animation.
@@ -348,22 +287,8 @@ class BackNavigationController {
                 ProtoLog.d(WM_DEBUG_BACK_PREVIEW, "Focus window is closing.");
                 return null;
             }
-
-            final boolean interceptBack = currentTask != null
-                    && currentTask.mAtmService.mTaskOrganizerController
-                            .shouldInterceptBackPressedOnRootTask(currentTask.getRootTask());
-            final OnBackInvokedCallbackInfo callbackInfo;
-            if (interceptBack) {
-                final OnBackInvokedCallbackInfo info = window.getOnBackInvokedCallbackInfo();
-                final IOnBackInvokedCallback callback =
-                        new OnInterceptBackInvokedCallback(currentActivity,
-                                info != null ? info.getCallback() : null);
-                callbackInfo = new OnBackInvokedCallbackInfo(callback, PRIORITY_DEFAULT, false,
-                        OVERRIDE_UNDEFINED);
-            } else {
-                // Now let's find if this window has a callback from the client side.
-                callbackInfo = window.getOnBackInvokedCallbackInfo();
-            }
+            // Now let's find if this window has a callback from the client side.
+            final OnBackInvokedCallbackInfo callbackInfo = window.getOnBackInvokedCallbackInfo();
             if (callbackInfo == null) {
                 Slog.e(TAG, "No callback registered, returning null.");
                 return null;
@@ -595,6 +520,12 @@ class BackNavigationController {
     static boolean getAnimatablePrevActivities(@NonNull Task currentTask,
             @NonNull ActivityRecord currentActivity,
             @NonNull ArrayList<ActivityRecord> outPrevActivities) {
+        if (currentActivity.mAtmService
+                .mTaskOrganizerController.shouldInterceptBackPressedOnRootTask(
+                        currentTask.getRootTask())) {
+            // The task organizer will handle back pressed, don't play animation.
+            return false;
+        }
         final ActivityRecord root = currentTask.getRootActivity(false /*ignoreRelinquishIdentity*/,
                 true /*setToBottomIfNone*/);
         if (root != null && ActivityClientController.shouldMoveTaskToBack(currentActivity, root)) {
