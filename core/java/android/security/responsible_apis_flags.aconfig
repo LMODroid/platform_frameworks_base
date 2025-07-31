@@ -160,3 +160,10 @@ flag {
     description: "Flag for enable ExtraKeyValueFilter in IntentFirewall"
     bug: "428733109"
 }
+
+flag {
+    name: "enable_intent_firewall_component_class_filter"
+    namespace: "responsible_apis"
+    description: "Flag for enabling component-class-filter in IntentFirewall"
+    bug: "428733109"
+}
