@@ -843,9 +843,9 @@
     <string name="policydesc_watchLogin_secondaryUser" product="tv" msgid="8965224107449407052">"画面のロック解除に失敗した回数を監視し、多すぎる場合は Android TV デバイスをロックするかこのユーザーのデータをすべて消去します。"</string>
     <string name="policydesc_watchLogin_secondaryUser" product="automotive" msgid="7180857406058327941">"画面のロック解除に失敗した回数を監視し、多すぎる場合はインフォテインメント システムをロックするかこのプロファイルのデータをすべて消去します。"</string>
     <string name="policydesc_watchLogin_secondaryUser" product="default" msgid="9177645136475155924">"画面のロック解除に失敗した回数を監視し、多すぎる場合はスマートフォンをロックするかこのユーザーのデータをすべて消去します。"</string>
-    <string name="policylab_resetPassword" msgid="214556238645096520">"画面ロックの変更"</string>
+    <string name="policylab_resetPassword" msgid="214556238645096520">"画面ロックを変更"</string>
     <string name="policydesc_resetPassword" msgid="4626419138439341851">"画面ロックを変更します。"</string>
-    <string name="policylab_forceLock" msgid="7360335502968476434">"画面のロック"</string>
+    <string name="policylab_forceLock" msgid="7360335502968476434">"画面をロック"</string>
     <string name="policydesc_forceLock" msgid="1008844760853899693">"画面をロックする方法とタイミングを制御します。"</string>
     <string name="policylab_wipeData" msgid="1359485247727537311">"すべてのデータを消去"</string>
     <string name="policydesc_wipeData" product="tablet" msgid="7245372676261947507">"警告せずにタブレットを初期化して内部のデータを消去します。"</string>
