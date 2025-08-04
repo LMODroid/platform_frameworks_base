@@ -516,7 +516,7 @@
     <string name="battery_info_status_charging_on_hold" msgid="6364355145521694438">"फ़ोन को चार्ज होने से रोक दिया गया है"</string>
     <string name="battery_info_status_charging_v2" msgid="6118522107222245505">"चार्ज हो रही है"</string>
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"फ़ास्ट चार्जिंग"</string>
-    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"इसका नियंत्रण एडमिन के पास है"</string>
+    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"इसका कंट्रोल एडमिन के पास है"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"इसे पाबंदी मोड वाली सेटिंग से कंट्रोल किया जाता है"</string>
     <string name="disabled" msgid="8017887509554714950">"बंद किया गया"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"अनुमति है"</string>
@@ -577,7 +577,7 @@
     <string name="alarm_template_far" msgid="6382760514842998629">"अलार्म <xliff:g id="WHEN">%1$s</xliff:g> को बजेगा"</string>
     <string name="zen_mode_duration_settings_title" msgid="1553451650289651489">"अवधि"</string>
     <string name="zen_mode_duration_always_prompt_title" msgid="3212996860498119555">"हर बार पूछें"</string>
-    <string name="zen_mode_forever" msgid="3339224497605461291">"जब तक इसे बंद नहीं किया जाता"</string>
+    <string name="zen_mode_forever" msgid="3339224497605461291">"बंद किए जाने तक"</string>
     <string name="zen_mode_starred_contacts_empty_name" msgid="933552939706125937">"(कोई नाम नहीं)"</string>
     <string name="time_unit_just_now" msgid="3006134267292728099">"अभी-अभी"</string>
     <string name="media_transfer_this_device_name" msgid="2357329267148436433">"यह फ़ोन"</string>
