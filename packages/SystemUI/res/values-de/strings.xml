@@ -940,7 +940,7 @@
     <string name="data_connection_no_internet" msgid="691058178914184544">"Kein Internet"</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"Einstellungen für <xliff:g id="ID_1">%s</xliff:g> öffnen."</string>
     <string name="accessibility_quick_settings_edit" msgid="1523745183383815910">"Reihenfolge der Einstellungen bearbeiten."</string>
-    <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"Ein-/Aus-Menü"</string>
+    <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"Ein/Aus-Menü"</string>
     <string name="accessibility_quick_settings_page" msgid="7506322631645550961">"Seite <xliff:g id="ID_1">%1$d</xliff:g> von <xliff:g id="ID_2">%2$d</xliff:g>"</string>
     <string name="tuner_lock_screen" msgid="2267383813241144544">"Sperrbildschirm"</string>
     <string name="finder_active" msgid="7907846989716941952">"Du kannst dieses Smartphone über „Mein Gerät finden“ orten, auch wenn es ausgeschaltet ist"</string>
