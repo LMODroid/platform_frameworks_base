@@ -1919,11 +1919,11 @@
     <string name="data_saver_enable_button" msgid="4399405762586419726">"Aktivieren"</string>
     <string name="zen_mode_duration_minutes_summary" msgid="4555514757230849789">"{count,plural, =1{Für eine Minute (bis {formattedTime})}other{Für # Minuten (bis {formattedTime})}}"</string>
     <string name="zen_mode_duration_minutes_summary_short" msgid="1187553788355486950">"{count,plural, =1{Für 1 Min. (bis {formattedTime})}other{Für # Min. (bis {formattedTime})}}"</string>
-    <string name="zen_mode_duration_hours_summary" msgid="3866333100793277211">"{count,plural, =1{Für 1 Stunde (bis {formattedTime})}other{Für # Stunden (bis {formattedTime})}}"</string>
+    <string name="zen_mode_duration_hours_summary" msgid="3866333100793277211">"{count,plural, =1{1 Stunde (bis {formattedTime})}other{# Stunden (bis {formattedTime})}}"</string>
     <string name="zen_mode_duration_hours_summary_short" msgid="687919813833347945">"{count,plural, =1{Für 1 h (bis {formattedTime})}other{Für # h (bis {formattedTime})}}"</string>
     <string name="zen_mode_duration_minutes" msgid="2340007982276569054">"{count,plural, =1{Für eine Minute}other{Für # Minuten}}"</string>
     <string name="zen_mode_duration_minutes_short" msgid="2435756450204526554">"{count,plural, =1{Für 1 Min.}other{Für # Min.}}"</string>
-    <string name="zen_mode_duration_hours" msgid="7841806065034711849">"{count,plural, =1{Für 1 Stunde}other{Für # Stunden}}"</string>
+    <string name="zen_mode_duration_hours" msgid="7841806065034711849">"{count,plural, =1{1 Stunde}other{# Stunden}}"</string>
     <string name="zen_mode_duration_hours_short" msgid="3666949653933099065">"{count,plural, =1{Für 1 h}other{Für # h}}"</string>
     <string name="zen_mode_until_next_day" msgid="1403042784161725038">"Bis <xliff:g id="FORMATTEDTIME">%1$s</xliff:g>"</string>
     <string name="zen_mode_until" msgid="2250286190237669079">"Bis <xliff:g id="FORMATTEDTIME">%1$s</xliff:g>"</string>
