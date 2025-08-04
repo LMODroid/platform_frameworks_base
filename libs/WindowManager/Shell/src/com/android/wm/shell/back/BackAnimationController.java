@@ -643,16 +643,21 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
     }
 
     private class TransitionIdleRunner implements Runnable {
-        boolean mIsEnable;
+        int mRequestCount;
 
         @Override
         public void run() {
-            if (!mIsEnable || !mCurrentTracker.isActive()) {
+            if (mRequestCount == 0 || !mCurrentTracker.isActive()) {
+                return;
+            }
+            if (mRequestCount > 2) {
+                // Break from recursive call.
+                mRequestCount = 0;
                 return;
             }
             ProtoLog.d(WM_SHELL_BACK_PREVIEW, "Gesture hasn't finish after transition "
                     + "idle, start back navigation again.");
-            mIsEnable = false;
+            mRequestCount = 0;
             startBackNavigation(mCurrentTracker);
             startPredictiveBackAnimationIfNeeded();
         }
@@ -672,8 +677,9 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         if (backType == BackNavigationInfo.TYPE_IN_TRANSITION) {
             mBackNavigationInfo = null;
             tryPilferPointers();
-            mTransitionIdleRunner.mIsEnable = true;
-            mTransitions.runOnIdle(() -> mShellExecutor.execute(mTransitionIdleRunner));
+            mTransitionIdleRunner.mRequestCount++;
+            mTransitions.runOnIdle(() -> mShellExecutor.executeDelayed(
+                    mTransitionIdleRunner, 0));
             return;
         }
         final boolean shouldDispatchToAnimator = shouldDispatchToAnimator();
@@ -919,7 +925,7 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
         mPointersPilfered = false;
         mBackGestureStarted = false;
         activeTouchTracker.setState(BackTouchTracker.TouchTrackerState.FINISHED);
-        mTransitionIdleRunner.mIsEnable = false;
+        mTransitionIdleRunner.mRequestCount = 0;
 
         if (mPostCommitAnimationInProgress) {
             ProtoLog.w(WM_SHELL_BACK_PREVIEW, "Animation is still running");
