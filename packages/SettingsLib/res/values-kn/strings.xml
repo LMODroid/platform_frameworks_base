@@ -198,7 +198,7 @@
     <string name="tts_settings" msgid="8130616705989351312">"ಪಠ್ಯದಿಂದ ಧ್ವನಿಯ ಸೆಟ್ಟಿಂಗ್‌ಗಳು"</string>
     <string name="tts_settings_title" msgid="7602210956640483039">"ಟೆಕ್ಸ್ಟ್-ಟು-ಸ್ಪೀಚ್ ಔಟ್‌ಪುಟ್‌"</string>
     <string name="tts_default_rate_title" msgid="3964187817364304022">"ಧ್ವನಿಯ ಪ್ರಮಾಣ"</string>
-    <string name="tts_default_rate_summary" msgid="3781937042151716987">"ಪಠ್ಯವನ್ನು ಹೇಳಿದ ವೇಗ"</string>
+    <string name="tts_default_rate_summary" msgid="3781937042151716987">"ಪಠ್ಯವನ್ನು ಮಾತಿನಲ್ಲಿ ಹೇಳುವ ವೇಗ"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"ಪಿಚ್"</string>
     <string name="tts_default_pitch_summary" msgid="9132719475281551884">"ಸಂಯೋಜಿತ ಧ್ವನಿಯ ಟೋನ್ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುತ್ತದೆ"</string>
     <string name="tts_default_lang_title" msgid="4698933575028098940">"ಭಾಷೆ"</string>

@@ -128,7 +128,7 @@
     <string name="bluetooth_profile_hid" msgid="2969922922664315866">"ఇన్‌పుట్ పరికరం"</string>
     <string name="bluetooth_profile_pan" msgid="1006235139308318188">"ఇంటర్నెట్ యాక్సెస్"</string>
     <string name="bluetooth_profile_pbap" msgid="2103406516858653017">"కాంటాక్ట్‌లు, కాల్ హిస్టరీకి యాక్సెస్‌ను అనుమతించండి"</string>
-    <string name="bluetooth_profile_pbap_summary" msgid="402819589201138227">"కాల్ అనౌన్స్‌మెంట్‌లు, ఇంకా మరిన్నింటి కోసం సమాచారం ఉపయోగించబడుతుంది"</string>
+    <string name="bluetooth_profile_pbap_summary" msgid="402819589201138227">"ఈ సమాచారాన్ని కాల్ అనౌన్స్‌మెంట్లు చేయడానికి, మరిన్నింటికి ఉపయోగిస్తాము"</string>
     <string name="bluetooth_profile_pan_nap" msgid="7871974753822470050">"ఇంటర్నెట్ కనెక్షన్ షేరింగ్"</string>
     <string name="bluetooth_profile_map" msgid="8907204701162107271">"టెక్స్ట్ మెసేజ్‌లు"</string>
     <string name="bluetooth_profile_sap" msgid="8304170950447934386">"SIM యాక్సెస్"</string>
@@ -198,9 +198,9 @@
     <string name="tts_settings" msgid="8130616705989351312">"టెక్స్ట్-టు-స్పీచ్ సెట్టింగ్‌లు"</string>
     <string name="tts_settings_title" msgid="7602210956640483039">"టెక్స్ట్-టు-స్పీచ్ అవుట్‌పుట్"</string>
     <string name="tts_default_rate_title" msgid="3964187817364304022">"స్పీచ్ రేట్"</string>
-    <string name="tts_default_rate_summary" msgid="3781937042151716987">"వచనాన్ని చదివి వినిపించాల్సిన వేగం"</string>
+    <string name="tts_default_rate_summary" msgid="3781937042151716987">"టెక్స్ట్ చదివి వినిపించాల్సిన వేగం"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"పిచ్"</string>
-    <string name="tts_default_pitch_summary" msgid="9132719475281551884">"సమన్వయం చేసిన ప్రసంగం యొక్క టోన్‌ను ప్రభావితం చేస్తుంది"</string>
+    <string name="tts_default_pitch_summary" msgid="9132719475281551884">"సమన్వయం చేసిన స్పీచ్ టోన్‌ను ప్రభావితం చేస్తుంది"</string>
     <string name="tts_default_lang_title" msgid="4698933575028098940">"భాష"</string>
     <string name="tts_lang_use_system" msgid="6312945299804012406">"సిస్టమ్ భాషను ఉపయోగించండి"</string>
     <string name="tts_lang_not_selected" msgid="7927823081096056147">"భాష ఎంచుకోబడలేదు"</string>
@@ -516,7 +516,7 @@
     <string name="battery_info_status_charging_on_hold" msgid="6364355145521694438">"ఛార్జింగ్ హోల్డ్‌లో ఉంది"</string>
     <string name="battery_info_status_charging_v2" msgid="6118522107222245505">"ఛార్జ్ అవుతోంది"</string>
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"ఫాస్ట్ ఛార్జింగ్"</string>
-    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"నిర్వాహకుని ద్వారా నియంత్రించబడింది"</string>
+    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"అడ్మిన్‌ కంట్రోల్‌ చేస్తున్నారు"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"పరిమితం చేసిన సెట్టింగ్ ద్వారా నియంత్రించబడుతుంది"</string>
     <string name="disabled" msgid="8017887509554714950">"డిజేబుల్ చేయబడింది"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"అనుమతించినవి"</string>
@@ -588,7 +588,7 @@
     <string name="media_transfer_internal_mic" msgid="797333824290228595">"మైక్రోఫోన్ (అంతర్గతం)"</string>
     <string name="media_transfer_dock_speaker_device_name" msgid="2856219597113881950">"డాక్ స్పీకర్"</string>
     <string name="media_transfer_external_device_name" msgid="2588672258721846418">"ఎక్స్‌టర్నల్ పరికరం"</string>
-    <string name="media_transfer_default_device_name" msgid="4315604017399871828">"కనెక్ట్ చేసిన పరికరం"</string>
+    <string name="media_transfer_default_device_name" msgid="4315604017399871828">"కనెక్ట్ అయిన డివైజ్"</string>
     <string name="media_transfer_this_phone" msgid="7194341457812151531">"ఈ ఫోన్"</string>
     <string name="media_output_status_unknown_error" msgid="5098565887497902222">"ఈ పరికరంలో ప్లే చేయడం సాధ్యపడదు"</string>
     <string name="media_output_status_require_premium" msgid="8411255800047014822">"మారడానికి ఖాతాను అప్‌గ్రేడ్ చేయండి"</string>

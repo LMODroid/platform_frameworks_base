@@ -458,7 +458,7 @@
     <string name="transcode_user_control" msgid="6176368544817731314">"ट्रान्सकोडिङसम्बन्धी डिफल्ट सेटिङ परिवर्तन गर्नुहोस्"</string>
     <string name="transcode_enable_all" msgid="2411165920039166710">"ट्रान्सकोडिङ अन गर्नुहोस्"</string>
     <string name="transcode_default" msgid="3784803084573509491">"एपहरूमा आधुनिक फर्म्याट प्रयोग गर्न मिल्छ भनी मान्नुहोस्"</string>
-    <string name="transcode_notification" msgid="5560515979793436168">"ट्रान्सकोडिङसम्बन्धी सूचना देखाउनुहोस्"</string>
+    <string name="transcode_notification" msgid="5560515979793436168">"ट्रान्सकोडिङसम्बन्धी नोटिफिकेसन देखाउनुहोस्"</string>
     <string name="transcode_disable_cache" msgid="3160069309377467045">"ट्रान्सकोडिङको क्यास अफ गर्नुहोस्"</string>
     <string name="runningservices_settings_title" msgid="6460099290493086515">"चलिरहेका सेवाहरू"</string>
     <string name="runningservices_settings_summary" msgid="1046080643262665743">"हाल चालु भइरहेका सेवाहरू हेर्नुहोस् र नियन्त्रण गर्नुहोस्"</string>

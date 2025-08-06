@@ -516,7 +516,7 @@
     <string name="battery_info_status_charging_on_hold" msgid="6364355145521694438">"ચાર્જિંગ હોલ્ડ પર રાખવામાં આવ્યું"</string>
     <string name="battery_info_status_charging_v2" msgid="6118522107222245505">"ચાર્જ થઈ રહ્યું છે"</string>
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"ઝડપી ચાર્જિંગ"</string>
-    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"વ્યવસ્થાપક દ્વારા નિયંત્રિત"</string>
+    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"ઍડમિન દ્વારા નિયંત્રિત"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"પ્રતિબંધિત સેટિંગ દ્વારા નિયંત્રિત"</string>
     <string name="disabled" msgid="8017887509554714950">"બંધ કરી"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"મંજૂરી છે"</string>
