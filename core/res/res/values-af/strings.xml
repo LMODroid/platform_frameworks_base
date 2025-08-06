@@ -1574,7 +1574,7 @@
     <string name="sync_undo_deletes" msgid="5786033331266418896">"Ontdoen die uitgeveedes"</string>
     <string name="sync_do_nothing" msgid="4528734662446469646">"Doen vir eers niks nie"</string>
     <string name="choose_account_label" msgid="5557833752759831548">"Kies \'n rekening"</string>
-    <string name="add_account_label" msgid="4067610644298737417">"Voeg \'n rekening by"</string>
+    <string name="add_account_label" msgid="4067610644298737417">"Voeg ’n rekening by"</string>
     <string name="add_account_button_label" msgid="322390749416414097">"Voeg rekening by"</string>
     <string name="number_picker_increment_button" msgid="7621013714795186298">"Vermeerder"</string>
     <string name="number_picker_decrement_button" msgid="5116948444762708204">"Verminder"</string>

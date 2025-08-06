@@ -1202,7 +1202,7 @@
     <string name="app_running_notification_title" msgid="8985999749231486569">"<xliff:g id="APP_NAME">%1$s</xliff:g> चल रहा है"</string>
     <string name="app_running_notification_text" msgid="5120815883400228566">"ऐप्लिकेशन को रोकने या ज़्यादा जानकारी के लिए टैप करें."</string>
     <string name="ok" msgid="2646370155170753815">"ठीक है"</string>
-    <string name="cancel" msgid="6908697720451760115">"रद्द करें"</string>
+    <string name="cancel" msgid="6908697720451760115">"अभी नहीं"</string>
     <string name="yes" msgid="9069828999585032361">"ठीक है"</string>
     <string name="no" msgid="5122037903299899715">"रद्द करें"</string>
     <string name="dialog_alert_title" msgid="651856561974090712">"ध्यान दें"</string>
