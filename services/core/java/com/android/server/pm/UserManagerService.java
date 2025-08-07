@@ -1761,14 +1761,13 @@ public class UserManagerService extends IUserManager.Stub {
         }
     }
 
-
     @GuardedBy("mUsersLock")
     private UserInfo getProfileParentLU(@UserIdInt int userId) {
         UserInfo profile = getUserInfoLU(userId);
         if (profile == null) {
             return null;
         }
-        int parentUserId = profile.profileGroupId;
+        int parentUserId = profile.isParallel() ? profile.parallelParentId : profile.profileGroupId;
         if (parentUserId == userId || parentUserId == UserInfo.NO_PROFILE_GROUP_ID) {
             return null;
         } else {
