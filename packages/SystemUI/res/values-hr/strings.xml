@@ -184,7 +184,7 @@
     <string name="biometric_dialog_confirm" msgid="2005978443007344895">"Potvrdi"</string>
     <string name="biometric_dialog_try_again" msgid="8575345628117768844">"Pokušaj ponovo"</string>
     <string name="biometric_dialog_empty_space_description" msgid="3330555462071453396">"Dodirnite da biste otkazali autentifikaciju"</string>
-    <string name="biometric_dialog_face_icon_description_idle" msgid="4351777022315116816">"Pokušajte ponovo"</string>
+    <string name="biometric_dialog_face_icon_description_idle" msgid="4351777022315116816">"Pokušajte ponovno"</string>
     <string name="biometric_dialog_face_icon_description_authenticating" msgid="3401633342366146535">"Traženje lica"</string>
     <string name="biometric_dialog_face_icon_description_authenticated" msgid="2242167416140740920">"Lice je autentificirano"</string>
     <string name="biometric_dialog_face_icon_description_confirmed" msgid="7918067993953940778">"Potvrđeno"</string>
@@ -1425,7 +1425,7 @@
     <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"Napravili ste pokret tipke za radnju.\n\nRadnja + / prikazuje sve prečace koji su vam dostupni."</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Pozadinsko osvjetljenje tipkovnice"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Razina %1$d od %2$d"</string>
-    <string name="home_controls_dream_label" msgid="6567105701292324257">"Upravljanje uređajima"</string>
+    <string name="home_controls_dream_label" msgid="6567105701292324257">"Kontrole uređaja"</string>
     <string name="home_controls_dream_description" msgid="4644150952104035789">"Brzo upravljajte uređajima putem čuvara zaslona"</string>
     <string name="volume_undo_action" msgid="5815519725211877114">"Poništi"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"Za povratak trima prstima prijeđite ulijevo ili udesno na dodirnoj podlozi"</string>

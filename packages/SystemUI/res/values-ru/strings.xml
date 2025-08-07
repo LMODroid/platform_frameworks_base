@@ -272,7 +272,7 @@
     <string name="accessibility_quick_settings_dnd_alarms_on" msgid="3375848309132140014">"только будильник"</string>
     <string name="accessibility_quick_settings_dnd" msgid="2415967452264206047">"Не беспокоить."</string>
     <string name="accessibility_quick_settings_bluetooth" msgid="8250942386687551283">"Bluetooth."</string>
-    <string name="accessibility_quick_settings_bluetooth_on" msgid="3819082137684078013">"Модуль Bluetooth включен."</string>
+    <string name="accessibility_quick_settings_bluetooth_on" msgid="3819082137684078013">"Bluetooth включен."</string>
     <string name="accessibility_quick_settings_alarm" msgid="558094529584082090">"Будильник установлен на <xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="accessibility_quick_settings_more_time" msgid="7646479831704665284">"Увеличить время."</string>
     <string name="accessibility_quick_settings_less_time" msgid="9110364286464977870">"Уменьшить время."</string>
@@ -379,7 +379,7 @@
     <string name="quick_settings_dark_mode_secondary_label_until_bedtime_ends" msgid="1790772410777123685">"Ограничить временем сна"</string>
     <string name="quick_settings_nfc_label" msgid="1054317416221168085">"Модуль NFC"</string>
     <string name="quick_settings_nfc_off" msgid="3465000058515424663">"Модуль NFC отключен"</string>
-    <string name="quick_settings_nfc_on" msgid="1004976611203202230">"Модуль NFC включен"</string>
+    <string name="quick_settings_nfc_on" msgid="1004976611203202230">"NFC включен"</string>
     <string name="quick_settings_screen_record_label" msgid="8650355346742003694">"Запись видео с экрана"</string>
     <string name="quick_settings_screen_record_start" msgid="1574725369331638985">"Начать"</string>
     <string name="quick_settings_screen_record_stop" msgid="8087348522976412119">"Остановить"</string>
