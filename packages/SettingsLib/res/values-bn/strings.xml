@@ -197,8 +197,8 @@
     <string name="launch_defaults_none" msgid="8049374306261262709">"কোনও ডিফল্ট সেট করা নেই"</string>
     <string name="tts_settings" msgid="8130616705989351312">"পাঠ্য থেকে ভাষ্য আউটপুট সেটিংস"</string>
     <string name="tts_settings_title" msgid="7602210956640483039">"টেক্সট-টু-স্পিচ আউটপুট"</string>
-    <string name="tts_default_rate_title" msgid="3964187817364304022">"কথা বলার হার"</string>
-    <string name="tts_default_rate_summary" msgid="3781937042151716987">"যে গতিতে পাঠ্য উচ্চারিত হয়"</string>
+    <string name="tts_default_rate_title" msgid="3964187817364304022">"স্পিচ রেট"</string>
+    <string name="tts_default_rate_summary" msgid="3781937042151716987">"যে গতিতে টেক্সট উচ্চারিত হয়"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"পিচ"</string>
     <string name="tts_default_pitch_summary" msgid="9132719475281551884">"সিন্থেসাইজ করা ভাষ্যের স্বরকে প্রভাবিত করে"</string>
     <string name="tts_default_lang_title" msgid="4698933575028098940">"ভাষা"</string>
