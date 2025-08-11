@@ -255,9 +255,9 @@
     <string name="adb_wireless_settings" msgid="2295017847215680229">"اشکال‌زدایی بی‌سیم"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"برای مشاهده و استفاده از دستگاه‌های در دسترس، اشکال‌زدایی بی‌سیم را روشن کنید"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"جفت کردن دستگاه با رمزینه پاسخ‌سریع"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"دستگاه‌های جدید را بااستفاده از اسکنر رمزینه پاسخ‌سریع مرتبط کنید"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"دستگاه‌های جدید را بااستفاده از اسکنر رمزینه پاسخ‌سریع جفت کنید"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"جفت کردن دستگاه با کد مرتبط‌سازی"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"دستگاه‌های جدید را با استفاده از کد شش رقمی مرتبط کنید"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"دستگاه‌های جدید را با استفاده از کد شش رقمی چفت کنید"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"دستگاه‌های مرتبط‌شده"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"درحال‌حاضر متصل"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"جزئیات دستگاه"</string>

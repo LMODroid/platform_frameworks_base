@@ -258,7 +258,7 @@
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Sambungkan perangkat baru menggunakan pemindai kode QR"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Sambungkan perangkat dengan kode penyambungan"</string>
     <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Sambungkan perangkat baru menggunakan kode enam digit"</string>
-    <string name="adb_paired_devices_title" msgid="5268997341526217362">"Perangkat disambungkan"</string>
+    <string name="adb_paired_devices_title" msgid="5268997341526217362">"Perangkat yang tersambung"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Saat ini terhubung"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Detail perangkat"</string>
     <string name="adb_device_forget" msgid="193072400783068417">"Lupakan"</string>

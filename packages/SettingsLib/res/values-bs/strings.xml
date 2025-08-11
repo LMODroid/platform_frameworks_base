@@ -281,7 +281,7 @@
     <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Prikazuje dugme za prijavu grešaka u meniju napajanja"</string>
     <string name="keep_screen_on" msgid="1187161672348797558">"Ne zaključavaj"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"Ekran neće prelaziti u stanje mirovanja tokom punjenja"</string>
-    <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Omogući Bluetooth HCI snoop zapisnik"</string>
+    <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Omogući zapisnik špijuniranja Bluetooth HCI-ja"</string>
     <string name="bt_hci_snoop_log_summary" msgid="6808538971394092284">"Snimite Bluetooth pakete. (Uključite/isključite Bluetooth nakon što promijenite ovu postavku)"</string>
     <string name="oem_unlock_enable" msgid="5334869171871566731">"OEM otključavanje"</string>
     <string name="oem_unlock_enable_summary" msgid="5857388174390953829">"Dozvoli otključavanje bootloadera"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Dozvoli lažne lokacije"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Dozvoli lažne lokacije"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Omogući pregled atributa prikaza"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Prijenos podataka na mobilnoj mreži ostaje aktivan čak i kada je aktiviran WiFi (za brzo prebacivanje između mreža)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Prenos podataka na mobilnoj mreži ostaje aktivan čak i kada je aktiviran WiFi (za brzo prebacivanje između mreža)."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Korištenje hardverskog ubrzavanja dijeljenja internetske veze ako je dostupno"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"Omogućiti otklanjanje grešaka putem USB-a?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"Otklanjanje grešaka putem USB-a je namijenjeno samo u svrhe razvoja aplikacija. Koristite ga za kopiranje podataka između računara i uređaja, instaliranje aplikacija na uređaj bez obavještenja te čitanje podataka iz zapisnika."</string>

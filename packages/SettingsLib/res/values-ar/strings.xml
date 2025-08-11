@@ -326,7 +326,7 @@
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"عرض خيارات شهادة عرض شاشة لاسلكي"</string>
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"‏زيادة مستوى تسجيل Wi-Fi، وعرض لكل SSID RSSI في منتقي Wi-Fi"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"لتقليل استهلاك البطارية وتحسين أداء الشبكة"</string>
-    <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"‏عند تفعيل هذا الوضع، قد يتم تغيير عنوان MAC لهذا الجهاز في كل مرة تتصل فيها بشبكة تم تفعيل التوزيع العشوائي لعناوين MAC عليها."</string>
+    <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"‏عند تفعيل هذا الوضع، قد يتم تغيير عنوان MAC لهذا الجهاز في كل مرة تتصل فيها بشبكة تم تفعيل التوزيع العشوائي لعناوين MAC عليها"</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"تفرض تكلفة استخدام"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"بدون قياس"</string>
     <string name="select_logd_size_title" msgid="1604578195914595173">"أحجام ذاكرة التخزين المؤقت للتسجيل"</string>
@@ -351,7 +351,7 @@
     <string name="dev_settings_warning_message" msgid="37741686486073668">"هذه الإعدادات مخصصة لاستخدام التطوير فقط. قد يتسبب هذا في حدوث أعطال أو خلل في أداء الجهاز والتطبيقات المثبتة عليه."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"‏التحقق من التطبيقات عبر USB"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"‏التحقق من التطبيقات المثبتة عبر ADB/ADT لكشف السلوك الضار"</string>
-    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"‏سيتم عرض أجهزة البلوتوث بدون أسماء (عناوين MAC فقط)."</string>
+    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"‏سيتم عرض أجهزة البلوتوث بدون أسماء (عناوين MAC فقط)"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"إيقاف ميزة مستوى الصوت المطلق للبلوتوث في حال حدوث مشاكل متعلقة بمستوى الصوت في الأجهزة البعيدة، مثل مستوى صوت عالٍ بشكل غير مقبول أو عدم إمكانية التحكّم في الصوت"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"‏تفعيل حِزم ميزة Bluetooth Gabeldorsche"</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"لتفعيل الميزة \"إمكانية اتصال محسّن\""</string>
@@ -361,7 +361,7 @@
     <string name="hdcp_checking_dialog_title" msgid="7691060297616217781">"‏تعيين سلوك التحقق من HDCP"</string>
     <string name="debug_debugging_category" msgid="535341063709248842">"تصحيح الأخطاء"</string>
     <string name="debug_app" msgid="8903350241392391766">"اختيار التطبيق لتصحيحه"</string>
-    <string name="debug_app_not_set" msgid="1934083001283807188">"لم يتم ضبط تطبيق لتصحيحه."</string>
+    <string name="debug_app_not_set" msgid="1934083001283807188">"لم يتم ضبط تطبيق لتصحيحه"</string>
     <string name="debug_app_set" msgid="6599535090477753651">"تطبيق التصحيح: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="select_application" msgid="2543228890535466325">"اختيار تطبيق"</string>
     <string name="no_application" msgid="9038334538870247690">"لا شيء"</string>
@@ -409,7 +409,7 @@
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"‏تفعيل طبقات تصحيح أخطاء GPU"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"‏السماح بتحميل طبقات تصحيح أخطاء GPU لتطبيقات تصحيح الأخطاء"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"تفعيل التسجيل المطوَّل للمورّد"</string>
-    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"تضمين سجلات المورّدين الإضافية الخاصة بالجهاز في تقارير الخطأ، والتي قد تحتوي على معلومات شخصية و/أو تستهلك المزيد من شحن البطارية و/أو تستهلك المزيد من مساحة التخزين"</string>
+    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"تضمين سجلات المورّدين الإضافية الخاصة بالجهاز في تقارير الخطأ، التي قد تحتوي على معلومات شخصية، و/أو تستهلك المزيد من شحن البطارية و/أو مساحة التخزين"</string>
     <string name="enable_verbose_vendor_logging_checkbox" msgid="3864578373293835530">"الإيقاف بعد يوم واحد"</string>
     <string name="verbose_vendor_logging_notification_title" msgid="6811217272559843592">"انتهى التسجيل المطوّل للمورِّد"</string>
     <string name="verbose_vendor_logging_notification_summary" msgid="5226524769774370942">"تم التفعيل لمدة يوم واحد"</string>

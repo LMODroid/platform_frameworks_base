@@ -292,7 +292,7 @@
     <string name="mock_location_app_set" msgid="4706722469342913843">"Skynliggingapp: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="debug_networking_category" msgid="6829757985772659599">"Inligtingruiling"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"Draadlose skermsertifisering"</string>
-    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Aktiveer Wi-Fi-woordryke aanmelding"</string>
+    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Aktiveer gedetailleerde aanmelding vir wi-fi"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Regulering van Wi-fi-opsporing"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Nie-aanhoudende MAC-verewekansiging vir wi-fi"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"Mobiele data is altyd aktief"</string>
@@ -331,9 +331,9 @@
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"Onbeperk"</string>
     <string name="select_logd_size_title" msgid="1604578195914595173">"Logskepperbuffer se groottes"</string>
     <string name="select_logd_size_dialog_title" msgid="2105401994681013578">"Kies logskeppergroottes per logbuffer"</string>
-    <string name="dev_logpersist_clear_warning_title" msgid="8631859265777337991">"Maak logskrywer se aanhoudende berging skoon?"</string>
-    <string name="dev_logpersist_clear_warning_message" msgid="6447590867594287413">"Wanneer ons nie meer monitering met die aanhoudende logskrywer uitvoer nie, word ons vereis om die logskrywerdata wat op jou toestel is, uit te vee."</string>
-    <string name="select_logpersist_title" msgid="447071974007104196">"Berg logskrywerdata aanhoudend op toestel"</string>
+    <string name="dev_logpersist_clear_warning_title" msgid="8631859265777337991">"Maak logskepper se aanhoudende berging skoon?"</string>
+    <string name="dev_logpersist_clear_warning_message" msgid="6447590867594287413">"Wanneer ons nie meer monitering met die aanhoudende logskepper uitvoer nie, word ons vereis om die logskepperdata wat op jou toestel is, uit te vee."</string>
+    <string name="select_logpersist_title" msgid="447071974007104196">"Berg logskepperdata aanhoudend op toestel"</string>
     <string name="select_logpersist_dialog_title" msgid="7745193591195485594">"Kies loglêerbuffers om aanhoudend op toestel te stoor"</string>
     <string name="select_usb_configuration_title" msgid="6339801314922294586">"Kies USB-opstelling"</string>
     <string name="select_usb_configuration_dialog_title" msgid="3579567144722589237">"Kies USB-opstelling"</string>

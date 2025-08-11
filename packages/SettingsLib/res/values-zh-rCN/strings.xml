@@ -253,7 +253,7 @@
     <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"连接到 Wi-Fi 后启用调试模式"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"错误"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"无线调试"</string>
-    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"要查看和使用可用的设备，请开启无线调试"</string>
+    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"如要查看并使用可用的设备，请开启无线调试"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"使用二维码配对设备"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"使用二维码扫描器配对新设备"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"使用配对码配对设备"</string>
@@ -280,7 +280,7 @@
     <string name="bugreport_in_power" msgid="8664089072534638709">"Bug 报告快捷方式"</string>
     <string name="bugreport_in_power_summary" msgid="1885529649381831775">"在电源菜单中显示用于提交 bug 报告的按钮"</string>
     <string name="keep_screen_on" msgid="1187161672348797558">"不锁定屏幕"</string>
-    <string name="keep_screen_on_summary" msgid="1510731514101925829">"充电时屏幕不会休眠"</string>
+    <string name="keep_screen_on_summary" msgid="1510731514101925829">"充电时屏幕永不休眠"</string>
     <string name="bt_hci_snoop_log" msgid="7291287955649081448">"启用蓝牙 HCI 信息收集日志"</string>
     <string name="bt_hci_snoop_log_summary" msgid="6808538971394092284">"捕获蓝牙数据包（更改此设置之后请切换蓝牙开关）。"</string>
     <string name="oem_unlock_enable" msgid="5334869171871566731">"OEM 解锁"</string>

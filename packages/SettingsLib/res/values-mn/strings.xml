@@ -295,7 +295,7 @@
     <string name="wifi_verbose_logging" msgid="1785910450009679371">"Wi‑Fi дэлгэрэнгүй логийг идэвхжүүлэх"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Wi‑Fi скан бууруулалт"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Wi‑Fi-н байнгын бус MAC-г санамсаргүй байдлаар эмхлэх"</string>
-    <string name="mobile_data_always_on" msgid="8275958101875563572">"Мобайл дата байнга идэвхтэй"</string>
+    <string name="mobile_data_always_on" msgid="8275958101875563572">"Хөдөлгөөнт төхөөрөмжийн дата байнга идэвхтэй"</string>
     <string name="tethering_hardware_offload" msgid="4116053719006939161">"Модем болгох техник хангамжийн хурдасгуур"</string>
     <string name="bluetooth_show_devices_without_names" msgid="923584526471885819">"Нэргүй Bluetooth төхөөрөмжийг харуулах"</string>
     <string name="bluetooth_disable_absolute_volume" msgid="1452342324349203434">"Үнэмлэхүй дууны түвшнийг идэвхгүй болгох"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Хуурамч байршлыг зөвшөөрөх"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Хуурамч байршлыг зөвшөөрөх"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Харах тохируулгын шалгалтыг идэвхжүүлэх"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Wi‑Fi идэвхтэй байхад ч гэсэн гар утасны датаг идэвхтэй байлгадаг (сүлжээг түргэн солихын тулд)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Wi‑Fi идэвхтэй байхад ч гэсэн хөдөлгөөнт төхөөрөмжийн датаг идэвхтэй байлгадаг (сүлжээг түргэн солихын тулд)."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Модем болгох техник хангамжийн хурдасгуурыг боломжтой тохиолдолд ашиглах"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"USB дебаг хийхийг зөвшөөрөх үү?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"USB дебаг нь зөвхөн хөгжүүлэлтийн зорилготой. Үүнийг өөрийн компьютер болон төхөөрөмжийн хооронд өгөгдөл хуулах, өөрийн төхөөрөмж дээр мэдэгдэлгүйгээр аппликейшн суулгах, лог датаг унших зэрэгт ашиглаж болно."</string>

@@ -292,7 +292,7 @@
     <string name="mock_location_app_set" msgid="4706722469342913843">"Aplicația pentru locația de testare: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="debug_networking_category" msgid="6829757985772659599">"Conectare la rețele"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"Certificare Ecran wireless"</string>
-    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Înregistrare prin Wi-Fi de volume mari de date"</string>
+    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Înregistrare detaliată prin Wi-Fi"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Limitare căutare de rețele Wi-Fi"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Randomizarea adresei MAC nepersistente pentru Wi-Fi"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"Date mobile permanent active"</string>

@@ -56,7 +56,7 @@
     <string name="wifi_disabled_password_failure" msgid="6892387079613226738">"인증 문제"</string>
     <string name="wifi_cant_connect" msgid="5718417542623056783">"연결할 수 없음"</string>
     <string name="wifi_cant_connect_to_ap" msgid="3099667989279700135">"\'<xliff:g id="AP_NAME">%1$s</xliff:g>\'에 연결할 수 없음"</string>
-    <string name="wifi_check_password_try_again" msgid="8817789642851605628">"비밀번호를 확인하고 다시 시도하세요."</string>
+    <string name="wifi_check_password_try_again" msgid="8817789642851605628">"비밀번호를 확인하고 다시 시도하세요"</string>
     <string name="wifi_not_in_range" msgid="1541760821805777772">"범위 내에 없음"</string>
     <string name="wifi_no_internet_no_reconnect" msgid="821591791066497347">"자동으로 연결되지 않습니다."</string>
     <string name="wifi_no_internet" msgid="1774198889176926299">"인터넷에 연결되어 있지 않음"</string>
@@ -279,7 +279,7 @@
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, 디버그, 개발자"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"버그 신고 바로가기"</string>
     <string name="bugreport_in_power_summary" msgid="1885529649381831775">"전원 메뉴에 버그 신고 버튼 표시"</string>
-    <string name="keep_screen_on" msgid="1187161672348797558">"화면 켜짐 상태 유지"</string>
+    <string name="keep_screen_on" msgid="1187161672348797558">"절전모드 해제"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"충전하는 동안 화면이 꺼지지 않음"</string>
     <string name="bt_hci_snoop_log" msgid="7291287955649081448">"블루투스 HCI 스누프 로그 사용"</string>
     <string name="bt_hci_snoop_log_summary" msgid="6808538971394092284">"블루투스 패킷을 캡처합니다. (설정 변경 후 블루투스 전환)"</string>
@@ -298,7 +298,7 @@
     <string name="mobile_data_always_on" msgid="8275958101875563572">"항상 모바일 데이터 활성화"</string>
     <string name="tethering_hardware_offload" msgid="4116053719006939161">"테더링 하드웨어 가속"</string>
     <string name="bluetooth_show_devices_without_names" msgid="923584526471885819">"이름이 없는 블루투스 기기 표시"</string>
-    <string name="bluetooth_disable_absolute_volume" msgid="1452342324349203434">"절대 볼륨 사용 안함"</string>
+    <string name="bluetooth_disable_absolute_volume" msgid="1452342324349203434">"절대 볼륨 사용 중지"</string>
     <string name="bluetooth_enable_gabeldorsche" msgid="9131730396242883416">"Gabeldorsche 사용 설정"</string>
     <string name="bluetooth_select_avrcp_version_string" msgid="1710571610177659127">"블루투스 AVRCP 버전"</string>
     <string name="bluetooth_select_avrcp_version_dialog_title" msgid="7846922290083709633">"블루투스 AVRCP 버전 선택"</string>
@@ -326,7 +326,7 @@
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"무선 디스플레이 인증서 옵션 표시"</string>
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Wi‑Fi 로깅 수준을 높이고, Wi‑Fi 선택도구에서 SSID RSSI당 값을 표시"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"배터리 소모를 줄이고 네트워크 성능 개선"</string>
-    <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"이 모드를 사용 설정하면 기기가 MAC 주소 무작위 지정이 설정된 네트워크에 연결될 때마다 기기의 MAC 주소가 변경될 수 있습니다."</string>
+    <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"이 모드를 사용 설정하면 기기가 MAC 주소 무작위 순서 지정이 설정된 네트워크에 연결될 때마다 기기의 MAC 주소가 변경될 수 있습니다."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"종량제 네트워크"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"무제한 네트워크"</string>
     <string name="select_logd_size_title" msgid="1604578195914595173">"로거 버퍼 크기"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"모의 위치 허용"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"모의 위치 허용"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"보기 속성 검사 사용"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Wi‑Fi가 활성화되어 있을 때에도 빠른 네트워크 전환을 위하여 항상 모바일 데이터를 활성 상태로 유지"</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Wi‑Fi가 활성화되어 있을 때에도 빠른 네트워크 전환을 위하여 항상 모바일 데이터를 활성 상태로 유지합니다."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"가능한 경우 테더링 하드웨어 가속 사용"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"USB 디버깅을 허용하시겠습니까?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"USB 디버깅은 개발용으로만 설계되었습니다. 이 기능을 사용하면 컴퓨터와 기기 간에 데이터를 복사하고 알림 없이 기기에 앱을 설치하며 로그 데이터를 읽을 수 있습니다."</string>
@@ -350,7 +350,7 @@
     <string name="dev_settings_warning_title" msgid="8251234890169074553">"개발자 설정을 허용하시겠습니까?"</string>
     <string name="dev_settings_warning_message" msgid="37741686486073668">"이 설정은 개발자용으로만 설계되었습니다. 이 설정을 사용하면 기기 및 애플리케이션에 예기치 않은 중단이나 오류가 발생할 수 있습니다."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"USB를 통해 설치된 앱 확인"</string>
-    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"ADB/ADT를 통해 설치된 앱에 유해한 동작이 있는지 확인"</string>
+    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"ADB/ADT를 통해 설치된 앱에 유해한 동작이 있는지 확인합니다."</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"이름이 없이 MAC 주소만 있는 블루투스 기기 표시"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"참기 어려울 정도로 볼륨이 크거나 제어가 되지 않는 등 원격 기기에서 볼륨 문제가 발생할 경우 블루투스 절대 볼륨 기능을 사용 중지"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"블루투스 Gabeldorsche 기능 스택을 사용 설정합니다."</string>
@@ -407,7 +407,7 @@
     <string name="show_non_rect_clip" msgid="7499758654867881817">"사각형이 아닌 클립 작업 디버그"</string>
     <string name="track_frame_time" msgid="522674651937771106">"HWUI 렌더링 프로파일"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"GPU 디버그 레이어 사용 설정"</string>
-    <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"디버그 앱에 GPU 디버그 레이어 로드 허용"</string>
+    <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"디버깅할 앱에 GPU 디버그 레이어 로드 허용"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"상세 공급업체 로깅 사용 설정"</string>
     <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"버그 신고에 추가적인 기기별 공급업체 로그를 포함합니다. 여기에는 개인 정보가 포함될 수 있으며, 배터리 또는 저장공간 사용량이 늘어날 수 있습니다."</string>
     <string name="enable_verbose_vendor_logging_checkbox" msgid="3864578373293835530">"1일 후 사용 중지"</string>
