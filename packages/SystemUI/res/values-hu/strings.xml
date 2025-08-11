@@ -699,7 +699,7 @@
     <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Hívás folyamatban itt:"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"Kezelőfelület-hangoló"</string>
     <string name="status_bar" msgid="4357390266055077437">"Állapotsor"</string>
-    <string name="demo_mode" msgid="263484519766901593">"A rendszer kezelőfelületének demómódja"</string>
+    <string name="demo_mode" msgid="263484519766901593">"A rendszer kezelőfelületének demó módja"</string>
     <string name="enable_demo_mode" msgid="3180345364745966431">"Demó mód engedélyezése"</string>
     <string name="show_demo_mode" msgid="3677956462273059726">"Demó mód megjelenítése"</string>
     <string name="status_bar_ethernet" msgid="5690979758988647484">"Ethernet"</string>

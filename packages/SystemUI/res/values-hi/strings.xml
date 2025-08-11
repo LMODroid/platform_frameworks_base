@@ -1046,7 +1046,7 @@
     <string name="magnification_close_settings_click_label" msgid="4642477260651704517">"ज़ूम करने की सुविधा वाली सेटिंग को बंद करें"</string>
     <string name="magnification_exit_edit_mode_click_label" msgid="1664818325144887117">"बदलाव मोड से बाहर निकलें"</string>
     <string name="magnification_drag_corner_to_resize" msgid="1249766311052418130">"साइज़ बदलने के लिए, कोने को खींचें और छोड़ें"</string>
-    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"तिरछी दिशा में स्क्रोल करने की अनुमति दें"</string>
+    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"तिरछे स्क्रोल करने की अनुमति दें"</string>
     <string name="accessibility_resize" msgid="5733759136600611551">"साइज़ बदलें"</string>
     <string name="accessibility_change_magnification_type" msgid="666000085077432421">"ज़ूम करने की सुविधा का टाइप बदलें"</string>
     <string name="accessibility_magnification_end_resizing" msgid="4881690585800302628">"साइज़ बदलना रोकें"</string>
