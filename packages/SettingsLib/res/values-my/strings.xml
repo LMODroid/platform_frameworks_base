@@ -247,17 +247,17 @@
     <string name="tethering_settings_not_available" msgid="266821736434699780">"ဤအသုံးပြုသူအတွက် မိုဘိုင်းသုံး၍ ချိတ်ဆက်ခြင်း ဆက်တင်များ မရနိုင်ပါ"</string>
     <string name="apn_settings_not_available" msgid="1147111671403342300">"ဤ အသုံးပြုသူ အတွက် ဝင်လိုသည့် နေရာ အမည်၏ ဆက်တင်များကို မရယူနိုင်"</string>
     <string name="enable_adb" msgid="8072776357237289039">"USB အမှားရှာခြင်း"</string>
-    <string name="enable_adb_summary" msgid="3711526030096574316">"USB နှင့်ချိတ်ထားလျှင် အမှားရှာဖွေဖယ်ရှားမှုစနစ် စတင်ရန်"</string>
+    <string name="enable_adb_summary" msgid="3711526030096574316">"USB နှင့်ချိတ်ထားလျှင် အမှားရှာဖွေဖယ်ရှားမှုမုဒ်တွင် ရှိသည်"</string>
     <string name="clear_adb_keys" msgid="3010148733140369917">"USB အမှားရှာပြင်ဆင်ခွင့်များ ပြန်ရုပ်သိမ်းခြင်း"</string>
-    <string name="enable_adb_wireless" msgid="6973226350963971018">"ကြိုးမဲ့ အမှားရှာပြင်ခြင်း"</string>
-    <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Wi-Fi ချိတ်ဆက်ထားစဉ် အမှားရှာပြင်မုဒ်"</string>
+    <string name="enable_adb_wireless" msgid="6973226350963971018">"ကြိုးမဲ့ အမှားရှာပြင်ရန်"</string>
+    <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Wi-Fi ချိတ်ဆက်ထားစဉ် အမှားရှာပြင်မုဒ်တွင် ရှိသည်"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"အမှား"</string>
-    <string name="adb_wireless_settings" msgid="2295017847215680229">"ကြိုးမဲ့ အမှားရှာပြင်ခြင်း"</string>
+    <string name="adb_wireless_settings" msgid="2295017847215680229">"ကြိုးမဲ့ အမှားရှာပြင်ရန်"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"ရနိုင်သည့် စက်ပစ္စည်းများကို ကြည့်ပြီး အသုံးပြုနိုင်ရန် ကြိုးမဲ့ အမှားရှာပြင်ခြင်းကို ဖွင့်ပါ"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"QR ကုဒ်ဖြင့် စက်ပစ္စည်းကို အတူတွဲပါ"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR ကုဒ် စကင်ဖတ်စက် သုံး၍ စက်အသစ်များကို အတူတွဲနိုင်သည်"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"တွဲချိတ်ကုဒ်ဖြင့် စက်ပစ္စည်းကို အတူတွဲပါ"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"ဂဏန်းခြောက်လုံးကုဒ်ဖြင့် စက်ပစ္စည်းသစ်များကို အတူတွဲပါ"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"ဂဏန်းခြောက်လုံးကုဒ်ဖြင့် စက်ပစ္စည်းသစ်များကို အတူတွဲနိုင်သည်"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"တွဲချိတ်ပြီး စက်ပစ္စည်းများ"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"လက်ရှိ ချိတ်ဆက်ထားသည်"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"စက်အသေးစိတ်များ"</string>
@@ -279,7 +279,7 @@
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, debug, dev"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"ချွတ်ယွင်းမှု အစီရင်ခံရန် ဖြတ်လမ်း"</string>
     <string name="bugreport_in_power_summary" msgid="1885529649381831775">"ချွတ်ယွင်းမှု အစီရင်ခံစာကို တင်ရန် ပါဝါမီနူးမှ ခလုတ်ကို ပြပါ"</string>
-    <string name="keep_screen_on" msgid="1187161672348797558">"ဖွင့်ထားခြင်း"</string>
+    <string name="keep_screen_on" msgid="1187161672348797558">"ဖွင့်ထားရန်"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"အားသွင်းနေချိန် ဖန်သားပြင် ပိတ်သွားမည် မဟုတ်ပါ"</string>
     <string name="bt_hci_snoop_log" msgid="7291287955649081448">"ဘလူးတုသ် HCI snoop မှတ်တမ်းကို ဖွင့်ခြင်း"</string>
     <string name="bt_hci_snoop_log_summary" msgid="6808538971394092284">"ဘလူးတုသ် အတွဲများ သိမ်းယူပါ။ (ဤဆက်တင်ကို ပြောင်းပြီးသည့်အခါ ဘလူးတုသ် ဖွင့်/ပိတ် လုပ်ပါ)"</string>
@@ -294,9 +294,9 @@
     <string name="wifi_display_certification" msgid="1805579519992520381">"ကြိုးမဲ့ပြသမှု အသိအမှတ်ပြုလက်မှတ်"</string>
     <string name="wifi_verbose_logging" msgid="1785910450009679371">"Wi‑Fi အကျယ်မှတ်တမ်းတင်ခြင်းဖွင့်ရန်"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Wi‑Fi ရှာဖွေခြင်း ထိန်းချုပ်မှု"</string>
-    <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Wi‑Fi ပြောင်းလဲသော MAC ကျပန်းပြုလုပ်ခြင်း"</string>
+    <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Wi‑Fi ပြောင်းလဲသော MAC ကျပန်းပြုလုပ်ရန်"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"မိုဘိုင်းဒေတာကို အမြဲဖွင့်ထားရန်"</string>
-    <string name="tethering_hardware_offload" msgid="4116053719006939161">"မိုဘိုင်းသုံး၍ ချိတ်ဆက်ရန် စက်ပစ္စည်း အရှိန်မြှင့်တင်ခြင်း"</string>
+    <string name="tethering_hardware_offload" msgid="4116053719006939161">"မိုဘိုင်းသုံး၍ ချိတ်ဆက်သည့် စက်ပစ္စည်း အရှိန်မြှင့်တင်ရန်"</string>
     <string name="bluetooth_show_devices_without_names" msgid="923584526471885819">"အမည်မရှိသော ဘလူးတုသ်စက်ပစ္စည်းများကို ပြသရန်"</string>
     <string name="bluetooth_disable_absolute_volume" msgid="1452342324349203434">"ပကတိ အသံနှုန်း သတ်မှတ်ချက် ပိတ်ရန်"</string>
     <string name="bluetooth_enable_gabeldorsche" msgid="9131730396242883416">"Gabeldorsche ကို ဖွင့်ရန်"</string>

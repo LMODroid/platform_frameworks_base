@@ -366,7 +366,7 @@
     <string name="select_application" msgid="2543228890535466325">"ਐਪਲੀਕੇਸ਼ਨ ਚੁਣੋ"</string>
     <string name="no_application" msgid="9038334538870247690">"ਕੁਝ ਨਹੀਂ"</string>
     <string name="wait_for_debugger" msgid="7461199843335409809">"ਡੀਬੱਗਰ ਦੀ ਉਡੀਕ ਕਰੋ"</string>
-    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"ਡੀਬੱਗ ਕੀਤੀ ਐਪਲੀਕੇਸ਼ਨ ਚਲਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਅਟੈਚ ਕਰਨ ਲਈ ਡੀਬੱਗਰ ਦੀ ਉਡੀਕ ਕਰਦੀ ਹੈ"</string>
+    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"ਡੀਬੱਗ ਕੀਤੀ ਐਪਲੀਕੇਸ਼ਨ, ਪ੍ਰਕਿਰਿਆ ਸ਼ੁਰੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਡੀਬੱਗਰ ਦੇ ਅਟੈਚ ਹੋਣ ਦੀ ਉਡੀਕ ਕਰਦੀ ਹੈ"</string>
     <string name="debug_input_category" msgid="7349460906970849771">"ਇਨਪੁੱਟ"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"ਡਰਾਇੰਗ"</string>
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"ਹਾਰਡਵੇਅਰ ਐਕਸੈੱਲਰੇਟਿਡ ਰੈਂਡਰਿੰਗ"</string>

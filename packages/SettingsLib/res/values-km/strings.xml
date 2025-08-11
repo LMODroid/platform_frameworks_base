@@ -350,7 +350,7 @@
     <string name="dev_settings_warning_title" msgid="8251234890169074553">"អនុញ្ញាត​កំណត់​ការ​អភិវឌ្ឍ?"</string>
     <string name="dev_settings_warning_message" msgid="37741686486073668">"ការ​កំណត់​ទាំង​នេះ​សម្រាប់​តែ​ការ​ប្រើ​ក្នុង​ការ​អភិវឌ្ឍ​ប៉ុណ្ណោះ។ ពួក​វា​អាច​ធ្វើ​ឲ្យ​ឧបករណ៍ និង​កម្មវិធី​របស់​អ្នក​ខូច ឬ​ដំណើរ​មិន​ត្រឹមត្រូវ។"</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"ផ្ទៀងផ្ទាត់​កម្មវិធី​តាម USB"</string>
-    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"ពិនិត្យ​កម្មវិធី​បាន​ដំឡើង​តាម​រយៈ ADB/ADT សម្រាប់​ឥរិយាបថ​ដែល​គ្រោះ​ថ្នាក់។"</string>
+    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"ពិនិត្យ​កម្មវិធី​ដែល​ដំឡើង​តាម​រយៈ ADB/ADT ដើម្បីរកមើលឥរិយាបថ​​គ្រោះ​ថ្នាក់។"</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"​ឧបករណ៍​ប្ល៊ូធូសគ្មានឈ្មោះ​ (អាសយដ្ឋាន MAC តែប៉ុណ្ណោះ) នឹង​បង្ហាញ"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"បិទមុខងារកម្រិតសំឡេងឮខ្លាំងពេលភ្ជាប់ប៊្លូធូសក្នុងករណីមានបញ្ហាជាមួយឧបករណ៍បញ្ជាពីចម្ងាយ ដូចជាកម្រិតសំឡេងឮខ្លាំងដែលមិនអាចទទួលយកបាន ឬខ្វះការគ្រប់គ្រង។"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"បើកជង់​មុខងារ​ប៊្លូធូស Gabeldorsche។"</string>

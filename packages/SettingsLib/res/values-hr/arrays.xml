@@ -55,7 +55,7 @@
   </string-array>
   <string-array name="hdcp_checking_summaries">
     <item msgid="4045840870658484038">"Nikad ne upotrebljavaj HDCP provjeru"</item>
-    <item msgid="8254225038262324761">"Upotrebljavaj HDCP provjeru samo za DRM sadržaj"</item>
+    <item msgid="8254225038262324761">"Koristi HDCP provjeru samo za DRM sadržaj"</item>
     <item msgid="6421717003037072581">"Uvijek upotrebljavaj HDCP provjeru"</item>
   </string-array>
   <string-array name="bt_hci_snoop_log_entries">

@@ -239,7 +239,7 @@
     <string name="category_work" msgid="4014193632325996115">"ୱାର୍କ"</string>
     <string name="category_private" msgid="4244892185452788977">"ପ୍ରାଇଭେଟ"</string>
     <string name="category_clone" msgid="1554511758987195974">"କ୍ଲୋନ"</string>
-    <string name="development_settings_title" msgid="140296922921597393">"ଡେଭଲପରଙ୍କ ପାଇଁ ବିକଳ୍ପ"</string>
+    <string name="development_settings_title" msgid="140296922921597393">"ଡେଭେଲପର ବିକଳ୍ପ"</string>
     <string name="development_settings_enable" msgid="4285094651288242183">"ଡେଭଲପର୍‌ ବିକଳ୍ପଗୁଡ଼ିକ ସକ୍ଷମ କରନ୍ତୁ"</string>
     <string name="development_settings_summary" msgid="8718917813868735095">"ଆପ୍‌ର ବିକାଶ ପାଇଁ ବିକଳ୍ପମାନ ସେଟ୍‌ କରନ୍ତୁ"</string>
     <string name="development_settings_not_available" msgid="355070198089140951">"ଏହି ଉପଯୋଗକର୍ତ୍ତାଙ୍କ ପାଇଁ ଡେଭଲପରଙ୍କ ବିକଳ୍ପସମୂହ ଉପଲବ୍ଧ ନୁହେଁ"</string>
@@ -409,7 +409,7 @@
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"GPU ଡିବଗ୍‌ ଲେୟର୍‌ ସକ୍ଷମ କରନ୍ତୁ"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"ଡିବଗ୍‌ ଆପ୍‌ଗୁଡ଼ିକ ପାଇଁ GPU ଡିବଗ୍‌ ଲେୟର୍‌ ଲୋଡ୍ କରିବାର ଅନୁମତି ଦିଅନ୍ତୁ"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"ଭର୍ବୋସ ଭେଣ୍ଡର୍ ଲଗିଂ ସକ୍ଷମ କରନ୍ତୁ"</string>
-    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"ବଗ୍ ରିପୋର୍ଟଗୁଡ଼ିକରେ ଅତିରିକ୍ତ ଡିଭାଇସ୍-ନିର୍ଦ୍ଦିଷ୍ଟ ଲଗଗୁଡ଼ିକ ସାମିଲ କରନ୍ତୁ, ଯେଉଁଥିରେ ବ୍ୟକ୍ତିଗତ ସୂଚନା ଥାଇପାରେ, ଯାହା ଅଧିକ ବ୍ୟାଟେରୀ ଏବଂ/କିମ୍ବା ଅଧିକ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରିପାରେ।"</string>
+    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"ବଗ ରିପୋର୍ଟଗୁଡ଼ିକରେ ଅତିରିକ୍ତ ଡିଭାଇସ-ନିର୍ଦ୍ଦିଷ୍ଟ ଭେଣ୍ଡର ଲଗଗୁଡ଼ିକ ସାମିଲ କରନ୍ତୁ, ଯେଉଁଥିରେ ବ୍ୟକ୍ତିଗତ ସୂଚନା ଥାଇପାରେ, ଯାହା ଅଧିକ ବ୍ୟାଟେରୀ ଏବଂ/କିମ୍ବା ଅଧିକ ଷ୍ଟୋରେଜ ବ୍ୟବହାର କରିପାରେ।"</string>
     <string name="enable_verbose_vendor_logging_checkbox" msgid="3864578373293835530">"ଗୋଟିଏ ଦିନ ପରେ ଅକ୍ଷମ କରନ୍ତୁ"</string>
     <string name="verbose_vendor_logging_notification_title" msgid="6811217272559843592">"ଭର୍ବୋସ ଭେଣ୍ଡର ଲଗିଂ ସମାପ୍ତ ହୋଇଯାଇଛି"</string>
     <string name="verbose_vendor_logging_notification_summary" msgid="5226524769774370942">"ଗୋଟିଏ ଦିନ ପାଇଁ ସକ୍ଷମ କରାଯାଇଛି"</string>

@@ -250,7 +250,7 @@
     <string name="enable_adb_summary" msgid="3711526030096574316">"Režim otklanjanja grešaka kada je USB povezan"</string>
     <string name="clear_adb_keys" msgid="3010148733140369917">"Opozivanje odobrenja za uklanjanje USB grešaka"</string>
     <string name="enable_adb_wireless" msgid="6973226350963971018">"Bežično otklanjanje grešaka"</string>
-    <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Režim za otklanjanje grešaka kada je Wi‑Fi povezan"</string>
+    <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Režim za otklanjanje grešaka kada je WiFi povezan"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"Greška"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Bežično otklanjanje grešaka"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Da biste videli i koristili dostupne uređaje, uključite bežično otklanjanje grešaka"</string>
@@ -324,7 +324,7 @@
     <string name="private_dns_mode_provider_hostname_hint" msgid="6564868953748514595">"Unesite ime hosta dobavljača usluge DNS-a"</string>
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"Povezivanje nije uspelo"</string>
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Prikazuje opcije za sertifikaciju bežičnog ekrana"</string>
-    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Povećava nivo evidentiranja za Wi‑Fi. Prikaz po SSID RSSI-u u biraču Wi‑Fi mreže"</string>
+    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Povećava nivo evidentiranja za Wi‑Fi. Prikaz po SSID RSSI-u u biraču WiFi mreže"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Smanjuje potrošnju baterije i poboljšava učinak mreže"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Kada je ovaj režim omogućen, MAC adresa ovog uređaja može da se promeni svaki put kada se poveže sa mrežom na kojoj je omogućeno nasumično razvrstavanje MAC adresa."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Sa ograničenjem"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Dozvoli lažne lokacije"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Dozvoli lažne lokacije"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Omogući proveru atributa za pregled"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Mobilni podaci su uvek aktivni, čak i kada je Wi‑Fi aktivan (radi brze promene mreže)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Mobilni podaci su uvek aktivni, čak i kada je WiFi aktivan (radi brze promene mreže)."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Koristi se hardversko ubrzanje privezivanja ako je dostupno"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"Dozvoli otklanjanje USB grešaka?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"Otklanjanje USB grešaka namenjeno je samo za svrhe programiranja. Koristite ga za kopiranje podataka sa računara na uređaj i obratno, instaliranje aplikacija na uređaju bez obaveštenja i čitanje podataka iz evidencije."</string>
