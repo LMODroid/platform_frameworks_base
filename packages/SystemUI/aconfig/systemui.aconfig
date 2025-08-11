@@ -779,6 +779,16 @@ flag {
 }
 
 flag {
+    name: "fix_shade_header_wrong_icon_size"
+    namespace: "lse_desktop_experience"
+    description: "Fix system icon size in shade header on connected displays"
+    bug: "412409667"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "clipboard_use_description_mimetype"
     namespace: "systemui"
     description: "Read item mimetype from description rather than checking URI"
