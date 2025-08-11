@@ -550,6 +550,16 @@ flag {
 }
 
 flag {
+    name: "status_bar_battery_no_conflation"
+    namespace: "systemui"
+    description: "Use callbackFlow instead of conflatedCallbackFlow in BatteryRepository"
+    bug: "433239990"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "icon_refresh_2025"
     namespace: "systemui"
     description: "Build time flag for 2025 icon refresh"

@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.pipeline.battery.data.repository
 
 import android.content.Context
 import android.provider.Settings
+import com.android.systemui.Flags
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
@@ -29,11 +30,13 @@ import kotlin.coroutines.resume
 import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -91,8 +94,18 @@ constructor(
     private val controller: BatteryController,
     settingsRepository: SystemSettingsRepository,
 ) : BatteryRepository {
+    private fun <T> flaggedCallbackFlow(block: suspend ProducerScope<T>.() -> Unit): Flow<T> {
+        if (Flags.statusBarBatteryNoConflation()) {
+            return callbackFlow(block)
+        } else {
+            return conflatedCallbackFlow(block)
+        }
+    }
+
     private val batteryState: StateFlow<BatteryCallbackState> =
-        conflatedCallbackFlow<(BatteryCallbackState) -> BatteryCallbackState> {
+        // Never use conflatedCallbackFlow here because that could cause us to drop events.
+        // See b/433239990.
+        flaggedCallbackFlow<(BatteryCallbackState) -> BatteryCallbackState> {
                 val callback =
                     object : BatteryController.BatteryStateChangeCallback {
                         override fun onBatteryLevelChanged(

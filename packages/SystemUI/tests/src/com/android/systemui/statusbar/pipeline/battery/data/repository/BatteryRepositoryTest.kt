@@ -17,9 +17,11 @@
 package com.android.systemui.statusbar.pipeline.battery.data.repository
 
 import android.content.testableContext
+import android.platform.test.annotations.EnableFlags
 import android.provider.Settings
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.backgroundScope
@@ -27,6 +29,7 @@ import com.android.systemui.kosmos.collectLastValue
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.kosmos.testScope
+import com.android.systemui.kosmos.useStandardTestDispatcher
 import com.android.systemui.shared.settings.data.repository.fakeSystemSettingsRepository
 import com.android.systemui.shared.settings.data.repository.systemSettingsRepository
 import com.android.systemui.statusbar.policy.batteryController
@@ -36,6 +39,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceTimeBy
+import kotlinx.coroutines.test.runCurrent
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -43,7 +47,8 @@ import org.junit.runner.RunWith
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class BatteryRepositoryTest : SysuiTestCase() {
-    val kosmos = testKosmos()
+    // Always use standard dispatcher so that our backpressure tests work correctly.
+    val kosmos = testKosmos().useStandardTestDispatcher()
 
     val Kosmos.underTest by
         Kosmos.Fixture {
@@ -167,6 +172,208 @@ class BatteryRepositoryTest : SysuiTestCase() {
 
             batteryController.fake._isIncompatibleCharging = false
 
+            assertThat(latest).isFalse()
+        }
+
+    /** Regression test for b/433239990. */
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_BAR_BATTERY_NO_CONFLATION)
+    fun backpressure_isStateUnknown() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.isStateUnknown)
+            testScope.runCurrent()
+            assertThat(latest).isFalse()
+
+            batteryController.fake._isStateUnknown = true
+            testScope.runCurrent()
+            assertThat(latest).isTrue()
+
+            // Introduce backpressure by sending multiple events before `runCurrent`
+            // The first and the last event will be processed, but the middle event would get
+            // dropped if there's backpressure. So, put the event we care about in the middle.
+            batteryController.fake._isPowerSave = true
+            batteryController.fake._isStateUnknown = false
+            batteryController.fake._isDefender = true
+
+            // Use many `runCurrent`s to be sure we've processed all the events we have
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+
+            // Verify we didn't drop the middle unknown=false event
+            assertThat(latest).isFalse()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_BAR_BATTERY_NO_CONFLATION)
+    fun backpressure_isPluggedIn() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.isPluggedIn)
+            testScope.runCurrent()
+            assertThat(latest).isFalse()
+
+            batteryController.fake._isPluggedIn = true
+            testScope.runCurrent()
+            assertThat(latest).isTrue()
+
+            // Introduce backpressure by sending multiple events before `runCurrent`
+            // The first and the last event will be processed, but the middle event would get
+            // dropped if there's backpressure. So, put the event we care about in the middle.
+            batteryController.fake._isPowerSave = true
+            batteryController.fake._isPluggedIn = false
+            batteryController.fake._isDefender = true
+
+            // Use many `runCurrent`s to be sure we've processed all the events we have
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+
+            // Verify we didn't drop the middle isPluggedIn=false event
+            assertThat(latest).isFalse()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_BAR_BATTERY_NO_CONFLATION)
+    fun backpressure_isPowerSave() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.isPowerSaveEnabled)
+            testScope.runCurrent()
+            assertThat(latest).isFalse()
+
+            batteryController.fake._isPowerSave = true
+            testScope.runCurrent()
+            assertThat(latest).isTrue()
+
+            // Introduce backpressure by sending multiple events before `runCurrent`
+            // The first and the last event will be processed, but the middle event would get
+            // dropped if there's backpressure. So, put the event we care about in the middle.
+            batteryController.fake._level = 44
+            batteryController.fake._isPowerSave = false
+            batteryController.fake._isPluggedIn = true
+
+            // Use many `runCurrent`s to be sure we've processed all the events we have
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+
+            // Verify we didn't drop the middle isPowerSave=false event
+            assertThat(latest).isFalse()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_BAR_BATTERY_NO_CONFLATION)
+    fun backpressure_isExtremePowerSave() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.isExtremePowerSaveEnabled)
+            testScope.runCurrent()
+            assertThat(latest).isFalse()
+
+            batteryController.fake._isExtremePowerSave = true
+            testScope.runCurrent()
+            assertThat(latest).isTrue()
+
+            // Introduce backpressure by sending multiple events before `runCurrent`
+            // The first and the last event will be processed, but the middle event would get
+            // dropped if there's backpressure. So, put the event we care about in the middle.
+            batteryController.fake._isPluggedIn = true
+            batteryController.fake._isExtremePowerSave = false
+            batteryController.fake._level = 33
+
+            // Use many `runCurrent`s to be sure we've processed all the events we have
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+
+            // Verify we didn't drop the middle isExtremePowerSave=false event
+            assertThat(latest).isFalse()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_BAR_BATTERY_NO_CONFLATION)
+    fun backpressure_isBatteryDefender() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.isBatteryDefenderEnabled)
+            testScope.runCurrent()
+            assertThat(latest).isFalse()
+
+            batteryController.fake._isDefender = true
+            testScope.runCurrent()
+            assertThat(latest).isTrue()
+
+            // Introduce backpressure by sending multiple events before `runCurrent`
+            // The first and the last event will be processed, but the middle event would get
+            // dropped if there's backpressure. So, put the event we care about in the middle.
+            batteryController.fake._isPluggedIn = true
+            batteryController.fake._isDefender = false
+            batteryController.fake._isPowerSave = true
+
+            // Use many `runCurrent`s to be sure we've processed all the events we have
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+
+            // Verify we didn't drop the middle isDefender=false event
+            assertThat(latest).isFalse()
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_BAR_BATTERY_NO_CONFLATION)
+    fun backpressure_level() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.level)
+            testScope.runCurrent()
+            batteryController.fake._level = 10
+            testScope.runCurrent()
+            assertThat(latest).isEqualTo(10)
+
+            // Introduce backpressure by sending multiple events before `runCurrent`
+            // The first and the last event will be processed, but the middle event would get
+            // dropped if there's backpressure. So, put the event we care about in the middle.
+            batteryController.fake._isPluggedIn = true
+            batteryController.fake._level = 15
+            batteryController.fake._isPowerSave = true
+
+            // Use many `runCurrent`s to be sure we've processed all the events we have
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+
+            // Verify we didn't drop the middle level=15 event
+            assertThat(latest).isEqualTo(15)
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_BAR_BATTERY_NO_CONFLATION)
+    fun backpressure_isIncompatibleCharging() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.isIncompatibleCharging)
+            testScope.runCurrent()
+            assertThat(latest).isFalse()
+
+            batteryController.fake._isIncompatibleCharging = true
+            testScope.runCurrent()
+            assertThat(latest).isTrue()
+
+            // Introduce backpressure by sending multiple events before `runCurrent`
+            // The first and the last event will be processed, but the middle event would get
+            // dropped if there's backpressure. So, put the event we care about in the middle.
+            batteryController.fake._isPluggedIn = true
+            batteryController.fake._isIncompatibleCharging = false
+            batteryController.fake._isPowerSave = true
+
+            // Use many `runCurrent`s to be sure we've processed all the events we have
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+            testScope.runCurrent()
+
+            // Verify we didn't drop the middle isIncompatibleCharging=false event
             assertThat(latest).isFalse()
         }
 }
