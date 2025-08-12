@@ -521,6 +521,12 @@
     <!-- If this is true, the screen will come on when you unplug usb/power/whatever. -->
     <bool name="config_unplugTurnsOnScreen">false</bool>
 
+    <!-- Whether Activity.requestFullscreenMode() is enabled.
+         This should be disabled on devices that do not support this feature (e.g. Android
+         Automotive). When disabled, the API will be rejected with
+         RESULT_FAILED_NOT_SUPPORTED. -->
+    <bool name="config_fullscreenRequestSupported">true</bool>
+
     <!-- If this is true, the message that USB is only being used for charging will be shown. -->
     <bool name="config_usbChargingMessage">true</bool>
 
