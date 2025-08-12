@@ -432,6 +432,8 @@ class Task extends TaskFragment {
 
     /* Unique identifier for this task. */
     final int mTaskId;
+    // An optional name for this task
+    @Nullable String mName;
     /* User for which this task was created. */
     // TODO: Make final
     int mUserId;
@@ -692,6 +694,10 @@ class Task extends TaskFragment {
     static Task fromWindowContainerToken(WindowContainerToken token) {
         if (token == null) return null;
         return fromBinder(token.asBinder()).asTask();
+    }
+
+    void setName(@Nullable String name) {
+        mName = name;
     }
 
     Task reuseAsLeafTask(IVoiceInteractionSession _voiceSession, IVoiceInteractor _voiceInteractor,
@@ -3227,7 +3233,7 @@ class Task extends TaskFragment {
     }
 
     String getName() {
-        return "Task=" + mTaskId;
+        return "Task=" + mTaskId + (mName != null ? "(" + mName + ")" : "");
     }
 
     @Deprecated
@@ -3833,6 +3839,10 @@ class Task extends TaskFragment {
         sb.append(Integer.toHexString(System.identityHashCode(this)));
         sb.append(" #");
         sb.append(mTaskId);
+        if (mName != null) {
+            sb.append(" name=");
+            sb.append(mName);
+        }
         sb.append(" type=" + activityTypeToString(getActivityType()));
         if (affinity != null) {
             sb.append(" A=");
@@ -6350,6 +6360,8 @@ class Task extends TaskFragment {
         private boolean mOnTop;
         private boolean mHasBeenVisible;
         private boolean mRemoveWithTaskOrganizer;
+        @Nullable
+        private String mName;
 
         /**
          * Records the source task that requesting to build a new task, used to determine which of
@@ -6593,6 +6605,11 @@ class Task extends TaskFragment {
             return this;
         }
 
+        Builder setName(@Nullable String name) {
+            mName = name;
+            return this;
+        }
+
         private void validateRootTask(TaskDisplayArea tda) {
             if (mActivityType == ACTIVITY_TYPE_UNDEFINED && !mCreatedByOrganizer) {
                 // Can't have an undefined root task type yet...so re-map to standard. Anyone
@@ -6675,6 +6692,7 @@ class Task extends TaskFragment {
             }
 
             final Task task = buildInner();
+            task.setName(mName);
             task.mHasBeenVisible = mHasBeenVisible;
 
             // Set activity type before adding the root task to TaskDisplayArea, so home task can

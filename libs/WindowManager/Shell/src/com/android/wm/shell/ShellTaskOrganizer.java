@@ -299,28 +299,33 @@ public class ShellTaskOrganizer extends TaskOrganizer {
 
     /**
      * Creates a persistent root task in WM for a particular windowing-mode.
-     * @param displayId The display to create the root task on.
+     *
+     * @param displayId     The display to create the root task on.
      * @param windowingMode Windowing mode to put the root task in.
-     * @param listener The listener to get the created task callback.
+     * @param listener      The listener to get the created task callback.
+     * @deprecated Use {@link #createRootTask(CreateRootTaskRequest, TaskListener)}
      */
     public void createRootTask(int displayId, int windowingMode, TaskListener listener) {
-        createRootTask(displayId, windowingMode, listener, false /* removeWithTaskOrganizer */);
+        createRootTask(new CreateRootTaskRequest()
+                        .setDisplayId(displayId)
+                        .setWindowingMode(windowingMode),
+                listener);
     }
 
     /**
      * Creates a persistent root task in WM for a particular windowing-mode.
-     * @param displayId The display to create the root task on.
-     * @param windowingMode Windowing mode to put the root task in.
+     * @param request The data for this request
      * @param listener The listener to get the created task callback.
-     * @param removeWithTaskOrganizer True if this task should be removed when organizer destroyed.
+     *
+     * @hide
      */
-    public void createRootTask(int displayId, int windowingMode, TaskListener listener,
-            boolean removeWithTaskOrganizer) {
+    public void createRootTask(@NonNull CreateRootTaskRequest request, TaskListener listener) {
         ProtoLog.v(WM_SHELL_TASK_ORG, "createRootTask() displayId=%d winMode=%d listener=%s" ,
-                displayId, windowingMode, listener.toString());
+                request.displayId, request.windowingMode, listener.toString());
         final IBinder cookie = new Binder();
+        request.setLaunchCookie(cookie);
         setPendingLaunchCookieListener(cookie, listener);
-        super.createRootTask(displayId, windowingMode, cookie, removeWithTaskOrganizer);
+        super.createRootTask(request);
     }
 
     /**
