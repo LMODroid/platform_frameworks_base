@@ -92,7 +92,7 @@
     <string name="notification_channel_sms" msgid="1243384981025535724">"SMS मेसेज"</string>
     <string name="notification_channel_voice_mail" msgid="8457433203106654172">"व्हॉइसमेल मेसेज"</string>
     <string name="notification_channel_wfc" msgid="9048240466765169038">"वाय-फाय कॉलिंग"</string>
-    <string name="notification_channel_sim" msgid="5098802350325677490">"सिम स्थिती"</string>
+    <string name="notification_channel_sim" msgid="5098802350325677490">"सिम स्टेटस"</string>
     <string name="notification_channel_sim_high_prio" msgid="642361929452850928">"उच्च प्राधान्य सिम स्थिती"</string>
     <string name="peerTtyModeFull" msgid="337553730440832160">"समवयस्क व्यक्तीने TTY मोड पूर्ण ची विनंती केली"</string>
     <string name="peerTtyModeHco" msgid="5626377160840915617">"समवयस्क व्यक्तीने TTY मोड HCO ची विनंती केली"</string>
