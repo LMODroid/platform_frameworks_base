@@ -522,7 +522,7 @@
     <string name="guest_wipe_session_wipe" msgid="8056836584445473309">"ပြန်စပါ"</string>
     <string name="guest_wipe_session_dontwipe" msgid="3211052048269304205">"ဆက်လုပ်ပါ"</string>
     <string name="guest_notification_app_name" msgid="2110425506754205509">"ဧည့်သည်မုဒ်"</string>
-    <string name="guest_notification_session_active" msgid="5567273684713471450">"သင်သည် ဧည့်သည်မုဒ်တွင် ဖြစ်သည်"</string>
+    <string name="guest_notification_session_active" msgid="5567273684713471450">"သင်သည် ဧည့်သည်အဖြစ် သုံးနေသည်"</string>
     <string name="user_add_user_message_guest_remove" msgid="5589286604543355007">\n\n"အသုံးပြုသူ အသစ်ထည့်ခြင်းက ဧည့်သည်မုဒ်မှ ထွက်သွားမည်ဖြစ်ပြီး လက်ရှိဧည့်သည် စက်ရှင်မှ အက်ပ်နှင့် ဒေတာအားလုံးကို ဖျက်လိုက်ပါမည်။"</string>
     <string name="user_limit_reached_title" msgid="2429229448830346057">"အသုံးပြုသူ အကန့်အသတ် ပြည့်သွားပါပြီ"</string>
     <string name="user_limit_reached_message" msgid="1070703858915935796">"{count,plural, =1{အသုံးပြုသူတစ်ဦးသာ ထည့်နိုင်သည်။}other{အသုံးပြုသူ # ယောက်အထိ ထည့်နိုင်သည်။}}"</string>

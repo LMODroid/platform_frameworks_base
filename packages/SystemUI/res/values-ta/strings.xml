@@ -1046,7 +1046,7 @@
     <string name="magnification_close_settings_click_label" msgid="4642477260651704517">"பெரிதாக்கல் அமைப்புகளை மூடுக"</string>
     <string name="magnification_exit_edit_mode_click_label" msgid="1664818325144887117">"திருத்துதல் பயன்முறையிலிருந்து வெளியேறு"</string>
     <string name="magnification_drag_corner_to_resize" msgid="1249766311052418130">"அளவை மாற்ற மூலையை இழுக்கவும்"</string>
-    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"குறுக்கே ஸ்க்ரோல் செய்வதை அனுமதி"</string>
+    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"குறுக்கே ஸ்க்ரோல் செய்ய அனுமதித்தல்"</string>
     <string name="accessibility_resize" msgid="5733759136600611551">"அளவை மாற்று"</string>
     <string name="accessibility_change_magnification_type" msgid="666000085077432421">"பெரிதாக்கல் வகையை மாற்று"</string>
     <string name="accessibility_magnification_end_resizing" msgid="4881690585800302628">"அளவை மாற்றுவதை நிறுத்து"</string>
@@ -1055,7 +1055,7 @@
     <string name="accessibility_magnification_right_handle" msgid="9055988237319397605">"வலது ஹேண்டில்"</string>
     <string name="accessibility_magnification_bottom_handle" msgid="6531646968813821258">"கீழ்ப்புற ஹேண்டில்"</string>
     <string name="accessibility_magnification_settings_panel_description" msgid="8174187340747846953">"பெரிதாக்கல் அமைப்புகள்"</string>
-    <string name="accessibility_magnifier_size" msgid="3038755600030422334">"பெரிதாக்கும் கருவியின் அளவு"</string>
+    <string name="accessibility_magnifier_size" msgid="3038755600030422334">"பெரிதாக்கல் கட்ட அளவு"</string>
     <string name="accessibility_magnification_zoom" msgid="4222088982642063979">"அளவை மாற்று"</string>
     <string name="accessibility_magnification_medium" msgid="6994632616884562625">"நடுத்தரமானது"</string>
     <string name="accessibility_magnification_small" msgid="8144502090651099970">"சிறியது"</string>

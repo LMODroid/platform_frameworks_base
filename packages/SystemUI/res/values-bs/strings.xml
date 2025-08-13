@@ -990,7 +990,7 @@
     <string name="qs_dnd_prompt_auto_rule_app" msgid="1841469944118486580">"Način rada Ne ometaj uključilo je automatsko pravilo ili aplikacija."</string>
     <string name="running_foreground_services_title" msgid="5137313173431186685">"Aplikacije koje rade u pozadini"</string>
     <string name="running_foreground_services_msg" msgid="3009459259222695385">"Dodirnite za detalje o potrošnji baterije i prenosa podataka"</string>
-    <string name="mobile_data_disable_title" msgid="5366476131671617790">"Isključiti prijenos podataka na mobilnoj mreži?"</string>
+    <string name="mobile_data_disable_title" msgid="5366476131671617790">"Isključiti prenos podataka na mobilnoj mreži?"</string>
     <string name="mobile_data_disable_message" msgid="8604966027899770415">"Nećete imati pristup podacima ni internetu putem mobilnog operatera <xliff:g id="CARRIER">%s</xliff:g>. Internet će biti dostupan samo putem WiFi-ja."</string>
     <string name="mobile_data_disable_message_default_carrier" msgid="6496033312431658238">"vaš operater"</string>
     <string name="auto_data_switch_disable_title" msgid="5146527155665190652">"Vratiti na operatera <xliff:g id="CARRIER">%s</xliff:g>?"</string>

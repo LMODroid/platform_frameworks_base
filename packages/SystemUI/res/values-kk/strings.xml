@@ -670,7 +670,7 @@
     <string name="media_device_cast" msgid="4786241789687569892">"Трансляциялау"</string>
     <string name="stream_notification_unavailable" msgid="4313854556205836435">"Телефонның дыбысы өшіп тұрғанда қолжетімсіз."</string>
     <string name="stream_alarm_unavailable" msgid="4059817189292197839">"Мазаламау режимі қосылғандықтан өзгерту мүмкін емес."</string>
-    <string name="stream_media_unavailable" msgid="6823020894438959853">"Мазаламау режимі қосылғандықтан өзгерту мүмкін емес."</string>
+    <string name="stream_media_unavailable" msgid="6823020894438959853">"Мазаламау режимі қосылғандықтан, өзгерту мүмкін емес."</string>
     <string name="volume_stream_content_description_unmute" msgid="7729576371406792977">"%1$s. Дыбысын қосу үшін түртіңіз."</string>
     <string name="volume_stream_content_description_vibrate" msgid="4858111994183089761">"%1$s. Діріл режимін орнату үшін түртіңіз. Арнайы мүмкіндік қызметтерінің дыбысы өшуі мүмкін."</string>
     <string name="volume_stream_content_description_mute" msgid="4079046784917920984">"%1$s. Дыбысын өшіру үшін түртіңіз. Арнайы мүмкіндік қызметтерінің дыбысы өшуі мүмкін."</string>
