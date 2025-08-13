@@ -351,7 +351,7 @@
     <string name="dev_settings_warning_message" msgid="37741686486073668">"Mipangilio hii imekusudiwa kwa matumizi ya usanidi tu. Inaweza kusababisha kifaa chako na programu zilizoko kuvunjika au kutofanya kazi vizuri."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"Thibitisha programu kupitia USB"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"Kagua iwapo programu zilizosakinishwa kupitia ADB/ADT zina tabia ya kudhuru."</string>
-    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Itaonyesha vifaa vya Bluetooth bila majina (anwani za MAC pekee)"</string>
+    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Itaonyesha vifaa vya Bluetooth visivyo na majina (anwani za MAC pekee)"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Huzima kipengele cha Bluetooth cha sauti kamili kunapotokea matatizo ya sauti katika vifaa vya mbali kama vile sauti ya juu mno au inaposhindikana kuidhibiti."</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"Huwasha rafu ya kipengele ya Bluetooth Gabeldorsche."</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"Huwasha kipengele cha Muunganisho Ulioboreshwa."</string>

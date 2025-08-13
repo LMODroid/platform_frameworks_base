@@ -256,8 +256,8 @@
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"उपलब्ध डिवाइस देखने और इस्तेमाल करने के लिए, वॉयरलेस डीबगिंग की सुविधा चालू करें"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"क्यूआर कोड की मदद से डिवाइस जोड़ें"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"क्यूआर कोड स्कैनर का इस्तेमाल करके, नए डिवाइस जोड़ें"</string>
-    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"जोड़ने का कोड इस्तेमाल करके, डिवाइस जोड़ें"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"छह अंकों का कोड इस्तेमाल करके, नए डिवाइस जोड़ें"</string>
+    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"\'जोड़ने के लिए कोड\' इस्तेमाल करके डिवाइस जोड़ें"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"छह अंकों वाला कोड इस्तेमाल करके नए डिवाइस जोड़ें"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"जोड़े गए डिवाइस"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"फ़िलहाल, कनेक्ट किया गया"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"डिवाइस की जानकारी"</string>
@@ -628,7 +628,7 @@
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"प्रतिबंधित प्रोफ़ाइल"</string>
     <string name="user_add_user_title" msgid="5457079143694924885">"नया उपयोगकर्ता जोड़ें?"</string>
     <string name="user_add_user_message_long" msgid="1527434966294733380">"नए उपयोगकर्ता जोड़कर इस डिवाइस को दूसरे लोगों के साथ शेयर किया जा सकता है. हर उपयोगकर्ता के पास अपनी जगह होती है, जिसमें वे ऐप्लिकेशन, वॉलपेपर, और दूसरी चीज़ों में मनमुताबिक बदलाव कर सकते हैं. उपयोगकर्ता, वाई-फ़ाई जैसी डिवाइस सेटिंग में भी बदलाव कर सकते हैं. इसका असर हर किसी पर पड़ता है.\n\nजब किसी नए उपयोगकर्ता को जोड़ा जाता है, तो उसे अपनी जगह सेट अप करनी होती है.\n\nकोई भी उपयोगकर्ता, दूसरे सभी उपयोगकर्ताओं के लिए ऐप्लिकेशन अपडेट कर सकता है. ऐसा भी हो सकता है कि सुलभता सेटिंग और सेवाएं नए उपयोगकर्ता को ट्रांसफ़र न हो पाएं."</string>
-    <string name="user_add_user_message_short" msgid="3295959985795716166">"जब किसी नए उपयोगकर्ता को जोड़ा जाता है, तो उस व्यक्ति को डिवाइस में अपनी जगह सेट करनी होती है.\n\nकोई भी उपयोगकर्ता, बाकी सभी उपयोगकर्ताओं के लिए ऐप्लिकेशन अपडेट कर सकता है."</string>
+    <string name="user_add_user_message_short" msgid="3295959985795716166">"जब कोई नया उपयोगकर्ता जोड़ा जाता है, तो उसे डिवाइस में अपनी जगह सेट करनी होती है.\n\nकोई भी उपयोगकर्ता, बाकी सभी उपयोगकर्ताओं के लिए ऐप्लिकेशन अपडेट कर सकता है."</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"क्या इस व्यक्ति को एडमिन बनाना है?"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"एडमिन के पास अन्य लोगों के मुकाबले खास अधिकार होते हैं. एडमिन के पास ये अधिकार होते हैं: सभी लोगों को मैनेज करना, इस डिवाइस को अपडेट या रीसेट करना, सेटिंग में बदलाव करना, इंस्टॉल किए गए सभी ऐप्लिकेशन देखना, और अन्य लोगों को एडमिन के खास अधिकार देना या उन्हें वापस लेना."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"एडमिन बनाएं"</string>
@@ -660,8 +660,8 @@
     <string name="guest_reset_guest_confirm_button" msgid="2989915693215617237">"रीसेट करें"</string>
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"हटाएं"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"मेहमान के तौर पर ब्राउज़ करने का सेशन रीसेट किया जा रहा है…"</string>
-    <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"क्या मेहमान उपयोगकर्ता के मौजूदा सेशन को रीसेट करना है?"</string>
-    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"इससे मेहमान के तौर पर ब्राउज़ करने का नया सेशन शुरू हो जाएगा. इसके अलावा, मौजूदा सेशन में डाउनलोड किए गए ऐप्लिकेशन और सेव किया गया सारा डेटा मिट जाएगा"</string>
+    <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"क्या मेहमान मोड के सेशन को रीसेट करना है?"</string>
+    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"इससे मेहमान मोड का नया सेशन शुरू हो जाएगा. मौजूदा सेशन में इंस्टॉल किए गए सभी ऐप्लिकेशन और जनरेट हुआ डेटा मिट जाएगा"</string>
     <string name="guest_exit_dialog_title" msgid="1846494656849381804">"मेहमान मोड से बाहर निकलना है?"</string>
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"इससे, मेहमान मोड के मौजूदा सेशन का डेटा और इसमें इस्तेमाल हो रहे ऐप्लिकेशन मिट जाएंगे"</string>
     <string name="grant_admin" msgid="4323199171790522574">"हां, इन्हें एडमिन बनाएं"</string>
@@ -674,9 +674,9 @@
     <string name="guest_exit_button" msgid="5774985819191803960">"मेहमान मोड से बाहर निकलें"</string>
     <string name="guest_reset_button" msgid="2515069346223503479">"मेहमान मोड के सेशन को रीसेट करें"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"मेहमान मोड से बाहर निकलें"</string>
-    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"बाहर निकलने पर, सभी गतिविधियां मिट जाएंगी"</string>
-    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"बाहर निकलने पर, गतिविधि को मिटाया या सेव किया जा सकता है"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"सेशन की गतिविधि को अभी मिटाने के लिए, रीसेट करें. इसके अलावा, बाहर निकलने पर, गतिविधि को मिटाया या सेव किया जा सकता है"</string>
+    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"इस मोड से बाहर निकलने पर, सभी गतिविधियां मिट जाएंगी"</string>
+    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"इस मोड से बाहर निकलने पर, गतिविधि को मिटाया या सेव किया जा सकता है"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"इस मोड के सेशन की गतिविधि को अभी मिटाने के लिए, रीसेट करें. अगर चाहें, तो मेहमान मोड से बाहर निकलने पर गतिविधि मिटाएं या सेव करें"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"फ़ोटो चुनें"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"कई बार गलत कोशिशें की गई हैं. इस डिवाइस का डेटा मिटा दिया जाएगा."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"कई बार गलत कोशिशें की गई हैं. इस उपयोगकर्ता को मिटा दिया जाएगा."</string>

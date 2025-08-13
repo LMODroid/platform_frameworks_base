@@ -395,7 +395,7 @@
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"OpenGL ଟ୍ରେସ୍‌ ସକ୍ଷମ କରନ୍ତୁ"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"USB ଅଡିଓ ରାଉଟିଙ୍ଗ ଅକ୍ଷମ କରନ୍ତୁ"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"USB ଅଡିଓ ପେରିଫେରାଲ ପାଇଁ ସ୍ୱତଃ ରାଉଟିଂ ଅକ୍ଷମ କରନ୍ତୁ"</string>
-    <string name="debug_layout" msgid="1659216803043339741">"ଲେଆଉଟ୍‌ ବାଉଣ୍ଡ ଦେଖାଅ"</string>
+    <string name="debug_layout" msgid="1659216803043339741">"ଲେଆଉଟ ବାଉଣ୍ଡ ଦେଖାନ୍ତୁ"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"କ୍ଲିପ ବାଉଣ୍ଡ, ମାର୍ଜିନ ଆଦି ଦେଖାନ୍ତୁ"</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"RTL ଲେଆଉଟ ଦିଗନିର୍ଦ୍ଦେଶ ଫୋର୍ସ କରନ୍ତୁ"</string>
     <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"ସମସ୍ତ ଲୋକେଲ ପାଇଁ ସ୍କ୍ରିନ ଲେଆଉଟ ଦିଗନିର୍ଦ୍ଦେଶ RTLକୁ ଫୋର୍ସ କରନ୍ତୁ"</string>

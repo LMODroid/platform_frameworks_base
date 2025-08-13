@@ -352,7 +352,7 @@
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"‏אימות אפליקציות שהותקנו מ-USB"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"‏איתור התנהגות מזיקה של אפליקציות שהותקנו מ-ADB/ADT."</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"‏יוצגו מכשירי Bluetooth ללא שמות (כתובות MAC בלבד)"</string>
-    <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"‏השבתה של תכונת עוצמת הקול המוחלטת ב-Bluetooth במקרה של בעיות בעוצמת הקול במכשירים מרוחקים, כגון עוצמת קול רמה מדי או חוסר שליטה ברמת העוצמה."</string>
+    <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"‏השבתה של תכונת עוצמת הקול המוחלטת ב-Bluetooth במקרה של בעיות בעוצמת הקול במכשירים מרוחקים, כמו עוצמת קול גבוהה מדי או חוסר שליטה ברמת העוצמה."</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"‏הפעלת מקבץ הפיצ\'רים של Bluetooth Gabeldorsche."</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"הפעלה של תכונת הקישוריות המשופרת."</string>
     <string name="enable_terminal_title" msgid="3834790541986303654">"מסוף מקומי"</string>

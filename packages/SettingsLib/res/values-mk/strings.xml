@@ -278,7 +278,7 @@
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"Поврзете се на Wi-Fi мрежа"</string>
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, отстранува грешка, програмер"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"Кратенка за извештај за грешки"</string>
-    <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Прикажи копче за создавање извештај за грешки во менито на копчето за вклучување"</string>
+    <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Прикажува копче за создавање извештај за грешки во менито на копчето за вклучување"</string>
     <string name="keep_screen_on" msgid="1187161672348797558">"Остани во активен режим"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"Екранот никогаш нема да биде во режим на спиење додека се полни"</string>
     <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Овозможи евиденција за Bluetooth HCI"</string>
@@ -323,8 +323,8 @@
     <string name="private_dns_mode_provider" msgid="3619040641762557028">"Име на хост на оператор на приватен DNS"</string>
     <string name="private_dns_mode_provider_hostname_hint" msgid="6564868953748514595">"Внесете име на хост на операторот на DNS"</string>
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"Не може да се поврзе"</string>
-    <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Прикажувај ги опциите за сертификација на безжичен приказ"</string>
-    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Зголеми го нивото на евидентирање за Wi‑Fi, прикажувај RSSI по SSID во избирачот за Wi‑Fi"</string>
+    <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Ги прикажува опциите за сертификација на безжичен приказ"</string>
+    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Го зголемува нивото на евидентирање за Wi‑Fi, прикажувај RSSI по SSID во избирачот за Wi‑Fi"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Го намалува трошењето на батеријата и ги подобрува мрежните перформанси"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Кога е овозможен режимов, MAC-адресата на уредов може да се менува секојпат кога ќе се поврзе на мрежа што има овозможена рандомизација на MAC-адреси."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Со ограничен интернет"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Овозможи лажни локации"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Овозможи лажни локации"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Овозможете проверка на атрибутот на приказот"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Секогаш држи го активен мобилниот интернет, дури и при активно Wi-Fi (заради брзо менување мрежа)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Секогаш го држи активен мобилниот интернет, дури и при активно Wi-Fi (заради брзо менување мрежа)."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Ако е достапно, користи хардверско забрзување за врзување"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"Овозможи отстранување грешки на USB?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"Отстранувањето грешки на USB е наменето само за целите на развој. Користете го за копирање податоци меѓу вашиот компјутер и вашиот уред, за инсталирање апликации на вашиот уред без известување и за читање евиденција на податоци."</string>
@@ -408,8 +408,8 @@
     <string name="track_frame_time" msgid="522674651937771106">"Профилирај HWUI-приказ"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Овозм. отстр. греш. на GPU"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Дозволи вчитување GPU-слоеви за отстранув. грешки"</string>
-    <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Опширна евиденција на продавачи"</string>
-    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"Вклучува дополнителна евиденција на продавачи во извештаите за грешки за конкретен уред, којашто може да содржи приватни податоци, повеќе да ја користи батеријата и/или да користи повеќе простор."</string>
+    <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Опширна евиденција за продавачот"</string>
+    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"Вклучува дополнителна евиденција за продавачот во извештаите за грешки за конкретен уред, којашто може да содржи приватни податоци, повеќе да ја користи батеријата и/или да користи повеќе простор."</string>
     <string name="enable_verbose_vendor_logging_checkbox" msgid="3864578373293835530">"Оневозможи по еден ден"</string>
     <string name="verbose_vendor_logging_notification_title" msgid="6811217272559843592">"Опширната евиденција на продавачи заврши"</string>
     <string name="verbose_vendor_logging_notification_summary" msgid="5226524769774370942">"Овозможено за еден ден"</string>

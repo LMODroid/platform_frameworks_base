@@ -383,7 +383,7 @@
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Mostrar entrada del panel táctil"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Superposición en pantalla que muestra los datos introducidos en el panel táctil y los gestos reconocidos"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Mostrar cambios de superficies"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Hace parpadear todas las superficies de la ventana cuando se actualizan"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Hace parpadear todas las superficies de ventanas cuando se actualizan"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Ver actualizaciones de vista"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Hace parpadear las vistas dentro de las ventanas cuando se dibujan"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Ver actualizaciones de capas de hardware"</string>

@@ -377,13 +377,13 @@
     <string name="pointer_location" msgid="7516929526199520173">"محل اشاره‌گر"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"هم‌پوشانی صفحه‌نمایش با نمایش داده لمسی فعلی"</string>
     <string name="show_touches" msgid="8437666942161289025">"نمایش تک‌ضرب‌ها"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"نمایش بازخورد تصویری برای ضربه‌ها"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"نمایش بازخورد تصویری برای تک‌ضرب‌ها"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"نمایش فشار کلیدها"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"نمایش بازخورد بصری برای فشار دادن کلیدهای فیزیکی"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"نمایش ورودی صفحه لمسی"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"رونهاد صفحه که داده‌های ورودی صفحه لمسی و اشاره‌های شناسایی‌شده را نمایش می‌دهد"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"نمایش به‌روزرسانی سطح"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"هنگام به‌روزرسانی سطوح پنجره همه فلش شوند"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"هنگام به‌روزرسانی کل سطوح پنجره فلش شوند"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"نمایش به‌روزرسانی‌های نما"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"هنگام طراحی، نماها در داخل پنجره‌ها فلش شوند"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"نمایش به‌روزرسانی‌های لایه‌های سخت‌افزار"</string>

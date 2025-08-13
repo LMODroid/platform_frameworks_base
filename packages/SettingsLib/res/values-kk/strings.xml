@@ -366,7 +366,7 @@
     <string name="select_application" msgid="2543228890535466325">"Қолданба таңдау"</string>
     <string name="no_application" msgid="9038334538870247690">"Ешнәрсе"</string>
     <string name="wait_for_debugger" msgid="7461199843335409809">"Түзеткішті күту"</string>
-    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Орындау алдында түзелетін қолданба түзетушінің қосылуын күтеді."</string>
+    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Орындау алдында түзелетін қолданба түзеткіштің қосылуын күтеді."</string>
     <string name="debug_input_category" msgid="7349460906970849771">"Енгізу"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"Сызу"</string>
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Бейнелеуді аппаратпен жеделдету"</string>

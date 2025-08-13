@@ -258,7 +258,7 @@
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR कोड स्कॅनर वापरून नवीन डिव्हाइस पेअर करा"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"पेअरिंग कोडसह डिव्हाइस जोडा"</string>
     <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"सहा अंकी कोड वापरून नवीन डिव्हाइस जोडा"</string>
-    <string name="adb_paired_devices_title" msgid="5268997341526217362">"पेअर केलेले डिव्हाइस"</string>
+    <string name="adb_paired_devices_title" msgid="5268997341526217362">"पेअर केलेली डिव्हाइस"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"सध्या कनेक्ट केलेले आहे"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"डिव्हाइस तपशील"</string>
     <string name="adb_device_forget" msgid="193072400783068417">"विसरा"</string>
@@ -306,10 +306,10 @@
     <string name="bluetooth_select_map_version_dialog_title" msgid="7085934373987428460">"ब्लूटूथ MAP आवृत्ती निवडा"</string>
     <string name="bluetooth_select_a2dp_codec_type" msgid="952001408455456494">"ब्लूटूथ ऑडिओ कोडेक"</string>
     <string name="bluetooth_select_a2dp_codec_type_dialog_title" msgid="7510542404227225545">"ब्लूटूथ ऑडिओ Codec ट्रिगर करा\nनिवड"</string>
-    <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"ब्लूटूथ ऑडिओ नमुना दर"</string>
+    <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"ब्लूटूथ ऑडिओ सँपल रेट"</string>
     <string name="bluetooth_select_a2dp_codec_sample_rate_dialog_title" msgid="5876305103137067798">"ब्लूटूथ ऑडिओ Codec ट्रिगर करा\nनिवड: नमुना दर"</string>
     <string name="bluetooth_select_a2dp_codec_type_help_info" msgid="8647200416514412338">"फोन किंवा हेडसेटला सपोर्ट करत नाही म्हणजे ती निकामी झाली आहे"</string>
-    <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"प्रति नमुना ब्लूटूथ ऑडिओ बिट"</string>
+    <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"प्रति सँपल ब्लूटूथ ऑडिओ बिट"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample_dialog_title" msgid="4898693684282596143">"ब्लूटूथ ऑडिओ Codec ट्रिगर करा\nनिवड: बिट प्रति नमुना"</string>
     <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"ब्लूटूथ ऑडिओ चॅनल मोड"</string>
     <string name="bluetooth_select_a2dp_codec_channel_mode_dialog_title" msgid="2076949781460359589">"ब्लूटूथ ऑडिओ Codec ट्रिगर करा\nनिवड: चॅनल मोड"</string>
@@ -375,19 +375,19 @@
     <string name="strict_mode" msgid="889864762140862437">"कठोर मोड सुरू"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"मुख्य थ्रेडवर अ‍ॅप्स मोठी कार्ये करतात तेव्हा स्क्रीन फ्लॅश करा"</string>
     <string name="pointer_location" msgid="7516929526199520173">"पॉइंटर स्थान"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"वर्तमान स्पर्श डेटा दर्शविणारे स्क्रीन ओव्हरले"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"सद्य स्पर्श डेटा दर्शवणारे स्क्रीन ओव्हरले"</string>
     <string name="show_touches" msgid="8437666942161289025">"टॅप दाखवा"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"टॅपसाठी व्हिज्युअल फीडबॅक दाखवा"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"टॅपसाठी व्हिजुअल फीडबॅक दाखवा"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"की प्रेस दाखवा"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"प्रत्यक्ष की प्रेससाठी व्हिज्युअल फीडबॅक दाखवा"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"प्रत्यक्ष की प्रेससाठी व्हिजुअल फीडबॅक दाखवा"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"टचपॅड इनपुट दाखवा"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"टचपॅड इनपुट डेटा आणि ओळखीची जेश्चर दाखवणारी स्‍क्रीन ओव्‍हरले"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"सर्फेस अपडेट दाखवा"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"संपूर्ण विंडो सर्फेस अपडेट होतात तेव्हा ते फ्‍लॅश करा"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"व्‍ह्यू अपडेट दाखवा"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"रेखांकित केल्‍यावर विंडोच्‍या आतील व्‍ह्यू फ्लॅश करा"</string>
-    <string name="show_hw_layers_updates" msgid="5268370750002509767">"हार्डवेअर स्तर अपडेट दाखवा"</string>
-    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"हार्डवेअर स्तर अपडेट झाल्यावर ते हिरव्या रंगात फ्लॅश करा"</string>
+    <string name="show_hw_layers_updates" msgid="5268370750002509767">"हार्डवेअर लेयर अपडेट दाखवा"</string>
+    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"हार्डवेअर लेयर अपडेट झाल्यावर हिरव्या रंगात फ्लॅश करा"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"GPU ओव्हरड्रॉ डीबग करा"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"HW ओव्हरले बंद करा"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"स्क्रीन तयार करण्यासाठी नेहमी GPU वापरा"</string>

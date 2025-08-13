@@ -309,7 +309,7 @@
     <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"ဘလူးတုသ်အသံနမူနာနှုန်း"</string>
     <string name="bluetooth_select_a2dp_codec_sample_rate_dialog_title" msgid="5876305103137067798">"ဘလူးတုသ် အသံ ကိုးဒက်ခ် ဖွင့်ခြင်း\nရွေးချယ်မှု- နမူနာနှုန်း"</string>
     <string name="bluetooth_select_a2dp_codec_type_help_info" msgid="8647200416514412338">"မီးခိုးရောင် ခြယ်ထားခြင်းသည် ဖုန်း သို့မဟုတ် မိုက်ခွက်ပါနားကြပ်မှ ပံ့ပိုးထားမှုမရှိခြင်းကို ဆိုလိုသည်။"</string>
-    <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"နမူနာတစ်ခုစီတွင် ပါဝင်သော ဘလူးတုသ်အသံပမာဏ Bits"</string>
+    <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"ဘလူးတုသ် နမူနာအသံတစ်ခုချင်းတွင် ပါဝင်သော Bit အရေအတွက်"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample_dialog_title" msgid="4898693684282596143">"ဘလူးတုသ် အသံ ကိုးဒက်ခ် ဖွင့်ခြင်း\nရွေးချယ်မှု- နမူနာတစ်ခုစီအတွက် Bits"</string>
     <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"ဘလူးတုသ်အသံချန်နယ်မုဒ်"</string>
     <string name="bluetooth_select_a2dp_codec_channel_mode_dialog_title" msgid="2076949781460359589">"ဘလူးတုသ် အသံ ကိုးဒက်ခ် ဖွင့်ခြင်း\nရွေးချယ်မှု- ချန်နယ်မုဒ်"</string>
@@ -377,13 +377,13 @@
     <string name="pointer_location" msgid="7516929526199520173">"မြား၏တည်နေရာ"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"လက်ရှိထိတွေ့မှုဒေတာကို ဖန်သားပေါ်တွင်ထပ်၍ ပြသသည်"</string>
     <string name="show_touches" msgid="8437666942161289025">"တို့ချက်များ ပြရန်"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"တို့ခြင်းများအတွက် အမြင်ဖြင့် တုံ့ပြန်မှုပြသည်"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"တို့ခြင်းများအတွက် ရုပ်မြင်အကြံပြုချက် ပြသည်"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"ကီးနှိပ်မှုများ ပြရန်"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"ပကတိကီးနှိပ်မှုများအတွက် ရုပ်မြင်အကြံပြုချက် ပြပါ"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"ပကတိကီးနှိပ်မှုများအတွက် ရုပ်မြင်အကြံပြုချက် ပြသည်"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"တာ့ချ်ပက်ထည့်သွင်းချက် ပြရန်"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"ဖန်သားပြင်တွင် ထပ်ဆင့်ပြသခြင်းသည် တာ့ချ်ပက်တွင် ထည့်သွင်းသော ဒေတာနှင့် သိရှိသော လက်ဟန်များကို ပြထားသည်"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"မျက်နှာပြင်အပ်ဒိတ်ပြရန်"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"အပ်ဒိတ်လုပ်စဉ် ဝင်းဒိုးမျက်နှာပြင်တွင် အချက်ပြရန်"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"အပ်ဒိတ်လုပ်စဉ် ဝင်းဒိုးမျက်နှာပြင်တွင် အချက်ပြသည်"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"မြင်ကွင်းအပ်ဒိတ်များ ပြခြင်း"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"ပုံဆွဲစဉ် ဝင်းဒိုးအတွင်း တဒင်္ဂပြသည်"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"ဟာ့ဒ်ဝဲအလွှာ အပ်ဒိတ်များပြခြင်း"</string>
@@ -397,7 +397,7 @@
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"USB အသံစက်ပစ္စည်းများသို့ အလိုအလျောက် ချိတ်ဆက်ခြင်းကို ပိတ်သည်"</string>
     <string name="debug_layout" msgid="1659216803043339741">"ပြကွက်၏ဘောင်များ ပြရန်"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"ဖြတ်ပိုင်းအနားသတ်များ၊ အနားများ စသဖြင့် ပြသည်"</string>
-    <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"RTL အပြင်အဆင်အတိုင်း ဖြစ်စေခြင်း"</string>
+    <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"RTL အပြင်အဆင်အတိုင်း ဖြစ်စေရန်"</string>
     <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"ဘာသာစကားအားလုံးအတွက် RTL အပြင်အဆင်အတိုင်း ဖြစ်စေသည်"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"လမ်းညွှန်ဘား အကြည်"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"လမ်းညွှန်ဘား၏ နောက်ခံအရောင်ကို မူရင်းအားဖြင့် အကြည်ဖြစ်အောင် လုပ်သည်"</string>

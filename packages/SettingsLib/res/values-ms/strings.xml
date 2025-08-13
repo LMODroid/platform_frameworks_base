@@ -292,7 +292,7 @@
     <string name="mock_location_app_set" msgid="4706722469342913843">"Apl lokasi olokan: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="debug_networking_category" msgid="6829757985772659599">"Perangkaian"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"Pensijilan paparan wayarles"</string>
-    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Dayakan Pengelogan Berjela-jela Wi-Fi"</string>
+    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Dayakan Pengelogan Berjela Wi-Fi"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Pendikitan pengimbasan Wi-Fi"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Perawakan MAC tidak berterusan Wi‑Fi"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"Data mudah alih sentiasa aktif"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Benarkan lokasi olokan"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Benarkan lokasi olokan"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Dayakan pemeriksaan atribut paparan"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Pastikan data mudah alih sentiasa aktif, walaupun Wi-Fi aktif (untuk penukaran rangkaian yang pantas)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Sentiasa aktifkan data mudah alih, walaupun Wi-Fi aktif (untuk penukaran rangkaian yang pantas)."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Gunakan pecutan perkakasan penambatan jika tersedia"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"Benarkan penyahpepijatan USB?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"Penyahpepijatan USB adalah dimaksudkan untuk tujuan pembangunan sahaja. Gunakannya untuk menyalin data antara komputer dan peranti anda, memasang aplikasi pada peranti anda tanpa pemberitahuan, dan membaca data log."</string>
@@ -359,14 +359,14 @@
     <string name="enable_terminal_summary" msgid="2481074834856064500">"Dayakan apl terminal yang menawarkan akses shell tempatan"</string>
     <string name="hdcp_checking_title" msgid="3155692785074095986">"Penyemakan HDCP"</string>
     <string name="hdcp_checking_dialog_title" msgid="7691060297616217781">"Ttpkn tngkh laku smk HDCP"</string>
-    <string name="debug_debugging_category" msgid="535341063709248842">"Menyahpepijat"</string>
+    <string name="debug_debugging_category" msgid="535341063709248842">"Penyahpepijatan"</string>
     <string name="debug_app" msgid="8903350241392391766">"Pilih apl penyahpepijat"</string>
     <string name="debug_app_not_set" msgid="1934083001283807188">"Tiada aplikasi penyahpepijat yang ditetapkan"</string>
     <string name="debug_app_set" msgid="6599535090477753651">"Menyahpepijat aplikasi: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="select_application" msgid="2543228890535466325">"Pilih aplikasi"</string>
     <string name="no_application" msgid="9038334538870247690">"Tiada apa-apa"</string>
     <string name="wait_for_debugger" msgid="7461199843335409809">"Tunggu penyahpepijat"</string>
-    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Menanti penyahpepijat sebelum aplikasi melaksana"</string>
+    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Aplikasi nyahpepijat menanti penyahpepijat dilampirkan sebelum melaksana"</string>
     <string name="debug_input_category" msgid="7349460906970849771">"Input"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"Lukisan"</string>
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Pemaparan dipercepat perkakasan"</string>

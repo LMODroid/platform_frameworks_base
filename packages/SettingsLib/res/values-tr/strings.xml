@@ -326,7 +326,7 @@
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Kablosuz ekran sertifikası seçeneklerini göster"</string>
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Kablosuz günlük kaydı seviyesini artır. Kablosuz Seçici\'de her bir SSID RSSI için göster."</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Pili daha az harcar ve ağ performansını iyileştirir"</string>
-    <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Bu mod etkinleştirildiğinde, bu cihaz MAC rastgele hale getirme işlevi açık olan bir ağa her bağlandığında cihazın MAC adresi değişebilir."</string>
+    <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Bu mod etkinleştirildiğinde, bu cihaz MAC rastgele hale getirme işlevi açık olan bir ağa her bağlandığında cihazın MAC adresi değişebilir"</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Sayaçlı"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"Sayaçsız"</string>
     <string name="select_logd_size_title" msgid="1604578195914595173">"Günlük kaydedici arabellek boyutları"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Sahte konumlara izin ver"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Sahte konumlara izin ver"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Görünüm özelliği incelemeyi etkinleştir"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Kablosuz bağlantı etkin bile olsa mobil veri kullanımını her zaman etkin tut (ağlar arasında hızlı geçiş yapmak için)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Kablosuz bağlantı etkin bile olsa mobil veri kullanımını her zaman etkin tut (ağlar arasında hızlı geçiş yapmak için)"</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Mevcutsa, tethering donanım hızlandırıcısını kullan"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"USB hata ayıklamasına izin verilsin mi?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"USB hata ayıklaması yalnızca geliştirme amaçlıdır. Verileri bilgisayarınızla cihazınız arasında kopyalamak, bildirim göndermeksizin uygulamaları cihazınıza yüklemek ve günlük verilerini okumak için kullanın."</string>
@@ -350,9 +350,9 @@
     <string name="dev_settings_warning_title" msgid="8251234890169074553">"Geliştirme amaçlı ayarlara izin verilsin mi?"</string>
     <string name="dev_settings_warning_message" msgid="37741686486073668">"Bu ayarlar yalnızca geliştirme amaçlıdır. Cihazınızın veya cihazdaki uygulamaların bozulmasına veya hatalı çalışmasına neden olabilir."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"USB\'den yüklenen uygulamaları doğrula"</string>
-    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"ADB/ADT üzerinden yüklenen uygulamaları zararlı davranışlara karşı denetle."</string>
+    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"ADB/ADT üzerinden yüklenen uygulamaları zararlı davranışlara karşı denetle"</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Adsız Bluetooth cihazları (yalnızca MAC adresleri) gösterilecek"</string>
-    <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Uzak cihazda sesin aşırı yüksek olması veya kontrol edilememesi gibi ses sorunları olması ihtimaline karşı Bluetooh mutlak ses özelliğini iptal eder."</string>
+    <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Uzak cihazda sesin aşırı yüksek olması veya kontrol edilememesi gibi ses sorunları olması ihtimaline karşı Bluetooth mutlak ses özelliğini iptal eder"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"Bluetooth Gabeldorsche özellik yığınını etkinleştirir."</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"Gelişmiş Bağlantı özelliğini etkinleştirir."</string>
     <string name="enable_terminal_title" msgid="3834790541986303654">"Yerel terminal"</string>
@@ -461,7 +461,7 @@
     <string name="transcode_notification" msgid="5560515979793436168">"Kod dönüştürme bildirimlerini göster"</string>
     <string name="transcode_disable_cache" msgid="3160069309377467045">"Kod dönüştürme önbelleğini devre dışı bırak"</string>
     <string name="runningservices_settings_title" msgid="6460099290493086515">"Çalışan hizmetler"</string>
-    <string name="runningservices_settings_summary" msgid="1046080643262665743">"Şu anda çalışan hizmetleri görüntüle ve denetle"</string>
+    <string name="runningservices_settings_summary" msgid="1046080643262665743">"Şu anda çalışan hizmetleri görüntüleyin ve denetleyin"</string>
     <string name="select_webview_provider_title" msgid="3917815648099445503">"Web Görünümü kullanımı"</string>
     <string name="select_webview_provider_dialog_title" msgid="2444261109877277714">"Web Görünümü kullanımını ayarla"</string>
     <string name="select_webview_provider_toast_text" msgid="8512254949169359848">"Bu seçenek artık geçerli değil. Tekrar deneyin."</string>
