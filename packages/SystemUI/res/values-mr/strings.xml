@@ -695,7 +695,7 @@
     <string name="volume_panel_hint_muted" msgid="1124844870181285320">"म्यूट केले आहे"</string>
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"व्हायब्रेट करा"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"<xliff:g id="LABEL">%s</xliff:g> वर प्ले करत आहे"</string>
-    <string name="media_output_title_without_playing" msgid="3825663683169305013">"यावर ऑडिओ प्ले होईल"</string>
+    <string name="media_output_title_without_playing" msgid="3825663683169305013">"ऑडिओ यावर प्ले होईल"</string>
     <string name="media_output_title_ongoing_call" msgid="208426888064112006">"यावर कॉल करत आहे"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"सिस्टीम UI ट्युनर"</string>
     <string name="status_bar" msgid="4357390266055077437">"स्टेटस बार"</string>

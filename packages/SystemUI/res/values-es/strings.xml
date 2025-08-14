@@ -976,7 +976,7 @@
     <string name="instant_apps_title" msgid="8942706782103036910">"<xliff:g id="APP">%1$s</xliff:g> se está ejecutando"</string>
     <string name="instant_apps_message" msgid="6112428971833011754">"La aplicación se ha abierto sin instalarse."</string>
     <string name="instant_apps_message_with_help" msgid="1816952263531203932">"La aplicación se ha abierto sin instalarse. Toca para obtener más información."</string>
-    <string name="app_info" msgid="5153758994129963243">"Datos de aplicación"</string>
+    <string name="app_info" msgid="5153758994129963243">"Datos de app"</string>
     <string name="go_to_web" msgid="636673528981366511">"Ir al navegador"</string>
     <string name="mobile_data" msgid="4564407557775397216">"Datos móviles"</string>
     <string name="mobile_data_text_format" msgid="6806501540022589786">"<xliff:g id="ID_1">%1$s</xliff:g> ‑ <xliff:g id="ID_2">%2$s</xliff:g>"</string>
