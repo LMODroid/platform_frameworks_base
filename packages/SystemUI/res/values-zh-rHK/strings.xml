@@ -1369,7 +1369,7 @@
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"展開並顯示選項"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"收合"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"關閉此應用程式"</string>
-    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"<xliff:g id="APP_NAME">%1$s</xliff:g> 已關閉"</string>
+    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"「<xliff:g id="APP_NAME">%1$s</xliff:g>」已關閉"</string>
     <string name="privacy_dialog_manage_service" msgid="8320590856621823604">"管理服務"</string>
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"管理存取權"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"正由「手機通話」使用"</string>

@@ -741,8 +741,8 @@
     <string name="inline_done_button" msgid="6043094985588909584">"Listo"</string>
     <string name="inline_ok_button" msgid="603075490581280343">"Aplicar"</string>
     <string name="inline_turn_off_notifications" msgid="8543989584403106071">"Desactivar notificaciones"</string>
-    <string name="notification_silence_title" msgid="8608090968400832335">"Silenciadas"</string>
-    <string name="notification_alert_title" msgid="3656229781017543655">"Predeterminadas"</string>
+    <string name="notification_silence_title" msgid="8608090968400832335">"Silenciada"</string>
+    <string name="notification_alert_title" msgid="3656229781017543655">"Predeterminada"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"Automática"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"Sin sonido ni vibración"</string>
     <string name="notification_conversation_summary_low" msgid="3855696451919728790">"No suena ni vibra, pero aparece en la sección de conversaciones"</string>

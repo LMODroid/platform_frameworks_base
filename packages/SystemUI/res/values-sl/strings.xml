@@ -745,7 +745,7 @@
     <string name="notification_alert_title" msgid="3656229781017543655">"Privzeto"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"Samodejno"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"Brez zvočnega opozarjanja ali vibriranja."</string>
-    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"Brez zvoka ali vibriranja, vendar kljub temu prikazano v razdelku s pogovorom"</string>
+    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"Brez zvoka ali vibriranja, vendar kljub temu prikazano v razdelku s pogovorom."</string>
     <string name="notification_channel_summary_default" msgid="777294388712200605">"Zvonjenje ali vibriranje je omogočeno na podlagi nastavitev naprave."</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"Zvonjenje ali vibriranje je omogočeno na podlagi nastavitev naprave. Pogovori v aplikaciji <xliff:g id="APP_NAME">%1$s</xliff:g> so privzeto prikazani v oblačkih."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"Naj sistem določi, ali ob prejemu tega obvestila naprava predvaja zvok ali zavibrira"</string>

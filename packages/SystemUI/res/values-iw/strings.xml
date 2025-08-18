@@ -745,7 +745,7 @@
     <string name="notification_alert_title" msgid="3656229781017543655">"ברירת מחדל"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"באופן אוטומטי"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"ללא צליל או רטט"</string>
-    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"ללא צליל או רטט אבל עדיין מופיע בקטע השיחה"</string>
+    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"ללא צליל או רטט אבל עדיין תופיע בחלק של התראות השיחה"</string>
     <string name="notification_channel_summary_default" msgid="777294388712200605">"ייתכן שיופעל צלצול או רטט בהתאם להגדרות במכשיר"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"ייתכן שיופעל צלצול או רטט בהתאם להגדרות במכשיר. שיחות מהאפליקציה <xliff:g id="APP_NAME">%1$s</xliff:g> מופיעות בבועות כברירת מחדל."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"אפשר לתת למערכת לקבוע אם ההתראה הזאת צריכה להיות מלווה בצליל או ברטט"</string>
@@ -755,7 +755,7 @@
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; דורג נמוך יותר"</string>
     <string name="notification_channel_summary_priority_baseline" msgid="46674690072551234">"מוצגת בחלק העליון של קטע ההתראות וכתמונת פרופיל במסך הנעילה"</string>
     <string name="notification_channel_summary_priority_bubble" msgid="1275413109619074576">"מוצגת בחלק העליון של קטע התראות השיחה וכתמונת פרופיל במסך הנעילה, מופיעה בבועה"</string>
-    <string name="notification_channel_summary_priority_dnd" msgid="6665395023264154361">"מוצגת בחלק העליון של קטע התראות השיחה וכתמונת פרופיל במסך הנעילה, מפריעה במצב \'נא לא להפריע\'"</string>
+    <string name="notification_channel_summary_priority_dnd" msgid="6665395023264154361">"מופיעה בחלק העליון של התראות השיחה וכתמונת פרופיל במסך הנעילה, מפריעה במצב \"נא לא להפריע\""</string>
     <string name="notification_channel_summary_priority_all" msgid="7151752959650048285">"מוצגת בחלק העליון של קטע התראות השיחה וכתמונת פרופיל במסך הנעילה, מופיעה בבועה צפה ומפריעה במצב \'נא לא להפריע\'"</string>
     <string name="notification_priority_title" msgid="2079708866333537093">"בעדיפות גבוהה"</string>
     <string name="no_shortcut" msgid="8257177117568230126">"האפליקציה <xliff:g id="APP_NAME">%1$s</xliff:g> לא תומכת בתכונות השיחה"</string>
@@ -1363,7 +1363,7 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"סגירה"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"המסך מחובר"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"מיקרופון ומצלמה"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"נעשה שימוש לאחרונה באפליקציות"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"האפליקציות שהיו בשימוש לאחרונה"</string>
     <string name="privacy_dialog_more_button" msgid="7610604080293562345">"צפייה בהרשאות הגישה האחרונות"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"סיום"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"הרחבה והצגת האפשרויות"</string>

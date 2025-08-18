@@ -753,9 +753,9 @@
     <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"&lt;b&gt;स्थिति:&lt;/b&gt; सूचनालाई कम महत्त्वपूर्ण ठानी साइलेन्ट मोडमा सेट गरिएको छ"</string>
     <string name="notification_channel_summary_automatic_promoted" msgid="1301710305149590426">"&lt;b&gt;स्थिति:&lt;/b&gt; धेरै महत्त्वपूर्ण सूचनाका रूपमा सेट गरिएको छ"</string>
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"&lt;b&gt;स्थिति:&lt;/b&gt; कम महत्त्वपूर्ण सूचनाका रूपमा सेट गरिएको छ"</string>
-    <string name="notification_channel_summary_priority_baseline" msgid="46674690072551234">"यो वार्तालापका सूचनाहरूको सिरानमा र लक स्क्रिनमा प्रोफाइल फोटोका रूपमा देखिन्छ"</string>
-    <string name="notification_channel_summary_priority_bubble" msgid="1275413109619074576">"यो वार्तालापका सूचनाहरूको सिरानमा, बबलका रूपमा र लक स्क्रिनमा प्रोफाइल फोटोका रूपमा देखिन्छ"</string>
-    <string name="notification_channel_summary_priority_dnd" msgid="6665395023264154361">"यो वार्तालापका सूचनाहरूको सिरानमा र लक स्क्रिनमा प्रोफाइल फोटोका रूपमा देखिन्छ। साथै, यसले गर्दा \'बाधा नपुऱ्याउनुहोस्\' नामक सुविधामा अवरोध आउँछ"</string>
+    <string name="notification_channel_summary_priority_baseline" msgid="46674690072551234">"यो वार्तालापका नोटिफिकेसनको सिरानमा र लक स्क्रिनमा प्रोफाइल फोटोका रूपमा देखिन्छ"</string>
+    <string name="notification_channel_summary_priority_bubble" msgid="1275413109619074576">"यो वार्तालापका नोटिफिकेसनको सिरानमा, बबलका रूपमा र लक स्क्रिनमा प्रोफाइल फोटोका रूपमा देखिन्छ"</string>
+    <string name="notification_channel_summary_priority_dnd" msgid="6665395023264154361">"यो वार्तालापका नोटिफिकेसनको सिरानमा र लक स्क्रिनमा प्रोफाइल फोटोका रूपमा देखिन्छ। साथै, यसले गर्दा \'बाधा नपुऱ्याउनुहोस्\' नामक सुविधामा अवरोध आउँछ"</string>
     <string name="notification_channel_summary_priority_all" msgid="7151752959650048285">"यो वार्तालापसम्बन्धी नोटिफिकेसनको सूचीमा सबैभन्दा माथि, लक स्क्रिनमा प्रोफाइल फोटोका रूपमा र बबलका रूपमा देखिनुका साथै यसमा Do Not Disturb मोड लागू हुँदैन"</string>
     <string name="notification_priority_title" msgid="2079708866333537093">"प्राथमिकता"</string>
     <string name="no_shortcut" msgid="8257177117568230126">"<xliff:g id="APP_NAME">%1$s</xliff:g> मा वार्तालापसम्बन्धी सुविधा प्रयोग गर्न मिल्दैन"</string>

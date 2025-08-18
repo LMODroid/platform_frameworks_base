@@ -1223,7 +1223,7 @@
     <string name="audio_status" msgid="4237055636967709208">"កំពុងស្តាប់"</string>
     <string name="game_status" msgid="1340694320630973259">"កំពុងលេង"</string>
     <string name="empty_user_name" msgid="3389155775773578300">"មិត្តភ័ក្ដិ"</string>
-    <string name="empty_status" msgid="5938893404951307749">"តោះជជែកគ្នាយប់នេះ!"</string>
+    <string name="empty_status" msgid="5938893404951307749">"តស់ជជែកគ្នាយប់នេះ!"</string>
     <string name="status_before_loading" msgid="1500477307859631381">"ខ្លឹមសារនឹងបង្ហាញក្នុងពេលបន្តិចទៀត"</string>
     <string name="missed_call" msgid="4228016077700161689">"ខកខាន​ទទួល"</string>
     <string name="messages_count_overflow_indicator" msgid="7850934067082006043">"<xliff:g id="NUMBER">%d</xliff:g>+"</string>
