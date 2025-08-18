@@ -383,11 +383,11 @@
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Прикажувај влезни податоци од допирната подлога"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Преклопување на екранот што прикажува влезни податоци од допирната подлога и познати движења"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Прикажи ажурир. површина"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Осветли површ. на прозорци при нивно ажурирање"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Ги осветлува површините на прозорците кога ќе се ажурираат"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Покажувај ажурирања на приказот"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Осветлувај го приказот при повлекување во прозорците"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Го осветлува приказот при повлекување во прозорците"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Покажувај ажурирања на хардверски слоеви"</string>
-    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Осветлувај ги хардверските слоеви со зелено кога се ажурираат"</string>
+    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Ги осветлува хардверските слоеви со зелено кога се ажурираат"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Отстр. греш. на GPU"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Оневозможи HW-преклопувања"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Секогаш користи GPU за составување екран"</string>
@@ -396,11 +396,11 @@
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Исклучи USB-пренасочување"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Исклучи автоматско пренасочување до USB-аудиоуреди"</string>
     <string name="debug_layout" msgid="1659216803043339741">"Прикажи граници на распоред"</string>
-    <string name="debug_layout_summary" msgid="8825829038287321978">"Прикажувај граници на исечок, маргини итн."</string>
+    <string name="debug_layout_summary" msgid="8825829038287321978">"Прикажува граници на исечок, маргини итн."</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Наметни насока „оддесно налево“"</string>
-    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Наметни насока „оддесно налево“ за распоредот на екранот за сите локални стандарди"</string>
+    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Наметнува насока „оддесно налево“ за распоредот на екранот за сите локални стандарди"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Проѕирна лента за навигација"</string>
-    <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Направете ја заднината на лентата за навигација стандардно проѕирна"</string>
+    <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Ја прави заднината на лентата за навигација стандардно проѕирна"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Дозволи замаглувања на ниво на прозорци"</string>
     <string name="force_msaa" msgid="4081288296137775550">"Принудно користи 4x MSAA"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Овозможи 4x MSAA за апликации OpenGL ES 2.0"</string>

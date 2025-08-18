@@ -675,7 +675,7 @@
     <string name="guest_reset_button" msgid="2515069346223503479">"ゲスト セッションをリセット"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"ゲストを終了"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"終了時にすべてのアクティビティが削除されます"</string>
-    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"終了時にアクティビティを保存、削除できます"</string>
+    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"終了時にアクティビティを保存または削除できます"</string>
     <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"アクティビティは、リセットして今すぐ削除するか、終了時に保存または削除できます"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"写真を選択"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"試行回数が上限に達しました。このデバイスのデータが削除されます。"</string>

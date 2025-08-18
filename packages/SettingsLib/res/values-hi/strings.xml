@@ -661,7 +661,7 @@
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"हटाएं"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"मेहमान के तौर पर ब्राउज़ करने का सेशन रीसेट किया जा रहा है…"</string>
     <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"क्या मेहमान मोड के सेशन को रीसेट करना है?"</string>
-    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"इससे मेहमान मोड का नया सेशन शुरू हो जाएगा. मौजूदा सेशन में इंस्टॉल किए गए सभी ऐप्लिकेशन और जनरेट हुआ डेटा मिट जाएगा"</string>
+    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"इससे मेहमान मोड का नया सेशन शुरू हो जाएगा. मौजूदा सेशन में इंस्टॉल किए गए सभी ऐप्लिकेशन और जनरेट हुआ सारा डेटा मिट जाएगा"</string>
     <string name="guest_exit_dialog_title" msgid="1846494656849381804">"मेहमान मोड से बाहर निकलना है?"</string>
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"इससे, मेहमान मोड के मौजूदा सेशन का डेटा और इसमें इस्तेमाल हो रहे ऐप्लिकेशन मिट जाएंगे"</string>
     <string name="grant_admin" msgid="4323199171790522574">"हां, इन्हें एडमिन बनाएं"</string>

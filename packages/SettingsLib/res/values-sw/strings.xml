@@ -268,7 +268,7 @@
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"Unganisha na kifaa"</string>
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Msimbo wa kuoanisha wa Wi-Fi"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Imeshindwa kuoanisha"</string>
-    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Hakikisha kuwa kifaa kimeunganishwa kwenye mtandao mmoja."</string>
+    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Hakikisha kuwa kifaa kimeunganishwa kwenye mtandao ule ule."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Unganisha kifaa kupitia Wi-Fi kwa kuchanganua msimbo wa QR"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Inaoanisha kifaa…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Imeshindwa kuoanisha kifaa. Huenda msimbo wa QR haukuwa sahihi au kifaa hakijaunganishwa kwenye mtandao mmoja."</string>
@@ -375,7 +375,7 @@
     <string name="strict_mode" msgid="889864762140862437">"Hali makinifu imewashwa"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Fanya skrini imemeteke programu zinapoendeleza shughuli ndefu kwenye skrini kuu"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Mahali pa kiashiria"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"Kuegeshwa kwa skrini ikionyesha data ya mguso ya sasa"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"Programu juu ya nyingine ionyeshe data ya mguso uliopo"</string>
     <string name="show_touches" msgid="8437666942161289025">"Onyesha unapogusa"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Onyesha ishara za kuthibitisha unapogusa"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"Onyesha mibofyo ya vitufe"</string>

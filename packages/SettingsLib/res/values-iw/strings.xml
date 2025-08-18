@@ -268,7 +268,7 @@
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"התאמה למכשיר"</string>
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"‏קוד התאמה של Wi-Fi"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"ההתאמה נכשלה"</string>
-    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"יש לוודא שהמכשיר מחובר לאותה רשת."</string>
+    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"צריך לוודא שהמכשיר מחובר לאותה רשת."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"‏כדי להתאים מכשיר דרך Wi‑Fi, יש לסרוק קוד QR"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"המכשיר בתהליך התאמה…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"‏התאמת המכשיר נכשלה. קוד ה-QR היה שגוי או שהמכשיר לא מחובר לאותה רשת."</string>
@@ -628,7 +628,7 @@
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"פרופיל מוגבל"</string>
     <string name="user_add_user_title" msgid="5457079143694924885">"להוסיף משתמש חדש?"</string>
     <string name="user_add_user_message_long" msgid="1527434966294733380">"‏ניתן לשתף את המכשיר הזה עם אנשים אחרים על ידי יצירת משתמשים נוספים. לכל משתמש מרחב משלו, שאותו אפשר להתאים אישית בעזרת אפליקציות, טפט ופריטים נוספים. המשתמשים יכולים גם להתאים הגדרות של המכשיר כמו Wi‑Fi, שמשפיעות על כולם.\n\nכשמוסיפים משתמש חדש, המשתמש הזה צריך להגדיר את המרחב שלו.\n\nכל אחד מהמשתמשים יכול לעדכן אפליקציות לכל שאר המשתמשים. יכול להיות שהגדרות ושירותים של נגישות לא יועברו למשתמש החדש."</string>
-    <string name="user_add_user_message_short" msgid="3295959985795716166">"כשמוסיפים משתמש חדש, הוא צריך להגדיר את המרחב שלו.\n\nכל משתמש יכול לעדכן אפליקציות בשביל כל המשתמשים האחרים."</string>
+    <string name="user_add_user_message_short" msgid="3295959985795716166">"המשתמש החדש יצטרך להגדיר את המרחב שלו.\n\nכל משתמש יכול לעדכן אפליקציות עבור כל המשתמשים האחרים."</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"להגדיר את המשתמש הזה כאדמין?"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"לאדמינים יש הרשאות מיוחדות שאין למשתמשים אחרים. אדמין יכול לנהל את כל המשתמשים, לעדכן את המכשיר הזה או לאפס אותו, לשנות הגדרות, לראות את כל האפליקציות המותקנות ולהעניק הרשאות אדמין לאחרים או לשלול אותן."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"הגדרה כאדמין"</string>
@@ -675,8 +675,8 @@
     <string name="guest_reset_button" msgid="2515069346223503479">"איפוס הגלישה כאורח"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"יציאה ממצב אורח"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"כל הפעילות תימחק ביציאה"</string>
-    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"אפשר לשמור או למחוק את הפעילות שלך ביציאה"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"אפשר לאפס כדי למחוק עכשיו את הפעילות מהסשן, או לשמור או למחוק את הפעילות ביציאה"</string>
+    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"אורחים יכולים לשמור או למחוק את הפעילות שלהם ביציאה"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"אורחים יכולים לאפס ולמחוק עכשיו את הפעילות מהסשן, או להחליט ביציאה מהסשן אם לשמור או למחוק את הפעילות"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"בחירת תמונה"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"נעשו יותר מדי ניסיונות שגויים. הנתונים במכשיר יימחקו."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"נעשו יותר מדי ניסיונות שגויים. המשתמש הזה יימחק."</string>

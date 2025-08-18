@@ -668,7 +668,7 @@
     <string name="not_grant_admin" msgid="3557849576157702485">"Tidak, jangan jadikan sebagai admin"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Keluar"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Simpan aktivitas tamu?"</string>
-    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Anda bisa menyimpan aktivitas sesi saat ini atau menghapus semua aplikasi &amp; data"</string>
+    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Anda dapat menyimpan aktivitas sesi ini atau menghapus semua aplikasi dan data"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Hapus"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Simpan"</string>
     <string name="guest_exit_button" msgid="5774985819191803960">"Keluar dari mode tamu"</string>
@@ -676,7 +676,7 @@
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"Keluar dari mode tamu"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Semua aktivitas akan dihapus saat Anda keluar"</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"Anda dapat menyimpan atau menghapus aktivitas saat keluar"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Reset untuk hapus aktivitas sesi sekarang, atau simpan atau hapus aktivitas saat keluar"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Reset untuk menghapus aktivitas sesi sekarang, atau simpan atau hapus aktivitas saat keluar"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"Pilih foto"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"Terlalu banyak percobaan yang salah. Data perangkat ini akan dihapus."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"Terlalu banyak percobaan yang salah. Pengguna ini akan dihapus."</string>

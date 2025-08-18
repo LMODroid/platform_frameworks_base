@@ -254,11 +254,11 @@
     <string name="adb_wireless_error" msgid="721958772149779856">"ఎర్రర్"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"వైర్‌లెస్ డీబగ్గింగ్"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"అందుబాటులో ఉన్న పరికరాలను చూడటానికి, ఉపయోగించడానికి, వైర్‌లెస్ డీబగ్గింగ్‌ను ఆన్ చేయండి"</string>
-    <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"QR కోడ్‌తో పరికరాన్ని పెయిర్ చేయండి"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR కోడ్ స్కానర్‌ను ఉపయోగించి కొత్త పరికరాలను పెయిర్ చేయండి"</string>
-    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"పెయిరింగ్ కోడ్‌తో పరికరాన్ని పెయిర్ చేయండి"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"ఆరు అంకెల కోడ్‌ను ఉపయోగించి కొత్త పరికరాలను పెయిర్ చేయండి"</string>
-    <string name="adb_paired_devices_title" msgid="5268997341526217362">"పెయిర్ చేయబడిన పరికరాలు"</string>
+    <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"QR కోడ్‌తో డివైజ్‌ను పెయిర్ చేయండి"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR కోడ్ స్కానర్‌ను ఉపయోగించి కొత్త డివైజ్‌లను పెయిర్ చేయండి"</string>
+    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"పెయిరింగ్ కోడ్‌తో డివైజ్‌ను పెయిర్ చేయండి"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"ఆరు అంకెల కోడ్‌ను ఉపయోగించి కొత్త డివైజ్‌లను పెయిర్ చేయండి"</string>
+    <string name="adb_paired_devices_title" msgid="5268997341526217362">"పెయిర్ చేయబడిన డివైజ్‌లు"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"ప్రస్తుతం కనెక్ట్ చేయబడింది"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"డివైజ్ వివరాలు"</string>
     <string name="adb_device_forget" msgid="193072400783068417">"విస్మరించు"</string>
@@ -268,7 +268,7 @@
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"పరికరంతో పెయిర్ చేయండి"</string>
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Wi‑Fi పెయిరింగ్ కోడ్"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"పెయిరింగ్ విఫలమైంది"</string>
-    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"పరికరం అదే నెట్‌వర్క్‌కు కనెక్ట్ చేయబడి ఉందని నిర్ధారించుకోండి."</string>
+    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"డివైజ్‌ అదే నెట్‌వర్క్‌కు కనెక్ట్ చేయబడి ఉందని నిర్ధారించుకోండి."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"QR కోడ్‌ను స్కాన్ చేయడం ద్వారా Wi-Fiని ఉపయోగించి పరికరాన్ని పెయిర్ చేయండి"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"పరికరం పెయిర్ చేయబడుతోంది…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"పరికరాన్ని పెయిర్ చేయడం విఫలమైంది. QR కోడ్ తప్పుగా ఉండడం గాని, లేదా పరికరం అదే నెట్‌వర్క్‌కు కనెక్ట్ అయి లేకపోవడం గాని జరిగింది."</string>
@@ -327,7 +327,7 @@
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Wi‑Fi పికర్‌లో SSID RSSI ప్రకారం చూపబడే Wi‑Fi లాగింగ్ స్థాయిని పెంచండి"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"బ్యాటరీ వినియోగాన్ని తగ్గించి &amp; నెట్‌వర్క్ పనితీరును మెరుగుపరుస్తుంది"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"ఈ మోడ్ ఎనేబుల్ అయ్యాక, ఈ డివైజ్ MAC అడ్రస్ మారే అవకాశం ఉంది. MAC ర్యాండమైజేషన్‌ ఎనేబుల్ అయిన నెట్‌వర్క్‌తో, కనెక్ట్ అయిన ప్రతిసారి ఇలా జరగవచ్చు."</string>
-    <string name="wifi_metered_label" msgid="8737187690304098638">"గణించబడుతోంది"</string>
+    <string name="wifi_metered_label" msgid="8737187690304098638">"మీటర్‌డ్ (డేటా కౌంట్ అవుతుంది)"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"గణించబడటం లేదు"</string>
     <string name="select_logd_size_title" msgid="1604578195914595173">"లాగర్ బఫర్ సైజ్‌లు"</string>
     <string name="select_logd_size_dialog_title" msgid="2105401994681013578">"లాగ్ బఫర్‌కి లాగర్ పరిమా. ఎంచుకోండి"</string>
@@ -380,7 +380,7 @@
     <string name="show_touches_summary" msgid="3692861665994502193">"ట్యాప్‌ చేసినప్పుడు విజువల్‌ ఫీడ్‌బ్యాక్‌ చూపండి"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"కీ ప్రెస్‌లను చూడండి"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"భౌతిక కీ ప్రెస్‌ల విజువల్ ఫీడ్‌బ్యాక్‌ను చూడండి"</string>
-    <string name="touchpad_visualizer" msgid="3707916068870825115">"టచ్‌ప్యాడ్ ఇన్‌పుట్‌ను చూపండి"</string>
+    <string name="touchpad_visualizer" msgid="3707916068870825115">"టచ్‌ప్యాడ్ ఇన్‌పుట్‌ను చూపించు"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"స్క్రీన్ ఓవర్‌లే టచ్‌ప్యాడ్ ఇన్‌పుట్ డేటాను, గుర్తించబడిన సంజ్ఞలను డిస్‌ప్లే చేస్తోంది"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"సర్ఫేస్‌ అప్‌డేట్లను చూపు"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"విండో సర్‌ఫేస్‌లన్నీ అప్‌డేట్‌ అయితే ఫ్లాష్ చేయండి"</string>

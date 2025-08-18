@@ -385,7 +385,7 @@
     <string name="show_screen_updates" msgid="2078782895825535494">"显示面 (surface) 更新"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"窗口中的面 (surface) 更新时全部闪烁"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"显示视图更新"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"绘图时闪烁显示窗口中的视图"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"窗口中的视图更新时会闪烁显示"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"显示硬件层更新"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"硬件层更新时闪烁绿色"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"调试 GPU 过度绘制"</string>
@@ -396,7 +396,7 @@
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"关闭 USB 音频转接"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"关闭自动转接至 USB 音频外围设备的功能"</string>
     <string name="debug_layout" msgid="1659216803043339741">"显示布局边界"</string>
-    <string name="debug_layout_summary" msgid="8825829038287321978">"显示剪裁边界、边距等。"</string>
+    <string name="debug_layout_summary" msgid="8825829038287321978">"显示剪裁边界、边距等"</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"强制使用从右到左的布局方向"</string>
     <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"强制将所有语言区域的屏幕布局方向改为从右到左"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"透明导航栏"</string>
@@ -667,15 +667,15 @@
     <string name="grant_admin" msgid="4323199171790522574">"是，将其设为管理员"</string>
     <string name="not_grant_admin" msgid="3557849576157702485">"不，不要将其设为管理员"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"退出"</string>
-    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"要保存访客活动吗？"</string>
-    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"您可以保存当前会话中的活动，也可以删除所有应用和数据"</string>
+    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"要保存访客活动记录吗？"</string>
+    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"您可以保存当前会话中的活动记录，也可以删除所有应用和数据"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"删除"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"保存"</string>
     <string name="guest_exit_button" msgid="5774985819191803960">"退出访客模式"</string>
     <string name="guest_reset_button" msgid="2515069346223503479">"重置访客会话"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"退出访客模式"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"退出时所有活动记录都将被删除"</string>
-    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"您可以在退出时保存或删除您的活动"</string>
+    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"您可以在退出时保存或删除您的活动记录"</string>
     <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"重置可立即删除会话活动记录，您也可以在退出时保存或删除活动记录"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"选择照片"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"错误次数过多。系统将删除此设备上的数据。"</string>

@@ -661,7 +661,7 @@
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"Κατάργηση"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"Επαναφορά επισκέπτη…"</string>
     <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"Επαναφορά περιόδου σύνδεσης επισκέπτη;"</string>
-    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Με αυτόν τον τρόπο θα ξεκινήσει μια νέα περίοδος σύνδεσης επισκέπτη και θα διαγραφούν όλες οι εφαρμογές και τα δεδομένα από την τρέχουσα περίοδο σύνδεσης"</string>
+    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Με αυτόν τον τρόπο θα ξεκινήσει μια νέα περίοδος λειτουργίας επισκέπτη και θα διαγραφούν όλες οι εφαρμογές και τα δεδομένα από την τρέχουσα περίοδο λειτουργίας"</string>
     <string name="guest_exit_dialog_title" msgid="1846494656849381804">"Έξοδος από λειτ. επισκέπτη;"</string>
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"Θα διαγραφούν εφαρμογές και δεδομένα από την τρέχουσα περίοδο σύνδεσης επισκέπτη"</string>
     <string name="grant_admin" msgid="4323199171790522574">"Ναι, να γίνει εκχώρηση δικαιωμάτων διαχειριστή"</string>

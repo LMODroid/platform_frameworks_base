@@ -375,17 +375,17 @@
     <string name="strict_mode" msgid="889864762140862437">"Mod tegas didayakan"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Kelip skrin apabila apl beroperasi lama pada urutan utama"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Lokasi penuding"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"Tindihan skrin menunjukkan data sentuh semasa"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"Tindanan skrin menunjukkan data sentuh semasa"</string>
     <string name="show_touches" msgid="8437666942161289025">"Tunjukkan ketikan"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Tunjukkan maklum balas visual untuk ketikan"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"Tunjukkan tekanan kekunci"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"Tunjukkan maklum balas visual untuk tekanan kekunci fizikal"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Tunjukkan input pad sentuh"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Tindanan skrin memaparkan data input pad sentuh dan gerak isyarat yang dikenali"</string>
-    <string name="show_screen_updates" msgid="2078782895825535494">"Tunjuk kemaskinian permukaan"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Denyar permukaan tetingkap apabila dikemas kini"</string>
+    <string name="show_screen_updates" msgid="2078782895825535494">"Tunjukkan kemaskinian permukaan"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Kerlip permukaan tetingkap apabila dikemaskinikan"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Tunjukkan kemaskinian paparan"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Denyar paparan dalam tetingkap apabila dilukis"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Kerlip paparan dalam tetingkap apabila dilukis"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Tunjukkan kemaskinian perkakasan"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Denyar hijau lapisan perkakasan yang dikemaskinikan"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Nyahpepijat lebih lukis GPU"</string>
@@ -400,7 +400,7 @@
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Paksa arah reka letak RTL"</string>
     <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Paksa arah reka letak skrin RTL bagi semua tempat peristiwa"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Bar navigasi lut sinar"</string>
-    <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Tukarkan warna latar bar navigasi kepada lut sinar secara lalai"</string>
+    <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Buat warna latar bar navigasi menjadi lut sinar secara lalai"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Benarkan kabur tahap tetingkap"</string>
     <string name="force_msaa" msgid="4081288296137775550">"Paksa 4x MSAA"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Dayakan 4x MSAA dalam apl OpenGL ES 2.0"</string>

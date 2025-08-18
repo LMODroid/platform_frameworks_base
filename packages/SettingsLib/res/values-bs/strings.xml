@@ -304,17 +304,17 @@
     <string name="bluetooth_select_avrcp_version_dialog_title" msgid="7846922290083709633">"Odaberite Bluetooth AVRCP verziju"</string>
     <string name="bluetooth_select_map_version_string" msgid="526308145174175327">"Bluetooth MAP verzija"</string>
     <string name="bluetooth_select_map_version_dialog_title" msgid="7085934373987428460">"Odaberite Bluetooth MAP verziju"</string>
-    <string name="bluetooth_select_a2dp_codec_type" msgid="952001408455456494">"Bluetooth Audio kodek"</string>
-    <string name="bluetooth_select_a2dp_codec_type_dialog_title" msgid="7510542404227225545">"Aktivirajte Bluetooth Audio Codec\nOdabir"</string>
-    <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"Brzina uzorkovanja za Bluetooth audio"</string>
-    <string name="bluetooth_select_a2dp_codec_sample_rate_dialog_title" msgid="5876305103137067798">"Aktivirajte Bluetooth Audio Codec\nOdabir: Brzina uzorkovanja"</string>
+    <string name="bluetooth_select_a2dp_codec_type" msgid="952001408455456494">"Kodek za Bluetooth zvuk"</string>
+    <string name="bluetooth_select_a2dp_codec_type_dialog_title" msgid="7510542404227225545">"Aktivirajte kodek za Bluetooth zvuk\nOdabir"</string>
+    <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"Brzina uzorkovanja za Bluetooth zvuk"</string>
+    <string name="bluetooth_select_a2dp_codec_sample_rate_dialog_title" msgid="5876305103137067798">"Aktivirajte kodek za Bluetooth zvuk\nOdabir: brzina uzorkovanja"</string>
     <string name="bluetooth_select_a2dp_codec_type_help_info" msgid="8647200416514412338">"Ako je stavka nedostupna, to znači da je telefon ili slušalice ne podržavaju"</string>
-    <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"Bluetooth audio bitovi po uzorku"</string>
-    <string name="bluetooth_select_a2dp_codec_bits_per_sample_dialog_title" msgid="4898693684282596143">"Aktivirajte Bluetooth Audio Codec\nOdabir: Bitovi po uzorku"</string>
-    <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"Način Bluetooth audio kanala"</string>
-    <string name="bluetooth_select_a2dp_codec_channel_mode_dialog_title" msgid="2076949781460359589">"Aktivirajte Bluetooth Audio Codec\nOdabir: Način rada po kanalima"</string>
-    <string name="bluetooth_select_a2dp_codec_ldac_playback_quality" msgid="3233402355917446304">"Bluetooth Audio LDAC kodek: kvalitet reprodukcije"</string>
-    <string name="bluetooth_select_a2dp_codec_ldac_playback_quality_dialog_title" msgid="7274396574659784285">"Aktivirajte Bluetooth Audio \nOdabir kodeka: kvalitet reprodukcije"</string>
+    <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"Bitovi po uzorku za Bluetooth zvuk"</string>
+    <string name="bluetooth_select_a2dp_codec_bits_per_sample_dialog_title" msgid="4898693684282596143">"Aktivirajte kodek za Bluetooth zvuk\nOdabir: bitovi po uzorku"</string>
+    <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"Način kanala za Bluetooth zvuk"</string>
+    <string name="bluetooth_select_a2dp_codec_channel_mode_dialog_title" msgid="2076949781460359589">"Aktivirajte kodek za Bluetooth zvuk\nOdabir: način kanala"</string>
+    <string name="bluetooth_select_a2dp_codec_ldac_playback_quality" msgid="3233402355917446304">"LDAC kodek za Bluetooth zvuk: kvalitet reprodukcije"</string>
+    <string name="bluetooth_select_a2dp_codec_ldac_playback_quality_dialog_title" msgid="7274396574659784285">"Aktivirajte Bluetooth zvuk \nOdabir kodeka: kvalitet reprodukcije"</string>
     <string name="bluetooth_select_a2dp_codec_streaming_label" msgid="2040810756832027227">"Prenos: <xliff:g id="STREAMING_PARAMETER">%1$s</xliff:g>"</string>
     <string name="select_private_dns_configuration_title" msgid="7887550926056143018">"Privatni DNS"</string>
     <string name="select_private_dns_configuration_dialog_title" msgid="3731422918335951912">"Odaberite način rada privatnog DNS-a"</string>
@@ -369,7 +369,7 @@
     <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Aplikacija u kojoj se otklanjaju greške čeka da se priloži program za otklanjanje grešaka prije izvršavanja"</string>
     <string name="debug_input_category" msgid="7349460906970849771">"Ulaz"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"Crtanje"</string>
-    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Hardverski ubrzano prikazivanje"</string>
+    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Hardverski ubrzano renderovanje"</string>
     <string name="media_category" msgid="8122076702526144053">"Mediji"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Praćenje"</string>
     <string name="strict_mode" msgid="889864762140862437">"Omogući strogi način rada"</string>
@@ -379,8 +379,8 @@
     <string name="show_touches" msgid="8437666942161289025">"Prikaži dodire"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Prikaz vizuelnih povratnih informacija za dodire"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"Prikaži pritiskanja tipki"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"Prikaži vizuelne povr. inform. za pritiske tipki"</string>
-    <string name="touchpad_visualizer" msgid="3707916068870825115">"Prikazuj unos putem dodirne podloge"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"Prikaz vizuelnih povratnih informacija za pritiske tipki"</string>
+    <string name="touchpad_visualizer" msgid="3707916068870825115">"Prikaži unos putem dodirne podloge"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Na preklapanju ekrana se prikazuju podaci uneseni putem dodirne podloge i prepoznati pokreti"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Prikaži ažuriranja za površinu"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Osvjetljava sve površine prozora kada se ažuriraju"</string>
@@ -417,7 +417,7 @@
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Onemogućava se nakon jednog dana"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Omogućeno je na neograničeno vrijeme"</string>
     <string name="window_animation_scale_title" msgid="5236381298376812508">"Skala animacije prozora"</string>
-    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Skala animacije prijelaza"</string>
+    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Skala animacije prelaza"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Skala trajanja animatora"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simulacija sekundarnih ekrana"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplikacije"</string>

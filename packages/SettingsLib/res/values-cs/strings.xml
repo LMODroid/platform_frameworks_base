@@ -668,7 +668,7 @@
     <string name="not_grant_admin" msgid="3557849576157702485">"Ne, nenastavovat jako administrátora"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Ukončit"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Uložit aktivitu hosta?"</string>
-    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Aktivitu z aktuální relace můžete uložit, nebo všechny aplikace a data smazat"</string>
+    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Aktivitu z aktuální relace můžete uložit nebo všechny aplikace a data smazat"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Smazat"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Uložit"</string>
     <string name="guest_exit_button" msgid="5774985819191803960">"Ukončit režim hosta"</string>

@@ -383,7 +383,7 @@
     <string name="touchpad_visualizer" msgid="3707916068870825115">"បង្ហាញការបញ្ចូលតាមផ្ទាំងប៉ះ"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"ការត្រួតគ្នា​លើ​អេក្រង់ដែលបង្ហាញទិន្នន័យបញ្ចូលតាមផ្ទាំងប៉ះ និងចលនាដែលស្គាល់"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"បង្ហាញ​បច្ចុប្បន្នភាព​ផ្ទៃ"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"ផ្ទៃ​វីនដូទាំង​មូល​បញ្ចេញពន្លឺ​នៅពេល​ធ្វើ​បច្ចុប្បន្នភាព"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"ធ្វើឱ្យផ្ទៃវិនដូទាំង​មូលលោតភ្លើងភ្លឹបភ្លែតនៅពេល​ពួកគេធ្វើ​បច្ចុប្បន្នភាព"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"បង្ហាញ​បច្ចុប្បន្នភាពទិដ្ឋភាព"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"ទិដ្ឋភាព​បញ្ចេញពន្លឺភ្លឹបភ្លែត​នៅក្នុង​វិនដូនៅ​ពេលគូរ"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"បង្ហាញ​​បច្ចុប្បន្នភាព​ស្រទាប់​ហាតវែរ"</string>

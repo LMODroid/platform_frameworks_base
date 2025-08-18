@@ -375,7 +375,7 @@
     <string name="strict_mode" msgid="889864762140862437">"嚴格模式已啟用"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"當應用程式在主執行緒中進行長時間作業時，讓螢幕閃爍"</string>
     <string name="pointer_location" msgid="7516929526199520173">"指標位置"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"在螢幕上重疊顯示目前的觸控資料"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"在重疊式畫面上顯示目前的觸控資料"</string>
     <string name="show_touches" msgid="8437666942161289025">"顯示輕按回應"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"顯示輕按位置的視覺回應"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"顯示按鍵操作"</string>
@@ -628,7 +628,7 @@
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"限制存取的個人檔案"</string>
     <string name="user_add_user_title" msgid="5457079143694924885">"新增使用者？"</string>
     <string name="user_add_user_message_long" msgid="1527434966294733380">"你可以建立其他使用者，與他人共用這部裝置。每位使用者都有屬於自己的空間，並可以自訂應用程式、桌布等等。此外，使用者也可以調整會影響所有人的裝置設定，例如 Wi‑Fi 設定。\n\n新加入的使用者需要自行設定個人空間。\n\n任何使用者都可以為所有其他使用者更新應用程式。無障礙功能設定和服務則未必適用於新的使用者。"</string>
-    <string name="user_add_user_message_short" msgid="3295959985795716166">"新增的使用者需要自行設定個人空間。\n\n任何使用者都可以為其他所有使用者更新應用程式。"</string>
+    <string name="user_add_user_message_short" msgid="3295959985795716166">"新增的使用者需要自行設定個人空間。\n\n任何使用者都可以為其他使用者更新應用程式。"</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"要指定此使用者為管理員嗎？"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"管理員擁有其他使用者沒有的特殊權限。管理員可管理所有使用者、更新或重設此裝置、修改設定、查看所有已安裝的應用程式，以及對其他使用者授予或撤銷管理員權限。"</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"指定為管理員"</string>
@@ -668,7 +668,7 @@
     <string name="not_grant_admin" msgid="3557849576157702485">"否，不要指定他為管理員"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"結束"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"要儲存訪客活動嗎？"</string>
-    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"你可儲存目前工作階段中的活動或刪除所有應用程式和資料"</string>
+    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"你可儲存目前工作階段中的活動，或刪除所有應用程式和資料"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"刪除"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"儲存"</string>
     <string name="guest_exit_button" msgid="5774985819191803960">"結束訪客模式"</string>

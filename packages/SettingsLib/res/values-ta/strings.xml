@@ -369,20 +369,20 @@
     <string name="wait_for_debugger_summary" msgid="6846330006113363286">"பிழைதிருத்தப்பட்ட ஆப்ஸ் செயல்படுவதற்கு முன்பு பிழைதிருத்தியை இணைப்பதற்குக் காத்திருக்கும்"</string>
     <string name="debug_input_category" msgid="7349460906970849771">"உள்ளீடு"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"வரைபொருள்"</string>
-    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"வன்பொருள் முடுக்கத்துடன் கூடிய காட்சியாக்கம்"</string>
+    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"ஹார்டுவேர் ஆக்ஸிலரேடட் ரெண்டரிங்"</string>
     <string name="media_category" msgid="8122076702526144053">"மீடியா"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"கண்காணித்தல்"</string>
     <string name="strict_mode" msgid="889864762140862437">"நிலையான பயன்முறை இயக்கப்பட்டது"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"முக்கியத் தொடரிழையில் நீண்ட நேரம் செயல்படும்போது திரையைக் காட்சிப்படுத்தும்"</string>
-    <string name="pointer_location" msgid="7516929526199520173">"குறிப்பான் இடம்"</string>
+    <string name="pointer_location" msgid="7516929526199520173">"பாயிண்டர் இடம்"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"தற்போது தொடப்பட்டிருக்கும் தரவைக் காட்டும் திரை மேலடுக்கு"</string>
     <string name="show_touches" msgid="8437666942161289025">"தட்டல்களைக் காட்டு"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"தட்டல்களின் போது காட்சி அறிகுறிகளைக் காட்டும்"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"பட்டன் அழுத்தத்தை காட்டு"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"பட்டன் அழுத்தங்களைக் காட்சி மூலம் உறுதிப்படுத்தும்"</string>
-    <string name="touchpad_visualizer" msgid="3707916068870825115">"டச்பேட் உள்ளீட்டைக் காட்டுதல்"</string>
+    <string name="touchpad_visualizer" msgid="3707916068870825115">"டச்பேட் உள்ளீட்டைக் காட்டு"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"டச்பேட் உள்ளீட்டுத் தரவையும் அங்கீகரிக்கப்பட்ட சைகைகளையும் திரை மேலடுக்குக் காட்டும்"</string>
-    <string name="show_screen_updates" msgid="2078782895825535494">"மேலோட்ட புதுப்பிப்புகளைக் காட்டு"</string>
+    <string name="show_screen_updates" msgid="2078782895825535494">"பரப்புநிலை புதுப்பிப்புகளைக் காட்டு"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"சாளரத்தின் பரப்புநிலைகள் புதுப்பிக்கப்படும்போது, அவற்றை முழுவதுமாகக் காட்டும்"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"வியூ அப்டேட்ஸைக் காட்டு"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"வரையும்போது, சாளரங்களில் காட்சிகளைக் காட்டும்"</string>
@@ -686,7 +686,7 @@
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"முடக்கப்பட்டது"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"இயக்கப்பட்டது"</string>
     <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"இந்த மாற்றங்கள் செயல்படுத்தப்பட உங்கள் சாதனத்தை மறுபடி தொடங்க வேண்டும். இப்போதே மறுபடி தொடங்கவும் அல்லது ரத்துசெய்யவும்."</string>
-    <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"வயர்டு ஹெட்ஃபோன்"</string>
+    <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"வயருள்ள ஹெட்ஃபோன்"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"ஹெட்ஃபோன்"</string>
     <string name="media_transfer_usb_speaker_name" msgid="4736537022543593896">"USB ஸ்பீக்கர்"</string>
     <string name="media_transfer_wired_device_mic_name" msgid="7417067197803840965">"மைக் ஜாக்"</string>
