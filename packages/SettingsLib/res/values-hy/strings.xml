@@ -306,7 +306,7 @@
     <string name="bluetooth_select_map_version_dialog_title" msgid="7085934373987428460">"Ընտրել Bluetooth MAP-ի տարբերակը"</string>
     <string name="bluetooth_select_a2dp_codec_type" msgid="952001408455456494">"Bluetooth աուդիո կոդեկ"</string>
     <string name="bluetooth_select_a2dp_codec_type_dialog_title" msgid="7510542404227225545">"Գործարկել Bluetooth աուդիո կոդեկը\nԸնտրություն"</string>
-    <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"Bluetooth աուդիոյի ընդհատավորման հաճախականությունը"</string>
+    <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"Bluetooth աուդիո սեմփլինգի հաճախականությունը"</string>
     <string name="bluetooth_select_a2dp_codec_sample_rate_dialog_title" msgid="5876305103137067798">"Գործարկել Bluetooth աուդիո կոդեկը\nԸնտրություն՝ ընդհատավորման հաճախականություն"</string>
     <string name="bluetooth_select_a2dp_codec_type_help_info" msgid="8647200416514412338">"Եթե տարրը մոխրագույն է, նշանակում է, որ չի աջակցվում հեռախոսի համ ականջակալի կողմից։"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"Bluetooth աուդիո, բիթ / նմուշ"</string>
@@ -419,7 +419,7 @@
     <string name="window_animation_scale_title" msgid="5236381298376812508">"Պատուհանի շարժապատկեր"</string>
     <string name="transition_animation_scale_title" msgid="1278477690695439337">"Անցումների շարժապատկեր"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Շարժանկարի տևողության սանդղակ"</string>
-    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Կրկնաստեղծել երկրորդական էկրան"</string>
+    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Երկրորդական էկրանների նմանակում"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Հավելվածներ"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Չպահել գործողությունները"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Օգտատիրոջ դուրս գալուց հետո հեռացնել բոլոր գործողությունները"</string>
@@ -667,7 +667,7 @@
     <string name="grant_admin" msgid="4323199171790522574">"Այո, տրամադրել ադմինիստրատորի իրավունքներ"</string>
     <string name="not_grant_admin" msgid="3557849576157702485">"Ոչ, չտրամադրել ադմինիստրատորի իրավունքներ"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Դուրս գալ"</string>
-    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Պահե՞լ հյուրի ռեժիմի պատմությունը"</string>
+    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Պահե՞լ աշխատաշրջանի պատմությունը"</string>
     <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Պահեք ընթացիկ աշխատաշրջանի պատմությունը կամ ջնջեք հավելվածներն ու տվյալները"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Ջնջել"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Պահել"</string>

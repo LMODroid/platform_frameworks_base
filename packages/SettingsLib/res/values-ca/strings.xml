@@ -382,7 +382,7 @@
     <string name="show_key_presses_summary" msgid="725387457373015024">"Mostra avisos visuals en prémer tecles físiques"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Mostra l\'entrada del ratolí tàctil"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Superposició de pantalla que mostra les dades d\'entrada del ratolí tàctil i els gestos reconeguts"</string>
-    <string name="show_screen_updates" msgid="2078782895825535494">"Canvis de superfície"</string>
+    <string name="show_screen_updates" msgid="2078782895825535494">"Mostra canvis de superfície"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Il·lumina superfícies de finestres en actualitzar-se"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Actualitzacions de visualitzacions"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Il·lumina visualitzacions de finestres creades"</string>
@@ -667,7 +667,7 @@
     <string name="grant_admin" msgid="4323199171790522574">"Sí, converteix-lo en administrador"</string>
     <string name="not_grant_admin" msgid="3557849576157702485">"No, no el converteixis en administrador"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Surt"</string>
-    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Desar l\'activitat de convidat?"</string>
+    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Vols desar l\'activitat de convidat?"</string>
     <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Pots desar l\'activitat de la sessió actual o suprimir totes les apps i dades"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Suprimeix"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Desa"</string>

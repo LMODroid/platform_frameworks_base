@@ -309,7 +309,7 @@
     <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"Частота дискретизации аудио Bluetooth"</string>
     <string name="bluetooth_select_a2dp_codec_sample_rate_dialog_title" msgid="5876305103137067798">"Запустить аудиокодек для Bluetooth\nВыбор: частота дискретизации"</string>
     <string name="bluetooth_select_a2dp_codec_type_help_info" msgid="8647200416514412338">"Серым цветом показаны варианты, не поддерживаемые телефоном или наушниками"</string>
-    <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"Бит на выборку аудио Bluetooth"</string>
+    <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"Глубина дискретизации аудио Bluetooth"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample_dialog_title" msgid="4898693684282596143">"Запустить аудиокодек для Bluetooth\nВыбор: разрядность"</string>
     <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"Режим аудиоканала Bluetooth"</string>
     <string name="bluetooth_select_a2dp_codec_channel_mode_dialog_title" msgid="2076949781460359589">"Запустить аудиокодек для Bluetooth\nВыбор: режим канала"</string>
@@ -384,8 +384,8 @@
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Экранный оверлей, на котором изображены входные данные сенсорной панели и распознанные жесты"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Показывать обновления поверхности"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Подсвечивать поверхности окон при обновлении"</string>
-    <string name="show_hw_screen_updates" msgid="2021286231267747506">"Показывать обнов. экрана"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Подсвечивать области экрана при отрисовке"</string>
+    <string name="show_hw_screen_updates" msgid="2021286231267747506">"Показывать обновления представлений"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Подсвечивать представления в окнах при прорисовке"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Показ. аппаратные обновл."</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Выделять аппаратные уровни зеленым при обновлении"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Отладка наложения"</string>
@@ -395,10 +395,10 @@
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"Вкл. трассировку OpenGL"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Откл. передачу аудио (USB)"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Отключить автоматическую передачу на внешние USB-устройства"</string>
-    <string name="debug_layout" msgid="1659216803043339741">"Показывать границы элементов"</string>
+    <string name="debug_layout" msgid="1659216803043339741">"Показывать границы макета"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"Показывать границы обрезки, поля и т. п."</string>
-    <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Отразить интерфейс"</string>
-    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Принудительно расположить элементы интерфейса справа налево вне зависимости от региональных настроек"</string>
+    <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Расположение справа налево"</string>
+    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Принудительно включить расположение справа налево для макетов экрана во всех региональных настройках"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Прозрачная панель навигации"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Сделать цвет фона панели навигации прозрачным по умолчанию"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Размытие на уровне окон"</string>
@@ -419,7 +419,7 @@
     <string name="window_animation_scale_title" msgid="5236381298376812508">"Анимация окон"</string>
     <string name="transition_animation_scale_title" msgid="1278477690695439337">"Анимация переходов"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Длительность анимации"</string>
-    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Эмуляция доп. экранов"</string>
+    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Симуляция дополнительных экранов"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Приложения"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Вытеснение фоновых Activity"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Удалять все Activity после выхода пользователя"</string>
@@ -628,7 +628,7 @@
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"Профиль с огр. доступом"</string>
     <string name="user_add_user_title" msgid="5457079143694924885">"Добавить пользователя?"</string>
     <string name="user_add_user_message_long" msgid="1527434966294733380">"Если этим устройством пользуются сразу несколько человек, для каждого из них можно создать профиль – отдельное пространство с выбранными приложениями, обоями и т. д. Новый пользователь настраивает его сам.\n\nИз профиля можно поменять и общие настройки устройства, например сеть Wi-Fi.\n\nОбновлять общие приложения могут все, однако специальные возможности настраиваются индивидуально."</string>
-    <string name="user_add_user_message_short" msgid="3295959985795716166">"Новому пользователю потребуется настроить свой профиль.\n\nЛюбой пользователь может обновлять приложения для всех остальных."</string>
+    <string name="user_add_user_message_short" msgid="3295959985795716166">"Новому пользователю потребуется настроить собственное пространство.\n\nЛюбой пользователь может обновлять приложения для всех остальных."</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"Назначить этого пользователя администратором?"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"У администраторов права шире, чем у других пользователей. Администратор может управлять аккаунтами всех пользователей, обновлять ПО на устройстве, менять и сбрасывать его настройки, просматривать установленные приложения, а также предоставлять и отзывать права администратора."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Назначить администратором"</string>
@@ -661,22 +661,22 @@
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"Удалить"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"Сброс гостевого сеанса…"</string>
     <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"Сбросить гостевой сеанс?"</string>
-    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"При этом начнется новый гостевой сеанс, а все данные и приложения предыдущего сеанса будут удалены."</string>
+    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"При этом начнется новый гостевой сеанс, а все данные и приложения из предыдущего будут удалены."</string>
     <string name="guest_exit_dialog_title" msgid="1846494656849381804">"Выйти из гостевого режима?"</string>
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"Все приложения и данные текущего гостевого сеанса будут удалены."</string>
     <string name="grant_admin" msgid="4323199171790522574">"Предоставить права администратора"</string>
     <string name="not_grant_admin" msgid="3557849576157702485">"Не предоставлять права администратора"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Выйти"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Сохранить историю сеанса?"</string>
-    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Сохраните историю текущего сеанса или удалите данные и приложения."</string>
+    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Вы можете сохранить историю текущего сеанса или удалить все данные и приложения."</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Удалить"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Сохранить"</string>
     <string name="guest_exit_button" msgid="5774985819191803960">"Выйти из гостевого режима"</string>
     <string name="guest_reset_button" msgid="2515069346223503479">"Сбросить гостевой сеанс"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"Выйти из гостевого режима"</string>
-    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"История будет удалена сразу после выхода"</string>
+    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"При выходе вся история будет удалена"</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"При выходе вы можете сохранить или удалить историю"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Можно сбросить историю сеанса прямо сейчас, либо удалить или сохранить ее при выходе."</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Можно сбросить историю сеанса прямо сейчас либо удалить или сохранить ее при выходе"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"Выбрать фотографию"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"Слишком много неудачных попыток. С устройства будут удалены все данные."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"Слишком много неудачных попыток. Этот пользователь будет удален."</string>

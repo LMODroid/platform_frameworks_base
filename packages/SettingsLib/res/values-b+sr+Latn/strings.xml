@@ -378,7 +378,7 @@
     <string name="pointer_location_summary" msgid="957120116989798464">"Preklopni element sa trenutnim podacima o dodiru"</string>
     <string name="show_touches" msgid="8437666942161289025">"Prikazuj dodire"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Prikazuje vizuelne povratne informacije za dodire"</string>
-    <string name="show_key_presses" msgid="6360141722735900214">"Prikazuj pritiske tastera"</string>
+    <string name="show_key_presses" msgid="6360141722735900214">"Prikaži pritiske tastera"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"Prikazuje povratne informacije za pritiske tastera"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Prikaži unos na tačpedu"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Element koji prekriva sadržaj ekrana prikazuje podatke iz unosa na tačpedu i prepoznaje pokrete"</string>
@@ -416,10 +416,10 @@
     <string name="verbose_vendor_logging_notification_action" msgid="1190831050259046071">"Omogući još jedan dan"</string>
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Onemogućeno posle jednog dana"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Omogućeno neograničeno"</string>
-    <string name="window_animation_scale_title" msgid="5236381298376812508">"Razmera animacije prozora"</string>
-    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Razmera animacije prelaza"</string>
-    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Animatorova razmera trajanja"</string>
-    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simuliraj sekundarne ekrane"</string>
+    <string name="window_animation_scale_title" msgid="5236381298376812508">"Brzina animacije prozora"</string>
+    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Brzina animacije prelaza"</string>
+    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Brzina generisanja animacije"</string>
+    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simulacija sekundarnih ekrana"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplikacije"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Ne čuvaj aktivnosti"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Uništava svaku aktivnost čim je korisnik napusti"</string>

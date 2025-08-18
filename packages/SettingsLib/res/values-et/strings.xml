@@ -674,7 +674,7 @@
     <string name="guest_exit_button" msgid="5774985819191803960">"Välju külalisrežiimist"</string>
     <string name="guest_reset_button" msgid="2515069346223503479">"Lähtesta külastajaseanss"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"Välju külastajaseansist"</string>
-    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Kõik tegevused kustutatakse väljumisel"</string>
+    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Kõik tegevused kustutatakse väljumisel."</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"Võite tegevused väljumisel salvestada või kustutada."</string>
     <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Seansi tegevuste kohe kustutamiseks lähtestage; või salvestage või kustutage need väljumisel."</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"Valige foto"</string>

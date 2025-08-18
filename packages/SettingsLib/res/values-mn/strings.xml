@@ -378,8 +378,8 @@
     <string name="pointer_location_summary" msgid="957120116989798464">"Дэлгэцийн давхаргаар одоогийн хүрэлтийн өгөгдлийг харуулж байна"</string>
     <string name="show_touches" msgid="8437666942161289025">"Товшилтыг харуулах"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Товшилтын визуал хариу үйлдлийг харуулах"</string>
-    <string name="show_key_presses" msgid="6360141722735900214">"Түлхүүрийн даралт харуул"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"Биет түлхүүрийн даралтын визуал хариу үйлдлийг харуул"</string>
+    <string name="show_key_presses" msgid="6360141722735900214">"Товчлуурын даралт харуул"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"Биет товчлуурын даралтын визуал хариу үйлдлийг харуул"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Мэдрэгч самбарын оролтыг харуулах"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Дэлгэцэд давхарлах нь мэдрэгч самбарын оролтын өгөгдөл болон танигдсан зангааг үзүүлж байна"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Гадаргын шинэчлэлтүүдийг харуулах"</string>

@@ -268,7 +268,7 @@
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"Uparivanje s uređajem"</string>
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Kôd za uparivanje putem Wi-Fija"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Uparivanje nije uspjelo"</string>
-    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Provjerite je li uređaj povezan na istu mrežu."</string>
+    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Provjerite je li uređaj povezan s istom mrežom."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Uparite uređaj putem Wi-Fija skeniranjem QR koda"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Uparivanje uređaja…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Uparivanje uređaja nije uspjelo. QR kôd je neispravan ili uređaj nije povezan na istu mrežu."</string>
@@ -381,7 +381,7 @@
     <string name="show_key_presses" msgid="6360141722735900214">"Prikaži pritiske na tipke"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"Prikazuje vizualne povratne informacije za pritiske na tipke"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Prikaži unos na dodirnu podlogu"</string>
-    <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Na preklapanju na zaslonu prikazuju se podaci uneseni na dodirnoj podlozi i prepoznati pokreti"</string>
+    <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Na zaslonu se prikazuju podaci o unosu na dodirnu podlogu i prepoznati pokreti"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Prikaži ažuriranja površine"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Sve površine prozora bljeskaju pri ažuriranju"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Prikaži ažuriranja prikaza"</string>
@@ -418,7 +418,7 @@
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Omogućeno na neograničeno vrijeme"</string>
     <string name="window_animation_scale_title" msgid="5236381298376812508">"Brzina animacije prozora"</string>
     <string name="transition_animation_scale_title" msgid="1278477690695439337">"Brzina animacije prijelaza"</string>
-    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Brzina generiranja animacija"</string>
+    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Trajanje animacije"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simulacija sekundarnih zaslona"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplikacije"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Ukloni aktivnosti"</string>

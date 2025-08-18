@@ -257,7 +257,7 @@
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Associer l\'appareil à l\'aide d\'un code QR"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Associer les nouveaux appareils à l\'aide d\'un lecteur de code QR"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Associer l\'appareil avec un code d\'association"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Associer les nouveaux appareils à l\'aide d\'un code à six chiffres"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Associez les nouveaux appareils à l\'aide d\'un code à six chiffres"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Appareils associés"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Actuellement connecté"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Renseignements sur l\'appareil"</string>
@@ -369,23 +369,23 @@
     <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Avant de s\'exécuter, l\'appli déboguée doit attendre que le débogueur soit attaché."</string>
     <string name="debug_input_category" msgid="7349460906970849771">"Entrée"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"Dessin"</string>
-    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Accélération matérielle"</string>
+    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Rendu accéléré par le matériel"</string>
     <string name="media_category" msgid="8122076702526144053">"Médias"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Surveillance"</string>
     <string name="strict_mode" msgid="889864762140862437">"Mode Strict activé"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"L\'écran clignote lors d\'opérations longues sur fil principal"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Emplacement du curseur"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"Superposition écran indiquant données des touchers"</string>
-    <string name="show_touches" msgid="8437666942161289025">"Afficher éléments touchés"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"Afficher repère visuel pour éléments sélectionnés"</string>
-    <string name="show_key_presses" msgid="6360141722735900214">"Afficher press. de touches"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"Afficher retour visuel pour press. de touches phys."</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"Superposition de l\'écran indiquant les données des touchers"</string>
+    <string name="show_touches" msgid="8437666942161289025">"Afficher les éléments touchés"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"Affichez un repère visuel pour les éléments touchés"</string>
+    <string name="show_key_presses" msgid="6360141722735900214">"Afficher la pression des touches"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"Affichez le retour visuel pour la pression des touches physiques"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Afficher l\'entrée du pavé tactile"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Superposition de l\'écran affichant les données d\'entrée du pavé tactile et les gestes reconnus"</string>
-    <string name="show_screen_updates" msgid="2078782895825535494">"Afficher mises à jour surface"</string>
+    <string name="show_screen_updates" msgid="2078782895825535494">"Afficher les mises à jour surface"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Faites clignoter les surfaces à chaque mise à jour"</string>
-    <string name="show_hw_screen_updates" msgid="2021286231267747506">"Afficher m. à j. affichage"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Faites clignoter éléments dessinés dans les fenêtres"</string>
+    <string name="show_hw_screen_updates" msgid="2021286231267747506">"Afficher mises à jour de l\'affichage"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Faites clignoter les éléments dessinés dans les fenêtres"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Mises à jour couches mat."</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Couches matérielles en vert une fois mises à jour"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Déboguer les conflits GPU"</string>
@@ -398,7 +398,7 @@
     <string name="debug_layout" msgid="1659216803043339741">"Afficher les contours"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"Affichez les contours de découpe, les marges, etc."</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Forcer droite à gauche"</string>
-    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Forcez l\'orientation de droite à gauche (toutes langues)"</string>
+    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Forcez l\'orientation de droite à gauche (pour toutes les langues)"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Barre de navigation transparente"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Rendez la couleur d\'arrière-plan de la barre de navigation transparente par défaut"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Autoriser le flou au niveau des fenêtres"</string>
@@ -416,9 +416,9 @@
     <string name="verbose_vendor_logging_notification_action" msgid="1190831050259046071">"Activer pour une journée de plus"</string>
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Se désactive après une journée"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Activé indéfiniment"</string>
-    <string name="window_animation_scale_title" msgid="5236381298376812508">"Échelle animation fenêtres"</string>
+    <string name="window_animation_scale_title" msgid="5236381298376812508">"Échelle d\'animation des fenêtres"</string>
     <string name="transition_animation_scale_title" msgid="1278477690695439337">"Éch. d\'animation des transitions"</string>
-    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Échelle durée animation"</string>
+    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Échelle de durée des animations"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simuler des écrans secondaires"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Applis"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Ne pas conserver activités"</string>
@@ -668,7 +668,7 @@
     <string name="not_grant_admin" msgid="3557849576157702485">"Non, ne pas le définir comme administrateur"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Quitter"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Enregistrer l\'activité d\'invité?"</string>
-    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Vous pouvez enregistrer l\'activité de session ou supprimer les applis et données"</string>
+    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Vous pouvez enregistrer l\'activité de la session ou supprimer les applis et données"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Supprimer"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Enregistrer"</string>
     <string name="guest_exit_button" msgid="5774985819191803960">"Quitter le mode Invité"</string>

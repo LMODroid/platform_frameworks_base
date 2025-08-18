@@ -383,7 +383,7 @@
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Näytä kosketuslevyn syöte"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Näytön peitto, jossa näkyy kosketuslevyn syötedata ja tunnistetut eleet"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Näytä pintapäivitykset"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Väläytä koko ikkunoiden pinnat päivitettäessä"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Näytä kaikki ikkunapinnat päivitettäessä"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Näytä näyttöpäivitykset"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Näytä ikkunoiden sisältö piirtämisen yhteydessä"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Näytä laitteistotason päivitykset"</string>
@@ -661,7 +661,7 @@
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"Poista"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"Nollataan vierasta…"</string>
     <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"Nollataanko vierailija-käyttökerta?"</string>
-    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Tämä aloittaa uuden vierailija-käyttökerran ja kaikki nykyisen istunnon sovellukset ja data poistetaan"</string>
+    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Uusi vierailija-käyttökerta aloitetaan ja kaikki nykyisen istunnon sovellukset ja data poistetaan"</string>
     <string name="guest_exit_dialog_title" msgid="1846494656849381804">"Poistutaanko vierastilasta?"</string>
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"Tämä poistaa nykyisen vierailija-käyttökerran sovellukset ja datan"</string>
     <string name="grant_admin" msgid="4323199171790522574">"Kyllä, tee hänestä järjestelmänvalvoja"</string>
@@ -674,9 +674,9 @@
     <string name="guest_exit_button" msgid="5774985819191803960">"Poistu vierastilasta"</string>
     <string name="guest_reset_button" msgid="2515069346223503479">"Nollaa vierailija-käyttökerta"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"Kirjaa vieras ulos"</string>
-    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Kaikki toiminta poistetaan uloskirjaamisen aikana"</string>
+    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Kaikki toiminta poistetaan poistuessasi"</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"Voit tallentaa tai poistaa toiminnan poistuessasi"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Nollaa poistaaksesi istunnon toiminnan nyt, tai voit tallentaa tai poistaa toimintaa poistuessasi"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Poista istunnon toiminta nollaamalla nyt, tai voit tallentaa tai poistaa toimintaa poistuessasi"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"Valitse kuva"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"Liian monta virheellistä yritystä. Laitteen data poistetaan."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"Liian monta virheellistä yritystä. Tämä käyttäjä poistetaan."</string>
