@@ -309,7 +309,7 @@
     <string name="turn_on_bluetooth_auto_tomorrow" msgid="3345758139235739006">"Automatski uključi sutra"</string>
     <string name="turn_on_bluetooth_auto_info_disabled" msgid="682984290339848844">"Značajke kao što su brzo dijeljenje i Pronađi moj uređaj koriste Bluetooth"</string>
     <string name="turn_on_bluetooth_auto_info_enabled" msgid="7440944034584560279">"Bluetooth će se uključiti sutra ujutro"</string>
-    <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"Dijeli zvuk"</string>
+    <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"Zajednički slušajte"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"Zajedničko slušanje"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_accessibility" msgid="7604615019302091708">"unesite postavke zajedničkog slušanja"</string>
     <string name="quick_settings_bluetooth_secondary_label_battery_level" msgid="4182034939479344093">"<xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%s</xliff:g> baterije"</string>
