@@ -340,7 +340,7 @@
     <string name="permgroupdesc_camera" msgid="7585150538459320326">"tomar fotografías y grabar videos"</string>
     <string name="permgrouplab_nearby_devices" msgid="5529147543651181991">"Dispositivos cercanos"</string>
     <string name="permgroupdesc_nearby_devices" msgid="3213561597116913508">"descubrir y conectarse a dispositivos cercanos"</string>
-    <string name="permgrouplab_calllog" msgid="7926834372073550288">"Registros de llamadas"</string>
+    <string name="permgrouplab_calllog" msgid="7926834372073550288">"Llamadas"</string>
     <string name="permgroupdesc_calllog" msgid="2026996642917801803">"leer y escribir el registro de llamadas telefónicas"</string>
     <string name="permgrouplab_phone" msgid="570318944091926620">"Teléfono"</string>
     <string name="permgroupdesc_phone" msgid="270048070781478204">"hacer y administrar llamadas telefónicas"</string>

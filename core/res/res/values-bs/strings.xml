@@ -328,7 +328,7 @@
     <string name="permgroupdesc_sms" msgid="5726462398070064542">"šalje i pregleda SMS poruke"</string>
     <string name="permgrouplab_storage" msgid="17339216290379241">"Fajlovi"</string>
     <string name="permgroupdesc_storage" msgid="5378659041354582769">"pristup fajlovima na vašem uređaju"</string>
-    <string name="permgrouplab_readMediaAural" msgid="1858331312624942053">"Muzika i audio"</string>
+    <string name="permgrouplab_readMediaAural" msgid="1858331312624942053">"Muzika i zvuk"</string>
     <string name="permgroupdesc_readMediaAural" msgid="7565467343667089595">"pristupanje muzici i zvuku na vašem uređaju"</string>
     <string name="permgrouplab_readMediaVisual" msgid="4724874717811908660">"Fotografije i videozapisi"</string>
     <string name="permgroupdesc_readMediaVisual" msgid="4080463241903508688">"pristupanje fotografijama i videozapisima na vašem uređaju"</string>
@@ -1664,7 +1664,7 @@
     <string name="default_audio_route_name_headphones" msgid="6954070994792640762">"Slušalice"</string>
     <string name="default_audio_route_name_usb" msgid="895668743163316932">"USB"</string>
     <string name="default_audio_route_category_name" msgid="5241740395748134483">"Sistem"</string>
-    <string name="bluetooth_a2dp_audio_route_name" msgid="4214648773120426288">"Bluetooth audio"</string>
+    <string name="bluetooth_a2dp_audio_route_name" msgid="4214648773120426288">"Bluetooth zvuk"</string>
     <string name="wireless_display_route_description" msgid="8297563323032966831">"Bežični prikaz"</string>
     <string name="media_route_button_content_description" msgid="2299223698196869956">"Emitiranje"</string>
     <string name="media_route_chooser_title" msgid="6646594924991269208">"Poveži na uređaj"</string>

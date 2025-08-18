@@ -1183,7 +1183,7 @@
     <string name="copyUrl" msgid="6229645005987260230">"Kopier webadresse"</string>
     <string name="selectTextMode" msgid="3225108910999318778">"Markér tekst"</string>
     <string name="undo" msgid="3175318090002654673">"Fortryd"</string>
-    <string name="redo" msgid="7231448494008532233">"Annuller fortryd"</string>
+    <string name="redo" msgid="7231448494008532233">"Annuller fortrydelse"</string>
     <string name="autofill" msgid="511224882647795296">"Autofyld"</string>
     <string name="textSelectionCABTitle" msgid="5151441579532476940">"Tekstmarkering"</string>
     <string name="addToDictionary" msgid="8041821113480950096">"Føj til ordbog"</string>

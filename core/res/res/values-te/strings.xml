@@ -337,7 +337,7 @@
     <string name="permgroupdesc_activityRecognition" msgid="4725624819457670704">"ఫిజికల్ యాక్టివిటీని యాక్సెస్ చేయండి"</string>
     <string name="permgrouplab_camera" msgid="9090413408963547706">"కెమెరా"</string>
     <string name="permgroupdesc_camera" msgid="7585150538459320326">"చిత్రాలను తీయడానికి మరియు వీడియోను రికార్డ్ చేయడానికి"</string>
-    <string name="permgrouplab_nearby_devices" msgid="5529147543651181991">"సమీపంలోని పరికరాలు"</string>
+    <string name="permgrouplab_nearby_devices" msgid="5529147543651181991">"సమీపంలోని డివైజ్‌లు"</string>
     <string name="permgroupdesc_nearby_devices" msgid="3213561597116913508">"సమీప పరికరాలను కనుగొనండి అలాగే కనెక్ట్ చేయండి"</string>
     <string name="permgrouplab_calllog" msgid="7926834372073550288">"కాల్ లాగ్స్‌"</string>
     <string name="permgroupdesc_calllog" msgid="2026996642917801803">"ఫోన్ కాల్ లాగ్‌ని చదవండి మరియు రాయండి"</string>
@@ -1393,7 +1393,7 @@
     <string name="no_permissions" msgid="5729199278862516390">"అనుమతులు అవసరం లేదు"</string>
     <string name="perm_costs_money" msgid="749054595022779685">"దీనికి మీకు డబ్బు ఖర్చు కావచ్చు"</string>
     <string name="dlg_ok" msgid="5103447663504839312">"సరే"</string>
-    <string name="usb_charging_notification_title" msgid="1674124518282666955">"USB ద్వారా ఈ పరికరాన్ని ఛార్జ్ చేస్తోంది"</string>
+    <string name="usb_charging_notification_title" msgid="1674124518282666955">"USB ద్వారా ఈ డివైజ్‌‌ను ఛార్జ్ చేస్తోంది"</string>
     <string name="usb_supplying_notification_title" msgid="5378546632408101811">"USB ద్వారా కనెక్ట్ చేయబడిన పరికరాన్ని ఛార్జ్ చేస్తోంది"</string>
     <string name="usb_mtp_notification_title" msgid="1065989144124499810">"USB ఫైల్ బదిలీ ఆన్ చేయబడింది"</string>
     <string name="usb_ptp_notification_title" msgid="5043437571863443281">"USB ద్వారా PTP ఆన్ చేయబడింది"</string>
