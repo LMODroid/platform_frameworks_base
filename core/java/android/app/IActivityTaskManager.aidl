@@ -384,8 +384,9 @@ interface IActivityTaskManager {
     /**
      * This setups the leashed for sysui to animate the current back gesture.
      * Only valid after startBackNavigation.
+     * @return Returns whether system can prepare back animation.
      */
-    void startPredictiveBackAnimation();
+    boolean startPredictiveBackAnimation();
 
     /**
      * registers a callback to be invoked when a background activity launch is aborted.

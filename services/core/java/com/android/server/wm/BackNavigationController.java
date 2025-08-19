@@ -161,15 +161,20 @@ class BackNavigationController {
      * Set up the necessary leashes for predictive back animation based on previous
      * startBackNavigation state.
      */
-    void startPredictiveBackAnimation() {
+    boolean startPredictiveBackAnimation() {
         synchronized (mWindowManagerService.mGlobalLock) {
             if (mCurrentAnimationBuilder == null) {
-                return;
+                return false;
+            }
+            if (mWindowManagerService.mAtmService.getTransitionController().inTransition()) {
+                mCurrentAnimationBuilder = null;
+                return false;
             }
             final AnimationHandler.ScheduleAnimationBuilder tmp = mCurrentAnimationBuilder;
             mCurrentAnimationBuilder = null;
             scheduleAnimationInner(tmp);
         }
+        return true;
     }
 
     /**

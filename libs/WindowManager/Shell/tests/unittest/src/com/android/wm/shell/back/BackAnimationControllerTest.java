@@ -186,6 +186,7 @@ public class BackAnimationControllerTest extends ShellTestCase {
         mController.mTouchableArea.set(mTouchableRegion);
         mBackTransitionHandler = mController.mBackTransitionHandler;
         spyOn(mBackTransitionHandler);
+        doReturn(true).when(mActivityTaskManager).startPredictiveBackAnimation();
     }
 
     private void createNavigationInfo(int backType,

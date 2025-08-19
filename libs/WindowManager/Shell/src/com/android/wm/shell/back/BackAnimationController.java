@@ -493,10 +493,15 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
             if (!shouldDispatchToAnimator()) {
                 return;
             }
+            boolean started;
             try {
-                mActivityTaskManager.startPredictiveBackAnimation();
+                started = mActivityTaskManager.startPredictiveBackAnimation();
             } catch (RemoteException r) {
                 Log.e(TAG, "Failed to start predictive animation", r);
+                started = false;
+            }
+            if (!started) {
+                ProtoLog.d(WM_SHELL_BACK_PREVIEW, "Failed to start predictive back animation.");
                 finishBackNavigation(mCurrentTracker.getTriggerBack());
                 return;
             }
