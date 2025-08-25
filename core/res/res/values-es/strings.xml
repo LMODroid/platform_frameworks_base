@@ -93,7 +93,7 @@
     <string name="notification_channel_sms" msgid="1243384981025535724">"Mensajes SMS"</string>
     <string name="notification_channel_voice_mail" msgid="8457433203106654172">"Mensajes de voz"</string>
     <string name="notification_channel_wfc" msgid="9048240466765169038">"Llamada por Wi-Fi"</string>
-    <string name="notification_channel_sim" msgid="5098802350325677490">"Estado de la tarjeta SIM"</string>
+    <string name="notification_channel_sim" msgid="5098802350325677490">"Estado de la SIM"</string>
     <string name="notification_channel_sim_high_prio" msgid="642361929452850928">"Estado de SIM de alta prioridad"</string>
     <string name="peerTtyModeFull" msgid="337553730440832160">"Un dispositivo ha solicitado el modo TTY FULL"</string>
     <string name="peerTtyModeHco" msgid="5626377160840915617">"Un dispositivo ha solicitado el modo TTY HCO"</string>
@@ -225,8 +225,8 @@
     <string name="personal_apps_suspension_soon_text" msgid="8123898693479590">"Las aplicaciones personales se bloquearán el <xliff:g id="DATE">%1$s</xliff:g> a las <xliff:g id="TIME">%2$s</xliff:g>. Tu administrador de TI no permite que tu perfil de trabajo esté más de <xliff:g id="NUMBER">%3$d</xliff:g> días desactivado."</string>
     <string name="personal_apps_suspended_turn_profile_on" msgid="2758012869627513689">"Activar"</string>
     <string name="work_profile_telephony_paused_title" msgid="7690804479291839519">"Llamadas y mensajes desactivados"</string>
-    <string name="work_profile_telephony_paused_text" msgid="8065762301100978221">"Has pausado las aplicaciones de trabajo. No recibirás llamadas ni mensajes de texto."</string>
-    <string name="work_profile_telephony_paused_turn_on_button" msgid="7542632318337068821">"Reanudar aplicaciones de trabajo"</string>
+    <string name="work_profile_telephony_paused_text" msgid="8065762301100978221">"Has pausado las apps de trabajo. No recibirás llamadas ni mensajes de texto."</string>
+    <string name="work_profile_telephony_paused_turn_on_button" msgid="7542632318337068821">"Reanudar apps de trabajo"</string>
     <string name="me" msgid="6207584824693813140">"Yo"</string>
     <string name="power_dialog" product="tablet" msgid="8333207765671417261">"Opciones de la tablet"</string>
     <string name="power_dialog" product="tv" msgid="7792839006640933763">"Opciones de Android TV"</string>
@@ -414,8 +414,8 @@
     <string name="permdesc_killBackgroundProcesses" msgid="2357013583055434685">"Este permiso autoriza a la aplicación a interrumpir procesos en segundo plano de otras aplicaciones y puede hacer, por tanto, que esas aplicaciones dejen de ejecutarse."</string>
     <string name="permlab_systemAlertWindow" msgid="5757218350944719065">"Esta aplicación puede aparecer sobre otras aplicaciones"</string>
     <string name="permdesc_systemAlertWindow" msgid="1145660714855738308">"Esta aplicación puede aparecer sobre otras aplicaciones u otras partes de la pantalla. Esto puede interferir con el uso normal de las aplicaciones y cambiar la forma en la que estas aparecen."</string>
-    <string name="permlab_hideOverlayWindows" msgid="6382697828482271802">"ocultar superposiciones de otras aplicaciones"</string>
-    <string name="permdesc_hideOverlayWindows" msgid="5660242821651958225">"Esta aplicación puede solicitar que el sistema oculte superposiciones de otras aplicaciones para que no se muestren sobre ella."</string>
+    <string name="permlab_hideOverlayWindows" msgid="6382697828482271802">"ocultar superposiciones de otras apps"</string>
+    <string name="permdesc_hideOverlayWindows" msgid="5660242821651958225">"Esta app puede solicitar que el sistema oculte superposiciones de otras apps para que no se muestren sobre ella."</string>
     <string name="permlab_runInBackground" msgid="541863968571682785">"ejecutarse en segundo plano"</string>
     <string name="permdesc_runInBackground" msgid="4344539472115495141">"Esta aplicación puede ejecutarse en segundo plano, pero es posible que la batería se agote más rápido."</string>
     <string name="permlab_useDataInBackground" msgid="783415807623038947">"utilizar datos en segundo plano"</string>
@@ -530,7 +530,7 @@
     <string name="permdesc_vibrate" msgid="8733343234582083721">"Permite que la aplicación controle la función de vibración."</string>
     <string name="permdesc_vibrator_state" msgid="7050024956594170724">"Permite que la aplicación acceda al ajuste de vibración."</string>
     <string name="permlab_callPhone" msgid="1798582257194643320">"llamar directamente a números de teléfono"</string>
-    <string name="permdesc_callPhone" msgid="7892422187827695656">"Permite que la aplicación llame a números de teléfono sin tu intervención, lo que puede dar lugar a llamadas o cargos inesperados. Ten en cuenta que esto no permite que la aplicación llame a números de emergencia. Las aplicaciones maliciosas pueden incurrir en gastos al hacer llamadas sin tu confirmación o marcar códigos de operador que desvían automáticamente las llamadas entrantes a otro número."</string>
+    <string name="permdesc_callPhone" msgid="7892422187827695656">"Permite que la app llame a números de teléfono sin tu intervención, lo que puede dar lugar a llamadas o cargos inesperados. Ten en cuenta que esto no permite que la app llame a números de emergencia. Las apps maliciosas pueden incurrir en gastos al hacer llamadas sin tu confirmación o marcar códigos de operador que desvían automáticamente las llamadas entrantes a otro número."</string>
     <string name="permlab_accessImsCallService" msgid="442192920714863782">"acceder al servicio de llamadas IMS"</string>
     <string name="permdesc_accessImsCallService" msgid="6328551241649687162">"Permite que la aplicación utilice el servicio IMS para realizar llamadas sin tu intervención."</string>
     <string name="permlab_readPhoneState" msgid="8138526903259297969">"consultar la identidad y el estado del teléfono"</string>
@@ -831,8 +831,8 @@
     <string name="permdesc_highSamplingRateSensors" msgid="8430061978931155995">"Permite que la aplicación consulte datos de sensores a una frecuencia superior a 200 Hz"</string>
     <string name="permlab_updatePackagesWithoutUserAction" msgid="3363272609642618551">"actualizar la aplicación sin la acción del usuario"</string>
     <string name="permdesc_updatePackagesWithoutUserAction" msgid="4567739631260526366">"Permite que una aplicación instalada previamente se actualice sin la acción del usuario"</string>
-    <string name="permlab_writeVerificationStateE2eeContactKeys" msgid="3990742344778360457">"Actualizar los estados de verificación de las claves de contacto de cifrado de extremo a extremo que sean propiedad de otras aplicaciones"</string>
-    <string name="permdesc_writeVerificationStateE2eeContactKeys" msgid="8453156829747427041">"Permite que la aplicación actualice los estados de verificación de las claves de contacto de cifrado de extremo a extremo que sean propiedad de otras aplicaciones."</string>
+    <string name="permlab_writeVerificationStateE2eeContactKeys" msgid="3990742344778360457">"Actualizar los estados de verificación de las claves de contacto de cifrado de extremo a extremo que sean propiedad de otras apps"</string>
+    <string name="permdesc_writeVerificationStateE2eeContactKeys" msgid="8453156829747427041">"Permite que la app actualice los estados de verificación de las claves de contacto de cifrado de extremo a extremo que sean propiedad de otras apps."</string>
     <string name="policylab_limitPassword" msgid="4851829918814422199">"Establecimiento de reglas de contraseña"</string>
     <string name="policydesc_limitPassword" msgid="4105491021115793793">"Controla la longitud y los caracteres permitidos en los PIN y en las contraseñas de bloqueo de pantalla."</string>
     <string name="policylab_watchLogin" msgid="7599669460083719504">"Supervisar los intentos de desbloqueo de pantalla"</string>
@@ -2009,7 +2009,7 @@
     <string name="work_mode_turn_on" msgid="5316648862401307800">"Reactivar"</string>
     <string name="work_mode_emergency_call_button" msgid="6818855962881612322">"Emergencia"</string>
     <string name="set_up_screen_lock_title" msgid="8346083801616474030">"Define un bloqueo de pantalla"</string>
-    <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"Establecer bloqueo de pantalla"</string>
+    <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"Definir bloqueo"</string>
     <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"Para usar el espacio privado, define un bloqueo de pantalla"</string>
     <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"Para eliminar el espacio privado, define un método de desbloqueo de pantalla en este dispositivo"</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"La aplicación no está disponible"</string>
@@ -2224,7 +2224,7 @@
     <string name="resolver_cant_access_work_apps_explanation" msgid="1129960195389373279">"Este contenido no se puede abrir con aplicaciones de trabajo"</string>
     <string name="resolver_cant_share_with_personal_apps_explanation" msgid="6349766201904601544">"Este contenido no se puede compartir con aplicaciones personales"</string>
     <string name="resolver_cant_access_personal_apps_explanation" msgid="1679399548862724359">"Este contenido no se puede abrir con aplicaciones personales"</string>
-    <string name="resolver_turn_on_work_apps" msgid="1535946298236678122">"Las aplicaciones de trabajo están en pausa"</string>
+    <string name="resolver_turn_on_work_apps" msgid="1535946298236678122">"Las apps de trabajo están en pausa"</string>
     <string name="resolver_switch_on_work" msgid="4527096360772311894">"Reactivar"</string>
     <string name="resolver_no_work_apps_available" msgid="3298291360133337270">"Ninguna aplicación de trabajo"</string>
     <string name="resolver_no_personal_apps_available" msgid="6284837227019594881">"Ninguna aplicación personal"</string>
@@ -2233,8 +2233,8 @@
     <string name="miniresolver_open_in_work" msgid="941341494673509916">"¿Abrir en <xliff:g id="APP">%s</xliff:g> de trabajo?"</string>
     <string name="miniresolver_call_in_work" msgid="528779988307529039">"¿Llamar desde la aplicación de trabajo?"</string>
     <string name="miniresolver_switch_to_work" msgid="1042640606122638596">"¿Cambiar a la aplicación de trabajo?"</string>
-    <string name="miniresolver_call_information" msgid="6739417525304184083">"Tu organización solo te permite hacer llamadas desde aplicaciones de trabajo"</string>
-    <string name="miniresolver_sms_information" msgid="4311292661329483088">"Tu organización solo te permite enviar mensajes desde aplicaciones de trabajo"</string>
+    <string name="miniresolver_call_information" msgid="6739417525304184083">"Tu organización solo te permite hacer llamadas desde apps de trabajo"</string>
+    <string name="miniresolver_sms_information" msgid="4311292661329483088">"Tu organización solo te permite enviar mensajes desde apps de trabajo"</string>
     <string name="miniresolver_private_space_phone_information" msgid="4469511223312488570">"Solo puedes hacer llamadas desde tu aplicación personal Teléfono. Las llamadas que hagas desde Teléfono se añadirán a tu historial de llamadas."</string>
     <string name="miniresolver_private_space_messages_information" msgid="111285656327622118">"Solo puedes enviar mensajes SMS desde tu aplicación personal Mensajes."</string>
     <string name="miniresolver_use_personal_browser" msgid="776072682871133308">"Usar navegador personal"</string>
@@ -2452,6 +2452,6 @@
     <string name="keyboard_shortcut_group_applications_calendar" msgid="3571770335653387606">"Calendar"</string>
     <string name="keyboard_shortcut_group_applications_calculator" msgid="6753209559716091507">"Calculadora"</string>
     <string name="keyboard_shortcut_group_applications_maps" msgid="7950000659522589471">"Maps"</string>
-    <string name="keyboard_shortcut_group_applications" msgid="3010389163951364798">"Aplicaciones"</string>
+    <string name="keyboard_shortcut_group_applications" msgid="3010389163951364798">"Apps"</string>
     <string name="fingerprint_loe_notification_msg" msgid="3927447270148854546">"Tus huellas digitales ya no pueden reconocerse. Vuelve a configurar Desbloqueo con huella digital."</string>
 </resources>

@@ -1907,7 +1907,7 @@
     <string name="clone_profile_label_badge" msgid="1871997694718793964">"שכפול של <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="private_profile_label_badge" msgid="1712086003787839183">"<xliff:g id="LABEL">%1$s</xliff:g> בפרופיל הפרטי"</string>
     <string name="lock_to_app_unlock_pin" msgid="3890940811866290782">"יש לבקש קוד אימות לפני ביטול הצמדה"</string>
-    <string name="lock_to_app_unlock_pattern" msgid="2694204070499712503">"צריך לבקש קו ביטול נעילה לפני ביטול הצמדה"</string>
+    <string name="lock_to_app_unlock_pattern" msgid="2694204070499712503">"צריך לבקש קו פתיחת נעילה לפני ביטול הצמדה"</string>
     <string name="lock_to_app_unlock_password" msgid="9126722403506560473">"יש לבקש סיסמה לפני ביטול הצמדה"</string>
     <string name="package_installed_device_owner" msgid="8684974629306529138">"החבילה הותקנה על ידי האדמין.\nצריך לעבור להגדרות כדי לראות את ההרשאות שניתנו"</string>
     <string name="package_updated_device_owner" msgid="7560272363805506941">"עודכנה על ידי מנהל המערכת"</string>
@@ -2010,7 +2010,7 @@
     <string name="work_mode_emergency_call_button" msgid="6818855962881612322">"שיחת חירום"</string>
     <string name="set_up_screen_lock_title" msgid="8346083801616474030">"הגדרת נעילת מסך"</string>
     <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"הגדרה של נעילת מסך"</string>
-    <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"כדי להשתמש במרחב הפרטי יש להגדיר נעילת מסך במכשיר"</string>
+    <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"כדי להשתמש במרחב הפרטי, עליך להגדיר נעילת מסך במכשיר"</string>
     <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"כדי למחוק את המרחב הפרטי, צריך להגדיר נעילת מסך במכשיר הזה."</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"האפליקציה לא זמינה"</string>
     <string name="app_blocked_message" msgid="542972921087873023">"האפליקציה <xliff:g id="APP_NAME">%1$s</xliff:g> לא זמינה בשלב זה."</string>

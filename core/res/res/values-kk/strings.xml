@@ -2422,7 +2422,7 @@
     <string name="private_space_biometric_prompt_title" msgid="5777592909271728154">"Құпия кеңістік"</string>
     <string name="redacted_notification_message" msgid="1520587845842228816">"Хабарландырудың құпия контенті жасырылған."</string>
     <string name="redacted_notification_action_title" msgid="6942924973335920935"></string>
-    <string name="screen_not_shared_sensitive_content" msgid="7058419185079565001">"Қауіпсіздік мақсатында қолданба контенті экранды көрсету кезінде жасырылды."</string>
+    <string name="screen_not_shared_sensitive_content" msgid="7058419185079565001">"Қауіпсіздік мақсатында қолданба контенті экранды бөлісу кезінде жасырылды."</string>
     <string name="satellite_notification_title" msgid="4026338973463121526">"Жерсерік қызметіне автоматты түрде қосылды"</string>
     <string name="satellite_notification_summary" msgid="5207364139430767162">"Мобильдік не Wi-Fi желісіне қосылмастан хабар жібере аласыз және ала аласыз."</string>
     <string name="satellite_notification_manual_title" msgid="1097504441849466279">"Жерсерік арқылы хабар алмасасыз ба?"</string>

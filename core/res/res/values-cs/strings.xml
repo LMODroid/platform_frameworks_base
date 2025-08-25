@@ -991,7 +991,7 @@
     <string name="keyguard_password_entry_touch_hint" msgid="4032288032993261520"><font size="17">"Klepnutím zadáte heslo"</font></string>
     <string name="keyguard_password_enter_password_code" msgid="2751130557661643482">"Zadejte heslo pro odemknutí"</string>
     <string name="keyguard_password_enter_pin_password_code" msgid="7792964196473964340">"Zadejte kód PIN pro odemknutí"</string>
-    <string name="keyguard_password_wrong_pin_code" msgid="8583732939138432793">"Nesprávný kód PIN."</string>
+    <string name="keyguard_password_wrong_pin_code" msgid="8583732939138432793">"Nesprávný PIN."</string>
     <string name="keyguard_label_text" msgid="3841953694564168384">"Chcete-li telefon odemknout, stiskněte Menu a poté 0."</string>
     <string name="emergency_call_dialog_number_for_display" msgid="2978165477085612673">"Číslo tísňové linky"</string>
     <string name="lockscreen_carrier_default" msgid="6192313772955399160">"Žádný signál"</string>
@@ -1686,7 +1686,7 @@
     <string name="kg_forgot_pattern_button_text" msgid="406145459223122537">"Zapomenuté gesto"</string>
     <string name="kg_wrong_pattern" msgid="1342812634464179931">"Nesprávné gesto"</string>
     <string name="kg_wrong_password" msgid="2384677900494439426">"Nesprávné heslo"</string>
-    <string name="kg_wrong_pin" msgid="3680925703673166482">"Nesprávný kód PIN"</string>
+    <string name="kg_wrong_pin" msgid="3680925703673166482">"Nesprávný PIN"</string>
     <string name="kg_pattern_instructions" msgid="8366024510502517748">"Zadejte gesto"</string>
     <string name="kg_sim_pin_instructions" msgid="6479401489471690359">"Zadejte kód PIN SIM karty"</string>
     <string name="kg_pin_instructions" msgid="7355933174673539021">"Zadejte kód PIN"</string>
@@ -1695,7 +1695,7 @@
     <string name="kg_puk_enter_pin_hint" msgid="8190982314659429770">"Zadejte požadovaný kód PIN."</string>
     <string name="kg_enter_confirm_pin_hint" msgid="6372557107414074580">"Potvrďte požadovaný kód PIN."</string>
     <string name="kg_sim_unlock_progress_dialog_message" msgid="5743634657721110967">"Odblokování SIM karty…"</string>
-    <string name="kg_password_wrong_pin_code" msgid="9013856346870572451">"Nesprávný kód PIN."</string>
+    <string name="kg_password_wrong_pin_code" msgid="9013856346870572451">"Nesprávný PIN."</string>
     <string name="kg_invalid_sim_pin_hint" msgid="4821601451222564077">"Zadejte kód PIN o délce 4–8 číslic."</string>
     <string name="kg_invalid_sim_puk_hint" msgid="2539364558870734339">"Kód PUK by měl obsahovat 8 číslic."</string>
     <string name="kg_invalid_puk" msgid="4809502818518963344">"Znovu zadejte správný kód PUK. Opakovanými pokusy SIM kartu trvale deaktivujete."</string>
@@ -1945,7 +1945,7 @@
     <string name="zen_mode_implicit_deactivated" msgid="8688441768371501750">"Vypnuto"</string>
     <string name="zen_mode_trigger_summary_divider_text" msgid="7461583466043698862">", "</string>
     <string name="zen_mode_trigger_summary_range_symbol_combination" msgid="1804900738798069619">"<xliff:g id="START">%1$s</xliff:g>–<xliff:g id="END">%2$s</xliff:g>"</string>
-    <string name="zen_mode_trigger_event_calendar_any" msgid="2086784607921121803">"V libovolném kalendáři"</string>
+    <string name="zen_mode_trigger_event_calendar_any" msgid="2086784607921121803">"Libovolný kalendář"</string>
     <string name="muted_by" msgid="91464083490094950">"Hodinky <xliff:g id="THIRD_PARTY">%1$s</xliff:g> některé zvuky vypínají."</string>
     <string name="system_error_wipe_data" msgid="5910572292172208493">"V zařízení došlo k internímu problému. Dokud neprovedete obnovení továrních dat, může být nestabilní."</string>
     <string name="system_error_manufacturer" msgid="703545241070116315">"V zařízení došlo k internímu problému. Další informace vám sdělí výrobce."</string>
