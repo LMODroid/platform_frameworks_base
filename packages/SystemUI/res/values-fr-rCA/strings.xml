@@ -695,8 +695,8 @@
     <string name="volume_panel_hint_muted" msgid="1124844870181285320">"son désactivé"</string>
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"vibration"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"Lecture de <xliff:g id="LABEL">%s</xliff:g> sur"</string>
-    <string name="media_output_title_without_playing" msgid="3825663683169305013">"Lecture audio sur"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Appel en cours"</string>
+    <string name="media_output_title_without_playing" msgid="3825663683169305013">"Appareil lisant l\'audio"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Appareil utilisé"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"System UI Tuner"</string>
     <string name="status_bar" msgid="4357390266055077437">"Barre d\'état"</string>
     <string name="demo_mode" msgid="263484519766901593">"Mode Démo de l\'interface système"</string>

@@ -200,7 +200,7 @@
     <string name="biometric_dialog_use_pin" msgid="8385294115283000709">"Použít kód PIN"</string>
     <string name="biometric_dialog_use_pattern" msgid="2315593393167211194">"Použít gesto"</string>
     <string name="biometric_dialog_use_password" msgid="3445033859393474779">"Použít heslo"</string>
-    <string name="biometric_dialog_wrong_pin" msgid="1878539073972762803">"Nesprávný kód PIN"</string>
+    <string name="biometric_dialog_wrong_pin" msgid="1878539073972762803">"Nesprávný PIN"</string>
     <string name="biometric_dialog_wrong_pattern" msgid="8954812279840889029">"Nesprávné gesto"</string>
     <string name="biometric_dialog_wrong_password" msgid="69477929306843790">"Nesprávné heslo"</string>
     <string name="biometric_dialog_credential_too_many_attempts" msgid="3083141271737748716">"Příliš mnoho neplatných pokusů.\nZkuste to znovu za <xliff:g id="NUMBER">%d</xliff:g> s."</string>
@@ -322,7 +322,7 @@
     <string name="accessibility_quick_settings_rotation" msgid="4800050198392260738">"Automatické otáčení obrazovky"</string>
     <string name="quick_settings_location_label" msgid="2621868789013389163">"Poloha"</string>
     <string name="quick_settings_screensaver_label" msgid="1495003469366524120">"Spořič obrazovky"</string>
-    <string name="quick_settings_camera_label" msgid="5612076679385269339">"Fotoaparát"</string>
+    <string name="quick_settings_camera_label" msgid="5612076679385269339">"Přístup k fotoaparátu"</string>
     <string name="quick_settings_mic_label" msgid="8392773746295266375">"Přístup k mikrofonu"</string>
     <string name="quick_settings_camera_mic_available" msgid="1453719768420394314">"Dostupné"</string>
     <string name="quick_settings_camera_mic_blocked" msgid="4710884905006788281">"Blokováno"</string>
@@ -696,7 +696,7 @@
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"vibrace"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"Přehrávání <xliff:g id="LABEL">%s</xliff:g> přes"</string>
     <string name="media_output_title_without_playing" msgid="3825663683169305013">"Zvuk se bude přehrávat přes"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Volání na zařízení"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Volání probíhá na:"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"Nástroj na ladění uživatelského rozhraní systému"</string>
     <string name="status_bar" msgid="4357390266055077437">"Stavový řádek"</string>
     <string name="demo_mode" msgid="263484519766901593">"Ukázkový režim uživatelského rozhraní systému"</string>
@@ -1126,7 +1126,7 @@
     <string name="retry_face" msgid="416380073082560186">"Znovu zkusit ověření obličejem"</string>
     <string name="controls_seeding_in_progress" msgid="3033855341410264148">"Načítání doporučení"</string>
     <string name="controls_media_title" msgid="1746947284862928133">"Média"</string>
-    <string name="controls_media_close_session" msgid="4780485355795635052">"Skrýt toto ovládání médií aplikace <xliff:g id="APP_NAME">%1$s</xliff:g>?"</string>
+    <string name="controls_media_close_session" msgid="4780485355795635052">"Skrýt toto ovládání médií pro aplikaci <xliff:g id="APP_NAME">%1$s</xliff:g>?"</string>
     <string name="controls_media_active_session" msgid="3146882316024153337">"Aktuální mediální relaci nelze skrýt."</string>
     <string name="controls_media_dismiss_button" msgid="4485675693008031646">"Skrýt"</string>
     <string name="controls_media_resume" msgid="1933520684481586053">"Pokračovat"</string>
