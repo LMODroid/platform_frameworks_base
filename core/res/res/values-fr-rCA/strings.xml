@@ -1944,7 +1944,7 @@
     <string name="zen_mode_implicit_deactivated" msgid="8688441768371501750">"Désactivée"</string>
     <string name="zen_mode_trigger_summary_divider_text" msgid="7461583466043698862">", "</string>
     <string name="zen_mode_trigger_summary_range_symbol_combination" msgid="1804900738798069619">"<xliff:g id="START">%1$s</xliff:g> – <xliff:g id="END">%2$s</xliff:g>"</string>
-    <string name="zen_mode_trigger_event_calendar_any" msgid="2086784607921121803">"N\'importe quel agenda"</string>
+    <string name="zen_mode_trigger_event_calendar_any" msgid="2086784607921121803">"Tout agenda"</string>
     <string name="muted_by" msgid="91464083490094950">"Des sons sont désactivés par : <xliff:g id="THIRD_PARTY">%1$s</xliff:g>"</string>
     <string name="system_error_wipe_data" msgid="5910572292172208493">"Un problème interne est survenu avec votre appareil. Il se peut qu\'il soit instable jusqu\'à ce que vous le réinitialisiez à ses paramètres par défaut."</string>
     <string name="system_error_manufacturer" msgid="703545241070116315">"Un problème interne est survenu avec votre appareil. Communiquez avec le fabricant pour obtenir plus de détails."</string>
@@ -2008,8 +2008,8 @@
     <string name="work_mode_off_title" msgid="6367463960165135829">"Réactiver les applis pros?"</string>
     <string name="work_mode_turn_on" msgid="5316648862401307800">"Réactiver"</string>
     <string name="work_mode_emergency_call_button" msgid="6818855962881612322">"Urgence"</string>
-    <string name="set_up_screen_lock_title" msgid="8346083801616474030">"Config. Verrouillage d\'écran"</string>
-    <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"Config. Verrouillage d\'écran"</string>
+    <string name="set_up_screen_lock_title" msgid="8346083801616474030">"Config. verrouillage d\'écran"</string>
+    <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"Config. verrouillage d\'écran"</string>
     <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"Configurez verrouillage de l\'écran pour utiliser Espace privé"</string>
     <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"Réglez le verrouillage de l\'écran pour supprimer l\'espace privé"</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"L\'appli n\'est pas accessible"</string>

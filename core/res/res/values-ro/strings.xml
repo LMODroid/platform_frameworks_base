@@ -1907,7 +1907,7 @@
     <string name="clone_profile_label_badge" msgid="1871997694718793964">"Clonă pentru <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="private_profile_label_badge" msgid="1712086003787839183">"<xliff:g id="LABEL">%1$s</xliff:g> privat"</string>
     <string name="lock_to_app_unlock_pin" msgid="3890940811866290782">"Solicită codul PIN înainte de a anula fixarea"</string>
-    <string name="lock_to_app_unlock_pattern" msgid="2694204070499712503">"Solicită mai întâi modelul pentru deblocare"</string>
+    <string name="lock_to_app_unlock_pattern" msgid="2694204070499712503">"Solicită modelul înainte de a anula fixarea"</string>
     <string name="lock_to_app_unlock_password" msgid="9126722403506560473">"Solicită parola înainte de a anula fixarea"</string>
     <string name="package_installed_device_owner" msgid="8684974629306529138">"Instalat de administrator.\nAccesează setările ca să vezi permisiunile acordate."</string>
     <string name="package_updated_device_owner" msgid="7560272363805506941">"Actualizat de administrator"</string>

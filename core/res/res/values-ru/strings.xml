@@ -1908,7 +1908,7 @@
     <string name="clone_profile_label_badge" msgid="1871997694718793964">"Клонировать <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="private_profile_label_badge" msgid="1712086003787839183">"<xliff:g id="LABEL">%1$s</xliff:g> (частный профиль)"</string>
     <string name="lock_to_app_unlock_pin" msgid="3890940811866290782">"Запрашивать PIN-код"</string>
-    <string name="lock_to_app_unlock_pattern" msgid="2694204070499712503">"Запрашивать графический ключ"</string>
+    <string name="lock_to_app_unlock_pattern" msgid="2694204070499712503">"Запрашивать графический ключ, прежде чем откреплять"</string>
     <string name="lock_to_app_unlock_password" msgid="9126722403506560473">"Запрашивать пароль"</string>
     <string name="package_installed_device_owner" msgid="8684974629306529138">"Установлено администратором.\nЧтобы посмотреть предоставленные разрешения, перейдите в настройки."</string>
     <string name="package_updated_device_owner" msgid="7560272363805506941">"Обновлено администратором"</string>
