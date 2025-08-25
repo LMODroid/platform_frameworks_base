@@ -93,7 +93,7 @@
     <string name="bubble_shortcut_long_label" msgid="6088437544312894043">"Всплывающие чаты"</string>
     <string name="restart_button_description" msgid="4564728020654658478">"Нажмите, чтобы перезапустить приложение и оптимизировать размер"</string>
     <string name="user_aspect_ratio_settings_button_hint" msgid="734835849600713016">"Изменить соотношение сторон приложения в настройках"</string>
-    <string name="user_aspect_ratio_settings_button_description" msgid="4315566801697411684">"Изменить соотношение сторон"</string>
+    <string name="user_aspect_ratio_settings_button_description" msgid="4315566801697411684">"Соотношение сторон"</string>
     <string name="camera_compat_treatment_suggested_button_description" msgid="8103916969024076767">"Проблемы с камерой?\nНажмите, чтобы исправить."</string>
     <string name="camera_compat_treatment_applied_button_description" msgid="2944157113330703897">"Не помогло?\nНажмите, чтобы отменить изменения."</string>
     <string name="camera_compat_dismiss_button_description" msgid="2795364433503817511">"Нет проблем с камерой? Нажмите, чтобы закрыть."</string>
