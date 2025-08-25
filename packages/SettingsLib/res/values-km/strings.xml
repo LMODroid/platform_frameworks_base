@@ -373,7 +373,7 @@
     <string name="media_category" msgid="8122076702526144053">"មេឌៀ"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"តាមដាន"</string>
     <string name="strict_mode" msgid="889864762140862437">"បាន​បើក​មុខងារតឹងរ៉ឹង"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"បញ្ចេញ​ពន្លឺ​អេក្រង់​ពេល​កម្មវិធី​ធ្វើ​ប្រតិបត្តិការ​យូរ​លើ​សែស្រឡាយ​​មេ"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"ភ្លឺភ្លឹបភ្លែតលើអេក្រង់​ពេល​កម្មវិធី​ធ្វើ​ប្រតិបត្តិការ​យូរ​លើសរសៃមេ"</string>
     <string name="pointer_location" msgid="7516929526199520173">"ទីតាំង​ទ្រនិច"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"អេក្រង់​ត្រួត​គ្នា​បង្ហាញ​ទិន្នន័យ​ប៉ះ​បច្ចុប្បន្ន"</string>
     <string name="show_touches" msgid="8437666942161289025">"បង្ហាញការចុច"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"ប្រើភាសាប្រព័ន្ធ"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"បាន​បរាជ័យ​ក្នុង​ការ​បើក​ការ​កំណត់​សម្រាប់ <xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g>"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"វិធី​សាស្ត្រ​បញ្ចូល​នេះ​អាច​​ប្រមូល​អត្ថបទ​ដែល​អ្នក​វាយ​ទាំងអស់ រួម​មាន​ទិន្នន័យ​ផ្ទាល់ខ្លួន ដូច​ជ ពាក្យ​សម្ងាត់ និង​លេខ​កាត​ឥណទាន។ វា​បាន​មក​ពី​កម្មវិធី <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> ។ ប្រើ​វិធី​សាស្ត្រ​បញ្ចូល​នេះ?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ចំណាំ៖ បន្ទាប់ពីបិទបើកឡើងវិញហើយ កម្មវិធីនេះមិនអាចចាប់ផ្តើមបានទេ រហូតទាល់តែអ្នកដោះសោទូរស័ព្ទរបស់អ្នក"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ចំណាំ៖ បន្ទាប់ពីចាប់ផ្ដើមឡើងវិញ កម្មវិធីនេះមិនអាចចាប់ផ្តើមបានទេ រហូតទាល់តែអ្នកដោះសោទូរស័ព្ទរបស់អ្នក"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"ស្ថានភាព​នៃការ​ចុះឈ្មោះ IMS"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"បាន​ចុះឈ្មោះ"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"មិនបាន​ចុះឈ្មោះ"</string>

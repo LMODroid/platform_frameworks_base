@@ -386,9 +386,9 @@
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"તે અપડેટ થાય ત્યારે સમગ્ર વિન્ડો સપાટી ફ્લૅશ કરો"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"વ્યૂના અપડેટ બતાવો"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"વિન્ડોમાં વ્યૂ દર્શાવવામાં આવે ત્યારે ફ્લૅશ કરો"</string>
-    <string name="show_hw_layers_updates" msgid="5268370750002509767">"હાર્ડવેર સ્તરોના અપડેટ બતાવો"</string>
+    <string name="show_hw_layers_updates" msgid="5268370750002509767">"હાર્ડવેર લેયરના અપડેટ બતાવો"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"હાર્ડવેર સ્તરો અપડેટ થાય ત્યારે તેને લીલા રંગથી ફ્લૅશ કરો"</string>
-    <string name="debug_hw_overdraw" msgid="8944851091008756796">"GPU ઓવરડ્રો ડિબગ કરો"</string>
+    <string name="debug_hw_overdraw" msgid="8944851091008756796">"GPU ઓવરડ્રૉ ડિબગ કરો"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"HW ઓવરલે બંધ કરો"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"સ્ક્રીન જોડવા માટે હંમેશાં GPUનો ઉપયોગ કરો"</string>
     <string name="simulate_color_space" msgid="1206503300335835151">"રંગ સ્થાનનું અનુકરણ કરો"</string>
@@ -402,10 +402,10 @@
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"પારદર્શક નૅવિગેશન બાર"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"નૅવિગેશન બારના બૅકગ્રાઉન્ડના રંગને ડિફૉલ્ટ તરીકે પારદર્શક બનાવો"</string>
     <string name="window_blurs" msgid="6831008984828425106">"વિન્ડો-લેવલને બ્લર કરવાની સુવિધા ચાલુ કરો"</string>
-    <string name="force_msaa" msgid="4081288296137775550">"4x MSAAને ફરજ પાડો"</string>
+    <string name="force_msaa" msgid="4081288296137775550">"4x MSAAને ફરજિયાત રીતે લાગુ કરો"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"OpenGL ES 2.0 ઍપમાં 4x MSAA ચાલુ કરો"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"બિન-લંબચોરસ ક્લિપ કામગીરી ડિબગ કરો"</string>
-    <string name="track_frame_time" msgid="522674651937771106">"HWUIની પ્રોફાઇલ રેંડરીંગ"</string>
+    <string name="track_frame_time" msgid="522674651937771106">"HWUIની પ્રોફાઇલ રેન્ડરીંગ"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"GPU ડિબગ લેયરને ચાલુ કરો"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"ડિબગ ઍપ માટે GPU ડિબગ લેયર લોડ કરવાની મંજૂરી આપો"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"વર્બોઝ વેન્ડર લૉગિંગ ચાલુ કરો"</string>
@@ -423,10 +423,10 @@
     <string name="debug_applications_category" msgid="5394089406638954196">"ઍપ"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"ઍક્ટિવિટી રાખશો નહીં"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"જેવો વપરાશકર્તા તેને છોડે, તરત જ દરેક ઍક્ટિવિટી નષ્ટ કરો"</string>
-    <string name="app_process_limit_title" msgid="8361367869453043007">"બૅકગ્રાઉન્ડ પ્રક્રિયા સીમા"</string>
+    <string name="app_process_limit_title" msgid="8361367869453043007">"બૅકગ્રાઉન્ડ પ્રક્રિયાની મર્યાદા"</string>
     <string name="show_all_anrs" msgid="9160563836616468726">"બૅકગ્રાઉન્ડના ANRs બતાવો"</string>
     <string name="show_all_anrs_summary" msgid="8562788834431971392">"બૅકગ્રાઉન્ડ ઍપ માટે \"ઍપ પ્રતિસાદ આપતી નથી\" સંવાદ ડિસ્પ્લે કરો."</string>
-    <string name="show_notification_channel_warnings" msgid="3448282400127597331">"નોટિફિકેશન ચૅનલની ચેતવણી બતાવો"</string>
+    <string name="show_notification_channel_warnings" msgid="3448282400127597331">"નોટિફિકેશન ચૅનલની ચેતવણીઓ બતાવો"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"ઍપ માન્ય ચૅનલ વિના નોટિફિકેશન પોસ્ટ કરે તો સ્ક્રીન પર ચેતવણી ડિસ્પ્લે થાય છે"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"બાહ્ય પર ઍપને મંજૂરી આપવાની ફરજ પાડો"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"મેનિફેસ્ટ મૂલ્યોને ધ્યાનમાં લીધા સિવાય, કોઈપણ ઍપને બાહ્ય સ્ટોરેજ પર લખાવા માટે લાયક બનાવે છે"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"સિસ્ટમ ભાષાઓનો ઉપયોગ કરો"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"<xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> માટેના સેટિંગ ખોલવામાં નિષ્ફળ"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"આ ઇનપુટ પદ્ધતિ પાસવર્ડ્સ અને ક્રેડિટ કાર્ડ નંબર જેવી વ્યક્તિગત માહિતી સહિત તમે લખો છો તે તમામ ટેક્સ્ટ એકત્રિત કરવા માટે સક્ષમ હોઈ શકે છે. તે ઍપ્લિકેશન <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> માંથી આવે છે. આ ઇનપુટ પદ્ધતિ વાપરીએ?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"નોંધ: રીબૂટ કર્યાં પછી, જ્યાં સુધી તમે તમારો ફોન અનલૉક કરશો નહીં ત્યાં સુધી આ ઍપ્લિકેશન શરૂ થઈ શકશે નહીં"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"નોંધ: રીબૂટ કર્યાં પછી, જ્યાં સુધી તમે તમારો ફોન અનલૉક કરશો નહીં ત્યાં સુધી આ ઍપ શરૂ થઈ શકશે નહીં"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"IMS રજિસ્ટ્રેશનની સ્થિતિ"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"રજિસ્ટર કરેલ"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"રજિસ્ટર કરેલ નથી"</string>

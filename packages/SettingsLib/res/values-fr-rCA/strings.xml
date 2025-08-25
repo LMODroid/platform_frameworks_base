@@ -370,10 +370,10 @@
     <string name="debug_input_category" msgid="7349460906970849771">"Entrée"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"Dessin"</string>
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Rendu accéléré par le matériel"</string>
-    <string name="media_category" msgid="8122076702526144053">"Médias"</string>
+    <string name="media_category" msgid="8122076702526144053">"Éléments multimédias"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Surveillance"</string>
     <string name="strict_mode" msgid="889864762140862437">"Mode Strict activé"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"L\'écran clignote lors d\'opérations longues sur fil principal"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"L\'écran clignote lors d\'opérations longues sur le fil principal"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Emplacement du curseur"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"Superposition de l\'écran indiquant les données des touchers"</string>
     <string name="show_touches" msgid="8437666942161289025">"Afficher les éléments touchés"</string>
@@ -386,12 +386,12 @@
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Faites clignoter les surfaces à chaque mise à jour"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Afficher mises à jour de l\'affichage"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Faites clignoter les éléments dessinés dans les fenêtres"</string>
-    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Mises à jour couches mat."</string>
-    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Couches matérielles en vert une fois mises à jour"</string>
-    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Déboguer les conflits GPU"</string>
-    <string name="disable_overlays" msgid="4206590799671557143">"Désact. superpos. matér."</string>
-    <string name="disable_overlays_summary" msgid="1954852414363338166">"Toujours utiliser le GPU pour la composition écran"</string>
-    <string name="simulate_color_space" msgid="1206503300335835151">"Simuler espace colorimétrique"</string>
+    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Mises à jour couches matérielles"</string>
+    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Les couches matérielles clignotent en vert pendant leurs mises à jour"</string>
+    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Déboguer les dépassements GPU"</string>
+    <string name="disable_overlays" msgid="4206590799671557143">"Désactiver superpositions matérielles"</string>
+    <string name="disable_overlays_summary" msgid="1954852414363338166">"Utilisez toujours le GPU pour la composition des écrans"</string>
+    <string name="simulate_color_space" msgid="1206503300335835151">"Simuler l\'espace colorimétrique"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"Enable OpenGL traces"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Désactiver le routage audio USB"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Désactivez le routage automatique vers les périphériques audio USB"</string>
@@ -405,7 +405,7 @@
     <string name="force_msaa" msgid="4081288296137775550">"Forcer MSAA 4x"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Activer MSAA 4x dans les applis OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Déboguer opérations de découpage non rectangulaire"</string>
-    <string name="track_frame_time" msgid="522674651937771106">"Profiler le rendu HWUI"</string>
+    <string name="track_frame_time" msgid="522674651937771106">"Analyser le rendu HWUI"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Activer couches débogage UTG"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Autoriser couches débogage UTG pour applis de débogage"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Activer le journal détaillé des fournisseurs"</string>
@@ -424,14 +424,14 @@
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Ne pas conserver activités"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Supprimez immédiatement les activités abandonnées"</string>
     <string name="app_process_limit_title" msgid="8361367869453043007">"Limite processus arr.-plan"</string>
-    <string name="show_all_anrs" msgid="9160563836616468726">"Afficher ANR arrière-plan"</string>
-    <string name="show_all_anrs_summary" msgid="8562788834431971392">"Afficher le message « L\'appli ne répond plus » pour les applis en arrière-plan"</string>
-    <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Affich. avertiss. canal notification"</string>
+    <string name="show_all_anrs" msgid="9160563836616468726">"Afficher les ANR en arrière-plan"</string>
+    <string name="show_all_anrs_summary" msgid="8562788834431971392">"Affichez le message « L\'appli ne répond pas » pour les applis en arrière-plan"</string>
+    <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Afficher avertiss. canaux de notification"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"Affichez avertiss. à l\'écran quand une appli présente une notif. sans canal valide"</string>
-    <string name="force_allow_on_external" msgid="9187902444231637880">"Forcer l\'autor. d\'applis sur stockage externe"</string>
+    <string name="force_allow_on_external" msgid="9187902444231637880">"Forcer l\'autorisation d\'applis sur stockage externe"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Rend possible l\'enregistrement de toute appli sur un espace de stockage externe, indépendamment des valeurs du fichier de configuration"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Forcer les activités à être redimensionnables"</string>
-    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Permet de redimensionner toutes les activités pour le mode multi-fenêtre, indépendamment des valeurs du fichier de configuration."</string>
+    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Permet de redimensionner toutes les activités pour le mode Multifenêtre, indépendamment des valeurs du fichier de configuration."</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"Activer les fenêtres de forme libre"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"Mot de passe sauvegarde PC"</string>
     <string name="local_backup_password_summary_none" msgid="7646898032616361714">"Les sauvegardes complètes sur PC ne sont pas protégées actuellement"</string>

@@ -402,7 +402,7 @@
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Doorzichtige navigatiebalk"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Maak de achtergrondkleur van de navigatiebalk standaard doorzichtig"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Vervagen op vensterniveau toestaan"</string>
-    <string name="force_msaa" msgid="4081288296137775550">"4x MSAA forceren"</string>
+    <string name="force_msaa" msgid="4081288296137775550">"4x MSAA afdwingen"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Zet 4x MSAA aan in OpenGL ES 2.0-apps"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Foutopsporing niet-rechthoekig bijsnijden"</string>
     <string name="track_frame_time" msgid="522674651937771106">"HWUI-weergave van profiel"</string>
@@ -429,7 +429,7 @@
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Kanaalwaarschuwingen voor meldingen tonen"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"Toont een waarschuwing op het scherm wanneer een app een melding post zonder geldig kanaal"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"Toestaan van apps op externe opslag afdwingen"</string>
-    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Hiermee komt elke app in aanmerking voor schrijven naar externe opslag, ongeacht de manifestwaarden"</string>
+    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Elke app komt in aanmerking voor schrijven naar externe opslag, ongeacht de manifestwaarden"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Formaat activiteiten geforceerd aanpasbaar maken"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Maak het formaat van alle activiteiten aanpasbaar, ongeacht de manifestwaarden"</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"Vensters met vrije vorm aanzetten"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Gebruik systeemtalen"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"Instellingen openen voor <xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> mislukt"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"Deze invoermethode verzamelt mogelijk alle tekst die je typt, inclusief persoonsgegevens zoals wachtwoorden en creditcardnummers. De methode is afkomstig uit de app <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g>. Deze invoermethode aanzetten?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Opmerking: Nadat je de telefoon opnieuw opstart, wordt deze app pas gestart nadat je de telefoon ontgrendelt"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Opmerking: Nadat je de telefoon opnieuw opstart, wordt deze app pas gestart als je de telefoon ontgrendelt"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"IMS-registratiestatus"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"Geregistreerd"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"Niet geregistreerd"</string>

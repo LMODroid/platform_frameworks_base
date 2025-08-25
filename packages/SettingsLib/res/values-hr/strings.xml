@@ -405,7 +405,7 @@
     <string name="force_msaa" msgid="4081288296137775550">"Nametni 4x MSAA"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Omogućuje 4x MSAA u aplikacijama OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Otklanjanje pogrešaka za operacije nepravokutnog isječka"</string>
-    <string name="track_frame_time" msgid="522674651937771106">"Profil HWUI generiranja"</string>
+    <string name="track_frame_time" msgid="522674651937771106">"Profil HWUI renderiranja"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Omogući slojeve za otklanjanje pogrešaka GPU-a"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Omogućuje učitavanje slojeva za otklanjanje pogrešaka GPU-a za aplikacije za otklanjanje pogrešaka"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Omogući slanje opširnog zapisnika dobavljača"</string>
@@ -431,7 +431,7 @@
     <string name="force_allow_on_external" msgid="9187902444231637880">"Prisilno dopusti aplikacije u vanjskoj pohrani"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Aplikacije se mogu zapisivati u vanjsku pohranu neovisno o vrijednostima manifesta"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Nametni mogućnost promjene veličine za aktivnosti"</string>
-    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Omogućuje mijenjanje veličine svih aktivnosti za više prozora, neovisno o vrijednostima manifesta"</string>
+    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Omogućuje promjenu veličine svih aktivnosti za više prozora, neovisno o vrijednostima manifesta"</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"Omogući prozore slobodnog oblika"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"Zaporka sigurnosne kopije"</string>
     <string name="local_backup_password_summary_none" msgid="7646898032616361714">"Potpune sigurnosne kopije na računalu trenutačno nisu zaštićene"</string>

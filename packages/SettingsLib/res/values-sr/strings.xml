@@ -391,7 +391,7 @@
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Отклони грешке GPU преклапања"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Онемогући HW постављене елементе"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Увек се користи GPU за компоновање екрана"</string>
-    <string name="simulate_color_space" msgid="1206503300335835151">"Симулирај простор боје"</string>
+    <string name="simulate_color_space" msgid="1206503300335835151">"Симулација простора боје"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"Омогући OpenGL трагове"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Онемогући USB преусм. звука"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Онемогућава аутоматско преусмеравање на USB аудио периферне уређаје"</string>
@@ -405,7 +405,7 @@
     <string name="force_msaa" msgid="4081288296137775550">"Наметни 4x MSAA"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Омогућава 4x MSAA у OpenGL ES 2.0 апликацијама"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Отклони грешке исецања области неправоугаоног облика"</string>
-    <string name="track_frame_time" msgid="522674651937771106">"Рендеруј помоћу HWUI-а"</string>
+    <string name="track_frame_time" msgid="522674651937771106">"Рендеровање помоћу HWUI-а"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Омогући слојеве за отклањање грешака GPU-a"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Омогућите учитавање слојева за отклањање грешака GPU-a у апликацијама за отклањање грешака"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Опширне евиденције продавца"</string>

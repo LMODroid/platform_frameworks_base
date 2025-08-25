@@ -388,7 +388,7 @@
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Osvjetljava prikaze u prozorima prilikom iscrtavanja"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Prikaži ažuriranja hardverskih slojeva"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Hardverski slojevi trepere zeleno pri ažuriranju"</string>
-    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Otkl. greške GPU preklapanja"</string>
+    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Otkloni greške GPU preklapanja"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Onemog. hardverska prekl."</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Uvijek se koristi GPU za slaganje ekrana"</string>
     <string name="simulate_color_space" msgid="1206503300335835151">"Simuliraj prostor boje"</string>

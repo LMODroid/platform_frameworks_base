@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Користи ги системските јазици"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"Подесувањата за <xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> не се отворија"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"Овој метод на внес може да го собере сиот текст кој го пишувате, вклучувајќи и лични податоци како што се, лозинки и броеви на кредитни картички. Тоа го прави апликацијата <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g>. Користи го овој метод на внес?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Забелешка: по рестартирање, апликацијава не може да се вклучи додека не го отклучите телефонот"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Забелешка: По рестартирање, апликацијава не може да се вклучи додека не го отклучите телефонот"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"Состојба на IMS-регистрација"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"Регистриран"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"Не е регистриран"</string>

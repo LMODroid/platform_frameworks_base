@@ -290,7 +290,7 @@
     <string name="mock_location_app" msgid="6269380172542248304">"Sélectionner l\'application de position fictive"</string>
     <string name="mock_location_app_not_set" msgid="6972032787262831155">"Aucune application de position fictive définie"</string>
     <string name="mock_location_app_set" msgid="4706722469342913843">"Application de position fictive : <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
-    <string name="debug_networking_category" msgid="6829757985772659599">"Mise en réseau"</string>
+    <string name="debug_networking_category" msgid="6829757985772659599">"Réseau"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"Certification affichage sans fil"</string>
     <string name="wifi_verbose_logging" msgid="1785910450009679371">"Autoriser l\'enregistrement d\'infos Wi-Fi détaillées"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Limiter la recherche Wi‑Fi"</string>
@@ -422,7 +422,7 @@
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simuler des écrans secondaires"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Applications"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Ne pas conserver les activités"</string>
-    <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Supprimer immédiatement les activités abandonnées"</string>
+    <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Détruire les activités dès que l\'utilisateur les quitte"</string>
     <string name="app_process_limit_title" msgid="8361367869453043007">"Limite de processus en arrière-plan"</string>
     <string name="show_all_anrs" msgid="9160563836616468726">"Afficher les ANR d\'arrière-plan"</string>
     <string name="show_all_anrs_summary" msgid="8562788834431971392">"Afficher la boîte de dialogue \"L\'application ne répond plus\" pour les applications en arrière-plan"</string>
