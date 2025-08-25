@@ -389,7 +389,7 @@
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"显示硬件层更新"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"硬件层更新时闪烁绿色"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"调试 GPU 过度绘制"</string>
-    <string name="disable_overlays" msgid="4206590799671557143">"停用 HW 叠加层"</string>
+    <string name="disable_overlays" msgid="4206590799671557143">"停用硬件叠加层"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"始终使用 GPU 进行屏幕合成"</string>
     <string name="simulate_color_space" msgid="1206503300335835151">"模拟颜色空间"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"启用 OpenGL 跟踪"</string>
@@ -581,7 +581,7 @@
     <string name="zen_mode_starred_contacts_empty_name" msgid="933552939706125937">"（无姓名）"</string>
     <string name="time_unit_just_now" msgid="3006134267292728099">"刚刚"</string>
     <string name="media_transfer_this_device_name" msgid="2357329267148436433">"本机"</string>
-    <string name="media_transfer_this_device_name_tablet" msgid="2975593806278422086">"这部平板电脑"</string>
+    <string name="media_transfer_this_device_name_tablet" msgid="2975593806278422086">"本机"</string>
     <string name="media_transfer_this_device_name_desktop" msgid="7912386128141470452">"此计算机（内部）"</string>
     <!-- no translation found for media_transfer_this_device_name_tv (5285685336836896535) -->
     <skip />
@@ -644,7 +644,7 @@
     <string name="profile_info_settings_title" msgid="105699672534365099">"个人资料信息"</string>
     <string name="user_need_lock_message" msgid="4311424336209509301">"您需要先设置锁定屏幕来保护您的应用和个人数据，然后才可以创建受限个人资料。"</string>
     <string name="user_set_lock_button" msgid="1427128184982594856">"设置屏幕锁定方式"</string>
-    <string name="user_switch_to_user" msgid="6975428297154968543">"切换到“<xliff:g id="USER_NAME">%s</xliff:g>”"</string>
+    <string name="user_switch_to_user" msgid="6975428297154968543">"切换到<xliff:g id="USER_NAME">%s</xliff:g>"</string>
     <string name="creating_new_user_dialog_message" msgid="7232880257538970375">"正在创建新用户…"</string>
     <string name="creating_new_guest_dialog_message" msgid="1114905602181350690">"正在创建新的访客…"</string>
     <string name="add_user_failed" msgid="4809887794313944872">"无法创建新用户"</string>

@@ -394,7 +394,7 @@
     <string name="simulate_color_space" msgid="1206503300335835151">"ਰੰਗ ਸਪੇਸ ਨੂੰ ਸਿਮੂਲੇਟ ਕਰੋ"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"OpenGL ਟ੍ਰੇਸਿਜ ਨੂੰ ਚਾਲੂ ਕਰੋ"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"USB ਆਡੀਓ ਰੂਟਿੰਗ ਨੂੰ ਬੰਦ ਕਰੋ"</string>
-    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"USB ਆਡੀਓ ਪੈਰੀਫਰਲ ਲਈ ਸਵੈਚਲਿਤ ਰੂਟਿੰਗ ਬੰਦ ਕਰੋ"</string>
+    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"USB ਆਡੀਓ ਪੈਰੀਫਰਲਾਂ ਲਈ ਸਵੈਚਲਿਤ ਰੂਟਿੰਗ ਬੰਦ ਕਰੋ"</string>
     <string name="debug_layout" msgid="1659216803043339741">"ਖਾਕਾ ਸੀਮਾਵਾਂ ਦਿਖਾਓ"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"ਕਲਿੱਪ ਸੀਮਾਵਾਂ, ਹਾਸ਼ੀਏ ਆਦਿ ਦਿਖਾਓ"</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"ਸੱਜੇ ਤੋਂ ਖੱਬੇ ਵਾਲਾ ਖਾਕਾ ਲਾਗੂ ਕਰੋ"</string>
@@ -429,7 +429,7 @@
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"ਸੂਚਨਾ ਚੈਨਲ ਚਿਤਾਵਨੀਆਂ ਦਿਖਾਓ"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"ਐਪ ਵੱਲੋਂ ਵੈਧ ਚੈਨਲ ਤੋਂ ਬਿਨਾਂ ਸੂਚਨਾ ਪੋਸਟ ਕਰਨ \'ਤੇ ਸਕ੍ਰੀਨ \'ਤੇ ਚਿਤਾਵਨੀ ਦਿਖਾਉਂਦੀ ਹੈ"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"ਐਪਾਂ ਨੂੰ ਜ਼ਬਰਦਸਤੀ ਬਾਹਰੀ ਸਟੋਰੇਜ \'ਤੇ ਆਗਿਆ ਦਿਓ"</string>
-    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ਮੈਨੀਫੈਸਟ ਮੁੱਲਾਂ ਦੀ ਪਰਵਾਹ ਕੀਤੇ ਬਿਨਾਂ, ਕਿਸੇ ਵੀ ਐਪ ਨੂੰ ਬਾਹਰੀ ਸਟੋਰੇਜ \'ਤੇ ਲਿਖਣ ਦੇ ਯੋਗ ਬਣਾਉਂਦੀ ਹੈ"</string>
+    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ਇਸ ਨਾਲ ਕੋਈ ਵੀ ਐਪ ਬਾਹਰੀ ਸਟੋਰੇਜ \'ਤੇ ਲਿਖਣ ਦੇ ਯੋਗ ਬਣ ਜਾਂਦੀ ਹੈ, ਭਾਂਵੇ ਉਸਦਾ ਮੈਨੀਫ਼ੈਸਟ ਮੁੱਲ ਕੋਈ ਵੀ ਹੋਵੇ"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"ਸਰਗਰਮੀਆਂ ਨੂੰ ਜ਼ਬਰਦਸਤੀ ਆਕਾਰ ਬਦਲਣਯੋਗ ਬਣਾਓ"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"ਮੈਨੀਫ਼ੈਸਟ ਮੁੱਲਾਂ ਦੀ ਪਰਵਾਹ ਕੀਤੇ ਬਿਨਾਂ, ਮਲਟੀ-ਵਿੰਡੋ ਲਈ ਸਾਰੀਆਂ ਸਰਗਰਮੀਆਂ ਨੂੰ ਆਕਾਰ ਬਦਲਣਯੋਗ ਬਣਾਓ।"</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"ਫ੍ਰੀਫਾਰਮ ਵਿੰਡੋਜ਼ ਨੂੰ ਚਾਲੂ ਕਰੋ"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"ਸਿਸਟਮ ਭਾਸ਼ਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰੋ"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"<xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> ਲਈ ਸੈਟਿੰਗਾਂ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਫਲ"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"ਇਹ ਇਨਪੁੱਟ ਵਿਧੀ ਤੁਹਾਡੇ ਵੱਲੋਂ ਟਾਈਪ ਕੀਤਾ ਜਾਣ ਵਾਲੀ ਸਾਰੀ ਲਿਖਤ ਇਕੱਤਰ ਕਰਨ ਵਿੱਚ ਸਮਰੱਥ ਹੋ ਸਕਦੀ ਹੈ, ਨਿੱਜੀ ਡਾਟਾ ਸਮੇਤ ਜਿਵੇਂ ਪਾਸਵਰਡ ਅਤੇ ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਨੰਬਰ। ਇਹ <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> ਐਪ ਤੋਂ ਆਉਂਦਾ ਹੈ। ਕੀ ਇਹ ਸਪੈੱਲ ਚੈਕਰ ਵਰਤਣਾ ਹੈ?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ਨੋਟ ਕਰੋ: ਰੀਬੂਟ ਤੋਂ ਬਾਅਦ, ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਆਪਣਾ ਫ਼ੋਨ ਅਣਲਾਕ ਨਹੀਂ ਕਰਦੇ ਤਦ ਤੱਕ ਇਹ ਐਪ ਚਾਲੂ ਨਹੀਂ ਹੋ ਸਕਦੀ"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ਨੋਟ ਕਰੋ: ਰੀਬੂਟ ਤੋਂ ਬਾਅਦ, ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਆਪਣਾ ਫ਼ੋਨ ਅਣਲਾਕ ਨਹੀਂ ਕਰਦੇ ਉਦੋਂ ਤੱਕ ਇਹ ਐਪ ਚਾਲੂ ਨਹੀਂ ਹੋ ਸਕਦੀ"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"IMS ਰਜਿਸਟਰੇਸ਼ਨ ਸਥਿਤੀ"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"ਰਜਿਸਟਰ ਕੀਤੀ ਗਈ"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"ਰਜਿਸਟਰ ਨਹੀਂ ਕੀਤੀ ਗਈ"</string>

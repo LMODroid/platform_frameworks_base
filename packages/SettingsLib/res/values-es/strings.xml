@@ -372,7 +372,7 @@
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Renderización acelerada por hardware"</string>
     <string name="media_category" msgid="8122076702526144053">"Multimedia"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Supervisión"</string>
-    <string name="strict_mode" msgid="889864762140862437">"Modo Estricto habilitado"</string>
+    <string name="strict_mode" msgid="889864762140862437">"Modo estricto habilitado"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Hace parpadear la pantalla si las aplicaciones tardan mucho en el subproceso principal"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Ubicación del puntero"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"Superpone los datos de las pulsaciones en la pantalla"</string>
@@ -428,7 +428,7 @@
     <string name="show_all_anrs_summary" msgid="8562788834431971392">"Muestra un cuadro de diálogo que informa de que la aplicación no responde en aplicaciones en segundo plano"</string>
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Ver advertencias del canal de notificaciones"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"Muestra una advertencia en pantalla cuando una aplicación publica una notificación sin un canal válido"</string>
-    <string name="force_allow_on_external" msgid="9187902444231637880">"Forzar permitir aplicaciones en almacenamiento externo"</string>
+    <string name="force_allow_on_external" msgid="9187902444231637880">"Forzar la autorización de apps en almacenamiento externo"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Permite que cualquier aplicación se pueda escribir en un almacenamiento externo independientemente de los valores de manifiesto."</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Forzar que las actividades puedan cambiar de tamaño"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Permite que todas las actividades puedan cambiar de tamaño en multiventana independientemente de los valores de manifiesto"</string>
@@ -630,7 +630,7 @@
     <string name="user_add_user_message_long" msgid="1527434966294733380">"Puedes compartir este dispositivo si creas más usuarios. Cada uno tendrá su propio espacio y podrá personalizarlo con aplicaciones, un fondo de pantalla y más. Los usuarios también pueden ajustar opciones del dispositivo, como la conexión Wi‑Fi, que afectan a todos los usuarios.\n\nCuando añadas un usuario, tendrá que configurar su espacio.\n\nCualquier usuario puede actualizar aplicaciones de todos los usuarios. Es posible que no se transfieran los servicios y opciones de accesibilidad al nuevo usuario."</string>
     <string name="user_add_user_message_short" msgid="3295959985795716166">"Al añadir un nuevo usuario, dicha persona debe configurar su espacio.\n\nCualquier usuario puede actualizar las aplicaciones del resto de los usuarios."</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"¿Convertir a este usuario en administrador?"</string>
-    <string name="user_grant_admin_message" msgid="1673791931033486709">"Los administradores tienen privilegios especiales que otros usuarios no tienen. Los administradores pueden gestionar todos los usuarios, actualizar o restablecer este dispositivo, modificar los ajustes, ver todas las aplicaciones instaladas y conceder o revocar privilegios de administrador a otros usuarios."</string>
+    <string name="user_grant_admin_message" msgid="1673791931033486709">"Los administradores tienen privilegios especiales que otros usuarios no tienen. Los administradores pueden gestionar todos los usuarios, actualizar o restablecer este dispositivo, modificar los ajustes, ver todas las apps instaladas y conceder o revocar privilegios de administrador a otros usuarios."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Convertir en administrador"</string>
     <string name="user_setup_dialog_title" msgid="8037342066381939995">"¿Configurar usuario?"</string>
     <string name="user_setup_dialog_message" msgid="269931619868102841">"Asegúrate de que la persona está disponible en este momento para usar el dispositivo y configurar su espacio."</string>

@@ -373,7 +373,7 @@
     <string name="media_category" msgid="8122076702526144053">"Multimedia"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Supervisión"</string>
     <string name="strict_mode" msgid="889864762140862437">"Modo estricto"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"Parpadear si aplicaciones tardan en proceso principal"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"La pantalla parpadea si las aplicaciones tardan en el subproceso principal"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Ubicación del puntero"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"Muestra los datos táctiles en la pantalla"</string>
     <string name="show_touches" msgid="8437666942161289025">"Mostrar presiones"</string>
@@ -388,7 +388,7 @@
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Las vistas parpadean cuando se actualizan"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Mostrar cambios de capas"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Luz verde en capas de hardware al actualizarse"</string>
-    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Depurar superpos. de GPU"</string>
+    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Depurar superposición de GPU"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Desactivar superposición de hardware"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Usar GPU para combinar pantallas"</string>
     <string name="simulate_color_space" msgid="1206503300335835151">"Simular espacio de color"</string>
@@ -405,7 +405,7 @@
     <string name="force_msaa" msgid="4081288296137775550">"Forzar MSAA 4x"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Activar MSAA 4x en aplicaciones OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Depurar operaciones de recorte no rectangulares"</string>
-    <string name="track_frame_time" msgid="522674651937771106">"Perfil procesamiento HWUI"</string>
+    <string name="track_frame_time" msgid="522674651937771106">"Perfil de procesamiento HWUI"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Habilitar depuración GPU"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Permite cargar capas de depuración de GPU para apps de depuración"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Habilitar registro de proveedor detallado"</string>

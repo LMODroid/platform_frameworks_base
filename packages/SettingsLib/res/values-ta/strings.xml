@@ -385,7 +385,7 @@
     <string name="show_screen_updates" msgid="2078782895825535494">"பரப்புநிலை புதுப்பிப்புகளைக் காட்டு"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"சாளரத்தின் பரப்புநிலைகள் புதுப்பிக்கப்படும்போது, அவற்றை முழுவதுமாகக் காட்டும்"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"வியூ அப்டேட்ஸைக் காட்டு"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"வரையும்போது, சாளரங்களில் காட்சிகளைக் காட்டும்"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"சாளரம் திறக்கும்போது உள்ளே ஃப்ளாஷ் ஆகும்"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"வன்பொருள் லேயர்களின் புதுப்பிப்புகளைக் காட்டு"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"வன்பொருள் லேயர்களைப் புதுப்பிக்கும்போது, அவற்றைப் பச்சை நிறத்தில் காட்டும்"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"GPU ஓவர்டிரா பிழைதிருத்து"</string>

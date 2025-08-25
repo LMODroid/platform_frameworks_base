@@ -262,7 +262,7 @@
     <item msgid="5023908510820531131">"У <xliff:g id="AS_TYPED_COMMAND">adb shell dumpsys gfxinfo</xliff:g>"</item>
   </string-array>
   <string-array name="debug_hw_overdraw_entries">
-    <item msgid="1968128556747588800">"Искључи"</item>
+    <item msgid="1968128556747588800">"Искључено"</item>
     <item msgid="3033215374382962216">"Прикажи области преклапања"</item>
     <item msgid="3474333938380896988">"Прикажи области за деутераномалију"</item>
   </string-array>

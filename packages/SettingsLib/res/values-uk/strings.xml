@@ -403,7 +403,7 @@
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Зробити колір фону панелі навігації прозорим за умовчанням"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Дозволити розмиття вікон"</string>
     <string name="force_msaa" msgid="4081288296137775550">"Примус. запустити 4x MSAA"</string>
-    <string name="force_msaa_summary" msgid="9070437493586769500">"Увімкнути 4x MSAA в програмах OpenGL ES 2.0"</string>
+    <string name="force_msaa_summary" msgid="9070437493586769500">"Увімкнути 4x MSAA в додатках OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Налагодити непрямокутну обрізку"</string>
     <string name="track_frame_time" msgid="522674651937771106">"Обробка HWUI за профілем"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Увімкнути шари налагодження ГП"</string>

@@ -373,7 +373,7 @@
     <string name="media_category" msgid="8122076702526144053">"媒體"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"監控"</string>
     <string name="strict_mode" msgid="889864762140862437">"嚴格模式已啟用"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"當應用程式在主執行緒中進行長時間作業時，讓螢幕閃爍"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"當應用程式在主執行緒中進行長時間操作時，使螢幕閃爍"</string>
     <string name="pointer_location" msgid="7516929526199520173">"指標位置"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"在重疊式畫面上顯示目前的觸控資料"</string>
     <string name="show_touches" msgid="8437666942161289025">"顯示輕按回應"</string>
@@ -390,7 +390,7 @@
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"在硬件層更新時閃動綠燈"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"GPU 透支偵錯"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"停用 HW 重疊效果"</string>
-    <string name="disable_overlays_summary" msgid="1954852414363338166">"永遠使用 GPU 進行畫面合成"</string>
+    <string name="disable_overlays_summary" msgid="1954852414363338166">"一律使用 GPU 進行畫面合成"</string>
     <string name="simulate_color_space" msgid="1206503300335835151">"模擬色彩空間"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"啟用 OpenGL 追蹤"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"停用 USB 音效檔案路由功能"</string>
@@ -429,9 +429,9 @@
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"顯示通知渠道警告"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"當應用程式未經有效渠道發佈通知時，在螢幕上顯示警告"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"強制允許應用程式寫入到外部儲存空間"</string>
-    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"在任何資訊清單值下，允許將所有符合資格的應用程式寫入到外部儲存完間"</string>
-    <string name="force_resizable_activities" msgid="7143612144399959606">"強制將活動設為可調整尺寸"</string>
-    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"在任何資訊清單值下，允許系統配合多重視窗環境調整所有活動的尺寸。"</string>
+    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"允許將所有應用程式寫入到外部儲存完間，不受資訊清單所設定的值影響"</string>
+    <string name="force_resizable_activities" msgid="7143612144399959606">"強制將活動設為可調整大小"</string>
+    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"將所有活動配合多重視窗環境調整大小，不受資訊清單所設定的值影響"</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"啟用自由形態視窗"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"桌面電腦備份密碼"</string>
     <string name="local_backup_password_summary_none" msgid="7646898032616361714">"桌面電腦的完整備份目前未受保護"</string>

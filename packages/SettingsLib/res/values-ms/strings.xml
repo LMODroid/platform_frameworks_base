@@ -387,7 +387,7 @@
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Tunjukkan kemaskinian paparan"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Kerlip paparan dalam tetingkap apabila dilukis"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Tunjukkan kemaskinian perkakasan"</string>
-    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Denyar hijau lapisan perkakasan yang dikemaskinikan"</string>
+    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Kerlip hijau lapisan perkakasan yang dikemaskinikan"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Nyahpepijat lebih lukis GPU"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Lumpuhkan tindihan HW"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Sentiasa gunakan GPU untuk komposit skrin"</string>

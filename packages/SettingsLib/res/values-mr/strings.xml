@@ -425,11 +425,11 @@
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"वापरकर्त्याने प्रत्येक ॲक्टिव्हिटी सोडताच ती नष्ट करा"</string>
     <string name="app_process_limit_title" msgid="8361367869453043007">"बॅकग्राउंड प्रक्रिया मर्यादा"</string>
     <string name="show_all_anrs" msgid="9160563836616468726">"बॅकग्राउंड ANRs दाखवा"</string>
-    <string name="show_all_anrs_summary" msgid="8562788834431971392">"बॅकग्राउंड अ‍ॅप्ससाठी अ‍ॅप प्रतिसाद देत नाही दाखवते"</string>
-    <string name="show_notification_channel_warnings" msgid="3448282400127597331">"सूचना चॅनल चेतावण्या दाखवा"</string>
-    <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"एखादे अ‍ॅप वैध चॅनलशिवाय सूचना पोस्ट करते तेव्हा स्क्रीनवर चेतावणी देते"</string>
+    <string name="show_all_anrs_summary" msgid="8562788834431971392">"बॅकग्राउंड अ‍ॅप्ससाठी अ‍ॅप प्रतिसाद देत नाही हा डायलॉग दाखवा"</string>
+    <string name="show_notification_channel_warnings" msgid="3448282400127597331">"नोटिफिकेशन चॅनल चेतावण्या दाखवा"</string>
+    <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"अ‍ॅपने वैध चॅनलविना नोटिफिकेशन दिल्यास स्क्रीनवर चेतावणी देते"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"बाह्य स्टोरेजवर अ‍ॅप्सना अनुमती देण्याची सक्ती करा"</string>
-    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"मॅनिफेस्‍ट मूल्ये काहीही असू देत, कोणत्याही अ‍ॅपला बाह्य स्टोरेजवर राइट करण्यासाठी पात्र बनविते"</string>
+    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"मॅनिफेस्‍ट मूल्ये काहीही असोत, कोणत्याही अ‍ॅपला बाह्य स्टोरेजवर राइट करण्यासाठी पात्र बनवते"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"ॲक्टिव्हिटीचा आकार बदलण्यायोग्य होण्याची सक्ती करा"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"मॅनिफेस्‍ट मूल्ये काहीही असू देत, एकाहून अधिक विंडोसाठी सर्व अ‍ॅक्टिव्हिटीचा आकार बदलण्यायोग्य करा."</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"freeform windows सुरू करा"</string>
@@ -500,7 +500,7 @@
     <string name="power_charging_limited" msgid="4144004473976005214">"<xliff:g id="LEVEL">%1$s</xliff:g> - बॅटरीचे संरक्षण करण्यासाठी चार्जिंग थांबवले आहे"</string>
     <string name="power_charging_future_paused" msgid="1809543660923642799">"<xliff:g id="LEVEL">%1$s</xliff:g> ‑ चार्ज होत आहे"</string>
     <string name="power_fast_charging_duration_v2" msgid="3797735998640359490">"<xliff:g id="LEVEL">%1$s</xliff:g> - <xliff:g id="STATUS">%2$s</xliff:g> - <xliff:g id="TIME">%3$s</xliff:g> पर्यंत पूर्ण होईल"</string>
-    <string name="power_charging_duration_v2" msgid="2938998284074003248">"<xliff:g id="LEVEL">%1$s</xliff:g> - बॅटरी <xliff:g id="TIME">%2$s</xliff:g> या वेळेत पूर्ण चार्ज होईल"</string>
+    <string name="power_charging_duration_v2" msgid="2938998284074003248">"<xliff:g id="LEVEL">%1$s</xliff:g> - बॅटरी <xliff:g id="TIME">%2$s</xliff:g> पर्यंत पूर्ण चार्ज होईल"</string>
     <string name="power_remaining_charging_duration_only_v2" msgid="5358176435722950193">"<xliff:g id="TIME">%1$s</xliff:g> पर्यंत पूर्णपणे चार्ज होईल"</string>
     <string name="power_remaining_fast_charging_duration_only_v2" msgid="6270950195810579563">"<xliff:g id="TIME">%1$s</xliff:g> पर्यंत पूर्ण होईल"</string>
     <string name="battery_info_status_unknown" msgid="268625384868401114">"अज्ञात"</string>
@@ -610,7 +610,7 @@
     <string name="help_label" msgid="3528360748637781274">"मदत आणि फीडबॅक"</string>
     <string name="storage_category" msgid="2287342585424631813">"स्टोरेज"</string>
     <string name="shared_data_title" msgid="1017034836800864953">"शेअर केलेला डेटा"</string>
-    <string name="shared_data_summary" msgid="5516326713822885652">"शेअर केलेला डेटा पहा आणि सुधारित करा"</string>
+    <string name="shared_data_summary" msgid="5516326713822885652">"शेअर केलेला डेटा पहा आणि त्यात फेरबदल करा"</string>
     <string name="shared_data_no_blobs_text" msgid="3108114670341737434">"या वापरकर्त्यासाठी कोणताही शेअर केलेला डेटा नाही."</string>
     <string name="shared_data_query_failure_text" msgid="3489828881998773687">"शेअर केलेला डेटा मिळवताना एरर आली. पुन्हा प्रयत्न करा."</string>
     <string name="blob_id_text" msgid="8680078988996308061">"शेअर केलेल्या डेटाचा आयडी: <xliff:g id="BLOB_ID">%d</xliff:g>"</string>

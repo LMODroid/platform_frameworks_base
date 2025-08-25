@@ -373,7 +373,7 @@
     <string name="media_category" msgid="8122076702526144053">"Media"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Övervakning"</string>
     <string name="strict_mode" msgid="889864762140862437">"Strikt läge aktiverat"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"Tänd skärm när app gör omfattande åtgärd på huvudtråd"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"Tänd skärm när appar gör omfattande åtgärd på huvudtråd"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Pekarens plats"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"Överlägg på skärmen med aktuella skärmtryck"</string>
     <string name="show_touches" msgid="8437666942161289025">"Visa tryck"</string>

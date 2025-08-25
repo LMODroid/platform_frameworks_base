@@ -373,7 +373,7 @@
     <string name="media_category" msgid="8122076702526144053">"మీడియా"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"పర్యవేక్షణ"</string>
     <string name="strict_mode" msgid="889864762140862437">"స్ట్రిక్ట్ మోడ్ ఎనేబుల్డ్"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"యాప్‌లు ప్రధాన థ్రెడ్‌లో సుదీర్ఘ చర్యలు చేసేటప్పుడు స్క్రీన్‌ను ఫ్లాష్ చేయండి"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"మెయిన్ థ్రెడ్‌లో యాప్‌లకు టైమ్ పడితే స్క్రీన్‌ను ఫ్లాష్ చేయండి"</string>
     <string name="pointer_location" msgid="7516929526199520173">"పాయింటర్ లొకేషన్"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"ప్రస్తుత టచ్ డేటాను చూపుతోన్న స్క్రీన్ ఓవర్‌లే"</string>
     <string name="show_touches" msgid="8437666942161289025">"ట్యాప్‌ చేసినవి చూపండి"</string>
@@ -422,16 +422,16 @@
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"ఇతర డిస్‌ప్లేలను సిమ్యులేట్‌ చేయండి"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"యాప్‌లు"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"యాక్టివిటీస్‌ను ఉంచవద్దు"</string>
-    <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"యూజర్ నిష్క్రమించాక పూర్తి యాక్టివిటీని తొలగించండి"</string>
+    <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"యూజర్ వదిలి వెళ్లాక పూర్తి యాక్టివిటీని తొలగించండి"</string>
     <string name="app_process_limit_title" msgid="8361367869453043007">"బ్యాక్‌గ్రౌండ్ ప్రాసెస్ పరిమితి"</string>
     <string name="show_all_anrs" msgid="9160563836616468726">"బ్యాక్‌గ్రౌండ్ ANRలను చూపండి"</string>
     <string name="show_all_anrs_summary" msgid="8562788834431971392">"బ్యాక్‌గ్రౌండ్ యాప్‌ల కోసం యాప్ ప్రతిస్పందించడం లేదు అనే డైలాగ్‌ను చూపు"</string>
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"ఛానెల్ హెచ్చరికల నోటిఫికేషన్‌‌ను చూపు"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"చెల్లుబాటు అయ్యే ఛానెల్ లేకుండా యాప్ నోటిఫికేషన్‌ను పోస్ట్ చేస్తున్నప్పుడు స్క్రీన్‌పై హెచ్చరికను చూపిస్తుంది"</string>
-    <string name="force_allow_on_external" msgid="9187902444231637880">"యాప్‌లను బాహ్య స్టోరేజ్‌లో తప్పనిసరిగా అనుమతించండి"</string>
-    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ఏ యాప్‌ను అయినా మానిఫెస్ట్ విలువలతో సంబంధం లేకుండా బాహ్య స్టోరేజ్‌లో సేవ్ చేయడానికి అనుమతిస్తుంది"</string>
-    <string name="force_resizable_activities" msgid="7143612144399959606">"యాక్టివిటీ విండోల సైజ్‌ మార్చ‌గ‌లిగేలా నిర్బంధించు"</string>
-    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"మానిఫెస్ట్ విలువలతో సంబంధం లేకుండా అన్ని యాక్టివిటీస్‌ను పలు రకాల విండోల్లో సరిపోయేటట్లు సైజ్‌ మార్చగలిగేలా చేస్తుంది."</string>
+    <string name="force_allow_on_external" msgid="9187902444231637880">"ఎక్స్‌టర్నల్ స్టోరేజ్‌లో యాప్‌లను అనుమతించండి"</string>
+    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ఏ యాప్‌ను అయినా మానిఫెస్ట్ విలువలతో సంబంధం లేకుండా ఎక్స్‌టర్నల్ స్టోరేజ్‌లో సేవ్ చేయడానికి అనుమతిస్తుంది"</string>
+    <string name="force_resizable_activities" msgid="7143612144399959606">"యాక్టివిటీ విండోల సైజ్‌ను మార్చేలా చేయండి"</string>
+    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"మానిఫెస్ట్ వ్యాల్యూస్‌తో (విలువలతో) సంబంధం లేకుండా అన్ని యాక్టివిటీలను పలు రకాల విండోలకు సరిపోయేలా సైజ్‌ను మారుస్తుంది."</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"స్వతంత్ర రూప విండోలను ఎనేబుల్ చేయండి"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"డెస్క్‌టాప్ బ్యాకప్ పాస్‌వర్డ్"</string>
     <string name="local_backup_password_summary_none" msgid="7646898032616361714">"మొత్తం డెస్క్‌టాప్‌ బ్యాకప్‌లకు ప్రస్తుతం ప్రొటెక్షన్ (రక్షణ) లేదు"</string>
@@ -609,7 +609,7 @@
     <string name="media_transfer_wired_device_name" msgid="4447880899964056007">"వైర్ గల ఆడియో పరికరం"</string>
     <string name="help_label" msgid="3528360748637781274">"సహాయం &amp; ఫీడ్‌బ్యాక్"</string>
     <string name="storage_category" msgid="2287342585424631813">"స్టోరేజ్"</string>
-    <string name="shared_data_title" msgid="1017034836800864953">"షేర్ చేసిన డేటా"</string>
+    <string name="shared_data_title" msgid="1017034836800864953">"షేర్ అయిన డేటా"</string>
     <string name="shared_data_summary" msgid="5516326713822885652">"షేర్ చేసిన డేటాను చూసి, ఎడిట్ చేయండి"</string>
     <string name="shared_data_no_blobs_text" msgid="3108114670341737434">"ఈ యూజర్ కోసం షేర్ చేసిన డేటా ఏదీ లేదు."</string>
     <string name="shared_data_query_failure_text" msgid="3489828881998773687">"షేర్ చేసిన డేటా పొందడంలో ఎర్రర్ ఏర్పడింది. మళ్లీ ట్రై చేయండి."</string>
@@ -644,7 +644,7 @@
     <string name="profile_info_settings_title" msgid="105699672534365099">"ప్రొఫైల్ సమాచారం"</string>
     <string name="user_need_lock_message" msgid="4311424336209509301">"మీరు పరిమితం చేయబడిన ప్రొఫైల్‌ను క్రియేట్ చేయడానికి ముందు, మీ యాప్‌లు మరియు వ్యక్తిగత డేటాను రక్షించడానికి స్క్రీన్ లాక్‌ను సెటప్ చేయాల్సి ఉంటుంది."</string>
     <string name="user_set_lock_button" msgid="1427128184982594856">"లాక్‌ను సెట్ చేయి"</string>
-    <string name="user_switch_to_user" msgid="6975428297154968543">"<xliff:g id="USER_NAME">%s</xliff:g>‌కు స్విచ్ చేయండి"</string>
+    <string name="user_switch_to_user" msgid="6975428297154968543">"<xliff:g id="USER_NAME">%s</xliff:g>‌కు స్విచ్ అవండి"</string>
     <string name="creating_new_user_dialog_message" msgid="7232880257538970375">"కొత్త యూజర్‌ను క్రియేట్ చేస్తోంది…"</string>
     <string name="creating_new_guest_dialog_message" msgid="1114905602181350690">"కొత్త గెస్ట్‌ను క్రియేట్ చేస్తోంది…"</string>
     <string name="add_user_failed" msgid="4809887794313944872">"కొత్త యూజర్‌ను క్రియేట్ చేయడం విఫలమైంది"</string>
@@ -721,7 +721,7 @@
     <string name="accessibility_ethernet_disconnected" msgid="2832501530856497489">"ఈథర్‌నెట్ డిస్‌కనెక్ట్ చేయబడింది."</string>
     <string name="accessibility_ethernet_connected" msgid="6175942685957461563">"ఈథర్‌నెట్."</string>
     <string name="accessibility_no_calling" msgid="3540827068323895748">"కాలింగ్ మోడ్ ఆఫ్‌లో ఉంది."</string>
-    <string name="physical_keyboard_title" msgid="4811935435315835220">"భౌతిక కీబోర్డ్"</string>
+    <string name="physical_keyboard_title" msgid="4811935435315835220">"ఫిజికల్ కీబోర్డ్"</string>
     <string name="keyboard_layout_dialog_title" msgid="3927180147005616290">"కీబోర్డ్ లేఅవుట్‌ను ఎంచుకోండి"</string>
     <string name="keyboard_layout_default_label" msgid="1997292217218546957">"ఆటోమేటిక్ సెట్టింగ్"</string>
     <string name="turn_screen_on_title" msgid="2662312432042116026">"స్క్రీన్‌ను ఆన్ చేయడానికి సంబంధించిన కంట్రోల్"</string>

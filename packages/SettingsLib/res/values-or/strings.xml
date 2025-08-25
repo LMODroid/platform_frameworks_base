@@ -428,9 +428,9 @@
     <string name="show_all_anrs_summary" msgid="8562788834431971392">"ବ୍ୟାକ୍‌ଗ୍ରାଉଣ୍ଡ ଆପ୍‌ଗୁଡ଼ିକ ପାଇଁ \"ଆପ୍‌ ଉତ୍ତର ଦେଉନାହିଁ\" ଡାୟଲଗ୍‌ ଦେଖାନ୍ତୁ"</string>
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"ବିଜ୍ଞପ୍ତି ଚ୍ୟାନେଲ୍ ଚେତାବନୀ ଦେଖାନ୍ତୁ"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"ବୈଧ ଚେନେଲ ବିନା ଗୋଟିଏ ଆପ ଏକ ବିଜ୍ଞପ୍ତି ପୋଷ୍ଟ କଲେ ଅନ-ସ୍କ୍ରିନ ଚେତାବନୀ ଦେଖାଏ"</string>
-    <string name="force_allow_on_external" msgid="9187902444231637880">"ଆପ୍‌କୁ ଏକ୍ସଟର୍ନଲ୍ ମେମୋରୀରେ ଫୋର୍ସ୍ ଅନୁମତି ଦିଅନ୍ତୁ"</string>
+    <string name="force_allow_on_external" msgid="9187902444231637880">"ଏକ୍ସଟର୍ନାଲରେ ଆପ୍ସକୁ ଫୋର୍ସ ଅନୁମତି ଦିଅନ୍ତୁ"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ଯେକୌଣସି ଆପ୍‌କୁ ଏକ୍ସଟର୍ନଲ୍ ଷ୍ଟୋରେଜ୍‌ରେ ଲେଖାଯୋଗ୍ୟ କରନ୍ତୁ, ମେନିଫେଷ୍ଟ ମୂଲ୍ୟ ଯାହା ହୋଇଥାଉ ନା କାହିଁକି"</string>
-    <string name="force_resizable_activities" msgid="7143612144399959606">"ୱିଣ୍ଡୋ ହିସାବରେ କାର୍ଯ୍ୟକଳାପର ଆକାର ବଦଳାନ୍ତୁ"</string>
+    <string name="force_resizable_activities" msgid="7143612144399959606">"କାର୍ଯ୍ୟକଳାପଗୁଡ଼ିକୁ ରିସାଇଜ କରିବାକୁ ଫୋର୍ସ କରନ୍ତୁ"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"ମାନିଫେଷ୍ଟ ମୂଲ୍ୟ ଯାହା ହୋଇଥାଉ ନା କାହିଁକି, ଏକାଧିକ-ୱିଣ୍ଡୋ ପାଇଁ ସମସ୍ତ କାର୍ଯ୍ୟକଳାପକୁ ରିସାଇଜ କରନ୍ତୁ।"</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"ଫ୍ରିଫର୍ମ ୱିଣ୍ଡୋକୁ ସକ୍ଷମ କରନ୍ତୁ"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"ଡେସ୍କଟପ ବେକଅପ ପାସୱାର୍ଡ"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"ସିଷ୍ଟମ୍‌ ଭାଷା ବ୍ୟବହାର କରନ୍ତୁ"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"<xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> ପାଇଁ ସେଟିଂସ ଖୋଲିବାରେ ବିଫଳ"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"ଏହି ଇନ୍‌ପୁଟ୍‌ ପଦ୍ଧତି, ପାସ୍‌ୱର୍ଡ ଓ କ୍ରେଡିଟ୍‌ କାର୍ଡ ନମ୍ୱର୍‌ ଭଳି ବ୍ୟକ୍ତିଗତ ଡାଟା ସମେତ ଆପଣ ଟାଇପ୍‌ କରିଥିବା ସମସ୍ତ ଅକ୍ଷର ସଂଗହ କରିପାରେ।ଏହା, <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> ଆପ୍‌ରୁ ଆସିଛି| ଏହି ଇନ୍‌ପୁଟ୍‌ ପଦ୍ଧତି ବ୍ୟବହାର କରିବେ?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ଧ୍ୟାନଦିଅନ୍ତୁ: ରିବୁଟ୍‌ କରିବା ପରେ, ଆପଣଙ୍କ ଫୋନ୍‌ ଅନଲକ୍‌ ନହେବା ପର୍ଯ୍ୟନ୍ତ ଏହି ଆପ୍‌ ଆରମ୍ଭ ହୋଇପାରିବ ନାହିଁ"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ଧ୍ୟାନ ଦିଅନ୍ତୁ: ରିବୁଟ କରିବା ପରେ, ଆପଣଙ୍କ ଫୋନକୁ ଆପଣ ଅନଲକ ନ କରିବା ପର୍ଯ୍ୟନ୍ତ ଏହି ଆପ ଆରମ୍ଭ ହୋଇପାରିବ ନାହିଁ"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"IMS ପଞ୍ଜିକରଣ ସ୍ଥିତି"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"ପଞ୍ଜିକୃତ"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"ପଞ୍ଜିକୃତ ହୋଇନାହିଁ"</string>

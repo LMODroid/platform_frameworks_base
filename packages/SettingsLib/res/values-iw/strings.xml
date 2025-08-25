@@ -394,7 +394,7 @@
     <string name="simulate_color_space" msgid="1206503300335835151">"יצירת הדמיה של מרחב צבעים"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"‏הפעלת מעקבי OpenGL"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"‏השבתת ניתוב אודיו ב-USB"</string>
-    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"‏השבתת ניתוב אוטומטי אל התקני אודיו חיצוניים ב-USB"</string>
+    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"‏הניתוב האוטומטי אל התקני אודיו חיצוניים ב-USB יושבת"</string>
     <string name="debug_layout" msgid="1659216803043339741">"הצגת גבולות הפריסה"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"הצגת גבולות אזור, שוליים וכדומה"</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"אילוץ כיוון פריסה מימין לשמאל"</string>
@@ -425,7 +425,7 @@
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"השמדת כל פעילות ברגע שהמשתמש עוזב אותה"</string>
     <string name="app_process_limit_title" msgid="8361367869453043007">"מגבלה של תהליכים ברקע"</string>
     <string name="show_all_anrs" msgid="9160563836616468726">"‏הצגת מקרי ANR ברקע"</string>
-    <string name="show_all_anrs_summary" msgid="8562788834431971392">"הצגת תיבת דו-שיח של \'אפליקציה לא מגיבה\' עבור אפליקציות שפועלות ברקע"</string>
+    <string name="show_all_anrs_summary" msgid="8562788834431971392">"תופיע תיבת דו-שיח של \"אפליקציה לא מגיבה\" לגבי אפליקציות שפועלות ברקע"</string>
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"אזהרות לגבי ערוץ התראות"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"הצגת אזהרה כשאפליקציה שולחת התראה ללא ערוץ תקין"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"אילוץ הרשאת אפליקציות באחסון חיצוני"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"שימוש בשפות המערכת"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"פתיחת הגדרות עבור <xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> נכשלה"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"ייתכן ששיטת קלט זו תוכל לאסוף את כל הטקסט המוקלד, כולל נתונים אישיים כגון סיסמאות ומספרי כרטיס אשראי. היא מגיעה מהאפליקציה <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g>. האם להשתמש בשיטת קלט זו?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"לתשומת ליבך: לאחר הפעלה מחדש של המכשיר, ניתן להפעיל את האפליקציה רק לאחר שתבטל את נעילת הטלפון"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"חשוב לשים לב: אחרי שהמכשיר יופעל מחדש, צריך יהיה קודם לפתוח את נעילת הטלפון ורק אחר כך להפעיל את האפליקציה"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"‏סטטוס הרשמה ל-IMS"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"רשום"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"לא רשום"</string>
