@@ -696,7 +696,7 @@
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"振动"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"<xliff:g id="LABEL">%s</xliff:g>播放位置："</string>
     <string name="media_output_title_without_playing" msgid="3825663683169305013">"音频播放位置："</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"正在通话"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"当前通话设备"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"系统界面调节工具"</string>
     <string name="status_bar" msgid="4357390266055077437">"状态栏"</string>
     <string name="demo_mode" msgid="263484519766901593">"系统界面演示模式"</string>
@@ -1126,7 +1126,7 @@
     <string name="retry_face" msgid="416380073082560186">"重试人脸识别身份验证"</string>
     <string name="controls_seeding_in_progress" msgid="3033855341410264148">"正在加载推荐内容"</string>
     <string name="controls_media_title" msgid="1746947284862928133">"媒体"</string>
-    <string name="controls_media_close_session" msgid="4780485355795635052">"要针对“<xliff:g id="APP_NAME">%1$s</xliff:g>”隐藏此媒体控件吗？"</string>
+    <string name="controls_media_close_session" msgid="4780485355795635052">"要隐藏“<xliff:g id="APP_NAME">%1$s</xliff:g>”的这个媒体控件吗？"</string>
     <string name="controls_media_active_session" msgid="3146882316024153337">"无法隐藏当前的媒体会话。"</string>
     <string name="controls_media_dismiss_button" msgid="4485675693008031646">"隐藏"</string>
     <string name="controls_media_resume" msgid="1933520684481586053">"继续播放"</string>

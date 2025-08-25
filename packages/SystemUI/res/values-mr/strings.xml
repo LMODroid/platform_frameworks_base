@@ -318,7 +318,7 @@
     <string name="quick_settings_bluetooth_secondary_label_input" msgid="3887552721233148132">"इनपुट"</string>
     <string name="quick_settings_bluetooth_secondary_label_hearing_aids" msgid="5553051568867097111">"श्रवणयंत्रे"</string>
     <string name="quick_settings_bluetooth_secondary_label_transient" msgid="3882884317600669650">"सुरू करत आहे…"</string>
-    <string name="quick_settings_rotation_unlocked_label" msgid="2359922767950346112">"ऑटो-रोटेट"</string>
+    <string name="quick_settings_rotation_unlocked_label" msgid="2359922767950346112">"ऑटोमॅटिक रोटेट"</string>
     <string name="accessibility_quick_settings_rotation" msgid="4800050198392260738">"ऑटोमॅटिक रोटेट स्क्रीन"</string>
     <string name="quick_settings_location_label" msgid="2621868789013389163">"स्थान"</string>
     <string name="quick_settings_screensaver_label" msgid="1495003469366524120">"स्क्रीन सेव्हर"</string>
@@ -696,7 +696,7 @@
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"व्हायब्रेट करा"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"<xliff:g id="LABEL">%s</xliff:g> वर प्ले करत आहे"</string>
     <string name="media_output_title_without_playing" msgid="3825663683169305013">"ऑडिओ यावर प्ले होईल"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"यावर कॉल करत आहे"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"कॉल करत आहे"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"सिस्टीम UI ट्युनर"</string>
     <string name="status_bar" msgid="4357390266055077437">"स्टेटस बार"</string>
     <string name="demo_mode" msgid="263484519766901593">"सिस्टीम UI डेमो मोड"</string>
@@ -1448,7 +1448,7 @@
     <string name="accessibility_deprecate_extra_dim_dialog_toast" msgid="165474092660941104">"आणखी डिम शॉर्टकट काढून टाकले आहेत"</string>
     <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"कनेक्टिव्हिटी"</string>
     <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"अ‍ॅक्सेसिबिलिटी"</string>
-    <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"उपयुक्तता"</string>
+    <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"युटिलिटी"</string>
     <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"गोपनीयता"</string>
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"अ‍ॅप्सद्वारे पुरवलेले"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"डिस्प्ले"</string>

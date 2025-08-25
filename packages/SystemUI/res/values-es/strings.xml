@@ -101,7 +101,7 @@
     <string name="screenshot_private_profile_notification" msgid="1704440899154243171">"Se ha guardado en el perfil privado de <xliff:g id="APP">%1$s</xliff:g>"</string>
     <string name="screenshot_default_files_app_name" msgid="8721579578575161912">"Archivos"</string>
     <string name="screenshot_detected_template" msgid="7940376642921719915">"<xliff:g id="APPNAME">%1$s</xliff:g> ha detectado esta captura de pantalla."</string>
-    <string name="screenshot_detected_multiple_template" msgid="7644827792093819241">"<xliff:g id="APPNAME">%1$s</xliff:g> y otras aplicaciones abiertas han detectado esta captura de pantalla."</string>
+    <string name="screenshot_detected_multiple_template" msgid="7644827792093819241">"<xliff:g id="APPNAME">%1$s</xliff:g> y otras apps abiertas han detectado esta captura de pantalla."</string>
     <string name="app_clips_save_add_to_note" msgid="3460200751278069445">"Añadir a nota"</string>
     <string name="backlinks_include_link" msgid="4562093591148248158">"Incluir enlace"</string>
     <string name="backlinks_duplicate_label_format" msgid="558445128952827926">"<xliff:g id="APPNAME">%1$s</xliff:g> <xliff:g id="FREQUENCYCOUNT">(%2$d)</xliff:g>"</string>
@@ -423,13 +423,13 @@
     <string name="sensor_privacy_mic_camera_unblocked_toast_content" msgid="7339355093282661115">"Micrófono y cámara disponible"</string>
     <string name="sensor_privacy_mic_turned_on_dialog_title" msgid="6348853159838376513">"Micrófono activado"</string>
     <string name="sensor_privacy_mic_turned_off_dialog_title" msgid="5760464281790732849">"Micrófono desactivado"</string>
-    <string name="sensor_privacy_mic_unblocked_dialog_content" msgid="4889961886199270224">"El micrófono está habilitado para todas las aplicaciones y servicios."</string>
-    <string name="sensor_privacy_mic_blocked_no_exception_dialog_content" msgid="5864898470772965394">"El acceso al micrófono está inhabilitado para todas las aplicaciones y servicios. Puedes habilitar el acceso al micrófono en Ajustes &gt; Privacidad &gt; Micrófono."</string>
-    <string name="sensor_privacy_mic_blocked_with_exception_dialog_content" msgid="810289713700437896">"El acceso al micrófono está inhabilitado para todas las aplicaciones y servicios. Puedes cambiarlo en Ajustes &gt; Privacidad &gt; Micrófono."</string>
+    <string name="sensor_privacy_mic_unblocked_dialog_content" msgid="4889961886199270224">"El micrófono está habilitado para todas las apps y servicios."</string>
+    <string name="sensor_privacy_mic_blocked_no_exception_dialog_content" msgid="5864898470772965394">"El acceso al micrófono está inhabilitado para todas las apps y servicios. Puedes habilitar el acceso al micrófono en Ajustes &gt; Privacidad &gt; Micrófono."</string>
+    <string name="sensor_privacy_mic_blocked_with_exception_dialog_content" msgid="810289713700437896">"El acceso al micrófono está inhabilitado para todas las apps y servicios. Puedes cambiarlo en Ajustes &gt; Privacidad &gt; Micrófono."</string>
     <string name="sensor_privacy_camera_turned_on_dialog_title" msgid="8039095295100075952">"Cámara activada"</string>
     <string name="sensor_privacy_camera_turned_off_dialog_title" msgid="1936603903120742696">"Cámara desactivada"</string>
-    <string name="sensor_privacy_camera_unblocked_dialog_content" msgid="7847190103011782278">"La cámara está habilitada para todas las aplicaciones y servicios."</string>
-    <string name="sensor_privacy_camera_blocked_dialog_content" msgid="3182428709314874616">"El acceso a la cámara está inhabilitado para todas las aplicaciones y servicios."</string>
+    <string name="sensor_privacy_camera_unblocked_dialog_content" msgid="7847190103011782278">"La cámara está habilitada para todas las apps y servicios."</string>
+    <string name="sensor_privacy_camera_blocked_dialog_content" msgid="3182428709314874616">"El acceso a la cámara está inhabilitado para todas las apps y servicios."</string>
     <string name="sensor_privacy_htt_blocked_dialog_content" msgid="3333321592997666441">"Para usar el botón del micrófono, habilita el acceso al micrófono en Ajustes."</string>
     <string name="sensor_privacy_dialog_open_settings" msgid="5635865896053011859">"Abrir Ajustes"</string>
     <string name="media_seamless_other_device" msgid="4654849800789196737">"Otro dispositivo"</string>
@@ -497,7 +497,7 @@
     <string name="hub_mode_add_widget_button_text" msgid="4831464661209971729">"Añadir widget"</string>
     <string name="hub_mode_editing_exit_button_text" msgid="3704686734192264771">"Hecho"</string>
     <string name="label_for_button_in_empty_state_cta" msgid="7314975555382055823">"Añadir widgets"</string>
-    <string name="title_for_empty_state_cta" msgid="6161654421223450530">"Accede rápidamente a los widgets de tus aplicaciones favoritas sin desbloquear la tablet."</string>
+    <string name="title_for_empty_state_cta" msgid="6161654421223450530">"Accede rápidamente a los widgets de tus apps favoritas sin desbloquear la tablet."</string>
     <string name="dialog_title_to_allow_any_widget" msgid="1004820948962675644">"¿Permitir cualquier widget en la pantalla de bloqueo?"</string>
     <string name="button_text_to_open_settings" msgid="1987729256950941628">"Abrir ajustes"</string>
     <string name="work_mode_off_title" msgid="5794818421357835873">"¿Reactivar apps de trabajo?"</string>
@@ -828,17 +828,17 @@
     <string name="keyboard_shortcut_a11y_show_search_results" msgid="2865241062981833705">"Mostrando resultados de la búsqueda"</string>
     <string name="keyboard_shortcut_a11y_filter_system" msgid="7744143131119370483">"Mostrando combinaciones de teclas del sistema"</string>
     <string name="keyboard_shortcut_a11y_filter_input" msgid="4589316004510335529">"Mostrando combinaciones de teclas de entrada"</string>
-    <string name="keyboard_shortcut_a11y_filter_open_apps" msgid="6175417687221004059">"Mostrando combinaciones de teclas que abren aplicaciones"</string>
+    <string name="keyboard_shortcut_a11y_filter_open_apps" msgid="6175417687221004059">"Mostrando combinaciones de teclas que abren apps"</string>
     <string name="keyboard_shortcut_a11y_filter_current_app" msgid="7944592357493737911">"Mostrando combinaciones de teclas de la aplicación actual"</string>
     <string name="group_system_access_notification_shade" msgid="1619028907006553677">"Ver notificaciones"</string>
     <string name="group_system_full_screenshot" msgid="5742204844232667785">"Hacer captura de pantalla"</string>
     <string name="group_system_access_system_app_shortcuts" msgid="8562482996626694026">"Mostrar accesos directos"</string>
     <string name="group_system_go_back" msgid="2730322046244918816">"Volver"</string>
     <string name="group_system_access_home_screen" msgid="4130366993484706483">"Ir a pantalla de inicio"</string>
-    <string name="group_system_overview_open_apps" msgid="5659958952937994104">"Ver aplicaciones recientes"</string>
-    <string name="group_system_cycle_forward" msgid="5478663965957647805">"Desplazarse por aplicaciones recientes (adelante)"</string>
-    <string name="group_system_cycle_back" msgid="8194102916946802902">"Desplazarse por aplicaciones recientes (atrás)"</string>
-    <string name="group_system_access_all_apps_search" msgid="1553588630154197469">"Abrir lista de aplicaciones"</string>
+    <string name="group_system_overview_open_apps" msgid="5659958952937994104">"Ver apps recientes"</string>
+    <string name="group_system_cycle_forward" msgid="5478663965957647805">"Desplazarse por apps recientes (adelante)"</string>
+    <string name="group_system_cycle_back" msgid="8194102916946802902">"Desplazarse por apps recientes (atrás)"</string>
+    <string name="group_system_access_all_apps_search" msgid="1553588630154197469">"Abrir lista de apps"</string>
     <string name="group_system_access_system_settings" msgid="8731721963449070017">"Abrir ajustes"</string>
     <string name="group_system_access_google_assistant" msgid="7210074957915968110">"Abrir el Asistente"</string>
     <string name="group_system_lock_screen" msgid="7391191300363416543">"Pantalla de bloqueo"</string>
@@ -1314,7 +1314,7 @@
     <string name="log_access_confirmation_title" msgid="4843557604739943395">"¿Permitir que <xliff:g id="LOG_ACCESS_APP_NAME">%s</xliff:g> acceda a todos los registros del dispositivo?"</string>
     <string name="log_access_confirmation_allow" msgid="752147861593202968">"Permitir el acceso una vez"</string>
     <string name="log_access_confirmation_deny" msgid="2389461495803585795">"No permitir"</string>
-    <string name="log_access_confirmation_body" msgid="6883031912003112634">"Los registros del dispositivo documentan lo que sucede en tu dispositivo. Las aplicaciones pueden usar estos registros para encontrar y solucionar problemas.\n\nComo algunos registros pueden contener información sensible, es mejor que solo permitas que accedan a ellos las aplicaciones en las que confíes. \n\nAunque no permitas que esta aplicación acceda a todos los registros del dispositivo, podrá seguir accediendo a sus propios registros. Es posible que el fabricante del dispositivo pueda acceder a algunos registros o información de tu dispositivo."</string>
+    <string name="log_access_confirmation_body" msgid="6883031912003112634">"Los registros del dispositivo documentan lo que sucede en tu dispositivo. Las apps pueden usar estos registros para encontrar y solucionar problemas.\n\nComo algunos registros pueden contener información sensible, es mejor que solo permitas que accedan a ellos las apps en las que confíes. \n\nAunque no permitas que esta app acceda a todos los registros del dispositivo, podrá seguir accediendo a sus propios registros. Es posible que el fabricante del dispositivo pueda acceder a algunos registros o información de tu dispositivo."</string>
     <string name="log_access_confirmation_learn_more" msgid="3134565480986328004">"Más información"</string>
     <string name="log_access_confirmation_learn_more_at" msgid="5635666259505215905">"Más información en <xliff:g id="URL">%s</xliff:g>"</string>
     <string name="keyguard_affordance_enablement_dialog_action_template" msgid="8164857863036314664">"Abrir <xliff:g id="APPNAME">%1$s</xliff:g>"</string>
@@ -1341,7 +1341,7 @@
     <string name="stylus_battery_low" msgid="7134370101603167096">"Batería del lápiz óptico baja"</string>
     <string name="video_camera" msgid="7654002575156149298">"Videocámara"</string>
     <string name="call_from_work_profile_title" msgid="5418253516453177114">"No puedes llamar desde una aplicación personal"</string>
-    <string name="call_from_work_profile_text" msgid="2856337395968118274">"Tu organización solo te permite hacer llamadas desde aplicaciones de trabajo"</string>
+    <string name="call_from_work_profile_text" msgid="2856337395968118274">"Tu organización solo te permite hacer llamadas desde apps de trabajo"</string>
     <string name="call_from_work_profile_action" msgid="2937701298133010724">"Cambiar al perfil de trabajo"</string>
     <string name="install_dialer_on_work_profile_action" msgid="2014659711597862506">"Instalar una aplicación de llamadas de trabajo"</string>
     <string name="call_from_work_profile_close" msgid="5830072964434474143">"Cancelar"</string>
@@ -1363,7 +1363,7 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"Cerrar"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"Pantalla conectada"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"Micrófono y cámara"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Uso reciente en aplicaciones"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Uso reciente en apps"</string>
     <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Ver acceso reciente"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Hecho"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Desplegar y mostrar opciones"</string>
@@ -1382,12 +1382,12 @@
     <string name="privacy_dialog_recent_app_usage_2" msgid="2874689735085367167">"Usado recientemente por <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>)"</string>
     <string name="shortcut_helper_category_system" msgid="462110876978937359">"Sistema"</string>
     <string name="shortcut_helper_category_system_controls" msgid="3153344561395751020">"Controles del sistema"</string>
-    <string name="shortcut_helper_category_system_apps" msgid="6001757545472556810">"Aplicaciones del sistema"</string>
+    <string name="shortcut_helper_category_system_apps" msgid="6001757545472556810">"Apps del sistema"</string>
     <string name="shortcut_helper_category_multitasking" msgid="7413381961404090136">"Multitarea"</string>
-    <string name="shortcutHelper_category_recent_apps" msgid="7918731953612377145">"Aplicaciones recientes"</string>
+    <string name="shortcutHelper_category_recent_apps" msgid="7918731953612377145">"Apps recientes"</string>
     <string name="shortcutHelper_category_split_screen" msgid="1159669813444812244">"Pantalla dividida"</string>
     <string name="shortcut_helper_category_input" msgid="8674018654124839566">"Entrada"</string>
-    <string name="shortcut_helper_category_app_shortcuts" msgid="8010249408308587117">"Accesos directos a aplicaciones"</string>
+    <string name="shortcut_helper_category_app_shortcuts" msgid="8010249408308587117">"Accesos directos a apps"</string>
     <string name="shortcut_helper_category_current_app_shortcuts" msgid="4017840565974573628">"Aplicación en uso"</string>
     <string name="shortcut_helper_category_a11y" msgid="6314444792641773464">"Accesibilidad"</string>
     <string name="shortcut_helper_title" msgid="8567500639300970049">"Combinaciones de teclas"</string>
@@ -1405,7 +1405,7 @@
     <string name="launch_keyboard_touchpad_tutorial_notification_content" msgid="1780725168171929365">"Aprende gestos del panel táctil, combinaciones de teclas y más"</string>
     <string name="touchpad_tutorial_back_gesture_button" msgid="2746834288077265946">"Gesto para volver"</string>
     <string name="touchpad_tutorial_home_gesture_button" msgid="7640544867625955304">"Gesto para ir al inicio"</string>
-    <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"Ver aplicaciones recientes"</string>
+    <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"Ver apps recientes"</string>
     <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"Hecho"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"Atrás"</string>
     <string name="touchpad_back_gesture_guidance" msgid="6263750214998421587">"Para volver, desliza con tres dedos hacia la izquierda o la derecha en cualquier parte del panel táctil.\n\nTambién puedes hacerlo con la combinación de teclas asignada + Esc."</string>
@@ -1415,12 +1415,12 @@
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"Para ir a la pantalla de inicio en cualquier momento, desliza hacia arriba con tres dedos desde la parte inferior de la pantalla."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"¡Muy bien!"</string>
     <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Has completado el gesto para ir a la pantalla de inicio."</string>
-    <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Ver aplicaciones recientes"</string>
+    <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Ver apps recientes"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"Desliza tres dedos hacia arriba y mantén pulsado en el panel táctil."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"¡Bien hecho!"</string>
-    <string name="touchpad_recent_apps_gesture_success_body" msgid="4334263906697493273">"Has completado el gesto para ver las aplicaciones recientes."</string>
+    <string name="touchpad_recent_apps_gesture_success_body" msgid="4334263906697493273">"Has completado el gesto para ver las apps recientes."</string>
     <string name="tutorial_action_key_title" msgid="2659466586996495447">"Tecla de acción"</string>
-    <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"Para acceder a tus aplicaciones, pulsa la tecla de acción de tu teclado."</string>
+    <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"Para acceder a tus apps, pulsa la tecla de acción de tu teclado."</string>
     <string name="tutorial_action_key_success_title" msgid="466467860120112933">"¡Enhorabuena!"</string>
     <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"Has completado el gesto de la tecla de acción.\n\nLa combinación de teclas Acción + / muestra todas las combinaciones de teclas que tienes disponibles."</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Retroiluminación del teclado"</string>
@@ -1430,17 +1430,17 @@
     <string name="volume_undo_action" msgid="5815519725211877114">"Deshacer"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"Para volver atrás, desliza hacia la izquierda o la derecha con tres dedos en el panel táctil"</string>
     <string name="home_edu_toast_content" msgid="3381071147871955415">"Para ir a la pantalla de inicio, desliza hacia arriba con tres dedos en el panel táctil"</string>
-    <string name="overview_edu_toast_content" msgid="5797030644017804518">"Para ver las aplicaciones recientes, desliza hacia arriba y mantén pulsado el panel táctil con tres dedos"</string>
-    <string name="all_apps_edu_toast_content" msgid="8807496014667211562">"Para ver todas tus aplicaciones, pulsa la tecla de acción de tu teclado"</string>
+    <string name="overview_edu_toast_content" msgid="5797030644017804518">"Para ver las apps recientes, desliza hacia arriba y mantén pulsado el panel táctil con tres dedos"</string>
+    <string name="all_apps_edu_toast_content" msgid="8807496014667211562">"Para ver todas tus apps, pulsa la tecla de acción de tu teclado"</string>
     <string name="redacted_notification_single_line_title" msgid="212019960919261670">"Oculta"</string>
     <string name="redacted_notification_single_line_text" msgid="8684166405005242945">"Desbloquea para ver"</string>
     <string name="back_edu_notification_title" msgid="5624780717751357278">"Usa el panel táctil para volver atrás"</string>
     <string name="back_edu_notification_content" msgid="2497557451540954068">"Desliza hacia la izquierda o hacia la derecha con tres dedos. Toca para aprender a usar más gestos."</string>
     <string name="home_edu_notification_title" msgid="6097902076909654045">"Usa el panel táctil para ir a la pantalla de inicio"</string>
     <string name="home_edu_notification_content" msgid="6631697734535766588">"Desliza hacia arriba con tres dedos. Toca para aprender a usar más gestos."</string>
-    <string name="overview_edu_notification_title" msgid="1265824157319562406">"Usa el panel táctil para ver las aplicaciones recientes"</string>
+    <string name="overview_edu_notification_title" msgid="1265824157319562406">"Usa el panel táctil para ver las apps recientes"</string>
     <string name="overview_edu_notification_content" msgid="3578204677648432500">"Desliza hacia arriba con tres dedos y mantén pulsado. Toca para aprender a usar más gestos."</string>
-    <string name="all_apps_edu_notification_title" msgid="372262997265569063">"Usa el teclado para ver todas las aplicaciones"</string>
+    <string name="all_apps_edu_notification_title" msgid="372262997265569063">"Usa el teclado para ver todas las apps"</string>
     <string name="all_apps_edu_notification_content" msgid="3255070575694025585">"Pulsa la tecla de acción en cualquier momento. Toca para aprender a usar más gestos."</string>
     <string name="accessibility_deprecate_extra_dim_dialog_title" msgid="910988771011857460">"La atenuación extra ahora forma parte del control deslizante de brillo"</string>
     <string name="accessibility_deprecate_extra_dim_dialog_description" msgid="4453123359258743230">"Ahora puedes atenuar aún más tu pantalla reduciendo el nivel de brillo.\n\nComo esta función ahora forma parte del control deslizante de brillo, se van a quitar los accesos directos de atenuación extra."</string>
@@ -1450,7 +1450,7 @@
     <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"Accesibilidad"</string>
     <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"Utilidades"</string>
     <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"Privacidad"</string>
-    <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"Proporcionado por aplicaciones"</string>
+    <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"Proporcionado por apps"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"Pantalla"</string>
     <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Desconocido"</string>
 </resources>
