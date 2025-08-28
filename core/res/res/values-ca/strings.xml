@@ -144,7 +144,7 @@
     <string name="wfcSpnFormat_wifi_call" msgid="434016592539090004">"Trucada per Wifi"</string>
     <string name="wifi_calling_off_summary" msgid="5626710010766902560">"Desactivat"</string>
     <string name="wfc_mode_wifi_preferred_summary" msgid="1035175836270943089">"Trucades per Wi‑Fi"</string>
-    <string name="wfc_mode_cellular_preferred_summary" msgid="4958965609212575619">"Trucades per la xarxa mòbil"</string>
+    <string name="wfc_mode_cellular_preferred_summary" msgid="4958965609212575619">"Truca a través de la xarxa mòbil"</string>
     <string name="wfc_mode_wifi_only_summary" msgid="104951993894678665">"Només Wi-Fi"</string>
     <!-- no translation found for crossSimFormat_spn (9125246077491634262) -->
     <skip />

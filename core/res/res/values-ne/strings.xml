@@ -33,7 +33,7 @@
     <string name="mmiErrorWhileRoaming" msgid="1204173664713870114">"तपाईं रोमिङमा हुनुहुँदा तपाईंको फोनबाट कल फर्वार्ड गर्ने सम्बन्धी सेटिङहरू परिवर्तन गर्न सकिँदैन।"</string>
     <string name="serviceEnabled" msgid="7549025003394765639">"सेवा सक्षम पारियो।"</string>
     <string name="serviceEnabledFor" msgid="1463104778656711613">"निम्न उल्लेखितको लागि सेवा सक्षम पारियो:"</string>
-    <string name="serviceDisabled" msgid="641878791205871379">"सेवा असक्षम पारिएको छ।"</string>
+    <string name="serviceDisabled" msgid="641878791205871379">"सेवा अफ गरिएको छ।"</string>
     <string name="serviceRegistered" msgid="3856192211729577482">"दर्ता सफल भयो।"</string>
     <string name="serviceErased" msgid="997354043770513494">"मेटाइ सफल थियो।"</string>
     <string name="passwordIncorrect" msgid="917087532676155877">"गलत पासवर्ड।"</string>
@@ -1186,7 +1186,7 @@
     <string name="redo" msgid="7231448494008532233">"रिडू गर्नुहोस्"</string>
     <string name="autofill" msgid="511224882647795296">"अटोफिल"</string>
     <string name="textSelectionCABTitle" msgid="5151441579532476940">"पाठ चयनता"</string>
-    <string name="addToDictionary" msgid="8041821113480950096">"शब्दकोशमा थप्नुहोस्"</string>
+    <string name="addToDictionary" msgid="8041821113480950096">"शब्दकोशमा हाल्नुहोस्"</string>
     <string name="deleteText" msgid="4200807474529938112">"मेट्नुहोस्"</string>
     <string name="inputMethod" msgid="1784759500516314751">"निवेश विधि"</string>
     <string name="editTextMenuTitle" msgid="857666911134482176">"पाठ कार्यहरू"</string>
@@ -2120,7 +2120,7 @@
     <string name="shortcut_restore_not_supported" msgid="4763198938588468400">"एपले ब्याकअप तथा पुनर्स्थापनालाई समर्थन नगर्ने हुँदा सर्टकट पुनर्स्थापित गर्न सकिएन"</string>
     <string name="shortcut_restore_signature_mismatch" msgid="579345304221605479">"एपमा प्रयोग गरिने हस्ताक्षर नमिल्ने हुँदा सर्टकट पुनर्स्थापित गर्न सकिएन"</string>
     <string name="shortcut_restore_unknown_issue" msgid="2478146134395982154">"सर्टकट पुनर्स्थापित गर्न सकिएन"</string>
-    <string name="shortcut_disabled_reason_unknown" msgid="753074793553599166">"सर्टकट असक्षम पारिएको छ"</string>
+    <string name="shortcut_disabled_reason_unknown" msgid="753074793553599166">"सर्टकट अफ गरिएको छ"</string>
     <string name="harmful_app_warning_uninstall" msgid="6472912975664191772">"स्थापना रद्द गर्नु…"</string>
     <string name="harmful_app_warning_open_anyway" msgid="5963657791740211807">"जे भए पनि खोल्नुहोस्"</string>
     <string name="harmful_app_warning_title" msgid="8794823880881113856">"हानिकारक एप भेटियो"</string>

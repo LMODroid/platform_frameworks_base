@@ -292,7 +292,7 @@
     <string name="notification_channel_car_mode" msgid="2123919247040988436">"โหมดรถยนต์"</string>
     <string name="notification_channel_account" msgid="6436294521740148173">"สถานะบัญชี"</string>
     <string name="notification_channel_developer" msgid="1691059964407549150">"ข้อความสำหรับนักพัฒนาซอฟต์แวร์"</string>
-    <string name="notification_channel_developer_important" msgid="7197281908918789589">"ข้อความสำคัญสำหรับนักพัฒนาซอฟต์แวร์"</string>
+    <string name="notification_channel_developer_important" msgid="7197281908918789589">"ข้อความสำคัญสำหรับนักพัฒนาแอป"</string>
     <string name="notification_channel_updates" msgid="7907863984825495278">"การอัปเดต"</string>
     <string name="notification_channel_network_status" msgid="2127687368725272809">"สถานะเครือข่าย"</string>
     <string name="notification_channel_network_alerts" msgid="6312366315654526528">"การแจ้งเตือนเครือข่าย"</string>
