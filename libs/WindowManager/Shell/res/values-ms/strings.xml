@@ -53,7 +53,7 @@
     <string name="accessibility_split_top" msgid="2789329702027147146">"Pisah atas"</string>
     <string name="accessibility_split_bottom" msgid="8694551025220868191">"Pisah bawah"</string>
     <string name="one_handed_tutorial_title" msgid="4583241688067426350">"Menggunakan mod sebelah tangan"</string>
-    <string name="one_handed_tutorial_description" msgid="3486582858591353067">"Untuk keluar, leret ke atas daripada bahagian bawah skrin atau ketik pada mana-mana di bahagian atas apl"</string>
+    <string name="one_handed_tutorial_description" msgid="3486582858591353067">"Untuk keluar, leret ke atas dari bawah skrin atau ketik pada mana-mana bahagian di atas apl"</string>
     <string name="accessibility_action_start_one_handed" msgid="5070337354072861426">"Mulakan mod sebelah tangan"</string>
     <string name="accessibility_action_stop_one_handed" msgid="1369940261782179442">"Keluar daripada mod sebelah tangan"</string>
     <string name="bubbles_settings_button_description" msgid="1301286017420516912">"Tetapan untuk gelembung <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
