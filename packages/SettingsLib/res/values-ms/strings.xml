@@ -161,7 +161,7 @@
     <string name="bluetooth_pairing_decline" msgid="6483118841204885890">"Batal"</string>
     <string name="bluetooth_pairing_will_share_phonebook" msgid="3064334458659165176">"Berpasangan memberi anda akses kepada kenalan dan sejarah panggilan apabila disambungkan."</string>
     <string name="bluetooth_pairing_error_message" msgid="6626399020672335565">"Tidak dapat berpasangan dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
-    <string name="bluetooth_pairing_pin_error_message" msgid="264422127613704940">"Tidak dapat berganding dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g> kerana PIN atau kunci laluan yang salah."</string>
+    <string name="bluetooth_pairing_pin_error_message" msgid="264422127613704940">"Tidak dapat berganding dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g> kerana PIN atau kunci laluan salah."</string>
     <string name="bluetooth_pairing_device_down_error_message" msgid="2554424863101358857">"Tidak boleh berkomunikasi dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
     <string name="bluetooth_pairing_rejected_error_message" msgid="5943444352777314442">"Pasangan ditolak oleh <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
     <string name="bluetooth_talkback_computer" msgid="3736623135703893773">"Komputer"</string>
@@ -633,7 +633,7 @@
     <string name="user_grant_admin_message" msgid="1673791931033486709">"Pentadbir mempunyai keistimewaan khas yang tiada pada pengguna lain. Pentadbir boleh mengurus semua pengguna, mengemaskinikan atau menetapkan semula peranti ini, mengubah suai tetapan, melihat semua apl yang telah dipasang dan memberikan atau membatalkan keistimewaan pentadbir untuk pengguna lain."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Jadikan pentadbir"</string>
     <string name="user_setup_dialog_title" msgid="8037342066381939995">"Sediakan pengguna sekarang?"</string>
-    <string name="user_setup_dialog_message" msgid="269931619868102841">"Pastikan individu itu bersedia untuk mengambil peranti dan menyediakan ruangannya"</string>
+    <string name="user_setup_dialog_message" msgid="269931619868102841">"Pastikan individu itu bersedia untuk mengambil peranti dan menyediakan ruangnya"</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"Sediakan profil sekarang?"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"Sediakan sekarang"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"Bukan sekarang"</string>
@@ -685,7 +685,7 @@
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"Lalai peranti"</string>
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"Dilumpuhkan"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"Didayakan"</string>
-    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"Peranti anda mesti dibut semula supaya perubahan ini berlaku. But semula sekarang atau batalkan."</string>
+    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"Peranti anda mesti dibut semula supaya perubahan ini dilaksanakan. But semula sekarang atau batalkan."</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"Fon kepala berwayar"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"Fon kepala"</string>
     <string name="media_transfer_usb_speaker_name" msgid="4736537022543593896">"Pembesar suara USB"</string>

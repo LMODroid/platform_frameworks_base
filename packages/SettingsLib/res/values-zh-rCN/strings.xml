@@ -633,7 +633,7 @@
     <string name="user_grant_admin_message" msgid="1673791931033486709">"管理员拥有其他用户没有的特殊权限。管理员可以管理所有用户、更新或重置此设备、修改设置、查看所有已安装的应用，以及授予或撤消其他用户的管理员权限。"</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"设为管理员"</string>
     <string name="user_setup_dialog_title" msgid="8037342066381939995">"要现在设置该用户吗？"</string>
-    <string name="user_setup_dialog_message" msgid="269931619868102841">"请确保对方现在可以使用该设备设置自己的空间。"</string>
+    <string name="user_setup_dialog_message" msgid="269931619868102841">"请确保对方现在可以使用该设备设置自己的空间"</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"要立即设置个人资料吗？"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"立即设置"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"以后再说"</string>
@@ -685,7 +685,7 @@
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"设备默认设置"</string>
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"已停用"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"已启用"</string>
-    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"设备必须重新启动才能应用此更改。您可以立即重新启动或取消。"</string>
+    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"必须重启设备才能应用此更改。请立即重启或取消更改。"</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"有线耳机"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"头戴式耳机"</string>
     <string name="media_transfer_usb_speaker_name" msgid="4736537022543593896">"USB 音箱"</string>

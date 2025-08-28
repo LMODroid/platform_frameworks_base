@@ -636,7 +636,7 @@
     <string name="user_setup_dialog_message" msgid="269931619868102841">"ਇਹ ਪੱਕਾ ਕਰੋ ਕਿ ਵਿਅਕਤੀ ਡੀਵਾਈਸ ਵਰਤਣ ਅਤੇ ਆਪਣੀ ਜਗ੍ਹਾ ਦੇ ਸੈੱਟਅੱਪ ਲਈ ਉਪਲਬਧ ਹੈ"</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"ਕੀ ਹੁਣ ਪ੍ਰੋਫਾਈਲ ਸੈੱਟ ਅੱਪ ਕਰਨੀ ਹੈ?"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"ਹੁਣੇ ਸੈੱਟ ਅੱਪ ਕਰੋ"</string>
-    <string name="user_setup_button_setup_later" msgid="8712980133555493516">"ਅਜੇ ਨਹੀਂ"</string>
+    <string name="user_setup_button_setup_later" msgid="8712980133555493516">"ਹੁਣੇ ਨਹੀਂ"</string>
     <string name="user_add_user_type_title" msgid="551279664052914497">"ਸ਼ਾਮਲ ਕਰੋ"</string>
     <string name="user_new_user_name" msgid="60979820612818840">"ਨਵਾਂ ਵਰਤੋਂਕਾਰ"</string>
     <string name="user_new_profile_name" msgid="2405500423304678841">"ਨਵੀਂ ਪ੍ਰੋਫਾਈਲ"</string>

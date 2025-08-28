@@ -632,8 +632,8 @@
     <string name="user_grant_admin_title" msgid="5157031020083343984">"Tehdäänkö tästä käyttäjästä järjestelmänvalvoja?"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"Järjestelmänvalvojilla on enemmän oikeuksia kuin muilla. Järjestelmänvalvoja voi hallinnoida kaikkia käyttäjiä, päivittää tai nollata tämän laitteen, muokata asetuksia, nähdä asennetut sovellukset ja antaa tai peruuttaa järjestelmänvalvojan oikeudet muilta."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Muuta järjestelmänvalvojaksi"</string>
-    <string name="user_setup_dialog_title" msgid="8037342066381939995">"Lisätäänkö käyttäjä nyt?"</string>
-    <string name="user_setup_dialog_message" msgid="269931619868102841">"Varmista, että käyttäjä voi ottaa laitteen nyt ja määrittää oman tilansa."</string>
+    <string name="user_setup_dialog_title" msgid="8037342066381939995">"Otetaanko käyttäjä nyt käyttöön?"</string>
+    <string name="user_setup_dialog_message" msgid="269931619868102841">"Varmista, että käyttäjä voi ottaa laitteen nyt ja ottaa oman tilansa käyttöön."</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"Määritetäänkö profiilin asetukset nyt?"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"Ota käyttöön nyt"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"Ei nyt"</string>

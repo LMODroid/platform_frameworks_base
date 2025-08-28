@@ -685,7 +685,7 @@
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"Zadana postavka uređaja"</string>
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"Onemogućeno"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"Omogućeno"</string>
-    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"Uređaj se mora ponovno pokrenuti da bi se ta promjena primijenila. Ponovo pokrenite uređaj odmah ili odustanite."</string>
+    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"Uređaj se mora ponovno pokrenuti da bi se ta promjena primijenila. Ponovno ga pokrenite odmah ili odustanite."</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"Žičane slušalice"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"Slušalice"</string>
     <string name="media_transfer_usb_speaker_name" msgid="4736537022543593896">"USB zvučnik"</string>
