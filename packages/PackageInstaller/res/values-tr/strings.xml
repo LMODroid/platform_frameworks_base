@@ -121,9 +121,9 @@
     <string name="unarchive_action_required_title" msgid="4971245740162604619">"İşlem gerekli"</string>
     <string name="unarchive_action_required_body" msgid="1679431572983989231">"Bu uygulamayı geri yüklemek için sonraki adımları uygulayın"</string>
     <string name="unarchive_error_installer_disabled_title" msgid="4815715617014985605">"<xliff:g id="INSTALLERNAME">%1$s</xliff:g> devre dışı bırakıldı"</string>
-    <string name="unarchive_error_installer_disabled_body" msgid="4820821285907011729">"Bu uygulamayı geri yüklemek için Ayarlar\'da <xliff:g id="INSTALLERNAME">%1$s</xliff:g> yükleyicisini etkinleştirin"</string>
+    <string name="unarchive_error_installer_disabled_body" msgid="4820821285907011729">"Bu uygulamayı geri yüklemek için Ayarlar\'da <xliff:g id="INSTALLERNAME">%1$s</xliff:g> uygulamasını etkinleştirin"</string>
     <string name="unarchive_error_installer_uninstalled_title" msgid="3748354109176326489">"<xliff:g id="INSTALLERNAME">%1$s</xliff:g> yüklemesi kaldırılmış"</string>
-    <string name="unarchive_error_installer_uninstalled_body" msgid="944733542444183204">"Bu uygulamayı geri yüklemek için <xliff:g id="INSTALLERNAME">%1$s</xliff:g> yükleyicisini yüklemeniz gerekiyor"</string>
+    <string name="unarchive_error_installer_uninstalled_body" msgid="944733542444183204">"Bu uygulamayı geri yüklemek için <xliff:g id="INSTALLERNAME">%1$s</xliff:g> uygulamasını yüklemeniz gerekiyor"</string>
     <string name="unarchive_action_required_continue" msgid="5711202111224184257">"Devam"</string>
     <string name="unarchive_clear_storage_button" msgid="1549537154535608744">"Depolama alanını temizle"</string>
     <string name="unarchive_settings_button" msgid="3504171760009177425">"Ayarlar"</string>
