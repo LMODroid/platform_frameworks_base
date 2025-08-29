@@ -265,7 +265,7 @@
     <string name="adb_device_fingerprint_title_format" msgid="291504822917843701">"डिभाइसको फिंगरप्रिन्ट: <xliff:g id="FINGERPRINT_PARAM">%1$s</xliff:g>"</string>
     <string name="adb_wireless_connection_failed_title" msgid="664211177427438438">"वायरलेसमा जोड्न सकिएन"</string>
     <string name="adb_wireless_connection_failed_message" msgid="9213896700171602073">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g> सही नेटवर्कमा जोडिएको कुरा सुनिश्चित गर्नुहोस्"</string>
-    <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"यन्त्रसँग कनेक्ट गर्नुहोस्"</string>
+    <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"डिभाइससँग कनेक्ट गर्नुहोस्"</string>
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Wi‑Fi मा कनेक्ट गर्ने कोड"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"कनेक्ट गर्न सकिएन"</string>
     <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"डिभाइस उही नेटवर्कमा कनेक्ट गरिएको छ भन्ने कुरा सुनिश्चित गर्नुहोस्।"</string>
@@ -633,7 +633,7 @@
     <string name="user_grant_admin_message" msgid="1673791931033486709">"एड्मिनहरूसँग अन्य प्रयोगकर्तासँग नभएका विशेषाधिकारहरू हुन्छन्। एड्मिन सबै प्रयोगकर्ताहरूलाई व्यवस्थापन गर्न, यो डिभाइस अपडेट वा रिसेट गर्न, सेटिङ परिमार्जन गर्न, इन्स्टल गरिएका सबै एपहरू हेर्न र अरूलाई एड्मिनका विशेषाधिकारहरू दिन वा अरूलाई दिइएका एड्मिनका विशेषाधिकारहरू खारेज गर्न सक्नुहुन्छ।"</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"एड्मिन बनाउनुहोस्"</string>
     <string name="user_setup_dialog_title" msgid="8037342066381939995">"अहिले प्रयोगकर्ता सेटअप गर्ने हो?"</string>
-    <string name="user_setup_dialog_message" msgid="269931619868102841">"यी व्यक्ति यो डिभाइस चलाउन र आफ्नो ठाउँ सेट गर्न उपलब्ध छन् भन्ने कुरा सुनिश्चित गर्नुहोस्"</string>
+    <string name="user_setup_dialog_message" msgid="269931619868102841">"यी व्यक्ति यो डिभाइस चलाउन र आफ्नो स्पेस सेट गर्न उपलब्ध छन् भन्ने कुरा सुनिश्चित गर्नुहोस्"</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"अहिले प्रोफाइल सेटअप गर्ने हो?"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"अब सेटअप गर्नुहोस्"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"अहिले होइन"</string>
@@ -683,8 +683,8 @@
     <string name="failed_attempts_now_wiping_profile" msgid="7626589520888963129">"धेरै पटक गलत तरिकाले अनलक गर्ने प्रयास गरियो। यो वर्क प्रोफाइल र यसमा भएको डेटा मेटाइने छ।"</string>
     <string name="failed_attempts_now_wiping_dialog_dismiss" msgid="2749889771223578925">"हटाउनुहोस्"</string>
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"डिभाइसको डिफल्ट"</string>
-    <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"असक्षम पारिएको छ"</string>
-    <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"सक्षम पारिएको छ"</string>
+    <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"अफ गरिएको छ"</string>
+    <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"अन गरिएको छ"</string>
     <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"यो परिवर्तन लागू गर्न तपाईंको डिभाइस अनिवार्य रूपमा रिबुट गर्नु पर्छ। अहिले नै रिबुट गर्नुहोस् वा रद्द गर्नुहोस्।"</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"तारयुक्त हेडफोन"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"हेडफोन"</string>

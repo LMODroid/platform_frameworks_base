@@ -266,7 +266,7 @@
     <string name="adb_wireless_connection_failed_title" msgid="664211177427438438">"Povezivanje nije uspelo"</string>
     <string name="adb_wireless_connection_failed_message" msgid="9213896700171602073">"Uverite se da je <xliff:g id="DEVICE_NAME">%1$s</xliff:g> povezan sa odgovarajućom mrežom"</string>
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"Uparite sa uređajem"</string>
-    <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Kôd za uparivanje preko Wi‑Fi-ja"</string>
+    <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Kôd za uparivanje preko WiFi-ja"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Uparivanje nije uspelo"</string>
     <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Uverite se da je uređaj povezan na istu mrežu."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Uparite uređaj pomoću Wi‑Fi mreže ili tako što ćete skenirati QR kôd"</string>
@@ -324,7 +324,7 @@
     <string name="private_dns_mode_provider_hostname_hint" msgid="6564868953748514595">"Unesite ime hosta dobavljača usluge DNS-a"</string>
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"Povezivanje nije uspelo"</string>
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Prikazuje opcije za sertifikaciju bežičnog ekrana"</string>
-    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Povećava nivo evidentiranja za Wi‑Fi. Prikaz po SSID RSSI-u u biraču WiFi mreže"</string>
+    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Povećava nivo evidentiranja za WiFi. Prikaz po SSID RSSI-u u biraču WiFi mreže"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Smanjuje potrošnju baterije i poboljšava učinak mreže"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Kada je ovaj režim omogućen, MAC adresa ovog uređaja može da se promeni svaki put kada se poveže sa mrežom na kojoj je omogućeno nasumično razvrstavanje MAC adresa."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Sa ograničenjem"</string>

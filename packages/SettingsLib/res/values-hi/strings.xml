@@ -292,8 +292,8 @@
     <string name="mock_location_app_set" msgid="4706722469342913843">"मॉक लोकेशन के लिए ऐप्लिकेशन: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="debug_networking_category" msgid="6829757985772659599">"नेटवर्किंग"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"वायरलेस डिसप्ले सर्टिफ़िकेशन"</string>
-    <string name="wifi_verbose_logging" msgid="1785910450009679371">"वाई-फ़ाई वर्बोस लॉगिंग चालू करें"</string>
-    <string name="wifi_scan_throttling" msgid="2985624788509913617">"वाई-फ़ाई के लिए स्कैन थ्रॉटलिंग करें"</string>
+    <string name="wifi_verbose_logging" msgid="1785910450009679371">"वाई-फ़ाई के लिए वर्बोस लॉगिंग चालू करें"</string>
+    <string name="wifi_scan_throttling" msgid="2985624788509913617">"वाई-फ़ाई स्कैन थ्रॉटलिंग"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"थोड़े समय के लिए वाई-फ़ाई नेटवर्क से जुड़ने पर एमएसी पता बदलने की सुविधा"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"मोबाइल डेटा हमेशा चालू रखें"</string>
     <string name="tethering_hardware_offload" msgid="4116053719006939161">"हार्डवेयर से तेज़ी लाने के लिए टेदर करें"</string>
@@ -324,7 +324,7 @@
     <string name="private_dns_mode_provider_hostname_hint" msgid="6564868953748514595">"डीएनएस प्रोवाइडर का होस्टनेम डालें"</string>
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"कनेक्‍ट नहीं हो सका"</string>
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"वायरलेस डिसप्ले सर्टिफ़िकेशन के विकल्प दिखाएं"</string>
-    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"वाई-फ़ाई लॉगिंग लेवल बढ़ाएं, वाई-फ़ाई पिकर में हर एसएसआईडी के लिए आरएसएसआई दिखाएं"</string>
+    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"वाई-फ़ाई के लिए लॉगिंग का लेवल बढ़ाएं, वाई-फाई पिकर में हर एसएसआईडी के लिए आरएसएसआई दिखाएं"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"बैटरी की खपत कम और नेटवर्क की परफ़ॉर्मेंस बेहतर होती है"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"जब यह मोड चालू होता है, तब नेटवर्क से कनेक्ट होने पर हर बार इस डिवाइस का एमएसी पता बदल सकता है. ऐसा तब होता है, जब डिवाइस किसी ऐसे नेटवर्क से जुड़ता है जिस पर एमएसी पता बदलने की सुविधा चालू होती है."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"डेटा इस्तेमाल करने की सीमा तय की गई है"</string>
@@ -656,7 +656,7 @@
     <string name="guest_exit_guest" msgid="5908239569510734136">"मेहमान सेशन को हटाएं"</string>
     <string name="guest_reset_guest" msgid="6110013010356013758">"मेहमान के तौर पर ब्राउज़ करने का सेशन रीसेट करें"</string>
     <string name="guest_reset_guest_dialog_title" msgid="8047270010895437534">"क्या आप मेहमान के तौर पर ब्राउज़ करने का सेशन रीसेट करना चाहते हैं?"</string>
-    <string name="guest_remove_guest_dialog_title" msgid="4548511006624088072">"क्या मेहमान को हटाना है?"</string>
+    <string name="guest_remove_guest_dialog_title" msgid="4548511006624088072">"क्या मेहमान मोड को हटाना है?"</string>
     <string name="guest_reset_guest_confirm_button" msgid="2989915693215617237">"रीसेट करें"</string>
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"हटाएं"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"मेहमान के तौर पर ब्राउज़ करने का सेशन रीसेट किया जा रहा है…"</string>
@@ -682,10 +682,10 @@
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"कई बार गलत कोशिशें की गई हैं. इस उपयोगकर्ता को मिटा दिया जाएगा."</string>
     <string name="failed_attempts_now_wiping_profile" msgid="7626589520888963129">"कई बार गलत कोशिशें की गई हैं. यह वर्क प्रोफ़ाइल और इसका डेटा मिटा दिया जाएगा."</string>
     <string name="failed_attempts_now_wiping_dialog_dismiss" msgid="2749889771223578925">"खारिज करें"</string>
-    <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"डिवाइस की डिफ़ॉल्ट सेटिंग"</string>
+    <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"डिवाइस डिफ़ॉल्ट"</string>
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"बंद है"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"चालू है"</string>
-    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"बदली गई सेटिंग को लागू करने के लिए, डिवाइस को रीस्टार्ट करना होगा. अपने डिवाइस को रीस्टार्ट करें या रद्द करें."</string>
+    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"सेटिंग में किया गया बदलाव लागू करने के लिए, डिवाइस को रीस्टार्ट करना होगा. रीस्टार्ट करें या रद्द करें."</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"वायर वाला हेडफ़ोन"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"हेडफ़ोन"</string>
     <string name="media_transfer_usb_speaker_name" msgid="4736537022543593896">"यूएसबी स्पीकर"</string>
