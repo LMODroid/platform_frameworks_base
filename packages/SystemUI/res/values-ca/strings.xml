@@ -712,7 +712,7 @@
     <string name="wallet_secondary_label_device_locked" msgid="5175862019125370506">"Desbloqueja per utilitzar"</string>
     <string name="wallet_error_generic" msgid="257704570182963611">"Hi ha hagut un problema en obtenir les teves targetes; torna-ho a provar més tard"</string>
     <string name="wallet_lockscreen_settings_label" msgid="3539105300870383570">"Configuració de la pantalla de bloqueig"</string>
-    <string name="qr_code_scanner_title" msgid="1938155688725760702">"Escàner de codis QR"</string>
+    <string name="qr_code_scanner_title" msgid="1938155688725760702">"Escàner codis QR"</string>
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"S\'està actualitzant"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"Perfil de treball"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"Mode d\'avió"</string>
@@ -1080,7 +1080,7 @@
     <string name="accessibility_floating_button_action_remove_menu" msgid="6730432848162552135">"Suprimeix"</string>
     <string name="accessibility_floating_button_action_double_tap_to_toggle" msgid="7976492639670692037">"commuta"</string>
     <string name="accessibility_floating_button_action_edit" msgid="1688227814600463987">"Edita"</string>
-    <string name="quick_controls_title" msgid="6839108006171302273">"Controls de dispositius"</string>
+    <string name="quick_controls_title" msgid="6839108006171302273">"Controls dispositius"</string>
     <string name="controls_providers_title" msgid="6879775889857085056">"Selecciona l\'aplicació per afegir controls"</string>
     <string name="controls_number_of_favorites" msgid="4481806788981836355">"{count,plural, =1{S\'ha afegit # control.}many{S\'han afegit # controls.}other{S\'han afegit # controls.}}"</string>
     <string name="controls_removed" msgid="3731789252222856959">"Suprimit"</string>
@@ -1426,7 +1426,7 @@
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Retroil·luminació del teclat"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Nivell %1$d de %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"Controls de la llar"</string>
-    <string name="home_controls_dream_description" msgid="4644150952104035789">"Utilitza controls de la llar com a estalvi de pantalla"</string>
+    <string name="home_controls_dream_description" msgid="4644150952104035789">"Utilitza els controls de la llar com a estalvi de pantalla"</string>
     <string name="volume_undo_action" msgid="5815519725211877114">"Desfés"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"Per tornar enrere, llisca tres dits cap a l\'esquerra o cap a la dreta al ratolí tàctil"</string>
     <string name="home_edu_toast_content" msgid="3381071147871955415">"Per anar a la pantalla d\'inici, fes lliscar tres dits cap amunt al ratolí tàctil"</string>

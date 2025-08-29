@@ -746,7 +746,7 @@
     <string name="notification_automatic_title" msgid="3745465364578762652">"Automatico"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"Nessun suono o vibrazione"</string>
     <string name="notification_conversation_summary_low" msgid="3855696451919728790">"Nessun suono o vibrazione, ma appare ancora nella sezione delle conversazioni"</string>
-    <string name="notification_channel_summary_default" msgid="777294388712200605">"Potrebbero essere attivati lo squillo o la vibrazione in base alle impostazioni del dispositivo"</string>
+    <string name="notification_channel_summary_default" msgid="777294388712200605">"Il dispositivo potrebbe suonare o vibrare in base alle impostazioni"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"Potrebbero essere attivati lo squillo o la vibrazione in base alle impostazioni del dispositivo. Conversazioni dalla bolla <xliff:g id="APP_NAME">%1$s</xliff:g> per impostaz. predefinita."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"Fai stabilire al sistema se questa notifica deve emettere suoni o vibrazioni"</string>
     <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;Stato:&lt;/b&gt; promossa a Predefinita"</string>
