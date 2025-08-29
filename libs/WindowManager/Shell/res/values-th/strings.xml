@@ -53,7 +53,7 @@
     <string name="accessibility_split_top" msgid="2789329702027147146">"แยกไปด้านบน"</string>
     <string name="accessibility_split_bottom" msgid="8694551025220868191">"แยกไปด้านล่าง"</string>
     <string name="one_handed_tutorial_title" msgid="4583241688067426350">"การใช้โหมดมือเดียว"</string>
-    <string name="one_handed_tutorial_description" msgid="3486582858591353067">"หากต้องการออก ให้เลื่อนขึ้นจากด้านล่างของหน้าจอหรือแตะที่ใดก็ได้เหนือแอป"</string>
+    <string name="one_handed_tutorial_description" msgid="3486582858591353067">"หากต้องการออก ให้ปัดขึ้นจากด้านล่างของหน้าจอหรือแตะที่ใดก็ได้เหนือแอป"</string>
     <string name="accessibility_action_start_one_handed" msgid="5070337354072861426">"เริ่มโหมดมือเดียว"</string>
     <string name="accessibility_action_stop_one_handed" msgid="1369940261782179442">"ออกจากโหมดมือเดียว"</string>
     <string name="bubbles_settings_button_description" msgid="1301286017420516912">"การตั้งค่าบับเบิล <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>

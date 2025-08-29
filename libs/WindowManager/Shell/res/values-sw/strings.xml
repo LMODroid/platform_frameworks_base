@@ -52,7 +52,7 @@
     <string name="accessibility_split_right" msgid="8441001008181296837">"Gawanya sehemu ya kulia"</string>
     <string name="accessibility_split_top" msgid="2789329702027147146">"Gawanya sehemu ya juu"</string>
     <string name="accessibility_split_bottom" msgid="8694551025220868191">"Gawanya sehemu ya chini"</string>
-    <string name="one_handed_tutorial_title" msgid="4583241688067426350">"Kutumia hali ya kutumia kwa mkono mmoja"</string>
+    <string name="one_handed_tutorial_title" msgid="4583241688067426350">"Kutumia kwa mkono mmoja"</string>
     <string name="one_handed_tutorial_description" msgid="3486582858591353067">"Ili ufunge, telezesha kidole juu kutoka sehemu ya chini ya skrini au uguse mahali popote juu ya programu"</string>
     <string name="accessibility_action_start_one_handed" msgid="5070337354072861426">"Anzisha hali ya kutumia kwa mkono mmoja"</string>
     <string name="accessibility_action_stop_one_handed" msgid="1369940261782179442">"Funga hali ya kutumia kwa mkono mmoja"</string>

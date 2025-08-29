@@ -53,7 +53,7 @@
     <string name="accessibility_split_top" msgid="2789329702027147146">"Rozdělit nahoře"</string>
     <string name="accessibility_split_bottom" msgid="8694551025220868191">"Rozdělit dole"</string>
     <string name="one_handed_tutorial_title" msgid="4583241688067426350">"Používání režimu jedné ruky"</string>
-    <string name="one_handed_tutorial_description" msgid="3486582858591353067">"Režim ukončíte, když přejedete prstem z dolní části obrazovky nahoru nebo klepnete kamkoli nad aplikaci"</string>
+    <string name="one_handed_tutorial_description" msgid="3486582858591353067">"Režim ukončíte, když přejedete prstem z dolní části obrazovky nahoru nebo klepnete kamkoli nad aplikaci."</string>
     <string name="accessibility_action_start_one_handed" msgid="5070337354072861426">"Spustit režim jedné ruky"</string>
     <string name="accessibility_action_stop_one_handed" msgid="1369940261782179442">"Ukončit režim jedné ruky"</string>
     <string name="bubbles_settings_button_description" msgid="1301286017420516912">"Nastavení bublin aplikace <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
