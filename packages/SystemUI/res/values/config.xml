@@ -761,6 +761,7 @@
          PowerManager#WakeReason. -->
     <integer-array name="config_face_auth_wake_up_triggers">
         <item>1</item> <!-- WAKE_REASON_POWER_BUTTON -->
+        <item>3</item> <!-- WAKE_REASON_PLUGGED_IN -->
         <item>4</item> <!-- WAKE_REASON_GESTURE -->
         <item>6</item> <!-- WAKE_REASON_WAKE_KEY -->
         <item>7</item> <!-- WAKE_REASON_WAKE_MOTION -->
