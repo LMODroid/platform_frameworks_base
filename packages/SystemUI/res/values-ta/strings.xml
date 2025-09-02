@@ -342,7 +342,7 @@
     <string name="quick_settings_brightness_dialog_title" msgid="4980669966716685588">"ஒளிர்வு"</string>
     <string name="quick_settings_inversion_label" msgid="3501527749494755688">"கலர் இன்வெர்ஷன்"</string>
     <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"கலர் கரெக்‌ஷன்"</string>
-    <string name="quick_settings_font_scaling_label" msgid="5289001009876936768">"எழுத்து வடிவத்தின் அளவு"</string>
+    <string name="quick_settings_font_scaling_label" msgid="5289001009876936768">"எழுத்து அளவு"</string>
     <string name="quick_settings_more_user_settings" msgid="7634653308485206306">"பயனர்களை நிர்வகியுங்கள்"</string>
     <string name="quick_settings_done" msgid="2163641301648855793">"முடிந்தது"</string>
     <string name="quick_settings_close_user_panel" msgid="5599724542275896849">"மூடுக"</string>
@@ -405,7 +405,7 @@
     <string name="accessibility_hearing_device_pair_new_device" msgid="8440082580186130090">"புதிய சாதனத்தை இணைக்க கிளிக் செய்யலாம்"</string>
     <string name="hearing_devices_presets_error" msgid="350363093458408536">"முன்னமைவைப் புதுப்பிக்க முடியவில்லை"</string>
     <string name="hearing_devices_preset_label" msgid="7878267405046232358">"முன்னமைவு"</string>
-    <string name="quick_settings_hearing_devices_live_caption_title" msgid="1054814050932225451">"உடனடி வசனம்"</string>
+    <string name="quick_settings_hearing_devices_live_caption_title" msgid="1054814050932225451">"உடனடி சப்டைட்டில்"</string>
     <string name="sensor_privacy_start_use_mic_dialog_title" msgid="563796653825944944">"சாதனத்தின் மைக்ரோஃபோனுக்கான தடுப்பை நீக்கவா?"</string>
     <string name="sensor_privacy_start_use_camera_dialog_title" msgid="8807639852654305227">"சாதனத்தின் கேமராவுக்கான தடுப்பை நீக்கவா?"</string>
     <string name="sensor_privacy_start_use_mic_camera_dialog_title" msgid="4316471859905020023">"சாதனத்தின் கேமராவுக்கும் மைக்ரோஃபோனுக்குமான தடுப்பை நீக்கவா?"</string>
