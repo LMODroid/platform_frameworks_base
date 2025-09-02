@@ -430,7 +430,7 @@
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"অ্যাপ সঠিক চ্যানেল ছাড়া বিজ্ঞপ্তি দেখালে সতর্ক করে"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"জোর করে কোনও অ্যাপকে এক্সটার্নাল স্টোরেজে পাঠানো"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ম্যানিফেস্ট মানের নির্বিশেষে যেকোনও অ্যাপকে এক্সটারনাল স্টোরেজে ইনস্টল করার উপযুক্ত বানায়"</string>
-    <string name="force_resizable_activities" msgid="7143612144399959606">"আকার পরিবর্তনযোগ্য করার জন্য ক্রিয়াকলাপগুলিকে জোর করুন"</string>
+    <string name="force_resizable_activities" msgid="7143612144399959606">"রিসাইজেবল করতে সব অ্যাক্টিভিটি ফোর্স করুন"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"ম্যানিফেস্ট মানগুলির নির্বিশেষে মাল্টি-উইন্ডোর জন্য সমস্ত ক্রিয়াকলাপগুলির আকার পরিবর্তনযোগ্য করুন৷"</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"ফ্রি-ফর্ম উইন্ডো চালু করুন"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"ডেস্কটপ ব্যাকআপ পাসওয়ার্ড"</string>
