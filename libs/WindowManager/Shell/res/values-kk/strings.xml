@@ -54,8 +54,8 @@
     <string name="accessibility_split_bottom" msgid="8694551025220868191">"Астынан шығару"</string>
     <string name="one_handed_tutorial_title" msgid="4583241688067426350">"Бір қолмен басқару режимі қосылып тұр"</string>
     <string name="one_handed_tutorial_description" msgid="3486582858591353067">"Шығу үшін экранның төменгі жағынан жоғары қарай сырғытыңыз немесе қолданбаның үстінен кез келген жерден түртіңіз."</string>
-    <string name="accessibility_action_start_one_handed" msgid="5070337354072861426">"Бір қолмен енгізу режимін іске қосу"</string>
-    <string name="accessibility_action_stop_one_handed" msgid="1369940261782179442">"Бір қолмен енгізу режимінен шығу"</string>
+    <string name="accessibility_action_start_one_handed" msgid="5070337354072861426">"Бір қолмен басқару режимін іске қосу"</string>
+    <string name="accessibility_action_stop_one_handed" msgid="1369940261782179442">"Бір қолмен басқару режимінен шығу"</string>
     <string name="bubbles_settings_button_description" msgid="1301286017420516912">"<xliff:g id="APP_NAME">%1$s</xliff:g> қалқыма хабарларының параметрлері"</string>
     <string name="bubble_overflow_button_content_description" msgid="8160974472718594382">"Қосымша мәзір"</string>
     <string name="bubble_accessibility_action_add_back" msgid="1830101076853540953">"Стекке қайта енгізу"</string>
