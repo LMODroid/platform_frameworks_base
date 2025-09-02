@@ -153,7 +153,7 @@
     <string name="cfTemplateForwardedTime" msgid="735042369233323609">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: <xliff:g id="DIALING_NUMBER">{1}</xliff:g> <xliff:g id="TIME_DELAY">{2}</xliff:g> sekunnin päästä"</string>
     <string name="cfTemplateRegistered" msgid="5619930473441550596">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: ei siirretty"</string>
     <string name="cfTemplateRegisteredTime" msgid="5222794399642525045">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: ei siirretty"</string>
-    <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Mobiiliverkkoa koskeva turvallisuus"</string>
+    <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Mobiiliverkon turvallisuus"</string>
     <string name="scCellularNetworkSecuritySummary" msgid="7042036754550545005">"Salaus, ilmoitukset salaamattomista verkoista"</string>
     <string name="scIdentifierDisclosureIssueTitle" msgid="2898888825129970328">"Laitteen tunnus jaettu"</string>
     <string name="scIdentifierDisclosureIssueSummaryNotification" msgid="3699930821270580416">"Klo <xliff:g id="DISCLOSURE_TIME">%1$s</xliff:g> lähellä oleva verkko tallensi laitteesi yksilöllisen tunnuksen (IMSI tai IMEI), kun käytössä oli SIM-kortti, jonka <xliff:g id="DISCLOSURE_NETWORK">%2$s</xliff:g> tarjoaa"</string>
