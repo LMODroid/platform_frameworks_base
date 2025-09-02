@@ -1202,7 +1202,7 @@
     <string name="app_running_notification_title" msgid="8985999749231486569">"<xliff:g id="APP_NAME">%1$s</xliff:g> চলছে"</string>
     <string name="app_running_notification_text" msgid="5120815883400228566">"আরও তথ্যের জন্য বা অ্যাপ্লিকেশানটি বন্ধ করতে আলতো চাপুন।"</string>
     <string name="ok" msgid="2646370155170753815">"ঠিক আছে"</string>
-    <string name="cancel" msgid="6908697720451760115">"বাতিল করুন"</string>
+    <string name="cancel" msgid="6908697720451760115">"ক্যানসেল করুন"</string>
     <string name="yes" msgid="9069828999585032361">"ঠিক আছে"</string>
     <string name="no" msgid="5122037903299899715">"বাতিল করুন"</string>
     <string name="dialog_alert_title" msgid="651856561974090712">"খেয়াল করুন"</string>

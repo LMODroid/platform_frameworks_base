@@ -75,7 +75,7 @@
     <string name="CLIRPermanent" msgid="166443681876381118">"Ezin duzu aldatu deitzailearen identitatearen ezarpena."</string>
     <string name="auto_data_switch_title" msgid="3286350716870518297">"<xliff:g id="CARRIERDISPLAY">%s</xliff:g> operadorearen datu-konexiora aldatu zara"</string>
     <string name="auto_data_switch_content" msgid="803557715007110959">"Ezarpenak atalean alda dezakezu aukera hori"</string>
-    <string name="RestrictedOnDataTitle" msgid="1500576417268169774">"Ez dago mugikorretarako datu-zerbitzurik"</string>
+    <string name="RestrictedOnDataTitle" msgid="1500576417268169774">"Ez dago datu-konexioaren zerbitzurik"</string>
     <string name="RestrictedOnEmergencyTitle" msgid="2852916906106191866">"Ezin da egin larrialdi-deirik"</string>
     <string name="RestrictedOnNormalTitle" msgid="7009474589746551737">"Ez dago ahots-deien zerbitzurik"</string>
     <string name="RestrictedOnAllVoiceTitle" msgid="3982069078579103087">"Ez dago ahozko zerbitzurik eta ezin da egin larrialdi-deirik"</string>
