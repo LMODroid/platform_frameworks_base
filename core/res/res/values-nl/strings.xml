@@ -153,7 +153,7 @@
     <string name="cfTemplateForwardedTime" msgid="735042369233323609">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: <xliff:g id="DIALING_NUMBER">{1}</xliff:g> na <xliff:g id="TIME_DELAY">{2}</xliff:g> seconden"</string>
     <string name="cfTemplateRegistered" msgid="5619930473441550596">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: niet doorgeschakeld"</string>
     <string name="cfTemplateRegisteredTime" msgid="5222794399642525045">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: niet doorgeschakeld"</string>
-    <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Beveiliging van mobiel netwerk"</string>
+    <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Beveiliging mobiel netwerk"</string>
     <string name="scCellularNetworkSecuritySummary" msgid="7042036754550545005">"Versleuteling, meldingen voor niet-versleutelde netwerken"</string>
     <string name="scIdentifierDisclosureIssueTitle" msgid="2898888825129970328">"Toegang tot apparaat-ID gehad"</string>
     <string name="scIdentifierDisclosureIssueSummaryNotification" msgid="3699930821270580416">"Om <xliff:g id="DISCLOSURE_TIME">%1$s</xliff:g> heeft een netwerk in de buurt de unieke ID van je apparaat (IMSI of IMEI) geregistreerd toen je je simkaart van <xliff:g id="DISCLOSURE_NETWORK">%2$s</xliff:g> gebruikte"</string>
