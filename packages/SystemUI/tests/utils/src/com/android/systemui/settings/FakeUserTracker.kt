@@ -33,6 +33,7 @@ class FakeUserTracker(
     private var _userHandle: UserHandle = UserHandle.of(_userId),
     private var _userInfo: UserInfo = mock(),
     private var _userProfiles: List<UserInfo> = emptyList(),
+    private var _isUserSwitching: Boolean = false,
     userContentResolver: ContentResolver = MockContentResolver(),
     userContext: Context = mock(),
     private val onCreateCurrentUserContext: (Context) -> Context = { mock() },
@@ -47,6 +48,9 @@ class FakeUserTracker(
         get() = _userInfo
     override val userProfiles: List<UserInfo>
         get() = _userProfiles
+
+    override val isUserSwitching: Boolean
+        get() = _isUserSwitching
 
     override val userContentResolver: ContentResolver = userContentResolver
     override val userContext: Context = userContext
@@ -81,11 +85,13 @@ class FakeUserTracker(
     }
 
     fun onUserChanging(userId: Int = _userId) {
+        _isUserSwitching = true
         val copy = callbacks.toList()
         copy.forEach { it.onUserChanging(userId, userContext) {} }
     }
 
     fun onUserChanged(userId: Int = _userId) {
+        _isUserSwitching = false
         val copy = callbacks.toList()
         copy.forEach { it.onUserChanged(userId, userContext) }
     }

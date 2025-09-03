@@ -338,7 +338,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         // Setup keyguard
         mViewMediator.onSystemReady();
         processAllMessagesAndBgExecutorMessages();
-        mViewMediator.setShowingLocked(true, "");
+        mViewMediator.setShowingLocked(true);
 
         // Request keyguard going away
         when(mKeyguardStateController.isKeyguardGoingAway()).thenReturn(true);
@@ -366,7 +366,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
 
         // The call to exit should be rejected, and keyguard should still be visible
         verify(mKeyguardUnlockAnimationController, never()).notifyStartSurfaceBehindRemoteAnimation(
-                any(), any(), any(), anyLong(), anyBoolean());
+                any(), any(), anyLong(), anyBoolean());
         try {
             assertATMSLockScreenShowing(true);
         } catch (Exception e) {
@@ -383,7 +383,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         // Setup keyguard
         mViewMediator.onSystemReady();
         processAllMessagesAndBgExecutorMessages();
-        mViewMediator.setShowingLocked(true, "");
+        mViewMediator.setShowingLocked(true);
 
         // After the request, begin a switch to a new secure user
         int nextUserId = 500;
@@ -419,7 +419,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         // Setup keyguard
         mViewMediator.onSystemReady();
         processAllMessagesAndBgExecutorMessages();
-        mViewMediator.setShowingLocked(true, "");
+        mViewMediator.setShowingLocked(true);
 
         // After the request, begin a switch to an insecure user
         int nextUserId = 500;
@@ -447,7 +447,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         // Setup keyguard as not visible
         mViewMediator.onSystemReady();
         processAllMessagesAndBgExecutorMessages();
-        mViewMediator.setShowingLocked(false, "");
+        mViewMediator.setShowingLocked(false);
         processAllMessagesAndBgExecutorMessages();
 
         // Begin a switch to a new secure user
