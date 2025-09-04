@@ -250,7 +250,7 @@
     <string name="shutdown_confirm" product="watch" msgid="2977299851200240146">"Teie kell lülitub välja."</string>
     <string name="shutdown_confirm" product="default" msgid="136816458966692315">"Teie telefon lülitub välja."</string>
     <string name="shutdown_confirm_question" msgid="796151167261608447">"Kas soovite välja lülitada?"</string>
-    <string name="reboot_safemode_title" msgid="5853949122655346734">"Ohutus režiimis taaskäivitamine"</string>
+    <string name="reboot_safemode_title" msgid="5853949122655346734">"Taaskäivitamine turvarežiimis"</string>
     <string name="reboot_safemode_confirm" msgid="1658357874737219624">"Kas soovite taaskäivitada ohutus režiimis? See keelab kõik installitud kolmandate osapoolte rakendused. Need taastatakse pärast uuesti taaskäivitamist."</string>
     <string name="recent_tasks_title" msgid="8183172372995396653">"Hiljutised"</string>
     <string name="no_recent_tasks" msgid="9063946524312275906">"Hiljutisi rakendusi pole."</string>

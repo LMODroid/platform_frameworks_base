@@ -154,7 +154,7 @@
     <string name="cfTemplateForwardedTime" msgid="735042369233323609">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: <xliff:g id="DIALING_NUMBER">{1}</xliff:g> após <xliff:g id="TIME_DELAY">{2}</xliff:g> segundos"</string>
     <string name="cfTemplateRegistered" msgid="5619930473441550596">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: Não encaminhado"</string>
     <string name="cfTemplateRegisteredTime" msgid="5222794399642525045">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: Não encaminhado"</string>
-    <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Segurança de rede móvel"</string>
+    <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Segurança da rede móvel"</string>
     <string name="scCellularNetworkSecuritySummary" msgid="7042036754550545005">"Criptografia, notificações para redes não criptografadas"</string>
     <string name="scIdentifierDisclosureIssueTitle" msgid="2898888825129970328">"ID do dispositivo acessado"</string>
     <string name="scIdentifierDisclosureIssueSummaryNotification" msgid="3699930821270580416">"Às <xliff:g id="DISCLOSURE_TIME">%1$s</xliff:g>, uma rede próxima registrou o ID exclusivo do seu dispositivo (IMSI ou IMEI) enquanto usava seu chip da <xliff:g id="DISCLOSURE_NETWORK">%2$s</xliff:g>"</string>
