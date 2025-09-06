@@ -1874,6 +1874,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         initAppVolumes();
         updateRowsH(mDefaultRow);
         initSettingsH(lockTaskModeState);
+        mDialogView.animate().cancel();
         mShowing = true;
         mIsAnimatingDismiss = false;
         mDialog.show();
