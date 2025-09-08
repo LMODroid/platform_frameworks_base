@@ -290,7 +290,7 @@
     <string name="mock_location_app" msgid="6269380172542248304">"Kies skynliggingapp"</string>
     <string name="mock_location_app_not_set" msgid="6972032787262831155">"Geen skynliggingapp gestel nie"</string>
     <string name="mock_location_app_set" msgid="4706722469342913843">"Skynliggingapp: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
-    <string name="debug_networking_category" msgid="6829757985772659599">"Inligtingruiling"</string>
+    <string name="debug_networking_category" msgid="6829757985772659599">"Netwerke"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"Draadlose skermsertifisering"</string>
     <string name="wifi_verbose_logging" msgid="1785910450009679371">"Aktiveer gedetailleerde aanmelding vir wi-fi"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Regulering van Wi-fi-opsporing"</string>
