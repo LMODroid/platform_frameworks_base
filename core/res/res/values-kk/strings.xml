@@ -1135,7 +1135,7 @@
     <string name="day" msgid="8394717255950176156">"күн"</string>
     <string name="days" msgid="4570879797423034973">"күндер"</string>
     <string name="hour" msgid="7796325297097314653">"сағат"</string>
-    <string name="hours" msgid="8517014849629200683">"сағаттар"</string>
+    <string name="hours" msgid="8517014849629200683">"сағат"</string>
     <string name="minute" msgid="8369209540986467610">"минут"</string>
     <string name="minutes" msgid="3456532942641808971">"минуттар"</string>
     <string name="second" msgid="9210875257112211713">"секунд"</string>
@@ -1770,7 +1770,7 @@
     <string name="user_switched" msgid="7249833311585228097">"Ағымдағы пайдаланушы <xliff:g id="NAME">%1$s</xliff:g>."</string>
     <string name="user_switching_message" msgid="1912993630661332336">"<xliff:g id="NAME">%1$s</xliff:g> профиліне ауысу…"</string>
     <string name="user_logging_out_message" msgid="7216437629179710359">"<xliff:g id="NAME">%1$s</xliff:g> ішінен шығу…"</string>
-    <string name="owner_name" msgid="8713560351570795743">"Құрылғы иесі"</string>
+    <string name="owner_name" msgid="8713560351570795743">"Ие"</string>
     <string name="guest_name" msgid="8502103277839834324">"Қонақ"</string>
     <string name="error_message_title" msgid="4082495589294631966">"Қателік"</string>
     <string name="error_message_change_not_allowed" msgid="843159705042381454">"Бұл өзгертуге әкімші рұқсат етпеген"</string>
