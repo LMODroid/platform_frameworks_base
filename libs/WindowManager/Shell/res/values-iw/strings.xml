@@ -52,7 +52,7 @@
     <string name="accessibility_split_right" msgid="8441001008181296837">"פיצול ימינה"</string>
     <string name="accessibility_split_top" msgid="2789329702027147146">"פיצול למעלה"</string>
     <string name="accessibility_split_bottom" msgid="8694551025220868191">"פיצול למטה"</string>
-    <string name="one_handed_tutorial_title" msgid="4583241688067426350">"איך להשתמש בתכונה \'מצב שימוש ביד אחת\'"</string>
+    <string name="one_handed_tutorial_title" msgid="4583241688067426350">"איך להשתמש בתכונה \"מצב שימוש ביד אחת\""</string>
     <string name="one_handed_tutorial_description" msgid="3486582858591353067">"כדי לצאת, יש להחליק למעלה מתחתית המסך או ללחוץ במקום כלשהו במסך מעל האפליקציה"</string>
     <string name="accessibility_action_start_one_handed" msgid="5070337354072861426">"הפעלה של מצב שימוש ביד אחת"</string>
     <string name="accessibility_action_stop_one_handed" msgid="1369940261782179442">"יציאה ממצב שימוש ביד אחת"</string>
