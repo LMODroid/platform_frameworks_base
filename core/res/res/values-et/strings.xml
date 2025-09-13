@@ -1002,7 +1002,7 @@
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"Õige."</string>
     <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"Proovige uuesti"</string>
     <string name="lockscreen_password_wrong" msgid="8605355913868947490">"Proovige uuesti"</string>
-    <string name="lockscreen_storage_locked" msgid="634993789186443380">"Ava kõigi funktsioonide ja andmete nägemiseks"</string>
+    <string name="lockscreen_storage_locked" msgid="634993789186443380">"Avage kõigi funktsioonide ja andmete nägemiseks"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"Maksimaalne näoga avamise katsete arv on ületatud"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"SIM-i pole"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="3986843848305639161">"Tahvelarvutis pole SIM-i."</string>

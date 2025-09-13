@@ -1754,7 +1754,7 @@
     <string name="leave_accessibility_shortcut_on" msgid="6543362062336990814">"ஷார்ட்கட்டைப் பயன்படுத்து"</string>
     <string name="color_inversion_feature_name" msgid="2672824491933264951">"கலர் இன்வெர்ஷன்"</string>
     <string name="color_correction_feature_name" msgid="7975133554160979214">"கலர் கரெக்‌ஷன்"</string>
-    <string name="one_handed_mode_feature_name" msgid="2334330034828094891">"ஒற்றைக் கைப் பயன்முறை"</string>
+    <string name="one_handed_mode_feature_name" msgid="2334330034828094891">"ஒற்றைக் கை மோட்"</string>
     <string name="reduce_bright_colors_feature_name" msgid="3222994553174604132">"மிகக் குறைவான வெளிச்சம்"</string>
     <string name="hearing_aids_feature_name" msgid="1125892105105852542">"செவித்துணைக் கருவிகள்"</string>
     <string name="accessibility_shortcut_enabling_service" msgid="5473495203759847687">"ஒலியளவுக்கான விசைகளைப் பிடித்திருந்தீர்கள். <xliff:g id="SERVICE_NAME">%1$s</xliff:g> ஆன் செய்யப்பட்டது."</string>
