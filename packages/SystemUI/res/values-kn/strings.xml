@@ -1403,18 +1403,18 @@
     <string name="launch_touchpad_tutorial_notification_content" msgid="7931085031240753226">"ಟಚ್‌ಪ್ಯಾಡ್ ಜೆಸ್ಚರ್‌ಗಳನ್ನು ಕಲಿಯಿರಿ"</string>
     <string name="launch_keyboard_touchpad_tutorial_notification_title" msgid="1940023776496198762">"ನಿಮ್ಮ ಕೀಬೋರ್ಡ್ ಮತ್ತು ಟಚ್‌ಪ್ಯಾಡ್ ಬಳಸಿ ನ್ಯಾವಿಗೇಟ್ ಮಾಡಿ"</string>
     <string name="launch_keyboard_touchpad_tutorial_notification_content" msgid="1780725168171929365">"ಟಚ್‌ಪ್ಯಾಡ್ ಗೆಸ್ಚರ್‌ಗಳು, ಕೀಬೋರ್ಡ್‌ಗಳ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು ಮತ್ತು ಹೆಚ್ಚಿನದನ್ನು ತಿಳಿಯಿರಿ"</string>
-    <string name="touchpad_tutorial_back_gesture_button" msgid="2746834288077265946">"ಹಿಂಬದಿ ಗೆಸ್ಚರ್"</string>
-    <string name="touchpad_tutorial_home_gesture_button" msgid="7640544867625955304">"ಹೋಮ್ ಗೆಸ್ಚರ್"</string>
+    <string name="touchpad_tutorial_back_gesture_button" msgid="2746834288077265946">"ಹಿಂಬದಿ ಜೆಸ್ಚರ್"</string>
+    <string name="touchpad_tutorial_home_gesture_button" msgid="7640544867625955304">"ಹೋಮ್ ಜೆಸ್ಚರ್"</string>
     <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"ಇತ್ತೀಚಿನ ಆ್ಯಪ್‌ಗಳನ್ನು ವೀಕ್ಷಿಸಿ"</string>
     <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"ಮುಗಿದಿದೆ"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"ಹಿಂತಿರುಗಿ"</string>
     <string name="touchpad_back_gesture_guidance" msgid="6263750214998421587">"ಹಿಂತಿರುಗಲು, ಟಚ್‌ಪ್ಯಾಡ್‌ನಲ್ಲಿ ಎಲ್ಲಿಯಾದರೂ ಮೂರು ಬೆರಳುಗಳನ್ನು ಬಳಸಿ ಎಡ ಅಥವಾ ಬಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ.\n\nಇದಕ್ಕಾಗಿ ನೀವು ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್ Action + ESC ಅನ್ನು ಸಹ ಬಳಸಬಹುದು."</string>
     <string name="touchpad_back_gesture_success_title" msgid="7240576648330612171">"ಭೇಷ್!"</string>
-    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"ನೀವು ಗೋ ಬ್ಯಾಕ್ ಗೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ."</string>
+    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"ನೀವು ಗೋ ಬ್ಯಾಕ್ ಜೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ."</string>
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ನಿಮ್ಮ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ಗೆ ಹೋಗಲು, ನಿಮ್ಮ ಸ್ಕ್ರೀನ್ ಕೆಳಗಿನಿಂದ ಮೂರು ಬೆರಳುಗಳಿಂದ ಮೇಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"ಭೇಷ್!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"ನೀವು ಗೋ ಹೋಮ್ ಗೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ."</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"ನೀವು ಗೋ ಹೋಮ್ ಜೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ."</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"ಇತ್ತೀಚಿನ ಆ್ಯಪ್‌ಗಳನ್ನು ವೀಕ್ಷಿಸಿ"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"ನಿಮ್ಮ ಟಚ್‌ಪ್ಯಾಡ್‌ನಲ್ಲಿ ಮೂರು ಬೆರಳುಗಳನ್ನು ಬಳಸಿ ಮೇಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ ಮತ್ತು ಹಿಡಿದುಕೊಳ್ಳಿ."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"ಭೇಷ್‌!"</string>
@@ -1422,7 +1422,7 @@
     <string name="tutorial_action_key_title" msgid="2659466586996495447">"ಆ್ಯಕ್ಷನ್‌ ಕೀ"</string>
     <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"ನಿಮ್ಮ ಆ್ಯಪ್‌ಗಳನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು, ನಿಮ್ಮ ಕೀಬೋರ್ಡ್‌ನಲ್ಲಿರುವ ಆ್ಯಕ್ಷನ್‌ ಕೀಯನ್ನು ಒತ್ತಿರಿ."</string>
     <string name="tutorial_action_key_success_title" msgid="466467860120112933">"ಅಭಿನಂದನೆಗಳು!"</string>
-    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"ನೀವು ಆ್ಯಕ್ಷನ್‌ ಕೀ ಗೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ.\n\nನಿಮಗೆ ಲಭ್ಯವಿರುವ ಎಲ್ಲಾ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಆ್ಯಕ್ಷನ್‌ + / ತೋರಿಸುತ್ತದೆ."</string>
+    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"ನೀವು ಆ್ಯಕ್ಷನ್‌ ಕೀ ಜೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ.\n\nನಿಮಗೆ ಲಭ್ಯವಿರುವ ಎಲ್ಲಾ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಆ್ಯಕ್ಷನ್‌ + / ತೋರಿಸುತ್ತದೆ."</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"ಕೀಬೋರ್ಡ್ ಬ್ಯಾಕ್‌ಲೈಟ್"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"%2$d ರಲ್ಲಿ %1$d ಮಟ್ಟ"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"ಮನೆ ನಿಯಂತ್ರಣಗಳು"</string>

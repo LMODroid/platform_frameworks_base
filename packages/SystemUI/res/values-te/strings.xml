@@ -1447,7 +1447,7 @@
     <string name="accessibility_deprecate_extra_dim_dialog_button" msgid="3947537827396916005">"కాంతిని మరింత డిమ్ చేసే షార్ట్‌కట్‌లను తీసివేయండి"</string>
     <string name="accessibility_deprecate_extra_dim_dialog_toast" msgid="165474092660941104">"కాంతిని మరింత డిమ్ చేసే షార్ట్‌కట్‌లు తీసివేయబడ్డాయి"</string>
     <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"కనెక్టివిటీ"</string>
-    <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"Accessibility"</string>
+    <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"యాక్సెసిబిలిటీ"</string>
     <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"యుటిలిటీలు"</string>
     <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"గోప్యత"</string>
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"యాప్‌ల ద్వారా అందించబడినవి"</string>
