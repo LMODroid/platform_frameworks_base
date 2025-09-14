@@ -294,7 +294,7 @@
     <string name="wifi_display_certification" msgid="1805579519992520381">"வயர்லெஸ் காட்சிக்கான சான்றிதழ்"</string>
     <string name="wifi_verbose_logging" msgid="1785910450009679371">"வைஃபை அதிவிவர நுழைவை இயக்கு"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"வைஃபை ஸ்கேனிங்கை வரம்பிடு"</string>
-    <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"வைஃபையில் MAC முகவரியை ரேண்டம் ஆக்கு"</string>
+    <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"வைஃபையில் மாறுபடும் MAC முகவரியை ரேண்டம் ஆக்குதல்"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"மொபைல் டேட்டாவை எப்போதும் இயக்கத்திலேயே வை"</string>
     <string name="tethering_hardware_offload" msgid="4116053719006939161">"வன்பொருள் விரைவுப்படுத்துதல் இணைப்பு முறை"</string>
     <string name="bluetooth_show_devices_without_names" msgid="923584526471885819">"பெயர்கள் இல்லாமல் புளூடூத் சாதனங்களைக் காட்டு"</string>
@@ -311,7 +311,7 @@
     <string name="bluetooth_select_a2dp_codec_type_help_info" msgid="8647200416514412338">"கிரே-அவுட் என்றால் மொபைலாலோ ஹெட்செட்டாலோ ஆதரிக்கப்படவில்லை என்று அர்த்தம்"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"புளூடூத் ஆடியோ பிட்கள்/சாம்பிள்"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample_dialog_title" msgid="4898693684282596143">"புளூடூத் ஆடியோ கோடெக்கைத் தொடங்கு\nதேர்வு: பிட்கள் / சாம்பிள்"</string>
-    <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"புளூடூத் ஆடியோ சேனல் பயன்முறை"</string>
+    <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"புளூடூத் ஆடியோ சேனல் மோட்"</string>
     <string name="bluetooth_select_a2dp_codec_channel_mode_dialog_title" msgid="2076949781460359589">"புளூடூத் ஆடியோ கோடெக்கைத் தொடங்கு\nதேர்வு: சேனல் பயன்முறை"</string>
     <string name="bluetooth_select_a2dp_codec_ldac_playback_quality" msgid="3233402355917446304">"புளூடூத் ஆடியோ LDAC கோடெக்: வீடியோவின் தரம்"</string>
     <string name="bluetooth_select_a2dp_codec_ldac_playback_quality_dialog_title" msgid="7274396574659784285">"புளூடூத் ஆடியோ LDACயைத் தொடங்கு\nகோடெக் தேர்வு: வீடியோவின் தரம்"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"போலி இருப்பிடங்களை அனுமதி"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"போலி இருப்பிடங்களை அனுமதி"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"காட்சி பண்புக்கூறு சோதனையை இயக்கு"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"வைஃபை இயங்கும் போதும் (வேகமான நெட்வொர்க் மாற்றத்திற்கு), மொபைல் டேட்டாவை எப்போதும் இயக்கத்தில் வைக்கும்."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"வைஃபை இயங்கும் போதும், வேகமான நெட்வொர்க் மாற்றத்திற்கு மொபைல் டேட்டாவை எப்போதும் இயக்கத்தில் வைக்கும்."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"வன்பொருள் விரைவுப்படுத்துதல் இணைப்பு முறை கிடைக்கும் போது, அதைப் பயன்படுத்தும்"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"USB பிழைதிருத்தத்தை அனுமதிக்கவா?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"USB பிழைதிருத்தம் மேம்படுத்தல் நோக்கங்களுக்காக மட்டுமே. அதை உங்கள் கணினி மற்றும் சாதனத்திற்கு இடையில் தரவை நகலெடுக்கவும், அறிவிப்பு இல்லாமல் உங்கள் சாதனத்தில் ஆப்ஸை நிறுவவும், பதிவு தரவைப் படிக்கவும் பயன்படுத்தவும்."</string>

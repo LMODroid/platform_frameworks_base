@@ -77,7 +77,7 @@
     <string name="osu_sign_up_failed" msgid="5605453599586001793">"Dovršavanje registracije nije uspelo. Dodirnite da biste probali ponovo."</string>
     <string name="osu_sign_up_complete" msgid="7640183358878916847">"Registracija je dovršena. Povezuje se…"</string>
     <string name="speed_label_slow" msgid="6069917670665664161">"Spora"</string>
-    <string name="speed_label_okay" msgid="1253594383880810424">"Potvrdi"</string>
+    <string name="speed_label_okay" msgid="1253594383880810424">"Važi"</string>
     <string name="speed_label_fast" msgid="2677719134596044051">"Brza"</string>
     <string name="speed_label_very_fast" msgid="8215718029533182439">"Veoma brza"</string>
     <string name="wifi_passpoint_expired" msgid="6540867261754427561">"Isteklo"</string>
@@ -557,7 +557,7 @@
     <string name="next" msgid="2699398661093607009">"Dalje"</string>
     <string name="back" msgid="5554327870352703710">"Nazad"</string>
     <string name="save" msgid="3745809743277153149">"Sačuvaj"</string>
-    <string name="okay" msgid="949938843324579502">"Potvrdi"</string>
+    <string name="okay" msgid="949938843324579502">"Važi"</string>
     <string name="done" msgid="381184316122520313">"Gotovo"</string>
     <string name="alarms_and_reminders_label" msgid="6918395649731424294">"Alarmi i podsetnici"</string>
     <string name="alarms_and_reminders_switch_title" msgid="4939393911531826222">"Omogući podešavanje alarma i podsetnika"</string>

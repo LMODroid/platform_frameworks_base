@@ -329,7 +329,7 @@
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Wakati hali hii imewashwa, huenda anwani ya MAC ya kifaa hiki ikabadilika kila wakati kinapounganisha kwenye mtandao ambapo kipengele cha unasibu wa MAC kimewashwa."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Mtandao unapima data"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"Mtandao usiopima data"</string>
-    <string name="select_logd_size_title" msgid="1604578195914595173">"Ukubwa wa kiweka bafa ya kumbukumbu"</string>
+    <string name="select_logd_size_title" msgid="1604578195914595173">"Ukubwa wa kiweka akiba ya kumbukumbu"</string>
     <string name="select_logd_size_dialog_title" msgid="2105401994681013578">"Chagua ukubwa wa kila Kumbukumbu"</string>
     <string name="dev_logpersist_clear_warning_title" msgid="8631859265777337991">"Ungependa kufuta data iliyo kwenye hifadhi ya kiweka kumbukumbu za mara kwa mara?"</string>
     <string name="dev_logpersist_clear_warning_message" msgid="6447590867594287413">"Tunapoacha kufuatilia kwa kutumia kiweka kumbukumbu za mara kwa mara, tunapaswa kufuta data yote ya kiweka kumbukumbu iliyo kwenye kifaa chako."</string>
