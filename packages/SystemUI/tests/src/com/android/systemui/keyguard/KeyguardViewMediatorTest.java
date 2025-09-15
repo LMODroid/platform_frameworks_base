@@ -542,7 +542,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         assertFalse(mViewMediator.isShowingAndNotOccluded());
 
         // WHEN lockdown occurs
-        when(mLockPatternUtils.isUserInLockdown(anyInt())).thenReturn(true);
+        when(mUpdateMonitor.isUserInLockdown(anyInt())).thenReturn(true);
         mKeyguardUpdateMonitorCallbackCaptor.getValue().onStrongAuthStateChanged(0);
 
         // THEN keyguard is shown
@@ -635,7 +635,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         mViewMediator.setKeyguardEnabled(true);
         TestableLooper.get(this).processAllMessages();
         captureKeyguardUpdateMonitorCallback();
-        when(mLockPatternUtils.isUserInLockdown(anyInt())).thenReturn(true);
+        when(mUpdateMonitor.isUserInLockdown(anyInt())).thenReturn(true);
         mKeyguardUpdateMonitorCallbackCaptor.getValue().onStrongAuthStateChanged(0);
         assertTrue(mViewMediator.isShowingAndNotOccluded());
 
