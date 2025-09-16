@@ -43,7 +43,7 @@
     <string name="unknown_apps_admin_dlg_text" msgid="4456572224020176095">"Администратор не дозвољава инсталирање апликација добијених из непознатих извора"</string>
     <string name="unknown_apps_user_restriction_dlg_text" msgid="151020786933988344">"Овај корисник не може да инсталира непознате апликације"</string>
     <string name="install_apps_user_restriction_dlg_text" msgid="2154119597001074022">"Овом кориснику није дозвољено да инсталира апликације"</string>
-    <string name="ok" msgid="7871959885003339302">"Потврди"</string>
+    <string name="ok" msgid="7871959885003339302">"Важи"</string>
     <string name="archive" msgid="4447791830199354721">"Архивирај"</string>
     <string name="update_anyway" msgid="8792432341346261969">"Ипак ажурирај"</string>
     <string name="manage_applications" msgid="5400164782453975580">"Управљајте апл."</string>
