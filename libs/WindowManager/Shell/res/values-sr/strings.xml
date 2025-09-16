@@ -123,7 +123,7 @@
     <string name="screenshot_text" msgid="1477704010087786671">"Снимак екрана"</string>
     <string name="open_in_browser_text" msgid="9181692926376072904">"Отвори у прегледачу"</string>
     <string name="new_window_text" msgid="6318648868380652280">"Нови прозор"</string>
-    <string name="manage_windows_text" msgid="5567366688493093920">"Управљајте прозорима"</string>
+    <string name="manage_windows_text" msgid="5567366688493093920">"Управљај прозорима"</string>
     <string name="close_text" msgid="4986518933445178928">"Затворите"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"Затворите мени"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="6366422614991687237">"Отворите мени"</string>
