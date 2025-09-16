@@ -387,7 +387,7 @@
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"顯示畫面更新"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"繪圖時在視窗中閃爍顯示畫面"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"顯示硬體層更新"</string>
-    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"在硬體層更新時閃綠燈"</string>
+    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"在硬體層更新時閃爍綠色"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"針對 GPU 過度繪製進行偵錯"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"停用硬體重疊圖層"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"一律使用 GPU 進行畫面合成"</string>
