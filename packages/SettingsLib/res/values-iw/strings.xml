@@ -374,12 +374,12 @@
     <string name="debug_monitoring_category" msgid="1597387133765424994">"מעקב"</string>
     <string name="strict_mode" msgid="889864762140862437">"מצב קפדני מופעל"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"‏המסך יהבהב כשאפליקציות יבצעו פעולות ארוכות ב-thread הראשי"</string>
-    <string name="pointer_location" msgid="7516929526199520173">"מיקום מצביע"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"שכבת-על של המסך המציגה את נתוני המגע הנוכחיים"</string>
+    <string name="pointer_location" msgid="7516929526199520173">"מיקום הסמן"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"שכבת-על במסך מציגה את נתוני המגע הנוכחיים"</string>
     <string name="show_touches" msgid="8437666942161289025">"הצגת לחיצות"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"הצגת משוב ויזואלי ללחיצות"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"משוב ויזואלי ללחיצות"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"הצגת לחיצות המקשים"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"הצגת משוב חזותי עבור לחיצות פיזיות על מקשים"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"משוב ויזואלי להקשה על מקשים פיזיים"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"הצגת הקלט של לוח המגע"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"שכבת-על במסך מציגה את נתוני הקלט של לוח המגע ואת התנועות המזוהות"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"הצגת עדכונים על פני השטח"</string>
@@ -638,9 +638,9 @@
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"הגדרה"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"לא עכשיו"</string>
     <string name="user_add_user_type_title" msgid="551279664052914497">"הוספה"</string>
-    <string name="user_new_user_name" msgid="60979820612818840">"משתמש חדש"</string>
+    <string name="user_new_user_name" msgid="60979820612818840">"פרופיל חדש"</string>
     <string name="user_new_profile_name" msgid="2405500423304678841">"פרופיל חדש"</string>
-    <string name="user_info_settings_title" msgid="6351390762733279907">"פרטי משתמש"</string>
+    <string name="user_info_settings_title" msgid="6351390762733279907">"פרטים"</string>
     <string name="profile_info_settings_title" msgid="105699672534365099">"פרטי פרופיל"</string>
     <string name="user_need_lock_message" msgid="4311424336209509301">"לפני שיתאפשר לך ליצור פרופיל מוגבל, יהיה עליך להגדיר נעילת מסך כדי להגן על האפליקציות ועל הנתונים האישיים שלך."</string>
     <string name="user_set_lock_button" msgid="1427128184982594856">"הגדרת נעילה"</string>

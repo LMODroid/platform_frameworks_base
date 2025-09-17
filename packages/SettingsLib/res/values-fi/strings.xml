@@ -279,7 +279,7 @@
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, virheenkorjaus, kehittäminen"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"Virheraportin pikakuvake"</string>
     <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Näytä virheraporttipainike virtavalikossa"</string>
-    <string name="keep_screen_on" msgid="1187161672348797558">"Pysy käynnissä"</string>
+    <string name="keep_screen_on" msgid="1187161672348797558">"Pidä päällä"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"Näyttö ei sammu puhelimen latautuessa"</string>
     <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Ota Bluetoothin HCI-tarkkailuloki käyttöön"</string>
     <string name="bt_hci_snoop_log_summary" msgid="6808538971394092284">"Tallenna Bluetoothin HCl-paketit tiedostoon (ota Bluetooth käyttöön asetuksen muuttamisen jälkeen)"</string>
