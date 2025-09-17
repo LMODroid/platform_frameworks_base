@@ -64,7 +64,7 @@
     <string name="archive_application_text_current_user_work_profile" msgid="1450487362134779752">"మీ వర్క్ ప్రొఫైల్‌లో ఈ యాప్‌ను ఆర్కైవ్ చేయాలా? మీ వ్యక్తిగత డేటా సేవ్ చేయబడుతుంది"</string>
     <string name="archive_application_text_user" msgid="2586558895535581451">"<xliff:g id="USERNAME">%1$s</xliff:g>‌కు ఈ యాప్‌ను ఆర్కైవ్ చేయాలా? మీ వ్యక్తిగత డేటా సేవ్ చేయబడుతుంది"</string>
     <string name="archive_application_text_current_user_private_profile" msgid="1958423158655599132">"మీరు మీ ప్రైవేట్ స్పేస్ నుండి ఈ యాప్‌ను ఆర్కైవ్ చేయాలనుకుంటున్నారా? మీ వ్యక్తిగత డేటా సేవ్ చేయబడుతుంది"</string>
-    <string name="uninstall_application_text_all_users" msgid="575491774380227119">"మీరు ఈ యాప్‌ను "<b>"అందరు"</b>" వినియోగదారులకు అన్‌ఇన్‌స్టాల్ చేయాలనుకుంటున్నారా? అప్లికేషన్, దాని డేటా పరికరంలోని "<b>"అందరు"</b>" వినియోగదారుల నుండి తీసివేయబడుతుంది."</string>
+    <string name="uninstall_application_text_all_users" msgid="575491774380227119">"మీరు ఈ యాప్‌ను "<b>"అందరు"</b>" యూజర్లకు అన్-ఇన్‌స్టాల్ చేయాలనుకుంటున్నారా? అప్లికేషన్, దానికి సంబంధించిన డేటా, డివైజ్‌లోని "<b>"అందరు"</b>" యూజర్ల నుండి తొలగిపోతుంది."</string>
     <string name="uninstall_application_text_user" msgid="498072714173920526">"మీరు వినియోగదారు <xliff:g id="USERNAME">%1$s</xliff:g> కోసం ఈ యాప్‌ను అన్‌ఇన్‌స్టాల్ చేయాలనుకుంటున్నారా?"</string>
     <string name="uninstall_application_text_current_user_work_profile" msgid="8788387739022366193">"మీ వర్క్ ప్రొఫైల్ నుండి ఈ యాప్‌ను మీరు అన్‌ఇన్‌స్టాల్ చేయాలనుకుంటున్నారా?"</string>
     <string name="uninstall_update_text" msgid="863648314632448705">"ఈ యాప్‌ను ఫ్యాక్టరీ వెర్షన్‌తో భర్తీ చేయాలా? మొత్తం డేటా తీసివేయబడుతుంది."</string>
