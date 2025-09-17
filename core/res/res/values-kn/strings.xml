@@ -1002,7 +1002,7 @@
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"ಸರಿಯಾಗಿದೆ!"</string>
     <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ"</string>
     <string name="lockscreen_password_wrong" msgid="8605355913868947490">"ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ"</string>
-    <string name="lockscreen_storage_locked" msgid="634993789186443380">"ಎಲ್ಲ ವೈಶಿಷ್ಟ್ಯಗಳು ಮತ್ತು ಡೇಟಾಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ"</string>
+    <string name="lockscreen_storage_locked" msgid="634993789186443380">"ಎಲ್ಲ ಫೀಚರ್‌ಗಳು ಮತ್ತು ಡೇಟಾಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"ಗರಿಷ್ಠ ಫೇಸ್ ಅನ್‍ಲಾಕ್ ಪ್ರಯತ್ನಗಳು ಮೀರಿವೆ"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"SIM ಇಲ್ಲ"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="3986843848305639161">"ಟ್ಯಾಬ್ಲೆಟ್‌ನಲ್ಲಿ SIM ಇಲ್ಲ."</string>

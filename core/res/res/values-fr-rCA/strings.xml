@@ -1003,7 +1003,7 @@
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"C\'est exact!"</string>
     <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"Réessayer"</string>
     <string name="lockscreen_password_wrong" msgid="8605355913868947490">"Réessayer"</string>
-    <string name="lockscreen_storage_locked" msgid="634993789186443380">"Déverr. pour acc. aux autres fonction. et données"</string>
+    <string name="lockscreen_storage_locked" msgid="634993789186443380">"Déverr. toutes les fonctionnalités et données"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"Nombre maximal atteint de tentatives de déverrouillage par reconnaissance faciale"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"Aucune carte SIM"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="3986843848305639161">"Aucune carte SIM ne se trouve dans la tablette."</string>
@@ -1688,7 +1688,7 @@
     <string name="kg_wrong_pin" msgid="3680925703673166482">"NIP incorrect."</string>
     <string name="kg_pattern_instructions" msgid="8366024510502517748">"Dessinez votre schéma."</string>
     <string name="kg_sim_pin_instructions" msgid="6479401489471690359">"Saisissez le NIP de la carte SIM"</string>
-    <string name="kg_pin_instructions" msgid="7355933174673539021">"Saisissez le NIP."</string>
+    <string name="kg_pin_instructions" msgid="7355933174673539021">"Entrez le NIP"</string>
     <string name="kg_password_instructions" msgid="7179782578809398050">"Saisissez votre mot de passe."</string>
     <string name="kg_puk_enter_puk_hint" msgid="6696187482616360994">"La carte SIM est maintenant désactivée. Saisissez le code PUK pour continuer. Contactez votre opérateur pour en savoir plus."</string>
     <string name="kg_puk_enter_pin_hint" msgid="8190982314659429770">"Saisir le NIP souhaité"</string>
@@ -1879,7 +1879,7 @@
     <string name="print_service_installed_title" msgid="6134880817336942482">"Le service « <xliff:g id="NAME">%s</xliff:g> » a bien été installé"</string>
     <string name="print_service_installed_message" msgid="7005672469916968131">"Toucher pour activer"</string>
     <string name="restr_pin_enter_admin_pin" msgid="1199419462726962697">"Entrez le NIP d\'administrateur"</string>
-    <string name="restr_pin_enter_pin" msgid="373139384161304555">"Saisissez le NIP"</string>
+    <string name="restr_pin_enter_pin" msgid="373139384161304555">"Entrez le NIP"</string>
     <string name="restr_pin_incorrect" msgid="3861383632940852496">"Incorrect"</string>
     <string name="restr_pin_enter_old_pin" msgid="7537079094090650967">"NIP actuel"</string>
     <string name="restr_pin_enter_new_pin" msgid="3267614461844565431">"Nouveau NIP"</string>

@@ -293,7 +293,7 @@
     <string name="notification_channel_car_mode" msgid="2123919247040988436">"Mode Voiture"</string>
     <string name="notification_channel_account" msgid="6436294521740148173">"État du compte"</string>
     <string name="notification_channel_developer" msgid="1691059964407549150">"Messages relatifs aux développeurs"</string>
-    <string name="notification_channel_developer_important" msgid="7197281908918789589">"Messages importants relatifs aux développeurs"</string>
+    <string name="notification_channel_developer_important" msgid="7197281908918789589">"Messages importants pour les développeurs"</string>
     <string name="notification_channel_updates" msgid="7907863984825495278">"Mises à jour"</string>
     <string name="notification_channel_network_status" msgid="2127687368725272809">"État du réseau"</string>
     <string name="notification_channel_network_alerts" msgid="6312366315654526528">"Alertes réseau"</string>
