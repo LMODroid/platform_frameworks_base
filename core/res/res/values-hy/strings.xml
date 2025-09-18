@@ -1002,7 +1002,7 @@
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"Ճիշտ է:"</string>
     <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"Կրկին փորձեք"</string>
     <string name="lockscreen_password_wrong" msgid="8605355913868947490">"Կրկին փորձեք"</string>
-    <string name="lockscreen_storage_locked" msgid="634993789186443380">"Ապակողպեք՝ բոլոր գործառույթներն ու տվյալներն օգտագործելու համար"</string>
+    <string name="lockscreen_storage_locked" msgid="634993789186443380">"Ապակողպեք՝ բոլոր գործառ․ ու տվյալների համար"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"Դեմքով ապակողպման փորձերի առավելագույն քանակը գերազանցված են"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"SIM քարտ չկա"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="3986843848305639161">"Պլանշետում SIM քարտ չկա։"</string>

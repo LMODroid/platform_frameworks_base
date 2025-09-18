@@ -1002,7 +1002,7 @@
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"சரி!"</string>
     <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"மீண்டும் முயற்சிக்கவும்"</string>
     <string name="lockscreen_password_wrong" msgid="8605355913868947490">"மீண்டும் முயற்சிக்கவும்"</string>
-    <string name="lockscreen_storage_locked" msgid="634993789186443380">"எல்லா அம்சங்கள் &amp; தரவை பெற, சாதனத்தை அன்லாக் செய்யவும்"</string>
+    <string name="lockscreen_storage_locked" msgid="634993789186443380">"எல்லா அம்சங்கள் &amp; தரவை பெற, அன்லாக் செய்யவும்"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"முகம் காட்டித் திறத்தல் அம்சத்தை அதிகமுறை பயன்படுத்துவிட்டீர்கள்"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"சிம் இல்லை"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="3986843848305639161">"டேப்லெட்டில் சிம் இல்லை."</string>
