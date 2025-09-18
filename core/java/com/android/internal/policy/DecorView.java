@@ -168,6 +168,11 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         }
     };
 
+    /** Display Compat Safe App Area 1.0 */
+    private static final String FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA =
+        "android.software.car.display_compatibility.safe_app_area";
+    private static final int FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA_VERSION = 1;
+
     // Cludge to address b/22668382: Set the shadow size to the maximum so that the layer
     // size calculation takes the shadow size into account. We set the elevation currently
     // to max until the first layout command has been executed.
@@ -331,12 +336,21 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
      * @return true if app requires display compat
      */
     private static boolean requiresDisplayCompat(@NonNull Context context) {
+        final PackageManager pm = context.getPackageManager();
+        // DisplayCompat is not required on devices that support
+        // splitscreen multitasking since the window itself will provide
+        // a constrained view for the app within it.
+        if (!pm.hasSystemFeature(
+                FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA,
+                FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA_VERSION)) {
+            return false;
+        }
         boolean requiresDisplayCompat = false;
         final String packageName = context.getPackageName();
         final int userId = UserHandle.myUserId();
         UserHandle userHandle = UserHandle.of(userId);
         try {
-            ApplicationInfo applicationInfo = context.getPackageManager()
+            ApplicationInfo applicationInfo = pm
                 .getApplicationInfoAsUser(packageName, 0 /** flags */, userHandle);
             requiresDisplayCompat = (applicationInfo.privateFlagsExt
                     & PRIVATE_FLAG_EXT_DISPLAY_COMPAT) != 0;
