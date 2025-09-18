@@ -528,7 +528,7 @@
     <string name="user_limit_reached_message" msgid="1070703858915935796">"{count,plural, =1{فقط یک کاربر می‌توان ایجاد کرد.}one{حداکثر # کاربر می‌توانید اضافه کنید.}other{حداکثر # کاربر می‌توانید اضافه کنید.}}"</string>
     <string name="user_remove_user_title" msgid="9124124694835811874">"کاربر حذف شود؟"</string>
     <string name="user_remove_user_message" msgid="6702834122128031833">"همه برنامه‌ها و داده‌های این کاربر حذف می‌شود."</string>
-    <string name="user_remove_user_remove" msgid="8387386066949061256">"حذف"</string>
+    <string name="user_remove_user_remove" msgid="8387386066949061256">"برداشتن"</string>
     <string name="media_projection_dialog_title" msgid="3316063622495360646">"ضبط یا پخش محتوا با <xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g> شروع شود؟"</string>
     <string name="media_projection_dialog_warning" msgid="1303664408388363598">"<xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g> به همه اطلاعاتی که روی صفحه‌نمایش قابل‌مشاهد است و هنگام ضبط کردن یا پخش محتوا از دستگاهتان پخش می‌شود دسترسی خواهد داشت. این شامل اطلاعاتی مانند گذرواژه‌ها، جزئیات پرداخت، عکس‌ها، پیام‌ها، و صداهایی که پخش می‌کنید می‌شود."</string>
     <string name="media_projection_sys_service_dialog_title" msgid="3751133258891897878">"ضبط یا پخش محتوا شروع شود؟"</string>
