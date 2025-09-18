@@ -68,7 +68,7 @@
     <string name="kg_unlock_with_pin_or_fp" msgid="5635161174698729890">"PIN वा फिंगरप्रिन्ट प्रयोग गरी अनलक गर्नुहोस्"</string>
     <string name="kg_unlock_with_password_or_fp" msgid="2251295907826814237">"पासवर्ड वा फिंगरप्रिन्ट प्रयोग गरी अनलक गर्नुहोस्"</string>
     <string name="kg_unlock_with_pattern_or_fp" msgid="2391870539909135046">"प्याटर्न वा फिंगरप्रिन्ट प्रयोग गरी अनलक गर्नुहोस्"</string>
-    <string name="kg_prompt_after_dpm_lock" msgid="6002804765868345917">"थप सुरक्षाका लागि कामसम्बन्धी नीतिका अनुसार डिभाइस लक गरियो"</string>
+    <string name="kg_prompt_after_dpm_lock" msgid="6002804765868345917">"थप सुरक्षाका लागि कार्यालयको नीतिअनुसार डिभाइस लक गरिएको छ"</string>
     <string name="kg_prompt_after_user_lockdown_pin" msgid="5374732179740050373">"लकडाउन गरेपछि PIN हाल्नु पर्ने हुन्छ"</string>
     <string name="kg_prompt_after_user_lockdown_password" msgid="9097968458291129795">"लकडाउन गरेपछि पासवर्ड हाल्नु पर्ने हुन्छ"</string>
     <string name="kg_prompt_after_user_lockdown_pattern" msgid="215072203613597906">"लकडाउन गरेपछि प्याटर्न हाल्नु पर्ने हुन्छ"</string>

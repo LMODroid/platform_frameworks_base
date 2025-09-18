@@ -68,7 +68,7 @@
     <string name="kg_unlock_with_pin_or_fp" msgid="5635161174698729890">"PIN/వేలిముద్రతో తెరవండి"</string>
     <string name="kg_unlock_with_password_or_fp" msgid="2251295907826814237">"పాస్‌వర్డ్/వేలిముద్రతో తెరవండి"</string>
     <string name="kg_unlock_with_pattern_or_fp" msgid="2391870539909135046">"ఆకృతి/వేలిముద్రతో తెరవండి"</string>
-    <string name="kg_prompt_after_dpm_lock" msgid="6002804765868345917">"మరింత సెక్యూరిటీకై, వర్క్ పాలసీతో డివైజ్ లాక్ చేశారు"</string>
+    <string name="kg_prompt_after_dpm_lock" msgid="6002804765868345917">"అదనపు సెక్యూరిటీ కోసం, వర్క్ పాలసీ ప్రకారం ఈ డివైజ్‌ను లాక్ చేశారు"</string>
     <string name="kg_prompt_after_user_lockdown_pin" msgid="5374732179740050373">"లాక్‌డౌన్ తర్వాత PIN అవసరం"</string>
     <string name="kg_prompt_after_user_lockdown_password" msgid="9097968458291129795">"లాక్‌డౌన్ తర్వాత పాస్‌వర్డ్ అవసరం"</string>
     <string name="kg_prompt_after_user_lockdown_pattern" msgid="215072203613597906">"లాక్‌డౌన్ తర్వాత ఆకృతి అవసరం"</string>
