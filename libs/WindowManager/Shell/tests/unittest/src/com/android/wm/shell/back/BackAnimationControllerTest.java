@@ -292,6 +292,47 @@ public class BackAnimationControllerTest extends ShellTestCase {
         verify(mTransitions).runOnIdle(any());
     }
 
+    // Delay starting gesture tracking to allow the system to receive onPointerDownOutsideFocus
+    // first. This is critical for interactions in multi-windowing mode.
+    @Test
+    public void noStartBackNavigationWhenActionDown() throws RemoteException {
+        registerAnimation(BackNavigationInfo.TYPE_RETURN_TO_HOME);
+        createNavigationInfo(BackNavigationInfo.TYPE_RETURN_TO_HOME,
+                /* enableAnimation = */ true,
+                /* isAnimationCallback = */ false);
+        doMotionEvent(MotionEvent.ACTION_DOWN, 0);
+        verify(mActivityTaskManager, never()).startBackNavigation(any(), any());
+        doMotionEvent(MotionEvent.ACTION_MOVE, 100);
+        verify(mActivityTaskManager).startBackNavigation(any(), any());
+    }
+
+    @EnableFlags(Flags.FLAG_PREDICTIVE_BACK_DELAY_WM_TRANSITION)
+    @Test
+    public void ensureStartBackAnimation_ThresholdBeforeStartBackNavigation()
+            throws RemoteException {
+        registerAnimation(BackNavigationInfo.TYPE_RETURN_TO_HOME);
+        createNavigationInfo(BackNavigationInfo.TYPE_RETURN_TO_HOME,
+                /* enableAnimation = */ true,
+                /* isAnimationCallback = */ false);
+        doMotionEvent(MotionEvent.ACTION_DOWN, 0);
+        mController.onThresholdCrossed();
+        doMotionEvent(MotionEvent.ACTION_MOVE, 100);
+        mShellExecutor.flushAll();
+        verify(mActivityTaskManager).startPredictiveBackAnimation();
+    }
+
+    @EnableFlags(Flags.FLAG_PREDICTIVE_BACK_DELAY_WM_TRANSITION)
+    @Test
+    public void ensureStarBackAnimation_ThresholdAfterStartBackNavigation() throws RemoteException {
+        registerAnimation(BackNavigationInfo.TYPE_RETURN_TO_HOME);
+        createNavigationInfo(BackNavigationInfo.TYPE_RETURN_TO_HOME,
+                /* enableAnimation = */ true,
+                /* isAnimationCallback = */ false);
+        doStartEvents(0, 100);
+        mShellExecutor.flushAll();
+        verify(mActivityTaskManager).startPredictiveBackAnimation();
+    }
+
     @Test
     public void backToHome_dispatchesEvents() throws RemoteException {
         registerAnimation(BackNavigationInfo.TYPE_RETURN_TO_HOME);
