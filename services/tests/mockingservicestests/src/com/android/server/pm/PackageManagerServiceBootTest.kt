@@ -71,21 +71,21 @@ class PackageManagerServiceBootTest {
         val pm = createPackageManagerService()
         verify(rule.mocks().injector).bootstrap(pm)
         verify(rule.mocks().settings).addSharedUserLPw("android.uid.system",
-                Process.SYSTEM_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED)
+                Process.SYSTEM_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED, 0)
         verify(rule.mocks().settings).addSharedUserLPw("android.uid.phone",
-                Process.PHONE_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED)
+                Process.PHONE_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED, 0)
         verify(rule.mocks().settings).addSharedUserLPw("android.uid.log",
-                Process.LOG_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED)
+                Process.LOG_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED, 0)
         verify(rule.mocks().settings).addSharedUserLPw("android.uid.nfc",
-                Process.NFC_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED)
+                Process.NFC_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED, 0)
         verify(rule.mocks().settings).addSharedUserLPw("android.uid.bluetooth",
-                Process.BLUETOOTH_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED)
+                Process.BLUETOOTH_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED, 0)
         verify(rule.mocks().settings).addSharedUserLPw("android.uid.shell",
-                Process.SHELL_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED)
+                Process.SHELL_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED, 0)
         verify(rule.mocks().settings).addSharedUserLPw("android.uid.se",
-                Process.SE_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED)
+                Process.SE_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED, 0)
         verify(rule.mocks().settings).addSharedUserLPw("android.uid.networkstack",
-                Process.NETWORK_STACK_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED)
+                Process.NETWORK_STACK_UID, FLAG_SYSTEM, PRIVATE_FLAG_PRIVILEGED, 0)
         rule.system().validateFinalState()
     }
 

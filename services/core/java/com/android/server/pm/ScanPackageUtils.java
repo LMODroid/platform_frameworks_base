@@ -132,6 +132,7 @@ final class ScanPackageUtils {
         final SharedUserSetting oldSharedUserSetting = request.mOldSharedUserSetting;
         final SharedUserSetting sharedUserSetting = request.mSharedUserSetting;
         final UserHandle user = request.mUser;
+        final int userId = (user == null ? UserHandle.USER_SYSTEM : user.getIdentifier());
         final boolean isPlatformPackage = request.mIsPlatformPackage;
 
         List<String> changedAbiCodePath = null;
@@ -213,21 +214,40 @@ final class ScanPackageUtils {
             // PackageSetting to pass in.
             int pkgFlags = PackageInfoUtils.appInfoFlags(parsedPackage, null);
             int pkgPrivateFlags = PackageInfoUtils.appInfoPrivateFlags(parsedPackage, null);
+            int pkgPrivateFlagsExt =
+                    PackageInfoUtils.appInfoPrivateFlagsExt(parsedPackage, null, userId);
 
             // REMOVE SharedUserSetting from method; update in a separate call
-            pkgSetting = Settings.createNewSetting(parsedPackage.getPackageName(),
-                    originalPkgSetting, disabledPkgSetting, realPkgName, sharedUserSetting,
-                    destCodeFile, parsedPackage.getNativeLibraryRootDir(),
-                    AndroidPackageUtils.getRawPrimaryCpuAbi(parsedPackage),
-                    AndroidPackageUtils.getRawSecondaryCpuAbi(parsedPackage),
-                    parsedPackage.getLongVersionCode(), pkgFlags, pkgPrivateFlags, user,
-                    true /*allowInstall*/, instantApp, virtualPreload, isStoppedSystemApp,
-                    UserManagerService.getInstance(), usesSdkLibraries,
-                    parsedPackage.getUsesSdkLibrariesVersionsMajor(),
-                    parsedPackage.getUsesSdkLibrariesOptional(), usesStaticLibraries,
-                    parsedPackage.getUsesStaticLibrariesVersions(), parsedPackage.getMimeGroups(),
-                    newDomainSetId,
-                    parsedPackage.getTargetSdkVersion(), parsedPackage.getRestrictUpdateHash());
+            pkgSetting =
+                    Settings.createNewSetting(
+                            parsedPackage.getPackageName(),
+                            originalPkgSetting,
+                            disabledPkgSetting,
+                            realPkgName,
+                            sharedUserSetting,
+                            destCodeFile,
+                            parsedPackage.getNativeLibraryRootDir(),
+                            AndroidPackageUtils.getRawPrimaryCpuAbi(parsedPackage),
+                            AndroidPackageUtils.getRawSecondaryCpuAbi(parsedPackage),
+                            parsedPackage.getLongVersionCode(),
+                            pkgFlags,
+                            pkgPrivateFlags,
+                            pkgPrivateFlagsExt,
+                            user,
+                            true /*allowInstall*/,
+                            instantApp,
+                            virtualPreload,
+                            isStoppedSystemApp,
+                            UserManagerService.getInstance(),
+                            usesSdkLibraries,
+                            parsedPackage.getUsesSdkLibrariesVersionsMajor(),
+                            parsedPackage.getUsesSdkLibrariesOptional(),
+                            usesStaticLibraries,
+                            parsedPackage.getUsesStaticLibrariesVersions(),
+                            parsedPackage.getMimeGroups(),
+                            newDomainSetId,
+                            parsedPackage.getTargetSdkVersion(),
+                            parsedPackage.getRestrictUpdateHash());
 
             // If isPendingRestore is true before, set the value true to the PackageSetting
             if (isPendingRestoreBefore) {
@@ -244,18 +264,28 @@ final class ScanPackageUtils {
             // TODO(narayan): This update is bogus. nativeLibraryDir & primaryCpuAbi,
             // secondaryCpuAbi are not known at this point so we always update them
             // to null here, only to reset them at a later point.
-            Settings.updatePackageSetting(pkgSetting, disabledPkgSetting, oldSharedUserSetting,
-                    sharedUserSetting, destCodeFile, parsedPackage.getNativeLibraryDir(),
+            Settings.updatePackageSetting(
+                    pkgSetting,
+                    disabledPkgSetting,
+                    oldSharedUserSetting,
+                    sharedUserSetting,
+                    destCodeFile,
+                    parsedPackage.getNativeLibraryDir(),
                     pkgSetting.getPrimaryCpuAbi(),
                     pkgSetting.getSecondaryCpuAbi(),
                     PackageInfoUtils.appInfoFlags(parsedPackage, pkgSetting),
                     PackageInfoUtils.appInfoPrivateFlags(parsedPackage, pkgSetting),
+                    PackageInfoUtils.appInfoPrivateFlagsExt(parsedPackage, pkgSetting, userId),
                     UserManagerService.getInstance(),
-                    usesSdkLibraries, parsedPackage.getUsesSdkLibrariesVersionsMajor(),
+                    usesSdkLibraries,
+                    parsedPackage.getUsesSdkLibrariesVersionsMajor(),
                     parsedPackage.getUsesSdkLibrariesOptional(),
-                    usesStaticLibraries, parsedPackage.getUsesStaticLibrariesVersions(),
-                    parsedPackage.getMimeGroups(), newDomainSetId,
-                    parsedPackage.getTargetSdkVersion(), parsedPackage.getRestrictUpdateHash(),
+                    usesStaticLibraries,
+                    parsedPackage.getUsesStaticLibrariesVersions(),
+                    parsedPackage.getMimeGroups(),
+                    newDomainSetId,
+                    parsedPackage.getTargetSdkVersion(),
+                    parsedPackage.getRestrictUpdateHash(),
                     isDontKill);
         }
 
@@ -272,7 +302,6 @@ final class ScanPackageUtils {
             PackageManagerService.reportSettingsProblem(Log.WARN, msg);
         }
 
-        final int userId = (user == null ? UserHandle.USER_SYSTEM : user.getIdentifier());
         // for existing packages, change the install state; but, only if it's explicitly specified
         if (!createNewPackage) {
             final boolean instantApp = (scanFlags & SCAN_AS_INSTANT_APP) != 0;
@@ -465,9 +494,12 @@ final class ScanPackageUtils {
         }
         pkgSetting.setLastModifiedTime(scanFileTime);
         // TODO(b/135203078): Remove, move to constructor
-        pkgSetting.setPkg(parsedPackage)
+        pkgSetting
+                .setPkg(parsedPackage)
                 .setFlags(PackageInfoUtils.appInfoFlags(parsedPackage, pkgSetting))
-                .setPrivateFlags(PackageInfoUtils.appInfoPrivateFlags(parsedPackage, pkgSetting));
+                .setPrivateFlags(PackageInfoUtils.appInfoPrivateFlags(parsedPackage, pkgSetting))
+                .setPrivateFlagsExt(
+                        PackageInfoUtils.appInfoPrivateFlagsExt(parsedPackage, pkgSetting, userId));
         if (parsedPackage.getLongVersionCode() != pkgSetting.getVersionCode()) {
             pkgSetting.setLongVersionCode(parsedPackage.getLongVersionCode());
         }

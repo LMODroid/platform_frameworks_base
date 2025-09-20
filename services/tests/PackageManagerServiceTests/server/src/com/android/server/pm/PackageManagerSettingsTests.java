@@ -1392,16 +1392,19 @@ public class PackageManagerSettingsTests {
 
     @Test
     public void testPackageStateCopy01() {
-        final PackageSetting origPkgSetting01 = new PackageSetting(
-                PACKAGE_NAME,
-                REAL_PACKAGE_NAME,
-                INITIAL_CODE_PATH /*codePath*/,
-                ApplicationInfo.FLAG_SYSTEM|ApplicationInfo.FLAG_HAS_CODE,
-                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED|ApplicationInfo.PRIVATE_FLAG_HIDDEN,
-                UUID.randomUUID())
-                .setPrimaryCpuAbi("x86_64")
-                .setSecondaryCpuAbi("x86")
-                .setLongVersionCode(INITIAL_VERSION_CODE);
+        final PackageSetting origPkgSetting01 =
+                new PackageSetting(
+                                PACKAGE_NAME,
+                                REAL_PACKAGE_NAME,
+                                INITIAL_CODE_PATH /*codePath*/,
+                                ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_HAS_CODE,
+                                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED
+                                        | ApplicationInfo.PRIVATE_FLAG_HIDDEN,
+                                0 /* pkgPrivateFlagsExt */,
+                                UUID.randomUUID())
+                        .setPrimaryCpuAbi("x86_64")
+                        .setSecondaryCpuAbi("x86")
+                        .setLongVersionCode(INITIAL_VERSION_CODE);
         origPkgSetting01.setPkg(mockAndroidPackage(origPkgSetting01));
         final PackageSetting testPkgSetting01 = new PackageSetting(origPkgSetting01);
         verifySettingCopy(origPkgSetting01, testPkgSetting01);
@@ -1409,20 +1412,43 @@ public class PackageManagerSettingsTests {
 
     @Test
     public void testPackageStateCopy02() {
-        final PackageSetting origPkgSetting01 = new PackageSetting(
-                PACKAGE_NAME,
-                REAL_PACKAGE_NAME,
-                INITIAL_CODE_PATH /*codePath*/,
-                ApplicationInfo.FLAG_SYSTEM|ApplicationInfo.FLAG_HAS_CODE,
-                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED|ApplicationInfo.PRIVATE_FLAG_HIDDEN,
-                UUID.randomUUID())
-                .setPrimaryCpuAbi("x86_64")
-                .setSecondaryCpuAbi("x86")
-                .setLongVersionCode(INITIAL_VERSION_CODE);
-        origPkgSetting01.setUserState(0, 100, 100, 1, true, false, false, false, 0, null, false,
-                false, "lastDisabledCaller", new ArraySet<>(new String[]{"enabledComponent1"}),
-                new ArraySet<>(new String[]{"disabledComponent1"}), 0, 0, "harmfulAppWarning",
-                "splashScreenTheme", 1000L, PackageManager.USER_MIN_ASPECT_RATIO_UNSET, null);
+        final PackageSetting origPkgSetting01 =
+                new PackageSetting(
+                                PACKAGE_NAME,
+                                REAL_PACKAGE_NAME,
+                                INITIAL_CODE_PATH /*codePath*/,
+                                ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_HAS_CODE,
+                                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED
+                                        | ApplicationInfo.PRIVATE_FLAG_HIDDEN,
+                                0 /* pkgPrivateFlagsExt */,
+                                UUID.randomUUID())
+                        .setPrimaryCpuAbi("x86_64")
+                        .setSecondaryCpuAbi("x86")
+                        .setLongVersionCode(INITIAL_VERSION_CODE);
+        origPkgSetting01.setUserState(
+                0,
+                100,
+                100,
+                1,
+                true,
+                false,
+                false,
+                false,
+                0,
+                null,
+                false,
+                false,
+                "lastDisabledCaller",
+                new ArraySet<>(new String[] {"enabledComponent1"}),
+                new ArraySet<>(new String[] {"disabledComponent1"}),
+                0,
+                0,
+                "harmfulAppWarning",
+                "splashScreenTheme",
+                1000L,
+                PackageManager.USER_MIN_ASPECT_RATIO_UNSET,
+                null,
+                false);
         final PersistableBundle appExtras1 = createPersistableBundle(
                 PACKAGE_NAME_1, 1L, 0.01, true, "appString1");
         final PersistableBundle launcherExtras1 = createPersistableBundle(
@@ -1438,14 +1464,16 @@ public class PackageManagerSettingsTests {
                 UserPackage.of(0, "suspendingPackage1"),
                 new SuspendParams(dialogInfo1, appExtras1, launcherExtras1));
         origPkgSetting01.setPkg(mockAndroidPackage(origPkgSetting01));
-        final PackageSetting testPkgSetting01 = new PackageSetting(
-                PACKAGE_NAME /*pkgName*/,
-                REAL_PACKAGE_NAME /*realPkgName*/,
-                UPDATED_CODE_PATH /*codePath*/,
-                0 /*pkgFlags*/,
-                0 /*pkgPrivateFlags*/,
-                UUID.randomUUID())
-                .setLongVersionCode(UPDATED_VERSION_CODE);
+        final PackageSetting testPkgSetting01 =
+                new PackageSetting(
+                                PACKAGE_NAME /*pkgName*/,
+                                REAL_PACKAGE_NAME /*realPkgName*/,
+                                UPDATED_CODE_PATH /*codePath*/,
+                                0 /*pkgFlags*/,
+                                0 /*pkgPrivateFlags*/,
+                                0 /* pkgPrivateFlagsExt */,
+                                UUID.randomUUID())
+                        .setLongVersionCode(UPDATED_VERSION_CODE);
         testPkgSetting01.copyPackageSetting(origPkgSetting01, true);
         verifySettingCopy(origPkgSetting01, testPkgSetting01);
         verifyUserStatesCopy(origPkgSetting01.readUserState(0),
@@ -1462,6 +1490,7 @@ public class PackageManagerSettingsTests {
         testPkgSetting01.setInstalled(false /*installed*/, 0 /*userId*/);
         assertThat(testPkgSetting01.getFlags(), is(0));
         assertThat(testPkgSetting01.getPrivateFlags(), is(0));
+        assertThat(testPkgSetting01.getPrivateFlagsExt(), is(0));
         final PackageSetting oldPkgSetting01 = new PackageSetting(testPkgSetting01);
         Settings.updatePackageSetting(
                 testPkgSetting01,
@@ -1474,6 +1503,7 @@ public class PackageManagerSettingsTests {
                 "armeabi" /*secondaryCpuAbi*/,
                 0 /*pkgFlags*/,
                 0 /*pkgPrivateFlags*/,
+                0 /*pkgPrivateFlagsExt*/,
                 UserManagerService.getInstance(),
                 null /*usesSdkLibraries*/,
                 null /*usesSdkLibrariesVersions*/,
@@ -1493,6 +1523,7 @@ public class PackageManagerSettingsTests {
         assertThat(testPkgSetting01.getPrivateFlags(), is(0));
         assertThat(testPkgSetting01.getPath(), is(UPDATED_CODE_PATH));
         assertNull(testPkgSetting01.getOldPaths());
+        assertThat(testPkgSetting01.getPrivateFlagsExt(), is(0));
         final PackageUserState userState = testPkgSetting01.readUserState(0);
         verifyUserState(userState, false /*notLaunched*/,
                 false /*stopped*/, false /*installed*/);
@@ -1506,6 +1537,7 @@ public class PackageManagerSettingsTests {
         testPkgSetting01.setInstalled(false /*installed*/, 0 /*userId*/);
         assertThat(testPkgSetting01.getFlags(), is(0));
         assertThat(testPkgSetting01.getPrivateFlags(), is(0));
+        assertThat(testPkgSetting01.getPrivateFlagsExt(), is(0));
         final PackageSetting oldPkgSetting01 = new PackageSetting(testPkgSetting01);
         Settings.updatePackageSetting(
                 testPkgSetting01,
@@ -1518,6 +1550,7 @@ public class PackageManagerSettingsTests {
                 "armeabi" /*secondaryCpuAbi*/,
                 ApplicationInfo.FLAG_SYSTEM /*pkgFlags*/,
                 ApplicationInfo.PRIVATE_FLAG_PRIVILEGED /*pkgPrivateFlags*/,
+                0 /*pkgPrivateFlagsExt*/,
                 UserManagerService.getInstance(),
                 null /*usesSdkLibraries*/,
                 null /*usesSdkLibrariesVersions*/,
@@ -1536,6 +1569,7 @@ public class PackageManagerSettingsTests {
         assertThat(testPkgSetting01.getFlags(), is(ApplicationInfo.FLAG_SYSTEM));
         assertThat(testPkgSetting01.isSystem(), is(true));
         assertThat(testPkgSetting01.getPrivateFlags(), is(ApplicationInfo.PRIVATE_FLAG_PRIVILEGED));
+        assertThat(testPkgSetting01.getPrivateFlagsExt(), is(0));
         assertThat(testPkgSetting01.isPrivileged(), is(true));
         final PackageUserState userState = testPkgSetting01.readUserState(0);
         verifyUserState(userState,  false /*notLaunched*/,
@@ -1562,6 +1596,7 @@ public class PackageManagerSettingsTests {
                 "armeabi" /*secondaryCpuAbi*/,
                 ApplicationInfo.FLAG_SYSTEM /*pkgFlags*/,
                 ApplicationInfo.PRIVATE_FLAG_PRIVILEGED /*pkgPrivateFlags*/,
+                0 /*pkgPrivateFlagsExt*/,
                 UserManagerService.getInstance(),
                 null /*usesSdkLibraries*/,
                 null /*usesSdkLibrariesVersions*/,
@@ -1587,6 +1622,7 @@ public class PackageManagerSettingsTests {
                 "armeabi" /*secondaryCpuAbi*/,
                 ApplicationInfo.FLAG_SYSTEM /*pkgFlags*/,
                 ApplicationInfo.PRIVATE_FLAG_PRIVILEGED /*pkgPrivateFlags*/,
+                0 /*pkgPrivateFlagsExt*/,
                 UserManagerService.getInstance(),
                 null /*usesSdkLibraries*/,
                 null /*usesSdkLibrariesVersions*/,
@@ -1614,8 +1650,14 @@ public class PackageManagerSettingsTests {
     @Test
     public void testUpdatePackageSetting03() {
         Settings settings = makeSettings();
-        final SharedUserSetting testUserSetting01 = createSharedUserSetting(
-                settings, "TestUser", 10064, 0 /*pkgFlags*/, 0 /*pkgPrivateFlags*/);
+        final SharedUserSetting testUserSetting01 =
+                createSharedUserSetting(
+                        settings,
+                        "TestUser",
+                        10064,
+                        0 /*pkgFlags*/,
+                        0 /*pkgPrivateFlags*/,
+                        0 /*pkgPrivateFlagsExt*/);
         final PackageSetting testPkgSetting01 =
                 createPackageSetting(0 /*sharedUserId*/, 0 /*pkgFlags*/);
         try {
@@ -1630,6 +1672,7 @@ public class PackageManagerSettingsTests {
                     "armeabi" /*secondaryCpuAbi*/,
                     0 /*pkgFlags*/,
                     0 /*pkgPrivateFlags*/,
+                    0 /*pkgPrivateFlagsExt*/,
                     UserManagerService.getInstance(),
                     null /*usesSdkLibraries*/,
                     null /*usesSdkLibrariesVersions*/,
@@ -1652,39 +1695,42 @@ public class PackageManagerSettingsTests {
         final PackageSetting originalPkgSetting01 =
                 createPackageSetting(0 /*sharedUserId*/, 0 /*pkgFlags*/);
         final PackageSignatures originalSignatures = originalPkgSetting01.getSignatures();
-        final PackageSetting testPkgSetting01 = Settings.createNewSetting(
-                REAL_PACKAGE_NAME,
-                originalPkgSetting01 /*originalPkg*/,
-                null /*disabledPkg*/,
-                null /*realPkgName*/,
-                null /*sharedUser*/,
-                UPDATED_CODE_PATH /*codePath*/,
-                null /*legacyNativeLibraryPath*/,
-                "arm64-v8a" /*primaryCpuAbi*/,
-                "armeabi" /*secondaryCpuAbi*/,
-                UPDATED_VERSION_CODE /*versionCode*/,
-                ApplicationInfo.FLAG_SYSTEM /*pkgFlags*/,
-                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED /*pkgPrivateFlags*/,
-                null /*installUser*/,
-                false /*allowInstall*/,
-                false /*instantApp*/,
-                false /*virtualPreload*/,
-                false /* stopped */,
-                UserManagerService.getInstance(),
-                null /*usesSdkLibraries*/,
-                null /*usesSdkLibrariesVersions*/,
-                null /*usesSdkLibrariesOptional*/,
-                null /*usesStaticLibraries*/,
-                null /*usesStaticLibrariesVersions*/,
-                null /*mimeGroups*/,
-                UUID.randomUUID(),
-                34 /*targetSdkVersion*/,
-                null /*restrictUpdateHash*/);
+        final PackageSetting testPkgSetting01 =
+                Settings.createNewSetting(
+                        REAL_PACKAGE_NAME,
+                        originalPkgSetting01 /*originalPkg*/,
+                        null /*disabledPkg*/,
+                        null /*realPkgName*/,
+                        null /*sharedUser*/,
+                        UPDATED_CODE_PATH /*codePath*/,
+                        null /*legacyNativeLibraryPath*/,
+                        "arm64-v8a" /*primaryCpuAbi*/,
+                        "armeabi" /*secondaryCpuAbi*/,
+                        UPDATED_VERSION_CODE /*versionCode*/,
+                        ApplicationInfo.FLAG_SYSTEM /*pkgFlags*/,
+                        ApplicationInfo.PRIVATE_FLAG_PRIVILEGED /*pkgPrivateFlags*/,
+                        0 /*pkgPrivateFlagsExt*/,
+                        null /*installUser*/,
+                        false /*allowInstall*/,
+                        false /*instantApp*/,
+                        false /*virtualPreload*/,
+                        false /* stopped */,
+                        UserManagerService.getInstance(),
+                        null /*usesSdkLibraries*/,
+                        null /*usesSdkLibrariesVersions*/,
+                        null /*usesSdkLibrariesOptional*/,
+                        null /*usesStaticLibraries*/,
+                        null /*usesStaticLibrariesVersions*/,
+                        null /*mimeGroups*/,
+                        UUID.randomUUID(),
+                        34 /*targetSdkVersion*/,
+                        null /*restrictUpdateHash*/);
         assertThat(testPkgSetting01.getPath(), is(UPDATED_CODE_PATH));
         assertThat(testPkgSetting01.getPackageName(), is(PACKAGE_NAME));
         assertThat(testPkgSetting01.getFlags(), is(ApplicationInfo.FLAG_SYSTEM));
         assertThat(testPkgSetting01.isSystem(), is(true));
         assertThat(testPkgSetting01.getPrivateFlags(), is(ApplicationInfo.PRIVATE_FLAG_PRIVILEGED));
+        assertThat(testPkgSetting01.getPrivateFlagsExt(), is(0));
         assertThat(testPkgSetting01.isPrivileged(), is(true));
         assertThat(testPkgSetting01.getPrimaryCpuAbi(), is("arm64-v8a"));
         assertThat(testPkgSetting01.getPrimaryCpuAbiLegacy(), is("arm64-v8a"));
@@ -1700,39 +1746,42 @@ public class PackageManagerSettingsTests {
     /** Create a new non-system PackageSetting */
     @Test
     public void testCreateNewSetting02() {
-        final PackageSetting testPkgSetting01 = Settings.createNewSetting(
-                PACKAGE_NAME,
-                null /*originalPkg*/,
-                null /*disabledPkg*/,
-                null /*realPkgName*/,
-                null /*sharedUser*/,
-                INITIAL_CODE_PATH /*codePath*/,
-                null /*legacyNativeLibraryPath*/,
-                "x86_64" /*primaryCpuAbiString*/,
-                "x86" /*secondaryCpuAbiString*/,
-                INITIAL_VERSION_CODE /*versionCode*/,
-                0 /*pkgFlags*/,
-                0 /*pkgPrivateFlags*/,
-                UserHandle.SYSTEM /*installUser*/,
-                true /*allowInstall*/,
-                false /*instantApp*/,
-                false /*virtualPreload*/,
-                false /* stopped */,
-                UserManagerService.getInstance(),
-                null /*usesSdkLibraries*/,
-                null /*usesSdkLibrariesVersions*/,
-                null /*usesSdkLibrariesOptional*/,
-                null /*usesStaticLibraries*/,
-                null /*usesStaticLibrariesVersions*/,
-                null /*mimeGroups*/,
-                UUID.randomUUID(),
-                34 /*targetSdkVersion*/,
-                null /*restrictUpdateHash*/);
+        final PackageSetting testPkgSetting01 =
+                Settings.createNewSetting(
+                        PACKAGE_NAME,
+                        null /*originalPkg*/,
+                        null /*disabledPkg*/,
+                        null /*realPkgName*/,
+                        null /*sharedUser*/,
+                        INITIAL_CODE_PATH /*codePath*/,
+                        null /*legacyNativeLibraryPath*/,
+                        "x86_64" /*primaryCpuAbiString*/,
+                        "x86" /*secondaryCpuAbiString*/,
+                        INITIAL_VERSION_CODE /*versionCode*/,
+                        0 /*pkgFlags*/,
+                        0 /*pkgPrivateFlags*/,
+                        0 /*pkgPrivateFlagsExt*/,
+                        UserHandle.SYSTEM /*installUser*/,
+                        true /*allowInstall*/,
+                        false /*instantApp*/,
+                        false /*virtualPreload*/,
+                        false /* stopped */,
+                        UserManagerService.getInstance(),
+                        null /*usesSdkLibraries*/,
+                        null /*usesSdkLibrariesVersions*/,
+                        null /*usesSdkLibrariesOptional*/,
+                        null /*usesStaticLibraries*/,
+                        null /*usesStaticLibrariesVersions*/,
+                        null /*mimeGroups*/,
+                        UUID.randomUUID(),
+                        34 /*targetSdkVersion*/,
+                        null /*restrictUpdateHash*/);
         assertThat(testPkgSetting01.getAppId(), is(0));
         assertThat(testPkgSetting01.getPath(), is(INITIAL_CODE_PATH));
         assertThat(testPkgSetting01.getPackageName(), is(PACKAGE_NAME));
         assertThat(testPkgSetting01.getFlags(), is(0));
         assertThat(testPkgSetting01.getPrivateFlags(), is(0));
+        assertThat(testPkgSetting01.getPrivateFlagsExt(), is(0));
         assertThat(testPkgSetting01.getPrimaryCpuAbi(), is("x86_64"));
         assertThat(testPkgSetting01.getPrimaryCpuAbiLegacy(), is("x86_64"));
         assertThat(testPkgSetting01.getSecondaryCpuAbiLegacy(), is("x86"));
@@ -1746,41 +1795,50 @@ public class PackageManagerSettingsTests {
     @Test
     public void testCreateNewSetting03() {
         Settings settings = makeSettings();
-        final SharedUserSetting testUserSetting01 = createSharedUserSetting(
-                settings, "TestUser", 10064, 0 /*pkgFlags*/, 0 /*pkgPrivateFlags*/);
-        final PackageSetting testPkgSetting01 = Settings.createNewSetting(
-                PACKAGE_NAME,
-                null /*originalPkg*/,
-                null /*disabledPkg*/,
-                null /*realPkgName*/,
-                testUserSetting01 /*sharedUser*/,
-                INITIAL_CODE_PATH /*codePath*/,
-                null /*legacyNativeLibraryPath*/,
-                "x86_64" /*primaryCpuAbiString*/,
-                "x86" /*secondaryCpuAbiString*/,
-                INITIAL_VERSION_CODE /*versionCode*/,
-                0 /*pkgFlags*/,
-                0 /*pkgPrivateFlags*/,
-                null /*installUser*/,
-                false /*allowInstall*/,
-                false /*instantApp*/,
-                false /*virtualPreload*/,
-                false /* stopped */,
-                UserManagerService.getInstance(),
-                null /*usesSdkLibraries*/,
-                null /*usesSdkLibrariesVersions*/,
-                null /*usesStaticLibraries*/,
-                null /*usesStaticLibrariesVersions*/,
-                null /*usesSdkLibrariesOptional*/,
-                null /*mimeGroups*/,
-                UUID.randomUUID(),
-                34 /*targetSdkVersion*/,
-                null /*restrictUpdateHash*/);
+        final SharedUserSetting testUserSetting01 =
+                createSharedUserSetting(
+                        settings,
+                        "TestUser",
+                        10064,
+                        0 /*pkgFlags*/,
+                        0 /*pkgPrivateFlags*/,
+                        0 /*pkgPrivateFlagsExt*/);
+        final PackageSetting testPkgSetting01 =
+                Settings.createNewSetting(
+                        PACKAGE_NAME,
+                        null /*originalPkg*/,
+                        null /*disabledPkg*/,
+                        null /*realPkgName*/,
+                        testUserSetting01 /*sharedUser*/,
+                        INITIAL_CODE_PATH /*codePath*/,
+                        null /*legacyNativeLibraryPath*/,
+                        "x86_64" /*primaryCpuAbiString*/,
+                        "x86" /*secondaryCpuAbiString*/,
+                        INITIAL_VERSION_CODE /*versionCode*/,
+                        0 /*pkgFlags*/,
+                        0 /*pkgPrivateFlags*/,
+                        0 /*pkgPrivateFlagsExt*/,
+                        null /*installUser*/,
+                        false /*allowInstall*/,
+                        false /*instantApp*/,
+                        false /*virtualPreload*/,
+                        false /* stopped */,
+                        UserManagerService.getInstance(),
+                        null /*usesSdkLibraries*/,
+                        null /*usesSdkLibrariesVersions*/,
+                        null /*usesStaticLibraries*/,
+                        null /*usesStaticLibrariesVersions*/,
+                        null /*usesSdkLibrariesOptional*/,
+                        null /*mimeGroups*/,
+                        UUID.randomUUID(),
+                        34 /*targetSdkVersion*/,
+                        null /*restrictUpdateHash*/);
         assertThat(testPkgSetting01.getAppId(), is(10064));
         assertThat(testPkgSetting01.getPath(), is(INITIAL_CODE_PATH));
         assertThat(testPkgSetting01.getPackageName(), is(PACKAGE_NAME));
         assertThat(testPkgSetting01.getFlags(), is(0));
         assertThat(testPkgSetting01.getPrivateFlags(), is(0));
+        assertThat(testPkgSetting01.getPrivateFlagsExt(), is(0));
         assertThat(testPkgSetting01.getPrimaryCpuAbi(), is("x86_64"));
         assertThat(testPkgSetting01.getPrimaryCpuAbiLegacy(), is("x86_64"));
         assertThat(testPkgSetting01.getSecondaryCpuAbi(), is("x86"));
@@ -1797,39 +1855,42 @@ public class PackageManagerSettingsTests {
                 createPackageSetting(0 /*sharedUserId*/, 0 /*pkgFlags*/);
         disabledPkgSetting01.setAppId(10064);
         final PackageSignatures disabledSignatures = disabledPkgSetting01.getSignatures();
-        final PackageSetting testPkgSetting01 = Settings.createNewSetting(
-                PACKAGE_NAME,
-                null /*originalPkg*/,
-                disabledPkgSetting01 /*disabledPkg*/,
-                null /*realPkgName*/,
-                null /*sharedUser*/,
-                UPDATED_CODE_PATH /*codePath*/,
-                null /*legacyNativeLibraryPath*/,
-                "arm64-v8a" /*primaryCpuAbi*/,
-                "armeabi" /*secondaryCpuAbi*/,
-                UPDATED_VERSION_CODE /*versionCode*/,
-                0 /*pkgFlags*/,
-                0 /*pkgPrivateFlags*/,
-                null /*installUser*/,
-                false /*allowInstall*/,
-                false /*instantApp*/,
-                false /*virtualPreload*/,
-                false /* stopped */,
-                UserManagerService.getInstance(),
-                null /*usesSdkLibraries*/,
-                null /*usesSdkLibrariesVersions*/,
-                null /*usesStaticLibraries*/,
-                null /*usesStaticLibrariesVersions*/,
-                null /*usesSdkLibrariesOptional*/,
-                null /*mimeGroups*/,
-                UUID.randomUUID(),
-                34 /*targetSdkVersion*/,
-                null /*restrictUpdateHash*/);
+        final PackageSetting testPkgSetting01 =
+                Settings.createNewSetting(
+                        PACKAGE_NAME,
+                        null /*originalPkg*/,
+                        disabledPkgSetting01 /*disabledPkg*/,
+                        null /*realPkgName*/,
+                        null /*sharedUser*/,
+                        UPDATED_CODE_PATH /*codePath*/,
+                        null /*legacyNativeLibraryPath*/,
+                        "arm64-v8a" /*primaryCpuAbi*/,
+                        "armeabi" /*secondaryCpuAbi*/,
+                        UPDATED_VERSION_CODE /*versionCode*/,
+                        0 /*pkgFlags*/,
+                        0 /*pkgPrivateFlags*/,
+                        0 /*pkgPrivateFlagsExt*/,
+                        null /*installUser*/,
+                        false /*allowInstall*/,
+                        false /*instantApp*/,
+                        false /*virtualPreload*/,
+                        false /* stopped */,
+                        UserManagerService.getInstance(),
+                        null /*usesSdkLibraries*/,
+                        null /*usesSdkLibrariesVersions*/,
+                        null /*usesStaticLibraries*/,
+                        null /*usesStaticLibrariesVersions*/,
+                        null /*usesSdkLibrariesOptional*/,
+                        null /*mimeGroups*/,
+                        UUID.randomUUID(),
+                        34 /*targetSdkVersion*/,
+                        null /*restrictUpdateHash*/);
         assertThat(testPkgSetting01.getAppId(), is(10064));
         assertThat(testPkgSetting01.getPath(), is(UPDATED_CODE_PATH));
         assertThat(testPkgSetting01.getPackageName(), is(PACKAGE_NAME));
         assertThat(testPkgSetting01.getFlags(), is(0));
         assertThat(testPkgSetting01.getPrivateFlags(), is(0));
+        assertThat(testPkgSetting01.getPrivateFlagsExt(), is(0));
         assertThat(testPkgSetting01.getPrimaryCpuAbi(), is("arm64-v8a"));
         assertThat(testPkgSetting01.getPrimaryCpuAbiLegacy(), is("arm64-v8a"));
         assertThat(testPkgSetting01.getSecondaryCpuAbi(), is("armeabi"));
@@ -1843,34 +1904,36 @@ public class PackageManagerSettingsTests {
     /** Create a new stopped system PackageSetting */
     @Test
     public void testCreateNewSetting05() {
-        final PackageSetting testPkgSetting01 = Settings.createNewSetting(
-                PACKAGE_NAME,
-                null /*originalPkg*/,
-                null /*disabledPkg*/,
-                null /*realPkgName*/,
-                null /*sharedUser*/,
-                UPDATED_CODE_PATH /*codePath*/,
-                null /*legacyNativeLibraryPath*/,
-                "arm64-v8a" /*primaryCpuAbi*/,
-                "armeabi" /*secondaryCpuAbi*/,
-                UPDATED_VERSION_CODE /*versionCode*/,
-                ApplicationInfo.FLAG_SYSTEM /*pkgFlags*/,
-                0 /*pkgPrivateFlags*/,
-                UserHandle.SYSTEM /*installUser*/,
-                false /*allowInstall*/,
-                false /*instantApp*/,
-                false /*virtualPreload*/,
-                true /* stopped */,
-                UserManagerService.getInstance(),
-                null /*usesSdkLibraries*/,
-                null /*usesSdkLibrariesVersions*/,
-                null /*usesStaticLibraries*/,
-                null /*usesStaticLibrariesVersions*/,
-                null /*usesSdkLibrariesOptional*/,
-                null /*mimeGroups*/,
-                UUID.randomUUID(),
-                34 /*targetSdkVersion*/,
-                null /*restrictUpdateHash*/);
+        final PackageSetting testPkgSetting01 =
+                Settings.createNewSetting(
+                        PACKAGE_NAME,
+                        null /*originalPkg*/,
+                        null /*disabledPkg*/,
+                        null /*realPkgName*/,
+                        null /*sharedUser*/,
+                        UPDATED_CODE_PATH /*codePath*/,
+                        null /*legacyNativeLibraryPath*/,
+                        "arm64-v8a" /*primaryCpuAbi*/,
+                        "armeabi" /*secondaryCpuAbi*/,
+                        UPDATED_VERSION_CODE /*versionCode*/,
+                        ApplicationInfo.FLAG_SYSTEM /*pkgFlags*/,
+                        0 /*pkgPrivateFlags*/,
+                        0 /*pkgPrivateFlagsExt*/,
+                        UserHandle.SYSTEM /*installUser*/,
+                        false /*allowInstall*/,
+                        false /*instantApp*/,
+                        false /*virtualPreload*/,
+                        true /* stopped */,
+                        UserManagerService.getInstance(),
+                        null /*usesSdkLibraries*/,
+                        null /*usesSdkLibrariesVersions*/,
+                        null /*usesStaticLibraries*/,
+                        null /*usesStaticLibrariesVersions*/,
+                        null /*usesSdkLibrariesOptional*/,
+                        null /*mimeGroups*/,
+                        UUID.randomUUID(),
+                        34 /*targetSdkVersion*/,
+                        null /*restrictUpdateHash*/);
         assertThat(testPkgSetting01.getAppId(), is(0));
         assertThat(testPkgSetting01.getPath(), is(UPDATED_CODE_PATH));
         assertThat(testPkgSetting01.getPackageName(), is(PACKAGE_NAME));
@@ -2036,8 +2099,12 @@ public class PackageManagerSettingsTests {
     @Test
     public void testAddPackageSetting() throws PackageManagerException {
         final Settings settings = makeSettings();
-        final SharedUserSetting sus1 = new SharedUserSetting(
-                "TestUser", 0 /*pkgFlags*/, 0 /*pkgPrivateFlags*/);
+        final SharedUserSetting sus1 =
+                new SharedUserSetting(
+                        "TestUser",
+                        0 /*pkgFlags*/,
+                        0 /*pkgPrivateFlags*/,
+                        0 /*pkgPrivateFlagsExt*/);
         sus1.mAppId = 10001;
         final PackageSetting ps1 = createPackageSetting("com.foo");
         ps1.setAppId(10001);
@@ -2161,6 +2228,7 @@ public class PackageManagerSettingsTests {
         // assertThat(origPkgSetting.pkg, is(testPkgSetting.pkg));
         assertThat(origPkgSetting.getFlags(), is(testPkgSetting.getFlags()));
         assertThat(origPkgSetting.getPrivateFlags(), is(testPkgSetting.getPrivateFlags()));
+        assertThat(origPkgSetting.getPrivateFlagsExt(), is(testPkgSetting.getPrivateFlagsExt()));
         assertSame(origPkgSetting.getPrimaryCpuAbi(), testPkgSetting.getPrimaryCpuAbi());
         assertThat(origPkgSetting.getPrimaryCpuAbi(), is(testPkgSetting.getPrimaryCpuAbi()));
         assertSame(origPkgSetting.getPrimaryCpuAbiLegacy(), testPkgSetting.getPrimaryCpuAbiLegacy());
@@ -2238,22 +2306,25 @@ public class PackageManagerSettingsTests {
                 && userState.getMinAspectRatio() == oldUserState.getMinAspectRatio();
     }
 
-    private SharedUserSetting createSharedUserSetting(Settings settings, String userName,
-            int sharedUserId, int pkgFlags, int pkgPrivateFlags) {
+    private SharedUserSetting createSharedUserSetting(
+            Settings settings,
+            String userName,
+            int sharedUserId,
+            int pkgFlags,
+            int pkgPrivateFlags,
+            int pkgPrivateFlagsExt) {
         return settings.addSharedUserLPw(
-                userName,
-                sharedUserId,
-                pkgFlags,
-                pkgPrivateFlags);
+                userName, sharedUserId, pkgFlags, pkgPrivateFlags, pkgPrivateFlagsExt);
     }
     private PackageSetting createPackageSetting(int sharedUserId, int pkgFlags) {
         return new PackageSetting(
-                PACKAGE_NAME,
-                REAL_PACKAGE_NAME,
-                INITIAL_CODE_PATH /*codePath*/,
-                pkgFlags,
-                0 /*privateFlags*/,
-                UUID.randomUUID())
+                        PACKAGE_NAME,
+                        REAL_PACKAGE_NAME,
+                        INITIAL_CODE_PATH /*codePath*/,
+                        pkgFlags,
+                        0 /*privateFlags*/,
+                        0 /* pkgPrivateFlagsExt */,
+                        UUID.randomUUID())
                 .setPrimaryCpuAbi("x86_64")
                 .setSecondaryCpuAbi("x86")
                 .setLongVersionCode(INITIAL_VERSION_CODE)
@@ -2262,12 +2333,13 @@ public class PackageManagerSettingsTests {
 
     private PackageSetting createPackageSetting(String packageName) {
         return new PackageSetting(
-                packageName,
-                packageName,
-                INITIAL_CODE_PATH /*codePath*/,
-                0,
-                0 /*privateFlags*/,
-                UUID.randomUUID())
+                        packageName,
+                        packageName,
+                        INITIAL_CODE_PATH /*codePath*/,
+                        0,
+                        0 /*privateFlags*/,
+                        0 /* pkgPrivateFlagsExt */,
+                        UUID.randomUUID())
                 .setPrimaryCpuAbi("x86_64")
                 .setSecondaryCpuAbi("x86")
                 .setLongVersionCode(INITIAL_VERSION_CODE);
@@ -2292,82 +2364,95 @@ public class PackageManagerSettingsTests {
     }
 
     private void writeCorruptedPackagesXml() {
-        writeFile(new File(InstrumentationRegistry.getContext().getFilesDir(), "system/packages.xml"),
+        writeFile(
+                new File(InstrumentationRegistry.getContext().getFilesDir(), "system/packages.xml"),
                 ("<?xml version='1.0' encoding='utf-8' standalone='yes' ?>"
-                        + "<packages>"
-                        + "<last-platform-version internal=\"15\" external=\"0\" />"
-                        + "<permission-trees>"
-                        + "<item name=\"com.google.android.permtree\""
-                ).getBytes());
+                                + "<packages>"
+                                + "<last-platform-version internal=\"15\" external=\"0\" />"
+                                + "<permission-trees>"
+                                + "<item name=\"com.google.android.permtree\"")
+                        .getBytes());
     }
 
     static void writePackagesXml(String fileName) {
-        writeFile(new File(InstrumentationRegistry.getContext().getFilesDir(), fileName),
+        writeFile(
+                new File(InstrumentationRegistry.getContext().getFilesDir(), fileName),
                 ("<?xml version='1.0' encoding='utf-8' standalone='yes' ?>"
-                + "<packages>"
-                + "<last-platform-version internal=\"15\" external=\"0\" fingerprint=\"foo\" />"
-                + "<permission-trees>"
-                + "<item name=\"com.google.android.permtree\" package=\"com.google.android.permpackage\" />"
-                + "</permission-trees>"
-                + "<permissions>"
-                + "<item name=\"android.permission.WRITE_CALL_LOG\" package=\"android\" protection=\"1\" />"
-                + "<item name=\"android.permission.ASEC_ACCESS\" package=\"android\" protection=\"2\" />"
-                + "<item name=\"android.permission.REBOOT\" package=\"android\" protection=\"18\" />"
-                + "</permissions>"
-                + "<package name=\"com.android.app1\" codePath=\"/system/app/app1.apk\" nativeLibraryPath=\"/data/data/com.android.app1/lib\" flags=\"1\" ft=\"1360e2caa70\" it=\"135f2f80d08\" ut=\"1360e2caa70\" version=\"1109\" sharedUserId=\"11000\">"
-                + "<sigs count=\"1\">"
-                + "<cert index=\"0\" key=\"" + KeySetStrings.ctsKeySetCertA + "\" />"
-                + "</sigs>"
-                + "<proper-signing-keyset identifier=\"1\" />"
-                + "</package>"
-                + "<package name=\"com.android.app2\" codePath=\"/system/app/app2.apk\" nativeLibraryPath=\"/data/data/com.android.app2/lib\" flags=\"1\" ft=\"1360e578718\" it=\"135f2f80d08\" ut=\"1360e578718\" version=\"15\" enabled=\"3\" userId=\"11001\">"
-                + "<sigs count=\"1\">"
-                + "<cert index=\"0\" />"
-                + "</sigs>"
-                + "<proper-signing-keyset identifier=\"1\" />"
-                + "<defined-keyset alias=\"AB\" identifier=\"4\" />"
-                + "</package>"
-                + "<package name=\"com.android.app3\" codePath=\"/system/app/app3.apk\" nativeLibraryPath=\"/data/data/com.android.app3/lib\" flags=\"1\" ft=\"1360e577b60\" it=\"135f2f80d08\" ut=\"1360e577b60\" version=\"15\" userId=\"11030\">"
-                + "<sigs count=\"1\">"
-                + "<cert index=\"1\" key=\"" + KeySetStrings.ctsKeySetCertB + "\" />"
-                + "</sigs>"
-                + "<proper-signing-keyset identifier=\"2\" />"
-                + "<upgrade-keyset identifier=\"3\" />"
-                + "<defined-keyset alias=\"C\" identifier=\"3\" />"
-                + "</package>"
-                + "<shared-user name=\"com.android.shared1\" userId=\"11000\">"
-                + "<sigs count=\"1\">"
-                + "<cert index=\"1\" />"
-                + "</sigs>"
-                + "<perms>"
-                + "<item name=\"android.permission.REBOOT\" />"
-                + "</perms>"
-                + "</shared-user>"
-                + "<keyset-settings version=\"1\">"
-                + "<keys>"
-                + "<public-key identifier=\"1\" value=\"" + KeySetStrings.ctsKeySetPublicKeyA + "\" />"
-                + "<public-key identifier=\"2\" value=\"" + KeySetStrings.ctsKeySetPublicKeyB + "\" />"
-                + "<public-key identifier=\"3\" value=\"" + KeySetStrings.ctsKeySetPublicKeyC + "\" />"
-                + "</keys>"
-                + "<keysets>"
-                + "<keyset identifier=\"1\">"
-                + "<key-id identifier=\"1\" />"
-                + "</keyset>"
-                + "<keyset identifier=\"2\">"
-                + "<key-id identifier=\"2\" />"
-                + "</keyset>"
-                + "<keyset identifier=\"3\">"
-                + "<key-id identifier=\"3\" />"
-                + "</keyset>"
-                + "<keyset identifier=\"4\">"
-                + "<key-id identifier=\"1\" />"
-                + "<key-id identifier=\"2\" />"
-                + "</keyset>"
-                + "</keysets>"
-                + "<lastIssuedKeyId value=\"3\" />"
-                + "<lastIssuedKeySetId value=\"4\" />"
-                + "</keyset-settings>"
-                + "</packages>").getBytes());
+                     + "<packages><last-platform-version internal=\"15\" external=\"0\""
+                     + " fingerprint=\"foo\" /><permission-trees><item"
+                     + " name=\"com.google.android.permtree\""
+                     + " package=\"com.google.android.permpackage\" /></permission-trees>"
+                     + "<permissions><item name=\"android.permission.WRITE_CALL_LOG\""
+                     + " package=\"android\" protection=\"1\" /><item"
+                     + " name=\"android.permission.ASEC_ACCESS\" package=\"android\""
+                     + " protection=\"2\" /><item name=\"android.permission.REBOOT\""
+                     + " package=\"android\" protection=\"18\" /></permissions><package"
+                     + " name=\"com.android.app1\" codePath=\"/system/app/app1.apk\""
+                     + " nativeLibraryPath=\"/data/data/com.android.app1/lib\" flags=\"1\""
+                     + " ft=\"1360e2caa70\" it=\"135f2f80d08\" ut=\"1360e2caa70\" version=\"1109\""
+                     + " sharedUserId=\"11000\"><sigs count=\"1\"><cert index=\"0\" key=\""
+                                + KeySetStrings.ctsKeySetCertA
+                                + "\" /></sigs><proper-signing-keyset identifier=\"1\" />"
+                                + "</package><package name=\"com.android.app2\""
+                                + " codePath=\"/system/app/app2.apk\""
+                                + " nativeLibraryPath=\"/data/data/com.android.app2/lib\""
+                                + " flags=\"1\" ft=\"1360e578718\" it=\"135f2f80d08\""
+                                + " ut=\"1360e578718\" version=\"15\" enabled=\"3\""
+                                + " userId=\"11001\"><sigs count=\"1\"><cert index=\"0\" />"
+                                + "</sigs><proper-signing-keyset identifier=\"1\" /><defined-keyset"
+                                + " alias=\"AB\" identifier=\"4\" /></package><package"
+                                + " name=\"com.android.app3\" codePath=\"/system/app/app3.apk\""
+                                + " nativeLibraryPath=\"/data/data/com.android.app3/lib\""
+                                + " flags=\"1\" ft=\"1360e577b60\" it=\"135f2f80d08\""
+                                + " ut=\"1360e577b60\" version=\"15\" userId=\"11030\"><sigs"
+                                + " count=\"1\"><cert index=\"1\" key=\""
+                                + KeySetStrings.ctsKeySetCertB
+                                + "\" />"
+                                + "</sigs>"
+                                + "<proper-signing-keyset identifier=\"2\" />"
+                                + "<upgrade-keyset identifier=\"3\" />"
+                                + "<defined-keyset alias=\"C\" identifier=\"3\" />"
+                                + "</package>"
+                                + "<shared-user name=\"com.android.shared1\" userId=\"11000\">"
+                                + "<sigs count=\"1\">"
+                                + "<cert index=\"1\" />"
+                                + "</sigs>"
+                                + "<perms>"
+                                + "<item name=\"android.permission.REBOOT\" />"
+                                + "</perms>"
+                                + "</shared-user>"
+                                + "<keyset-settings version=\"1\">"
+                                + "<keys>"
+                                + "<public-key identifier=\"1\" value=\""
+                                + KeySetStrings.ctsKeySetPublicKeyA
+                                + "\" />"
+                                + "<public-key identifier=\"2\" value=\""
+                                + KeySetStrings.ctsKeySetPublicKeyB
+                                + "\" />"
+                                + "<public-key identifier=\"3\" value=\""
+                                + KeySetStrings.ctsKeySetPublicKeyC
+                                + "\" />"
+                                + "</keys>"
+                                + "<keysets>"
+                                + "<keyset identifier=\"1\">"
+                                + "<key-id identifier=\"1\" />"
+                                + "</keyset>"
+                                + "<keyset identifier=\"2\">"
+                                + "<key-id identifier=\"2\" />"
+                                + "</keyset>"
+                                + "<keyset identifier=\"3\">"
+                                + "<key-id identifier=\"3\" />"
+                                + "</keyset>"
+                                + "<keyset identifier=\"4\">"
+                                + "<key-id identifier=\"1\" />"
+                                + "<key-id identifier=\"2\" />"
+                                + "</keyset>"
+                                + "</keysets>"
+                                + "<lastIssuedKeyId value=\"3\" />"
+                                + "<lastIssuedKeySetId value=\"4\" />"
+                                + "</keyset-settings>"
+                                + "</packages>")
+                        .getBytes());
     }
 
     private void writePackageRestrictions_noSuspendingPackageXml(final int userId) {
@@ -2418,21 +2503,26 @@ public class PackageManagerSettingsTests {
     }
 
     private static void writeStoppedPackagesXml() {
-        writeFile(new File(InstrumentationRegistry.getContext().getFilesDir(), "system/packages-stopped.xml"),
-                ( "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>"
-                + "<stopped-packages>"
-                + "<pkg name=\"com.android.app1\" nl=\"1\" />"
-                + "<pkg name=\"com.android.app3\" nl=\"1\" />"
-                + "</stopped-packages>")
-                .getBytes());
+        writeFile(
+                new File(
+                        InstrumentationRegistry.getContext().getFilesDir(),
+                        "system/packages-stopped.xml"),
+                ("<?xml version='1.0' encoding='utf-8' standalone='yes' ?>"
+                                + "<stopped-packages>"
+                                + "<pkg name=\"com.android.app1\" nl=\"1\" />"
+                                + "<pkg name=\"com.android.app3\" nl=\"1\" />"
+                                + "</stopped-packages>")
+                        .getBytes());
     }
 
     private static void writePackagesList() {
-        writeFile(new File(InstrumentationRegistry.getContext().getFilesDir(), "system/packages.list"),
-                ( "com.android.app1 11000 0 /data/data/com.android.app1 seinfo1"
-                + "com.android.app2 11001 0 /data/data/com.android.app2 seinfo2"
-                + "com.android.app3 11030 0 /data/data/com.android.app3 seinfo3")
-                .getBytes());
+        writeFile(
+                new File(
+                        InstrumentationRegistry.getContext().getFilesDir(), "system/packages.list"),
+                ("com.android.app1 11000 0 /data/data/com.android.app1 seinfo1"
+                                + "com.android.app2 11001 0 /data/data/com.android.app2 seinfo2"
+                                + "com.android.app3 11030 0 /data/data/com.android.app3 seinfo3")
+                        .getBytes());
     }
 
     private static void deleteSystemFolder() {

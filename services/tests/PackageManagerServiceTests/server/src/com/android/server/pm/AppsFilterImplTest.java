@@ -997,7 +997,8 @@ public class AppsFilterImplTest {
 
         PackageSetting targetSetting = simulateAddPackage(appsFilter, target, DUMMY_TARGET_APPID);
         SharedUserSetting actorSharedSetting = new SharedUserSetting("actorSharedUser",
-                targetSetting.getFlags(), targetSetting.getPrivateFlags());
+                targetSetting.getFlags(), targetSetting.getPrivateFlags(),
+                targetSetting.getPrivateFlagsExt());
         actorSharedSetting.mAppId = 100; /* mimic a valid sharedUserSetting.mAppId */
         PackageSetting overlaySetting =
                 simulateAddPackage(appsFilter, overlay, DUMMY_OVERLAY_APPID);

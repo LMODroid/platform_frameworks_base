@@ -336,6 +336,6 @@ public class PackageManagerServiceUtilsTest {
 
     private PackageSetting createPackageSetting() {
         return new PackageSetting(PACKAGE_NAME, PACKAGE_NAME, CODE_PATH, /* pkgFlags= */ 0,
-                /* privateFlags= */ 0 , UUID.randomUUID());
+                /* privateFlags= */ 0 , /* privateFlagsExt=*/ 0, UUID.randomUUID());
     }
 }
