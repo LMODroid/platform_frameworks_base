@@ -1369,7 +1369,7 @@
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"ازهم بازکردن و نمایش گزینه‌ها"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"جمع کردن"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"بستن این برنامه"</string>
-    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"<xliff:g id="APP_NAME">%1$s</xliff:g> بسته شد"</string>
+    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"«<xliff:g id="APP_NAME">%1$s</xliff:g>» بسته است"</string>
     <string name="privacy_dialog_manage_service" msgid="8320590856621823604">"مدیریت سرویس"</string>
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"مدیریت دسترسی"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"تماس تلفنی از آن استفاده می‌کند"</string>
