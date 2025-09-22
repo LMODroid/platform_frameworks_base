@@ -676,7 +676,7 @@
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"خروج مهمان"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"همه فعالیت‌ها هنگام خروج حذف خواهد شد"</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"می‌توانید فعالیتتان را هنگام خروج ذخیره یا حذف کنید"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"برای حذف فعالیت جلسه در این لحظه، بازنشانی کنید یا می‌توانید فعالیت را هنگام خروج ذخیره یا حذف کنید"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"برای حذف فعالیت جلسه در این لحظه، بازنشانی کنید یا اینکه فعالیت را هنگام خروج ذخیره یا حذف کنید"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"انتخاب عکس"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"تلاش‌های نادرست بسیار زیادی انجام شده است. داده‌های این دستگاه حذف خواهد شد."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"تلاش‌های اشتباه بسیار زیادی انجام شده است. این کاربر حذف خواهد شد."</string>

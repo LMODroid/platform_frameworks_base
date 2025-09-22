@@ -386,7 +386,7 @@
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Підсвічувати вікна повністю під час оновлення"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Показувати оновлення областей"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Підсвічувати оновлені області у вікнах"</string>
-    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Показ. апаратні оновлення"</string>
+    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Показувати апаратні оновлення"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Виділяти апаратні рівні зеленим під час оновлення"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Налагодити накладання GPU"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Вимк. апаратн. накладання"</string>
@@ -402,7 +402,7 @@
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Прозора панель навігації"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Зробити колір фону панелі навігації прозорим за умовчанням"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Дозволити розмиття вікон"</string>
-    <string name="force_msaa" msgid="4081288296137775550">"Примус. запустити 4x MSAA"</string>
+    <string name="force_msaa" msgid="4081288296137775550">"Примусово запустити 4x MSAA"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Увімкнути 4x MSAA в додатках OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Налагодити непрямокутну обрізку"</string>
     <string name="track_frame_time" msgid="522674651937771106">"Обробка HWUI за профілем"</string>
