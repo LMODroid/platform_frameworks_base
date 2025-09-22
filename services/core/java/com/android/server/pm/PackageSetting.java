@@ -268,9 +268,15 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
     }
 
     @VisibleForTesting(visibility = VisibleForTesting.Visibility.PACKAGE)
-    public PackageSetting(@NonNull String name, @Nullable String realName, @NonNull File path,
-                          int pkgFlags, int pkgPrivateFlags, @NonNull UUID domainSetId) {
-        super(pkgFlags, pkgPrivateFlags);
+    public PackageSetting(
+            @NonNull String name,
+            @Nullable String realName,
+            @NonNull File path,
+            int pkgFlags,
+            int pkgPrivateFlags,
+            int pkgPrivateFlagsExt,
+            @NonNull UUID domainSetId) {
+        super(pkgFlags, pkgPrivateFlags, pkgPrivateFlagsExt);
         this.mName = name;
         this.mRealName = realName;
         this.mPath = path;
@@ -1091,14 +1097,30 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
         onChanged();
     }
 
-    void setUserState(int userId, long ceDataInode, long deDataInode, int enabled,
-                      boolean installed, boolean stopped, boolean notLaunched, boolean hidden,
-                      int distractionFlags, ArrayMap<UserPackage, SuspendParams> suspendParams,
-                      boolean instantApp, boolean virtualPreload, String lastDisableAppCaller,
-                      ArraySet<String> enabledComponents, ArraySet<String> disabledComponents,
-                      int installReason, int uninstallReason,
-                      String harmfulAppWarning, String splashScreenTheme,
-                      long firstInstallTime, int aspectRatio, ArchiveState archiveState) {
+    void setUserState(
+            int userId,
+            long ceDataInode,
+            long deDataInode,
+            int enabled,
+            boolean installed,
+            boolean stopped,
+            boolean notLaunched,
+            boolean hidden,
+            int distractionFlags,
+            ArrayMap<UserPackage, SuspendParams> suspendParams,
+            boolean instantApp,
+            boolean virtualPreload,
+            String lastDisableAppCaller,
+            ArraySet<String> enabledComponents,
+            ArraySet<String> disabledComponents,
+            int installReason,
+            int uninstallReason,
+            String harmfulAppWarning,
+            String splashScreenTheme,
+            long firstInstallTime,
+            int aspectRatio,
+            ArchiveState archiveState,
+            boolean displayCompat) {
         modifyUserState(userId)
                 .setSuspendParams(suspendParams)
                 .setCeDataInode(ceDataInode)
@@ -1120,26 +1142,42 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
                 .setSplashScreenTheme(splashScreenTheme)
                 .setFirstInstallTimeMillis(firstInstallTime)
                 .setMinAspectRatio(aspectRatio)
-                .setArchiveState(archiveState);
+                .setArchiveState(archiveState)
+                .setDisplayCompat(displayCompat);
         onChanged();
     }
 
     void setUserState(int userId, PackageUserStateInternal otherState) {
-        setUserState(userId, otherState.getCeDataInode(), otherState.getDeDataInode(),
-                otherState.getEnabledState(), otherState.isInstalled(), otherState.isStopped(),
-                otherState.isNotLaunched(), otherState.isHidden(), otherState.getDistractionFlags(),
+        setUserState(
+                userId,
+                otherState.getCeDataInode(),
+                otherState.getDeDataInode(),
+                otherState.getEnabledState(),
+                otherState.isInstalled(),
+                otherState.isStopped(),
+                otherState.isNotLaunched(),
+                otherState.isHidden(),
+                otherState.getDistractionFlags(),
                 otherState.getSuspendParams() == null
-                        ? null : otherState.getSuspendParams().untrackedStorage(),
-                otherState.isInstantApp(), otherState.isVirtualPreload(),
+                        ? null
+                        : otherState.getSuspendParams().untrackedStorage(),
+                otherState.isInstantApp(),
+                otherState.isVirtualPreload(),
                 otherState.getLastDisableAppCaller(),
                 otherState.getEnabledComponentsNoCopy() == null
-                        ? null : otherState.getEnabledComponentsNoCopy().untrackedStorage(),
+                        ? null
+                        : otherState.getEnabledComponentsNoCopy().untrackedStorage(),
                 otherState.getDisabledComponentsNoCopy() == null
-                        ? null : otherState.getDisabledComponentsNoCopy().untrackedStorage(),
-                otherState.getInstallReason(), otherState.getUninstallReason(),
-                otherState.getHarmfulAppWarning(), otherState.getSplashScreenTheme(),
-                otherState.getFirstInstallTimeMillis(), otherState.getMinAspectRatio(),
-                otherState.getArchiveState());
+                        ? null
+                        : otherState.getDisabledComponentsNoCopy().untrackedStorage(),
+                otherState.getInstallReason(),
+                otherState.getUninstallReason(),
+                otherState.getHarmfulAppWarning(),
+                otherState.getSplashScreenTheme(),
+                otherState.getFirstInstallTimeMillis(),
+                otherState.getMinAspectRatio(),
+                otherState.getArchiveState(),
+                otherState.isDisplayCompat());
     }
 
     WatchedArraySet<String> getEnabledComponents(int userId) {
@@ -1351,6 +1389,7 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
             proto.write(PackageProto.UserInfoProto.FIRST_INSTALL_TIME_MS,
                     state.getFirstInstallTimeMillis());
             writeArchiveState(proto, state.getArchiveState());
+            proto.write(PackageProto.UserInfoProto.IS_DISPLAY_COMPAT, state.isDisplayCompat());
             proto.end(userToken);
         }
     }

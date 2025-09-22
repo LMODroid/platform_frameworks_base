@@ -300,7 +300,7 @@ class PackageManagerComponentLabelIconOverrideTest {
                     .hideAsFinal()
 
     private fun makePkgSetting(pkgName: String, pkg: AndroidPackageInternal) =
-        PackageSetting(pkgName, null, File("/test"), 0, 0,
+        PackageSetting(pkgName, null, File("/test"), 0, 0, 0,
                 UUID.fromString("3f9d52b7-d7b4-406a-a1da-d9f19984c72c"))
         .apply {
             if (params.isSystem) {

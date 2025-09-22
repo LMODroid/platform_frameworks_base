@@ -38,6 +38,7 @@ public class PackageSettingBuilder {
     private long mPVersionCode;
     private int mPkgFlags;
     private int mPrivateFlags;
+    private int mPrivateFlagsExt;
     private int mSharedUserId;
     private String mVolumeUuid;
     private int mAppId;
@@ -109,6 +110,11 @@ public class PackageSettingBuilder {
         return this;
     }
 
+    public PackageSettingBuilder setPrivateFlagsExt(int privateFlagsExt) {
+        this.mPrivateFlagsExt = privateFlagsExt;
+        return this;
+    }
+
     public PackageSettingBuilder setSharedUserId(int sharedUserId) {
         this.mSharedUserId = sharedUserId;
         return this;
@@ -158,7 +164,7 @@ public class PackageSettingBuilder {
 
     public PackageSetting build() {
         final PackageSetting packageSetting = new PackageSetting(mName, mRealName,
-                new File(mCodePath), mPkgFlags, mPrivateFlags, mDomainSetId)
+                new File(mCodePath), mPkgFlags, mPrivateFlags, mPrivateFlagsExt, mDomainSetId)
                 .setLegacyNativeLibraryPath(mLegacyNativeLibraryPathString)
                 .setPrimaryCpuAbi(mPrimaryCpuAbiString)
                 .setSecondaryCpuAbi(mSecondaryCpuAbiString)

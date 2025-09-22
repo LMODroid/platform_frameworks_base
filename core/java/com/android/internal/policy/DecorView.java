@@ -17,7 +17,9 @@
 package com.android.internal.policy;
 
 import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
+import static android.content.pm.ApplicationInfo.PRIVATE_FLAG_EXT_DISPLAY_COMPAT;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+import static android.os.Build.IS_DEBUGGABLE;
 import static android.os.Build.VERSION_CODES.M;
 import static android.os.Build.VERSION_CODES.N;
 import static android.view.InsetsState.clearsCompatInsets;
@@ -46,11 +48,14 @@ import static com.android.internal.policy.PhoneWindow.FEATURE_OPTIONS_PANEL;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.TestApi;
 import android.app.WindowConfiguration;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -68,6 +73,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.Looper;
+import android.os.UserHandle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
@@ -162,6 +168,11 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         }
     };
 
+    /** Display Compat Safe App Area 1.0 */
+    private static final String FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA =
+        "android.software.car.display_compatibility.safe_app_area";
+    private static final int FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA_VERSION = 1;
+
     // Cludge to address b/22668382: Set the shadow size to the maximum so that the layer
     // size calculation takes the shadow size into account. We set the elevation currently
     // to max until the first layout command has been executed.
@@ -217,6 +228,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
     private final int mBarEnterExitDuration;
     final boolean mForceWindowDrawsBarBackgrounds;
     private final int mSemiTransparentBarColor;
+    private final boolean mRequiresDisplayCompat;
 
     private final BackgroundFallback mBackgroundFallback = new BackgroundFallback();
 
@@ -300,6 +312,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
                 && context.getApplicationInfo().targetSdkVersion >= N;
         mSemiTransparentBarColor = context.getResources().getColor(
                 R.color.system_bar_background_semi_transparent, null /* theme */);
+        mRequiresDisplayCompat = requiresDisplayCompat(context);
 
         setWindow(window);
 
@@ -311,6 +324,46 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
                 WearGestureInterceptionDetector.isEnabled(context)
                         ? new WearGestureInterceptionDetector(context, this)
                         : null;
+    }
+
+    /**
+     * Apps not built specifically for a form factor may require display compat features
+     * including limiting of drawing behind system bars, e.g. apps from tablet or mobile
+     * that are installed on Automotive devices.
+     *
+     * NOTE: This does not use context.getApplicationInfo() as this data doesn't include user-
+     * specific settings like display compat, use getApplicationInfoAsUser instead.
+     * @return true if app requires display compat
+     */
+    private static boolean requiresDisplayCompat(@NonNull Context context) {
+        final PackageManager pm = context.getPackageManager();
+        // DisplayCompat is not required on devices that support
+        // splitscreen multitasking since the window itself will provide
+        // a constrained view for the app within it.
+        if (!pm.hasSystemFeature(
+                FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA,
+                FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA_VERSION)) {
+            return false;
+        }
+        boolean requiresDisplayCompat = false;
+        final String packageName = context.getPackageName();
+        final int userId = UserHandle.myUserId();
+        UserHandle userHandle = UserHandle.of(userId);
+        try {
+            ApplicationInfo applicationInfo = pm
+                .getApplicationInfoAsUser(packageName, 0 /** flags */, userHandle);
+            requiresDisplayCompat = (applicationInfo.privateFlagsExt
+                    & PRIVATE_FLAG_EXT_DISPLAY_COMPAT) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Self package not found: " + packageName);
+        } finally {
+            if (IS_DEBUGGABLE) {
+                Log.d(TAG, "package: " + packageName +
+                        " user: " + userId +
+                        " displayCompat: " + requiresDisplayCompat);
+            }
+            return requiresDisplayCompat;
+        }
     }
 
     void setBackgroundFallback(@Nullable Drawable fallbackDrawable) {
@@ -1189,7 +1242,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
                         && decorFitsSystemWindows
                         && !hideNavigation)
                 || ((mLastForceConsumingTypes & WindowInsets.Type.navigationBars()) != 0
-                        && hideNavigation);
+                        && hideNavigation) || mRequiresDisplayCompat;
 
         boolean consumingNavBar =
                 ((attrs.flags & FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0
@@ -1214,7 +1267,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
                         && mForceWindowDrawsBarBackgrounds
                         && mLastTopInset != 0)
                 || ((mLastForceConsumingTypes & WindowInsets.Type.statusBars()) != 0
-                        && hideStatusBar);
+                        && hideStatusBar) || mRequiresDisplayCompat;
 
         final boolean hideCaptionBar = fullscreen
                 || (requestedVisibleTypes & WindowInsets.Type.captionBar()) == 0;

@@ -207,7 +207,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
-
 final class InstallPackageHelper {
     private final PackageManagerService mPm;
     private final AppDataHelper mAppDataHelper;
@@ -4017,9 +4016,13 @@ final class InstallPackageHelper {
             }
 
             if (!ignoreSharedUserId && parsedPackage.getSharedUserId() != null) {
-                sharedUserSetting = mPm.mSettings.getSharedUserLPw(
-                        parsedPackage.getSharedUserId(),
-                        0 /*pkgFlags*/, 0 /*pkgPrivateFlags*/, true /*create*/);
+                sharedUserSetting =
+                        mPm.mSettings.getSharedUserLPw(
+                                parsedPackage.getSharedUserId(),
+                                0 /*pkgFlags*/,
+                                0 /*pkgPrivateFlags*/,
+                                0 /* pkgPrivateFlagsExt */,
+                                true /*create*/);
             } else {
                 sharedUserSetting = null;
             }
@@ -4719,8 +4722,8 @@ final class InstallPackageHelper {
             SharedUserSetting sharedUserSetting = null;
             try {
                 synchronized (mPm.mLock) {
-                    sharedUserSetting = mPm.mSettings.getSharedUserLPw(pkg.getSharedUserId(),
-                            0, 0, false);
+                    sharedUserSetting =
+                            mPm.mSettings.getSharedUserLPw(pkg.getSharedUserId(), 0, 0, 0, false);
                 }
             } catch (PackageManagerException ignore) {
             }
@@ -4760,8 +4763,8 @@ final class InstallPackageHelper {
             SharedUserSetting sharedUserSetting = null;
             synchronized (mPm.mLock) {
                 try {
-                    sharedUserSetting = mPm.mSettings.getSharedUserLPw(pkg.getSharedUserId(), 0,
-                            0, false);
+                    sharedUserSetting =
+                            mPm.mSettings.getSharedUserLPw(pkg.getSharedUserId(), 0, 0, 0, false);
                 } catch (PackageManagerException ignore) {
                 }
                 if (sharedUserSetting != null && sharedUserSetting.isPrivileged()) {
