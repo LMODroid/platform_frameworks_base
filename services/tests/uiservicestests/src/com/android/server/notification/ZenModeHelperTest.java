@@ -118,6 +118,7 @@ import android.app.NotificationManager.Policy;
 import android.app.compat.CompatChanges;
 import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -131,6 +132,7 @@ import android.media.AudioManagerInternal;
 import android.media.AudioSystem;
 import android.media.VolumePolicy;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Process;
 import android.os.SimpleClock;
@@ -142,7 +144,9 @@ import android.platform.test.flag.junit.SetFlagsRule;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.service.notification.Condition;
+import android.service.notification.ConditionProviderService;
 import android.service.notification.DeviceEffectsApplier;
+import android.service.notification.IConditionProvider;
 import android.service.notification.SystemZenRules;
 import android.service.notification.ZenAdapters;
 import android.service.notification.ZenDeviceEffects;
@@ -2545,21 +2549,22 @@ public class ZenModeHelperTest extends UiServiceTestCase {
 
     @Test
     public void testRulesWithSameUri() {
-        // needs to be a valid schedule info object for the subscription to happen properly
-        ScheduleInfo scheduleInfo = new ScheduleInfo();
-        scheduleInfo.days = new int[]{1, 2};
-        scheduleInfo.endHour = 1;
-        Uri sharedUri = ZenModeConfig.toScheduleConditionId(scheduleInfo);
-        AutomaticZenRule zenRule = new AutomaticZenRule("name",
-                new ComponentName(mPkg, "ScheduleConditionProvider"),
-                sharedUri,
-                NotificationManager.INTERRUPTION_FILTER_PRIORITY, true);
+        // Needs a "valid" CPS otherwise ZenModeConditions will balk and clear rule.condition
+        ComponentName packageCpsName = new ComponentName(mContext,
+                PackageConditionProviderService.class);
+        ConditionProviderService packageCps = new PackageConditionProviderService();
+        mConditionProviders.registerGuestService(mConditionProviders.new ManagedServiceInfo(
+                (IConditionProvider) packageCps.onBind(null), packageCpsName,
+                mContext.getUserId(), false, mock(ServiceConnection.class),
+                Build.VERSION_CODES.TIRAMISU, 44));
+        Uri sharedUri = Uri.parse("packageConditionId");
+
+        AutomaticZenRule zenRule = new AutomaticZenRule("name", packageCpsName,
+                sharedUri, NotificationManager.INTERRUPTION_FILTER_PRIORITY, true);
         String id = mZenModeHelper.addAutomaticZenRule(mPkg, zenRule,
                 UPDATE_ORIGIN_SYSTEM_OR_SYSTEMUI, "test", Process.SYSTEM_UID);
-        AutomaticZenRule zenRule2 = new AutomaticZenRule("name2",
-                new ComponentName(mPkg, "ScheduleConditionProvider"),
-                sharedUri,
-                NotificationManager.INTERRUPTION_FILTER_PRIORITY, true);
+        AutomaticZenRule zenRule2 = new AutomaticZenRule("name2", packageCpsName,
+                sharedUri, NotificationManager.INTERRUPTION_FILTER_PRIORITY, true);
         String id2 = mZenModeHelper.addAutomaticZenRule(mPkg, zenRule2,
                 UPDATE_ORIGIN_SYSTEM_OR_SYSTEMUI, "test", Process.SYSTEM_UID);
 
@@ -6604,6 +6609,18 @@ public class ZenModeHelperTest extends UiServiceTestCase {
         public int nextTag() throws IOException, XmlPullParserException {
             return parser.nextTag();
         }
+    }
+
+    private static class PackageConditionProviderService extends ConditionProviderService {
+
+        @Override
+        public void onConnected() { }
+
+        @Override
+        public void onSubscribe(Uri conditionId) { }
+
+        @Override
+        public void onUnsubscribe(Uri conditionId) { }
     }
 
     private static class TestClock extends SimpleClock {
