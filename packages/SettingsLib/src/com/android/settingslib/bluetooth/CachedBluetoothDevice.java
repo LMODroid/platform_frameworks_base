@@ -28,7 +28,6 @@ import android.bluetooth.BluetoothHearingAid;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothUuid;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -594,9 +593,6 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     void fillData() {
         updateProfiles();
         fetchActiveDevices();
-        migratePhonebookPermissionChoice();
-        migrateMessagePermissionChoice();
-
         dispatchAttributesChanged();
     }
 
@@ -1145,54 +1141,6 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
 
     public interface Callback {
         void onDeviceAttributesChanged();
-    }
-
-    // Migrates data from old data store (in Settings app's shared preferences) to new (in Bluetooth
-    // app's shared preferences).
-    private void migratePhonebookPermissionChoice() {
-        SharedPreferences preferences = mContext.getSharedPreferences(
-                "bluetooth_phonebook_permission", Context.MODE_PRIVATE);
-        if (!preferences.contains(mDevice.getAddress())) {
-            return;
-        }
-
-        if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_UNKNOWN) {
-            int oldPermission =
-                    preferences.getInt(mDevice.getAddress(), BluetoothDevice.ACCESS_UNKNOWN);
-            if (oldPermission == BluetoothDevice.ACCESS_ALLOWED) {
-                mDevice.setPhonebookAccessPermission(BluetoothDevice.ACCESS_ALLOWED);
-            } else if (oldPermission == BluetoothDevice.ACCESS_REJECTED) {
-                mDevice.setPhonebookAccessPermission(BluetoothDevice.ACCESS_REJECTED);
-            }
-        }
-
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.remove(mDevice.getAddress());
-        editor.commit();
-    }
-
-    // Migrates data from old data store (in Settings app's shared preferences) to new (in Bluetooth
-    // app's shared preferences).
-    private void migrateMessagePermissionChoice() {
-        SharedPreferences preferences = mContext.getSharedPreferences(
-                "bluetooth_message_permission", Context.MODE_PRIVATE);
-        if (!preferences.contains(mDevice.getAddress())) {
-            return;
-        }
-
-        if (mDevice.getMessageAccessPermission() == BluetoothDevice.ACCESS_UNKNOWN) {
-            int oldPermission =
-                    preferences.getInt(mDevice.getAddress(), BluetoothDevice.ACCESS_UNKNOWN);
-            if (oldPermission == BluetoothDevice.ACCESS_ALLOWED) {
-                mDevice.setMessageAccessPermission(BluetoothDevice.ACCESS_ALLOWED);
-            } else if (oldPermission == BluetoothDevice.ACCESS_REJECTED) {
-                mDevice.setMessageAccessPermission(BluetoothDevice.ACCESS_REJECTED);
-            }
-        }
-
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.remove(mDevice.getAddress());
-        editor.commit();
     }
 
     private void processPhonebookAccess() {
