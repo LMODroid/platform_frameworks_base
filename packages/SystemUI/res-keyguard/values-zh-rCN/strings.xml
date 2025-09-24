@@ -58,7 +58,7 @@
     <string name="kg_wrong_pin_try_again" msgid="3129729383303430190">"PIN 码有误。请重试。"</string>
     <string name="kg_wrong_input_try_fp_suggestion" msgid="3143861542242024833">"或使用指纹解锁"</string>
     <string name="kg_fp_not_recognized" msgid="5183108260932029241">"未能识别指纹"</string>
-    <string name="bouncer_face_not_recognized" msgid="1666128054475597485">"无法识别面孔"</string>
+    <string name="bouncer_face_not_recognized" msgid="1666128054475597485">"无法识别人脸"</string>
     <string name="kg_bio_try_again_or_pin" msgid="4752168242723808390">"请重试或输入 PIN 码"</string>
     <string name="kg_bio_try_again_or_password" msgid="1473132729225398039">"请重试或输入密码"</string>
     <string name="kg_bio_try_again_or_pattern" msgid="4867893307468801501">"请重试或绘制解锁图案"</string>
