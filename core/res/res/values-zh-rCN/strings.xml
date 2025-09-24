@@ -262,7 +262,7 @@
     <string name="global_action_power_options" msgid="1185286119330160073">"电源"</string>
     <string name="global_action_restart" msgid="4678451019561687074">"重启"</string>
     <string name="global_action_emergency" msgid="1387617624177105088">"紧急呼叫"</string>
-    <string name="global_action_bug_report" msgid="5127867163044170003">"Bug 报告"</string>
+    <string name="global_action_bug_report" msgid="5127867163044170003">"错误报告"</string>
     <string name="global_action_logout" msgid="6093581310002476511">"结束会话"</string>
     <string name="global_action_screenshot" msgid="2610053466156478564">"屏幕截图"</string>
     <string name="bugreport_title" msgid="8549990811777373050">"Bug 报告"</string>
