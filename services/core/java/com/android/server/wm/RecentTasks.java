@@ -1318,16 +1318,19 @@ class RecentTasks {
             return;
         }
 
-        int recentsCount = mTasks.size();
-
         // Remove from the end of the list until we reach the max number of recents
-        while (recentsCount > mGlobalMaxNumTasks) {
-            final Task task = mTasks.remove(recentsCount - 1);
-            notifyTaskRemoved(task, true /* wasTrimmed */, false /* killProcess */);
-            recentsCount--;
-            if (DEBUG_RECENTS_TRIM_TASKS) {
-                Slog.d(TAG, "Trimming over max-recents task=" + task
-                        + " max=" + mGlobalMaxNumTasks);
+        for (int i = mTasks.size() - 1; i >= 0; i--) {
+            if (mTasks.size() <= mGlobalMaxNumTasks) {
+                break;
+            }
+            Task task = mTasks.get(i);
+            if (isTrimmable(task)) {
+                mTasks.remove(i);
+                notifyTaskRemoved(task, true /* wasTrimmed */, false /* killProcess */);
+                if (DEBUG_RECENTS_TRIM_TASKS) {
+                    Slog.d(TAG, "Trimming over max-recents task=" + task
+                            + " max=" + mGlobalMaxNumTasks);
+                }
             }
         }
 

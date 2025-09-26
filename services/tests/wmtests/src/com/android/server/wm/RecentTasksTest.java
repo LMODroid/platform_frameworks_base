@@ -648,6 +648,41 @@ public class RecentTasksTest extends WindowTestsBase {
     }
 
     @Test
+    public void testTrimToGlobalMaxNumRecents_withNonTrimmableTask_expectNotTrimmed() {
+        mRecentTasks.setGlobalMaxNumTasks(1);
+        Task nonTrimmableTask = mTasks.get(0);
+        nonTrimmableTask.mIsTrimmableFromRecents = false;
+        // Move home to front so the other task can satisfy the condition in
+        // RecentTasks#isTrimmable.
+        mRootWindowContainer.getDefaultTaskDisplayArea().getRootHomeTask().moveToFront("test");
+
+        mRecentTasks.add(nonTrimmableTask);
+        mRecentTasks.add(mTasks.get(1));
+
+        // The non-trimmable task is the oldest, so the newer (but trimmable) task should be
+        // removed instead to meet the size limit.
+        triggerTrimAndAssertTrimmed(mTasks.get(1));
+        assertRecentTasksOrder(nonTrimmableTask);
+    }
+
+    @Test
+    public void testTrimToGlobalMaxNumRecents_withHomeTask_expectNotTrimmed() {
+        mRecentTasks.setGlobalMaxNumTasks(1);
+
+        Task homeTask = createTaskBuilder(".HomeTask")
+                .setParentTask(mTaskContainer.getRootHomeTask())
+                .build();
+
+        mRecentTasks.add(mTasks.get(0));
+        mRecentTasks.add(homeTask);
+        mRecentTasks.add(mTasks.get(1));
+
+        // The home task should not be trimmed, so the other two tasks should be.
+        triggerTrimAndAssertTrimmed(mTasks.get(0), mTasks.get(1));
+        assertRecentTasksOrder(homeTask);
+    }
+
+    @Test
     public void testTrimQuietProfileTasks() {
         mRecentTasks.setOnlyTestVisibleRange();
         Task qt1 = createTaskBuilder(".QuietTask1").setUserId(TEST_QUIET_USER_ID).build();
