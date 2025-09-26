@@ -1394,7 +1394,7 @@
     <string name="perm_costs_money" msgid="749054595022779685">"Սա կարող է գումար պահանջել"</string>
     <string name="dlg_ok" msgid="5103447663504839312">"Հաստատել"</string>
     <string name="usb_charging_notification_title" msgid="1674124518282666955">"Սարքի լիցքավորում USB-ի միջոցով"</string>
-    <string name="usb_supplying_notification_title" msgid="5378546632408101811">"Միացված սարքի լիցքավորում USB-ի միջոցով"</string>
+    <string name="usb_supplying_notification_title" msgid="5378546632408101811">"Կապակցված սարքի լիցքավորում USB-ի միջոցով"</string>
     <string name="usb_mtp_notification_title" msgid="1065989144124499810">"Ֆայլերի փոխանցումը USB-ի միջոցով միացավ"</string>
     <string name="usb_ptp_notification_title" msgid="5043437571863443281">"PTP ռեժիմը USB-ի միջոցով միացավ"</string>
     <string name="usb_tether_notification_title" msgid="8828527870612663771">"USB մոդեմի ռեժիմը միացավ"</string>
@@ -1402,7 +1402,7 @@
     <string name="usb_uvc_notification_title" msgid="2030032862673400008">"Սարքը միացած է որպես վեբ տեսախցիկ"</string>
     <string name="usb_accessory_notification_title" msgid="1385394660861956980">"Միացվել է USB լրասարք"</string>
     <string name="usb_notification_message" msgid="4715163067192110676">"Հպեք՝ լրացուցիչ ընտրանքների համար:"</string>
-    <string name="usb_power_notification_message" msgid="7284765627437897702">"Միացված սարքի լիցքավորում: Հպեք՝ ավելի շատ ընտրանքների համար:"</string>
+    <string name="usb_power_notification_message" msgid="7284765627437897702">"Կապակցված սարքի լիցքավորում։ Հպեք՝ ավելի շատ ընտրանքներ տեսնելու համար։"</string>
     <string name="usb_unsupported_audio_accessory_title" msgid="2335775548086533065">"Հայտնաբերված է անալոգային աուդիո լրասարք"</string>
     <string name="usb_unsupported_audio_accessory_message" msgid="1300168007129796621">"Կցված սարքը համատեղելի չէ այս հեռախոսի հետ: Հպեք` ավելին իմանալու համար:"</string>
     <string name="adb_active_notification_title" msgid="408390247354560331">"USB-ով վրիպազերծումը միացված է"</string>
