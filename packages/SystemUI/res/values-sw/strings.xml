@@ -655,7 +655,7 @@
     <string name="screen_pinning_negative" msgid="6882816864569211666">"Hapana"</string>
     <string name="screen_pinning_start" msgid="7483998671383371313">"Programu imebandikwa"</string>
     <string name="screen_pinning_exit" msgid="4553787518387346893">"Programu imebanduliwa"</string>
-    <string name="stream_voice_call" msgid="7468348170702375660">"Piga simu"</string>
+    <string name="stream_voice_call" msgid="7468348170702375660">"Simu"</string>
     <string name="stream_system" msgid="7663148785370565134">"Mfumo"</string>
     <string name="stream_ring" msgid="7550670036738697526">"Mlio"</string>
     <string name="stream_music" msgid="2188224742361847580">"Maudhui"</string>
