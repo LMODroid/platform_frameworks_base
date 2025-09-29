@@ -655,7 +655,7 @@
     <string name="screen_pinning_negative" msgid="6882816864569211666">"မလိုပါ"</string>
     <string name="screen_pinning_start" msgid="7483998671383371313">"အက်ပ်ကို ပင်ထိုးလိုက်သည်"</string>
     <string name="screen_pinning_exit" msgid="4553787518387346893">"အက်ပ်ကို ပင်ဖြုတ်လိုက်သည်"</string>
-    <string name="stream_voice_call" msgid="7468348170702375660">"ဖုန်းခေါ်ဆိုခြင်း"</string>
+    <string name="stream_voice_call" msgid="7468348170702375660">"ဖုန်းပြောသံ"</string>
     <string name="stream_system" msgid="7663148785370565134">"စနစ်"</string>
     <string name="stream_ring" msgid="7550670036738697526">"ဖုန်းမြည်သံ"</string>
     <string name="stream_music" msgid="2188224742361847580">"မီဒီယာ"</string>
