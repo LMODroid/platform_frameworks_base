@@ -230,6 +230,10 @@ public class FaceProvider implements IBinder.DeathRecipient, ServiceProvider {
     }
 
     private void initSensors(boolean resetLockoutRequiresChallenge, SensorProps[] props) {
+        if (props == null) {
+            Slog.w(TAG, "Sensor properties is null, skipping sensor initialization");
+            return;
+        }
         if (resetLockoutRequiresChallenge) {
             Slog.d(getTag(), "Adding HIDL configs");
             for (SensorProps prop : props) {
@@ -240,6 +244,7 @@ public class FaceProvider implements IBinder.DeathRecipient, ServiceProvider {
             for (SensorProps prop : props) {
                 addAidlSensors(prop, resetLockoutRequiresChallenge);
             }
+
         }
     }
 
@@ -910,12 +915,17 @@ public class FaceProvider implements IBinder.DeathRecipient, ServiceProvider {
      */
     public IVirtualHal getVhal() throws RemoteException {
         if (mVhal == null && isVhalForTesting()) {
-            mVhal = IVirtualHal.Stub.asInterface(
-                    Binder.allowBlocking(
-                            ServiceManager.waitForService(
-                                    IVirtualHal.DESCRIPTOR + "/"
-                                            + mHalInstanceNameCurrent)));
-            Slog.d(getTag(), "getVhal " + mHalInstanceNameCurrent);
+            String serviceName = IVirtualHal.DESCRIPTOR + "/" + mHalInstanceNameCurrent;
+            IBinder binder = ServiceManager.checkService(serviceName);
+            if (binder != null) {
+                mVhal = IVirtualHal.Stub.asInterface(
+                        Binder.allowBlocking(
+                                ServiceManager.waitForService(serviceName)));
+                Slog.d(getTag(), "getVhal " + mHalInstanceNameCurrent);
+            } else {
+                Slog.w(TAG, "Virtual HAL service not found: " + serviceName);
+                return null;
+            }
         }
         return mVhal;
     }

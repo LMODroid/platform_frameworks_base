@@ -184,10 +184,13 @@ public class FaceSensorConfigurations implements Parcelable {
             String fqNameMapped = remapFqName(fqName);
             Slog.i(TAG, "getIFace fqName is mapped: " + fqName + "->" + fqNameMapped);
             try {
+                if (ServiceManager.checkService(fqNameMapped) == null) {
+                    return null;
+                }
                 IVirtualHal vhal = IVirtualHal.Stub.asInterface(
                         Binder.allowBlocking(ServiceManager.waitForService(fqNameMapped)));
                 return vhal.getFaceHal();
-            } catch (RemoteException e) {
+            } catch (RemoteException | NullPointerException e) {
                 Slog.e(TAG, "Remote exception in vhal.getFaceHal() call" + fqNameMapped);
             }
         }
