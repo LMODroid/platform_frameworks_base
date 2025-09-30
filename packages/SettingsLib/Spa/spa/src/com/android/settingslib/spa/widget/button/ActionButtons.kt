@@ -103,11 +103,18 @@ fun ActionButtons(actionButtons: List<ActionButton>) {
 @Composable
 private fun RowScope.ActionButton(actionButton: ActionButton) {
     if (isSpaExpressiveEnabled) {
+        // Make entire column clickable only if action button is enabled
+        val columnModifier = if (actionButton.enabled) {
+            Modifier.clickable(onClick = actionButton.onClick)
+        } else {
+            Modifier
+        }
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .weight(1f)
-                .clickable(onClick = actionButton.onClick)
+                .then(columnModifier)
         ) {
             IconButton(actionButton)
             Spacer(Modifier.height(SettingsDimension.extraSmall3))
