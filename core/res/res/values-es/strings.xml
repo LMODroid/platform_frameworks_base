@@ -2452,6 +2452,6 @@
     <string name="keyboard_shortcut_group_applications_calendar" msgid="3571770335653387606">"Calendar"</string>
     <string name="keyboard_shortcut_group_applications_calculator" msgid="6753209559716091507">"Calculadora"</string>
     <string name="keyboard_shortcut_group_applications_maps" msgid="7950000659522589471">"Maps"</string>
-    <string name="keyboard_shortcut_group_applications" msgid="3010389163951364798">"Apps"</string>
+    <string name="keyboard_shortcut_group_applications" msgid="3010389163951364798">"Aplicaciones"</string>
     <string name="fingerprint_loe_notification_msg" msgid="3927447270148854546">"Tus huellas digitales ya no pueden reconocerse. Vuelve a configurar Desbloqueo con huella digital."</string>
 </resources>

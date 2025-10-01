@@ -690,7 +690,7 @@
     <string name="fingerprint_app_setting_name" msgid="4253767877095495844">"আঙ্গুলের ছাপ ব্যবহার করুন"</string>
     <string name="fingerprint_or_screen_lock_app_setting_name" msgid="3501743523487644907">"আঙ্গুলের ছাপ অথবা স্ক্রিন লক ব্যবহার করুন"</string>
     <string name="fingerprint_dialog_default_subtitle" msgid="3879832845486835905">"চালিয়ে যেতে আঙ্গুলের ছাপ ব্যবহার করুন"</string>
-    <string name="fingerprint_or_screen_lock_dialog_default_subtitle" msgid="5195808203117992200">"চালিয়ে যেতে আপনার আঙুলের ছাপ বা স্ক্রিন লক ব্য়বহার করুন"</string>
+    <string name="fingerprint_or_screen_lock_dialog_default_subtitle" msgid="5195808203117992200">"চালিয়ে যেতে আপনার আঙুলের ছাপ বা স্ক্রিন লক ব্যবহার করুন"</string>
   <string-array name="fingerprint_error_vendor">
   </string-array>
     <string name="fingerprint_error_vendor_unknown" msgid="4170002184907291065">"কোনও সমস্যা হয়েছে। আবার করে দেখুন।"</string>
