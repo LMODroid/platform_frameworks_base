@@ -420,7 +420,7 @@
     <string name="transition_animation_scale_title" msgid="1278477690695439337">"Escala de animación de transición"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Escala de duración de animación"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simular pantallas secundarias"</string>
-    <string name="debug_applications_category" msgid="5394089406638954196">"Apps"</string>
+    <string name="debug_applications_category" msgid="5394089406638954196">"Aplicaciones"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"No mantener actividades"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Destruye actividades cuando el usuario salga de ellas"</string>
     <string name="app_process_limit_title" msgid="8361367869453043007">"Límitar procesos en segundo plano"</string>
