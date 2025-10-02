@@ -57,7 +57,7 @@
     <string name="kg_wrong_pin" msgid="4160978845968732624">"ভুল পিন"</string>
     <string name="kg_wrong_pin_try_again" msgid="3129729383303430190">"ভুল পিন। পুনৰ চেষ্টা কৰক।"</string>
     <string name="kg_wrong_input_try_fp_suggestion" msgid="3143861542242024833">"অথবা ফিংগাৰপ্ৰিণ্টেৰে আনলক কৰক"</string>
-    <string name="kg_fp_not_recognized" msgid="5183108260932029241">"অচিনাক্ত ফিংগাৰপ্ৰিণ্ট"</string>
+    <string name="kg_fp_not_recognized" msgid="5183108260932029241">"ফিংগাৰপ্ৰিণ্ট চিনাক্ত কৰা হোৱা নাই"</string>
     <string name="bouncer_face_not_recognized" msgid="1666128054475597485">"মুখাৱয়ব চিনাক্ত কৰা হোৱা নাই"</string>
     <string name="kg_bio_try_again_or_pin" msgid="4752168242723808390">"পুনৰ চেষ্টা কৰক অথবা পিন দিয়ক"</string>
     <string name="kg_bio_try_again_or_password" msgid="1473132729225398039">"পুনৰ চেষ্টা কৰক অথবা পাছৱৰ্ড দিয়ক"</string>
