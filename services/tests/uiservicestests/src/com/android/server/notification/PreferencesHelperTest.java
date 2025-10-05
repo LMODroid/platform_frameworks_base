@@ -52,6 +52,7 @@ import static android.media.AudioAttributes.CONTENT_TYPE_SONIFICATION;
 import static android.media.AudioAttributes.USAGE_NOTIFICATION;
 import static android.os.UserHandle.USER_ALL;
 import static android.os.UserHandle.USER_SYSTEM;
+
 import static android.platform.test.flag.junit.SetFlagsRule.DefaultInitValueType.DEVICE_DEFAULT;
 import static android.service.notification.Flags.FLAG_NOTIFICATION_CLASSIFICATION;
 import static android.service.notification.Flags.notificationClassification;
@@ -156,6 +157,7 @@ import com.android.os.AtomsProto.PackageNotificationChannelPreferences;
 import com.android.os.AtomsProto.PackageNotificationPreferences;
 import com.android.server.UiServiceTestCase;
 import com.android.server.notification.PermissionHelper.PackagePermission;
+import com.android.server.uri.UriGrantsManagerInternal;
 
 import platform.test.runner.parameterized.ParameterizedAndroidJunit4;
 import platform.test.runner.parameterized.Parameters;
@@ -3049,7 +3051,21 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     }
 
     @Test
-    public void testCreateChannel_noSoundUriPermission_contentSchemeVerified() {
+    public void testCreateChannel_hasSoundUriPermission_useCustomSound() {
+        final Uri sound = Uri.parse(SCHEME_CONTENT + "://media/test/sound/uri");
+
+        final NotificationChannel channel = new NotificationChannel("id2", "name2",
+                NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setSound(sound, mAudioAttributes);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel, true, false, UID_N_MR1,
+                false);
+        assertThat(mHelper.getNotificationChannel(PKG_N_MR1, UID_N_MR1, channel.getId(), true)
+                .getSound()).isEqualTo(sound);
+    }
+
+
+    @Test
+    public void testCreateChannel_noSoundUriPermission_replaceWithDefaultSound() {
         final Uri sound = Uri.parse(SCHEME_CONTENT + "://media/test/sound/uri");
 
         doThrow(new SecurityException("no access")).when(mUgmInternal)
@@ -3059,12 +3075,12 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         final NotificationChannel channel = new NotificationChannel("id2", "name2",
                 NotificationManager.IMPORTANCE_DEFAULT);
         channel.setSound(sound, mAudioAttributes);
-
-        assertThrows(SecurityException.class,
-                () -> mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel,
-                    true, false, UID_N_MR1, false));
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel, true, false, UID_N_MR1,
+                false);
         assertThat(mHelper.getNotificationChannel(PKG_N_MR1, UID_N_MR1, channel.getId(), true))
-                .isNull();
+                .isNotNull();
+        assertThat(mHelper.getNotificationChannel(PKG_N_MR1, UID_N_MR1, channel.getId(), true)
+                .getSound()).isEqualTo(Settings.System.DEFAULT_NOTIFICATION_URI);
     }
 
     @Test

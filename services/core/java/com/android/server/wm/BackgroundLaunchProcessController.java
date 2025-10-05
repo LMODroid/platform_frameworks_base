@@ -121,7 +121,8 @@ class BackgroundLaunchProcessController {
     BalVerdict areBackgroundActivityStartsAllowed(
             int pid, int uid, String packageName,
             int appSwitchState, BalCheckConfiguration checkConfiguration,
-            boolean hasActivityInVisibleTask, boolean hasBackgroundActivityStartPrivileges,
+            boolean hasActivityInVisibleTask, boolean inPinnedWindow,
+            boolean hasBackgroundActivityStartPrivileges,
             long lastStopAppSwitchesTime, long lastActivityLaunchTime,
             long lastActivityFinishTime) {
         // Allow if the proc is instrumenting with background activity starts privs.
@@ -145,8 +146,10 @@ class BackgroundLaunchProcessController {
                     : BAL_ALLOW_VISIBLE_WINDOW, /*background*/ false,
                     "process bound by foreground uid");
         }
-        // Allow if the caller has an activity in any foreground task.
-        if (checkConfiguration.checkVisibility && hasActivityInVisibleTask
+        // Allow if the caller has an activity in any foreground task, unless it's a pinned window
+        // and not a foreground service start.
+        if ((checkConfiguration.isCheckingForFgsStart || !inPinnedWindow)
+                && checkConfiguration.checkVisibility && hasActivityInVisibleTask
                 && appSwitchState != APP_SWITCH_DISALLOW) {
             return new BalVerdict(BAL_ALLOW_FOREGROUND, /*background*/ false,
                     "process has activity in foreground task");
