@@ -2137,7 +2137,7 @@
     <string name="review_notification_settings_title" msgid="5102557424459810820">"مرور تنظیمات اعلان"</string>
     <string name="review_notification_settings_text" msgid="5916244866751849279">"‏از Android نسخه ۱۳ به بعد، برنامه‌هایی که نصب می‌کنید برای ارسال اعلان به اجازه شما نیاز دارند. برای تغییر دادن این اجازه در برنامه‌های موجود، تک‌ضرب بزنید."</string>
     <string name="review_notification_settings_remind_me_action" msgid="1081081018678480907">"بعداً یادآوری شود"</string>
-    <string name="review_notification_settings_dismiss" msgid="4160916504616428294">"رد شدن"</string>
+    <string name="review_notification_settings_dismiss" msgid="4160916504616428294">"بستن"</string>
     <string name="notification_app_name_system" msgid="3045196791746735601">"سیستم"</string>
     <string name="notification_app_name_settings" msgid="9088548800899952531">"تنظیمات"</string>
     <string name="notification_appops_camera_active" msgid="8177643089272352083">"دوربین"</string>
@@ -2355,7 +2355,7 @@
     <string name="window_magnification_prompt_title" msgid="2876703640772778215">"تنظیمات جدید درشت‌نمایی"</string>
     <string name="window_magnification_prompt_content" msgid="8159173903032344891">"اکنون می‌توانید بخشی از صفحه را درشت‌نمایی کنید"</string>
     <string name="turn_on_magnification_settings_action" msgid="8521433346684847700">"روشن کردن در «تنظیمات»"</string>
-    <string name="dismiss_action" msgid="1728820550388704784">"رد شدن"</string>
+    <string name="dismiss_action" msgid="1728820550388704784">"بستن"</string>
     <string name="sensor_privacy_start_use_mic_notification_content_title" msgid="2420858361276370367">"لغو انسداد میکروفون دستگاه"</string>
     <string name="sensor_privacy_start_use_camera_notification_content_title" msgid="7287720213963466672">"لغو انسداد دوربین دستگاه"</string>
     <string name="sensor_privacy_start_use_notification_content_text" msgid="7595608891015777346">"‏برای &lt;b&gt;<xliff:g id="APP">%s</xliff:g>&lt;/b&gt; و همه برنامه‌ها و سرویس‌ها"</string>
