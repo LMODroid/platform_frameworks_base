@@ -27,7 +27,6 @@ import static android.os.FactoryTest.FACTORY_TEST_LOW_LEVEL;
 
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.TAG_ATM;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.TAG_WITH_CLASS_NAME;
-import static com.android.server.wm.ActivityTaskSupervisor.ON_TOP;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -161,7 +160,7 @@ public class ActivityStartController {
     }
 
     void startHomeActivity(Intent intent, ActivityInfo aInfo, String reason,
-            TaskDisplayArea taskDisplayArea) {
+            TaskDisplayArea taskDisplayArea, boolean onTop) {
         final ActivityOptions options = ActivityOptions.makeBasic();
         options.setLaunchWindowingMode(WINDOWING_MODE_FULLSCREEN);
         if (!ActivityRecord.isResolverActivity(aInfo.name)) {
@@ -181,7 +180,10 @@ public class ActivityStartController {
         final Task rootHomeTask;
         try {
             // Make sure root home task exists on display area.
-            rootHomeTask = taskDisplayArea.getOrCreateRootHomeTask(ON_TOP);
+            rootHomeTask = taskDisplayArea.getOrCreateRootHomeTask(onTop);
+            if (!onTop) {
+                options.setAvoidMoveToFront();
+            }
         } finally {
             mSupervisor.endDeferResume();
         }

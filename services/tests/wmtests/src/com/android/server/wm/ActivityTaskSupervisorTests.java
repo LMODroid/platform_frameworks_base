@@ -391,7 +391,8 @@ public class ActivityTaskSupervisorTests extends WindowTestsBase {
     public void testStartHomeAfterUserUnlocked() {
         mSupervisor.onUserUnlocked(0);
         waitHandlerIdle(mAtm.mH);
-        verify(mRootWindowContainer, timeout(TIMEOUT_MS)).startHomeOnEmptyDisplays("userUnlocked");
+        verify(mRootWindowContainer, timeout(TIMEOUT_MS))
+                .startHomeOnDisplaysWithNoHome("userUnlocked");
     }
 
     /** Verifies that launch from recents sets the launch cookie on the activity. */
