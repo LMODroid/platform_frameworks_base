@@ -797,7 +797,7 @@
     <string name="keyboard_key_media_stop" msgid="1509943745250377699">"Ndalo"</string>
     <string name="keyboard_key_media_next" msgid="8502476691227914952">"Para"</string>
     <string name="keyboard_key_media_previous" msgid="5637875709190955351">"Prapa"</string>
-    <string name="keyboard_key_media_rewind" msgid="3450387734224327577">"Rikthe me shpejtësi"</string>
+    <string name="keyboard_key_media_rewind" msgid="3450387734224327577">"Kthe prapa"</string>
     <string name="keyboard_key_media_fast_forward" msgid="3572444327046911822">"Përparo me shpejtësi"</string>
     <string name="keyboard_key_page_up" msgid="173914303254199845">"Faqja lart"</string>
     <string name="keyboard_key_page_down" msgid="9035902490071829731">"Faqja poshtë"</string>
