@@ -78,6 +78,7 @@ import static org.mockito.Mockito.when;
 import android.app.ActivityThread;
 import android.app.IApplicationThread;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Binder;
 import android.os.Bundle;
@@ -575,7 +576,7 @@ public class WindowManagerServiceTests extends WindowTestsBase {
             int expectedChangedPrivateFlags, int expectedFlagsValue,
             int expectedPrivateFlagsValue, boolean internalSystemWindowGranted,
             boolean manageActivityTasksGranted) {
-        final WindowState win = newWindowBuilder("appWin", TYPE_BASE_APPLICATION).build();
+        final WindowState win = createWindow(null, TYPE_BASE_APPLICATION, "appWin");
         win.mRelayoutCalled = !firstRelayout;
         mWm.mWindowMap.put(win.mClient.asBinder(), win);
         spyOn(mDisplayContent.mDwpcHelper);
