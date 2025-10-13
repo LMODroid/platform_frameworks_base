@@ -2421,7 +2421,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getMeid() {
-        return getMeid(getSlotIndex());
+        return null;
     }
 
     /**
@@ -2463,22 +2463,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getMeid(int slotIndex) {
-        ITelephony telephony = getITelephony();
-        if (telephony == null) return null;
-
-        try {
-            String meid = telephony.getMeidForSlot(slotIndex, getOpPackageName(),
-                    getAttributionTag());
-            if (TextUtils.isEmpty(meid)) {
-                Log.d(TAG, "getMeid: return null because MEID is not available");
-                return null;
-            }
-            return meid;
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -2491,7 +2476,7 @@ public class TelephonyManager {
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     @Nullable
     public String getManufacturerCode() {
-        return getManufacturerCode(getSlotIndex());
+        return null;
     }
 
     /**
@@ -2506,16 +2491,7 @@ public class TelephonyManager {
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     @Nullable
     public String getManufacturerCode(int slotIndex) {
-        ITelephony telephony = getITelephony();
-        if (telephony == null) return null;
-
-        try {
-            return telephony.getManufacturerCodeForSlot(slotIndex);
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -2741,7 +2717,7 @@ public class TelephonyManager {
 
     /**
      * Returns a constant indicating the device phone type.  This
-     * indicates the type of radio used to transmit voice calls.
+     * indicates the type of radio used to transmit voice/data calls.
      *
      * @see #PHONE_TYPE_NONE
      * @see #PHONE_TYPE_GSM
@@ -2753,7 +2729,7 @@ public class TelephonyManager {
      */
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY)
     public int getPhoneType() {
-        if (!isVoiceCapable()) {
+        if (!isVoiceCapable() && !isDataCapable()) {
             return PHONE_TYPE_NONE;
         }
         return getCurrentPhoneType();
@@ -6791,7 +6767,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public @EriIconIndex int getCdmaEnhancedRoamingIndicatorDisplayNumber() {
-        return getCdmaEriIconIndex(getSubId());
+        return -1;
     }
 
     /**
@@ -6801,18 +6777,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
     public @EriIconIndex int getCdmaEriIconIndex(int subId) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony == null)
-                return -1;
-            return telephony.getCdmaEriIconIndexForSubscriber(subId, getOpPackageName(),
-                    getAttributionTag());
-        } catch (RemoteException ex) {
-            // the phone process is restarting.
-            return -1;
-        } catch (NullPointerException ex) {
-            return -1;
-        }
+        return -1;
     }
 
     /**
@@ -6825,18 +6790,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
     public @EriIconMode int getCdmaEriIconMode(int subId) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony == null)
-                return -1;
-            return telephony.getCdmaEriIconModeForSubscriber(subId, getOpPackageName(),
-                    getAttributionTag());
-        } catch (RemoteException ex) {
-            // the phone process is restarting.
-            return -1;
-        } catch (NullPointerException ex) {
-            return -1;
-        }
+        return -1;
     }
 
     /**
@@ -6846,7 +6800,7 @@ public class TelephonyManager {
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public String getCdmaEriText() {
-        return getCdmaEriText(getSubId());
+        return null;
     }
 
     /**
@@ -6857,18 +6811,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     @UnsupportedAppUsage
     public String getCdmaEriText(int subId) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony == null)
-                return null;
-            return telephony.getCdmaEriTextForSubscriber(subId, getOpPackageName(),
-                    getAttributionTag());
-        } catch (RemoteException ex) {
-            // the phone process is restarting.
-            return null;
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return null;
     }
 
     // Suppressing AndroidFrameworkCompatChange because we're querying vendor
@@ -8136,15 +8079,6 @@ public class TelephonyManager {
      */
     @UnsupportedAppUsage
     public String nvReadItem(int itemID) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.nvReadItem(itemID);
-        } catch (RemoteException ex) {
-            Rlog.e(TAG, "nvReadItem RemoteException", ex);
-        } catch (NullPointerException ex) {
-            Rlog.e(TAG, "nvReadItem NPE", ex);
-        }
         return "";
     }
 
@@ -8163,15 +8097,6 @@ public class TelephonyManager {
      * @hide
      */
     public boolean nvWriteItem(int itemID, String itemValue) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.nvWriteItem(itemID, itemValue);
-        } catch (RemoteException ex) {
-            Rlog.e(TAG, "nvWriteItem RemoteException", ex);
-        } catch (NullPointerException ex) {
-            Rlog.e(TAG, "nvWriteItem NPE", ex);
-        }
         return false;
     }
 
@@ -8189,15 +8114,6 @@ public class TelephonyManager {
      * @hide
      */
     public boolean nvWriteCdmaPrl(byte[] preferredRoamingList) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.nvWriteCdmaPrl(preferredRoamingList);
-        } catch (RemoteException ex) {
-            Rlog.e(TAG, "nvWriteCdmaPrl RemoteException", ex);
-        } catch (NullPointerException ex) {
-            Rlog.e(TAG, "nvWriteCdmaPrl NPE", ex);
-        }
         return false;
     }
 
@@ -8220,6 +8136,9 @@ public class TelephonyManager {
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public boolean nvResetConfig(int resetType) {
+        if (resetType != 1) {  // 1: reload NV reset (reboot modem)
+            return false;
+        }
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
@@ -8257,16 +8176,6 @@ public class TelephonyManager {
     @SystemApi
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_RADIO_ACCESS)
     public boolean resetRadioConfig() {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                return telephony.resetModemConfig(getSlotIndex());
-            }
-        } catch (RemoteException ex) {
-            Rlog.e(TAG, "resetRadioConfig RemoteException", ex);
-        } catch (NullPointerException ex) {
-            Rlog.e(TAG, "resetRadioConfig NPE", ex);
-        }
         return false;
     }
 
@@ -8321,7 +8230,9 @@ public class TelephonyManager {
             if (telephony == null) {
                 throw new IllegalStateException("telephony service is null.");
             }
-            telephony.rebootModem(getSlotIndex());
+            if (!telephony.rebootModem(getSlotIndex())) {
+                throw new RuntimeException("Couldn't reboot modem (it may be not supported)");
+            }
         } catch (RemoteException ex) {
             Rlog.e(TAG, "rebootRadio RemoteException", ex);
             throw ex.rethrowAsRuntimeException();
@@ -10420,7 +10331,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaMdn() {
-        return getCdmaMdn(getSubId());
+        return null;
     }
 
     /**
@@ -10432,16 +10343,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaMdn(int subId) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony == null)
-                return null;
-            return telephony.getCdmaMdn(subId);
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -10453,7 +10355,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaMin() {
-        return getCdmaMin(getSubId());
+        return null;
     }
 
     /**
@@ -10465,16 +10367,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaMin(int subId) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony == null)
-                return null;
-            return telephony.getCdmaMin(subId);
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -11744,19 +11637,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public @CdmaRoamingMode int getCdmaRoamingMode() {
-        int mode = CDMA_ROAMING_MODE_RADIO_DEFAULT;
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                mode = telephony.getCdmaRoamingMode(getSubId());
-            } else {
-                throw new IllegalStateException("telephony service is null.");
-            }
-        } catch (RemoteException ex) {
-            Log.e(TAG, "Error calling ITelephony#getCdmaRoamingMode", ex);
-            ex.rethrowFromSystemServer();
-        }
-        return mode;
+        return CDMA_ROAMING_MODE_RADIO_DEFAULT;
     }
 
     /**
@@ -11788,21 +11669,6 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public void setCdmaRoamingMode(@CdmaRoamingMode int mode) {
-        if (getPhoneType() != PHONE_TYPE_CDMA) {
-            throw new IllegalStateException("Phone does not support CDMA.");
-        }
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                boolean result = telephony.setCdmaRoamingMode(getSubId(), mode);
-                if (!result) throw new IllegalStateException("radio is unavailable.");
-            } else {
-                throw new IllegalStateException("telephony service is null.");
-            }
-        } catch (RemoteException ex) {
-            Log.e(TAG, "Error calling ITelephony#setCdmaRoamingMode", ex);
-            ex.rethrowFromSystemServer();
-        }
     }
 
     /** @hide */
@@ -11858,19 +11724,7 @@ public class TelephonyManager {
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public @CdmaSubscription int getCdmaSubscriptionMode() {
-        int mode = CDMA_SUBSCRIPTION_RUIM_SIM;
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                mode = telephony.getCdmaSubscriptionMode(getSubId());
-            } else {
-                throw new IllegalStateException("telephony service is null.");
-            }
-        } catch (RemoteException ex) {
-            Log.e(TAG, "Error calling ITelephony#getCdmaSubscriptionMode", ex);
-            ex.rethrowFromSystemServer();
-        }
-        return mode;
+        return CDMA_SUBSCRIPTION_UNKNOWN;
     }
 
     /**
@@ -11898,21 +11752,6 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public void setCdmaSubscriptionMode(@CdmaSubscription int mode) {
-        if (getPhoneType() != PHONE_TYPE_CDMA) {
-            throw new IllegalStateException("Phone does not support CDMA.");
-        }
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                boolean result = telephony.setCdmaSubscriptionMode(getSubId(), mode);
-                if (!result) throw new IllegalStateException("radio is unavailable.");
-            } else {
-                throw new IllegalStateException("telephony service is null.");
-            }
-        } catch (RemoteException ex) {
-            Log.e(TAG, "Error calling ITelephony#setCdmaSubscriptionMode", ex);
-            ex.rethrowFromSystemServer();
-        }
     }
 
     /**
@@ -13614,7 +13453,7 @@ public class TelephonyManager {
     @SystemApi
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaPrlVersion() {
-        return getCdmaPrlVersion(getSubId());
+        return null;
     }
 
     /**
@@ -13627,14 +13466,6 @@ public class TelephonyManager {
      * @hide
      */
     public String getCdmaPrlVersion(int subId) {
-        try {
-            ITelephony service = getITelephony();
-            if (service != null) {
-                return service.getCdmaPrlVersion(subId);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#getCdmaPrlVersion", e);
-        }
         return null;
     }
 
@@ -17266,6 +17097,18 @@ public class TelephonyManager {
     public static void setupISubForTest(ISub iSub) {
         synchronized (sCacheLock) {
             sISub = iSub;
+        }
+    }
+
+    /**
+     * Setup sISms for testing.
+     *
+     * @hide
+     */
+    @VisibleForTesting
+    public static void setupISmsForTest(ISms iSms) {
+        synchronized (sCacheLock) {
+            sISms = iSms;
         }
     }
 
