@@ -734,7 +734,7 @@
     <string name="tuner_toast" msgid="3812684836514766951">"システムUI調整ツールを設定に追加しました"</string>
     <string name="remove_from_settings" msgid="633775561782209994">"設定から削除"</string>
     <string name="remove_from_settings_prompt" msgid="551565437265615426">"設定からシステムUI調整ツールを削除して、全機能の使用を停止しますか？"</string>
-    <string name="enable_bluetooth_title" msgid="866883307336662596">"BluetoothをONにしますか？"</string>
+    <string name="enable_bluetooth_title" msgid="866883307336662596">"Bluetoothを ON にしますか？"</string>
     <string name="enable_bluetooth_message" msgid="6740938333772779717">"タブレットでキーボードに接続するには、最初にBluetoothをONにする必要があります。"</string>
     <string name="enable_bluetooth_confirmation_ok" msgid="2866408183324184876">"ONにする"</string>
     <string name="rotation_lock_camera_rotation_on" msgid="789434807790534274">"ON - 顔ベース"</string>

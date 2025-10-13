@@ -296,7 +296,7 @@
     <string name="quick_settings_modes_label" msgid="879156359479504244">"模式"</string>
     <string name="quick_settings_bluetooth_label" msgid="7018763367142041481">"藍牙"</string>
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"找不到配對的裝置"</string>
-    <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"輕按即可連結或解除連結裝置"</string>
+    <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"輕按即可連接或解除連接裝置"</string>
     <string name="pair_new_bluetooth_devices" msgid="4601767620843349645">"配對新裝置"</string>
     <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"查看全部"</string>
     <string name="turn_on_bluetooth" msgid="5681370462180289071">"使用藍牙"</string>
