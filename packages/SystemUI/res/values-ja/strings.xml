@@ -648,7 +648,7 @@
     <string name="screen_pinning_description_recents_invisible_accessible" msgid="2857071808674481986">"固定を解除するまで画面が常に表示されるようになります。[ホーム] を押し続けると固定が解除されます。"</string>
     <string name="screen_pinning_exposes_personal_data" msgid="8189852022981524789">"個人データ（連絡先やメールの内容など）にアクセスされる可能性があります。"</string>
     <string name="screen_pinning_can_open_other_apps" msgid="7529756813231421455">"固定したアプリが他のアプリを開く可能性があります。"</string>
-    <string name="screen_pinning_toast" msgid="8177286912533744328">"このアプリの固定を解除するには [戻る] ボタンと [最近] ボタンを長押しします"</string>
+    <string name="screen_pinning_toast" msgid="8177286912533744328">"このアプリの固定を解除するには [戻る] ボタンと [最近使ったアプリ] ボタンを長押しします"</string>
     <string name="screen_pinning_toast_recents_invisible" msgid="6850978077443052594">"このアプリの固定を解除するには [戻る] ボタンと [ホーム] ボタンを長押しします"</string>
     <string name="screen_pinning_toast_gesture_nav" msgid="170699893395336705">"このアプリの固定を解除するには、上にスワイプして長押しします"</string>
     <string name="screen_pinning_positive" msgid="3285785989665266984">"OK"</string>

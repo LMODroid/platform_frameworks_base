@@ -578,7 +578,7 @@
     <string name="no_unseen_notif_text" msgid="395512586119868682">"புதிய அறிவிப்புகள் இல்லை"</string>
     <string name="adaptive_notification_edu_hun_title" msgid="7790738150177329960">"\'குறைந்த ஒலியளவில் அறிவிப்புகள்\' இயக்கப்பட்டுள்ளது"</string>
     <string name="adaptive_notification_edu_hun_text" msgid="7743367744129536610">"ஒரே நேரம் பல அறிவிப்புகள் வரும்போது சாதன ஒலியளவும் விழிப்பூட்டலும் தானாக 2 நிமிடம் குறைக்கப்படும்."</string>
-    <string name="go_to_adaptive_notification_settings" msgid="2423690125178298479">"முடக்கு"</string>
+    <string name="go_to_adaptive_notification_settings" msgid="2423690125178298479">"ஆஃப் செய்"</string>
     <string name="unlock_to_see_notif_text" msgid="7439033907167561227">"பழைய அறிவிப்பைப் பார்க்க அன்லாக் செய்க"</string>
     <string name="quick_settings_disclosure_parental_controls" msgid="2114102871438223600">"இந்தச் சாதனம் உங்கள் பெற்றோரால் நிர்வகிக்கப்படுகிறது"</string>
     <string name="quick_settings_disclosure_management_monitoring" msgid="8231336875820702180">"இந்த சாதனம் உங்கள் நிறுவனத்துக்கு உரியது, நெட்வொர்க் ட்ராஃபிக்கையும் நிறுவனமே கண்காணிக்கக்கூடும்"</string>
