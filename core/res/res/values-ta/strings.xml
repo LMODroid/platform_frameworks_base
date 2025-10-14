@@ -1293,7 +1293,7 @@
     <string name="android_upgrading_complete" msgid="409800058018374746">"துவக்குதலை முடிக்கிறது."</string>
     <string name="fp_power_button_enrollment_message" msgid="5648173517663246140">"நீங்கள் பவர் பட்டனை அழுத்தியுள்ளீர்கள் — வழக்கமாக இது திரையை ஆஃப் செய்யும்.\n\nஉங்கள் கைரேகையை அமைக்கும்போது மெதுவாகத் தொடுங்கள்."</string>
     <string name="fp_power_button_enrollment_title" msgid="6976841690455338563">"அமைவை நிறைவுசெய்ய திரையை முடக்குங்கள்"</string>
-    <string name="fp_power_button_enrollment_button_text" msgid="3199783266386029200">"முடக்கு"</string>
+    <string name="fp_power_button_enrollment_button_text" msgid="3199783266386029200">"ஆஃப் செய்"</string>
     <string name="fp_power_button_bp_title" msgid="5585506104526820067">"கைரேகைச் சரிபார்ப்பைத் தொடரவா?"</string>
     <string name="fp_power_button_bp_message" msgid="2983163038168903393">"நீங்கள் பவர் பட்டனை அழுத்தியுள்ளீர்கள் — வழக்கமாக இது திரையை ஆஃப் செய்யும்.\n\nஉங்கள் கைரேகையைச் சரிபார்க்க மெதுவாகத் தொடுங்கள்."</string>
     <string name="fp_power_button_bp_positive_button" msgid="728945472408552251">"திரையை ஆஃப் செய்"</string>
@@ -2400,7 +2400,7 @@
     <string name="concurrent_display_notification_power_save_title" msgid="1794569070730736281">"Dual Screen அம்சத்தைப் பயன்படுத்த முடியாது"</string>
     <string name="concurrent_display_notification_power_save_content" msgid="2198116070583851493">"பேட்டரி சேமிப்பான் இயக்கத்தில் இருப்பதால் Dual Screen அம்சத்தைப் பயன்படுத்த முடியாது. இதை நீங்கள் அமைப்புகளில் முடக்கலாம்."</string>
     <string name="device_state_notification_settings_button" msgid="691937505741872749">"அமைப்புகளைத் திற"</string>
-    <string name="device_state_notification_turn_off_button" msgid="6327161707661689232">"முடக்கு"</string>
+    <string name="device_state_notification_turn_off_button" msgid="6327161707661689232">"ஆஃப் செய்"</string>
     <string name="keyboard_layout_notification_selected_title" msgid="1202560174252421219">"<xliff:g id="DEVICE_NAME">%s</xliff:g> சாதனம் உள்ளமைக்கப்பட்டது"</string>
     <string name="keyboard_layout_notification_one_selected_message" msgid="4314216053129257197">"கீபோர்டு தளவமைப்பு <xliff:g id="LAYOUT_1">%s</xliff:g> மொழியில் அமைக்கப்பட்டது. மாற்ற தட்டவும்."</string>
     <string name="keyboard_layout_notification_two_selected_message" msgid="1876349944065922950">"<xliff:g id="LAYOUT_1">%1$s</xliff:g>, <xliff:g id="LAYOUT_2">%2$s</xliff:g> ஆகிய மொழிகளில் கீபோர்டு தளவமைப்பு அமைக்கப்பட்டது. மாற்ற தட்டவும்."</string>
