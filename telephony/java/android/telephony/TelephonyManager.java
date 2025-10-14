@@ -681,7 +681,7 @@ public class TelephonyManager {
             case UNKNOWN:
                 modemCount = 1;
                 // check for voice and data support, 0 if not supported
-                if (!isVoiceCapable() && !isSmsCapable() && !isDataCapable()) {
+                if (!isDeviceVoiceCapable() && !isSmsCapable() && !isDataCapable()) {
                     modemCount = 0;
                 }
                 break;
@@ -2729,7 +2729,7 @@ public class TelephonyManager {
      */
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY)
     public int getPhoneType() {
-        if (!isVoiceCapable() && !isDataCapable()) {
+        if (!isDeviceVoiceCapable() && !isDataCapable()) {
             return PHONE_TYPE_NONE;
         }
         return getCurrentPhoneType();
@@ -6238,6 +6238,7 @@ public class TelephonyManager {
      * @deprecated use {@link #getImsPrivateUserIdentity()}
      */
     @UnsupportedAppUsage
+    @Deprecated
     public String getIsimImpi() {
         try {
             IPhoneSubInfo info = getSubscriberInfoService();
@@ -6324,6 +6325,7 @@ public class TelephonyManager {
      * @deprecated use {@link #getImsPublicUserIdentities()}
      */
     @UnsupportedAppUsage
+    @Deprecated
     @Nullable
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public String[] getIsimImpu() {
@@ -6854,7 +6856,8 @@ public class TelephonyManager {
      */
     @Deprecated
     public boolean isVoiceCapable() {
-        return hasCapability(PackageManager.FEATURE_TELEPHONY_CALLING,
+        if (mContext == null) return true;
+        return mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_voice_capable);
     }
 
@@ -6879,7 +6882,8 @@ public class TelephonyManager {
      */
     @FlaggedApi(Flags.FLAG_DATA_ONLY_CELLULAR_SERVICE)
     public boolean isDeviceVoiceCapable() {
-        return isVoiceCapable();
+        return hasCapability(PackageManager.FEATURE_TELEPHONY_CALLING,
+                com.android.internal.R.bool.config_voice_capable);
     }
 
     /**
@@ -8194,6 +8198,7 @@ public class TelephonyManager {
      *          {@link PackageManager#FEATURE_TELEPHONY_RADIO_ACCESS}.
      * @hide
      */
+    @Deprecated
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     @SystemApi
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_RADIO_ACCESS)
@@ -10194,9 +10199,19 @@ public class TelephonyManager {
     public boolean hasCarrierPrivileges(int subId) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                return telephony.getCarrierPrivilegeStatus(subId)
-                        == CARRIER_PRIVILEGE_STATUS_HAS_ACCESS;
+            if (telephony == null) {
+                Rlog.e(TAG, "hasCarrierPrivileges: no Telephony service");
+                return false;
+            }
+            int status = telephony.getCarrierPrivilegeStatus(subId);
+            switch (status) {
+                case CARRIER_PRIVILEGE_STATUS_HAS_ACCESS:
+                    return true;
+                case CARRIER_PRIVILEGE_STATUS_NO_ACCESS:
+                    return false;
+                default:
+                    Rlog.e(TAG, "hasCarrierPrivileges: " + status);
+                    return false;
             }
         } catch (RemoteException ex) {
             Rlog.e(TAG, "hasCarrierPrivileges RemoteException", ex);
@@ -13511,6 +13526,7 @@ public class TelephonyManager {
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CARRIERLOCK)
     public int setAllowedCarriers(int slotIndex, List<CarrierIdentifier> carriers) {
