@@ -68,7 +68,7 @@
     <string name="permission_notifications_summary" msgid="2272810466047367030">"• Elolvashat minden értesítést, ideértve az olyan információkat, mint a névjegyek, az üzenetek és a fotók.&lt;br/&gt;• Értesítéseket küldhet.&lt;br/&gt;&lt;br/&gt;A Beállítások &gt; Értesítések menüpontban bármikor kezelheti az alkalmazás értesítések olvasására és küldésére való képességét."</string>
     <string name="permission_storage_summary" msgid="3918240895519506417"></string>
     <string name="permission_media_routing_control_summary" msgid="2714631092321412250">"Hozzáférhet a rendelkezésre álló eszközök listájához, és szabályozhatja, hogy melyik streamelhet vagy küldhet át hang- vagy videotartalmat más alkalmazásokból"</string>
-    <string name="device_type" product="default" msgid="8268703872070046263">"telefonján"</string>
+    <string name="device_type" product="default" msgid="8268703872070046263">"az Ön telefonján"</string>
     <string name="device_type" product="tablet" msgid="5038791954983067774">"táblagépén"</string>
     <string name="device_type" product="tv" msgid="5355611506659405636">"tévé"</string>
     <string name="device_type" product="device" msgid="1526125965802507189">"eszköz"</string>

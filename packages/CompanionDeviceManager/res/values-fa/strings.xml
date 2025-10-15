@@ -24,7 +24,7 @@
     <string name="summary_watch" msgid="8134580124808507407">"به این برنامه اجازه داده می‌شود اطلاعاتی مثل نام تماس‌گیرنده را همگام‌سازی کند و به این اجازه‌ها در <xliff:g id="DEVICE_TYPE">%1$s</xliff:g> شما دسترسی داشته باشد"</string>
     <string name="confirmation_title_glasses" msgid="8288346850537727333">"‏به &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; اجازه داده شود &lt;strong&gt;<xliff:g id="DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt; را مدیریت کند؟"</string>
     <string name="profile_name_glasses" msgid="3506504967216601277">"دستگاه"</string>
-    <string name="summary_glasses" msgid="5469208629679579157">"این برنامه قادر خواهد بود به این اجازه‌ها در <xliff:g id="DEVICE_TYPE">%1$s</xliff:g> شما دسترسی پیدا کند"</string>
+    <string name="summary_glasses" msgid="5469208629679579157">"این برنامه اجازه خواهد داشت به این اجازه‌ها در <xliff:g id="DEVICE_TYPE">%1$s</xliff:g> شما دسترسی پیدا کند"</string>
     <string name="title_app_streaming" msgid="6845373585257287200">"‏به &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; اجازه می‌دهید برنامه‌های <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> را در &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt; جاری‌سازی کند؟"</string>
     <string name="summary_app_streaming" msgid="1274464413649731829">"‏‫<xliff:g id="APP_NAME_0">%1$s</xliff:g> به هرچیزی که در <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> نمایان است یا پخش می‌شود، ازجمله صداها، عکس‌ها، گذرواژه‌ها، و پیام‌ها دسترسی خواهد داشت.&lt;br/&gt;&lt;br/&gt;تا زمانی‌که دسترسی به این اجازه را حذف نکنید، <xliff:g id="APP_NAME_1">%1$s</xliff:g> می‌تواند برنامه‌ها را در <xliff:g id="DEVICE_NAME">%3$s</xliff:g> جاری‌سازی کند."</string>
     <string name="helper_summary_app_streaming" msgid="1944832605534698562">"‫<xliff:g id="APP_NAME">%1$s</xliff:g> ازطرف <xliff:g id="DEVICE_NAME">%2$s</xliff:g> اجازه می‌خواهد برنامه‌ها را بین دستگاه‌های شما نمایش دهد و جاری‌سازی کند"</string>
@@ -37,7 +37,7 @@
     <string name="summary_nearby_device_streaming" msgid="962267343109051648">"‏‫<xliff:g id="APP_NAME_0">%1$s</xliff:g> به هرچیزی که در <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> شما نمایان است یا پخش می‌شود، ازجمله صداها، عکس‌ها، اطلاعات پرداخت، گذرواژه‌ها، و پیام‌ها دسترسی خواهد داشت.&lt;br/&gt;&lt;br/&gt;تا زمانی‌که دسترسی به این اجازه را حذف نکنید، <xliff:g id="APP_NAME_1">%1$s</xliff:g> می‌تواند برنامه‌ها و ویژگی‌های سیستم را در <xliff:g id="DEVICE_NAME">%3$s</xliff:g> جاری‌سازی کند."</string>
     <string name="helper_summary_nearby_device_streaming" msgid="8509848562931818793">"‫<xliff:g id="APP_NAME">%1$s</xliff:g> ازطرف <xliff:g id="DEVICE_NAME">%2$s</xliff:g> اجازه می‌خواهد برنامه‌ها و دیگر ویژگی‌های سیستم را بین دستگاه‌های شما جاری‌سازی کند"</string>
     <string name="profile_name_generic" msgid="6851028682723034988">"دستگاه"</string>
-    <string name="summary_generic" msgid="1761976003668044801">"این برنامه مجاز می‌شود اطلاعتی مثل نام شخصی را که تماس می‌گیرد بین تلفن شما و دستگاه انتخاب‌شده همگام‌سازی کند"</string>
+    <string name="summary_generic" msgid="1761976003668044801">"این برنامه خواهد توانست اطلاعاتی مانند نام شخص تماس‌گیرنده را بین تلفن شما و دستگاه انتخاب‌شده همگام‌سازی کند"</string>
     <string name="consent_yes" msgid="8344487259618762872">"اجازه دادن"</string>
     <string name="consent_no" msgid="2640796915611404382">"اجازه ندادن"</string>
     <string name="consent_cancel" msgid="5655005528379285841">"لغو"</string>
@@ -63,7 +63,7 @@
     <string name="permission_contacts_summary" msgid="2840800622763086808">"دسترسی به مخاطبین"</string>
     <string name="permission_calendar_summary" msgid="8430353935747336165">"دسترسی به تقویم"</string>
     <string name="permission_microphone_summary" msgid="4862628553869973259">"ضبط کردن صدا"</string>
-    <string name="permission_nearby_devices_summary" msgid="1306752848196464817">"پیدا کردن، تعیین موقعیت نسبی، و متصل شدن به دستگاه‌های اطراف"</string>
+    <string name="permission_nearby_devices_summary" msgid="1306752848196464817">"دستگاه‌های اطراف را پیدا کنید، به آن‌ها متصل شوید، و موقعیت نسبی آن‌ها را مشخصی کنید"</string>
     <string name="permission_notification_listener_access_summary" msgid="7856071768185367749">"خواندن همه اعلان‌ها، شامل اطلاعاتی مثل مخاطبین، پیام‌ها، و عکس‌ها"</string>
     <string name="permission_notifications_summary" msgid="2272810466047367030">"‏• خواندن همه اعلان‌ها، شامل اطلاعاتی مثل مخاطبین، پیام‌ها، و عکس‌ها&lt;br/&gt;• ارسال اعلان&lt;br/&gt;&lt;br/&gt;هرزمان بخواهید می‌توانید این توانایی برنامه برای خواندن و ارسال اعلان را در «تنظیمات > اعلان‌ها» مدیریت کنید."</string>
     <string name="permission_storage_summary" msgid="3918240895519506417"></string>
