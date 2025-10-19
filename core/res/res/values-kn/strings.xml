@@ -1670,7 +1670,7 @@
     <string name="media_route_chooser_title_for_remote_display" msgid="3105906508794326446">"ಸ್ಕ್ರೀನ್ ಅನ್ನು ಸಾಧನದಲ್ಲಿ ಬಿತ್ತರಿಸಿ"</string>
     <string name="media_route_chooser_searching" msgid="6119673534251329535">"ಸಾಧನಗಳನ್ನು ಹುಡುಕಲಾಗುತ್ತಿದೆ…"</string>
     <string name="media_route_chooser_extended_settings" msgid="2506352159381327741">"ಸೆಟ್ಟಿಂಗ್‌ಗಳು"</string>
-    <string name="media_route_controller_disconnect" msgid="7362617572732576959">"ಸಂಪರ್ಕ ಕಡಿತಗೊಳಿಸಿ"</string>
+    <string name="media_route_controller_disconnect" msgid="7362617572732576959">"ಡಿಸ್‌ಕನೆಕ್ಟ್ ಮಾಡಿ"</string>
     <string name="media_route_status_scanning" msgid="8045156315309594482">"ಸ್ಕ್ಯಾನ್ ಮಾಡಲಾಗುತ್ತಿದೆ…"</string>
     <string name="media_route_status_connecting" msgid="5845597961412010540">"ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ..."</string>
     <string name="media_route_status_available" msgid="1477537663492007608">"ಲಭ್ಯ"</string>
