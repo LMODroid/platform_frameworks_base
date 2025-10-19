@@ -286,7 +286,7 @@
     <string name="accessibility_sensors_off_active" msgid="2619725434618911551">"सेन्सर निष्क्रिय नामक सुविधा सक्रिय छ"</string>
     <string name="accessibility_clear_all" msgid="970525598287244592">"सबै सूचनाहरू हटाउनुहोस्।"</string>
     <string name="notification_group_overflow_indicator" msgid="7605120293801012648">"+ <xliff:g id="NUMBER">%s</xliff:g>"</string>
-    <string name="notification_group_overflow_description" msgid="7176322877233433278">"{count,plural, =1{समूहभित्र थप # सूचना छ।}other{समूहभित्र थप # वटा सूचना छन्।}}"</string>
+    <string name="notification_group_overflow_description" msgid="7176322877233433278">"{count,plural, =1{समूहभित्र थप # नोटिफिकेसन छ।}other{समूहभित्र थप # वटा नोटिफिकेसन छन्।}}"</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="936972553861524360">"स्क्रिनलाई ल्यान्डस्केप अवस्थामा बन्द गरिएको छ।"</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="2356633398683813837">"स्क्रिन पोर्टेट अभिमूखमा लक गरिएको छ।"</string>
     <string name="dessert_case" msgid="9104973640704357717">"Dessert Case"</string>
@@ -1298,7 +1298,7 @@
     <string name="dream_overlay_status_bar_camera_off" msgid="5273073778969890823">"क्यामेरा अफ छ"</string>
     <string name="dream_overlay_status_bar_mic_off" msgid="8366534415013819396">"माइक अफ छ"</string>
     <string name="dream_overlay_status_bar_camera_mic_off" msgid="3199425257833773569">"क्यामेरा र माइक अफ छन्"</string>
-    <string name="dream_overlay_status_bar_notification_indicator" msgid="8091389255691081711">"{count,plural, =1{# वटा सूचना}other{# वटा सूचनाहरू}}"</string>
+    <string name="dream_overlay_status_bar_notification_indicator" msgid="8091389255691081711">"{count,plural, =1{# वटा नोटिफिकेसन}other{# वटा नोटिफिकेसनहरू}}"</string>
     <string name="dream_overlay_weather_complication_desc" msgid="824503662089783824">"<xliff:g id="WEATHER_CONDITION">%1$s</xliff:g>, <xliff:g id="TEMPERATURE">%2$s</xliff:g>"</string>
     <string name="note_task_button_label" msgid="230135078402003532">"नोट लेख्ने कार्य"</string>
     <string name="note_task_shortcut_long_label" msgid="7729325091147319409">"नोट लेख्ने कार्य, <xliff:g id="NOTE_TAKING_APP">%1$s</xliff:g>"</string>

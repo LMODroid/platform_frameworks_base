@@ -299,7 +299,7 @@
     <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"Нажмите, чтобы подключить или отключить устройство."</string>
     <string name="pair_new_bluetooth_devices" msgid="4601767620843349645">"Подключить устройство"</string>
     <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"Все"</string>
-    <string name="turn_on_bluetooth" msgid="5681370462180289071">"Использовать"</string>
+    <string name="turn_on_bluetooth" msgid="5681370462180289071">"Использовать Bluetooth"</string>
     <string name="quick_settings_bluetooth_device_connected" msgid="7884777006729260996">"Подключено"</string>
     <string name="quick_settings_bluetooth_device_audio_sharing" msgid="1496358082943301670">"Передача аудио"</string>
     <string name="quick_settings_bluetooth_device_audio_sharing_or_switch_active" msgid="3227408556754456024">"Нажмите, чтобы переключить аудио или поделиться им"</string>
@@ -1254,7 +1254,7 @@
     <string name="non_carrier_network_unavailable" msgid="770049357024492372">"Нет других доступных сетей"</string>
     <string name="all_network_unavailable" msgid="4112774339909373349">"Нет доступных сетей"</string>
     <string name="turn_on_wifi" msgid="1308379840799281023">"Wi-Fi"</string>
-    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"Чтобы подключиться к сети, нажмите на ее название"</string>
+    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"Чтобы подключиться к сети, нажмите на ее название."</string>
     <string name="unlock_to_view_networks" msgid="5072880496312015676">"Разблокируйте, чтобы посмотреть сети Wi-Fi."</string>
     <string name="wifi_empty_list_wifi_on" msgid="3864376632067585377">"Поиск сетей…"</string>
     <string name="wifi_failed_connect_message" msgid="4161863112079000071">"Не удалось подключиться к сети"</string>
