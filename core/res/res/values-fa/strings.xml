@@ -1127,7 +1127,7 @@
     <string name="oneMonthDurationPast" msgid="4538030857114635777">"۱ ماه قبل"</string>
     <string name="beforeOneMonthDurationPast" msgid="8315149541372065392">"قبل از ۱ ماه گذشته"</string>
     <string name="last_num_days" msgid="2393660431490280537">"{count,plural, =1{# روز گذشته}one{# روز گذشته}other{# روز گذشته}}"</string>
-    <string name="last_month" msgid="1528906781083518683">"ماه گذشته"</string>
+    <string name="last_month" msgid="1528906781083518683">"ماه پیش"</string>
     <string name="older" msgid="1645159827884647400">"قدیمی‌تر"</string>
     <string name="preposition_for_date" msgid="2780767868832729599">"در <xliff:g id="DATE">%s</xliff:g>"</string>
     <string name="preposition_for_time" msgid="4336835286453822053">"در <xliff:g id="TIME">%s</xliff:g>"</string>
