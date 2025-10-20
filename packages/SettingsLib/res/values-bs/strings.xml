@@ -105,7 +105,7 @@
     <string name="bluetooth_battery_level_untethered_right" msgid="8377995536997790142">"Desno: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g> baterije"</string>
     <string name="tv_bluetooth_battery_level_untethered_left" msgid="337629670583744410">"Lijeva <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="tv_bluetooth_battery_level_untethered_right" msgid="8610019317279155595">"Desna <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
-    <string name="bluetooth_active_no_battery_level" msgid="4155462233006205630">"Aktivan"</string>
+    <string name="bluetooth_active_no_battery_level" msgid="4155462233006205630">"Aktivno"</string>
     <string name="bluetooth_saved_device" msgid="4895871321722311428">"Sačuvano"</string>
     <string name="bluetooth_hearing_aid_left_active" msgid="8330226430756799572">"Aktivno (samo lijevo)"</string>
     <string name="bluetooth_hearing_aid_right_active" msgid="2244728507170385397">"Aktivno (samo desno)"</string>
