@@ -473,7 +473,7 @@
     <string name="daltonizer_mode_protanomaly" msgid="7805583306666608440">"Protanomaly (အနီ-အစိမ်း)"</string>
     <string name="daltonizer_mode_tritanomaly" msgid="7135266249220732267">"Tritanomaly (အပြာ-အဝါ)"</string>
     <string name="accessibility_display_daltonizer_preference_title" msgid="1810693571332381974">"အရောင် အမှန်ပြင်ခြင်း"</string>
-    <string name="accessibility_display_daltonizer_preference_subtitle" msgid="1522101114585266455">"အရောင် အမှန်ပြင်ခြင်းသည် အောက်ပါတို့အတွက် အသုံးဝင်နိုင်သည်-&lt;br/&gt; &lt;ol&gt; &lt;li&gt;&amp;nbsp;အရောင်များကို ပိုမိုမှန်ကန်စွာ ကြည့်ရှုရန်&lt;/li&gt; &lt;li&gt;&amp;nbsp;အာရုံစိုက်နိုင်ရန် အရောင်များ ဖယ်ရှားရန်&lt;/li&gt; &lt;/ol&gt;"</string>
+    <string name="accessibility_display_daltonizer_preference_subtitle" msgid="1522101114585266455">"အရောင် အမှန်ပြင်ခြင်းသည် အောက်ပါတို့အတွက် အသုံးဝင်နိုင်သည်-&lt;br/&gt; &lt;ol&gt; &lt;li&gt;&amp;nbsp;အရောင်များကို ပိုမိုမှန်ကန်စွာ ကြည့်ရှုရန်&lt;/li&gt; &lt;li&gt;&amp;nbsp;အရောင်များ ဖယ်ရှားခြင်းဖြင့် အာရုံပိုစိုက်နိုင်ရန် &lt;/li&gt; &lt;/ol&gt;"</string>
     <string name="daltonizer_type_overridden" msgid="4509604753672535721">"<xliff:g id="TITLE">%1$s</xliff:g> မှ ကျော်၍ လုပ်ထားသည်။"</string>
     <string name="power_remaining_settings_home_page" msgid="4885165789445462557">"<xliff:g id="PERCENTAGE">%1$s</xliff:g> - <xliff:g id="TIME_STRING">%2$s</xliff:g>"</string>
     <string name="power_charging_on_hold_settings_home_page" msgid="7690464049464805856">"<xliff:g id="LEVEL">%1$s</xliff:g> - ဘက်ထရီကာကွယ်ရန် အားသွင်းခြင်းကို ခဏရပ်ထားသည်"</string>
@@ -518,7 +518,7 @@
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"အမြန်အားသွင်းခြင်း"</string>
     <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"စီမံခန့်ခွဲသူက ထိန်းချုပ်ထားသည်"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"ကန့်သတ်ဆက်တင်ဖြင့် ထိန်းချုပ်ထားသည်"</string>
-    <string name="disabled" msgid="8017887509554714950">"ပိတ်ထားပြီး"</string>
+    <string name="disabled" msgid="8017887509554714950">"ပိတ်ထားသည်"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"ခွင့်ပြုထားသည်"</string>
     <string name="external_source_untrusted" msgid="5037891688911672227">"ခွင့်မပြုပါ"</string>
     <string name="install_other_apps" msgid="3232595082023199454">"အမည်မသိအက်ပ် ထည့်သွင်းခြင်း"</string>

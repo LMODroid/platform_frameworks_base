@@ -469,7 +469,7 @@
     <string name="picture_color_mode_desc" msgid="151780973768136200">"‏استخدام sRGB"</string>
     <string name="daltonizer_mode_disabled" msgid="403424372812399228">"غير مفعّلة"</string>
     <string name="daltonizer_mode_monochromacy" msgid="362060873835885014">"عمى ألوان كامل"</string>
-    <string name="daltonizer_mode_deuteranomaly" msgid="3507284319584683963">"العجز في رؤية اللونين الأخضر والأحمر"</string>
+    <string name="daltonizer_mode_deuteranomaly" msgid="3507284319584683963">"العجز عن رؤية بعض درجات الأخضر"</string>
     <string name="daltonizer_mode_protanomaly" msgid="7805583306666608440">"غطش الأحمر (الأحمر والأخضر)"</string>
     <string name="daltonizer_mode_tritanomaly" msgid="7135266249220732267">"غمش الأزرق (الأزرق والأصفر)"</string>
     <string name="accessibility_display_daltonizer_preference_title" msgid="1810693571332381974">"تصحيح الألوان"</string>
