@@ -1254,7 +1254,7 @@
     <string name="non_carrier_network_unavailable" msgid="770049357024492372">"Ühtegi muud võrku pole saadaval"</string>
     <string name="all_network_unavailable" msgid="4112774339909373349">"Ühtegi võrku pole saadaval"</string>
     <string name="turn_on_wifi" msgid="1308379840799281023">"WiFi"</string>
-    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"Puudutage ühendamiseks võrku"</string>
+    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"Puudutage ühendamiseks võrku."</string>
     <string name="unlock_to_view_networks" msgid="5072880496312015676">"Võrkude vaatamiseks avage"</string>
     <string name="wifi_empty_list_wifi_on" msgid="3864376632067585377">"Võrkude otsimine …"</string>
     <string name="wifi_failed_connect_message" msgid="4161863112079000071">"Võrguühenduse loomine ebaõnnestus"</string>
