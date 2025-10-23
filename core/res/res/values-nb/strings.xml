@@ -923,7 +923,7 @@
     <string name="phoneTypeCar" msgid="4604775148963129195">"Bil"</string>
     <string name="phoneTypeCompanyMain" msgid="4482773154536455441">"Firma hoved"</string>
     <string name="phoneTypeIsdn" msgid="2496238954533998512">"ISDN"</string>
-    <string name="phoneTypeMain" msgid="5199722006991000111">"Hoved"</string>
+    <string name="phoneTypeMain" msgid="5199722006991000111">"Primær"</string>
     <string name="phoneTypeOtherFax" msgid="3037145630364770357">"Faks annen"</string>
     <string name="phoneTypeRadio" msgid="2637819130239264771">"Radio"</string>
     <string name="phoneTypeTelex" msgid="2558783611711876562">"Teleks"</string>
