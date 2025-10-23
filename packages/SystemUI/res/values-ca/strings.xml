@@ -1030,7 +1030,7 @@
     <string name="magnification_window_title" msgid="4863914360847258333">"Finestra d\'ampliació"</string>
     <string name="magnification_controls_title" msgid="8421106606708891519">"Finestra de controls d\'ampliació"</string>
     <string name="accessibility_control_zoom_in" msgid="1189272315480097417">"Amplia"</string>
-    <string name="accessibility_control_zoom_out" msgid="69578832020304084">"Redueix"</string>
+    <string name="accessibility_control_zoom_out" msgid="69578832020304084">"Redueix el zoom"</string>
     <string name="accessibility_control_move_up" msgid="6622825494014720136">"Mou cap amunt"</string>
     <string name="accessibility_control_move_down" msgid="5390922476900974512">"Mou cap avall"</string>
     <string name="accessibility_control_move_left" msgid="8156206978511401995">"Mou cap a l\'esquerra"</string>
