@@ -65,7 +65,7 @@
     <string name="permission_microphone_summary" msgid="4862628553869973259">"ضبط کردن صدا"</string>
     <string name="permission_nearby_devices_summary" msgid="1306752848196464817">"دستگاه‌های اطراف را پیدا کنید، به آن‌ها متصل شوید، و موقعیت نسبی آن‌ها را مشخصی کنید"</string>
     <string name="permission_notification_listener_access_summary" msgid="7856071768185367749">"خواندن همه اعلان‌ها، شامل اطلاعاتی مثل مخاطبین، پیام‌ها، و عکس‌ها"</string>
-    <string name="permission_notifications_summary" msgid="2272810466047367030">"‏• خواندن همه اعلان‌ها، شامل اطلاعاتی مثل مخاطبین، پیام‌ها، و عکس‌ها&lt;br/&gt;• ارسال اعلان&lt;br/&gt;&lt;br/&gt;هرزمان بخواهید می‌توانید این توانایی برنامه برای خواندن و ارسال اعلان را در «تنظیمات > اعلان‌ها» مدیریت کنید."</string>
+    <string name="permission_notifications_summary" msgid="2272810466047367030">"‏• خواندن همه اعلان‌ها، شامل اطلاعاتی مثل مخاطبین، پیام‌ها، و عکس‌ها&lt;br/&gt;• ارسال اعلان&lt;br/&gt;&lt;br/&gt;هر زمان‌که بخواهید می‌توانید این توانایی برنامه برای خواندن و ارسال اعلان را در «تنظیمات > اعلان‌ها» مدیریت کنید."</string>
     <string name="permission_storage_summary" msgid="3918240895519506417"></string>
     <string name="permission_media_routing_control_summary" msgid="2714631092321412250">"دسترسی به فهرست دستگاه‌های دردسترس و کنترل اینکه کدام دستگاه صدا یا ویدیو را از برنامه‌های دیگر جاری‌سازی یا پخش کند"</string>
     <string name="device_type" product="default" msgid="8268703872070046263">"تلفن"</string>
