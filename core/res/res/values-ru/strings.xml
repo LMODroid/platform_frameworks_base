@@ -711,7 +711,7 @@
     <string name="face_acquired_insufficient" msgid="6889245852748492218">"Невозможно создать модель лица. Повторите попытку."</string>
     <string name="face_acquired_too_bright" msgid="8070756048978079164">"Слишком светло. Сделайте освещение менее ярким."</string>
     <string name="face_acquired_too_dark" msgid="8539853432479385326">"Недостаточно света"</string>
-    <string name="face_acquired_too_close" msgid="4453646176196302462">"Переместите телефон дальше от лица"</string>
+    <string name="face_acquired_too_close" msgid="4453646176196302462">"Отодвиньте телефон дальше от лица"</string>
     <string name="face_acquired_too_far" msgid="2922278214231064859">"Переместите телефон ближе к лицу"</string>
     <string name="face_acquired_too_high" msgid="8278815780046368576">"Переместите телефон выше"</string>
     <string name="face_acquired_too_low" msgid="4075391872960840081">"Переместите телефон ниже"</string>
