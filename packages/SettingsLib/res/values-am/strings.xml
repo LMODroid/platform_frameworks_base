@@ -196,7 +196,7 @@
     <string name="launch_defaults_some" msgid="3631650616557252926">"አንዳንድ ነባሪዎ ተዘጋጅተዋል"</string>
     <string name="launch_defaults_none" msgid="8049374306261262709">"ምንም ነባሪዎች አልተዘጋጁም"</string>
     <string name="tts_settings" msgid="8130616705989351312">"ጽሁፍ-ወደ-ንግግር ቅንብሮች"</string>
-    <string name="tts_settings_title" msgid="7602210956640483039">"የፅሁፍ- ወደ- ንግግር ውፅዓት"</string>
+    <string name="tts_settings_title" msgid="7602210956640483039">"የፅሑፍ- ወደ- ንግግር ውፅዓት"</string>
     <string name="tts_default_rate_title" msgid="3964187817364304022">" የንግግር ደረጃ"</string>
     <string name="tts_default_rate_summary" msgid="3781937042151716987">"የተነገረበትን ጽሁፍ አፍጥን"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"ቅላፄ"</string>

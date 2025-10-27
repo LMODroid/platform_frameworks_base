@@ -541,7 +541,7 @@
     <string name="retail_demo_reset_next" msgid="3688129033843885362">"Další"</string>
     <string name="retail_demo_reset_title" msgid="1866911701095959800">"Zadejte heslo"</string>
     <string name="active_input_method_subtypes" msgid="4232680535471633046">"Aktivní metody zadávání"</string>
-    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Použít systémové jazyky"</string>
+    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Jazyky systému"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"Nastavení aplikace <xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> se nepodařilo otevřít"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"Prostřednictvím této vstupní metody zadávání dat lze shromažďovat zadaný text včetně osobních údajů, jako jsou hesla a čísla platebních karet. Metoda je poskytována aplikací <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g>. Chcete tuto metodu zadávání dat použít?"</string>
     <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Poznámka: Po restartování se tato aplikace nespustí, dokud telefon neodemknete."</string>
