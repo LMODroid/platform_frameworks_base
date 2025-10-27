@@ -927,7 +927,7 @@
     <string name="phoneTypeCar" msgid="4604775148963129195">"هاتف سيارة"</string>
     <string name="phoneTypeCompanyMain" msgid="4482773154536455441">"هاتف الشركة الرئيسي"</string>
     <string name="phoneTypeIsdn" msgid="2496238954533998512">"ISDN"</string>
-    <string name="phoneTypeMain" msgid="5199722006991000111">"رئيسي"</string>
+    <string name="phoneTypeMain" msgid="5199722006991000111">"الأساسي"</string>
     <string name="phoneTypeOtherFax" msgid="3037145630364770357">"فاكس آخر"</string>
     <string name="phoneTypeRadio" msgid="2637819130239264771">"لاسلكي"</string>
     <string name="phoneTypeTelex" msgid="2558783611711876562">"تلكس"</string>
