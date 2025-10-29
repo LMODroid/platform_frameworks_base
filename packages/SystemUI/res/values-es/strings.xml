@@ -1382,7 +1382,7 @@
     <string name="privacy_dialog_recent_app_usage_2" msgid="2874689735085367167">"Usado recientemente por <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>)"</string>
     <string name="shortcut_helper_category_system" msgid="462110876978937359">"Sistema"</string>
     <string name="shortcut_helper_category_system_controls" msgid="3153344561395751020">"Controles del sistema"</string>
-    <string name="shortcut_helper_category_system_apps" msgid="6001757545472556810">"Apps del sistema"</string>
+    <string name="shortcut_helper_category_system_apps" msgid="6001757545472556810">"Aplicaciones del sistema"</string>
     <string name="shortcut_helper_category_multitasking" msgid="7413381961404090136">"Multitarea"</string>
     <string name="shortcutHelper_category_recent_apps" msgid="7918731953612377145">"Aplicaciones recientes"</string>
     <string name="shortcutHelper_category_split_screen" msgid="1159669813444812244">"Pantalla dividida"</string>
