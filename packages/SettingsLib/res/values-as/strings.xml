@@ -580,7 +580,7 @@
     <string name="zen_mode_forever" msgid="3339224497605461291">"আপুনি অফ নকৰা পর্যন্ত"</string>
     <string name="zen_mode_starred_contacts_empty_name" msgid="933552939706125937">"(কোনো নাম নাই)"</string>
     <string name="time_unit_just_now" msgid="3006134267292728099">"এই মাত্ৰ"</string>
-    <string name="media_transfer_this_device_name" msgid="2357329267148436433">"এই ফ’নটো"</string>
+    <string name="media_transfer_this_device_name" msgid="2357329267148436433">"এই ফ’নটোত"</string>
     <string name="media_transfer_this_device_name_tablet" msgid="2975593806278422086">"এই টেবলেটটো"</string>
     <string name="media_transfer_this_device_name_desktop" msgid="7912386128141470452">"এই কম্পিউটাৰ (অভ্যন্তৰীণ)"</string>
     <!-- no translation found for media_transfer_this_device_name_tv (5285685336836896535) -->

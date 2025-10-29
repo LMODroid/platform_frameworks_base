@@ -116,7 +116,7 @@
     <string name="bluetooth_battery_level_untethered_lea_support" msgid="803110681688633362">"Connecté (prise en charge du partage audio). G. : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_0">%1$s</xliff:g>, D. : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_1">%2$s</xliff:g>."</string>
     <string name="bluetooth_battery_level_untethered_left_lea_support" msgid="7707464334346454950">"Connecté (prise en charge du partage audio). Gauche : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
     <string name="bluetooth_battery_level_untethered_right_lea_support" msgid="8941549024377771038">"Connecté (prise en charge du partage audio). Droite : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
-    <string name="bluetooth_no_battery_level_lea_support" msgid="5721725041048434075">"Connecté (prise en charge du partage audio)"</string>
+    <string name="bluetooth_no_battery_level_lea_support" msgid="5721725041048434075">"Connexion établie (prise en charge du partage audio)"</string>
     <string name="bluetooth_active_media_only_no_battery_level" msgid="71106861912593126">"Actif (contenu multimédia uniquement)"</string>
     <string name="bluetooth_saved_device_lea_support" msgid="7231323139968285768">"Prise en charge du partage audio"</string>
     <string name="bluetooth_hearing_aid_media_only_left_active" msgid="1632152540901488645">"Actif (contenu multimédia uniquement), côté gauche seulement"</string>
@@ -269,12 +269,12 @@
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Code d\'association Wi-Fi"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Échec de l\'association"</string>
     <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Vérifiez que l\'appareil est connecté au même réseau."</string>
-    <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Associez l\'appareil par Wi-Fi en numérisant un code QR"</string>
+    <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Associez l\'appareil par Wi-Fi en balayant un code QR"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Association de l\'appareil en cours…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Échec de l\'association de l\'appareil Soit le code QR est incorrect, soit l\'appareil n\'est pas connecté au même réseau."</string>
     <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"Adresse IP et port"</string>
     <string name="adb_wireless_qrcode_pairing_title" msgid="1906409667944674707">"Balayer le code QR"</string>
-    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Associer l\'appareil par Wi-Fi en numérisant un code QR"</string>
+    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Associez l\'appareil par Wi-Fi en balayant un code QR"</string>
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"Veuillez vous connecter à un réseau Wi-Fi"</string>
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, débogage, développeur"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"Raccourci de rapport de bogue"</string>
