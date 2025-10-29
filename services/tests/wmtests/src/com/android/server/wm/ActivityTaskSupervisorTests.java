@@ -388,11 +388,11 @@ public class ActivityTaskSupervisorTests extends WindowTestsBase {
      * encryption aware home app.
      */
     @Test
-    public void testStartHomeAfterUserUnlocked() {
+    public void testStartHomeAfterUserUnlockedWithHomeAlwaysPresent() {
         mSupervisor.onUserUnlocked(0);
         waitHandlerIdle(mAtm.mH);
         verify(mRootWindowContainer, timeout(TIMEOUT_MS))
-                .startHomeOnDisplaysWithNoHome("userUnlocked");
+                .startHomeOnDisplaysIfNeeded("userUnlocked");
     }
 
     /** Verifies that launch from recents sets the launch cookie on the activity. */
