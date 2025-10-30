@@ -170,7 +170,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
 
     /** Display Compat Safe App Area 1.0 */
     private static final String FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA =
-        "android.software.car.display_compatibility.safe_app_area";
+        "com.android.software.car.display_compatibility.safe_app_area";
     private static final int FEATURE_CAR_DISPLAY_COMPAT_SAFE_APP_AREA_VERSION = 1;
 
     // Cludge to address b/22668382: Set the shadow size to the maximum so that the layer
