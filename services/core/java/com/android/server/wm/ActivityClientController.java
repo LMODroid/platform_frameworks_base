@@ -25,6 +25,7 @@ import static android.app.ActivityTaskManager.INVALID_WINDOWING_MODE;
 import static android.app.FullscreenRequestHandler.REMOTE_CALLBACK_RESULT_KEY;
 import static android.app.FullscreenRequestHandler.RESULT_APPROVED;
 import static android.app.FullscreenRequestHandler.RESULT_FAILED_NOT_IN_FULLSCREEN_WITH_HISTORY;
+import static android.app.FullscreenRequestHandler.RESULT_FAILED_NOT_SUPPORTED;
 import static android.app.FullscreenRequestHandler.RESULT_FAILED_NOT_TOP_FOCUSED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
@@ -1179,6 +1180,10 @@ class ActivityClientController extends IActivityClientController.Stub {
 
     private @FullscreenRequestHandler.RequestResult int validateMultiwindowFullscreenRequestLocked(
             Task topFocusedRootTask, int fullscreenRequest, ActivityRecord requesterActivity) {
+        if (!mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_fullscreenRequestSupported)) {
+            return RESULT_FAILED_NOT_SUPPORTED;
+        }
         if (requesterActivity.getWindowingMode() == WINDOWING_MODE_PINNED) {
             return RESULT_APPROVED;
         }
