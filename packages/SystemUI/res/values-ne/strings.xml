@@ -256,7 +256,7 @@
     <string name="accessibility_battery_level_charging" msgid="8892191177774027364">"ब्याट्री चार्ज हुँदैछ, <xliff:g id="BATTERY_PERCENTAGE">%d</xliff:g> प्रतिशत भयो।"</string>
     <string name="accessibility_battery_level_charging_paused" msgid="3560711496775146763">"ब्याट्री <xliff:g id="PERCENTAGE">%d</xliff:g> प्रतिशत, ब्याट्री जोगाउन चार्ज गर्ने कार्य पज गरिएको छ।"</string>
     <string name="accessibility_battery_level_charging_paused_with_estimate" msgid="2223541217743647858">"ब्याट्री <xliff:g id="PERCENTAGE">%1$d</xliff:g> प्रतिशत, <xliff:g id="TIME">%2$s</xliff:g>, ब्याट्री जोगाउन चार्ज गर्ने कार्य पज गरिएको छ।"</string>
-    <string name="accessibility_overflow_action" msgid="8555835828182509104">"सबै सूचनाहरू हेर्नुहोस्"</string>
+    <string name="accessibility_overflow_action" msgid="8555835828182509104">"सबै नोटिफिकेसनहरू हेर्नुहोस्"</string>
     <string name="accessibility_tty_enabled" msgid="1123180388823381118">"टेलि टाइपराइटर सक्षम गरियो।"</string>
     <string name="accessibility_ringer_vibrate" msgid="6261841170896561364">"बज्ने कम्पन हुन्छ।"</string>
     <string name="accessibility_ringer_silent" msgid="8994620163934249882">"घन्टी मौन।"</string>
@@ -830,7 +830,7 @@
     <string name="keyboard_shortcut_a11y_filter_input" msgid="4589316004510335529">"इनपुट गर्ने सर्टकटहरू देखाइँदै छ"</string>
     <string name="keyboard_shortcut_a11y_filter_open_apps" msgid="6175417687221004059">"एपहरू खोल्ने सर्टकटहरू देखाइँदै छ"</string>
     <string name="keyboard_shortcut_a11y_filter_current_app" msgid="7944592357493737911">"हालको एपका लागि सर्टकटहरू देखाइँदै छ"</string>
-    <string name="group_system_access_notification_shade" msgid="1619028907006553677">"सूचनाहरू हेर्नुहोस्"</string>
+    <string name="group_system_access_notification_shade" msgid="1619028907006553677">"नोटिफिकेसनहरू हेर्नुहोस्"</string>
     <string name="group_system_full_screenshot" msgid="5742204844232667785">"स्क्रिनसट लिनुहोस्"</string>
     <string name="group_system_access_system_app_shortcuts" msgid="8562482996626694026">"सर्टकटहरू देखाउनुहोस्"</string>
     <string name="group_system_go_back" msgid="2730322046244918816">"पछाडि जानुहोस्"</string>
@@ -941,7 +941,7 @@
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"<xliff:g id="ID_1">%s</xliff:g> सम्बन्धी सेटिङहरूलाई खोल्नुहोस्।"</string>
     <string name="accessibility_quick_settings_edit" msgid="1523745183383815910">"सेटिङहरूको क्रमलाई सम्पादन गर्नुहोस्।"</string>
     <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"पावर मेनु"</string>
-    <string name="accessibility_quick_settings_page" msgid="7506322631645550961">"<xliff:g id="ID_2">%2$d</xliff:g> मध्ये पृष्ठ <xliff:g id="ID_1">%1$d</xliff:g>"</string>
+    <string name="accessibility_quick_settings_page" msgid="7506322631645550961">"पेज <xliff:g id="ID_2">%2$d</xliff:g> मध्ये <xliff:g id="ID_1">%1$d</xliff:g>"</string>
     <string name="tuner_lock_screen" msgid="2267383813241144544">"लक स्क्रिन"</string>
     <string name="finder_active" msgid="7907846989716941952">"तपाईं Find My Device प्रयोग गरी यो फोन अफ भए पनि यसको लोकेसन पत्ता लगाउन सक्नुहुन्छ"</string>
     <string name="shutdown_progress" msgid="5464239146561542178">"सट डाउन गरिँदै छ..."</string>

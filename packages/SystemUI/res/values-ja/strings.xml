@@ -830,7 +830,7 @@
     <string name="keyboard_shortcut_a11y_filter_input" msgid="4589316004510335529">"入力用のショートカットを表示しています"</string>
     <string name="keyboard_shortcut_a11y_filter_open_apps" msgid="6175417687221004059">"アプリを開くショートカットを表示しています"</string>
     <string name="keyboard_shortcut_a11y_filter_current_app" msgid="7944592357493737911">"現在のアプリのショートカットを表示しています"</string>
-    <string name="group_system_access_notification_shade" msgid="1619028907006553677">"お知らせを表示する"</string>
+    <string name="group_system_access_notification_shade" msgid="1619028907006553677">"通知を表示する"</string>
     <string name="group_system_full_screenshot" msgid="5742204844232667785">"スクリーンショットを撮る"</string>
     <string name="group_system_access_system_app_shortcuts" msgid="8562482996626694026">"ショートカットを表示する"</string>
     <string name="group_system_go_back" msgid="2730322046244918816">"戻る"</string>
