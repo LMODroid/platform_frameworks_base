@@ -624,7 +624,8 @@ class InsetsPolicy {
         return (mForcedShowingTypes & types) == types;
     }
 
-    void updateSystemBars(WindowState win, boolean inSplitScreenMode, boolean inFreeformMode) {
+    void updateSystemBars(@Nullable WindowState win, boolean inSplitScreenMode,
+                    boolean inFreeformMode) {
         mForcedShowingTypes = (inSplitScreenMode || inFreeformMode)
                 ? (Type.statusBars() | Type.navigationBars())
                 : forceShowingNavigationBars(win)
@@ -641,7 +642,7 @@ class InsetsPolicy {
         updateBarControlTarget(win);
     }
 
-    private boolean forceShowingNavigationBars(WindowState win) {
+    private boolean forceShowingNavigationBars(@Nullable WindowState win) {
         // When "force show navigation bar" is enabled, it means both force visible is true, and
         // we are in 3-button navigation. In this mode, the navigation bar is forcibly shown
         // when activity type is ACTIVITY_TYPE_STANDARD which means Launcher or Recent could
@@ -659,7 +660,7 @@ class InsetsPolicy {
             return false;
         }
 
-        if (!mPolicy.isRemoteInsetsControllerControllingSystemBars()) {
+        if (!mPolicy.isSystemBarRemoteInsetsControllerAllowed()) {
             return false;
         }
         if (mDisplayContent == null || mDisplayContent.mRemoteInsetsControlTarget == null) {

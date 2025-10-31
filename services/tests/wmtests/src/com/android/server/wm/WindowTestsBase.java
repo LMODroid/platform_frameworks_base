@@ -350,7 +350,7 @@ public class WindowTestsBase extends SystemServiceTestsBase {
         beforeCreateTestDisplay();
         mDisplayContent = createNewDisplayWithImeSupport(DISPLAY_IME_POLICY_LOCAL);
         addCommonWindows(annotation.addAllCommonWindows(), annotation.addWindows());
-        mDisplayContent.getDisplayPolicy().setRemoteInsetsControllerControlsSystemBars(false);
+        mDisplayContent.getDisplayPolicy().setSystemBarRemoteInsetsControllerAllowed(false);
 
         // Adding a display will cause freezing the display. Make sure to wait until it's
         // unfrozen to not run into race conditions with the tests.
