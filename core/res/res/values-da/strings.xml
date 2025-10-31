@@ -92,7 +92,7 @@
     <string name="notification_channel_sms" msgid="1243384981025535724">"Sms-beskeder"</string>
     <string name="notification_channel_voice_mail" msgid="8457433203106654172">"Talebeskeder"</string>
     <string name="notification_channel_wfc" msgid="9048240466765169038">"Wi-Fi-opkald"</string>
-    <string name="notification_channel_sim" msgid="5098802350325677490">"SIM-status"</string>
+    <string name="notification_channel_sim" msgid="5098802350325677490">"Status på SIM-kort"</string>
     <string name="notification_channel_sim_high_prio" msgid="642361929452850928">"SIM-kort med høj prioritet"</string>
     <string name="peerTtyModeFull" msgid="337553730440832160">"Den anden enhed har skiftet til FULD TTY-tilstand"</string>
     <string name="peerTtyModeHco" msgid="5626377160840915617">"Den anden enhed har skiftet til TTY-tilstanden HCO"</string>
@@ -147,7 +147,7 @@
     <string name="wfc_mode_wifi_only_summary" msgid="104951993894678665">"Kun Wi-Fi"</string>
     <!-- no translation found for crossSimFormat_spn (9125246077491634262) -->
     <skip />
-    <string name="crossSimFormat_spn_cross_sim_calling" msgid="5620807020002879057">"<xliff:g id="SPN">%s</xliff:g>-opkald via alternativt SIM"</string>
+    <string name="crossSimFormat_spn_cross_sim_calling" msgid="5620807020002879057">"<xliff:g id="SPN">%s</xliff:g>-opkald via alternativt SIM-kort"</string>
     <string name="cfTemplateNotForwarded" msgid="862202427794270501">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: Ikke viderestillet"</string>
     <string name="cfTemplateForwarded" msgid="9132506315842157860">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: <xliff:g id="DIALING_NUMBER">{1}</xliff:g>"</string>
     <string name="cfTemplateForwardedTime" msgid="735042369233323609">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: <xliff:g id="DIALING_NUMBER">{1}</xliff:g> efter <xliff:g id="TIME_DELAY">{2}</xliff:g> sekunder"</string>
@@ -156,13 +156,13 @@
     <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Mobilnetværkssikkerhed"</string>
     <string name="scCellularNetworkSecuritySummary" msgid="7042036754550545005">"Kryptering, notifikationer for ikke-krypterede netværk"</string>
     <string name="scIdentifierDisclosureIssueTitle" msgid="2898888825129970328">"Enheds-id\'et blev tilgået"</string>
-    <string name="scIdentifierDisclosureIssueSummaryNotification" msgid="3699930821270580416">"Kl. <xliff:g id="DISCLOSURE_TIME">%1$s</xliff:g> registrerede et netværk i nærheden din enheds unikke id (IMSI eller IMEI), da du brugte dit <xliff:g id="DISCLOSURE_NETWORK">%2$s</xliff:g>-SIM"</string>
-    <string name="scIdentifierDisclosureIssueSummary" msgid="7283387338827749276">"Kl. <xliff:g id="DISCLOSURE_TIME">%1$s</xliff:g> registrerede et netværk i nærheden din enheds unikke id (IMSI eller IMEI), da du brugte dit <xliff:g id="DISCLOSURE_NETWORK">%2$s</xliff:g>-SIM.\n\nDet vil sige, at din lokation, din aktivitet eller din identitet er blevet logget. Dette er helt normalt, men kan være et problem for folk, der er bekymrede for deres privatliv."</string>
+    <string name="scIdentifierDisclosureIssueSummaryNotification" msgid="3699930821270580416">"Kl. <xliff:g id="DISCLOSURE_TIME">%1$s</xliff:g> registrerede et netværk i nærheden din enheds unikke id (IMSI eller IMEI), da du brugte dit <xliff:g id="DISCLOSURE_NETWORK">%2$s</xliff:g>-SIM-kort"</string>
+    <string name="scIdentifierDisclosureIssueSummary" msgid="7283387338827749276">"Kl. <xliff:g id="DISCLOSURE_TIME">%1$s</xliff:g> registrerede et netværk i nærheden din enheds unikke id (IMSI eller IMEI), da du brugte dit <xliff:g id="DISCLOSURE_NETWORK">%2$s</xliff:g>-SIM-kort.\n\nDet vil sige, at din lokation, din aktivitet eller din identitet er blevet logget. Dette er helt normalt, men kan være et problem for folk, der er bekymrede for deres privatliv."</string>
     <string name="scNullCipherIssueEncryptedTitle" msgid="234717016411824969">"Der er oprettet forbindelse til det krypterede netværk <xliff:g id="NETWORK_NAME">%1$s</xliff:g>"</string>
-    <string name="scNullCipherIssueEncryptedSummary" msgid="8577510708842150475">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g>-SIM-forbindelsen er nu mere sikker"</string>
+    <string name="scNullCipherIssueEncryptedSummary" msgid="8577510708842150475">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g>-SIM-kort-forbindelsen er nu mere sikker"</string>
     <string name="scNullCipherIssueNonEncryptedTitle" msgid="3978071464929453915">"Der er oprettet forbindelse til et ikke-krypteret netværk"</string>
-    <string name="scNullCipherIssueNonEncryptedSummaryNotification" msgid="7386936934128110388">"Opkald, beskeder og data er i øjeblikket mere sårbare, når du bruger dit <xliff:g id="NETWORK_NAME">%1$s</xliff:g>-SIM"</string>
-    <string name="scNullCipherIssueNonEncryptedSummary" msgid="5093428974513703253">"Opkald, beskeder og data er i øjeblikket mere sårbare, når du bruger dit <xliff:g id="NETWORK_NAME">%1$s</xliff:g>-SIM.\n\nNår din forbindelse er krypteret igen, får du en ny notifikation."</string>
+    <string name="scNullCipherIssueNonEncryptedSummaryNotification" msgid="7386936934128110388">"Opkald, beskeder og data er i øjeblikket mere sårbare, når du bruger dit <xliff:g id="NETWORK_NAME">%1$s</xliff:g>-SIM-kort"</string>
+    <string name="scNullCipherIssueNonEncryptedSummary" msgid="5093428974513703253">"Opkald, beskeder og data er i øjeblikket mere sårbare, når du bruger dit <xliff:g id="NETWORK_NAME">%1$s</xliff:g>-SIM-kort.\n\nNår din forbindelse er krypteret igen, får du en ny notifikation."</string>
     <string name="scNullCipherIssueActionSettings" msgid="5888857706424639946">"Indstillinger for mobilnetværkssikkerhed"</string>
     <string name="scNullCipherIssueActionLearnMore" msgid="7896642417214757769">"Få flere oplysninger"</string>
     <string name="scNullCipherIssueActionGotIt" msgid="8747796640866585787">"OK"</string>
@@ -511,7 +511,7 @@
     <string name="permdesc_recordBackgroundAudio" msgid="1992623135737407516">"Denne app kan optage lyd med mikrofonen når som helst."</string>
     <string name="permlab_detectScreenCapture" msgid="4447042362828799433">"registrer screenshots af appvindue"</string>
     <string name="permdesc_detectScreenCapture" msgid="3485784917960342284">"Denne app får en notifikation, når der tages et screenshot, mens appen er i brug."</string>
-    <string name="permlab_sim_communication" msgid="176788115994050692">"send kommandoer til SIM"</string>
+    <string name="permlab_sim_communication" msgid="176788115994050692">"send kommandoer til SIM-kort"</string>
     <string name="permdesc_sim_communication" msgid="4179799296415957960">"Tillader, at appen sender kommandoer til SIM-kortet. Dette er meget farligt."</string>
     <string name="permlab_activityRecognition" msgid="1782303296053990884">"genkend fysisk aktivitet"</string>
     <string name="permdesc_activityRecognition" msgid="8667484762991357519">"Denne app kan genkende din fysiske aktivitet."</string>
@@ -776,8 +776,8 @@
     <string name="permdesc_sdcardWrite" msgid="8376047679331387102">"Tillader, at appen kan skrive indholdet af din delte lagerplads."</string>
     <string name="permlab_use_sip" msgid="8250774565189337477">"foretage/modtage SIP-opkald"</string>
     <string name="permdesc_use_sip" msgid="3590270893253204451">"Tillader, at appen foretager og modtager SIP-opkald."</string>
-    <string name="permlab_register_sim_subscription" msgid="1653054249287576161">"registrere nye telefon-SIM-forbindelser"</string>
-    <string name="permdesc_register_sim_subscription" msgid="4183858662792232464">"Tillader, at appen registrerer nye telefon-SIM-forbindelser."</string>
+    <string name="permlab_register_sim_subscription" msgid="1653054249287576161">"registrere nye telefon-SIM-kortforbindelser"</string>
+    <string name="permdesc_register_sim_subscription" msgid="4183858662792232464">"Tillader, at appen registrerer nye telefon-SIM-kortforbindelser."</string>
     <string name="permlab_register_call_provider" msgid="6135073566140050702">"registrere nye telefonforbindelser"</string>
     <string name="permdesc_register_call_provider" msgid="4201429251459068613">"Tillader, at appen registrerer nye telefonforbindelser."</string>
     <string name="permlab_connection_manager" msgid="3179365584691166915">"administrere telefonforbindelser"</string>
@@ -2240,11 +2240,11 @@
     <string name="miniresolver_use_work_browser" msgid="543575306251952994">"Brug arbejdsbrowser"</string>
     <string name="miniresolver_call" msgid="6386870060423480765">"Ring op"</string>
     <string name="miniresolver_switch" msgid="8011924662117617451">"Skift"</string>
-    <string name="PERSOSUBSTATE_SIM_NETWORK_ENTRY" msgid="8050953231914637819">"Pinkode til oplåsning af SIM-netværket"</string>
+    <string name="PERSOSUBSTATE_SIM_NETWORK_ENTRY" msgid="8050953231914637819">"Pinkode til oplåsning af SIM-kortnetværket"</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUBSET_ENTRY" msgid="7164399703751688214">"Pinkode til oplåsning af delmængde for SIM-netværket"</string>
-    <string name="PERSOSUBSTATE_SIM_CORPORATE_ENTRY" msgid="4447629474818217364">"Pinkode til oplåsning af virksomhedens SIM"</string>
-    <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_ENTRY" msgid="973059024670737358">"Pinkode til oplåsning af tjenesteudbyderens SIM"</string>
-    <string name="PERSOSUBSTATE_SIM_SIM_ENTRY" msgid="4487435301206073787">"Pinkode til oplåsning af SIM"</string>
+    <string name="PERSOSUBSTATE_SIM_CORPORATE_ENTRY" msgid="4447629474818217364">"Pinkode til oplåsning af virksomhedens SIM-kort"</string>
+    <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_ENTRY" msgid="973059024670737358">"Pinkode til SIM-oplåsning for tjenesteudbyder"</string>
+    <string name="PERSOSUBSTATE_SIM_SIM_ENTRY" msgid="4487435301206073787">"Pinkode til SIM-oplåsning"</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_PUK_ENTRY" msgid="768060297218652809">"Angiv PUK-kode"</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUBSET_PUK_ENTRY" msgid="7129527319490548930">"Angiv PUK-kode"</string>
     <string name="PERSOSUBSTATE_SIM_CORPORATE_PUK_ENTRY" msgid="2876126640607573252">"Angiv PUK-kode"</string>
@@ -2269,14 +2269,14 @@
     <string name="PERSOSUBSTATE_SIM_NS_SP_ENTRY" msgid="6144227308185112176">"Pinkode til oplåsning af tjenesteudbyderens netværksdelmængde"</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_IN_PROGRESS" msgid="4233355366318061180">"Anmoder om oplåsning af SIM-netværket…"</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUBSET_IN_PROGRESS" msgid="6742563947637715645">"Anmoder om oplåsning af delmængden for SIM-netværket…"</string>
-    <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_IN_PROGRESS" msgid="2033399698172403560">"Anmoder om oplåsning af tjenesteudbyderens SIM…"</string>
-    <string name="PERSOSUBSTATE_SIM_CORPORATE_IN_PROGRESS" msgid="4795977251920732254">"Anmoder om oplåsning af virksomhedens SIM…"</string>
+    <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_IN_PROGRESS" msgid="2033399698172403560">"Anmoder om SIM-oplåsning for tjenesteudbyder…"</string>
+    <string name="PERSOSUBSTATE_SIM_CORPORATE_IN_PROGRESS" msgid="4795977251920732254">"Anmoder om oplåsning af virksomhedens SIM-kort…"</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_PUK_IN_PROGRESS" msgid="1090425878157254446">"Anmoder om oplåsning med PUK-koden…"</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUBSET_PUK_IN_PROGRESS" msgid="6476898876518094438">"Anmoder om oplåsning med PUK-koden…"</string>
     <string name="PERSOSUBSTATE_SIM_CORPORATE_PUK_IN_PROGRESS" msgid="6006806734293747731">"Anmoder om oplåsning med PUK-koden…"</string>
     <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_PUK_IN_PROGRESS" msgid="6546680489620881893">"Anmoder om oplåsning med PUK-koden…"</string>
     <string name="PERSOSUBSTATE_SIM_SIM_PUK_IN_PROGRESS" msgid="3506845511000727015">"Anmoder om oplåsning med PUK-koden…"</string>
-    <string name="PERSOSUBSTATE_SIM_SIM_IN_PROGRESS" msgid="6709169861932992750">"Anmoder om oplåsning af SIM…"</string>
+    <string name="PERSOSUBSTATE_SIM_SIM_IN_PROGRESS" msgid="6709169861932992750">"Anmoder om SIM-oplåsning…"</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK1_IN_PROGRESS" msgid="4013870911606478520">"Anmoder om oplåsning af RUIM for Network1…"</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK2_IN_PROGRESS" msgid="9032651188219523434">"Anmoder om oplåsning af RUIM for Network2…"</string>
     <string name="PERSOSUBSTATE_RUIM_HRPD_IN_PROGRESS" msgid="6584576506344491207">"Anmoder om oplåsning af HRDP-relateret RUIM…"</string>
@@ -2294,11 +2294,11 @@
     <string name="PERSOSUBSTATE_RUIM_CORPORATE_PUK_IN_PROGRESS" msgid="2695664012344346788">"Anmoder om oplåsning med PUK-koden…"</string>
     <string name="PERSOSUBSTATE_RUIM_SERVICE_PROVIDER_PUK_IN_PROGRESS" msgid="2695678959963807782">"Anmoder om oplåsning med PUK-koden…"</string>
     <string name="PERSOSUBSTATE_RUIM_RUIM_PUK_IN_PROGRESS" msgid="1230605365926493599">"Anmoder om oplåsning med PUK-koden…"</string>
-    <string name="PERSOSUBSTATE_SIM_NETWORK_ERROR" msgid="1924844017037151535">"Anmodningen om oplåsning af SIM-netværket mislykkedes."</string>
+    <string name="PERSOSUBSTATE_SIM_NETWORK_ERROR" msgid="1924844017037151535">"Anmodningen om oplåsning af SIM-kortnetværket mislykkedes."</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUBSET_ERROR" msgid="3372797822292089708">"Anmodningen om oplåsning af delmængde for SIM-netværket mislykkedes."</string>
-    <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_ERROR" msgid="1878443146720411381">"Anmodningen om oplåsning af tjenesteudbyderens SIM mislykkedes."</string>
-    <string name="PERSOSUBSTATE_SIM_CORPORATE_ERROR" msgid="7664778312218023192">"Anmodningen om oplåsning af virksomhedens SIM mislykkedes."</string>
-    <string name="PERSOSUBSTATE_SIM_SIM_ERROR" msgid="2472944311643350302">"Anmodningen om oplåsning af SIM mislykkedes."</string>
+    <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_ERROR" msgid="1878443146720411381">"Anmodningen om SIM-oplåsning for tjenesteudbyder mislykkedes."</string>
+    <string name="PERSOSUBSTATE_SIM_CORPORATE_ERROR" msgid="7664778312218023192">"Anmodningen om oplåsning af virksomhedens SIM-kort mislykkedes."</string>
+    <string name="PERSOSUBSTATE_SIM_SIM_ERROR" msgid="2472944311643350302">"Anmodningen om SIM-oplåsning mislykkedes."</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK1_ERROR" msgid="828089694480999120">"Anmodningen om oplåsning af RUIM for Network1 mislykkedes."</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK2_ERROR" msgid="17619001007092511">"Anmodningen om oplåsning af RUIM for Network2 mislykkedes."</string>
     <string name="PERSOSUBSTATE_RUIM_HRPD_ERROR" msgid="807214229604353614">"Anmodningen om oplåsning af HRDP-relateret RUIM mislykkedes."</string>
@@ -2323,9 +2323,9 @@
     <string name="PERSOSUBSTATE_SIM_NS_SP_ERROR" msgid="1890493954453456758">"Anmodningen om oplåsning af tjenesteudbyderens netværksdelmængde mislykkedes."</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUCCESS" msgid="4886243367747126325">"SIM-netværket blev låst op."</string>
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUBSET_SUCCESS" msgid="4053809277733513987">"Delmængden for SIM-netværket blev låst op."</string>
-    <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_SUCCESS" msgid="8249342930499801740">"Tjenesteudbyderens SIM blev låst op."</string>
-    <string name="PERSOSUBSTATE_SIM_CORPORATE_SUCCESS" msgid="2339794542560381270">"Virksomhedens SIM blev låst op."</string>
-    <string name="PERSOSUBSTATE_SIM_SIM_SUCCESS" msgid="6975608174152828954">"SIM blev låst op."</string>
+    <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_SUCCESS" msgid="8249342930499801740">"SIM-oplåsning for tjenesteudbyder er gennemført."</string>
+    <string name="PERSOSUBSTATE_SIM_CORPORATE_SUCCESS" msgid="2339794542560381270">"Virksomhedens SIM-kort blev låst op."</string>
+    <string name="PERSOSUBSTATE_SIM_SIM_SUCCESS" msgid="6975608174152828954">"SIM-oplåsning er gennemført."</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK1_SUCCESS" msgid="2846699261330463192">"RUIM for Network1 blev låst op."</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK2_SUCCESS" msgid="5335414726057102801">"RUIM for Network2 blev låst op."</string>
     <string name="PERSOSUBSTATE_RUIM_HRPD_SUCCESS" msgid="8868100318474971969">"HRDP-relateret RUIM blev låst op."</string>

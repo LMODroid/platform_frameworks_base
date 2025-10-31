@@ -1649,7 +1649,7 @@
     <string name="activity_chooser_view_see_all" msgid="3917045206812726099">"Alles tonen"</string>
     <string name="activity_chooser_view_dialog_title_default" msgid="8880731437191978314">"Een activiteit kiezen"</string>
     <string name="share_action_provider_share_with" msgid="1904096863622941880">"Delen met"</string>
-    <string name="sending" msgid="206925243621664438">"Verzenden..."</string>
+    <string name="sending" msgid="206925243621664438">"Sturen..."</string>
     <string name="launchBrowserDefault" msgid="6328349989932924119">"Browser starten?"</string>
     <string name="SetupCallDefault" msgid="5581740063237175247">"Gesprek accepteren?"</string>
     <string name="activity_resolver_use_always" msgid="5575222334666843269">"Altijd"</string>
