@@ -253,7 +253,7 @@
     <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Wi-Fi కనెక్ట్ అయి ఉన్నప్పుడు, డీబగ్ మోడ్‌లో ఉంచు"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"ఎర్రర్"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"వైర్‌లెస్ డీబగ్గింగ్"</string>
-    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"అందుబాటులో ఉన్న పరికరాలను చూడటానికి, ఉపయోగించడానికి, వైర్‌లెస్ డీబగ్గింగ్‌ను ఆన్ చేయండి"</string>
+    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"అందుబాటులో ఉన్న డివైజ్‌లను చూడటానికి, ఉపయోగించడానికి, వైర్‌లెస్ డీబగ్గింగ్‌ను ఆన్ చేయండి"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"QR కోడ్‌తో డివైజ్‌ను పెయిర్ చేయండి"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR కోడ్ స్కానర్‌ను ఉపయోగించి కొత్త డివైజ్‌లను పెయిర్ చేయండి"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"పెయిరింగ్ కోడ్‌తో డివైజ్‌ను పెయిర్ చేయండి"</string>
@@ -274,7 +274,7 @@
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"పరికరాన్ని పెయిర్ చేయడం విఫలమైంది. QR కోడ్ తప్పుగా ఉండడం గాని, లేదా పరికరం అదే నెట్‌వర్క్‌కు కనెక్ట్ అయి లేకపోవడం గాని జరిగింది."</string>
     <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"IP అడ్రస్ &amp; పోర్ట్"</string>
     <string name="adb_wireless_qrcode_pairing_title" msgid="1906409667944674707">"QR కోడ్‌ను స్కాన్ చేయండి"</string>
-    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"QR కోడ్‌ను స్కాన్ చేయడం ద్వారా Wi-Fiని ఉపయోగించి పరికరాన్ని పెయిర్ చేయండి"</string>
+    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"QR కోడ్‌ను స్కాన్ చేయడం ద్వారా Wi-Fiని ఉపయోగించి డివైజ్‌ను పెయిర్ చేయండి"</string>
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"దయచేసి Wi-Fi నెట్‌వర్క్‌కు కనెక్ట్ చేయండి"</string>
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, డీబగ్, dev"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"బగ్ రిపోర్ట్ షార్ట్‌కట్"</string>

@@ -580,7 +580,7 @@
     <string name="zen_mode_forever" msgid="3339224497605461291">"बंद किए जाने तक"</string>
     <string name="zen_mode_starred_contacts_empty_name" msgid="933552939706125937">"(कोई नाम नहीं)"</string>
     <string name="time_unit_just_now" msgid="3006134267292728099">"अभी-अभी"</string>
-    <string name="media_transfer_this_device_name" msgid="2357329267148436433">"यह फ़ोन"</string>
+    <string name="media_transfer_this_device_name" msgid="2357329267148436433">"इस फ़ोन पर"</string>
     <string name="media_transfer_this_device_name_tablet" msgid="2975593806278422086">"यह टैबलेट"</string>
     <string name="media_transfer_this_device_name_desktop" msgid="7912386128141470452">"यह कंप्यूटर (इंटरनल)"</string>
     <!-- no translation found for media_transfer_this_device_name_tv (5285685336836896535) -->
