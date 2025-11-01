@@ -516,7 +516,7 @@
     <string name="battery_info_status_charging_on_hold" msgid="6364355145521694438">"Η φόρτιση τέθηκε σε αναμονή"</string>
     <string name="battery_info_status_charging_v2" msgid="6118522107222245505">"Φόρτιση"</string>
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"Γρήγορη φόρτιση"</string>
-    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"Ελέγχονται από το διαχειριστή"</string>
+    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"Ελέγχονται από τον διαχειριστή"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"Ελέγχεται από τη Ρύθμιση με περιορισμό"</string>
     <string name="disabled" msgid="8017887509554714950">"Απενεργοποιημένη"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"Επιτρέπεται"</string>
@@ -661,7 +661,7 @@
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"Κατάργηση"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"Επαναφορά επισκέπτη…"</string>
     <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"Επαναφορά περιόδου σύνδεσης επισκέπτη;"</string>
-    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Με αυτόν τον τρόπο θα ξεκινήσει μια νέα περίοδος σύνδεσης επισκέπτη και θα διαγραφούν όλες οι εφαρμογές και τα δεδομένα από την τρέχουσα περίοδο σύνδεσης"</string>
+    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Με αυτόν τον τρόπο θα ξεκινήσει μια νέα περίοδος λειτουργίας επισκέπτη και θα διαγραφούν όλες οι εφαρμογές και τα δεδομένα από την τρέχουσα περίοδο λειτουργίας"</string>
     <string name="guest_exit_dialog_title" msgid="1846494656849381804">"Έξοδος από λειτ. επισκέπτη;"</string>
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"Θα διαγραφούν εφαρμογές και δεδομένα από την τρέχουσα περίοδο σύνδεσης επισκέπτη"</string>
     <string name="grant_admin" msgid="4323199171790522574">"Ναι, να γίνει εκχώρηση δικαιωμάτων διαχειριστή"</string>

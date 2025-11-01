@@ -2007,9 +2007,9 @@
     <string name="work_mode_off_title" msgid="6367463960165135829">"是否为工作应用解除暂停状态？"</string>
     <string name="work_mode_turn_on" msgid="5316648862401307800">"解除暂停"</string>
     <string name="work_mode_emergency_call_button" msgid="6818855962881612322">"紧急呼叫"</string>
-    <string name="set_up_screen_lock_title" msgid="8346083801616474030">"设置一种屏锁方式"</string>
-    <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"设置屏锁方式"</string>
-    <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"若要使用私密空间，请在此设备上设置屏锁方式"</string>
+    <string name="set_up_screen_lock_title" msgid="8346083801616474030">"设置屏锁"</string>
+    <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"设置屏锁"</string>
+    <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"若要使用私密空间，请在此设备上设置屏锁"</string>
     <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"若要删除私密空间，请在此设备上设置屏幕锁定"</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"应用无法使用"</string>
     <string name="app_blocked_message" msgid="542972921087873023">"<xliff:g id="APP_NAME">%1$s</xliff:g>目前无法使用。"</string>
@@ -2149,11 +2149,11 @@
     <string name="notification_feedback_indicator_promoted" msgid="9030204303764698640">"系统已提升此通知的重要性。点按即可提供反馈。"</string>
     <string name="notification_feedback_indicator_demoted" msgid="8880309924296450875">"系统已降低此通知的重要性。点按即可提供反馈。"</string>
     <string name="nas_upgrade_notification_title" msgid="8436359459300146555">"增强型通知功能"</string>
-    <string name="nas_upgrade_notification_content" msgid="5157550369837103337">"建议的操作和回复目前由增强型通知功能提供。系统不再支持 Android 自适应通知功能。"</string>
+    <string name="nas_upgrade_notification_content" msgid="5157550369837103337">"建议的操作和回复目前由增强型通知功能提供。系统不再支持 Android 自动调节通知功能。"</string>
     <string name="nas_upgrade_notification_enable_action" msgid="3046406808378726874">"确定"</string>
     <string name="nas_upgrade_notification_disable_action" msgid="3794833210043497982">"关闭"</string>
     <string name="nas_upgrade_notification_learn_more_action" msgid="7011130656195423947">"了解详情"</string>
-    <string name="nas_upgrade_notification_learn_more_content" msgid="3735480566983530650">"在 Android 12 中，增强型通知功能取代了 Android 自适应通知功能。增强型通知功能可以显示建议的操作和回复，并可将通知整理得井井有条。\n\n增强型通知功能可以读取通知内容，包括联系人姓名、消息等个人信息。该功能还可以关闭通知或对通知做出回应，例如接听来电以及控制勿扰模式。"</string>
+    <string name="nas_upgrade_notification_learn_more_content" msgid="3735480566983530650">"在 Android 12 中，增强型通知功能取代了 Android 自动调节通知功能。增强型通知功能可以显示建议的操作和回复，并可将通知整理得井井有条。\n\n增强型通知功能可以读取通知内容，包括联系人姓名、消息等个人信息。该功能还可以关闭通知或对通知做出回应，例如接听来电以及控制勿扰模式。"</string>
     <string name="dynamic_mode_notification_channel_name" msgid="2986926422100223328">"日常安排模式信息通知"</string>
     <string name="dynamic_mode_notification_title" msgid="1388718452788985481">"省电模式已开启"</string>
     <string name="dynamic_mode_notification_summary" msgid="1639031262484979689">"降低电池用量以延长电池续航时间"</string>

@@ -256,4 +256,11 @@ public interface PackageUserState {
      * @hide
      */
     boolean dataExists();
+
+     /**
+     * @return whether the app requires display compat features
+     *
+     * @hide
+     */
+    boolean isDisplayCompat();
 }

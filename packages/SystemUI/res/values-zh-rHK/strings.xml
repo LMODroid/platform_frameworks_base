@@ -296,7 +296,7 @@
     <string name="quick_settings_modes_label" msgid="879156359479504244">"模式"</string>
     <string name="quick_settings_bluetooth_label" msgid="7018763367142041481">"藍牙"</string>
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"找不到配對的裝置"</string>
-    <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"輕按即可連結或解除連結裝置"</string>
+    <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"輕按即可連接或解除連接裝置"</string>
     <string name="pair_new_bluetooth_devices" msgid="4601767620843349645">"配對新裝置"</string>
     <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"查看全部"</string>
     <string name="turn_on_bluetooth" msgid="5681370462180289071">"使用藍牙"</string>
@@ -695,8 +695,8 @@
     <string name="volume_panel_hint_muted" msgid="1124844870181285320">"已經靜音"</string>
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"震動"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"正在播放「<xliff:g id="LABEL">%s</xliff:g>」的裝置："</string>
-    <string name="media_output_title_without_playing" msgid="3825663683169305013">"音訊播放媒體"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"通話中"</string>
+    <string name="media_output_title_without_playing" msgid="3825663683169305013">"音訊播放位置"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"目前通話所用裝置"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"系統使用者介面調諧器"</string>
     <string name="status_bar" msgid="4357390266055077437">"狀態列"</string>
     <string name="demo_mode" msgid="263484519766901593">"系統使用者介面示範模式"</string>
@@ -1369,7 +1369,7 @@
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"展開並顯示選項"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"收合"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"關閉此應用程式"</string>
-    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"<xliff:g id="APP_NAME">%1$s</xliff:g> 已關閉"</string>
+    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"「<xliff:g id="APP_NAME">%1$s</xliff:g>」已關閉"</string>
     <string name="privacy_dialog_manage_service" msgid="8320590856621823604">"管理服務"</string>
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"管理存取權"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"正由「手機通話」使用"</string>

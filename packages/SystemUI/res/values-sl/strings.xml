@@ -712,7 +712,7 @@
     <string name="wallet_secondary_label_device_locked" msgid="5175862019125370506">"Odklenite za uporabo"</string>
     <string name="wallet_error_generic" msgid="257704570182963611">"Pri pridobivanju kartic je prišlo do težave. Poskusite znova pozneje."</string>
     <string name="wallet_lockscreen_settings_label" msgid="3539105300870383570">"Nastavitve zaklepanja zaslona"</string>
-    <string name="qr_code_scanner_title" msgid="1938155688725760702">"Optični bralnik kod QR"</string>
+    <string name="qr_code_scanner_title" msgid="1938155688725760702">"Bralnik kod QR"</string>
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"Posodabljanje"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"Profil za Android Work"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"Način za letalo"</string>
@@ -745,7 +745,7 @@
     <string name="notification_alert_title" msgid="3656229781017543655">"Privzeto"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"Samodejno"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"Brez zvočnega opozarjanja ali vibriranja."</string>
-    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"Brez zvoka ali vibriranja, vendar kljub temu prikazano v razdelku s pogovorom"</string>
+    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"Brez zvoka ali vibriranja, vendar kljub temu prikazano v razdelku s pogovorom."</string>
     <string name="notification_channel_summary_default" msgid="777294388712200605">"Zvonjenje ali vibriranje je omogočeno na podlagi nastavitev naprave."</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"Zvonjenje ali vibriranje je omogočeno na podlagi nastavitev naprave. Pogovori v aplikaciji <xliff:g id="APP_NAME">%1$s</xliff:g> so privzeto prikazani v oblačkih."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"Naj sistem določi, ali ob prejemu tega obvestila naprava predvaja zvok ali zavibrira"</string>

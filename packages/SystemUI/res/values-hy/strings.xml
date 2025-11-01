@@ -830,9 +830,9 @@
     <string name="keyboard_shortcut_a11y_filter_input" msgid="4589316004510335529">"Ցուցադրվում են մուտքագրման դյուրանցումները"</string>
     <string name="keyboard_shortcut_a11y_filter_open_apps" msgid="6175417687221004059">"Ցուցադրվում են հավելվածներ բացող դյուրանցումները"</string>
     <string name="keyboard_shortcut_a11y_filter_current_app" msgid="7944592357493737911">"Ցուցադրվում են ընթացիկ հավելվածի դյուրանցումները"</string>
-    <string name="group_system_access_notification_shade" msgid="1619028907006553677">"Դիտել ծանուցումները"</string>
+    <string name="group_system_access_notification_shade" msgid="1619028907006553677">"Դիտել ծա­նու­ցում­նե­րը"</string>
     <string name="group_system_full_screenshot" msgid="5742204844232667785">"Սքրինշոթ անել"</string>
-    <string name="group_system_access_system_app_shortcuts" msgid="8562482996626694026">"Ցույց տալ դյուրանցումները"</string>
+    <string name="group_system_access_system_app_shortcuts" msgid="8562482996626694026">"Ցույց տալ դյու­րան­ցում­նե­րը"</string>
     <string name="group_system_go_back" msgid="2730322046244918816">"Հետ գնալ"</string>
     <string name="group_system_access_home_screen" msgid="4130366993484706483">"Անցնել հիմնական էկրան"</string>
     <string name="group_system_overview_open_apps" msgid="5659958952937994104">"Դիտել վերջին հավելվածները"</string>
@@ -1448,7 +1448,7 @@
     <string name="accessibility_deprecate_extra_dim_dialog_toast" msgid="165474092660941104">"Հավելյալ խամրեցման դյուրանցումները հեռացվել են"</string>
     <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"Կապ"</string>
     <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"Հատուկ գործառույթներ"</string>
-    <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"Կոմունալ ծառայություններ"</string>
+    <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"Հավելյալ գործառույթներ"</string>
     <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"Գաղտնիություն"</string>
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"Տրամադրվել են հավելվածների կողմից"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"Էկրան"</string>

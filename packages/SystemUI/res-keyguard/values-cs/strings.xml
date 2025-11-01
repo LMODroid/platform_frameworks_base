@@ -54,7 +54,7 @@
     <string name="kg_wrong_pattern_try_again" msgid="3603524940234151881">"Nesprávné gesto. Zkuste to znovu."</string>
     <string name="kg_wrong_password" msgid="4143127991071670512">"Špatné heslo"</string>
     <string name="kg_wrong_password_try_again" msgid="6602878676125765920">"Nesprávné heslo. Zkuste to znovu."</string>
-    <string name="kg_wrong_pin" msgid="4160978845968732624">"Nesprávný kód PIN"</string>
+    <string name="kg_wrong_pin" msgid="4160978845968732624">"Nesprávný PIN"</string>
     <string name="kg_wrong_pin_try_again" msgid="3129729383303430190">"Nesprávný PIN. Zkuste to znovu."</string>
     <string name="kg_wrong_input_try_fp_suggestion" msgid="3143861542242024833">"Nebo odemkněte otiskem prstu"</string>
     <string name="kg_fp_not_recognized" msgid="5183108260932029241">"Otisk prstu nebyl rozpoznán"</string>

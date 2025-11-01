@@ -295,7 +295,7 @@
     <string name="wifi_verbose_logging" msgid="1785910450009679371">"Wi‑Fi дэлгэрэнгүй логийг идэвхжүүлэх"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Wi‑Fi скан бууруулалт"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Wi‑Fi-н байнгын бус MAC-г санамсаргүй байдлаар эмхлэх"</string>
-    <string name="mobile_data_always_on" msgid="8275958101875563572">"Мобайл дата байнга идэвхтэй"</string>
+    <string name="mobile_data_always_on" msgid="8275958101875563572">"Хөдөлгөөнт төхөөрөмжийн дата байнга идэвхтэй"</string>
     <string name="tethering_hardware_offload" msgid="4116053719006939161">"Модем болгох техник хангамжийн хурдасгуур"</string>
     <string name="bluetooth_show_devices_without_names" msgid="923584526471885819">"Нэргүй Bluetooth төхөөрөмжийг харуулах"</string>
     <string name="bluetooth_disable_absolute_volume" msgid="1452342324349203434">"Үнэмлэхүй дууны түвшнийг идэвхгүй болгох"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Хуурамч байршлыг зөвшөөрөх"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Хуурамч байршлыг зөвшөөрөх"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Харах тохируулгын шалгалтыг идэвхжүүлэх"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Wi‑Fi идэвхтэй байхад ч гэсэн гар утасны датаг идэвхтэй байлгадаг (сүлжээг түргэн солихын тулд)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Wi‑Fi идэвхтэй байхад ч гэсэн хөдөлгөөнт төхөөрөмжийн датаг идэвхтэй байлгадаг (сүлжээг түргэн солихын тулд)."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Модем болгох техник хангамжийн хурдасгуурыг боломжтой тохиолдолд ашиглах"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"USB дебаг хийхийг зөвшөөрөх үү?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"USB дебаг нь зөвхөн хөгжүүлэлтийн зорилготой. Үүнийг өөрийн компьютер болон төхөөрөмжийн хооронд өгөгдөл хуулах, өөрийн төхөөрөмж дээр мэдэгдэлгүйгээр аппликейшн суулгах, лог датаг унших зэрэгт ашиглаж болно."</string>
@@ -378,8 +378,8 @@
     <string name="pointer_location_summary" msgid="957120116989798464">"Дэлгэцийн давхаргаар одоогийн хүрэлтийн өгөгдлийг харуулж байна"</string>
     <string name="show_touches" msgid="8437666942161289025">"Товшилтыг харуулах"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Товшилтын визуал хариу үйлдлийг харуулах"</string>
-    <string name="show_key_presses" msgid="6360141722735900214">"Түлхүүрийн даралт харуул"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"Биет түлхүүрийн даралтын визуал хариу үйлдлийг харуул"</string>
+    <string name="show_key_presses" msgid="6360141722735900214">"Товчлуурын даралт харуул"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"Биет товчлуурын даралтын визуал хариу үйлдлийг харуул"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Мэдрэгч самбарын оролтыг харуулах"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Дэлгэцэд давхарлах нь мэдрэгч самбарын оролтын өгөгдөл болон танигдсан зангааг үзүүлж байна"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Гадаргын шинэчлэлтүүдийг харуулах"</string>
@@ -429,7 +429,7 @@
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Мэдэгдлийн сувгийн анхааруулгыг харуулах"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"Апп хүчинтэй суваггүйгээр мэдэгдэл гаргах үед дэлгэцэд сануулга харуулна"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"Аппыг гадаад санах ойд хадгалахыг зөвшөөрөх"</string>
-    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Манифест утгыг нь үл хамааран дурын апп-г гадаад санах ойд бичих боломжтой болгодог"</string>
+    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Тодорхойлогч утгыг нь үл хамааран дурын аппыг гадаад санах ойд бичих боломжтой болгодог"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Үйл ажиллагааны хэмжээг өөрчилж болохуйц болгох"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Тодорхойлогч файлын утгыг үл хамааран, бүх үйл ажиллагааны хэмжээг олон цонхонд өөрчилж болохуйц болгоно уу."</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"Чөлөөт хэлбэрийн цонхыг идэвхжүүлэх"</string>
@@ -633,7 +633,7 @@
     <string name="user_grant_admin_message" msgid="1673791931033486709">"Админууд бусад хэрэглэгчид байхгүй тусгай эрхтэй байдаг. Админ нь бүх хэрэглэгчийг удирдах, энэ төхөөрөмжийг шинэчлэх, сэргээх, тохиргоог өөрчлөх, бүх суулгасан аппыг харах болон бусад хэрэглэгчид админы эрх өгөх эсвэл эрхийг нь цуцлах боломжтой."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Админ болгох"</string>
     <string name="user_setup_dialog_title" msgid="8037342066381939995">"Хэрэглэгчийг одоо тохируулах уу?"</string>
-    <string name="user_setup_dialog_message" msgid="269931619868102841">"Хэрэглэгч төхөөрөмжийг авч өөрийн профайлыг тохируулах боломжтой эсэхийг шалгана уу"</string>
+    <string name="user_setup_dialog_message" msgid="269931619868102841">"Хэрэглэгч төхөөрөмжийг авч өөрийн орон зайг тохируулах боломжтой эсэхийг шалгана уу"</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"Профайлыг одоо тохируулах уу?"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"Одоо тохируулах"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"Одоо биш"</string>

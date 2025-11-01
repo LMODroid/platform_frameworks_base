@@ -699,7 +699,7 @@
     <string name="media_output_title_ongoing_call" msgid="208426888064112006">"በጥሪ ላይ"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"የስርዓት በይነገጽ መቃኛ"</string>
     <string name="status_bar" msgid="4357390266055077437">"የሁኔታ አሞሌ"</string>
-    <string name="demo_mode" msgid="263484519766901593">"የስርዓት ተጠቃሚ በይነገጽ ማሳያ ሁነታ"</string>
+    <string name="demo_mode" msgid="263484519766901593">"የሥርዓት ተጠቃሚ በይነገጽ ማሳያ ሁነታ"</string>
     <string name="enable_demo_mode" msgid="3180345364745966431">"የማሳያ ሁነታውን ያንቁ"</string>
     <string name="show_demo_mode" msgid="3677956462273059726">"ማሳያ ሁነታን አሳይ"</string>
     <string name="status_bar_ethernet" msgid="5690979758988647484">"ኤተርኔት"</string>

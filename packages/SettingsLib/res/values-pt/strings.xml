@@ -38,9 +38,9 @@
     <string name="wifi_security_wpa" msgid="1072450904799930636">"WPA-Personal"</string>
     <string name="wifi_security_wpa2" msgid="4038267581230425543">"WPA2-Pessoal"</string>
     <string name="wifi_security_wpa_wpa2" msgid="946853615482465986">"WPA/WPA2-Pessoal"</string>
-    <string name="wifi_security_eap" msgid="6179633834446852269">"WPA/WPA2/WPA3-Enterprise"</string>
-    <string name="wifi_security_eap_wpa" msgid="6189023812330549957">"WPA-Enterprise"</string>
-    <string name="wifi_security_eap_wpa_wpa2" msgid="1089879674896108216">"WPA/WPA2-Enterprise"</string>
+    <string name="wifi_security_eap" msgid="6179633834446852269">"WPA/WPA2/WPA3-Empresarial"</string>
+    <string name="wifi_security_eap_wpa" msgid="6189023812330549957">"WPA-Empresarial"</string>
+    <string name="wifi_security_eap_wpa_wpa2" msgid="1089879674896108216">"WPA/WPA2-Empresarial"</string>
     <string name="wifi_security_eap_wpa2_wpa3" msgid="2952912020876252266">"WPA2/WPA3-Enterprise"</string>
     <string name="wifi_security_eap_wpa3" msgid="7961135182909018796">"WPA3-Enterprise"</string>
     <string name="wifi_security_passpoint" msgid="2209078477216565387">"Passpoint"</string>
@@ -255,9 +255,9 @@
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Depuração por Wi-Fi"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Para acessar e usar dispositivos disponíveis, ative a depuração por Wi-Fi."</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Parear o dispositivo com um QR code"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Parear novos dispositivos usando um leitor de QR code"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Pareie novos dispositivos usando um leitor de QR code"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Parear o dispositivo com um código de pareamento"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Parear novos dispositivos usando um código de seis dígitos"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Pareie novos dispositivos usando um código de seis dígitos"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Dispositivos pareados"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Conectados no momento"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Detalhes do dispositivo"</string>
@@ -323,8 +323,8 @@
     <string name="private_dns_mode_provider" msgid="3619040641762557028">"Nome do host do provedor de DNS particular"</string>
     <string name="private_dns_mode_provider_hostname_hint" msgid="6564868953748514595">"Informe o nome do host"</string>
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"Não foi possível conectar"</string>
-    <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Mostrar opções de certificação de Display sem fio"</string>
-    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Aumentar o nível de registro de Wi-Fi; mostrar conforme o RSSI do SSID no seletor de Wi-Fi"</string>
+    <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Mostra opções de certificação de display sem fio"</string>
+    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Aumenta o nível de registro de Wi-Fi; mostra conforme o RSSI do SSID no seletor de Wi-Fi"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Reduz o consumo de bateria e melhora o desempenho da rede"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Quando esse modo estiver ativado, o endereço MAC do dispositivo poderá mudar toda vez que ele se conectar a uma rede com ordem aleatória de MAC."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Limitada"</string>
@@ -341,7 +341,7 @@
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Permitir locais fictícios"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Ativar visualização de inspeção de atributo"</string>
     <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Sempre manter dados móveis ativos, mesmo quando o Wi-Fi estiver ativado (para troca rápida de rede)"</string>
-    <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Usar aceleração de hardware para tethering quando disponível"</string>
+    <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Usa aceleração de hardware para tethering quando disponível"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"Permitir a depuração USB?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"A depuração USB serve apenas para fins de desenvolvimento. Use-a para copiar dados entre o computador e o dispositivo, instalar apps no seu aparelho sem notificação e ler dados de registro."</string>
     <string name="adbwifi_warning_title" msgid="727104571653031865">"Permitir a depuração por Wi-Fi?"</string>
@@ -350,7 +350,7 @@
     <string name="dev_settings_warning_title" msgid="8251234890169074553">"Ativar as configurações de desenvolvimento?"</string>
     <string name="dev_settings_warning_message" msgid="37741686486073668">"Essas configurações são destinadas apenas para o uso de desenvolvedores. Elas podem causar a desativação ou mau funcionamento do dispositivo e dos apps contidos nele."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"Verificar apps por USB"</string>
-    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"Verificar comportamento nocivo em apps instalados via ADB/ADT"</string>
+    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"Verifique comportamento nocivo em apps instalados via ADB/ADT"</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Dispositivos Bluetooth sem nomes (somente endereços MAC) serão exibidos"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Desativa o recurso Bluetooth de volume absoluto em caso de problemas com o volume em dispositivos remotos, como volume excessivamente alto ou falta de controle"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"Ativa a pilha de recursos Bluetooth Gabeldorsche."</string>
@@ -461,7 +461,7 @@
     <string name="transcode_notification" msgid="5560515979793436168">"Mostrar notificações de transcodificação"</string>
     <string name="transcode_disable_cache" msgid="3160069309377467045">"Desativar cache da transcodificação"</string>
     <string name="runningservices_settings_title" msgid="6460099290493086515">"Serviços em execução"</string>
-    <string name="runningservices_settings_summary" msgid="1046080643262665743">"Ver e controlar os serviços em execução no momento"</string>
+    <string name="runningservices_settings_summary" msgid="1046080643262665743">"Veja e controle os serviços em execução no momento"</string>
     <string name="select_webview_provider_title" msgid="3917815648099445503">"Implementação do WebView"</string>
     <string name="select_webview_provider_dialog_title" msgid="2444261109877277714">"Configurar implementação do WebView"</string>
     <string name="select_webview_provider_toast_text" msgid="8512254949169359848">"Esta opção não é mais válida. Tente novamente."</string>

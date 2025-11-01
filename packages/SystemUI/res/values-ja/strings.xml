@@ -648,7 +648,7 @@
     <string name="screen_pinning_description_recents_invisible_accessible" msgid="2857071808674481986">"固定を解除するまで画面が常に表示されるようになります。[ホーム] を押し続けると固定が解除されます。"</string>
     <string name="screen_pinning_exposes_personal_data" msgid="8189852022981524789">"個人データ（連絡先やメールの内容など）にアクセスされる可能性があります。"</string>
     <string name="screen_pinning_can_open_other_apps" msgid="7529756813231421455">"固定したアプリが他のアプリを開く可能性があります。"</string>
-    <string name="screen_pinning_toast" msgid="8177286912533744328">"このアプリの固定を解除するには [戻る] ボタンと [最近] ボタンを長押しします"</string>
+    <string name="screen_pinning_toast" msgid="8177286912533744328">"このアプリの固定を解除するには [戻る] ボタンと [最近使ったアプリ] ボタンを長押しします"</string>
     <string name="screen_pinning_toast_recents_invisible" msgid="6850978077443052594">"このアプリの固定を解除するには [戻る] ボタンと [ホーム] ボタンを長押しします"</string>
     <string name="screen_pinning_toast_gesture_nav" msgid="170699893395336705">"このアプリの固定を解除するには、上にスワイプして長押しします"</string>
     <string name="screen_pinning_positive" msgid="3285785989665266984">"OK"</string>
@@ -696,7 +696,7 @@
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"バイブレーション"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"<xliff:g id="LABEL">%s</xliff:g> の再生先:"</string>
     <string name="media_output_title_without_playing" msgid="3825663683169305013">"音声の再生先"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"通話中"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"通話デバイス:"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"システムUI調整ツール"</string>
     <string name="status_bar" msgid="4357390266055077437">"ステータスバー"</string>
     <string name="demo_mode" msgid="263484519766901593">"システム UI デモモード"</string>
@@ -734,7 +734,7 @@
     <string name="tuner_toast" msgid="3812684836514766951">"システムUI調整ツールを設定に追加しました"</string>
     <string name="remove_from_settings" msgid="633775561782209994">"設定から削除"</string>
     <string name="remove_from_settings_prompt" msgid="551565437265615426">"設定からシステムUI調整ツールを削除して、全機能の使用を停止しますか？"</string>
-    <string name="enable_bluetooth_title" msgid="866883307336662596">"BluetoothをONにしますか？"</string>
+    <string name="enable_bluetooth_title" msgid="866883307336662596">"Bluetoothを ON にしますか？"</string>
     <string name="enable_bluetooth_message" msgid="6740938333772779717">"タブレットでキーボードに接続するには、最初にBluetoothをONにする必要があります。"</string>
     <string name="enable_bluetooth_confirmation_ok" msgid="2866408183324184876">"ONにする"</string>
     <string name="rotation_lock_camera_rotation_on" msgid="789434807790534274">"ON - 顔ベース"</string>
@@ -830,7 +830,7 @@
     <string name="keyboard_shortcut_a11y_filter_input" msgid="4589316004510335529">"入力用のショートカットを表示しています"</string>
     <string name="keyboard_shortcut_a11y_filter_open_apps" msgid="6175417687221004059">"アプリを開くショートカットを表示しています"</string>
     <string name="keyboard_shortcut_a11y_filter_current_app" msgid="7944592357493737911">"現在のアプリのショートカットを表示しています"</string>
-    <string name="group_system_access_notification_shade" msgid="1619028907006553677">"お知らせを表示する"</string>
+    <string name="group_system_access_notification_shade" msgid="1619028907006553677">"通知を表示する"</string>
     <string name="group_system_full_screenshot" msgid="5742204844232667785">"スクリーンショットを撮る"</string>
     <string name="group_system_access_system_app_shortcuts" msgid="8562482996626694026">"ショートカットを表示する"</string>
     <string name="group_system_go_back" msgid="2730322046244918816">"戻る"</string>

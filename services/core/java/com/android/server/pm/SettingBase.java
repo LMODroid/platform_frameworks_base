@@ -34,6 +34,7 @@ public abstract class SettingBase implements Watchable, Snappable {
     //  and bugs exist where callers query for an unsaved flag.
     private int mPkgFlags;
     private int mPkgPrivateFlags;
+    private int mPkgPrivateFlagsExt;
 
     /**
      * Watchable machinery
@@ -100,9 +101,10 @@ public abstract class SettingBase implements Watchable, Snappable {
     @Deprecated
     protected final LegacyPermissionState mLegacyPermissionsState = new LegacyPermissionState();
 
-    SettingBase(int pkgFlags, int pkgPrivateFlags) {
+    SettingBase(int pkgFlags, int pkgPrivateFlags, int pkgPrivateFlagsExt) {
         setFlags(pkgFlags);
         setPrivateFlags(pkgPrivateFlags);
+        setPrivateFlagsExt(pkgPrivateFlagsExt);
     }
 
     SettingBase(@Nullable SettingBase orig) {
@@ -114,6 +116,7 @@ public abstract class SettingBase implements Watchable, Snappable {
     public final void copySettingBase(SettingBase orig) {
         mPkgFlags = orig.mPkgFlags;
         mPkgPrivateFlags = orig.mPkgPrivateFlags;
+        mPkgPrivateFlagsExt = orig.mPkgPrivateFlagsExt;
         mLegacyPermissionsState.copyFrom(orig.mLegacyPermissionsState);
         onChanged();
     }
@@ -135,11 +138,21 @@ public abstract class SettingBase implements Watchable, Snappable {
         return this;
     }
 
+    public SettingBase setPrivateFlagsExt(int pkgPrivateFlagsExt) {
+        this.mPkgPrivateFlagsExt = pkgPrivateFlagsExt;
+        onChanged();
+        return this;
+    }
+
     public int getFlags() {
         return mPkgFlags;
     }
 
     public int getPrivateFlags() {
         return mPkgPrivateFlags;
+    }
+
+    public int getPrivateFlagsExt() {
+        return mPkgPrivateFlagsExt;
     }
 }

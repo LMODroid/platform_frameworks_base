@@ -1453,4 +1453,12 @@ public abstract class PackageManagerInternal {
      * Returns true if the device is upgrading from an SDK version lower than the one specified.
      */
     public abstract boolean isUpgradingFromLowerThan(int sdkVersion);
+
+    /**
+     * Sets the display compat mode for a package.
+     * @param packageName a specific package
+     * @param userId The user for whom the package is installed
+     * @param enabled Whether to enable or disable the display compat mode
+     */
+    public abstract void setDisplayCompat(String packageName, int userId, boolean enabled);
 }

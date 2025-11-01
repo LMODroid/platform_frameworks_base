@@ -85,7 +85,7 @@
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Chatea con burbujas"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Las nuevas conversaciones aparecen como iconos en una esquina inferior de la pantalla. Tócalas para ampliarlas o arrástralas para cerrarlas."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Controla las burbujas cuando quieras"</string>
-    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Toca aquí para gestionar qué aplicaciones y conversaciones pueden usar burbujas"</string>
+    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Toca aquí para gestionar qué apps y conversaciones pueden usar burbujas"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"Burbuja"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Gestionar"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"Burbuja cerrada."</string>
@@ -93,7 +93,7 @@
     <string name="bubble_shortcut_long_label" msgid="6088437544312894043">"Mostrar burbujas"</string>
     <string name="restart_button_description" msgid="4564728020654658478">"Toca para reiniciar esta aplicación y obtener una mejor vista"</string>
     <string name="user_aspect_ratio_settings_button_hint" msgid="734835849600713016">"Cambiar la relación de aspecto de esta aplicación en Ajustes"</string>
-    <string name="user_aspect_ratio_settings_button_description" msgid="4315566801697411684">"Cambiar relación de aspecto"</string>
+    <string name="user_aspect_ratio_settings_button_description" msgid="4315566801697411684">"Relación de aspecto"</string>
     <string name="camera_compat_treatment_suggested_button_description" msgid="8103916969024076767">"¿Problemas con la cámara?\nToca para reajustar"</string>
     <string name="camera_compat_treatment_applied_button_description" msgid="2944157113330703897">"¿No se ha solucionado?\nToca para revertir"</string>
     <string name="camera_compat_dismiss_button_description" msgid="2795364433503817511">"¿No hay problemas con la cámara? Toca para cerrar."</string>

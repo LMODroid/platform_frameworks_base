@@ -331,11 +331,11 @@
     <string name="permgroupdesc_readMediaAural" msgid="7565467343667089595">"ଆପଣଙ୍କ ଡିଭାଇସରେ ମ୍ୟୁଜିକ ଏବଂ ଅଡିଓକୁ ଆକ୍ସେସ କରନ୍ତୁ"</string>
     <string name="permgrouplab_readMediaVisual" msgid="4724874717811908660">"ଫଟୋ ଏବଂ ଭିଡିଓ"</string>
     <string name="permgroupdesc_readMediaVisual" msgid="4080463241903508688">"ଆପଣଙ୍କ ଡିଭାଇସରେ ଫଟୋ ଏବଂ ଭିଡିଓଗୁଡ଼ିକୁ ଆକ୍ସେସ କରନ୍ତୁ"</string>
-    <string name="permgrouplab_microphone" msgid="2480597427667420076">"ମାଇକ୍ରୋଫୋନ"</string>
+    <string name="permgrouplab_microphone" msgid="2480597427667420076">"Microphone"</string>
     <string name="permgroupdesc_microphone" msgid="1047786732792487722">"ଅଡିଓ ରେକର୍ଡ କରେ"</string>
     <string name="permgrouplab_activityRecognition" msgid="3324466667921775766">"ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ"</string>
     <string name="permgroupdesc_activityRecognition" msgid="4725624819457670704">"ଆପଣଙ୍କ ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ ଆକ୍ସେସ୍ କରନ୍ତୁ"</string>
-    <string name="permgrouplab_camera" msgid="9090413408963547706">"କେମେରା"</string>
+    <string name="permgrouplab_camera" msgid="9090413408963547706">"Camera"</string>
     <string name="permgroupdesc_camera" msgid="7585150538459320326">"ଫଟୋ ନିଏ ଓ ଭିଡିଓ ରେକର୍ଡ କରେ"</string>
     <string name="permgrouplab_nearby_devices" msgid="5529147543651181991">"ଆଖପାଖର ଡିଭାଇସଗୁଡ଼ିକ"</string>
     <string name="permgroupdesc_nearby_devices" msgid="3213561597116913508">"ଆଖପାଖର ଡିଭାଇସଗୁଡ଼ିକୁ ଖୋଜି ସଂଯୋଗ କରନ୍ତୁ"</string>

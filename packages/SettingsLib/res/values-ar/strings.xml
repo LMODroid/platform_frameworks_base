@@ -326,7 +326,7 @@
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"عرض خيارات شهادة عرض شاشة لاسلكي"</string>
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"‏زيادة مستوى تسجيل Wi-Fi، وعرض لكل SSID RSSI في منتقي Wi-Fi"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"لتقليل استهلاك البطارية وتحسين أداء الشبكة"</string>
-    <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"‏عند تفعيل هذا الوضع، قد يتم تغيير عنوان MAC لهذا الجهاز في كل مرة تتصل فيها بشبكة تم تفعيل التوزيع العشوائي لعناوين MAC عليها."</string>
+    <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"‏عند تفعيل هذا الوضع، قد يتم تغيير عنوان MAC لهذا الجهاز في كل مرة تتصل فيها بشبكة تم تفعيل التوزيع العشوائي لعناوين MAC عليها"</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"تفرض تكلفة استخدام"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"بدون قياس"</string>
     <string name="select_logd_size_title" msgid="1604578195914595173">"أحجام ذاكرة التخزين المؤقت للتسجيل"</string>
@@ -351,7 +351,7 @@
     <string name="dev_settings_warning_message" msgid="37741686486073668">"هذه الإعدادات مخصصة لاستخدام التطوير فقط. قد يتسبب هذا في حدوث أعطال أو خلل في أداء الجهاز والتطبيقات المثبتة عليه."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"‏التحقق من التطبيقات عبر USB"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"‏التحقق من التطبيقات المثبتة عبر ADB/ADT لكشف السلوك الضار"</string>
-    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"‏سيتم عرض أجهزة البلوتوث بدون أسماء (عناوين MAC فقط)."</string>
+    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"‏سيتم عرض أجهزة البلوتوث بدون أسماء (عناوين MAC فقط)"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"إيقاف ميزة مستوى الصوت المطلق للبلوتوث في حال حدوث مشاكل متعلقة بمستوى الصوت في الأجهزة البعيدة، مثل مستوى صوت عالٍ بشكل غير مقبول أو عدم إمكانية التحكّم في الصوت"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"‏تفعيل حِزم ميزة Bluetooth Gabeldorsche"</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"لتفعيل الميزة \"إمكانية اتصال محسّن\""</string>
@@ -361,7 +361,7 @@
     <string name="hdcp_checking_dialog_title" msgid="7691060297616217781">"‏تعيين سلوك التحقق من HDCP"</string>
     <string name="debug_debugging_category" msgid="535341063709248842">"تصحيح الأخطاء"</string>
     <string name="debug_app" msgid="8903350241392391766">"اختيار التطبيق لتصحيحه"</string>
-    <string name="debug_app_not_set" msgid="1934083001283807188">"لم يتم ضبط تطبيق لتصحيحه."</string>
+    <string name="debug_app_not_set" msgid="1934083001283807188">"لم يتم ضبط تطبيق لتصحيحه"</string>
     <string name="debug_app_set" msgid="6599535090477753651">"تطبيق التصحيح: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="select_application" msgid="2543228890535466325">"اختيار تطبيق"</string>
     <string name="no_application" msgid="9038334538870247690">"لا شيء"</string>
@@ -381,7 +381,7 @@
     <string name="show_key_presses" msgid="6360141722735900214">"عرض الضغطات على المفاتيح"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"عرض الملاحظات المرئية للضغطات الفعلية على المفاتيح"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"عرض البيانات التي يتم إدخالها بلوحة اللمس"</string>
-    <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"يعرض هذا الإعداد على الشاشة البيانات التي يتم إدخالها والإيماءات التي يتم استخدامها بواسطة لوحة اللمس."</string>
+    <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"يعرض فوق محتوى الشاشة بيانات إدخالات لوحة اللمس والإيماءات التي يتم التعرّف عليها"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"عرض تحديثات السطح"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"وميض أسطح النوافذ بالكامل عندما يتم تحديثها"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"إظهار تحديثات العرض"</string>
@@ -409,7 +409,7 @@
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"‏تفعيل طبقات تصحيح أخطاء GPU"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"‏السماح بتحميل طبقات تصحيح أخطاء GPU لتطبيقات تصحيح الأخطاء"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"تفعيل التسجيل المطوَّل للمورّد"</string>
-    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"تضمين سجلات المورّدين الإضافية الخاصة بالجهاز في تقارير الخطأ، والتي قد تحتوي على معلومات شخصية و/أو تستهلك المزيد من شحن البطارية و/أو تستهلك المزيد من مساحة التخزين"</string>
+    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"تضمين سجلات المورّدين الإضافية الخاصة بالجهاز في تقارير الخطأ، التي قد تحتوي على معلومات شخصية، و/أو تستهلك المزيد من شحن البطارية و/أو مساحة التخزين"</string>
     <string name="enable_verbose_vendor_logging_checkbox" msgid="3864578373293835530">"الإيقاف بعد يوم واحد"</string>
     <string name="verbose_vendor_logging_notification_title" msgid="6811217272559843592">"انتهى التسجيل المطوّل للمورِّد"</string>
     <string name="verbose_vendor_logging_notification_summary" msgid="5226524769774370942">"تم التفعيل لمدة يوم واحد"</string>
@@ -469,7 +469,7 @@
     <string name="picture_color_mode_desc" msgid="151780973768136200">"‏استخدام sRGB"</string>
     <string name="daltonizer_mode_disabled" msgid="403424372812399228">"غير مفعّلة"</string>
     <string name="daltonizer_mode_monochromacy" msgid="362060873835885014">"عمى ألوان كامل"</string>
-    <string name="daltonizer_mode_deuteranomaly" msgid="3507284319584683963">"العجز في رؤية اللونين الأخضر والأحمر"</string>
+    <string name="daltonizer_mode_deuteranomaly" msgid="3507284319584683963">"العجز عن رؤية بعض درجات الأخضر"</string>
     <string name="daltonizer_mode_protanomaly" msgid="7805583306666608440">"غطش الأحمر (الأحمر والأخضر)"</string>
     <string name="daltonizer_mode_tritanomaly" msgid="7135266249220732267">"غمش الأزرق (الأزرق والأصفر)"</string>
     <string name="accessibility_display_daltonizer_preference_title" msgid="1810693571332381974">"تصحيح الألوان"</string>
@@ -516,7 +516,7 @@
     <string name="battery_info_status_charging_on_hold" msgid="6364355145521694438">"الشحن معلَّق"</string>
     <string name="battery_info_status_charging_v2" msgid="6118522107222245505">"جارٍ الشحن"</string>
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"جارٍ الشحن السريع"</string>
-    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"إعدادات يتحكم فيها المشرف"</string>
+    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"إعداد يتحكم فيه المشرف"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"يتحكّم فيه إعداد محظور"</string>
     <string name="disabled" msgid="8017887509554714950">"غير مفعّل"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"تطبيق مسموح به"</string>
@@ -656,7 +656,7 @@
     <string name="guest_exit_guest" msgid="5908239569510734136">"إزالة جلسة الضيف"</string>
     <string name="guest_reset_guest" msgid="6110013010356013758">"إعادة ضبط جلسة الضيف"</string>
     <string name="guest_reset_guest_dialog_title" msgid="8047270010895437534">"هل تريد إعادة ضبط جلسة الضيف؟"</string>
-    <string name="guest_remove_guest_dialog_title" msgid="4548511006624088072">"هل تريد إزالة حساب الضيف؟"</string>
+    <string name="guest_remove_guest_dialog_title" msgid="4548511006624088072">"هل تريد إزالة جلسة الضيف؟"</string>
     <string name="guest_reset_guest_confirm_button" msgid="2989915693215617237">"إعادة الضبط"</string>
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"إزالة"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"جارٍ إعادة ضبط جلسة الضيف…"</string>

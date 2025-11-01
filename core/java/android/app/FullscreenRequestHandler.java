@@ -35,13 +35,15 @@ public class FullscreenRequestHandler {
     @IntDef(prefix = { "RESULT_" }, value = {
             RESULT_APPROVED,
             RESULT_FAILED_NOT_IN_FULLSCREEN_WITH_HISTORY,
-            RESULT_FAILED_NOT_TOP_FOCUSED
+            RESULT_FAILED_NOT_TOP_FOCUSED,
+            RESULT_FAILED_NOT_SUPPORTED
     })
     public @interface RequestResult {}
 
     public static final int RESULT_APPROVED = 0;
     public static final int RESULT_FAILED_NOT_IN_FULLSCREEN_WITH_HISTORY = 1;
     public static final int RESULT_FAILED_NOT_TOP_FOCUSED = 2;
+    public static final int RESULT_FAILED_NOT_SUPPORTED = 4;
 
     public static final String REMOTE_CALLBACK_RESULT_KEY = "result";
 
@@ -86,6 +88,10 @@ public class FullscreenRequestHandler {
                 break;
             case RESULT_FAILED_NOT_TOP_FOCUSED:
                 e = new IllegalStateException("The window is not the top focused window.");
+                break;
+            case RESULT_FAILED_NOT_SUPPORTED:
+                e = new UnsupportedOperationException("Fullscreen request denied by system "
+                        + "policy.");
                 break;
             default:
                 callback.onResult(null);

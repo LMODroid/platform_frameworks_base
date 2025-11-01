@@ -254,10 +254,10 @@
     <string name="adb_wireless_error" msgid="721958772149779856">"Error"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Depuración inalámbrica"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Para ver y usar los dispositivos disponibles, activa la depuración inalámbrica"</string>
-    <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Vincular dispositivo mediante código QR"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Vincular dispositivos nuevos mediante escáner de código QR"</string>
+    <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Vincular dispositivo con un código QR"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Vincular dispositivos nuevos con un escáner de código QR"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Vincular dispositivo con un código de vinculación"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Vincular dispositivos nuevos mediante código de seis dígitos"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Vincular dispositivos nuevos con un código de seis dígitos"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Dispositivos vinculados"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Conectado actualmente"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Detalles del dispositivo"</string>
@@ -281,7 +281,7 @@
     <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Muestra un botón en el menú de encendido para realizar un informe de errores"</string>
     <string name="keep_screen_on" msgid="1187161672348797558">"No desactivar"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"La pantalla nunca quedará inactiva mientras el dispositivo se esté cargando"</string>
-    <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Registro de Bluetooth HCI"</string>
+    <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Habilitar el registro de Bluetooth HCI"</string>
     <string name="bt_hci_snoop_log_summary" msgid="6808538971394092284">"Capturar paquetes de Bluetooth (activa/desactiva el Bluetooth después de cambiar esta configuración)"</string>
     <string name="oem_unlock_enable" msgid="5334869171871566731">"Desbloqueo para OEM"</string>
     <string name="oem_unlock_enable_summary" msgid="5857388174390953829">"Permitir que el cargador de inicio se desbloquee"</string>
@@ -325,7 +325,7 @@
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"No se pudo establecer conexión"</string>
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Muestra opciones de certificación de pantalla inalámbrica"</string>
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Aumenta el nivel de registro Wi-Fi y se muestra por SSID RSSI en el selector de Wi-Fi"</string>
-    <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Reduce el consumo de batería y mejora el rendimiento de la red."</string>
+    <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Reduce el agotamiento de la batería y mejora el rendimiento de la red"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Si este modo está habilitado, es posible que la dirección MAC del dispositivo cambie cada vez que se conecte a una red que tenga habilitada la aleatorización de MAC."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"De uso medido"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"Sin tarifa plana"</string>
@@ -333,7 +333,7 @@
     <string name="select_logd_size_dialog_title" msgid="2105401994681013578">"Selecciona el tamaño del Logger por búfer"</string>
     <string name="dev_logpersist_clear_warning_title" msgid="8631859265777337991">"¿Borrar el almacenamiento persistente del registrador?"</string>
     <string name="dev_logpersist_clear_warning_message" msgid="6447590867594287413">"Cuando ya no usamos el registrador persistente para monitorear, debemos borrar los datos que almacena el registrador en tu dispositivo."</string>
-    <string name="select_logpersist_title" msgid="447071974007104196">"Almacenar de forma persistente"</string>
+    <string name="select_logpersist_title" msgid="447071974007104196">"Almacenar de forma persistente en el dispositivo"</string>
     <string name="select_logpersist_dialog_title" msgid="7745193591195485594">"Selecciona búferes de registro para almacenamiento persistente en dispositivo"</string>
     <string name="select_usb_configuration_title" msgid="6339801314922294586">"Seleccionar configuración de USB"</string>
     <string name="select_usb_configuration_dialog_title" msgid="3579567144722589237">"Seleccionar configuración de USB"</string>
@@ -373,7 +373,7 @@
     <string name="media_category" msgid="8122076702526144053">"Multimedia"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Supervisión"</string>
     <string name="strict_mode" msgid="889864762140862437">"Modo estricto"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"Parpadear si aplicaciones tardan en proceso principal"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"La pantalla parpadea si las aplicaciones tardan en el subproceso principal"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Ubicación del puntero"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"Muestra los datos táctiles en la pantalla"</string>
     <string name="show_touches" msgid="8437666942161289025">"Mostrar presiones"</string>
@@ -383,12 +383,12 @@
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Mostrar entrada del panel táctil"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Muestra los datos de entrada del panel táctil y de gestos reconocidos en la pantalla"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Mostrar actualizaciones"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Destello en superficie por actualización"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"La superficie parpadea con cada actualización"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Mostrar cambios de vista"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Muestra vistas de ventanas procesadas"</string>
-    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Act. de capas de hardware"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Las vistas parpadean cuando se actualizan"</string>
+    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Mostrar cambios de capas"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Luz verde en capas de hardware al actualizarse"</string>
-    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Depurar superpos. de GPU"</string>
+    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Depurar superposición de GPU"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Desactivar superposición de hardware"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Usar GPU para combinar pantallas"</string>
     <string name="simulate_color_space" msgid="1206503300335835151">"Simular espacio de color"</string>
@@ -396,16 +396,16 @@
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Inhabilitar enrutamiento de audio USB"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Inhabilita el enrutamiento automático a periféricos de audio USB"</string>
     <string name="debug_layout" msgid="1659216803043339741">"Mostrar límites de diseño"</string>
-    <string name="debug_layout_summary" msgid="8825829038287321978">"Mostrar límites de recortes, márgenes, etc."</string>
+    <string name="debug_layout_summary" msgid="8825829038287321978">"Muestra límites de recortes, márgenes, etc."</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Forzar diseño de derecha a izquierda"</string>
-    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Forzar diseño de pantalla de derecha a izquierda para todos los idiomas"</string>
+    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Fuerza el diseño de pantalla de derecha a izquierda para todos los idiomas"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Barra de navegación transparente"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Hace que el color de fondo de la barra de navegación sea transparente de forma predeterminada"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Permitir difuminación en ventana"</string>
     <string name="force_msaa" msgid="4081288296137775550">"Forzar MSAA 4x"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Activar MSAA 4x en aplicaciones OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Depurar operaciones de recorte no rectangulares"</string>
-    <string name="track_frame_time" msgid="522674651937771106">"Perfil procesamiento HWUI"</string>
+    <string name="track_frame_time" msgid="522674651937771106">"Perfil de procesamiento HWUI"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Habilitar depuración GPU"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Permite cargar capas de depuración de GPU para apps de depuración"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Habilitar registro de proveedor detallado"</string>
@@ -661,7 +661,7 @@
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"Quitar"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"Restableciendo invitado…"</string>
     <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"¿Restablecer la sesión de invitado?"</string>
-    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Esta acción comenzará una nueva sesión de invitado y borrará todas las apps y los datos de la sesión actual."</string>
+    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Esta acción comenzará una nueva sesión de invitado y borrará todas las apps y los datos de la sesión actual"</string>
     <string name="guest_exit_dialog_title" msgid="1846494656849381804">"¿Salir del modo de invitado?"</string>
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"Esta acción borrará todas las apps y los datos de la sesión de invitado actual."</string>
     <string name="grant_admin" msgid="4323199171790522574">"Sí, convertir en administrador"</string>

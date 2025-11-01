@@ -602,7 +602,7 @@
     <string name="monitoring_title_device_owned" msgid="7029691083837606324">"डिवाइस मैनेजमेंट"</string>
     <string name="monitoring_subtitle_vpn" msgid="800485258004629079">"वीपीएन"</string>
     <string name="monitoring_subtitle_network_logging" msgid="2444199331891219596">"नेटवर्क लॉगिंग"</string>
-    <string name="monitoring_subtitle_ca_certificate" msgid="8588092029755175800">"CA सर्टिफ़िकेट"</string>
+    <string name="monitoring_subtitle_ca_certificate" msgid="8588092029755175800">"सीए सर्टिफ़िकेट"</string>
     <string name="monitoring_button_view_policies" msgid="3869724835853502410">"नीतियां देखें"</string>
     <string name="monitoring_button_view_controls" msgid="8316440345340701117">"कंट्रोल देखें"</string>
     <string name="monitoring_description_named_management" msgid="505833016545056036">"इस डिवाइस का मालिकाना हक <xliff:g id="ORGANIZATION_NAME">%1$s</xliff:g> के पास है.\n\nआपके संगठन का आईटी एडमिन कुछ चीज़ों की निगरानी और उन्हें प्रबंधित कर सकता है, जैसे कि सेटिंग, कॉर्पोरेट ऐक्सेस, ऐप्लिकेशन, आपके डिवाइस से जुड़ा डेटा, और आपके डिवाइस की जगह की जानकारी.\n\nज़्यादा जानकारी के लिए, अपने आईटी एडमिन से संपर्क करें."</string>
@@ -745,7 +745,7 @@
     <string name="notification_alert_title" msgid="3656229781017543655">"डिफ़ॉल्ट"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"अपने-आप"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"आवाज़ या वाइब्रेशन न हो"</string>
-    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"कोई आवाज़ या वाइब्रेशन नहीं, लेकिन फिर भी बातचीत वाले सेक्शन में दिखता है"</string>
+    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"कोई आवाज़ या वाइब्रेशन नहीं होता, फिर भी बातचीत वाले सेक्शन में दिखता है"</string>
     <string name="notification_channel_summary_default" msgid="777294388712200605">"डिवाइस की सेटिंग के आधार पर, सूचना आने पर घंटी बज सकती है या वाइब्रेशन हो सकता है"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"डिवाइस की सेटिंग के आधार पर, सूचना आने पर घंटी बज सकती है या वाइब्रेशन हो सकता है. <xliff:g id="APP_NAME">%1$s</xliff:g> पर होने वाली बातचीत, डिफ़ॉल्ट रूप से बबल के तौर पर दिखती है."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"सिस्टम को यह तय करने की अनुमति दें कि इस सूचना के मिलने पर आवाज़ हो या वाइब्रेशन हो"</string>
@@ -1046,7 +1046,7 @@
     <string name="magnification_close_settings_click_label" msgid="4642477260651704517">"ज़ूम करने की सुविधा वाली सेटिंग को बंद करें"</string>
     <string name="magnification_exit_edit_mode_click_label" msgid="1664818325144887117">"बदलाव मोड से बाहर निकलें"</string>
     <string name="magnification_drag_corner_to_resize" msgid="1249766311052418130">"साइज़ बदलने के लिए, कोने को खींचें और छोड़ें"</string>
-    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"तिरछी दिशा में स्क्रोल करने की अनुमति दें"</string>
+    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"तिरछे स्क्रोल करने की अनुमति दें"</string>
     <string name="accessibility_resize" msgid="5733759136600611551">"साइज़ बदलें"</string>
     <string name="accessibility_change_magnification_type" msgid="666000085077432421">"ज़ूम करने की सुविधा का टाइप बदलें"</string>
     <string name="accessibility_magnification_end_resizing" msgid="4881690585800302628">"साइज़ बदलना रोकें"</string>
@@ -1227,7 +1227,7 @@
     <string name="status_before_loading" msgid="1500477307859631381">"कॉन्टेंट जल्द ही दिखेगा"</string>
     <string name="missed_call" msgid="4228016077700161689">"मिस्ड कॉल"</string>
     <string name="messages_count_overflow_indicator" msgid="7850934067082006043">"<xliff:g id="NUMBER">%d</xliff:g>+"</string>
-    <string name="people_tile_description" msgid="8154966188085545556">"हाल के मैसेज, मिस्ड कॉल, और स्टेटस अपडेट देखें"</string>
+    <string name="people_tile_description" msgid="8154966188085545556">"हाल ही के मैसेज, मिस्ड कॉल, और स्टेटस अपडेट देखें"</string>
     <string name="people_tile_title" msgid="6589377493334871272">"बातचीत"</string>
     <string name="paused_by_dnd" msgid="7856941866433556428">"\'परेशान न करें\' की वजह से सूचनाएं नहीं दिख रहीं"</string>
     <string name="new_notification_text_content_description" msgid="2915029960094389291">"<xliff:g id="NAME">%1$s</xliff:g> ने एक मैसेज भेजा है: <xliff:g id="NOTIFICATION">%2$s</xliff:g>"</string>

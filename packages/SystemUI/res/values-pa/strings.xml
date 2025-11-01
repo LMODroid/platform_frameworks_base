@@ -745,7 +745,7 @@
     <string name="notification_alert_title" msgid="3656229781017543655">"ਪੂਰਵ-ਨਿਰਧਾਰਿਤ"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"ਸਵੈਚਲਿਤ"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"ਕੋਈ ਧੁਨੀ ਜਾਂ ਥਰਥਰਾਹਟ ਨਹੀਂ"</string>
-    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"ਕੋਈ ਅਵਾਜ਼ ਜਾਂ ਥਰਥਰਾਹਟ ਨਹੀਂ, ਪਰ ਫਿਰ ਵੀ ਗੱਲਬਾਤ ਸੈਕਸ਼ਨ ਵਿੱਚ ਦਿਖਾਈ ਦਿੰਦਾ ਹੈ"</string>
+    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"ਕੋਈ ਅਵਾਜ਼ ਜਾਂ ਥਰਥਰਾਹਟ ਨਹੀਂ, ਪਰ ਫਿਰ ਵੀ ਸੂਚਨਾ ਗੱਲਬਾਤ ਸੈਕਸ਼ਨ ਵਿੱਚ ਦਿਖਾਈ ਦਿੰਦੀ ਹੈ"</string>
     <string name="notification_channel_summary_default" msgid="777294388712200605">"ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਦੇ ਆਧਾਰ \'ਤੇ ਘੰਟੀ ਵੱਜ ਸਕਦੀ ਹੈ ਜਾਂ ਥਰਥਰਾਹਟ ਹੋ ਸਕਦੀ ਹੈ"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਦੇ ਆਧਾਰ \'ਤੇ ਘੰਟੀ ਵੱਜ ਸਕਦੀ ਹੈ ਜਾਂ ਥਰਥਰਾਹਟ ਹੋ ਸਕਦੀ ਹੈ। ਪੂਰਵ-ਨਿਰਧਾਰਿਤ ਤੌਰ \'ਤੇ <xliff:g id="APP_NAME">%1$s</xliff:g> ਬਬਲ ਤੋਂ ਗੱਲਾਂਬਾਤਾਂ।"</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"ਸਿਸਟਮ ਨੂੰ ਨਿਰਧਾਰਤ ਕਰਨ ਦਿਓ ਕਿ ਇਸ ਸੂਚਨਾ ਲਈ ਕੋਈ ਧੁਨੀ ਵਜਾਉਣੀ ਚਾਹੀਦੀ ਹੈ ਜਾਂ ਥਰਥਰਾਹਟ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ"</string>
@@ -755,11 +755,11 @@
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"&lt;b&gt;ਸਥਿਤੀ:&lt;/b&gt; ਦਰਜਾ ਘਟਾਇਆ ਗਿਆ"</string>
     <string name="notification_channel_summary_priority_baseline" msgid="46674690072551234">"ਗੱਲਬਾਤ ਸੂਚਨਾਵਾਂ ਦੇ ਸਿਖਰ \'ਤੇ ਅਤੇ ਲਾਕ ਸਕ੍ਰੀਨ \'ਤੇ ਪ੍ਰੋਫਾਈਲ ਤਸਵੀਰ ਵਜੋਂ ਦਿਖਾਉਂਦਾ ਹੈ"</string>
     <string name="notification_channel_summary_priority_bubble" msgid="1275413109619074576">"ਗੱਲਬਾਤ ਸੂਚਨਾਵਾਂ ਦੇ ਸਿਖਰ \'ਤੇ ਅਤੇ ਲਾਕ ਸਕ੍ਰੀਨ \'ਤੇ ਪ੍ਰੋਫਾਈਲ ਤਸਵੀਰ ਵਜੋਂ ਦਿਖਾਈਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਜੋ ਕਿ ਬਬਲ ਵਜੋਂ ਦਿਸਦੀਆਂ ਹਨ"</string>
-    <string name="notification_channel_summary_priority_dnd" msgid="6665395023264154361">"ਗੱਲਬਾਤ ਸੂਚਨਾਵਾਂ ਦੇ ਸਿਖਰ \'ਤੇ ਅਤੇ ਲਾਕ ਸਕ੍ਰੀਨ \'ਤੇ ਪ੍ਰੋਫਾਈਲ ਤਸਵੀਰ ਵਜੋਂ ਦਿਖਾਉਂਦਾ ਹੈ, \'ਪਰੇਸ਼ਾਨ ਨਾ ਕਰੋ\' ਸੁਵਿਧਾ ਵਿੱਚ ਵੀ ਵਿਘਨ ਪੈ ਸਕਦਾ ਹੈ"</string>
+    <string name="notification_channel_summary_priority_dnd" msgid="6665395023264154361">"ਇਸ ਨਾਲ ਇਹ ਸੂਚਨਾਵਾਂ ਗੱਲਬਾਤ ਸੰਬੰਧੀ ਸੂਚਨਾਵਾਂ ਦੇ ਸਿਖਰ \'ਤੇ ਅਤੇ ਲਾਕ ਸਕ੍ਰੀਨ \'ਤੇ ਪ੍ਰੋਫਾਈਲ ਤਸਵੀਰ ਵਜੋਂ ਦਿਸਣਗੀਆਂ, ਇਹ \'ਪਰੇਸ਼ਾਨ ਨਾ ਕਰੋ\' ਵਿਸ਼ੇਸ਼ਤਾ ਵਿੱਚ ਰੁਕਾਵਟ ਪਾ ਸਕਦੀਆਂ ਹਨ"</string>
     <string name="notification_channel_summary_priority_all" msgid="7151752959650048285">"ਗੱਲਬਾਤ ਸੂਚਨਾਵਾਂ ਦੇ ਸਿਖਰ \'ਤੇ ਅਤੇ ਲਾਕ ਸਕ੍ਰੀਨ \'ਤੇ ਪ੍ਰੋਫਾਈਲ ਤਸਵੀਰ ਵਜੋਂ ਦਿਖਾਈਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਜੋ ਕਿ ਬਬਲ ਵਜੋਂ ਦਿਸਦੀਆਂ ਹਨ ਅਤੇ \'ਪਰੇਸ਼ਾਨ ਨਾ ਕਰੋ\' ਸੁਵਿਧਾ ਵਿੱਚ ਵਿਘਨ ਵੀ ਪਾ ਸਕਦੀਆਂ ਹਨ"</string>
     <string name="notification_priority_title" msgid="2079708866333537093">"ਤਰਜੀਹ"</string>
     <string name="no_shortcut" msgid="8257177117568230126">"<xliff:g id="APP_NAME">%1$s</xliff:g> ਐਪ ਗੱਲਬਾਤ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦਾ ਸਮਰਥਨ ਨਹੀਂ ਕਰਦੀ"</string>
-    <string name="notification_unblockable_desc" msgid="2073030886006190804">"ਇਹਨਾਂ ਸੂਚਨਾਵਾਂ ਨੂੰ ਸੋਧਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।"</string>
+    <string name="notification_unblockable_desc" msgid="2073030886006190804">"ਇਨ੍ਹਾਂ ਸੂਚਨਾਵਾਂ ਨੂੰ ਸੋਧਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।"</string>
     <string name="notification_unblockable_call_desc" msgid="5907328164696532169">"ਕਾਲ ਸੰਬੰਧੀ ਸੂਚਨਾਵਾਂ ਨੂੰ ਸੋਧਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।"</string>
     <string name="notification_multichannel_desc" msgid="7414593090056236179">"ਇਹ ਸੂਚਨਾਵਾਂ ਦਾ ਗਰੁੱਪ ਇੱਥੇ ਸੰਰੂਪਿਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"</string>
     <string name="notification_delegate_header" msgid="1264510071031479920">"ਇੱਕ ਐਪ ਦੀ ਥਾਂ \'ਤੇ ਦੂਜੀ ਐਪ ਰਾਹੀਂ ਦਿੱਤੀ ਗਈ ਸੂਚਨਾ"</string>
@@ -1046,7 +1046,7 @@
     <string name="magnification_close_settings_click_label" msgid="4642477260651704517">"ਵੱਡਦਰਸ਼ੀਕਰਨ ਸੈਟਿੰਗਾਂ ਬੰਦ ਕਰੋ"</string>
     <string name="magnification_exit_edit_mode_click_label" msgid="1664818325144887117">"ਸੰਪਾਦਨ ਮੋਡ ਤੋਂ ਬਾਹਰ ਜਾਓ"</string>
     <string name="magnification_drag_corner_to_resize" msgid="1249766311052418130">"ਆਕਾਰ ਬਦਲਣ ਲਈ ਕੋਨਾ ਘਸੀਟੋ"</string>
-    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"ਟੇਡੀ ਦਿਸ਼ਾ ਵਿੱਚ ਸਕ੍ਰੋਲ ਕਰਨ ਦਿਓ"</string>
+    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"ਟੇਢੀ ਦਿਸ਼ਾ ਵਿੱਚ ਸਕ੍ਰੋਲ ਕਰਨ ਦਿਓ"</string>
     <string name="accessibility_resize" msgid="5733759136600611551">"ਆਕਾਰ ਬਦਲੋ"</string>
     <string name="accessibility_change_magnification_type" msgid="666000085077432421">"ਵੱਡਦਰਸ਼ੀਕਰਨ ਦੀ ਕਿਸਮ ਬਦਲੋ"</string>
     <string name="accessibility_magnification_end_resizing" msgid="4881690585800302628">"ਆਕਾਰ ਬਦਲਣਾ ਸਮਾਪਤ ਕਰੋ"</string>

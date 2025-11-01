@@ -266,9 +266,9 @@
     <string name="adb_wireless_connection_failed_title" msgid="664211177427438438">"Imeshindwa kuunganisha"</string>
     <string name="adb_wireless_connection_failed_message" msgid="9213896700171602073">"Hakikisha kuwa <xliff:g id="DEVICE_NAME">%1$s</xliff:g> kimeunganishwa kwenye mtandao sahihi"</string>
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"Unganisha na kifaa"</string>
-    <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Msimbo wa kuoanisha wa Wi-Fi"</string>
+    <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Namba ya kuunganisha Wi-Fi"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Imeshindwa kuoanisha"</string>
-    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Hakikisha kuwa kifaa kimeunganishwa kwenye mtandao mmoja."</string>
+    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Hakikisha kuwa kifaa kimeunganishwa kwenye mtandao ule ule."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Unganisha kifaa kupitia Wi-Fi kwa kuchanganua msimbo wa QR"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Inaoanisha kifaa…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Imeshindwa kuoanisha kifaa. Huenda msimbo wa QR haukuwa sahihi au kifaa hakijaunganishwa kwenye mtandao mmoja."</string>
@@ -329,7 +329,7 @@
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Wakati hali hii imewashwa, huenda anwani ya MAC ya kifaa hiki ikabadilika kila wakati kinapounganisha kwenye mtandao ambapo kipengele cha unasibu wa MAC kimewashwa."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Mtandao unapima data"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"Mtandao usiopima data"</string>
-    <string name="select_logd_size_title" msgid="1604578195914595173">"Ukubwa wa kiweka bafa ya kumbukumbu"</string>
+    <string name="select_logd_size_title" msgid="1604578195914595173">"Ukubwa wa kiweka akiba ya kumbukumbu"</string>
     <string name="select_logd_size_dialog_title" msgid="2105401994681013578">"Chagua ukubwa wa kila Kumbukumbu"</string>
     <string name="dev_logpersist_clear_warning_title" msgid="8631859265777337991">"Ungependa kufuta data iliyo kwenye hifadhi ya kiweka kumbukumbu za mara kwa mara?"</string>
     <string name="dev_logpersist_clear_warning_message" msgid="6447590867594287413">"Tunapoacha kufuatilia kwa kutumia kiweka kumbukumbu za mara kwa mara, tunapaswa kufuta data yote ya kiweka kumbukumbu iliyo kwenye kifaa chako."</string>
@@ -351,13 +351,13 @@
     <string name="dev_settings_warning_message" msgid="37741686486073668">"Mipangilio hii imekusudiwa kwa matumizi ya usanidi tu. Inaweza kusababisha kifaa chako na programu zilizoko kuvunjika au kutofanya kazi vizuri."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"Thibitisha programu kupitia USB"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"Kagua iwapo programu zilizosakinishwa kupitia ADB/ADT zina tabia ya kudhuru."</string>
-    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Itaonyesha vifaa vya Bluetooth bila majina (anwani za MAC pekee)"</string>
+    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Itaonyesha vifaa vya Bluetooth visivyo na majina (anwani za MAC pekee)"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Huzima kipengele cha Bluetooth cha sauti kamili kunapotokea matatizo ya sauti katika vifaa vya mbali kama vile sauti ya juu mno au inaposhindikana kuidhibiti."</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"Huwasha rafu ya kipengele ya Bluetooth Gabeldorsche."</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"Huwasha kipengele cha Muunganisho Ulioboreshwa."</string>
     <string name="enable_terminal_title" msgid="3834790541986303654">"Kituo cha karibu"</string>
     <string name="enable_terminal_summary" msgid="2481074834856064500">"Washa programu ya mwisho inayotoa ufikiaji mkuu wa karibu"</string>
-    <string name="hdcp_checking_title" msgid="3155692785074095986">"Inakagua HDCP"</string>
+    <string name="hdcp_checking_title" msgid="3155692785074095986">"Kukagua HDCP"</string>
     <string name="hdcp_checking_dialog_title" msgid="7691060297616217781">"Weka HDCP ya kukagua tabia"</string>
     <string name="debug_debugging_category" msgid="535341063709248842">"Utatuzi"</string>
     <string name="debug_app" msgid="8903350241392391766">"Chagua programu ya utatuaji"</string>
@@ -375,7 +375,7 @@
     <string name="strict_mode" msgid="889864762140862437">"Hali makinifu imewashwa"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Fanya skrini imemeteke programu zinapoendeleza shughuli ndefu kwenye skrini kuu"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Mahali pa kiashiria"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"Kuegeshwa kwa skrini ikionyesha data ya mguso ya sasa"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"Programu juu ya nyingine ionyeshe data ya mguso uliopo"</string>
     <string name="show_touches" msgid="8437666942161289025">"Onyesha unapogusa"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Onyesha ishara za kuthibitisha unapogusa"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"Onyesha mibofyo ya vitufe"</string>
@@ -384,7 +384,7 @@
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Programu inayowekelewa juu ya nyingine inayoonyesha data iliyoingizwa kupitia padi ya kugusa na miguso inayotambulika"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Onyesha masasisho ya sehemu"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Angaza dirisha lote zitakaposasisha"</string>
-    <string name="show_hw_screen_updates" msgid="2021286231267747506">"Onyesha taarifa za kuonekana"</string>
+    <string name="show_hw_screen_updates" msgid="2021286231267747506">"Onyesha arifa za kuonekana"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Angaza maoni ndani ya madirisha wakati yanatolewa"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Onyesha masasisho ya safu za maunzi"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Angaza kijani safu za maunzi zinaposasisha"</string>
@@ -428,7 +428,7 @@
     <string name="show_all_anrs_summary" msgid="8562788834431971392">"Onyesha kidirisha cha Programu Kutorejesha Majibu kwa programu zinazotumika chinichini"</string>
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Onyesha arifa za maonyo ya kituo"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"Huonyesha onyo kwenye skrini programu inapochapisha arifa bila kituo sahihi"</string>
-    <string name="force_allow_on_external" msgid="9187902444231637880">"Lazima uruhusu programu kwenye hifadhi ya nje"</string>
+    <string name="force_allow_on_external" msgid="9187902444231637880">"Ruhusu kwa lazima programu kwenye hifadhi ya nje"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Huruhusu programu yoyote iwekwe kwenye hifadhi ya nje, bila kujali thamani za faili ya maelezo"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Lazimisha shughuli ziweze kubadilishwa ukubwa"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Fanya shughuli zote ziweze kubadilishwa ukubwa kwenye madirisha mengi, bila kuzingatia thamani za faili ya maelezo."</string>
@@ -644,7 +644,7 @@
     <string name="profile_info_settings_title" msgid="105699672534365099">"Maelezo ya wasifu"</string>
     <string name="user_need_lock_message" msgid="4311424336209509301">"Kabla uunde wasifu uliowekekwa vikwazo, utahitajika kuweka skrini iliyofungwa ili kulinda programu zako na data binafsi."</string>
     <string name="user_set_lock_button" msgid="1427128184982594856">"Weka ufunguo"</string>
-    <string name="user_switch_to_user" msgid="6975428297154968543">"Badili utumie <xliff:g id="USER_NAME">%s</xliff:g>"</string>
+    <string name="user_switch_to_user" msgid="6975428297154968543">"Badili utumie kama <xliff:g id="USER_NAME">%s</xliff:g>"</string>
     <string name="creating_new_user_dialog_message" msgid="7232880257538970375">"Inaweka mtumiaji mpya…"</string>
     <string name="creating_new_guest_dialog_message" msgid="1114905602181350690">"Inaunda wasifu mpya wa mgeni…"</string>
     <string name="add_user_failed" msgid="4809887794313944872">"Imeshindwa kuweka mtumiaji mpya"</string>

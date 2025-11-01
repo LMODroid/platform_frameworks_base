@@ -198,9 +198,9 @@
     <string name="tts_settings" msgid="8130616705989351312">"\'எழுத்திலிருந்து பேச்சு\' அமைப்புகள்"</string>
     <string name="tts_settings_title" msgid="7602210956640483039">"வார்த்தையைப் பேச்சாக மாற்றுதல்"</string>
     <string name="tts_default_rate_title" msgid="3964187817364304022">"பேச்சு வீதம்"</string>
-    <string name="tts_default_rate_summary" msgid="3781937042151716987">"பேசப்படும் உரையின் வேகம்"</string>
+    <string name="tts_default_rate_summary" msgid="3781937042151716987">"வார்த்தைகள் பேசப்படும் வேகம்"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"ஒலித்திறன்"</string>
-    <string name="tts_default_pitch_summary" msgid="9132719475281551884">"உருவாக்கப்படும் பேச்சின் டோன் பாதிக்கப்படும்"</string>
+    <string name="tts_default_pitch_summary" msgid="9132719475281551884">"உருவாக்கப்படும் பேச்சின் தொனி மாறும்"</string>
     <string name="tts_default_lang_title" msgid="4698933575028098940">"மொழி"</string>
     <string name="tts_lang_use_system" msgid="6312945299804012406">"சாதனத்தின் மொழியைப் பயன்படுத்தவும்"</string>
     <string name="tts_lang_not_selected" msgid="7927823081096056147">"மொழி தேர்ந்தெடுக்கப்படவில்லை"</string>
@@ -293,8 +293,8 @@
     <string name="debug_networking_category" msgid="6829757985772659599">"நெட்வொர்க்கிங்"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"வயர்லெஸ் காட்சிக்கான சான்றிதழ்"</string>
     <string name="wifi_verbose_logging" msgid="1785910450009679371">"வைஃபை அதிவிவர நுழைவை இயக்கு"</string>
-    <string name="wifi_scan_throttling" msgid="2985624788509913617">"வைஃபை ஸ்கேனிங்கை வரம்பிடுதல்"</string>
-    <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"வைஃபையில் MAC முகவரியை ரேண்டம் ஆக்குதல்"</string>
+    <string name="wifi_scan_throttling" msgid="2985624788509913617">"வைஃபை ஸ்கேனிங்கை வரம்பிடு"</string>
+    <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"வைஃபையில் மாறுபடும் MAC முகவரியை ரேண்டம் ஆக்குதல்"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"மொபைல் டேட்டாவை எப்போதும் இயக்கத்திலேயே வை"</string>
     <string name="tethering_hardware_offload" msgid="4116053719006939161">"வன்பொருள் விரைவுப்படுத்துதல் இணைப்பு முறை"</string>
     <string name="bluetooth_show_devices_without_names" msgid="923584526471885819">"பெயர்கள் இல்லாமல் புளூடூத் சாதனங்களைக் காட்டு"</string>
@@ -311,7 +311,7 @@
     <string name="bluetooth_select_a2dp_codec_type_help_info" msgid="8647200416514412338">"கிரே-அவுட் என்றால் மொபைலாலோ ஹெட்செட்டாலோ ஆதரிக்கப்படவில்லை என்று அர்த்தம்"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"புளூடூத் ஆடியோ பிட்கள்/சாம்பிள்"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample_dialog_title" msgid="4898693684282596143">"புளூடூத் ஆடியோ கோடெக்கைத் தொடங்கு\nதேர்வு: பிட்கள் / சாம்பிள்"</string>
-    <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"புளூடூத் ஆடியோ சேனல் பயன்முறை"</string>
+    <string name="bluetooth_select_a2dp_codec_channel_mode" msgid="364277285688014427">"புளூடூத் ஆடியோ சேனல் மோட்"</string>
     <string name="bluetooth_select_a2dp_codec_channel_mode_dialog_title" msgid="2076949781460359589">"புளூடூத் ஆடியோ கோடெக்கைத் தொடங்கு\nதேர்வு: சேனல் பயன்முறை"</string>
     <string name="bluetooth_select_a2dp_codec_ldac_playback_quality" msgid="3233402355917446304">"புளூடூத் ஆடியோ LDAC கோடெக்: வீடியோவின் தரம்"</string>
     <string name="bluetooth_select_a2dp_codec_ldac_playback_quality_dialog_title" msgid="7274396574659784285">"புளூடூத் ஆடியோ LDACயைத் தொடங்கு\nகோடெக் தேர்வு: வீடியோவின் தரம்"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"போலி இருப்பிடங்களை அனுமதி"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"போலி இருப்பிடங்களை அனுமதி"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"காட்சி பண்புக்கூறு சோதனையை இயக்கு"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"வைஃபை இயங்கும் போதும் (வேகமான நெட்வொர்க் மாற்றத்திற்கு), மொபைல் டேட்டாவை எப்போதும் இயக்கத்தில் வைக்கும்."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"வைஃபை இயங்கும் போதும், வேகமான நெட்வொர்க் மாற்றத்திற்கு மொபைல் டேட்டாவை எப்போதும் இயக்கத்தில் வைக்கும்."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"வன்பொருள் விரைவுப்படுத்துதல் இணைப்பு முறை கிடைக்கும் போது, அதைப் பயன்படுத்தும்"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"USB பிழைதிருத்தத்தை அனுமதிக்கவா?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"USB பிழைதிருத்தம் மேம்படுத்தல் நோக்கங்களுக்காக மட்டுமே. அதை உங்கள் கணினி மற்றும் சாதனத்திற்கு இடையில் தரவை நகலெடுக்கவும், அறிவிப்பு இல்லாமல் உங்கள் சாதனத்தில் ஆப்ஸை நிறுவவும், பதிவு தரவைப் படிக்கவும் பயன்படுத்தவும்."</string>
@@ -350,7 +350,7 @@
     <string name="dev_settings_warning_title" msgid="8251234890169074553">"மேம்பட்ட அமைப்புகளை அனுமதிக்கவா?"</string>
     <string name="dev_settings_warning_message" msgid="37741686486073668">"இந்த அமைப்பு மேம்பட்டப் பயன்பாட்டிற்காக மட்டுமே. உங்கள் சாதனம் மற்றும் அதில் உள்ள பயன்பாடுகளைச் சிதைக்கும் அல்லது தவறாகச் செயல்படும் வகையில் பாதிப்பை ஏற்படுத்தும்."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"USB ஆப்ஸைச் சரிபார்"</string>
-    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"தீங்கு விளைவிக்கும் செயல்பாட்டை அறிய ADB/ADT மூலம் நிறுவப்பட்ட ஆப்ஸைச் சரிபார்."</string>
+    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"தீங்கு விளைவிக்கும் செயல்பாட்டை அறிய ADB/ADT மூலம் நிறுவப்பட்ட ஆப்ஸைச் சரிபார்க்கும்."</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"பெயர்கள் இல்லாமல் புளூடூத் சாதனங்கள் (MAC முகவரிகள் மட்டும்) காட்டப்படும்"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"மிகவும் அதிகமான ஒலியளவு அல்லது கட்டுப்பாடு இழப்பு போன்ற தொலைநிலைச் சாதனங்களில் ஏற்படும் ஒலி தொடர்பான சிக்கல்கள் இருக்கும் சமயங்களில், புளூடூத் அப்சல்யூட் ஒலியளவு அம்சத்தை முடக்கும்."</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"புளூடூத்தின் Gabeldorsche அம்சங்களை இயக்கும்."</string>
@@ -369,23 +369,23 @@
     <string name="wait_for_debugger_summary" msgid="6846330006113363286">"பிழைதிருத்தப்பட்ட ஆப்ஸ் செயல்படுவதற்கு முன்பு பிழைதிருத்தியை இணைப்பதற்குக் காத்திருக்கும்"</string>
     <string name="debug_input_category" msgid="7349460906970849771">"உள்ளீடு"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"வரைபொருள்"</string>
-    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"வன்பொருள் முடுக்கத்துடன் கூடிய காட்சியாக்கம்"</string>
+    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"ஹார்டுவேர் ஆக்ஸிலரேடட் ரெண்டரிங்"</string>
     <string name="media_category" msgid="8122076702526144053">"மீடியா"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"கண்காணித்தல்"</string>
     <string name="strict_mode" msgid="889864762140862437">"நிலையான பயன்முறை இயக்கப்பட்டது"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"முக்கியத் தொடரிழையில் நீண்ட நேரம் செயல்படும்போது திரையைக் காட்சிப்படுத்தும்"</string>
-    <string name="pointer_location" msgid="7516929526199520173">"குறிப்பான் இடம்"</string>
+    <string name="pointer_location" msgid="7516929526199520173">"பாயிண்டர் இடம்"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"தற்போது தொடப்பட்டிருக்கும் தரவைக் காட்டும் திரை மேலடுக்கு"</string>
     <string name="show_touches" msgid="8437666942161289025">"தட்டல்களைக் காட்டு"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"தட்டல்களின் போது காட்சி அறிகுறிகளைக் காட்டும்"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"பட்டன் அழுத்தத்தை காட்டு"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"பட்டன் அழுத்தங்களைக் காட்சி மூலம் உறுதிப்படுத்தும்"</string>
-    <string name="touchpad_visualizer" msgid="3707916068870825115">"டச்பேட் உள்ளீட்டைக் காட்டுதல்"</string>
+    <string name="touchpad_visualizer" msgid="3707916068870825115">"டச்பேட் உள்ளீட்டைக் காட்டு"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"டச்பேட் உள்ளீட்டுத் தரவையும் அங்கீகரிக்கப்பட்ட சைகைகளையும் திரை மேலடுக்குக் காட்டும்"</string>
-    <string name="show_screen_updates" msgid="2078782895825535494">"மேலோட்ட புதுப்பிப்புகளைக் காட்டு"</string>
+    <string name="show_screen_updates" msgid="2078782895825535494">"பரப்புநிலை புதுப்பிப்புகளைக் காட்டு"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"சாளரத்தின் பரப்புநிலைகள் புதுப்பிக்கப்படும்போது, அவற்றை முழுவதுமாகக் காட்டும்"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"வியூ அப்டேட்ஸைக் காட்டு"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"வரையும்போது, சாளரங்களில் காட்சிகளைக் காட்டும்"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"சாளரம் திறக்கும்போது உள்ளே ஃப்ளாஷ் ஆகும்"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"வன்பொருள் லேயர்களின் புதுப்பிப்புகளைக் காட்டு"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"வன்பொருள் லேயர்களைப் புதுப்பிக்கும்போது, அவற்றைப் பச்சை நிறத்தில் காட்டும்"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"GPU ஓவர்டிரா பிழைதிருத்து"</string>
@@ -427,7 +427,7 @@
     <string name="show_all_anrs" msgid="9160563836616468726">"பின்புல ANRகளைக் காட்டு"</string>
     <string name="show_all_anrs_summary" msgid="8562788834431971392">"பின்புல ஆப்ஸுக்கு, ஆப்ஸ் பதிலளிக்கவில்லை என்ற செய்தியைக் காட்டும்"</string>
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"அறிவிப்புச் சேனல் எச்சரிக்கைகளைக் காட்டு"</string>
-    <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"ஆப்ஸானது சரியான சேனல் இல்லாமல் அறிவிப்பை இடுகையிடும் போது, திரையில் எச்சரிக்கையைக் காட்டும்"</string>
+    <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"ஆப்ஸானது சரியான சேனல் இல்லாமல் அறிவிப்பைப் பதிவிடும்போது, திரையில் எச்சரிக்கையைக் காட்டும்"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"ஆப்ஸை வெளிப்புறச் சேமிப்பிடத்தில் அனுமதி"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"மேனிஃபெஸ்ட் மதிப்புகளைப் பொருட்படுத்தாமல், எல்லா ஆப்ஸையும் வெளிப்புறச் சேமிப்பிடத்தில் எழுத அனுமதிக்கும்"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"செயல்பாடுகளை அளவுமாறக்கூடியதாக அமை"</string>
@@ -686,7 +686,7 @@
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"முடக்கப்பட்டது"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"இயக்கப்பட்டது"</string>
     <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"இந்த மாற்றங்கள் செயல்படுத்தப்பட உங்கள் சாதனத்தை மறுபடி தொடங்க வேண்டும். இப்போதே மறுபடி தொடங்கவும் அல்லது ரத்துசெய்யவும்."</string>
-    <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"வயர்டு ஹெட்ஃபோன்"</string>
+    <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"வயருள்ள ஹெட்ஃபோன்"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"ஹெட்ஃபோன்"</string>
     <string name="media_transfer_usb_speaker_name" msgid="4736537022543593896">"USB ஸ்பீக்கர்"</string>
     <string name="media_transfer_wired_device_mic_name" msgid="7417067197803840965">"மைக் ஜாக்"</string>

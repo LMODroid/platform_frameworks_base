@@ -1712,6 +1712,11 @@ public class PackageImpl implements ParsedPackage, AndroidPackageInternal,
     }
 
     @Override
+    public boolean isDisplayCompat() {
+        return getBoolean(Booleans2.DISPLAY_COMPAT);
+    }
+
+    @Override
     public boolean isResourceOverlay() {
         return getBoolean(Booleans.OVERLAY);
     }
@@ -2207,6 +2212,12 @@ public class PackageImpl implements ParsedPackage, AndroidPackageInternal,
     @Override
     public ParsingPackage setAllowCrossUidActivitySwitchFromBelow(boolean value) {
         mAllowCrossUidActivitySwitchFromBelow = value;
+        return this;
+    }
+
+    @Override
+    public ParsingPackage setDisplayCompat(boolean value) {
+        setBoolean(Booleans2.DISPLAY_COMPAT, value);
         return this;
     }
 
@@ -3806,5 +3817,6 @@ public class PackageImpl implements ParsedPackage, AndroidPackageInternal,
         private static final long STUB = 1L;
         private static final long APEX = 1L << 1;
         private static final long UPDATABLE_SYSTEM = 1L << 2;
+        private static final long DISPLAY_COMPAT = 1L << 3;
     }
 }

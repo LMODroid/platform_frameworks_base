@@ -1406,7 +1406,7 @@
     <string name="usb_power_notification_message" msgid="7284765627437897702">"Pievienotā ierīce tiek uzlādēta. Pieskarieties, lai skatītu citas opcijas."</string>
     <string name="usb_unsupported_audio_accessory_title" msgid="2335775548086533065">"Konstatēts analogs audio piederums"</string>
     <string name="usb_unsupported_audio_accessory_message" msgid="1300168007129796621">"Pievienotā ierīce nav saderīga ar šo tālruni. Pieskarieties, lai uzzinātu vairāk."</string>
-    <string name="adb_active_notification_title" msgid="408390247354560331">"USB atkļūdošana ir pievienota."</string>
+    <string name="adb_active_notification_title" msgid="408390247354560331">"Atkļūdošanas USB savienojums izveidots"</string>
     <string name="adb_active_notification_message" msgid="5617264033476778211">"Pieskarieties, lai izslēgtu USB atkļūdošanu"</string>
     <string name="adb_active_notification_message" product="tv" msgid="6624498401272780855">"Atlasiet, lai atspējotu USB atkļūdošanu."</string>
     <string name="adbwifi_active_notification_title" msgid="6147343659168302473">"Aktivizēta bezvadu atkļūdošana"</string>

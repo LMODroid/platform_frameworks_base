@@ -335,6 +335,7 @@ message TaskProto {
     optional string affinity = 29;
     optional bool has_child_pip_activity = 30;
     optional TaskFragmentProto task_fragment = 31;
+    optional string task_name = 32;
 }
 
 /* represents TaskFragment */
@@ -399,6 +400,7 @@ message ActivityRecordProto {
     optional bool should_override_force_resize_app = 44;
     optional bool should_enable_user_aspect_ratio_settings = 45;
     optional bool is_user_fullscreen_override_enabled = 46;
+    optional .android.graphics.RectProto safe_region_bounds = 49;
 }
 
 /* represents WindowToken */

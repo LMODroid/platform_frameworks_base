@@ -1002,7 +1002,7 @@
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"ಸರಿಯಾಗಿದೆ!"</string>
     <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ"</string>
     <string name="lockscreen_password_wrong" msgid="8605355913868947490">"ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ"</string>
-    <string name="lockscreen_storage_locked" msgid="634993789186443380">"ಎಲ್ಲ ವೈಶಿಷ್ಟ್ಯಗಳು ಮತ್ತು ಡೇಟಾಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ"</string>
+    <string name="lockscreen_storage_locked" msgid="634993789186443380">"ಎಲ್ಲ ಫೀಚರ್‌ಗಳು ಮತ್ತು ಡೇಟಾಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"ಗರಿಷ್ಠ ಫೇಸ್ ಅನ್‍ಲಾಕ್ ಪ್ರಯತ್ನಗಳು ಮೀರಿವೆ"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"SIM ಇಲ್ಲ"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="3986843848305639161">"ಟ್ಯಾಬ್ಲೆಟ್‌ನಲ್ಲಿ SIM ಇಲ್ಲ."</string>
@@ -1670,7 +1670,7 @@
     <string name="media_route_chooser_title_for_remote_display" msgid="3105906508794326446">"ಸ್ಕ್ರೀನ್ ಅನ್ನು ಸಾಧನದಲ್ಲಿ ಬಿತ್ತರಿಸಿ"</string>
     <string name="media_route_chooser_searching" msgid="6119673534251329535">"ಸಾಧನಗಳನ್ನು ಹುಡುಕಲಾಗುತ್ತಿದೆ…"</string>
     <string name="media_route_chooser_extended_settings" msgid="2506352159381327741">"ಸೆಟ್ಟಿಂಗ್‌ಗಳು"</string>
-    <string name="media_route_controller_disconnect" msgid="7362617572732576959">"ಸಂಪರ್ಕ ಕಡಿತಗೊಳಿಸಿ"</string>
+    <string name="media_route_controller_disconnect" msgid="7362617572732576959">"ಡಿಸ್‌ಕನೆಕ್ಟ್ ಮಾಡಿ"</string>
     <string name="media_route_status_scanning" msgid="8045156315309594482">"ಸ್ಕ್ಯಾನ್ ಮಾಡಲಾಗುತ್ತಿದೆ…"</string>
     <string name="media_route_status_connecting" msgid="5845597961412010540">"ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ..."</string>
     <string name="media_route_status_available" msgid="1477537663492007608">"ಲಭ್ಯ"</string>

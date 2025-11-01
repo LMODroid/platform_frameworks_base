@@ -570,7 +570,7 @@
     <string name="notification_section_header_incoming" msgid="850925217908095197">"નવા"</string>
     <string name="notification_section_header_gentle" msgid="6804099527336337197">"સાઇલન્ટ"</string>
     <string name="notification_section_header_alerting" msgid="5581175033680477651">"નોટિફિકેશન"</string>
-    <string name="notification_section_header_conversations" msgid="821834744538345661">"વાતચીત"</string>
+    <string name="notification_section_header_conversations" msgid="821834744538345661">"વાતચીતો"</string>
     <string name="accessibility_notification_section_header_gentle_clear_all" msgid="6490207897764933919">"બધા સાઇલન્ટ નોટિફિકેશન સાફ કરો"</string>
     <string name="dnd_suppressing_shade_text" msgid="5588252250634464042">"ખલેલ પાડશો નહીં દ્વારા થોભાવેલ નોટિફિકેશન"</string>
     <string name="media_projection_action_text" msgid="3634906766918186440">"હવે શરૂ કરો"</string>

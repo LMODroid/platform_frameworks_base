@@ -154,7 +154,7 @@
     <string name="cfTemplateForwardedTime" msgid="735042369233323609">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: <xliff:g id="DIALING_NUMBER">{1}</xliff:g> após <xliff:g id="TIME_DELAY">{2}</xliff:g> segundos"</string>
     <string name="cfTemplateRegistered" msgid="5619930473441550596">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: Não encaminhado"</string>
     <string name="cfTemplateRegisteredTime" msgid="5222794399642525045">"<xliff:g id="BEARER_SERVICE_CODE">{0}</xliff:g>: Não encaminhado"</string>
-    <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Segurança de rede móvel"</string>
+    <string name="scCellularNetworkSecurityTitle" msgid="7752521808690294384">"Segurança da rede móvel"</string>
     <string name="scCellularNetworkSecuritySummary" msgid="7042036754550545005">"Criptografia, notificações para redes não criptografadas"</string>
     <string name="scIdentifierDisclosureIssueTitle" msgid="2898888825129970328">"ID do dispositivo acessado"</string>
     <string name="scIdentifierDisclosureIssueSummaryNotification" msgid="3699930821270580416">"Às <xliff:g id="DISCLOSURE_TIME">%1$s</xliff:g>, uma rede próxima registrou o ID exclusivo do seu dispositivo (IMSI ou IMEI) enquanto usava seu chip da <xliff:g id="DISCLOSURE_NETWORK">%2$s</xliff:g>"</string>
@@ -320,7 +320,7 @@
     <string name="managed_profile_app_label" msgid="367401088383965725">"Mudar para o app <xliff:g id="APP_NAME">%1$s</xliff:g> do perfil de trabalho"</string>
     <string name="permgrouplab_contacts" msgid="4254143639307316920">"Contatos"</string>
     <string name="permgroupdesc_contacts" msgid="9163927941244182567">"acesse seus contatos"</string>
-    <string name="permgrouplab_location" msgid="1858277002233964394">"Localização"</string>
+    <string name="permgrouplab_location" msgid="1858277002233964394">"localização"</string>
     <string name="permgroupdesc_location" msgid="1995955142118450685">"acesse o local do dispositivo"</string>
     <string name="permgrouplab_calendar" msgid="6426860926123033230">"Agenda"</string>
     <string name="permgroupdesc_calendar" msgid="6762751063361489379">"acessar sua agenda"</string>
@@ -2193,7 +2193,7 @@
     <string name="accessibility_system_action_back_label" msgid="4205361367345537608">"Voltar"</string>
     <string name="accessibility_system_action_recents_label" msgid="4782875610281649728">"Apps recentes"</string>
     <string name="accessibility_system_action_notifications_label" msgid="6083767351772162010">"Notificações"</string>
-    <string name="accessibility_system_action_quick_settings_label" msgid="4583900123506773783">"Configurações rápidas"</string>
+    <string name="accessibility_system_action_quick_settings_label" msgid="4583900123506773783">"Configurações Rápidas"</string>
     <string name="accessibility_system_action_power_dialog_label" msgid="8095341821683910781">"Caixa de diálogo de liga/desliga"</string>
     <string name="accessibility_system_action_lock_screen_label" msgid="5484190691945563838">"Bloquear tela"</string>
     <string name="accessibility_system_action_screenshot_label" msgid="3581566515062741676">"Capturar tela"</string>

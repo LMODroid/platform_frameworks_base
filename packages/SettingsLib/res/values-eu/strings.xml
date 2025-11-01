@@ -257,7 +257,7 @@
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Parekatu gailua QR kode batekin"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Parekatu gailu gehiago QR kode bat eskaneatuta"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Parekatu gailua parekatze-kode batekin"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Parekatu gailu gehiago sei digituko kode batekin"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Parekatu gailu gehiago 6 digituko kode batekin"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Parekatutako gailuak"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Konektatuta daudenak"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Gailuaren xehetasunak"</string>
@@ -431,7 +431,7 @@
     <string name="force_allow_on_external" msgid="9187902444231637880">"Behartu aplikazioak onartzera kanpoko memorian"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Aplikazioek kanpoko memorian idatz dezakete, ezarritako balioak kontuan izan gabe"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Behartu jardueren tamaina doitu ahal izatera"</string>
-    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Eman aukera jarduera guztien tamaina doitzeko, leiho batean baino gehiagotan erabili ahal izan daitezen, ezarritako balioak kontuan izan gabe"</string>
+    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Eman aukera jarduera guztien tamaina doitzeko, leiho batean baino gehiagotan erabili ahal izan daitezen, ezarritako balioak kontuan izan gabe."</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"Gaitu estilo libreko leihoak"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"Babeskopien pasahitz lokala"</string>
     <string name="local_backup_password_summary_none" msgid="7646898032616361714">"Une honetan, ordenagailuko babeskopia osoak ez daude babestuta"</string>

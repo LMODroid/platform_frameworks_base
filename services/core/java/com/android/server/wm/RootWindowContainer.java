@@ -1383,12 +1383,12 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         return homeStarted;
     }
 
-    void startHomeOnEmptyDisplays(String reason) {
+    void startHomeOnDisplaysWithNoHome(String reason) {
         forAllTaskDisplayAreas(taskDisplayArea -> {
-            if (taskDisplayArea.topRunningActivity() == null) {
+            if (taskDisplayArea.getHomeActivity() == null) {
                 int userId = mWmService.getUserAssignedToDisplay(taskDisplayArea.getDisplayId());
                 startHomeOnTaskDisplayArea(userId, reason, taskDisplayArea,
-                        false /* allowInstrumenting */, false /* fromHomeKey */);
+                        false /* allowInstrumenting */, false /* fromHomeKey */, false /* onTop */);
             }
         });
     }
@@ -1409,7 +1409,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         final DisplayContent display = getDisplayContent(displayId);
         return display.reduceOnAllTaskDisplayAreas((taskDisplayArea, result) ->
                         result | startHomeOnTaskDisplayArea(userId, reason, taskDisplayArea,
-                                allowInstrumenting, fromHomeKey),
+                                allowInstrumenting, fromHomeKey, true /* onTop */),
                 false /* initValue */);
     }
 
@@ -1425,7 +1425,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
      * - Use the secondary home defined in the config.
      */
     boolean startHomeOnTaskDisplayArea(int userId, String reason, TaskDisplayArea taskDisplayArea,
-            boolean allowInstrumenting, boolean fromHomeKey) {
+            boolean allowInstrumenting, boolean fromHomeKey, boolean onTop) {
         // Fallback to top focused display area if the provided one is invalid.
         if (taskDisplayArea == null) {
             final Task rootTask = getTopDisplayFocusedRootTask();
@@ -1473,7 +1473,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         final String myReason = reason + ":" + userId + ":" + UserHandle.getUserId(
                 aInfo.applicationInfo.uid) + ":" + taskDisplayArea.getDisplayId();
         mService.getActivityStartController().startHomeActivity(homeIntent, aInfo, myReason,
-                taskDisplayArea);
+                taskDisplayArea, onTop);
         return true;
     }
 
@@ -1629,7 +1629,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         }
         int userId = mWmService.getUserAssignedToDisplay(taskDisplayArea.getDisplayId());
         return startHomeOnTaskDisplayArea(userId, myReason, taskDisplayArea,
-                false /* allowInstrumenting */, false /* fromHomeKey */);
+                false /* allowInstrumenting */, false /* fromHomeKey */, true /* onTop */);
     }
 
     /**
@@ -3064,6 +3064,11 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             if (candidateRoot != null && canLaunchOnDisplay(r, candidateRoot)) {
                 return candidateRoot;
             }
+        }
+
+        final Task candidateRoot = launchParams != null ? launchParams.mPreferredRootTask : null;
+        if (candidateRoot != null && canLaunchOnDisplay(r, candidateRoot)) {
+            return candidateRoot;
         }
 
         // Next preference goes to the task id set in the activity options.

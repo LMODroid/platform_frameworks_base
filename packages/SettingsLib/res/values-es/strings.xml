@@ -253,7 +253,7 @@
     <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Activa el modo de depuración cuando haya conexión Wi‑Fi"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"Error"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Depuración inalámbrica"</string>
-    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Para ver y utilizar los dispositivos disponibles, activa la depuración inalámbrica"</string>
+    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Para ver y usar los dispositivos disponibles, activa la depuración inalámbrica"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Emparejar dispositivo con código QR"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Empareja nuevos dispositivos con el escáner de códigos QR"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Emparejar dispositivo con código de sincronización"</string>
@@ -281,7 +281,7 @@
     <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Muestra un botón en el menú de encendido para crear un informe de errores"</string>
     <string name="keep_screen_on" msgid="1187161672348797558">"Pantalla activa"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"La pantalla nunca entra en modo Suspensión si el dispositivo se está cargando"</string>
-    <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Habilitar registro de Bluetooth HCI"</string>
+    <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Habilitar el registro de Bluetooth HCI"</string>
     <string name="bt_hci_snoop_log_summary" msgid="6808538971394092284">"Capturar paquetes de Bluetooth (después de cambiar esta opción, desactiva y activa el Bluetooth)"</string>
     <string name="oem_unlock_enable" msgid="5334869171871566731">"Desbloqueo de OEM"</string>
     <string name="oem_unlock_enable_summary" msgid="5857388174390953829">"Permitir desbloquear el bootloader"</string>
@@ -325,7 +325,7 @@
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"No se ha podido establecer la conexión"</string>
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Muestra opciones para la certificación de la pantalla inalámbrica"</string>
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Aumenta el nivel de registro de la conexión Wi-Fi y se muestra por SSID RSSI en el selector Wi-Fi"</string>
-    <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Reduce el consumo de batería y mejora el rendimiento de la red"</string>
+    <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Reduce el consumo excesivo de batería y mejora el rendimiento de la red"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Si este modo está habilitado, es posible que la dirección MAC del dispositivo cambie cada vez que se conecte a una red que tenga habilitada la aleatorización de MAC"</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Medida"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"No medida"</string>
@@ -372,7 +372,7 @@
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Renderización acelerada por hardware"</string>
     <string name="media_category" msgid="8122076702526144053">"Multimedia"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Supervisión"</string>
-    <string name="strict_mode" msgid="889864762140862437">"Modo Estricto habilitado"</string>
+    <string name="strict_mode" msgid="889864762140862437">"Modo estricto habilitado"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Hace parpadear la pantalla si las aplicaciones tardan mucho en el subproceso principal"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Ubicación del puntero"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"Superpone los datos de las pulsaciones en la pantalla"</string>
@@ -383,7 +383,7 @@
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Mostrar entrada del panel táctil"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Superposición en pantalla que muestra los datos introducidos en el panel táctil y los gestos reconocidos"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Mostrar cambios de superficies"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Hace parpadear todas las superficies de la ventana cuando se actualizan"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Hace parpadear todas las superficies de ventanas cuando se actualizan"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Ver actualizaciones de vista"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Hace parpadear las vistas dentro de las ventanas cuando se dibujan"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Ver actualizaciones de capas de hardware"</string>
@@ -428,7 +428,7 @@
     <string name="show_all_anrs_summary" msgid="8562788834431971392">"Muestra un cuadro de diálogo que informa de que la aplicación no responde en aplicaciones en segundo plano"</string>
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Ver advertencias del canal de notificaciones"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"Muestra una advertencia en pantalla cuando una aplicación publica una notificación sin un canal válido"</string>
-    <string name="force_allow_on_external" msgid="9187902444231637880">"Forzar permitir aplicaciones en almacenamiento externo"</string>
+    <string name="force_allow_on_external" msgid="9187902444231637880">"Forzar la autorización de apps en almacenamiento externo"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Permite que cualquier aplicación se pueda escribir en un almacenamiento externo independientemente de los valores de manifiesto."</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Forzar que las actividades puedan cambiar de tamaño"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Permite que todas las actividades puedan cambiar de tamaño en multiventana independientemente de los valores de manifiesto"</string>
@@ -630,7 +630,7 @@
     <string name="user_add_user_message_long" msgid="1527434966294733380">"Puedes compartir este dispositivo si creas más usuarios. Cada uno tendrá su propio espacio y podrá personalizarlo con aplicaciones, un fondo de pantalla y más. Los usuarios también pueden ajustar opciones del dispositivo, como la conexión Wi‑Fi, que afectan a todos los usuarios.\n\nCuando añadas un usuario, tendrá que configurar su espacio.\n\nCualquier usuario puede actualizar aplicaciones de todos los usuarios. Es posible que no se transfieran los servicios y opciones de accesibilidad al nuevo usuario."</string>
     <string name="user_add_user_message_short" msgid="3295959985795716166">"Al añadir un nuevo usuario, dicha persona debe configurar su espacio.\n\nCualquier usuario puede actualizar las aplicaciones del resto de los usuarios."</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"¿Convertir a este usuario en administrador?"</string>
-    <string name="user_grant_admin_message" msgid="1673791931033486709">"Los administradores tienen privilegios especiales que otros usuarios no tienen. Los administradores pueden gestionar todos los usuarios, actualizar o restablecer este dispositivo, modificar los ajustes, ver todas las aplicaciones instaladas y conceder o revocar privilegios de administrador a otros usuarios."</string>
+    <string name="user_grant_admin_message" msgid="1673791931033486709">"Los administradores tienen privilegios especiales que otros usuarios no tienen. Los administradores pueden gestionar todos los usuarios, actualizar o restablecer este dispositivo, modificar los ajustes, ver todas las apps instaladas y conceder o revocar privilegios de administrador a otros usuarios."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Convertir en administrador"</string>
     <string name="user_setup_dialog_title" msgid="8037342066381939995">"¿Configurar usuario?"</string>
     <string name="user_setup_dialog_message" msgid="269931619868102841">"Asegúrate de que la persona está disponible en este momento para usar el dispositivo y configurar su espacio."</string>

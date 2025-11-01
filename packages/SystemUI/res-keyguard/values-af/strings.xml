@@ -58,7 +58,7 @@
     <string name="kg_wrong_pin_try_again" msgid="3129729383303430190">"Verkeerde PIN. Probeer weer."</string>
     <string name="kg_wrong_input_try_fp_suggestion" msgid="3143861542242024833">"Of ontsluit met vingerafdruk"</string>
     <string name="kg_fp_not_recognized" msgid="5183108260932029241">"Vingerafdruk nie herken nie"</string>
-    <string name="bouncer_face_not_recognized" msgid="1666128054475597485">"Gesig nie erken nie"</string>
+    <string name="bouncer_face_not_recognized" msgid="1666128054475597485">"Gesig nie herken nie"</string>
     <string name="kg_bio_try_again_or_pin" msgid="4752168242723808390">"Probeer weer of voer PIN in"</string>
     <string name="kg_bio_try_again_or_password" msgid="1473132729225398039">"Probeer weer of voer wagwoord in"</string>
     <string name="kg_bio_try_again_or_pattern" msgid="4867893307468801501">"Probeer weer of voer patroon in"</string>

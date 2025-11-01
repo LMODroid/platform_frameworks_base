@@ -17,14 +17,14 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="4470785958457506021">"Companion Device Manager"</string>
-    <string name="confirmation_title" msgid="2244241995958340998">"Дали дозволувате апликацијата &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; да пристапува до &lt;strong&gt;<xliff:g id="DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt;?"</string>
+    <string name="confirmation_title" msgid="2244241995958340998">"Дали ѝ дозволувате на апликацијата &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; да пристапува до &lt;strong&gt;<xliff:g id="DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt;?"</string>
     <string name="profile_name_watch" msgid="576290739483672360">"часовник"</string>
     <string name="chooser_title_non_profile" msgid="6035023914517087400">"Изберете уред со којшто ќе управува &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt;"</string>
     <string name="chooser_title" msgid="2235819929238267637">"Изберете <xliff:g id="PROFILE_NAME">%1$s</xliff:g> за поставување"</string>
     <string name="summary_watch" msgid="8134580124808507407">"Оваа апликација ќе има дозвола да ги синхронизира податоците како што се имињата на јавувачите и да пристапува до следниве дозволи на вашиот <xliff:g id="DEVICE_TYPE">%1$s</xliff:g>"</string>
     <string name="confirmation_title_glasses" msgid="8288346850537727333">"Ќе дозволите &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; да управува со &lt;strong&gt;<xliff:g id="DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt;?"</string>
     <string name="profile_name_glasses" msgid="3506504967216601277">"уред"</string>
-    <string name="summary_glasses" msgid="5469208629679579157">"Апликацијава ќе може да пристапува до овие дозволи на <xliff:g id="DEVICE_TYPE">%1$s</xliff:g>"</string>
+    <string name="summary_glasses" msgid="5469208629679579157">"Апликацијава ќе може да пристапува до овие дозволи на вашиот <xliff:g id="DEVICE_TYPE">%1$s</xliff:g>"</string>
     <string name="title_app_streaming" msgid="6845373585257287200">"Да се дозволи &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; да ги стримува апликациите од <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> на &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;?"</string>
     <string name="summary_app_streaming" msgid="1274464413649731829">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> ќе има пристап до сè што е видливо или репродуцирано на <xliff:g id="DEVICE_TYPE">%2$s</xliff:g>, including вклучувајќи ги и аудиото, фотографиите, лозинките и пораките.&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_1">%1$s</xliff:g> ќе може да стримува апликации на <xliff:g id="DEVICE_NAME">%3$s</xliff:g> додека не ја повлечете дозволава."</string>
     <string name="helper_summary_app_streaming" msgid="1944832605534698562">"<xliff:g id="APP_NAME">%1$s</xliff:g> бара дозвола во име на вашиот <xliff:g id="DEVICE_NAME">%2$s</xliff:g> за да прикажува и стримува апликации меѓу вашите уреди"</string>
@@ -63,7 +63,7 @@
     <string name="permission_contacts_summary" msgid="2840800622763086808">"Пристапува до контактите"</string>
     <string name="permission_calendar_summary" msgid="8430353935747336165">"Пристапува до календарот"</string>
     <string name="permission_microphone_summary" msgid="4862628553869973259">"Снима аудио"</string>
-    <string name="permission_nearby_devices_summary" msgid="1306752848196464817">"Наоѓа и се поврзува со уреди во близина и да ја утврдува нивната релативна положба"</string>
+    <string name="permission_nearby_devices_summary" msgid="1306752848196464817">"Наоѓа и се поврзува со уреди во близина и ја утврдува нивната релативна положба"</string>
     <string name="permission_notification_listener_access_summary" msgid="7856071768185367749">"Ги чита сите известувања, меѓу кои и податоци како контакти, пораки и фотографии"</string>
     <string name="permission_notifications_summary" msgid="2272810466047367030">"• Ги чита сите известувања, меѓу кои и податоци како контакти, пораки и фотографии&lt;br/&gt;• Испраќа известувања&lt;br/&gt;&lt;br/&gt;Може да управувате со способноста на апликацијава да чита и испраќа известувања кога било во „Поставки &gt; Известувања“."</string>
     <string name="permission_storage_summary" msgid="3918240895519506417"></string>

@@ -56,6 +56,7 @@ public final class SharedUserSetting extends SettingBase implements SharedUserAp
     /** @see SharedUserApi#getUidFlags() **/
     int uidFlags;
     int uidPrivateFlags;
+    int uidPrivateFlagsExt;
 
     /** @see SharedUserApi#getSeInfoTargetSdkVersion() **/
     int seInfoTargetSdkVersion;
@@ -97,10 +98,11 @@ public final class SharedUserSetting extends SettingBase implements SharedUserAp
             }};
     }
 
-    SharedUserSetting(String _name, int _pkgFlags, int _pkgPrivateFlags) {
-        super(_pkgFlags, _pkgPrivateFlags);
+    SharedUserSetting(String _name, int _pkgFlags, int _pkgPrivateFlags, int _pkgPrivateFlagsExt) {
+        super(_pkgFlags, _pkgPrivateFlags, _pkgPrivateFlagsExt);
         uidFlags =  _pkgFlags;
         uidPrivateFlags = _pkgPrivateFlags;
+        uidPrivateFlagsExt = _pkgPrivateFlagsExt;
         name = _name;
         seInfoTargetSdkVersion = android.os.Build.VERSION_CODES.CUR_DEVELOPMENT;
         mPackages = new WatchedArraySet<>();

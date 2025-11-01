@@ -268,7 +268,7 @@
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"התאמה למכשיר"</string>
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"‏קוד התאמה של Wi-Fi"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"ההתאמה נכשלה"</string>
-    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"יש לוודא שהמכשיר מחובר לאותה רשת."</string>
+    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"צריך לוודא שהמכשיר מחובר לאותה רשת."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"‏כדי להתאים מכשיר דרך Wi‑Fi, יש לסרוק קוד QR"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"המכשיר בתהליך התאמה…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"‏התאמת המכשיר נכשלה. קוד ה-QR היה שגוי או שהמכשיר לא מחובר לאותה רשת."</string>
@@ -352,7 +352,7 @@
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"‏אימות אפליקציות שהותקנו מ-USB"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"‏איתור התנהגות מזיקה של אפליקציות שהותקנו מ-ADB/ADT."</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"‏יוצגו מכשירי Bluetooth ללא שמות (כתובות MAC בלבד)"</string>
-    <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"‏השבתה של תכונת עוצמת הקול המוחלטת ב-Bluetooth במקרה של בעיות בעוצמת הקול במכשירים מרוחקים, כגון עוצמת קול רמה מדי או חוסר שליטה ברמת העוצמה."</string>
+    <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"‏השבתה של תכונת עוצמת הקול המוחלטת ב-Bluetooth במקרה של בעיות בעוצמת הקול במכשירים מרוחקים, כמו עוצמת קול גבוהה מדי או חוסר שליטה ברמת העוצמה."</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"‏הפעלת מקבץ הפיצ\'רים של Bluetooth Gabeldorsche."</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"הפעלה של תכונת הקישוריות המשופרת."</string>
     <string name="enable_terminal_title" msgid="3834790541986303654">"מסוף מקומי"</string>
@@ -374,12 +374,12 @@
     <string name="debug_monitoring_category" msgid="1597387133765424994">"מעקב"</string>
     <string name="strict_mode" msgid="889864762140862437">"מצב קפדני מופעל"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"‏המסך יהבהב כשאפליקציות יבצעו פעולות ארוכות ב-thread הראשי"</string>
-    <string name="pointer_location" msgid="7516929526199520173">"מיקום מצביע"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"שכבת-על של המסך המציגה את נתוני המגע הנוכחיים"</string>
+    <string name="pointer_location" msgid="7516929526199520173">"מיקום הסמן"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"שכבת-על במסך מציגה את נתוני המגע הנוכחיים"</string>
     <string name="show_touches" msgid="8437666942161289025">"הצגת לחיצות"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"הצגת משוב ויזואלי ללחיצות"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"משוב ויזואלי ללחיצות"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"הצגת לחיצות המקשים"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"הצגת משוב חזותי עבור לחיצות פיזיות על מקשים"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"משוב ויזואלי להקשה על מקשים פיזיים"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"הצגת הקלט של לוח המגע"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"שכבת-על במסך מציגה את נתוני הקלט של לוח המגע ואת התנועות המזוהות"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"הצגת עדכונים על פני השטח"</string>
@@ -394,7 +394,7 @@
     <string name="simulate_color_space" msgid="1206503300335835151">"יצירת הדמיה של מרחב צבעים"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"‏הפעלת מעקבי OpenGL"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"‏השבתת ניתוב אודיו ב-USB"</string>
-    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"‏השבתת ניתוב אוטומטי אל התקני אודיו חיצוניים ב-USB"</string>
+    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"‏הניתוב האוטומטי אל התקני אודיו חיצוניים ב-USB יושבת"</string>
     <string name="debug_layout" msgid="1659216803043339741">"הצגת גבולות הפריסה"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"הצגת גבולות אזור, שוליים וכדומה"</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"אילוץ כיוון פריסה מימין לשמאל"</string>
@@ -425,7 +425,7 @@
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"השמדת כל פעילות ברגע שהמשתמש עוזב אותה"</string>
     <string name="app_process_limit_title" msgid="8361367869453043007">"מגבלה של תהליכים ברקע"</string>
     <string name="show_all_anrs" msgid="9160563836616468726">"‏הצגת מקרי ANR ברקע"</string>
-    <string name="show_all_anrs_summary" msgid="8562788834431971392">"הצגת תיבת דו-שיח של \'אפליקציה לא מגיבה\' עבור אפליקציות שפועלות ברקע"</string>
+    <string name="show_all_anrs_summary" msgid="8562788834431971392">"תופיע תיבת דו-שיח של \"אפליקציה לא מגיבה\" לגבי אפליקציות שפועלות ברקע"</string>
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"אזהרות לגבי ערוץ התראות"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"הצגת אזהרה כשאפליקציה שולחת התראה ללא ערוץ תקין"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"אילוץ הרשאת אפליקציות באחסון חיצוני"</string>
@@ -473,7 +473,7 @@
     <string name="daltonizer_mode_protanomaly" msgid="7805583306666608440">"פרוטנומליה (אדום-ירוק)"</string>
     <string name="daltonizer_mode_tritanomaly" msgid="7135266249220732267">"טריטנומליה (כחול-צהוב)"</string>
     <string name="accessibility_display_daltonizer_preference_title" msgid="1810693571332381974">"תיקון צבע"</string>
-    <string name="accessibility_display_daltonizer_preference_subtitle" msgid="1522101114585266455">"‏תיקון הצבע יכול לעזור אם רוצים:&lt;br/&gt; &lt;ol&gt; &lt;li&gt;&amp;nbsp;לראות צבעים מדויקים יותר&lt;/li&gt; &lt;li&gt;&amp;nbsp;לראות פחות צבעים כדי לשפר את הריכוז&lt;/li&gt; &lt;/ol&gt;"</string>
+    <string name="accessibility_display_daltonizer_preference_subtitle" msgid="1522101114585266455">"‏תיקון הצבע עוזר:&lt;br/&gt; &lt;ol&gt; &lt;li&gt;&amp;nbsp;לראות צבעים מדויקים יותר&lt;/li&gt; &lt;li&gt;&amp;nbsp;לראות פחות צבעים כדי לשפר את הריכוז&lt;/li&gt; &lt;/ol&gt;"</string>
     <string name="daltonizer_type_overridden" msgid="4509604753672535721">"נעקף על ידי <xliff:g id="TITLE">%1$s</xliff:g>"</string>
     <string name="power_remaining_settings_home_page" msgid="4885165789445462557">"<xliff:g id="PERCENTAGE">%1$s</xliff:g> – <xliff:g id="TIME_STRING">%2$s</xliff:g>"</string>
     <string name="power_charging_on_hold_settings_home_page" msgid="7690464049464805856">"<xliff:g id="LEVEL">%1$s</xliff:g> – הטעינה הושהתה כדי להגן על הסוללה"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"שימוש בשפות המערכת"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"פתיחת הגדרות עבור <xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> נכשלה"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"ייתכן ששיטת קלט זו תוכל לאסוף את כל הטקסט המוקלד, כולל נתונים אישיים כגון סיסמאות ומספרי כרטיס אשראי. היא מגיעה מהאפליקציה <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g>. האם להשתמש בשיטת קלט זו?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"לתשומת ליבך: לאחר הפעלה מחדש של המכשיר, ניתן להפעיל את האפליקציה רק לאחר שתבטל את נעילת הטלפון"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"חשוב לשים לב: אחרי שהמכשיר יופעל מחדש, צריך יהיה קודם לפתוח את נעילת הטלפון ורק אחר כך להפעיל את האפליקציה"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"‏סטטוס הרשמה ל-IMS"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"רשום"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"לא רשום"</string>
@@ -628,7 +628,7 @@
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"פרופיל מוגבל"</string>
     <string name="user_add_user_title" msgid="5457079143694924885">"להוסיף משתמש חדש?"</string>
     <string name="user_add_user_message_long" msgid="1527434966294733380">"‏ניתן לשתף את המכשיר הזה עם אנשים אחרים על ידי יצירת משתמשים נוספים. לכל משתמש מרחב משלו, שאותו אפשר להתאים אישית בעזרת אפליקציות, טפט ופריטים נוספים. המשתמשים יכולים גם להתאים הגדרות של המכשיר כמו Wi‑Fi, שמשפיעות על כולם.\n\nכשמוסיפים משתמש חדש, המשתמש הזה צריך להגדיר את המרחב שלו.\n\nכל אחד מהמשתמשים יכול לעדכן אפליקציות לכל שאר המשתמשים. יכול להיות שהגדרות ושירותים של נגישות לא יועברו למשתמש החדש."</string>
-    <string name="user_add_user_message_short" msgid="3295959985795716166">"כשמוסיפים משתמש חדש, הוא צריך להגדיר את המרחב שלו.\n\nכל משתמש יכול לעדכן אפליקציות בשביל כל המשתמשים האחרים."</string>
+    <string name="user_add_user_message_short" msgid="3295959985795716166">"המשתמש החדש יצטרך להגדיר את המרחב שלו.\n\nכל משתמש יכול לעדכן אפליקציות עבור כל המשתמשים האחרים."</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"להגדיר את המשתמש הזה כאדמין?"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"לאדמינים יש הרשאות מיוחדות שאין למשתמשים אחרים. אדמין יכול לנהל את כל המשתמשים, לעדכן את המכשיר הזה או לאפס אותו, לשנות הגדרות, לראות את כל האפליקציות המותקנות ולהעניק הרשאות אדמין לאחרים או לשלול אותן."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"הגדרה כאדמין"</string>
@@ -638,9 +638,9 @@
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"הגדרה"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"לא עכשיו"</string>
     <string name="user_add_user_type_title" msgid="551279664052914497">"הוספה"</string>
-    <string name="user_new_user_name" msgid="60979820612818840">"משתמש חדש"</string>
+    <string name="user_new_user_name" msgid="60979820612818840">"פרופיל חדש"</string>
     <string name="user_new_profile_name" msgid="2405500423304678841">"פרופיל חדש"</string>
-    <string name="user_info_settings_title" msgid="6351390762733279907">"פרטי משתמש"</string>
+    <string name="user_info_settings_title" msgid="6351390762733279907">"פרטים"</string>
     <string name="profile_info_settings_title" msgid="105699672534365099">"פרטי פרופיל"</string>
     <string name="user_need_lock_message" msgid="4311424336209509301">"לפני שיתאפשר לך ליצור פרופיל מוגבל, יהיה עליך להגדיר נעילת מסך כדי להגן על האפליקציות ועל הנתונים האישיים שלך."</string>
     <string name="user_set_lock_button" msgid="1427128184982594856">"הגדרת נעילה"</string>
@@ -675,8 +675,8 @@
     <string name="guest_reset_button" msgid="2515069346223503479">"איפוס הגלישה כאורח"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"יציאה ממצב אורח"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"כל הפעילות תימחק ביציאה"</string>
-    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"אפשר לשמור או למחוק את הפעילות שלך ביציאה"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"אפשר לאפס כדי למחוק עכשיו את הפעילות מהסשן, או לשמור או למחוק את הפעילות ביציאה"</string>
+    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"אורחים יכולים לשמור או למחוק את הפעילות שלהם ביציאה"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"אורחים יכולים לאפס ולמחוק עכשיו את הפעילות מהסשן, או להחליט ביציאה מהסשן אם לשמור או למחוק את הפעילות"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"בחירת תמונה"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"נעשו יותר מדי ניסיונות שגויים. הנתונים במכשיר יימחקו."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"נעשו יותר מדי ניסיונות שגויים. המשתמש הזה יימחק."</string>

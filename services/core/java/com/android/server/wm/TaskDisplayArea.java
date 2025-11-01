@@ -312,7 +312,6 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
     private void addChildTask(Task task, int position) {
         if (DEBUG_ROOT_TASK) Slog.d(TAG_WM, "Set task=" + task + " on taskDisplayArea=" + this);
 
-        addRootTaskReferenceIfNeeded(task);
         position = findPositionForRootTask(position, task, true /* adding */);
 
         super.addChild(task, position);
@@ -682,7 +681,9 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
     }
 
     void assignRootTaskOrdering(SurfaceControl.Transaction t) {
-        if (getParent() == null) {
+        if (!mTransitionController.mBuildingTransitionLayers
+                && mTransitionController.isShellTransitionsEnabled()) {
+            // All root tasks can be organized, so handle them centrally by shell transitions.
             return;
         }
         mTmpAlwaysOnTopChildren.clear();

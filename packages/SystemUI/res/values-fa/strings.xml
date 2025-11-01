@@ -181,7 +181,7 @@
     <string name="accessibility_send_smart_reply" msgid="8885032190442015141">"ارسال"</string>
     <string name="cancel" msgid="1089011503403416730">"لغو"</string>
     <string name="biometric_dialog_logo" msgid="7681107853070774595">"نشان‌واره برنامه"</string>
-    <string name="biometric_dialog_confirm" msgid="2005978443007344895">"تأیید"</string>
+    <string name="biometric_dialog_confirm" msgid="2005978443007344895">"تأیید کردن"</string>
     <string name="biometric_dialog_try_again" msgid="8575345628117768844">"امتحان مجدد"</string>
     <string name="biometric_dialog_empty_space_description" msgid="3330555462071453396">"برای لغو راستی‌آزمایی تک‌ضرب بزنید"</string>
     <string name="biometric_dialog_face_icon_description_idle" msgid="4351777022315116816">"لطفاً دوباره امتحان کنید"</string>
@@ -515,7 +515,7 @@
     <string name="communal_widgets_disclaimer_text" msgid="1423545475160506349">"برای باز کردن برنامه بااستفاده از ابزاره، باید هویت خودتان را درستی‌سنجی کنید. همچنین، به‌خاطر داشته باشید که حتی وقتی رایانه لوحی‌تان قفل است، هرکسی می‌تواند آن‌ها را مشاهده کند. برخی‌از ابزاره‌ها ممکن است برای صفحه قفل درنظر گرفته نشده باشند و ممکن است افزوددن آن‌ها در اینجا ناامن باشد."</string>
     <string name="communal_widgets_disclaimer_button" msgid="4423059765740780753">"متوجهم"</string>
     <string name="accessibility_multi_user_switch_switcher" msgid="5330448341251092660">"تعویض کاربر"</string>
-    <string name="accessibility_multi_user_list_switcher" msgid="8574105376229857407">"منوی پایین‌پر"</string>
+    <string name="accessibility_multi_user_list_switcher" msgid="8574105376229857407">"منو پایین‌پر"</string>
     <string name="guest_exit_guest_dialog_message" msgid="8183450985628495709">"همه برنامه‌ها و داده‌های این جلسه حذف خواهد شد."</string>
     <string name="guest_wipe_session_title" msgid="7147965814683990944">"مهمان گرامی، بازگشتتان را خوش آمد می‌گوییم!"</string>
     <string name="guest_wipe_session_message" msgid="3393823610257065457">"آیا می‌خواهید جلسه‌تان را ادامه دهید؟"</string>
@@ -528,7 +528,7 @@
     <string name="user_limit_reached_message" msgid="1070703858915935796">"{count,plural, =1{فقط یک کاربر می‌توان ایجاد کرد.}one{حداکثر # کاربر می‌توانید اضافه کنید.}other{حداکثر # کاربر می‌توانید اضافه کنید.}}"</string>
     <string name="user_remove_user_title" msgid="9124124694835811874">"کاربر حذف شود؟"</string>
     <string name="user_remove_user_message" msgid="6702834122128031833">"همه برنامه‌ها و داده‌های این کاربر حذف می‌شود."</string>
-    <string name="user_remove_user_remove" msgid="8387386066949061256">"حذف"</string>
+    <string name="user_remove_user_remove" msgid="8387386066949061256">"برداشتن"</string>
     <string name="media_projection_dialog_title" msgid="3316063622495360646">"ضبط یا پخش محتوا با <xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g> شروع شود؟"</string>
     <string name="media_projection_dialog_warning" msgid="1303664408388363598">"<xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g> به همه اطلاعاتی که روی صفحه‌نمایش قابل‌مشاهد است و هنگام ضبط کردن یا پخش محتوا از دستگاهتان پخش می‌شود دسترسی خواهد داشت. این شامل اطلاعاتی مانند گذرواژه‌ها، جزئیات پرداخت، عکس‌ها، پیام‌ها، و صداهایی که پخش می‌کنید می‌شود."</string>
     <string name="media_projection_sys_service_dialog_title" msgid="3751133258891897878">"ضبط یا پخش محتوا شروع شود؟"</string>
@@ -564,7 +564,7 @@
     <string name="media_projection_task_switcher_notification_channel" msgid="7613206306777814253">"تغییر برنامه"</string>
     <string name="screen_capturing_disabled_by_policy_dialog_title" msgid="2113331792064527203">"سرپرست فناوری اطلاعات آن را مسدود کرده است"</string>
     <string name="screen_capturing_disabled_by_policy_dialog_description" msgid="6015975736747696431">"«ضبط صفحه‌نمایش» به‌دلیل خط‌مشی دستگاه غیرفعال است"</string>
-    <string name="clear_all_notifications_text" msgid="348312370303046130">"پاک کردن همه موارد"</string>
+    <string name="clear_all_notifications_text" msgid="348312370303046130">"پاک کردن همه"</string>
     <string name="manage_notifications_text" msgid="6885645344647733116">"مدیریت"</string>
     <string name="manage_notifications_history_text" msgid="57055985396576230">"سابقه"</string>
     <string name="notification_section_header_incoming" msgid="850925217908095197">"جدید"</string>
@@ -573,7 +573,7 @@
     <string name="notification_section_header_conversations" msgid="821834744538345661">"مکالمه‌ها"</string>
     <string name="accessibility_notification_section_header_gentle_clear_all" msgid="6490207897764933919">"پاک کردن همه اعلان‌های بی‌صدا"</string>
     <string name="dnd_suppressing_shade_text" msgid="5588252250634464042">"اعلان‌ها توسط «مزاحم نشوید» موقتاً متوقف شدند"</string>
-    <string name="media_projection_action_text" msgid="3634906766918186440">"اکنون شروع کنید"</string>
+    <string name="media_projection_action_text" msgid="3634906766918186440">"اکنون شروع کردن"</string>
     <string name="empty_shade_text" msgid="8935967157319717412">"اعلانی موجود نیست"</string>
     <string name="no_unseen_notif_text" msgid="395512586119868682">"اعلان جدیدی وجود ندارد"</string>
     <string name="adaptive_notification_edu_hun_title" msgid="7790738150177329960">"«آرام‌سازی اعلان‌ها» روشن است"</string>
@@ -1111,7 +1111,7 @@
     <string name="controls_dialog_message" msgid="342066938390663844">"پیشنهاد <xliff:g id="APP">%s</xliff:g>"</string>
     <string name="controls_tile_locked" msgid="731547768182831938">"دستگاه قفل است"</string>
     <string name="controls_settings_show_controls_dialog_title" msgid="3357852503553809554">"امکان دیدن و کنترل دستگاه‌ها از صفحه قفل وجود داشته باشد؟"</string>
-    <string name="controls_settings_show_controls_dialog_message" msgid="7666211700524587969">"می‌توانید کنترل‌هایی برای دستگاه‌های خارجی به صفحه قفل اضافه کنید.\n\nبرنامه دستگاهتان ممکن است به شما اجازه دهد بعضی‌از دستگاه‌ها را بدون باز کردن قفل تلفن یا رایانه لوحی‌تان کنترل کنید.\n\nهرزمان بخواهید می‌توانید در «تنظیمات» تغییراتی اعمال کنید."</string>
+    <string name="controls_settings_show_controls_dialog_message" msgid="7666211700524587969">"می‌توانید کنترل‌هایی برای دستگاه‌های خارجی به صفحه قفل اضافه کنید.\n\nبرنامه دستگاهتان ممکن است به شما اجازه دهد بعضی‌از دستگاه‌ها را بدون باز کردن قفل تلفن یا رایانه لوحی‌تان کنترل کنید.\n\nهر زمان‌که بخواهید می‌توانید در «تنظیمات» تغییراتی اعمال کنید."</string>
     <string name="controls_settings_trivial_controls_dialog_title" msgid="7593188157655036677">"امکان کنترل دستگاه‌ها از صفحه قفل وجود داشته باشد؟"</string>
     <string name="controls_settings_trivial_controls_dialog_message" msgid="397178734990952575">"می‌توانید بعضی‌از دستگاه‌ها را بدون باز کردن قفل تلفن یا رایانه لوحی‌تان کنترل کنید. برنامه دستگاهتان تعیین می‌کند که کدام دستگاه‌ها را می‌توان با این روش کنترل کرد."</string>
     <string name="controls_settings_dialog_neutral_button" msgid="4514446354793124140">"نه متشکرم"</string>
@@ -1369,7 +1369,7 @@
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"ازهم بازکردن و نمایش گزینه‌ها"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"جمع کردن"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"بستن این برنامه"</string>
-    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"<xliff:g id="APP_NAME">%1$s</xliff:g> بسته شد"</string>
+    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"«<xliff:g id="APP_NAME">%1$s</xliff:g>» بسته است"</string>
     <string name="privacy_dialog_manage_service" msgid="8320590856621823604">"مدیریت سرویس"</string>
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"مدیریت دسترسی"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"تماس تلفنی از آن استفاده می‌کند"</string>
@@ -1448,7 +1448,7 @@
     <string name="accessibility_deprecate_extra_dim_dialog_toast" msgid="165474092660941104">"میان‌برهای بسیار کم‌نور برداشته شدند"</string>
     <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"اتصال‌پذیری"</string>
     <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"دسترس‌پذیری"</string>
-    <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"برنامه‌های کمکی"</string>
+    <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"کاروری‌ها"</string>
     <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"حریم خصوصی"</string>
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"ارائه‌شده از برنامه‌ها"</string>
     <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"نمایشگر"</string>

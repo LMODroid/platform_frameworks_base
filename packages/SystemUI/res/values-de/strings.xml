@@ -940,7 +940,7 @@
     <string name="data_connection_no_internet" msgid="691058178914184544">"Kein Internet"</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"Einstellungen für <xliff:g id="ID_1">%s</xliff:g> öffnen."</string>
     <string name="accessibility_quick_settings_edit" msgid="1523745183383815910">"Reihenfolge der Einstellungen bearbeiten."</string>
-    <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"Ein-/Aus-Menü"</string>
+    <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"Ein/Aus-Menü"</string>
     <string name="accessibility_quick_settings_page" msgid="7506322631645550961">"Seite <xliff:g id="ID_1">%1$d</xliff:g> von <xliff:g id="ID_2">%2$d</xliff:g>"</string>
     <string name="tuner_lock_screen" msgid="2267383813241144544">"Sperrbildschirm"</string>
     <string name="finder_active" msgid="7907846989716941952">"Du kannst dieses Smartphone über „Mein Gerät finden“ orten, auch wenn es ausgeschaltet ist"</string>
@@ -1067,7 +1067,7 @@
     <string name="accessibility_floating_button_migration_tooltip" msgid="5217151214439341902">"Tippe, um die Bedienungshilfen aufzurufen. Du kannst diese Schaltfläche in den Einstellungen anpassen oder ersetzen.\n\n"<annotation id="link">"Zu den Einstellungen"</annotation></string>
     <string name="accessibility_floating_button_docking_tooltip" msgid="6814897496767461517">"Durch Ziehen an den Rand wird die Schaltfläche zeitweise ausgeblendet"</string>
     <string name="accessibility_floating_button_undo" msgid="511112888715708241">"Rückgängig machen"</string>
-    <string name="accessibility_floating_button_hidden_notification_title" msgid="4115036997406994799">"Schaltfläche „Bedienungshilfen“ ausgeblendet"</string>
+    <string name="accessibility_floating_button_hidden_notification_title" msgid="4115036997406994799">"Button „Bedienungshilfen“ ausgeblendet"</string>
     <string name="accessibility_floating_button_hidden_notification_text" msgid="1457021647040915658">"Tippen, um die Schaltfläche „Bedienungshilfen“ aufzurufen"</string>
     <string name="accessibility_floating_button_undo_message_label_text" msgid="9017658016426242640">"Verknüpfung für „<xliff:g id="FEATURE_NAME">%s</xliff:g>“ entfernt"</string>
     <string name="accessibility_floating_button_undo_message_number_text" msgid="4909270290725226075">"{count,plural, =1{# Verknüpfung entfernt}other{# Verknüpfungen entfernt}}"</string>
@@ -1414,7 +1414,7 @@
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"Startbildschirm"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"Du kannst jederzeit zum Startbildschirm gehen, indem du mit drei Fingern vom unteren Displayrand nach oben wischst."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Sehr gut!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du hast den Schritt für die „Startbildschirm“-Geste abgeschlossen."</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du hast den Schritt für die Touchgeste „Zum Startbildschirm“ abgeschlossen"</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Letzte Apps aufrufen"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"Wische mit 3 Fingern nach oben und halte das Touchpad gedrückt."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Gut gemacht!"</string>
@@ -1425,7 +1425,7 @@
     <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"Du hast den Schritt für die „Aktionstaste“-Geste abgeschlossen.\n\nAktion + / zeigt alle verfügbaren Tastenkombinationen."</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Tastaturbeleuchtung"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Level %1$d von %2$d"</string>
-    <string name="home_controls_dream_label" msgid="6567105701292324257">"Smart-Home"</string>
+    <string name="home_controls_dream_label" msgid="6567105701292324257">"Smart Home"</string>
     <string name="home_controls_dream_description" msgid="4644150952104035789">"Smart-Home-Steuer­ung anzeigen"</string>
     <string name="volume_undo_action" msgid="5815519725211877114">"Rückgängig machen"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"Wenn du zurückgehen möchtest, wische auf dem Touchpad mit drei Fingern nach links oder rechts"</string>

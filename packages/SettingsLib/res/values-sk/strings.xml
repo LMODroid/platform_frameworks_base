@@ -278,7 +278,7 @@
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"Pripojte sa k sieti Wi‑Fi"</string>
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, ladenie, dev"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"Odkaz na hlásenie chyby"</string>
-    <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Zobraziť v hlavnej ponuke tlačidlo na vytvorenie hlásenia chyby"</string>
+    <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Zobrazovať v hlavnej ponuke tlačidlo na vytvorenie hlásenia chyby"</string>
     <string name="keep_screen_on" msgid="1187161672348797558">"Nevypínať obrazovku"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"Neprepínať obrazovku pri nabíjaní do režimu spánku"</string>
     <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Povoliť denník Bluetooth HCI"</string>
@@ -351,7 +351,7 @@
     <string name="dev_settings_warning_message" msgid="37741686486073668">"Tieto nastavenia sú určené len pre vývojárov. Môžu spôsobiť poruchu alebo nesprávne fungovanie zariadenia a nainštalovaných aplikácií."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"Overovať aplikácie z USB"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"Kontrolovať škodlivosť aplikácií nainštalovaných pomocou nástroja ADB alebo ADT"</string>
-    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Zobraziť zariadenia Bluetooth bez názvov (iba adresy MAC)"</string>
+    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Zariadenia Bluetooth sa budú zobrazovať bez názvov (iba adresy MAC)"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Zakázať funkciu absolútnej hlasitosti rozhrania Bluetooth pri problémoch s hlasitosťou vo vzdialených zariadeniach (napr. príliš vysoká hlasitosť alebo absencia ovládacích prvkov)"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"Povoliť skupinu funkcií Bluetooth Gabeldorche"</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"Povoľuje funkciu Zlepšené možnosti pripojenia."</string>
@@ -394,7 +394,7 @@
     <string name="simulate_color_space" msgid="1206503300335835151">"Simulácia farebného priestoru"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"Trasovanie OpenGL"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Vypnúť smerovanie zvuku do USB"</string>
-    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Vypnúť automatické smerovanie do audio periférií USB"</string>
+    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Vypnúť automatické smerovanie do zvukových periférií USB"</string>
     <string name="debug_layout" msgid="1659216803043339741">"Zobrazovať ohraničenia"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"Zobrazovať vo výstrižku ohraničenie, okraje a pod."</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Vynútiť rozloženie sprava doľava"</string>
@@ -658,7 +658,7 @@
     <string name="guest_reset_guest_dialog_title" msgid="8047270010895437534">"Chcete resetovať reláciu hosťa?"</string>
     <string name="guest_remove_guest_dialog_title" msgid="4548511006624088072">"Chcete odobrať hosťa?"</string>
     <string name="guest_reset_guest_confirm_button" msgid="2989915693215617237">"Resetovať"</string>
-    <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"Odstrániť"</string>
+    <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"Odobrať"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"Relácia hosťa sa resetuje…"</string>
     <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"Chcete resetovať reláciu hosťa?"</string>
     <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Týmto sa spustí nová relácia hosťa a odstránia sa všetky aplikácie a údaje z aktuálnej relácie"</string>

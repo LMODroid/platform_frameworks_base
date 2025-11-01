@@ -75,7 +75,7 @@
     <string name="CLIRPermanent" msgid="166443681876381118">"Ezin duzu aldatu deitzailearen identitatearen ezarpena."</string>
     <string name="auto_data_switch_title" msgid="3286350716870518297">"<xliff:g id="CARRIERDISPLAY">%s</xliff:g> operadorearen datu-konexiora aldatu zara"</string>
     <string name="auto_data_switch_content" msgid="803557715007110959">"Ezarpenak atalean alda dezakezu aukera hori"</string>
-    <string name="RestrictedOnDataTitle" msgid="1500576417268169774">"Ez dago mugikorretarako datu-zerbitzurik"</string>
+    <string name="RestrictedOnDataTitle" msgid="1500576417268169774">"Ez dago datu-konexioaren zerbitzurik"</string>
     <string name="RestrictedOnEmergencyTitle" msgid="2852916906106191866">"Ezin da egin larrialdi-deirik"</string>
     <string name="RestrictedOnNormalTitle" msgid="7009474589746551737">"Ez dago ahots-deien zerbitzurik"</string>
     <string name="RestrictedOnAllVoiceTitle" msgid="3982069078579103087">"Ez dago ahozko zerbitzurik eta ezin da egin larrialdi-deirik"</string>
@@ -321,7 +321,7 @@
     <string name="permgroupdesc_contacts" msgid="9163927941244182567">"atzitu kontaktuak"</string>
     <string name="permgrouplab_location" msgid="1858277002233964394">"Kokapena"</string>
     <string name="permgroupdesc_location" msgid="1995955142118450685">"atzitu gailuaren kokapena"</string>
-    <string name="permgrouplab_calendar" msgid="6426860926123033230">"Calendar"</string>
+    <string name="permgrouplab_calendar" msgid="6426860926123033230">"Egutegia"</string>
     <string name="permgroupdesc_calendar" msgid="6762751063361489379">"atzitu egutegia"</string>
     <string name="permgrouplab_sms" msgid="795737735126084874">"SMSak"</string>
     <string name="permgroupdesc_sms" msgid="5726462398070064542">"bidali eta ikusi SMS mezuak"</string>

@@ -296,7 +296,7 @@
     <string name="quick_settings_modes_label" msgid="879156359479504244">"Načini rada"</string>
     <string name="quick_settings_bluetooth_label" msgid="7018763367142041481">"Bluetooth"</string>
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"Nema dostupnih uparenih uređaja"</string>
-    <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"Dodirnite da povežete ili prekinete povezanost uređaja"</string>
+    <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"Dodirnite da povežete uređaj ili prekinete vezu s njim"</string>
     <string name="pair_new_bluetooth_devices" msgid="4601767620843349645">"Uparite novi uređaj"</string>
     <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"Prikaži sve"</string>
     <string name="turn_on_bluetooth" msgid="5681370462180289071">"Koristi Bluetooth"</string>
@@ -696,7 +696,7 @@
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"vibracija"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"Reproducira se <xliff:g id="LABEL">%s</xliff:g> na"</string>
     <string name="media_output_title_without_playing" msgid="3825663683169305013">"Reprodukcija zvuka na"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Poziv putem"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Poziv na"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"Podešavač za korisnički interfejs sistema"</string>
     <string name="status_bar" msgid="4357390266055077437">"Statusna traka"</string>
     <string name="demo_mode" msgid="263484519766901593">"Demo način rada Sistemskog UI-ja"</string>
@@ -990,7 +990,7 @@
     <string name="qs_dnd_prompt_auto_rule_app" msgid="1841469944118486580">"Način rada Ne ometaj uključilo je automatsko pravilo ili aplikacija."</string>
     <string name="running_foreground_services_title" msgid="5137313173431186685">"Aplikacije koje rade u pozadini"</string>
     <string name="running_foreground_services_msg" msgid="3009459259222695385">"Dodirnite za detalje o potrošnji baterije i prenosa podataka"</string>
-    <string name="mobile_data_disable_title" msgid="5366476131671617790">"Isključiti prijenos podataka na mobilnoj mreži?"</string>
+    <string name="mobile_data_disable_title" msgid="5366476131671617790">"Isključiti prenos podataka na mobilnoj mreži?"</string>
     <string name="mobile_data_disable_message" msgid="8604966027899770415">"Nećete imati pristup podacima ni internetu putem mobilnog operatera <xliff:g id="CARRIER">%s</xliff:g>. Internet će biti dostupan samo putem WiFi-ja."</string>
     <string name="mobile_data_disable_message_default_carrier" msgid="6496033312431658238">"vaš operater"</string>
     <string name="auto_data_switch_disable_title" msgid="5146527155665190652">"Vratiti na operatera <xliff:g id="CARRIER">%s</xliff:g>?"</string>

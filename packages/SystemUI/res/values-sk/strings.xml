@@ -696,7 +696,7 @@
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"vibrovať"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"<xliff:g id="LABEL">%s</xliff:g> sa prehráva v:"</string>
     <string name="media_output_title_without_playing" msgid="3825663683169305013">"Zvuk sa prehrá cez"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Volanie je zapnuté"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Volanie prebieha na:"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"Tuner používateľského rozhrania systému"</string>
     <string name="status_bar" msgid="4357390266055077437">"Stavový riadok"</string>
     <string name="demo_mode" msgid="263484519766901593">"Ukážka používateľského rozhrania systému"</string>
@@ -1326,7 +1326,7 @@
     <string name="keyguard_affordance_enablement_dialog_notes_app_action" msgid="6821710209675089470">"Výber aplikácie"</string>
     <string name="keyguard_affordance_press_too_short" msgid="8145437175134998864">"Pridržte skratku"</string>
     <string name="rear_display_bottom_sheet_cancel" msgid="3461468855493357248">"Zrušiť"</string>
-    <string name="rear_display_bottom_sheet_confirm" msgid="1507591562761552899">"Prepnite obrazovky"</string>
+    <string name="rear_display_bottom_sheet_confirm" msgid="1507591562761552899">"Prepnúť obrazovku"</string>
     <string name="rear_display_folded_bottom_sheet_title" msgid="3930008746560711990">"Rozloženie telefónu"</string>
     <string name="rear_display_unfolded_bottom_sheet_title" msgid="6291111173057304055">"Chcete prepnúť obrazovky?"</string>
     <string name="rear_display_folded_bottom_sheet_description" msgid="6842767125783222695">"Ak chcete vyššie rozlíšenie, použite zadnú kameru"</string>

@@ -43,7 +43,7 @@
     <string name="unknown_apps_admin_dlg_text" msgid="4456572224020176095">"आपका एडमिन अनजान स्रोतों से मिलने वाले ऐप्लिकेशन को इंस्टॉल करने की अनुमति नहीं देता है"</string>
     <string name="unknown_apps_user_restriction_dlg_text" msgid="151020786933988344">"यह उपयोगकर्ता अनजान ऐप्लिकेशन इंस्टॉल नहीं कर सकता"</string>
     <string name="install_apps_user_restriction_dlg_text" msgid="2154119597001074022">"इस उपयोगकर्ता को ऐप्लिकेशन इंस्टॉल करने की अनुमति नहीं है"</string>
-    <string name="ok" msgid="7871959885003339302">"ठीक है"</string>
+    <string name="ok" msgid="7871959885003339302">"अनइंस्टॉल करें"</string>
     <string name="archive" msgid="4447791830199354721">"संग्रहित करें"</string>
     <string name="update_anyway" msgid="8792432341346261969">"फिर भी अपडेट करें"</string>
     <string name="manage_applications" msgid="5400164782453975580">"ऐप्लिकेशन प्रबंधित करें"</string>

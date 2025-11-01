@@ -3135,6 +3135,10 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         return true;
     }
 
+    boolean isForceHiddenNonSystemOverlayWindow() {
+        return mForceHideNonSystemOverlayWindow;
+    }
+
     void setForceHideNonSystemOverlayWindowIfNeeded(boolean forceHide) {
         final int baseType = getBaseType();
         if (mSession.mCanAddInternalSystemWindow
@@ -3915,6 +3919,7 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         switch (mAttrs.type) {
             case TYPE_NOTIFICATION_SHADE:
             case TYPE_STATUS_BAR:
+            case TYPE_STATUS_BAR_ADDITIONAL:
             case TYPE_NAVIGATION_BAR:
             case TYPE_WALLPAPER:
                 return false;

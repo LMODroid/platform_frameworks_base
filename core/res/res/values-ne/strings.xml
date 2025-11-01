@@ -33,7 +33,7 @@
     <string name="mmiErrorWhileRoaming" msgid="1204173664713870114">"तपाईं रोमिङमा हुनुहुँदा तपाईंको फोनबाट कल फर्वार्ड गर्ने सम्बन्धी सेटिङहरू परिवर्तन गर्न सकिँदैन।"</string>
     <string name="serviceEnabled" msgid="7549025003394765639">"सेवा सक्षम पारियो।"</string>
     <string name="serviceEnabledFor" msgid="1463104778656711613">"निम्न उल्लेखितको लागि सेवा सक्षम पारियो:"</string>
-    <string name="serviceDisabled" msgid="641878791205871379">"सेवा असक्षम पारिएको छ।"</string>
+    <string name="serviceDisabled" msgid="641878791205871379">"सेवा अफ गरिएको छ।"</string>
     <string name="serviceRegistered" msgid="3856192211729577482">"दर्ता सफल भयो।"</string>
     <string name="serviceErased" msgid="997354043770513494">"मेटाइ सफल थियो।"</string>
     <string name="passwordIncorrect" msgid="917087532676155877">"गलत पासवर्ड।"</string>
@@ -194,7 +194,7 @@
     <string name="low_memory" product="default" msgid="2539532364144025569">"फोन भण्डारण भरिएको छ! ठाउँ खाली गर्नको लागि केही फाइलहरू मेटाउनुहोस्।"</string>
     <string name="ssl_ca_cert_warning" msgid="7233573909730048571">"{count,plural, =1{प्रमाणपत्र जारी गर्ने निकायको प्रमाणपत्र इन्स्टल गरियो}other{प्रमाणपत्र जारी गर्ने निकायका प्रमाणपत्रहरू इन्स्टल गरिए}}"</string>
     <string name="ssl_ca_cert_noti_by_unknown" msgid="4961102218216815242">"अज्ञात तेस्रो पक्ष द्वारा"</string>
-    <string name="ssl_ca_cert_noti_by_administrator" msgid="4564941950768783879">"तपाईंको कार्य प्रोफाइलका प्रशासकद्वारा"</string>
+    <string name="ssl_ca_cert_noti_by_administrator" msgid="4564941950768783879">"तपाईंको वर्क प्रोफाइलका प्रशासकद्वारा"</string>
     <string name="ssl_ca_cert_noti_managed" msgid="217337232273211674">"<xliff:g id="MANAGING_DOMAIN">%s</xliff:g> द्वारा"</string>
     <string name="work_profile_deleted" msgid="5891181538182009328">"वर्क प्रोफाइल मेटियो"</string>
     <string name="work_profile_deleted_details" msgid="3773706828364418016">"उक्त वर्क प्रोफाइलको प्रशासकीय एप छैन वा बिग्रेको छ। त्यसले गर्दा, तपाईंको वर्क प्रोफाइल र सम्बन्धित डेटालाई मेटिएको छ। सहायताका लागि आफ्ना प्रशासकलाई सम्पर्क गर्नुहोस्।"</string>
@@ -224,8 +224,8 @@
     <string name="personal_apps_suspension_soon_text" msgid="8123898693479590">"मिति <xliff:g id="DATE">%1$s</xliff:g> <xliff:g id="TIME">%2$s</xliff:g> बजे व्यक्तिगत एपहरूलाई रोक लगाइने छ। तपाईंका IT एड्मिन तपाईंलाई आफ्नो वर्क प्रोफाइल <xliff:g id="NUMBER">%3$d</xliff:g> भन्दा धेरै दिन निष्क्रिय राख्ने अनुमति दिनुहुन्न।"</string>
     <string name="personal_apps_suspended_turn_profile_on" msgid="2758012869627513689">"अन गर्नुहोस्"</string>
     <string name="work_profile_telephony_paused_title" msgid="7690804479291839519">"कल वा म्यासेज अफ गरिएको छ"</string>
-    <string name="work_profile_telephony_paused_text" msgid="8065762301100978221">"तपाईंले कामसम्बन्धी एपहरू पज गर्नुभएको छ। तपाईं फोन कल वा टेक्स्ट म्यासेजहरू प्राप्त गर्नु हुने छैन।"</string>
-    <string name="work_profile_telephony_paused_turn_on_button" msgid="7542632318337068821">"कामसम्बन्धी एपहरू सुचारु गर्नुहोस्"</string>
+    <string name="work_profile_telephony_paused_text" msgid="8065762301100978221">"तपाईंले वर्क एपहरू पज गर्नुभएको छ। तपाईं फोन कल वा टेक्स्ट म्यासेजहरू प्राप्त गर्नु हुने छैन।"</string>
+    <string name="work_profile_telephony_paused_turn_on_button" msgid="7542632318337068821">"वर्क एपहरू सुचारु गर्नुहोस्"</string>
     <string name="me" msgid="6207584824693813140">"मलाई"</string>
     <string name="power_dialog" product="tablet" msgid="8333207765671417261">"ट्याब्लेट विकल्पहरू"</string>
     <string name="power_dialog" product="tv" msgid="7792839006640933763">"Android टिभी सम्बन्धी विकल्पहरू"</string>
@@ -346,7 +346,7 @@
     <string name="permgrouplab_sensors" msgid="9134046949784064495">"बडी सेन्सरहरू"</string>
     <string name="permgroupdesc_sensors" msgid="2610631290633747752">"तपाईंको महत्त्वपूर्ण संकेत बारे सेन्सर डेटा पहुँच गर्नुहोस्"</string>
     <string name="permgrouplab_notifications" msgid="5472972361980668884">"नोटिफिकेसनहरू"</string>
-    <string name="permgroupdesc_notifications" msgid="4608679556801506580">"सूचनाहरू देखाउनुहोस्"</string>
+    <string name="permgroupdesc_notifications" msgid="4608679556801506580">"नोटिफिकेसनहरू देखाउनुहोस्"</string>
     <string name="capability_title_canRetrieveWindowContent" msgid="7554282892101587296">"विन्डो सामग्रीको पुनःबहाली गर्नुहोस्।"</string>
     <string name="capability_desc_canRetrieveWindowContent" msgid="6195610527625237661">"तपाईँको अन्तरक्रिया भइरहेको विन्डोको सामग्रीको निरीक्षण गर्नुहोस्।"</string>
     <string name="capability_title_canRequestTouchExploration" msgid="327598364696316213">"छोएर गरिने खोजलाई सुचारु गर्नुहोस्"</string>
@@ -369,7 +369,7 @@
     <string name="permdesc_statusBarService" msgid="6652917399085712557">"एपलाई स्थिति पट्टि हुन अनुमति दिन्छ।"</string>
     <string name="permlab_expandStatusBar" msgid="1184232794782141698">"स्थिति पट्टिलाई विस्तृत/सङ्कुचित गर्नुहोस्"</string>
     <string name="permdesc_expandStatusBar" msgid="7180756900448498536">"एपलाई स्थिति पट्टि विस्तार वा संकुचन गर्न अनुमति दिन्छ।"</string>
-    <string name="permlab_fullScreenIntent" msgid="4310888199502509104">"लक गरिएको डिभाइसमा स्क्रिनभरि देखिने सूचनाहरू देखाउनुहोस्"</string>
+    <string name="permlab_fullScreenIntent" msgid="4310888199502509104">"लक गरिएको डिभाइसमा स्क्रिनभरि देखिने नोटिफिकेसनहरू देखाउनुहोस्"</string>
     <string name="permdesc_fullScreenIntent" msgid="1100721419406643997">"यो अनुमति दिइएमा एपले लक गरिएको डिभाइसमा स्क्रिनभरि देखिने सूचनाहरू देखाउन सक्छ"</string>
     <string name="permlab_install_shortcut" msgid="7451554307502256221">"सर्टकट इन्स्टल गर्ने"</string>
     <string name="permdesc_install_shortcut" msgid="4476328467240212503">"प्रयोगकर्ताको हस्तक्षेप बिना एउटा एपलाई सर्टकटमा हाल्ने अनुमति दिन्छ।"</string>
@@ -622,7 +622,7 @@
     <string name="permdesc_disableKeyguard" msgid="3223710003098573038">"कुनै सम्बन्धित पासवर्ड सुरक्षा र किलकलाई असक्षम पार्न एपलाई अनुमति दिन्छ। उदाहरणको लागि, अन्तर्गमन फोन कल प्राप्त गर्दा फोनले किलकलाई असक्षम पार्छ, त्यसपछि कल सकिएको बेला किलक पुनःसक्षम पार्छ।"</string>
     <string name="permlab_requestPasswordComplexity" msgid="1808977190557794109">"स्क्रिन लकको जटिलतासम्बन्धी जानकारी प्राप्त गर्ने अनुरोध गर्नुहोस्"</string>
     <string name="permdesc_requestPasswordComplexity" msgid="1130556896836258567">"यसले एपलाई स्क्रिन लकको जटिलताको स्तर (उच्च, मध्यम, न्यून वा कुनै पनि होइन) थाहा पाउने अनुमति दिन्छ जसले स्क्रिन लकको लम्बाइको सम्भावित दायरा र त्यसको प्रकारलाई जनाउँछ। यसै गरी, यो एपले प्रयोगकर्ताहरूलाई स्क्रिन लक अद्यावधिक गर्ने सुझाव पनि दिन सक्छ तर प्रयोगकर्ताहरू उक्त सुझावको बेवास्ता गरी बाहिर निस्कन सक्छन्। स्क्रिन लक सादा पाठको ढाँचामा भण्डारण नगरिने हुँदा यो एपलाई वास्तविक पासवर्ड थाहा नहुने कुराको हेक्का राख्नुहोस्।"</string>
-    <string name="permlab_postNotification" msgid="4875401198597803658">"सूचनाहरू देखाउनुहोस्"</string>
+    <string name="permlab_postNotification" msgid="4875401198597803658">"नोटिफिकेसनहरू देखाउनुहोस्"</string>
     <string name="permdesc_postNotification" msgid="5974977162462877075">"यो एपलाई सूचना देखाउन दिनुहोस्"</string>
     <string name="permlab_turnScreenOn" msgid="219344053664171492">"स्क्रिन अन गर्ने"</string>
     <string name="permdesc_turnScreenOn" msgid="4394606875897601559">"यो एपलाई स्क्रिन अन गर्ने अनुमति दिन्छ।"</string>
@@ -1002,7 +1002,7 @@
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"सही!"</string>
     <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"फेरि प्रयास गर्नुहोस्"</string>
     <string name="lockscreen_password_wrong" msgid="8605355913868947490">"फेरि प्रयास गर्नुहोस्"</string>
-    <string name="lockscreen_storage_locked" msgid="634993789186443380">"सबै सुविधाहरू र डेटाका लागि अनलक गर्नुहोस्"</string>
+    <string name="lockscreen_storage_locked" msgid="634993789186443380">"सबै सुविधा र डेटा एक्सेस गर्न अनलक गर्नुहोस्"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"फेस अनलक प्रयोग गरी अनलक गर्ने प्रयास अत्यधिक धेरै भयो"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"SIM कार्ड हालिएको छैन"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="3986843848305639161">"ट्याब्लेटमा SIM कार्ड हालिएको छैन।"</string>
@@ -1186,7 +1186,7 @@
     <string name="redo" msgid="7231448494008532233">"रिडू गर्नुहोस्"</string>
     <string name="autofill" msgid="511224882647795296">"अटोफिल"</string>
     <string name="textSelectionCABTitle" msgid="5151441579532476940">"पाठ चयनता"</string>
-    <string name="addToDictionary" msgid="8041821113480950096">"शब्दकोशमा थप्नुहोस्"</string>
+    <string name="addToDictionary" msgid="8041821113480950096">"शब्दकोशमा हाल्नुहोस्"</string>
     <string name="deleteText" msgid="4200807474529938112">"मेट्नुहोस्"</string>
     <string name="inputMethod" msgid="1784759500516314751">"निवेश विधि"</string>
     <string name="editTextMenuTitle" msgid="857666911134482176">"पाठ कार्यहरू"</string>
@@ -2004,7 +2004,7 @@
     <string name="app_suspended_default_message" msgid="6451215678552004172">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> अहिले उपलब्ध छैन। यो <xliff:g id="APP_NAME_1">%2$s</xliff:g> द्वारा व्यवस्थित छ।"</string>
     <string name="app_suspended_more_details" msgid="211260942831587014">"थप जान्नुहोस्"</string>
     <string name="app_suspended_unsuspend_message" msgid="1665438589450555459">"एपको पज हटाउनुहोस्"</string>
-    <string name="work_mode_off_title" msgid="6367463960165135829">"कामसम्बन्धी एपहरू अनपज गर्ने हो?"</string>
+    <string name="work_mode_off_title" msgid="6367463960165135829">"वर्क एपहरू अनपज गर्ने हो?"</string>
     <string name="work_mode_turn_on" msgid="5316648862401307800">"अनपज गर्नुहोस्"</string>
     <string name="work_mode_emergency_call_button" msgid="6818855962881612322">"आपत्‌कालीन"</string>
     <string name="set_up_screen_lock_title" msgid="8346083801616474030">"स्क्रिन लक सेटअप गर्नुहोस्"</string>
@@ -2120,7 +2120,7 @@
     <string name="shortcut_restore_not_supported" msgid="4763198938588468400">"एपले ब्याकअप तथा पुनर्स्थापनालाई समर्थन नगर्ने हुँदा सर्टकट पुनर्स्थापित गर्न सकिएन"</string>
     <string name="shortcut_restore_signature_mismatch" msgid="579345304221605479">"एपमा प्रयोग गरिने हस्ताक्षर नमिल्ने हुँदा सर्टकट पुनर्स्थापित गर्न सकिएन"</string>
     <string name="shortcut_restore_unknown_issue" msgid="2478146134395982154">"सर्टकट पुनर्स्थापित गर्न सकिएन"</string>
-    <string name="shortcut_disabled_reason_unknown" msgid="753074793553599166">"सर्टकट असक्षम पारिएको छ"</string>
+    <string name="shortcut_disabled_reason_unknown" msgid="753074793553599166">"सर्टकट अफ गरिएको छ"</string>
     <string name="harmful_app_warning_uninstall" msgid="6472912975664191772">"स्थापना रद्द गर्नु…"</string>
     <string name="harmful_app_warning_open_anyway" msgid="5963657791740211807">"जे भए पनि खोल्नुहोस्"</string>
     <string name="harmful_app_warning_title" msgid="8794823880881113856">"हानिकारक एप भेटियो"</string>
@@ -2135,7 +2135,7 @@
     <string name="zen_upgrade_notification_title" msgid="8198167698095298717">"बाधा नपुर्‍याउनुहोस् मोड परिवर्तन भएको छ"</string>
     <string name="zen_upgrade_notification_content" msgid="5228458567180124005">"रोक लगाइएका कुराहरू जाँच गर्न ट्याप गर्नुहोस्‌।"</string>
     <string name="review_notification_settings_title" msgid="5102557424459810820">"सूचनाका सेटिङको समीक्षा गर्नुहोस्"</string>
-    <string name="review_notification_settings_text" msgid="5916244866751849279">"Android १३ मा तपाईंले अनुमति दिनुभएका खण्डमा मात्र तपाईंले इन्स्टल गर्नुभएका एपले सूचना पठाउन सक्छन्। यसअघि इन्स्टल गरिसकिएका एपका हकमा यो अनुमति परिवर्तन गर्न ट्याप गर्नुहोस्।"</string>
+    <string name="review_notification_settings_text" msgid="5916244866751849279">"Android १३ मा तपाईंले अनुमति दिनुभएका खण्डमा मात्र तपाईंले इन्स्टल गर्नुभएका एपले नोटिफिकेसन पठाउन सक्छन्। यसअघि इन्स्टल गरिसकिएका एपका हकमा यो अनुमति परिवर्तन गर्न ट्याप गर्नुहोस्।"</string>
     <string name="review_notification_settings_remind_me_action" msgid="1081081018678480907">"मलाई पछि स्मरण गराइयोस्"</string>
     <string name="review_notification_settings_dismiss" msgid="4160916504616428294">"हटाउनुहोस्"</string>
     <string name="notification_app_name_system" msgid="3045196791746735601">"प्रणाली"</string>
@@ -2223,7 +2223,7 @@
     <string name="resolver_cant_access_work_apps_explanation" msgid="1129960195389373279">"यो सामग्री कामसम्बन्धी एपहरूमार्फत खोल्न मिल्दैन"</string>
     <string name="resolver_cant_share_with_personal_apps_explanation" msgid="6349766201904601544">"यो सामग्री व्यक्तिगत एपहरूमार्फत सेयर गर्न मिल्दैन"</string>
     <string name="resolver_cant_access_personal_apps_explanation" msgid="1679399548862724359">"यो सामग्री व्यक्तिगत एपहरूमार्फत खोल्न मिल्दैन"</string>
-    <string name="resolver_turn_on_work_apps" msgid="1535946298236678122">"कामसम्बन्धी एपहरू पज गरिएका छन्"</string>
+    <string name="resolver_turn_on_work_apps" msgid="1535946298236678122">"वर्क एपहरू पज गरिएका छन्"</string>
     <string name="resolver_switch_on_work" msgid="4527096360772311894">"अनपज गर्नुहोस्"</string>
     <string name="resolver_no_work_apps_available" msgid="3298291360133337270">"यो सामग्री खोल्न मिल्ने कुनै पनि वर्क एप छैन"</string>
     <string name="resolver_no_personal_apps_available" msgid="6284837227019594881">"यो सामग्री खोल्न मिल्ने कुनै पनि व्यक्तिगत एप छैन"</string>

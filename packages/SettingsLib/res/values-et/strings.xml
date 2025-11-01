@@ -253,7 +253,7 @@
     <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Silumisrežiim, kui WiFi-ühendus on olemas"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"Viga"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Juhtmevaba silumine"</string>
-    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Saadaolevate seadmete nägemiseks ja kasutamiseks lülitage sisse juhtmevaba silumine"</string>
+    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Saadaolevate seadmete nägemiseks ja kasutamiseks lülitage sisse juhtmevaba silumine."</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Seadme sidumine QR-koodiga"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Uute seadmete sidumine QR-koodiskanneriga"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Seadme sidumine sidumiskoodiga"</string>
@@ -269,12 +269,12 @@
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"WiFi sidumiskood"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Sidumine ei õnnestunud"</string>
     <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Veenduge, et seade oleks ühendatud samasse võrku."</string>
-    <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Siduge seade WiFi kaudu, skannides QR-koodi"</string>
+    <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Siduge seade WiFi kaudu, skannides QR-koodi."</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Seadme sidumine …"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Seadme sidumine ebaõnnestus. QR-kood oli vale või seade ei ole ühendatud samasse võrku."</string>
     <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"IP-aadress ja port"</string>
     <string name="adb_wireless_qrcode_pairing_title" msgid="1906409667944674707">"QR-koodi skannimine"</string>
-    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Siduge seade WiFi kaudu, skannides QR-koodi"</string>
+    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Siduge seade WiFi kaudu, skannides QR-koodi."</string>
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"Looge ühendus WiFi-võrguga"</string>
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, silumine, arendus"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"Veaaruande otsetee"</string>
@@ -674,7 +674,7 @@
     <string name="guest_exit_button" msgid="5774985819191803960">"Välju külalisrežiimist"</string>
     <string name="guest_reset_button" msgid="2515069346223503479">"Lähtesta külastajaseanss"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"Välju külastajaseansist"</string>
-    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Kõik tegevused kustutatakse väljumisel"</string>
+    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Kõik tegevused kustutatakse väljumisel."</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"Võite tegevused väljumisel salvestada või kustutada."</string>
     <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Seansi tegevuste kohe kustutamiseks lähtestage; või salvestage või kustutage need väljumisel."</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"Valige foto"</string>

@@ -672,8 +672,8 @@
     <string name="stream_alarm_unavailable" msgid="4059817189292197839">"অসুবিধা নিদিব অন থকাৰ কাৰণে উপলব্ধ নহয়"</string>
     <string name="stream_media_unavailable" msgid="6823020894438959853">"অসুবিধা নিদিব অন থকাৰ কাৰণে উপলব্ধ নহয়"</string>
     <string name="volume_stream_content_description_unmute" msgid="7729576371406792977">"%1$s। আনমিউট কৰিবৰ বাবে টিপক।"</string>
-    <string name="volume_stream_content_description_vibrate" msgid="4858111994183089761">"%1$s। কম্পনৰ বাবে টিপক। দিব্য়াংগসকলৰ বাবে থকা সেৱা মিউট হৈ থাকিব পাৰে।"</string>
-    <string name="volume_stream_content_description_mute" msgid="4079046784917920984">"%1$s। মিউট কৰিবলৈ টিপক। দিব্য়াংগসকলৰ বাবে থকা সেৱা মিউট হৈ থাকিব পাৰে।"</string>
+    <string name="volume_stream_content_description_vibrate" msgid="4858111994183089761">"%1$s। কম্পনৰ বাবে টিপক। দিব্যাংগসকলৰ বাবে থকা সেৱা মিউট হৈ থাকিব পাৰে।"</string>
+    <string name="volume_stream_content_description_mute" msgid="4079046784917920984">"%1$s। মিউট কৰিবলৈ টিপক। দিব্যাংগসকলৰ বাবে থকা সেৱা মিউট হৈ থাকিব পাৰে।"</string>
     <string name="volume_stream_content_description_vibrate_a11y" msgid="2742330052979397471">"%1$s। কম্পন অৱস্থাত ছেট কৰিবলৈ টিপক।"</string>
     <string name="volume_stream_content_description_mute_a11y" msgid="5743548478357238156">"%1$s। মিউট কৰিবলৈ টিপক।"</string>
     <string name="volume_panel_noise_control_title" msgid="7413949943872304474">"কোলাহল নিয়ন্ত্ৰণ"</string>
@@ -806,7 +806,7 @@
     <string name="keyboard_key_move_home" msgid="3496502501803911971">"হ\'ম"</string>
     <string name="keyboard_key_move_end" msgid="99190401463834854">"সমাপ্ত"</string>
     <string name="keyboard_key_insert" msgid="4621692715704410493">"ভৰাওক"</string>
-    <string name="keyboard_key_num_lock" msgid="7209960042043090548">"সংখ্য়া লক"</string>
+    <string name="keyboard_key_num_lock" msgid="7209960042043090548">"সংখ্যা লক"</string>
     <string name="keyboard_key_numpad_template" msgid="7316338238459991821">"নামপেড <xliff:g id="NAME">%1$s</xliff:g>"</string>
     <string name="notif_inline_reply_remove_attachment_description" msgid="7954075334095405429">"সংলগ্নক আঁতৰাওক"</string>
     <string name="keyboard_shortcut_group_system" msgid="1583416273777875970">"ছিষ্টেম"</string>

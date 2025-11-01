@@ -927,7 +927,7 @@
     <string name="phoneTypeCar" msgid="4604775148963129195">"هاتف سيارة"</string>
     <string name="phoneTypeCompanyMain" msgid="4482773154536455441">"هاتف الشركة الرئيسي"</string>
     <string name="phoneTypeIsdn" msgid="2496238954533998512">"ISDN"</string>
-    <string name="phoneTypeMain" msgid="5199722006991000111">"رئيسي"</string>
+    <string name="phoneTypeMain" msgid="5199722006991000111">"الأساسي"</string>
     <string name="phoneTypeOtherFax" msgid="3037145630364770357">"فاكس آخر"</string>
     <string name="phoneTypeRadio" msgid="2637819130239264771">"لاسلكي"</string>
     <string name="phoneTypeTelex" msgid="2558783611711876562">"تلكس"</string>
@@ -2381,7 +2381,7 @@
     <string name="vdm_camera_access_denied" product="tablet" msgid="6895968310395249076">"يتعذّر الوصول إلى كاميرا الجهاز اللوحي من على جهاز <xliff:g id="DEVICE">%1$s</xliff:g>."</string>
     <string name="vdm_secure_window" msgid="161700398158812314">"لا يمكن الوصول إلى هذا المحتوى أثناء البث. بدلاً من ذلك، جرِّب استخدام هاتفك."</string>
     <string name="vdm_pip_blocked" msgid="4036107522497281397">"لا يمكن عرض نافذة ضمن النافذة أثناء البث."</string>
-    <string name="system_locale_title" msgid="711882686834677268">"الإعداد التلقائي للنظام"</string>
+    <string name="system_locale_title" msgid="711882686834677268">"اللغة التلقائية للنظام"</string>
     <string name="default_card_name" msgid="9198284935962911468">"‏رقم البطاقة ‎<xliff:g id="CARDNUMBER">%d</xliff:g>"</string>
     <string name="permlab_companionProfileWatch" msgid="2457738382085872542">"‏إذن الملف الشخصي في Companion Watch لإدارة الساعات"</string>
     <string name="permdesc_companionProfileWatch" msgid="5655698581110449397">"يسمح هذا الإذن للتطبيق المصاحب بإدارة الساعات."</string>

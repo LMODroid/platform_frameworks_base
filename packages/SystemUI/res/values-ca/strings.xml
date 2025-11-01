@@ -318,7 +318,7 @@
     <string name="quick_settings_bluetooth_secondary_label_input" msgid="3887552721233148132">"Entrada"</string>
     <string name="quick_settings_bluetooth_secondary_label_hearing_aids" msgid="5553051568867097111">"Audiòfons"</string>
     <string name="quick_settings_bluetooth_secondary_label_transient" msgid="3882884317600669650">"S\'està activant…"</string>
-    <string name="quick_settings_rotation_unlocked_label" msgid="2359922767950346112">"Gira automàticament"</string>
+    <string name="quick_settings_rotation_unlocked_label" msgid="2359922767950346112">"Gir automàtic"</string>
     <string name="accessibility_quick_settings_rotation" msgid="4800050198392260738">"Gira la pantalla automàticament"</string>
     <string name="quick_settings_location_label" msgid="2621868789013389163">"Ubicació"</string>
     <string name="quick_settings_screensaver_label" msgid="1495003469366524120">"Estalvi de pantalla"</string>
@@ -712,7 +712,7 @@
     <string name="wallet_secondary_label_device_locked" msgid="5175862019125370506">"Desbloqueja per utilitzar"</string>
     <string name="wallet_error_generic" msgid="257704570182963611">"Hi ha hagut un problema en obtenir les teves targetes; torna-ho a provar més tard"</string>
     <string name="wallet_lockscreen_settings_label" msgid="3539105300870383570">"Configuració de la pantalla de bloqueig"</string>
-    <string name="qr_code_scanner_title" msgid="1938155688725760702">"Escàner de codis QR"</string>
+    <string name="qr_code_scanner_title" msgid="1938155688725760702">"Escàner codis QR"</string>
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"S\'està actualitzant"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"Perfil de treball"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"Mode d\'avió"</string>
@@ -1030,7 +1030,7 @@
     <string name="magnification_window_title" msgid="4863914360847258333">"Finestra d\'ampliació"</string>
     <string name="magnification_controls_title" msgid="8421106606708891519">"Finestra de controls d\'ampliació"</string>
     <string name="accessibility_control_zoom_in" msgid="1189272315480097417">"Amplia"</string>
-    <string name="accessibility_control_zoom_out" msgid="69578832020304084">"Redueix"</string>
+    <string name="accessibility_control_zoom_out" msgid="69578832020304084">"Redueix el zoom"</string>
     <string name="accessibility_control_move_up" msgid="6622825494014720136">"Mou cap amunt"</string>
     <string name="accessibility_control_move_down" msgid="5390922476900974512">"Mou cap avall"</string>
     <string name="accessibility_control_move_left" msgid="8156206978511401995">"Mou cap a l\'esquerra"</string>
@@ -1080,7 +1080,7 @@
     <string name="accessibility_floating_button_action_remove_menu" msgid="6730432848162552135">"Suprimeix"</string>
     <string name="accessibility_floating_button_action_double_tap_to_toggle" msgid="7976492639670692037">"commuta"</string>
     <string name="accessibility_floating_button_action_edit" msgid="1688227814600463987">"Edita"</string>
-    <string name="quick_controls_title" msgid="6839108006171302273">"Controls de dispositius"</string>
+    <string name="quick_controls_title" msgid="6839108006171302273">"Controls dispositius"</string>
     <string name="controls_providers_title" msgid="6879775889857085056">"Selecciona l\'aplicació per afegir controls"</string>
     <string name="controls_number_of_favorites" msgid="4481806788981836355">"{count,plural, =1{S\'ha afegit # control.}many{S\'han afegit # controls.}other{S\'han afegit # controls.}}"</string>
     <string name="controls_removed" msgid="3731789252222856959">"Suprimit"</string>
@@ -1262,7 +1262,7 @@
     <string name="see_all_networks" msgid="3773666844913168122">"Mostra-ho tot"</string>
     <string name="to_switch_networks_disconnect_ethernet" msgid="6698111101156951955">"Per canviar de xarxa, desconnecta la connexió Ethernet"</string>
     <string name="wifi_scan_notify_message" msgid="3753839537448621794">"Per millorar l\'experiència amb el dispositiu, les aplicacions i els serveis poden continuar cercant xarxes Wi‑Fi en qualsevol moment, fins i tot amb la Wi‑Fi desactivada. Pots canviar aquesta opció a la configuració de cerca de xarxes Wi‑Fi. "<annotation id="link">"Canvia-la"</annotation>"."</string>
-    <string name="turn_off_airplane_mode" msgid="8425587763226548579">"Desactiva el mode d\'avió"</string>
+    <string name="turn_off_airplane_mode" msgid="8425587763226548579">"Desactiva el mode avió"</string>
     <string name="qs_tile_request_dialog_text" msgid="3501359944139877694">"<xliff:g id="APPNAME">%1$s</xliff:g> vol afegir la icona següent a la configuració ràpida"</string>
     <string name="qs_tile_request_dialog_add" msgid="4888460910694986304">"Afegeix la icona"</string>
     <string name="qs_tile_request_dialog_not_add" msgid="4168716573114067296">"No afegeixis la icona"</string>
@@ -1426,7 +1426,7 @@
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Retroil·luminació del teclat"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Nivell %1$d de %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"Controls de la llar"</string>
-    <string name="home_controls_dream_description" msgid="4644150952104035789">"Utilitza controls de la llar com a estalvi de pantalla"</string>
+    <string name="home_controls_dream_description" msgid="4644150952104035789">"Utilitza els controls de la llar com a estalvi de pantalla"</string>
     <string name="volume_undo_action" msgid="5815519725211877114">"Desfés"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"Per tornar enrere, llisca tres dits cap a l\'esquerra o cap a la dreta al ratolí tàctil"</string>
     <string name="home_edu_toast_content" msgid="3381071147871955415">"Per anar a la pantalla d\'inici, fes lliscar tres dits cap amunt al ratolí tàctil"</string>

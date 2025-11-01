@@ -293,7 +293,7 @@
     <string name="notification_channel_car_mode" msgid="2123919247040988436">"Mode Voiture"</string>
     <string name="notification_channel_account" msgid="6436294521740148173">"État du compte"</string>
     <string name="notification_channel_developer" msgid="1691059964407549150">"Messages relatifs aux développeurs"</string>
-    <string name="notification_channel_developer_important" msgid="7197281908918789589">"Messages importants relatifs aux développeurs"</string>
+    <string name="notification_channel_developer_important" msgid="7197281908918789589">"Messages importants pour les développeurs"</string>
     <string name="notification_channel_updates" msgid="7907863984825495278">"Mises à jour"</string>
     <string name="notification_channel_network_status" msgid="2127687368725272809">"État du réseau"</string>
     <string name="notification_channel_network_alerts" msgid="6312366315654526528">"Alertes réseau"</string>
@@ -960,7 +960,7 @@
     <string name="imProtocolIcq" msgid="2410325380427389521">"ICQ"</string>
     <string name="imProtocolJabber" msgid="7919269388889582015">"Jabber"</string>
     <string name="imProtocolNetMeeting" msgid="4985002408136148256">"NetMeeting"</string>
-    <string name="orgTypeWork" msgid="8684458700669564172">"Bureau"</string>
+    <string name="orgTypeWork" msgid="8684458700669564172">"Travail"</string>
     <string name="orgTypeOther" msgid="5450675258408005553">"Autre"</string>
     <string name="orgTypeCustom" msgid="1126322047677329218">"Personnalisé"</string>
     <string name="relationTypeCustom" msgid="282938315217441351">"Personnalisée"</string>

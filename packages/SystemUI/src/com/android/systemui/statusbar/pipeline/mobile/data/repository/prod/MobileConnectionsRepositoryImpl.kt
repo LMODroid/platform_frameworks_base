@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.telephony.CarrierConfigManager
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
@@ -194,6 +195,15 @@ constructor(
     override val isDeviceEmergencyCallCapable: StateFlow<Boolean> =
         serviceStateChangedEvent
             .mapLatest {
+                // TODO(b/400460777): check for hasSystemFeature only once
+                val hasRadioAccess: Boolean =
+                    context.packageManager.hasSystemFeature(
+                        PackageManager.FEATURE_TELEPHONY_RADIO_ACCESS
+                    )
+                if (!hasRadioAccess) {
+                    return@mapLatest false
+                }
+
                 val modems = telephonyManager.activeModemCount
                 // Check the service state for every modem. If any state reports emergency calling
                 // capable, then consider the device to have emergency call capabilities

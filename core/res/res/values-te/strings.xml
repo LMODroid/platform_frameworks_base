@@ -66,7 +66,7 @@
     <string name="ThreeWCMmi" msgid="2436550866139999411">"మూడు మార్గాల కాలింగ్"</string>
     <string name="RuacMmi" msgid="1876047385848991110">"అవాంఛిత అంతరాయ కాల్స్‌ల తిరస్కరణ"</string>
     <string name="CndMmi" msgid="185136449405618437">"కాలింగ్ నంబర్ డెలివరీ"</string>
-    <string name="DndMmi" msgid="8797375819689129800">"అంతరాయం కలిగించవద్దు"</string>
+    <string name="DndMmi" msgid="8797375819689129800">"డిస్టర్బ్ చేయవద్దు"</string>
     <string name="CLIRDefaultOnNextCallOn" msgid="4511621022859867988">"కాలర్ ID ఆటోమేటిక్‌లపై పరిమితి ఉంటుంది. తర్వాత కాల్: పరిమితి ఉంటుంది"</string>
     <string name="CLIRDefaultOnNextCallOff" msgid="5036749051007098105">"కాలర్ ID ఆటోమేటిక్‌లపై పరిమితి ఉంటుంది. తర్వాత కాల్: పరిమితి లేదు"</string>
     <string name="CLIRDefaultOffNextCallOn" msgid="1022781126694885017">"కాలర్ ID ఆటోమేటిక్‌లపై పరిమితి లేదు. తర్వాత కాల్: పరిమితి ఉంటుంది"</string>
@@ -216,8 +216,8 @@
     <string name="gnss_time_update_service" msgid="9039489496037616095">"GNSS సమయ అప్‌డేట్ సర్వీస్"</string>
     <string name="device_policy_manager_service" msgid="5085762851388850332">"పరికర పాలసీ మేనేజర్ సర్వీస్"</string>
     <string name="music_recognition_manager_service" msgid="7481956037950276359">"మ్యూజిక్ గుర్తింపు మేనేజర్ సర్వీస్"</string>
-    <string name="factory_reset_warning" msgid="6858705527798047809">"మీ పరికరంలోని డేటా తొలగించబడుతుంది"</string>
-    <string name="factory_reset_message" msgid="2657049595153992213">"నిర్వాహక యాప్‌ ఉపయోగించడం సాధ్యపడదు. మీ పరికరంలోని డేటా ఇప్పుడు తొలగించబడుతుంది.\n\nమీకు ప్రశ్నలు ఉంటే, మీ సంస్థ యొక్క నిర్వాహకులను సంప్రదించండి."</string>
+    <string name="factory_reset_warning" msgid="6858705527798047809">"మీ డివైజ్‌లోని డేటా ఎరేజ్ (ఫ్యాక్టరీ రీసెట్) అవుతుంది"</string>
+    <string name="factory_reset_message" msgid="2657049595153992213">"అడ్మిన్ యాప్‌ను ఉపయోగించడం సాధ్యపడదు. మీ డివైజ్‌లోని డేటా ఇప్పుడు ఫ్యాక్టరీ రీసెట్ అవుతుంది.\n\nమీకు ప్రశ్నలు ఉంటే, మీ సంస్థ అడ్మిన్‌ను కాంటాక్ట్ చేయండి."</string>
     <string name="printing_disabled_by" msgid="3517499806528864633">"ముద్రణ <xliff:g id="OWNER_APP">%s</xliff:g> ద్వారా నిలిపివేయబడింది."</string>
     <string name="personal_apps_suspension_title" msgid="7561416677884286600">"మీ పని ప్రొఫైల్‌ను‌ ఆన్ చేయి"</string>
     <string name="personal_apps_suspension_text" msgid="6115455688932935597">"మీరు మీ కార్యాలయ ప్రొఫైల్‌ను ప్రారంభించే వరకు, మీ వ్యక్తిగత యాప్‌లు బ్లాక్ చేయబడతాయి"</string>
@@ -326,7 +326,7 @@
     <string name="permgrouplab_sms" msgid="795737735126084874">"SMS"</string>
     <string name="permgroupdesc_sms" msgid="5726462398070064542">"SMS మెసేజ్‌లను పంపడం, చూడటం"</string>
     <string name="permgrouplab_storage" msgid="17339216290379241">"ఫైల్స్"</string>
-    <string name="permgroupdesc_storage" msgid="5378659041354582769">"మీ పరికరంలోని ఫైల్స్‌ని యాక్సెస్ చేస్తుంది"</string>
+    <string name="permgroupdesc_storage" msgid="5378659041354582769">"మీ డివైజ్‌లోని ఫైల్స్‌ను యాక్సెస్ చేస్తుంది"</string>
     <string name="permgrouplab_readMediaAural" msgid="1858331312624942053">"మ్యూజిక్, ఆడియో"</string>
     <string name="permgroupdesc_readMediaAural" msgid="7565467343667089595">"మీ పరికరంలో మ్యూజిక్, ఆడియోను యాక్సెస్ చేయండి"</string>
     <string name="permgrouplab_readMediaVisual" msgid="4724874717811908660">"ఫోటోలు, వీడియోలు"</string>
@@ -337,7 +337,7 @@
     <string name="permgroupdesc_activityRecognition" msgid="4725624819457670704">"ఫిజికల్ యాక్టివిటీని యాక్సెస్ చేయండి"</string>
     <string name="permgrouplab_camera" msgid="9090413408963547706">"కెమెరా"</string>
     <string name="permgroupdesc_camera" msgid="7585150538459320326">"చిత్రాలను తీయడానికి మరియు వీడియోను రికార్డ్ చేయడానికి"</string>
-    <string name="permgrouplab_nearby_devices" msgid="5529147543651181991">"సమీపంలోని పరికరాలు"</string>
+    <string name="permgrouplab_nearby_devices" msgid="5529147543651181991">"\'సమీపంలోని డివైజ్‌ల\'"</string>
     <string name="permgroupdesc_nearby_devices" msgid="3213561597116913508">"సమీప పరికరాలను కనుగొనండి అలాగే కనెక్ట్ చేయండి"</string>
     <string name="permgrouplab_calllog" msgid="7926834372073550288">"కాల్ లాగ్స్‌"</string>
     <string name="permgroupdesc_calllog" msgid="2026996642917801803">"ఫోన్ కాల్ లాగ్‌ని చదవండి మరియు రాయండి"</string>
@@ -471,7 +471,7 @@
     <string name="permdesc_broadcastSticky" product="default" msgid="134529339678913453">"ప్రసారం ముగిసిన తర్వాత భద్రపరచబడే ప్రసారాలను పంపడానికి యాప్‌ను అనుమతిస్తుంది. అత్యధిక వినియోగం వలన ఫోన్ నెమ్మదిగా పని చేయవచ్చు లేదా అధిక పరిమాణంలో మెమరీని ఉపయోగించడం వలన అస్థిరంగా మారవచ్చు."</string>
     <string name="permlab_readContacts" msgid="8776395111787429099">"మీ కాంటాక్ట్‌లను చదవడం"</string>
     <string name="permdesc_readContacts" product="tablet" msgid="6430093481659992692">"టాబ్లెట్‌లో స్టోరేజ్‌ చేసిన మీ కాంటాక్ట్‌లకు సంబంధించిన డేటాను చదవడానికి యాప్‌ను అనుమతిస్తుంది. కాంటాక్ట్‌లను క్రియేట్ చేసిన మీ టాబ్లెట్‌లోని ఖాతాలకు కూడా యాప్‌లకు యాక్సెస్ ఉంటుంది. ఇందులో మీరు ఇన్‌స్టాల్ చేసిన యాప్‌ల ద్వారా క్రియేట్ చేయబడిన ఖాతాలు ఉండవచ్చు. ఈ అనుమతి, మీ కాంటాక్ట్ డేటాను సేవ్ చేయడానికి యాప్‌లను అనుమతిస్తుంది, హానికరమైన యాప్‌లు మీకు తెలియకుండానే కాంటాక్ట్ డేటాను షేర్ చేయవచ్చు."</string>
-    <string name="permdesc_readContacts" product="tv" msgid="8400138591135554789">"మీ Android TV పరికరంలో స్టోరేజ్‌ చేసిన కాంటాక్ట్‌లకు సంబంధించిన డేటాను చదవడానికి యాప్‌ను అనుమతిస్తుంది. కాంటాక్ట్‌లను క్రియేట్ చేసిన మీ Android TV పరికరంలోని ఖాతాలకు కూడా యాప్‌లకు యాక్సెస్ ఉంటుంది. ఇందులో మీరు ఇన్‌స్టాల్ చేసిన యాప్‌ల ద్వారా క్రియేట్ చేయబడిన ఖాతాలు ఉండవచ్చు. ఈ అనుమతి, మీ కాంటాక్ట్ డేటాను సేవ్ చేయడానికి యాప్‌లను అనుమతిస్తుంది, హానికరమైన యాప్‌లు మీకు తెలియకుండానే కాంటాక్ట్ డేటాను షేర్ చేయవచ్చు."</string>
+    <string name="permdesc_readContacts" product="tv" msgid="8400138591135554789">"మీ Android TV డివైజ్‌లో స్టోరేజ్ చేసిన కాంటాక్ట్‌లకు సంబంధించిన డేటాను రీడ్ చేయడానికి యాప్‌ను అనుమతిస్తుంది. కాంటాక్ట్‌లను క్రియేట్ చేసిన మీ Android TV డివైజ్‌లోని ఖాతాలను కూడా యాప్‌లు యాక్సెస్ చేస్తాయి. ఇందులో మీరు ఇన్‌స్టాల్ చేసిన యాప్‌ల ద్వారా క్రియేట్ అయిన ఖాతాలు కూడా ఉండవచ్చు. ఈ అనుమతి, మీ కాంటాక్ట్ డేటాను సేవ్ చేయడానికి యాప్‌లను అనుమతిస్తుంది, హానికరమైన యాప్‌లు మీకు తెలియకుండానే కాంటాక్ట్ డేటాను షేర్ చేసే అవకాశం ఉంది."</string>
     <string name="permdesc_readContacts" product="default" msgid="4911989776203207644">"ఫోన్‌లో స్టోరేజ్‌ చేసిన మీ కాంటాక్ట్‌లకు సంబంధించిన డేటాను చదవడానికి యాప్‌ను అనుమతిస్తుంది. కాంటాక్ట్‌లను క్రియేట్ చేసిన మీ ఫోన్‌లోని ఖాతాలను కూడా యాప్‌లు యాక్సెస్ చేయగలవు. ఇందులో మీరు ఇన్‌స్టాల్ చేసిన యాప్‌ల ద్వారా క్రియేట్ చేయబడిన ఖాతాలు ఉండవచ్చు. ఈ అనుమతి, మీ కాంటాక్ట్ డేటాను సేవ్ చేయడానికి యాప్‌లను అనుమతిస్తుంది, హానికరమైన యాప్‌లు మీకు తెలియకుండానే కాంటాక్ట్ డేటాను షేర్ చేయవచ్చు."</string>
     <string name="permlab_writeContacts" msgid="8919430536404830430">"మీ కాంటాక్ట్‌లను ఎడిట్ చేయడం"</string>
     <string name="permdesc_writeContacts" product="tablet" msgid="6422419281427826181">"మీ టాబ్లెట్‌లో స్టోరేజ్‌ చేసి ఉన్న కాంటాక్ట్‌లకు సంబంధించిన డేటాను ఎడిట్ చేయడానికి యాప్‌ను అనుమతిస్తుంది. ఈ అనుమతి, కాంటాక్ట్ డేటాను తొలగించడానికి యాప్‌లను అనుమతిస్తుంది."</string>
@@ -1393,7 +1393,7 @@
     <string name="no_permissions" msgid="5729199278862516390">"అనుమతులు అవసరం లేదు"</string>
     <string name="perm_costs_money" msgid="749054595022779685">"దీనికి మీకు డబ్బు ఖర్చు కావచ్చు"</string>
     <string name="dlg_ok" msgid="5103447663504839312">"సరే"</string>
-    <string name="usb_charging_notification_title" msgid="1674124518282666955">"USB ద్వారా ఈ పరికరాన్ని ఛార్జ్ చేస్తోంది"</string>
+    <string name="usb_charging_notification_title" msgid="1674124518282666955">"USB ద్వారా ఈ డివైజ్‌‌ను ఛార్జ్ చేస్తోంది"</string>
     <string name="usb_supplying_notification_title" msgid="5378546632408101811">"USB ద్వారా కనెక్ట్ చేయబడిన పరికరాన్ని ఛార్జ్ చేస్తోంది"</string>
     <string name="usb_mtp_notification_title" msgid="1065989144124499810">"USB ఫైల్ బదిలీ ఆన్ చేయబడింది"</string>
     <string name="usb_ptp_notification_title" msgid="5043437571863443281">"USB ద్వారా PTP ఆన్ చేయబడింది"</string>
@@ -1932,7 +1932,7 @@
     <string name="zen_mode_forever_dnd" msgid="3423201955704180067">"మీరు అంతరాయం కలిగించవద్దు ఎంపిక ఆఫ్ చేసే వరకు"</string>
     <string name="zen_mode_rule_name_combination" msgid="7174598364351313725">"<xliff:g id="FIRST">%1$s</xliff:g> / <xliff:g id="REST">%2$s</xliff:g>"</string>
     <string name="toolbar_collapse_description" msgid="8009920446193610996">"కుదించండి"</string>
-    <string name="zen_mode_feature_name" msgid="3785547207263754500">"అంతరాయం కలిగించవద్దు"</string>
+    <string name="zen_mode_feature_name" msgid="3785547207263754500">"డిస్టర్బ్ చేయవద్దు"</string>
     <string name="zen_mode_downtime_feature_name" msgid="5886005761431427128">"ముఖ్యమైన పనిలో ఉన్నప్పుడు"</string>
     <string name="zen_mode_default_weeknights_name" msgid="7902108149994062847">"వారపు రోజుల్లో రాత్రి"</string>
     <string name="zen_mode_default_weekends_name" msgid="4707200272709377930">"వారాంతం"</string>
@@ -2129,7 +2129,7 @@
     <string name="volume_dialog_ringer_guidance_vibrate" msgid="2055927873175228519">"కాల్స్‌ మరియు నోటిఫికేషన్‌లు వైబ్రేట్ అవుతాయి"</string>
     <string name="volume_dialog_ringer_guidance_silent" msgid="1011246774949993783">"కాల్స్‌ మరియు నోటిఫికేషన్‌లు మ్యూట్ చేయబడతాయి"</string>
     <string name="notification_channel_system_changes" msgid="2462010596920209678">"సిస్టమ్ మార్పులు"</string>
-    <string name="notification_channel_do_not_disturb" msgid="7832584281883687653">"అంతరాయం కలిగించవద్దు"</string>
+    <string name="notification_channel_do_not_disturb" msgid="7832584281883687653">"డిస్టర్బ్ చేయవద్దు"</string>
     <string name="zen_upgrade_notification_visd_title" msgid="2001148984371968620">"కొత్తది: అంతరాయం కలిగించవద్దు నోటిఫికేషన్‌లను దాస్తోంది"</string>
     <string name="zen_upgrade_notification_visd_content" msgid="3683314609114134946">"మరింత తెలుసుకోవడానికి మరియు మార్చడానికి నొక్కండి."</string>
     <string name="zen_upgrade_notification_title" msgid="8198167698095298717">"అంతరాయం కలిగించవద్దు మార్చబడింది"</string>
@@ -2357,7 +2357,7 @@
     <string name="turn_on_magnification_settings_action" msgid="8521433346684847700">"సెట్టింగ్‌లలో ఆన్ చేయండి"</string>
     <string name="dismiss_action" msgid="1728820550388704784">"విస్మరించు"</string>
     <string name="sensor_privacy_start_use_mic_notification_content_title" msgid="2420858361276370367">"పరికరం మైక్రోఫోన్‌ను అన్‌బ్లాక్ చేయండి"</string>
-    <string name="sensor_privacy_start_use_camera_notification_content_title" msgid="7287720213963466672">"పరికరంలోని కెమెరాను అన్‌బ్లాక్ చేయండి"</string>
+    <string name="sensor_privacy_start_use_camera_notification_content_title" msgid="7287720213963466672">"డివైజ్‌లోని కెమెరాను అన్‌బ్లాక్ చేయండి"</string>
     <string name="sensor_privacy_start_use_notification_content_text" msgid="7595608891015777346">"&lt;b&gt;<xliff:g id="APP">%s</xliff:g>&lt;/b&gt; యాప్, ఇతర యాప్‌లు, సర్వీస్‌ల కోసం"</string>
     <string name="sensor_privacy_start_use_dialog_turn_on_button" msgid="7089318886628390827">"అన్‌బ్లాక్ చేయండి"</string>
     <string name="sensor_privacy_notification_channel_label" msgid="936036783155261349">"సెన్సార్ గోప్యత"</string>

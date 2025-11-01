@@ -56,6 +56,7 @@ public interface PackageStateInternal extends PackageState {
     // TODO: Remove this in favor of boolean APIs
     int getFlags();
     int getPrivateFlags();
+    int getPrivateFlagsExt();
 
     @NonNull
     SparseArray<? extends PackageUserStateInternal> getUserStates();

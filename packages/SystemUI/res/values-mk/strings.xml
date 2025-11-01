@@ -59,7 +59,7 @@
     <string name="hdmi_cec_set_menu_language_description" msgid="8176716678074126619">"Побарана е промена на системскиот јазик од друг уред"</string>
     <string name="hdmi_cec_set_menu_language_accept" msgid="2513689457281009578">"Промени го јазикот"</string>
     <string name="hdmi_cec_set_menu_language_decline" msgid="7650721096558646011">"Зачувај го тековниот јазик"</string>
-    <string name="share_wifi_button_text" msgid="1285273973812029240">"Сподели Wi‑Fi"</string>
+    <string name="share_wifi_button_text" msgid="1285273973812029240">"Споделете Wi‑Fi"</string>
     <string name="wifi_debugging_title" msgid="7300007687492186076">"Да се дозволи безжично отстранување грешки на мрежава?"</string>
     <string name="wifi_debugging_message" msgid="5461204211731802995">"Име на мрежата (SSID)\n<xliff:g id="SSID_0">%1$s</xliff:g>\n\nWi‑Fi адреса (BSSID)\n<xliff:g id="BSSID_1">%2$s</xliff:g>"</string>
     <string name="wifi_debugging_always" msgid="2968383799517975155">"Секогаш дозволувај на оваа мрежа"</string>
@@ -85,7 +85,7 @@
     <string name="screenshot_failed_to_save_text" msgid="7232739948999195960">"Не може да се зачува слика од екранот"</string>
     <string name="screenshot_failed_to_capture_text" msgid="7818288545874407451">"Апликацијата или вашата организација не дозволува снимање слики од екранот"</string>
     <string name="screenshot_blocked_by_admin" msgid="5486757604822795797">"Зачувувањето слики од екранот е блокирано од IT-администраторот"</string>
-    <string name="screenshot_edit_label" msgid="8754981973544133050">"Измени"</string>
+    <string name="screenshot_edit_label" msgid="8754981973544133050">"Изменете"</string>
     <string name="screenshot_edit_description" msgid="3333092254706788906">"Изменете ја сликата од екранот"</string>
     <string name="screenshot_share_label" msgid="1653061117238861559">"Сподели"</string>
     <string name="screenshot_share_description" msgid="2861628935812656612">"Споделете слика од екранот"</string>
@@ -906,7 +906,7 @@
     <string name="drag_to_rearrange_tiles" msgid="2143204300089638620">"Задржете и влечете за да ги преуредите плочките"</string>
     <string name="drag_to_remove_tiles" msgid="4682194717573850385">"Повлечете тука за да се отстрани"</string>
     <string name="drag_to_remove_disabled" msgid="933046987838658850">"Потребни ви се најмалку <xliff:g id="MIN_NUM_TILES">%1$d</xliff:g> плочки"</string>
-    <string name="qs_edit" msgid="5583565172803472437">"Измени"</string>
+    <string name="qs_edit" msgid="5583565172803472437">"Изменете"</string>
     <string name="tuner_time" msgid="2450785840990529997">"Време"</string>
   <string-array name="clock_options">
     <item msgid="3986445361435142273">"Прикажи часови, минути и секунди"</item>
@@ -1079,7 +1079,7 @@
     <string name="accessibility_floating_button_action_move_out_edge_and_show" msgid="8354760891651663326">"Премести над работ и прикажи"</string>
     <string name="accessibility_floating_button_action_remove_menu" msgid="6730432848162552135">"Отстрани"</string>
     <string name="accessibility_floating_button_action_double_tap_to_toggle" msgid="7976492639670692037">"вклучување/исклучување"</string>
-    <string name="accessibility_floating_button_action_edit" msgid="1688227814600463987">"Измени"</string>
+    <string name="accessibility_floating_button_action_edit" msgid="1688227814600463987">"Изменете"</string>
     <string name="quick_controls_title" msgid="6839108006171302273">"Контроли за уредите"</string>
     <string name="controls_providers_title" msgid="6879775889857085056">"Изберете апликација за да додадете контроли"</string>
     <string name="controls_number_of_favorites" msgid="4481806788981836355">"{count,plural, =1{Додадена е # контрола.}one{Додадени се # контрола.}other{Додадени се # контроли.}}"</string>
@@ -1287,7 +1287,7 @@
     <string name="clipboard_editor" msgid="2971197550401892843">"Уредувач на привремена меморија"</string>
     <string name="clipboard_overlay_window_name" msgid="6450043652167357664">"Привремена меморија"</string>
     <string name="clipboard_image_preview" msgid="2156475174343538128">"Преглед на сликата"</string>
-    <string name="clipboard_edit" msgid="4500155216174011640">"измени"</string>
+    <string name="clipboard_edit" msgid="4500155216174011640">"изменете"</string>
     <string name="add" msgid="81036585205287996">"Додај"</string>
     <string name="manage_users" msgid="1823875311934643849">"Управувајте со корисниците"</string>
     <string name="drag_split_not_supported" msgid="7173481676120546121">"Известувањево не поддржува влечење на поделен екран"</string>

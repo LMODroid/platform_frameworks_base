@@ -321,7 +321,7 @@
     <string name="permgroupdesc_contacts" msgid="9163927941244182567">"আপনার পরিচিতিগুলিতে অ্যাক্সেস"</string>
     <string name="permgrouplab_location" msgid="1858277002233964394">"লোকেশন"</string>
     <string name="permgroupdesc_location" msgid="1995955142118450685">"এই ডিভাইসের লোকেশন অ্যাক্সেস"</string>
-    <string name="permgrouplab_calendar" msgid="6426860926123033230">"Calendar"</string>
+    <string name="permgrouplab_calendar" msgid="6426860926123033230">"ক্যালেন্ডার"</string>
     <string name="permgroupdesc_calendar" msgid="6762751063361489379">"আপনার ক্যালেন্ডারে অ্যাক্সেস"</string>
     <string name="permgrouplab_sms" msgid="795737735126084874">"SMS"</string>
     <string name="permgroupdesc_sms" msgid="5726462398070064542">"এসএমএসগুলি পাঠাতে এবং দেখতে"</string>
@@ -690,7 +690,7 @@
     <string name="fingerprint_app_setting_name" msgid="4253767877095495844">"আঙ্গুলের ছাপ ব্যবহার করুন"</string>
     <string name="fingerprint_or_screen_lock_app_setting_name" msgid="3501743523487644907">"আঙ্গুলের ছাপ অথবা স্ক্রিন লক ব্যবহার করুন"</string>
     <string name="fingerprint_dialog_default_subtitle" msgid="3879832845486835905">"চালিয়ে যেতে আঙ্গুলের ছাপ ব্যবহার করুন"</string>
-    <string name="fingerprint_or_screen_lock_dialog_default_subtitle" msgid="5195808203117992200">"চালিয়ে যেতে আপনার আঙুলের ছাপ বা স্ক্রিন লক ব্য়বহার করুন"</string>
+    <string name="fingerprint_or_screen_lock_dialog_default_subtitle" msgid="5195808203117992200">"চালিয়ে যেতে আপনার আঙুলের ছাপ বা স্ক্রিন লক ব্যবহার করুন"</string>
   <string-array name="fingerprint_error_vendor">
   </string-array>
     <string name="fingerprint_error_vendor_unknown" msgid="4170002184907291065">"কোনও সমস্যা হয়েছে। আবার করে দেখুন।"</string>
@@ -1002,7 +1002,7 @@
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"সঠিক!"</string>
     <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"আবার চেষ্টা করুন"</string>
     <string name="lockscreen_password_wrong" msgid="8605355913868947490">"আবার চেষ্টা করুন"</string>
-    <string name="lockscreen_storage_locked" msgid="634993789186443380">"সমস্ত বৈশিষ্ট্য এবং ডেটার জন্য আনলক করুন"</string>
+    <string name="lockscreen_storage_locked" msgid="634993789186443380">"সব ফিচার এবং ডেটার জন্য আনলক করুন"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"ফেস আনলক ফিচারের সাহায্যে আনলকের চেষ্টা সর্বোচ্চ সীমা পেরিয়ে গেছে"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"কোনও সিম নেই"</string>
     <string name="lockscreen_missing_sim_message" product="tablet" msgid="3986843848305639161">"ট্যাবলেটে কোনও সিম নেই।"</string>
@@ -1202,7 +1202,7 @@
     <string name="app_running_notification_title" msgid="8985999749231486569">"<xliff:g id="APP_NAME">%1$s</xliff:g> চলছে"</string>
     <string name="app_running_notification_text" msgid="5120815883400228566">"আরও তথ্যের জন্য বা অ্যাপ্লিকেশানটি বন্ধ করতে আলতো চাপুন।"</string>
     <string name="ok" msgid="2646370155170753815">"ঠিক আছে"</string>
-    <string name="cancel" msgid="6908697720451760115">"বাতিল করুন"</string>
+    <string name="cancel" msgid="6908697720451760115">"ক্যানসেল করুন"</string>
     <string name="yes" msgid="9069828999585032361">"ঠিক আছে"</string>
     <string name="no" msgid="5122037903299899715">"বাতিল করুন"</string>
     <string name="dialog_alert_title" msgid="651856561974090712">"খেয়াল করুন"</string>

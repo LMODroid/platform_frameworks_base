@@ -197,7 +197,7 @@
     <string name="launch_defaults_none" msgid="8049374306261262709">"Nu este configurată nicio valoare prestabilită"</string>
     <string name="tts_settings" msgid="8130616705989351312">"Setări redare vocală a textului"</string>
     <string name="tts_settings_title" msgid="7602210956640483039">"Redare vocală a textului"</string>
-    <string name="tts_default_rate_title" msgid="3964187817364304022">"Ritmul vorbirii"</string>
+    <string name="tts_default_rate_title" msgid="3964187817364304022">"Viteza vorbirii"</string>
     <string name="tts_default_rate_summary" msgid="3781937042151716987">"Viteza cu care este vorbit textul"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"Înălțime"</string>
     <string name="tts_default_pitch_summary" msgid="9132719475281551884">"Afectează tonalitatea vorbirii sintetizate"</string>
@@ -292,7 +292,7 @@
     <string name="mock_location_app_set" msgid="4706722469342913843">"Aplicația pentru locația de testare: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="debug_networking_category" msgid="6829757985772659599">"Conectare la rețele"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"Certificare Ecran wireless"</string>
-    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Înregistrare prin Wi-Fi de volume mari de date"</string>
+    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Înregistrare detaliată prin Wi-Fi"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Limitare căutare de rețele Wi-Fi"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Randomizarea adresei MAC nepersistente pentru Wi-Fi"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"Date mobile permanent active"</string>
@@ -500,8 +500,8 @@
     <string name="power_charging_limited" msgid="4144004473976005214">"<xliff:g id="LEVEL">%1$s</xliff:g> – Încărcarea s-a întrerupt pentru a proteja bateria"</string>
     <string name="power_charging_future_paused" msgid="1809543660923642799">"<xliff:g id="LEVEL">%1$s</xliff:g> – Se încarcă"</string>
     <string name="power_fast_charging_duration_v2" msgid="3797735998640359490">"<xliff:g id="LEVEL">%1$s</xliff:g> - <xliff:g id="STATUS">%2$s</xliff:g> - Timp rămas <xliff:g id="TIME">%3$s</xliff:g>"</string>
-    <string name="power_charging_duration_v2" msgid="2938998284074003248">"<xliff:g id="LEVEL">%1$s</xliff:g> - Complet încărcat în <xliff:g id="TIME">%2$s</xliff:g>"</string>
-    <string name="power_remaining_charging_duration_only_v2" msgid="5358176435722950193">"Complet încărcat în <xliff:g id="TIME">%1$s</xliff:g>"</string>
+    <string name="power_charging_duration_v2" msgid="2938998284074003248">"<xliff:g id="LEVEL">%1$s</xliff:g> - Complet încărcat la <xliff:g id="TIME">%2$s</xliff:g>"</string>
+    <string name="power_remaining_charging_duration_only_v2" msgid="5358176435722950193">"Complet încărcat la <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="power_remaining_fast_charging_duration_only_v2" msgid="6270950195810579563">"Încărcare completă la <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="battery_info_status_unknown" msgid="268625384868401114">"Necunoscut"</string>
     <string name="battery_info_status_charging" msgid="4279958015430387405">"Se încarcă"</string>

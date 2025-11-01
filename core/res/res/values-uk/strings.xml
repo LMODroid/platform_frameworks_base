@@ -1495,8 +1495,8 @@
     <string name="ext_media_status_formatting" msgid="774148701503179906">"Форматування…"</string>
     <string name="ext_media_status_missing" msgid="6520746443048867314">"Не вставлено"</string>
     <string name="activity_list_empty" msgid="4219430010716034252">"Відповідні дії не знайдено."</string>
-    <string name="permlab_route_media_output" msgid="8048124531439513118">"вибирати маршрути виводу медіа-вмісту"</string>
-    <string name="permdesc_route_media_output" msgid="1759683269387729675">"Дозволяє програмі скеровувати вивід медіа-даних на інші зовнішні пристрої."</string>
+    <string name="permlab_route_media_output" msgid="8048124531439513118">"перенаправляти вивід мультимедіа"</string>
+    <string name="permdesc_route_media_output" msgid="1759683269387729675">"Додаток зможе перенаправляти мультимедіа на інші зовнішні пристрої."</string>
     <string name="permlab_readInstallSessions" msgid="7279049337895583621">"отримувати дані про сеанси встановлення"</string>
     <string name="permdesc_readInstallSessions" msgid="4012608316610763473">"Дозволяє додатку читати дані сеансів встановлення. Додаток може бачити деталі про активні встановлення пакетів."</string>
     <string name="permlab_requestInstallPackages" msgid="7600020863445351154">"запитувати дані про пакети встановлення"</string>

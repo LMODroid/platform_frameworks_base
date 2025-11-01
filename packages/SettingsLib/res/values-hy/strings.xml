@@ -306,7 +306,7 @@
     <string name="bluetooth_select_map_version_dialog_title" msgid="7085934373987428460">"Ընտրել Bluetooth MAP-ի տարբերակը"</string>
     <string name="bluetooth_select_a2dp_codec_type" msgid="952001408455456494">"Bluetooth աուդիո կոդեկ"</string>
     <string name="bluetooth_select_a2dp_codec_type_dialog_title" msgid="7510542404227225545">"Գործարկել Bluetooth աուդիո կոդեկը\nԸնտրություն"</string>
-    <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"Bluetooth աուդիոյի ընդհատավորման հաճախականությունը"</string>
+    <string name="bluetooth_select_a2dp_codec_sample_rate" msgid="1638623076480928191">"Bluetooth աուդիո սեմփլինգի հաճախականությունը"</string>
     <string name="bluetooth_select_a2dp_codec_sample_rate_dialog_title" msgid="5876305103137067798">"Գործարկել Bluetooth աուդիո կոդեկը\nԸնտրություն՝ ընդհատավորման հաճախականություն"</string>
     <string name="bluetooth_select_a2dp_codec_type_help_info" msgid="8647200416514412338">"Եթե տարրը մոխրագույն է, նշանակում է, որ չի աջակցվում հեռախոսի համ ականջակալի կողմից։"</string>
     <string name="bluetooth_select_a2dp_codec_bits_per_sample" msgid="6253965294594390806">"Bluetooth աուդիո, բիթ / նմուշ"</string>
@@ -352,7 +352,7 @@
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"Ստուգել հավելվածները USB-ի նկատմամբ"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"Ստուգել հավելվածների անվտանգությունը ADB/ADT-ի միջոցով տեղադրված լինելու դեպքում։"</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Bluetooth սարքերը կցուցադրվեն առանց անունների (միայն MAC հասցեները)"</string>
-    <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Կասեցնում է Bluetooth-ի ձայնի բացարձակ ուժգնության գործառույթը՝ հեռավոր սարքերի հետ ձայնի ուժգնությանը վերաբերող խնդիրներ ունենալու դեպքում (օրինակ, երբ ձայնի ուժգնությունն անընդունելի է կամ դրա կառավարումը հնարավոր չէ):"</string>
+    <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Կասեցնում է Bluetooth-ի ձայնի բացարձակ ուժգնության գործառույթը՝ հեռավոր սարքերի հետ ձայնի ուժգնությանը վերաբերող խնդիրներ ունենալու դեպքում (օրինակ՝ երբ ձայնի ուժգնությունն անընդունելի է, կամ դրա կառավարումը հնարավոր չէ):"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"Միացնել Bluetooth Gabeldorsche գործառույթի զտիչը"</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"Միացնում է «Տվյալների լավացված փոխանակում» գործառույթը։"</string>
     <string name="enable_terminal_title" msgid="3834790541986303654">"Տեղային տերմինալ"</string>
@@ -373,7 +373,7 @@
     <string name="media_category" msgid="8122076702526144053">"Մեդիա"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Մշտադիտարկում"</string>
     <string name="strict_mode" msgid="889864762140862437">"Խիստ ռեժիմն ակտիվացված է"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"Լուսավորել էկրանը` ծրագրի գլխավոր շղթայի վրա երկար աշխատելիս"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"Լուսավորել էկրանը՝ ծրագրի գլխավոր շղթայի վրա երկար աշխատելիս"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Նշորդի տեղադրությունը"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"Էկրանի վերադրումը ցույց է տալիս ընթացիկ հպման տվյալները"</string>
     <string name="show_touches" msgid="8437666942161289025">"Ցույց տալ հպումները"</string>
@@ -393,8 +393,8 @@
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Միշտ օգտագործել GPU-ն՝ էկրանի կազմման համար"</string>
     <string name="simulate_color_space" msgid="1206503300335835151">"Նմանակել գունատարածքը"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"Ակտիվացնել OpenGL հետքերը"</string>
-    <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Անջատել USB աուդիո երթուղումը"</string>
-    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Անջատել ավտոմատ երթուղումը դեպի USB աուդիո սարքեր"</string>
+    <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Անջատել USB աուդիո երթուղավորումը"</string>
+    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Անջատել ավտոմատ երթուղավորումը դեպի USB աուդիո սարքեր"</string>
     <string name="debug_layout" msgid="1659216803043339741">"Ցույց տալ տարրերի չափերը"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"Ցույց տալ կտրվածքի սահմանները, լուսանցքները և այլն"</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Ուղղությունը դարձնել RTL"</string>
@@ -419,7 +419,7 @@
     <string name="window_animation_scale_title" msgid="5236381298376812508">"Պատուհանի շարժապատկեր"</string>
     <string name="transition_animation_scale_title" msgid="1278477690695439337">"Անցումների շարժապատկեր"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Շարժանկարի տևողության սանդղակ"</string>
-    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Կրկնաստեղծել երկրորդական էկրան"</string>
+    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Երկրորդական էկրանների նմանակում"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Հավելվածներ"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Չպահել գործողությունները"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Օգտատիրոջ դուրս գալուց հետո հեռացնել բոլոր գործողությունները"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Օգտագործել համակարգի լեզուները"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"Չստացվեց ցույց տալ <xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g>-ի տվյալները"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"Այս ներմուծման եղանակը հնարավորություն է տալիս հավաքել ձեր մուտքագրած ողջ տեքստը՝ ընդգրկելով անձնական տեղեկություններ, ինչպես գաղտնաբառն ու բանկային քարտի համարները: Սկզբնաղբյուրը <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> հավելվածն է: Կիրառե՞լ այս եղանակը:"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Ուշադրություն. Վերաբեռնումից հետո այս հավելվածը չի գործարկվի մինչև չապակողպեք հեռախոսը"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Ուշադրություն. վերաբեռնումից հետո այս հավելվածը չի գործարկվի, մինչև չապակողպեք սարքը"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"IMS ծառայության գրանցման կարգավիճակը"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"Գրանցված է"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"Գրանցված չէ"</string>
@@ -588,7 +588,7 @@
     <string name="media_transfer_internal_mic" msgid="797333824290228595">"Խոսափող (ներքին)"</string>
     <string name="media_transfer_dock_speaker_device_name" msgid="2856219597113881950">"Դոկ-կայանով բարձրախոս"</string>
     <string name="media_transfer_external_device_name" msgid="2588672258721846418">"Արտաքին սարք"</string>
-    <string name="media_transfer_default_device_name" msgid="4315604017399871828">"Միացված սարք"</string>
+    <string name="media_transfer_default_device_name" msgid="4315604017399871828">"Կապակցված սարք"</string>
     <string name="media_transfer_this_phone" msgid="7194341457812151531">"Այս հեռախոսը"</string>
     <string name="media_output_status_unknown_error" msgid="5098565887497902222">"Հնարավոր չէ նվագարկել այս սարքում"</string>
     <string name="media_output_status_require_premium" msgid="8411255800047014822">"Փոխելու համար անցեք հաշվի պրեմիում տարբերակին"</string>
@@ -644,7 +644,7 @@
     <string name="profile_info_settings_title" msgid="105699672534365099">"Պրոֆիլի տեղեկություններ"</string>
     <string name="user_need_lock_message" msgid="4311424336209509301">"Նախքան դուք կկարողանաք ստեղծել սահմանափակ պրոֆիլ, դուք պետք է կարգավորեք էկրանի կողպումը` ձեր ծրագրերը և անձնական տվյալները պաշտպանելու համար:"</string>
     <string name="user_set_lock_button" msgid="1427128184982594856">"Կարգավորել կողպումը"</string>
-    <string name="user_switch_to_user" msgid="6975428297154968543">"Անցնել <xliff:g id="USER_NAME">%s</xliff:g> պրոֆիլին"</string>
+    <string name="user_switch_to_user" msgid="6975428297154968543">"Մուտք գործել որպես <xliff:g id="USER_NAME">%s</xliff:g>"</string>
     <string name="creating_new_user_dialog_message" msgid="7232880257538970375">"Ստեղծվում է օգտատիրոջ նոր պրոֆիլ…"</string>
     <string name="creating_new_guest_dialog_message" msgid="1114905602181350690">"Նոր հյուրի ստեղծում…"</string>
     <string name="add_user_failed" msgid="4809887794313944872">"Չհաջողվեց ստեղծել նոր օգտատեր"</string>
@@ -667,7 +667,7 @@
     <string name="grant_admin" msgid="4323199171790522574">"Այո, տրամադրել ադմինիստրատորի իրավունքներ"</string>
     <string name="not_grant_admin" msgid="3557849576157702485">"Ոչ, չտրամադրել ադմինիստրատորի իրավունքներ"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Դուրս գալ"</string>
-    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Պահե՞լ հյուրի ռեժիմի պատմությունը"</string>
+    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Պահե՞լ աշխատաշրջանի պատմությունը"</string>
     <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Պահեք ընթացիկ աշխատաշրջանի պատմությունը կամ ջնջեք հավելվածներն ու տվյալները"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Ջնջել"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Պահել"</string>

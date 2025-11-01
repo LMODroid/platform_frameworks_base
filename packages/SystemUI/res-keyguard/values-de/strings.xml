@@ -55,7 +55,7 @@
     <string name="kg_wrong_password" msgid="4143127991071670512">"Falsches Passwort"</string>
     <string name="kg_wrong_password_try_again" msgid="6602878676125765920">"Passwort ist falsch. Versuche es noch einmal."</string>
     <string name="kg_wrong_pin" msgid="4160978845968732624">"Falsche PIN"</string>
-    <string name="kg_wrong_pin_try_again" msgid="3129729383303430190">"PIN ist falsch. Versuche es noch einmal.."</string>
+    <string name="kg_wrong_pin_try_again" msgid="3129729383303430190">"PIN ist falsch. Versuche es noch einmal."</string>
     <string name="kg_wrong_input_try_fp_suggestion" msgid="3143861542242024833">"Oder Gerät per Fingerabdruck entsperren"</string>
     <string name="kg_fp_not_recognized" msgid="5183108260932029241">"Fingerabdruck nicht erkannt"</string>
     <string name="bouncer_face_not_recognized" msgid="1666128054475597485">"Gesicht nicht erkannt"</string>

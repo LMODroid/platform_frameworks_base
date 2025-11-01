@@ -253,7 +253,7 @@
     <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Вмикати режим налагодження, коли пристрій підключено до мережі Wi-Fi"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"Помилка"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Налагодження через Wi-Fi"</string>
-    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Щоб переглядати та використовувати доступні пристрої, увімкніть налагодження через Wi-Fi"</string>
+    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Щоб переглядати й використовувати доступні пристрої, увімкніть налагодження через Wi-Fi"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Підключати пристрій за допомогою QR-коду"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Підключати нові пристрої за допомогою сканера QR-кодів"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Підключати пристрій за допомогою коду підключення"</string>
@@ -272,7 +272,7 @@
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Підключіть пристрій через Wi‑Fi за допомогою QR-коду"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Підключення пристрою…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Не вдалося підключитися до пристрою. Надано неправильний QR-код або пристрій не підключено до тієї ж мережі."</string>
-    <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"IP-адреса та порт"</string>
+    <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"IP-адреса й порт"</string>
     <string name="adb_wireless_qrcode_pairing_title" msgid="1906409667944674707">"Відскануйте QR-код"</string>
     <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Підключіть пристрій через Wi‑Fi за допомогою QR-коду"</string>
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"Підключіть пристрій до мережі Wi-Fi"</string>
@@ -386,7 +386,7 @@
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Підсвічувати вікна повністю під час оновлення"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Показувати оновлення областей"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Підсвічувати оновлені області у вікнах"</string>
-    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Показ. апаратні оновлення"</string>
+    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Показувати апаратні оновлення"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Виділяти апаратні рівні зеленим під час оновлення"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Налагодити накладання GPU"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Вимк. апаратн. накладання"</string>
@@ -402,8 +402,8 @@
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Прозора панель навігації"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Зробити колір фону панелі навігації прозорим за умовчанням"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Дозволити розмиття вікон"</string>
-    <string name="force_msaa" msgid="4081288296137775550">"Примус. запустити 4x MSAA"</string>
-    <string name="force_msaa_summary" msgid="9070437493586769500">"Увімкнути 4x MSAA в програмах OpenGL ES 2.0"</string>
+    <string name="force_msaa" msgid="4081288296137775550">"Примусово запустити 4x MSAA"</string>
+    <string name="force_msaa_summary" msgid="9070437493586769500">"Увімкнути 4x MSAA в додатках OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Налагодити непрямокутну обрізку"</string>
     <string name="track_frame_time" msgid="522674651937771106">"Обробка HWUI за профілем"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Увімкнути шари налагодження ГП"</string>

@@ -161,7 +161,7 @@
     <string name="bluetooth_pairing_decline" msgid="6483118841204885890">"Batal"</string>
     <string name="bluetooth_pairing_will_share_phonebook" msgid="3064334458659165176">"Berpasangan memberi anda akses kepada kenalan dan sejarah panggilan apabila disambungkan."</string>
     <string name="bluetooth_pairing_error_message" msgid="6626399020672335565">"Tidak dapat berpasangan dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
-    <string name="bluetooth_pairing_pin_error_message" msgid="264422127613704940">"Tidak dapat berganding dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g> kerana PIN atau kunci laluan yang salah."</string>
+    <string name="bluetooth_pairing_pin_error_message" msgid="264422127613704940">"Tidak dapat berganding dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g> kerana PIN atau kunci laluan salah."</string>
     <string name="bluetooth_pairing_device_down_error_message" msgid="2554424863101358857">"Tidak boleh berkomunikasi dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
     <string name="bluetooth_pairing_rejected_error_message" msgid="5943444352777314442">"Pasangan ditolak oleh <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
     <string name="bluetooth_talkback_computer" msgid="3736623135703893773">"Komputer"</string>
@@ -198,7 +198,7 @@
     <string name="tts_settings" msgid="8130616705989351312">"Tetapan teks kepada pertuturan"</string>
     <string name="tts_settings_title" msgid="7602210956640483039">"Output teks kepada pertuturan"</string>
     <string name="tts_default_rate_title" msgid="3964187817364304022">"Kadar pertuturan"</string>
-    <string name="tts_default_rate_summary" msgid="3781937042151716987">"Kelajuan pertuturan teks"</string>
+    <string name="tts_default_rate_summary" msgid="3781937042151716987">"Kelajuan teks dituturkan"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"Pic"</string>
     <string name="tts_default_pitch_summary" msgid="9132719475281551884">"Mempengaruhi nada pertuturan disintesiskan"</string>
     <string name="tts_default_lang_title" msgid="4698933575028098940">"Bahasa"</string>
@@ -292,7 +292,7 @@
     <string name="mock_location_app_set" msgid="4706722469342913843">"Apl lokasi olokan: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="debug_networking_category" msgid="6829757985772659599">"Perangkaian"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"Pensijilan paparan wayarles"</string>
-    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Dayakan Pengelogan Berjela-jela Wi-Fi"</string>
+    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Dayakan Pengelogan Berjela Wi-Fi"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Pendikitan pengimbasan Wi-Fi"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Perawakan MAC tidak berterusan Wi‑Fi"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"Data mudah alih sentiasa aktif"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Benarkan lokasi olokan"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Benarkan lokasi olokan"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Dayakan pemeriksaan atribut paparan"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Pastikan data mudah alih sentiasa aktif, walaupun Wi-Fi aktif (untuk penukaran rangkaian yang pantas)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Sentiasa aktifkan data mudah alih, walaupun Wi-Fi aktif (untuk penukaran rangkaian yang pantas)."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Gunakan pecutan perkakasan penambatan jika tersedia"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"Benarkan penyahpepijatan USB?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"Penyahpepijatan USB adalah dimaksudkan untuk tujuan pembangunan sahaja. Gunakannya untuk menyalin data antara komputer dan peranti anda, memasang aplikasi pada peranti anda tanpa pemberitahuan, dan membaca data log."</string>
@@ -359,14 +359,14 @@
     <string name="enable_terminal_summary" msgid="2481074834856064500">"Dayakan apl terminal yang menawarkan akses shell tempatan"</string>
     <string name="hdcp_checking_title" msgid="3155692785074095986">"Penyemakan HDCP"</string>
     <string name="hdcp_checking_dialog_title" msgid="7691060297616217781">"Ttpkn tngkh laku smk HDCP"</string>
-    <string name="debug_debugging_category" msgid="535341063709248842">"Menyahpepijat"</string>
+    <string name="debug_debugging_category" msgid="535341063709248842">"Penyahpepijatan"</string>
     <string name="debug_app" msgid="8903350241392391766">"Pilih apl penyahpepijat"</string>
     <string name="debug_app_not_set" msgid="1934083001283807188">"Tiada aplikasi penyahpepijat yang ditetapkan"</string>
     <string name="debug_app_set" msgid="6599535090477753651">"Menyahpepijat aplikasi: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="select_application" msgid="2543228890535466325">"Pilih aplikasi"</string>
     <string name="no_application" msgid="9038334538870247690">"Tiada apa-apa"</string>
     <string name="wait_for_debugger" msgid="7461199843335409809">"Tunggu penyahpepijat"</string>
-    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Menanti penyahpepijat sebelum aplikasi melaksana"</string>
+    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Aplikasi nyahpepijat menanti penyahpepijat dilampirkan sebelum melaksana"</string>
     <string name="debug_input_category" msgid="7349460906970849771">"Input"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"Lukisan"</string>
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Pemaparan dipercepat perkakasan"</string>
@@ -375,19 +375,19 @@
     <string name="strict_mode" msgid="889864762140862437">"Mod tegas didayakan"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Kelip skrin apabila apl beroperasi lama pada urutan utama"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Lokasi penuding"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"Tindihan skrin menunjukkan data sentuh semasa"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"Tindanan skrin menunjukkan data sentuh semasa"</string>
     <string name="show_touches" msgid="8437666942161289025">"Tunjukkan ketikan"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Tunjukkan maklum balas visual untuk ketikan"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"Tunjukkan tekanan kekunci"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"Tunjukkan maklum balas visual untuk tekanan kekunci fizikal"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Tunjukkan input pad sentuh"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Tindanan skrin memaparkan data input pad sentuh dan gerak isyarat yang dikenali"</string>
-    <string name="show_screen_updates" msgid="2078782895825535494">"Tunjuk kemaskinian permukaan"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Denyar permukaan tetingkap apabila dikemas kini"</string>
+    <string name="show_screen_updates" msgid="2078782895825535494">"Tunjukkan kemaskinian permukaan"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Kerlip permukaan tetingkap apabila dikemaskinikan"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Tunjukkan kemaskinian paparan"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Denyar paparan dalam tetingkap apabila dilukis"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Kerlip paparan dalam tetingkap apabila dilukis"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Tunjukkan kemaskinian perkakasan"</string>
-    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Denyar hijau lapisan perkakasan yang dikemaskinikan"</string>
+    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Kerlip hijau lapisan perkakasan yang dikemaskinikan"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Nyahpepijat lebih lukis GPU"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Lumpuhkan tindihan HW"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Sentiasa gunakan GPU untuk komposit skrin"</string>
@@ -400,7 +400,7 @@
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Paksa arah reka letak RTL"</string>
     <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Paksa arah reka letak skrin RTL bagi semua tempat peristiwa"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Bar navigasi lut sinar"</string>
-    <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Tukarkan warna latar bar navigasi kepada lut sinar secara lalai"</string>
+    <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Buat warna latar bar navigasi menjadi lut sinar secara lalai"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Benarkan kabur tahap tetingkap"</string>
     <string name="force_msaa" msgid="4081288296137775550">"Paksa 4x MSAA"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Dayakan 4x MSAA dalam apl OpenGL ES 2.0"</string>
@@ -633,7 +633,7 @@
     <string name="user_grant_admin_message" msgid="1673791931033486709">"Pentadbir mempunyai keistimewaan khas yang tiada pada pengguna lain. Pentadbir boleh mengurus semua pengguna, mengemaskinikan atau menetapkan semula peranti ini, mengubah suai tetapan, melihat semua apl yang telah dipasang dan memberikan atau membatalkan keistimewaan pentadbir untuk pengguna lain."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Jadikan pentadbir"</string>
     <string name="user_setup_dialog_title" msgid="8037342066381939995">"Sediakan pengguna sekarang?"</string>
-    <string name="user_setup_dialog_message" msgid="269931619868102841">"Pastikan individu itu bersedia untuk mengambil peranti dan menyediakan ruangannya"</string>
+    <string name="user_setup_dialog_message" msgid="269931619868102841">"Pastikan individu itu bersedia untuk mengambil peranti dan menyediakan ruangnya"</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"Sediakan profil sekarang?"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"Sediakan sekarang"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"Bukan sekarang"</string>
@@ -644,7 +644,7 @@
     <string name="profile_info_settings_title" msgid="105699672534365099">"Maklumat profil"</string>
     <string name="user_need_lock_message" msgid="4311424336209509301">"Sebelum anda boleh membuat profil yang terhad, anda perlu menyediakan kunci skrin untuk melindungi apl dan data peribadi anda."</string>
     <string name="user_set_lock_button" msgid="1427128184982594856">"Tetapkan kunci"</string>
-    <string name="user_switch_to_user" msgid="6975428297154968543">"Tukar kepada <xliff:g id="USER_NAME">%s</xliff:g>"</string>
+    <string name="user_switch_to_user" msgid="6975428297154968543">"Beralih kepada <xliff:g id="USER_NAME">%s</xliff:g>"</string>
     <string name="creating_new_user_dialog_message" msgid="7232880257538970375">"Membuat pengguna baharu…"</string>
     <string name="creating_new_guest_dialog_message" msgid="1114905602181350690">"Membuat tetamu baharu…"</string>
     <string name="add_user_failed" msgid="4809887794313944872">"Gagal membuat pengguna baharu"</string>
@@ -685,7 +685,7 @@
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"Lalai peranti"</string>
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"Dilumpuhkan"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"Didayakan"</string>
-    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"Peranti anda mesti dibut semula supaya perubahan ini berlaku. But semula sekarang atau batalkan."</string>
+    <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"Peranti anda mesti dibut semula supaya perubahan ini dilaksanakan. But semula sekarang atau batalkan."</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"Fon kepala berwayar"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"Fon kepala"</string>
     <string name="media_transfer_usb_speaker_name" msgid="4736537022543593896">"Pembesar suara USB"</string>

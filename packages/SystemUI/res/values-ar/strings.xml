@@ -33,7 +33,7 @@
     <string name="battery_saver_dismiss_action" msgid="7199342621040014738">"لا، شكرًا"</string>
     <string name="standard_battery_saver_text" msgid="6855876746552374119">"عادي"</string>
     <string name="extreme_battery_saver_text" msgid="8455810156739865335">"التوفير العالي"</string>
-    <string name="status_bar_settings_auto_rotation" msgid="8329080442278431708">"التدوير التلقائي للشاشة"</string>
+    <string name="status_bar_settings_auto_rotation" msgid="8329080442278431708">"تدوير الشاشة تلقائيًا"</string>
     <string name="usb_device_permission_prompt" msgid="4414719028369181772">"هل تريد السماح لتطبيق <xliff:g id="APPLICATION">%1$s</xliff:g> بالدخول إلى <xliff:g id="USB_DEVICE">%2$s</xliff:g>؟"</string>
     <string name="usb_device_permission_prompt_warn" msgid="2309129784984063656">"‏هل تريد السماح لتطبيق <xliff:g id="APPLICATION">%1$s</xliff:g> بالدخول إلى <xliff:g id="USB_DEVICE">%2$s</xliff:g>؟\nلم يتم منح هذا التطبيق إذن تسجيل، ولكن يمكنه تسجيل الصوت من خلال جهاز USB هذا."</string>
     <string name="usb_audio_device_permission_prompt_title" msgid="4221351137250093451">"هل تريد السماح لتطبيق \"<xliff:g id="APPLICATION">%1$s</xliff:g>\" بالوصول إلى <xliff:g id="USB_DEVICE">%2$s</xliff:g>؟"</string>
@@ -197,7 +197,7 @@
     <string name="biometric_dialog_authenticated" msgid="7337147327545272484">"مصادقة"</string>
     <string name="biometric_dialog_cancel_authentication" msgid="981316588773442637">"إلغاء المصادقة"</string>
     <string name="biometric_dialog_content_view_more_options_button" msgid="2663810393874865475">"مزيد من الخيارات"</string>
-    <string name="biometric_dialog_use_pin" msgid="8385294115283000709">"استخدام رقم تعريف شخصي"</string>
+    <string name="biometric_dialog_use_pin" msgid="8385294115283000709">"استخدام رقم التعريف الشخصي"</string>
     <string name="biometric_dialog_use_pattern" msgid="2315593393167211194">"استخدام النقش"</string>
     <string name="biometric_dialog_use_password" msgid="3445033859393474779">"استخدام كلمة المرور"</string>
     <string name="biometric_dialog_wrong_pin" msgid="1878539073972762803">"رقم تعريف شخصي خاطئ"</string>
@@ -319,10 +319,10 @@
     <string name="quick_settings_bluetooth_secondary_label_hearing_aids" msgid="5553051568867097111">"سماعات الأذن الطبية"</string>
     <string name="quick_settings_bluetooth_secondary_label_transient" msgid="3882884317600669650">"جارٍ التفعيل…"</string>
     <string name="quick_settings_rotation_unlocked_label" msgid="2359922767950346112">"التدوير التلقائي"</string>
-    <string name="accessibility_quick_settings_rotation" msgid="4800050198392260738">"التدوير التلقائي للشاشة"</string>
+    <string name="accessibility_quick_settings_rotation" msgid="4800050198392260738">"تدوير الشاشة تلقائيًا"</string>
     <string name="quick_settings_location_label" msgid="2621868789013389163">"الموقع الجغرافي"</string>
     <string name="quick_settings_screensaver_label" msgid="1495003469366524120">"شاشة الاستراحة"</string>
-    <string name="quick_settings_camera_label" msgid="5612076679385269339">"الوصول إلى الكاميرا"</string>
+    <string name="quick_settings_camera_label" msgid="5612076679385269339">"الوصول للكاميرا"</string>
     <string name="quick_settings_mic_label" msgid="8392773746295266375">"الوصول للميكروفون"</string>
     <string name="quick_settings_camera_mic_available" msgid="1453719768420394314">"متاح"</string>
     <string name="quick_settings_camera_mic_blocked" msgid="4710884905006788281">"محظور"</string>
@@ -1254,7 +1254,7 @@
     <string name="non_carrier_network_unavailable" msgid="770049357024492372">"لا تتوفّر شبكات أخرى."</string>
     <string name="all_network_unavailable" msgid="4112774339909373349">"لا تتوفّر أي شبكات."</string>
     <string name="turn_on_wifi" msgid="1308379840799281023">"Wi-Fi"</string>
-    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"انقر على إحدى الشبكات للاتصال بالإنترنت."</string>
+    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"انقر على إحدى الشبكات للاتصال بالإنترنت"</string>
     <string name="unlock_to_view_networks" msgid="5072880496312015676">"فتح القفل لعرض الشبكات"</string>
     <string name="wifi_empty_list_wifi_on" msgid="3864376632067585377">"جارٍ البحث عن شبكات…"</string>
     <string name="wifi_failed_connect_message" msgid="4161863112079000071">"تعذّر الاتصال بالشبكة."</string>
@@ -1369,7 +1369,7 @@
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"توسيع الخيارات وعرضها"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"تصغير"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"إغلاق هذا التطبيق"</string>
-    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"تم إغلاق <xliff:g id="APP_NAME">%1$s</xliff:g>."</string>
+    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"تم إغلاق \"<xliff:g id="APP_NAME">%1$s</xliff:g>\""</string>
     <string name="privacy_dialog_manage_service" msgid="8320590856621823604">"إدارة الخدمة"</string>
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"إدارة أذونات الوصول"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"قيد الاستخدام في المكالمة الهاتفية"</string>

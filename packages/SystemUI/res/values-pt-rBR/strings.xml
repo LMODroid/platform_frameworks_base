@@ -72,7 +72,7 @@
     <string name="usb_disable_contaminant_detection" msgid="3827082183595978641">"Ativar USB"</string>
     <string name="learn_more" msgid="4690632085667273811">"Saiba mais"</string>
     <string name="global_action_screenshot" msgid="2760267567509131654">"Capturar tela"</string>
-    <string name="global_action_smart_lock_disabled" msgid="6286551337177954859">"Desbloqueio extra desativado"</string>
+    <string name="global_action_smart_lock_disabled" msgid="6286551337177954859">"Desbloqueio compartilhado desativado"</string>
     <string name="remote_input_image_insertion_text" msgid="4850791636452521123">"enviou uma imagem"</string>
     <string name="screenshot_saving_title" msgid="2298349784913287333">"Salvando captura de tela..."</string>
     <string name="screenshot_saving_work_profile_title" msgid="5332829607308450880">"Salvando captura de tela no perfil de trabalho…"</string>
@@ -263,8 +263,8 @@
     <!-- no translation found for accessibility_casting (8708751252897282313) -->
     <skip />
     <string name="accessibility_desc_notification_shade" msgid="5355229129428759989">"Aba de notificações."</string>
-    <string name="accessibility_desc_quick_settings" msgid="4374766941484719179">"Configurações rápidas."</string>
-    <string name="accessibility_desc_qs_notification_shade" msgid="8327226953072700376">"Configurações rápidas e aba de notificações."</string>
+    <string name="accessibility_desc_quick_settings" msgid="4374766941484719179">"Configurações Rápidas."</string>
+    <string name="accessibility_desc_qs_notification_shade" msgid="8327226953072700376">"Configurações Rápidas e aba de notificações."</string>
     <string name="accessibility_desc_lock_screen" msgid="409034672704273634">"Tela de bloqueio"</string>
     <string name="accessibility_desc_work_lock" msgid="4355620395354680575">"Tela de bloqueio de trabalho"</string>
     <string name="accessibility_desc_close" msgid="8293708213442107755">"Fechar"</string>
@@ -696,7 +696,7 @@
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"vibrar"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"Tocando <xliff:g id="LABEL">%s</xliff:g> em"</string>
     <string name="media_output_title_without_playing" msgid="3825663683169305013">"Onde vai tocar:"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Ligando"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Dispositivo de ligações"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"Sintonizador System UI"</string>
     <string name="status_bar" msgid="4357390266055077437">"Barra de status"</string>
     <string name="demo_mode" msgid="263484519766901593">"Modo de demonstração da interface do sistema"</string>
@@ -745,7 +745,7 @@
     <string name="notification_alert_title" msgid="3656229781017543655">"Padrão"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"Automática"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"Som e vibração desativados"</string>
-    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"Nenhum som ou vibração, mas ainda aparecem na seção de conversa"</string>
+    <string name="notification_conversation_summary_low" msgid="3855696451919728790">"Não produzem som nem vibração, mas ainda aparecem na seção de conversa"</string>
     <string name="notification_channel_summary_default" msgid="777294388712200605">"Pode vibrar ou tocar com base nas configurações do dispositivo"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"Pode vibrar ou tocar com base nas configurações do dispositivo. As conversas do app <xliff:g id="APP_NAME">%1$s</xliff:g> aparecem em balões por padrão."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"Faça com que o sistema determine se a notificação resultará em som ou vibração"</string>
@@ -1263,7 +1263,7 @@
     <string name="to_switch_networks_disconnect_ethernet" msgid="6698111101156951955">"Para mudar de rede, desconecte o cabo Ethernet"</string>
     <string name="wifi_scan_notify_message" msgid="3753839537448621794">"Para melhorar a experiência no dispositivo, os apps e serviços ainda podem procurar redes Wi-Fi a qualquer momento, mesmo quando o Wi-Fi estiver desativado. Você pode mudar essa opção nas configurações de busca por Wi-Fi. "<annotation id="link">"Mudar"</annotation></string>
     <string name="turn_off_airplane_mode" msgid="8425587763226548579">"Desativar modo avião"</string>
-    <string name="qs_tile_request_dialog_text" msgid="3501359944139877694">"O app <xliff:g id="APPNAME">%1$s</xliff:g> quer adicionar o bloco a seguir às Configurações rápidas"</string>
+    <string name="qs_tile_request_dialog_text" msgid="3501359944139877694">"O app <xliff:g id="APPNAME">%1$s</xliff:g> quer adicionar o bloco a seguir às Configurações Rápidas"</string>
     <string name="qs_tile_request_dialog_add" msgid="4888460910694986304">"Adicionar bloco"</string>
     <string name="qs_tile_request_dialog_not_add" msgid="4168716573114067296">"Não adicionar bloco"</string>
     <string name="qs_user_switch_dialog_title" msgid="3045189293587781366">"Selecionar usuário"</string>

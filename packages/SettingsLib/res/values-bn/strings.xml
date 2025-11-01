@@ -197,8 +197,8 @@
     <string name="launch_defaults_none" msgid="8049374306261262709">"কোনও ডিফল্ট সেট করা নেই"</string>
     <string name="tts_settings" msgid="8130616705989351312">"পাঠ্য থেকে ভাষ্য আউটপুট সেটিংস"</string>
     <string name="tts_settings_title" msgid="7602210956640483039">"টেক্সট-টু-স্পিচ আউটপুট"</string>
-    <string name="tts_default_rate_title" msgid="3964187817364304022">"কথা বলার হার"</string>
-    <string name="tts_default_rate_summary" msgid="3781937042151716987">"যে গতিতে পাঠ্য উচ্চারিত হয়"</string>
+    <string name="tts_default_rate_title" msgid="3964187817364304022">"স্পিচ রেট"</string>
+    <string name="tts_default_rate_summary" msgid="3781937042151716987">"যে গতিতে টেক্সট উচ্চারিত হয়"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"পিচ"</string>
     <string name="tts_default_pitch_summary" msgid="9132719475281551884">"সিন্থেসাইজ করা ভাষ্যের স্বরকে প্রভাবিত করে"</string>
     <string name="tts_default_lang_title" msgid="4698933575028098940">"ভাষা"</string>
@@ -221,7 +221,7 @@
     <string name="tts_engine_settings_button" msgid="477155276199968948">"ইঞ্জিন সেটিংস লঞ্চ করুন"</string>
     <string name="tts_engine_preference_section_title" msgid="3861562305498624904">"পছন্দের ইঞ্জিন"</string>
     <string name="tts_general_section_title" msgid="8919671529502364567">"সাধারণ"</string>
-    <string name="tts_reset_speech_pitch_title" msgid="7149398585468413246">"ভাষ্য়ের শব্দ মাত্রাকে আবার সেট করুন"</string>
+    <string name="tts_reset_speech_pitch_title" msgid="7149398585468413246">"ভাষ্যের শব্দ মাত্রাকে আবার সেট করুন"</string>
     <string name="tts_reset_speech_pitch_summary" msgid="6822904157021406449">"ডিফল্ট হিসেবে যে মাত্রায় পাঠ্য উচ্চারিত হয়, সেই শব্দ মাত্রাকে আবার সেট করুন৷"</string>
   <string-array name="tts_rate_entries">
     <item msgid="4563475121751694801">"৬০%"</item>
@@ -324,7 +324,7 @@
     <string name="private_dns_mode_provider_hostname_hint" msgid="6564868953748514595">"ডিএনএস প্রদানকারীর হোস্টনেম লিখুন"</string>
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"কানেক্ট করা যায়নি"</string>
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"ওয়্যারলেস প্রদর্শন সার্টিফিকেশন জন্য বিকল্পগুলি দেখান"</string>
-    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"ওয়াই-ফাই লগিং স্তর বাড়ান, ওয়াই-ফাই চয়নকারীতে SSID RSSI অনুযায়ী দেখান"</string>
+    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"ওয়াই-ফাই লগিংয়ের লেভেল বাড়ান, SSID RSSI অনুযায়ী ওয়াই-ফাই পিকারে দেখান"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"ব্যাটারির খরচ কমায় এবং নেটওয়ার্কের পারফর্ম্যান্স উন্নত করে"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"এই মোডটি চালু থাকলে, MAC অ্যাড্রেসের র‍্যান্ডমাইজেশনের সুবিধা চালু আছে এমন কোনও নেটওয়ার্কে প্রত্যেকবার কানেক্ট করার সময় ডিভাইসের MAC অ্যাড্রেস পরিবর্তিত হতে পারে।"</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"মিটার্ড"</string>
@@ -357,7 +357,7 @@
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"কানেক্টিভিটি ফিচার উন্নত করার বিষয়টি চালু করা হয়েছে।"</string>
     <string name="enable_terminal_title" msgid="3834790541986303654">"স্থানীয় টার্মিনাল"</string>
     <string name="enable_terminal_summary" msgid="2481074834856064500">"স্থানীয় শেল অ্যাক্সেসের প্রস্তাব করে এমন টার্মিনাল অ্যাপ্লিকেশন সক্ষম করুন"</string>
-    <string name="hdcp_checking_title" msgid="3155692785074095986">"HDCP পরীক্ষণ"</string>
+    <string name="hdcp_checking_title" msgid="3155692785074095986">"HDCP চেকিং"</string>
     <string name="hdcp_checking_dialog_title" msgid="7691060297616217781">"HDCP চেক করার আচরণ সেট করুন"</string>
     <string name="debug_debugging_category" msgid="535341063709248842">"ডিবাগিং"</string>
     <string name="debug_app" msgid="8903350241392391766">"ডিবাগ অ্যাপ বেছে নিন"</string>
@@ -430,7 +430,7 @@
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"অ্যাপ সঠিক চ্যানেল ছাড়া বিজ্ঞপ্তি দেখালে সতর্ক করে"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"জোর করে কোনও অ্যাপকে এক্সটার্নাল স্টোরেজে পাঠানো"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ম্যানিফেস্ট মানের নির্বিশেষে যেকোনও অ্যাপকে এক্সটারনাল স্টোরেজে ইনস্টল করার উপযুক্ত বানায়"</string>
-    <string name="force_resizable_activities" msgid="7143612144399959606">"আকার পরিবর্তনযোগ্য করার জন্য ক্রিয়াকলাপগুলিকে জোর করুন"</string>
+    <string name="force_resizable_activities" msgid="7143612144399959606">"রিসাইজেবল করতে সব অ্যাক্টিভিটি ফোর্স করুন"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"ম্যানিফেস্ট মানগুলির নির্বিশেষে মাল্টি-উইন্ডোর জন্য সমস্ত ক্রিয়াকলাপগুলির আকার পরিবর্তনযোগ্য করুন৷"</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"ফ্রি-ফর্ম উইন্ডো চালু করুন"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"ডেস্কটপ ব্যাকআপ পাসওয়ার্ড"</string>

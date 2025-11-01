@@ -329,6 +329,7 @@ public class KeyguardService extends Service {
             return new FoldGracePeriodProvider();
         }
     };
+    private final ActivityManager mActivityManager;
 
     @Inject
     public KeyguardService(
@@ -349,6 +350,7 @@ public class KeyguardService extends Service {
             @Main Executor mainExecutor,
             KeyguardInteractor keyguardInteractor,
             KeyguardEnabledInteractor keyguardEnabledInteractor,
+            ActivityManager activityManager,
             Lazy<KeyguardStateCallbackStartable> keyguardStateCallbackStartableLazy,
             KeyguardWakeDirectlyToGoneInteractor keyguardWakeDirectlyToGoneInteractor,
             KeyguardDismissInteractor keyguardDismissInteractor,
@@ -383,6 +385,7 @@ public class KeyguardService extends Service {
 
         mWmOcclusionManager = windowManagerOcclusionManager;
         mKeyguardEnabledInteractor = keyguardEnabledInteractor;
+        mActivityManager = activityManager;
         mKeyguardWakeDirectlyToGoneInteractor = keyguardWakeDirectlyToGoneInteractor;
         mKeyguardDismissInteractor = keyguardDismissInteractor;
     }
@@ -663,6 +666,10 @@ public class KeyguardService extends Service {
         public void showDismissibleKeyguard() {
             trace("showDismissibleKeyguard");
             checkPermission();
+            if (mActivityManager.getLockTaskModeState() != ActivityManager.LOCK_TASK_MODE_NONE) {
+                return;
+            }
+
             if (mFoldGracePeriodProvider.get().isEnabled()) {
                 mKeyguardInteractor.showDismissibleKeyguard();
             }

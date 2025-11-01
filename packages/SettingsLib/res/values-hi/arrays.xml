@@ -55,7 +55,7 @@
   </string-array>
   <string-array name="hdcp_checking_summaries">
     <item msgid="4045840870658484038">"कभी भी HDCP जाँच का उपयोग न करें"</item>
-    <item msgid="8254225038262324761">"HDCP जांच का इस्तेमाल सिर्फ़ डीआरएम कॉन्टेंट के लिए करें"</item>
+    <item msgid="8254225038262324761">"एचडीसीपी जांच का इस्तेमाल सिर्फ़ डीआरएम कॉन्टेंट के लिए करें"</item>
     <item msgid="6421717003037072581">"हमेशा HDCP जाँच का उपयोग करें"</item>
   </string-array>
   <string-array name="bt_hci_snoop_log_entries">
@@ -207,7 +207,7 @@
   <string-array name="window_animation_scale_entries">
     <item msgid="2675263395797191850">"एनिमेशन बंद"</item>
     <item msgid="5790132543372767872">"एनिमेशन स्‍केल .5x"</item>
-    <item msgid="2529692189302148746">"ऐनिमेशन स्‍केल 1 गुना"</item>
+    <item msgid="2529692189302148746">"ऐनिमेशन स्‍केल 1x"</item>
     <item msgid="8072785072237082286">"एनिमेशन स्‍केल 1.5x"</item>
     <item msgid="3531560925718232560">"एनिमेशन स्‍केल 2x"</item>
     <item msgid="4542853094898215187">"एनिमेशन स्‍केल 5x"</item>
@@ -225,7 +225,7 @@
   <string-array name="animator_duration_scale_entries">
     <item msgid="6416998593844817378">"एनिमेशन बंद"</item>
     <item msgid="875345630014338616">"एनिमेशन स्‍केल .5x"</item>
-    <item msgid="2753729231187104962">"ऐनिमेशन स्‍केल 1 गुना"</item>
+    <item msgid="2753729231187104962">"ऐनिमेशन स्‍केल 1x"</item>
     <item msgid="1368370459723665338">"एनिमेशन स्‍केल 1.5x"</item>
     <item msgid="5768005350534383389">"एनिमेशन स्‍केल 2x"</item>
     <item msgid="3728265127284005444">"एनिमेशन स्‍केल 5x"</item>
@@ -267,7 +267,7 @@
     <item msgid="3474333938380896988">"हरा रंग पहचानने में कमी के क्षेत्र दिखाएं"</item>
   </string-array>
   <string-array name="app_process_limit_entries">
-    <item msgid="794656271086646068">"मानक सीमा"</item>
+    <item msgid="794656271086646068">"स्टैंडर्ड लिमिट"</item>
     <item msgid="8628438298170567201">"कोई पृष्ठभूमि प्रक्रियाएं नहीं"</item>
     <item msgid="915752993383950932">"अधिकतम 1 प्रक्रिया"</item>
     <item msgid="8554877790859095133">"अधिकतम 2 प्रक्रियाएं"</item>

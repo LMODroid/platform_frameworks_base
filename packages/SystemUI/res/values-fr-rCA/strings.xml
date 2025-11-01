@@ -369,7 +369,7 @@
     <string name="quick_settings_night_secondary_label_until_sunrise" msgid="4063448287758262485">"Jusqu\'à l\'aube"</string>
     <string name="quick_settings_night_secondary_label_on_at" msgid="3584738542293528235">"Actif à <xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="quick_settings_secondary_label_until" msgid="1883981263191927372">"Jusqu\'à <xliff:g id="TIME">%s</xliff:g>"</string>
-    <string name="quick_settings_ui_mode_night_label" msgid="1398928270610780470">"Thème sombre"</string>
+    <string name="quick_settings_ui_mode_night_label" msgid="1398928270610780470">"Thème Sombre"</string>
     <string name="quick_settings_dark_mode_secondary_label_battery_saver" msgid="4990712734503013251">"Économiseur de pile"</string>
     <string name="quick_settings_dark_mode_secondary_label_on_at_sunset" msgid="6017379738102015710">"Activé le soir"</string>
     <string name="quick_settings_dark_mode_secondary_label_until_sunrise" msgid="4404885070316716472">"Jusqu\'à l\'aube"</string>
@@ -655,7 +655,7 @@
     <string name="screen_pinning_negative" msgid="6882816864569211666">"Non, merci"</string>
     <string name="screen_pinning_start" msgid="7483998671383371313">"Appli épinglée"</string>
     <string name="screen_pinning_exit" msgid="4553787518387346893">"L\'épinglage de l\'appli a été annulé"</string>
-    <string name="stream_voice_call" msgid="7468348170702375660">"Appeler"</string>
+    <string name="stream_voice_call" msgid="7468348170702375660">"Appel"</string>
     <string name="stream_system" msgid="7663148785370565134">"Système"</string>
     <string name="stream_ring" msgid="7550670036738697526">"Sonnerie"</string>
     <string name="stream_music" msgid="2188224742361847580">"Multimédia"</string>
@@ -695,8 +695,8 @@
     <string name="volume_panel_hint_muted" msgid="1124844870181285320">"son désactivé"</string>
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"vibration"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"Lecture de <xliff:g id="LABEL">%s</xliff:g> sur"</string>
-    <string name="media_output_title_without_playing" msgid="3825663683169305013">"Lecture audio sur"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Appel en cours"</string>
+    <string name="media_output_title_without_playing" msgid="3825663683169305013">"Appareil lisant l\'audio"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Appareil utilisé"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"System UI Tuner"</string>
     <string name="status_bar" msgid="4357390266055077437">"Barre d\'état"</string>
     <string name="demo_mode" msgid="263484519766901593">"Mode Démo de l\'interface système"</string>

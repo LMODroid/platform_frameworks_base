@@ -56,7 +56,7 @@
     <string name="permission_nearby_devices" msgid="7530973297737123481">"ଆଖପାଖର ଡିଭାଇସ"</string>
     <string name="permission_media_routing_control" msgid="5498639511586715253">"ମିଡିଆ ଆଉଟପୁଟ ପରିବର୍ତ୍ତନ କରନ୍ତୁ"</string>
     <string name="permission_storage" msgid="6831099350839392343">"ଫଟୋ ଏବଂ ମିଡିଆ"</string>
-    <string name="permission_notifications" msgid="4099418516590632909">"ବିଜ୍ଞପ୍ତିଗୁଡ଼ିକ"</string>
+    <string name="permission_notifications" msgid="4099418516590632909">"ବିଜ୍ଞପ୍ତି"</string>
     <string name="permission_phone_summary" msgid="8246321093970051702">"ଫୋନ କଲଗୁଡ଼ିକ କରିବା ଏବଂ ସେଗୁଡ଼ିକୁ ପରିଚାଳନା କରିବା"</string>
     <string name="permission_call_logs_summary" msgid="7545243592757693321">"ଫୋନ କଲ ଲଗକୁ ପଢ଼ିବା ଏବଂ ଲେଖିବା"</string>
     <string name="permission_sms_summary" msgid="8499509535410068616">"SMS ମେସେଜ ପଠାଇବା ଏବଂ ଭ୍ୟୁ କରିବା"</string>

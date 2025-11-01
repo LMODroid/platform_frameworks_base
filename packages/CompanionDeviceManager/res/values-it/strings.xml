@@ -24,7 +24,7 @@
     <string name="summary_watch" msgid="8134580124808507407">"Questa app potrà sincronizzare informazioni, ad esempio il nome di un chiamante, e accedere alle seguenti autorizzazioni sul <xliff:g id="DEVICE_TYPE">%1$s</xliff:g>"</string>
     <string name="confirmation_title_glasses" msgid="8288346850537727333">"Vuoi consentire all\'app &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; di gestire &lt;strong&gt;<xliff:g id="DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt;?"</string>
     <string name="profile_name_glasses" msgid="3506504967216601277">"dispositivo"</string>
-    <string name="summary_glasses" msgid="5469208629679579157">"Questa app potrà accedere alle seguenti autorizzazioni <xliff:g id="DEVICE_TYPE">%1$s</xliff:g>:"</string>
+    <string name="summary_glasses" msgid="5469208629679579157">"Questa app potrà accedere alle seguenti autorizzazioni sul tuo <xliff:g id="DEVICE_TYPE">%1$s</xliff:g>:"</string>
     <string name="title_app_streaming" msgid="6845373585257287200">"Consentire all\'app &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; di riprodurre in streaming le app <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> su &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;?"</string>
     <string name="summary_app_streaming" msgid="1274464413649731829">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> avrà accesso a tutti i contenuti visibili o riprodotti <xliff:g id="DEVICE_TYPE">%2$s</xliff:g>, inclusi audio, foto, password e messaggi.&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_1">%1$s</xliff:g> sarà in grado di riprodurre in streaming le app su <xliff:g id="DEVICE_NAME">%3$s</xliff:g> finché non rimuoverai l\'accesso a questa autorizzazione."</string>
     <string name="helper_summary_app_streaming" msgid="1944832605534698562">"<xliff:g id="APP_NAME">%1$s</xliff:g> richiede per conto di <xliff:g id="DEVICE_NAME">%2$s</xliff:g> l\'autorizzazione a mostrare e riprodurre in streaming app tra i dispositivi"</string>
@@ -68,7 +68,7 @@
     <string name="permission_notifications_summary" msgid="2272810466047367030">"• Legge tutte le notifiche, incluse informazioni come contatti, messaggi e foto&lt;br/&gt;• Invia notifiche&lt;br/&gt;&lt;br/&gt;Puoi gestire la capacità dell\'app di leggere e inviare notifiche in qualsiasi momento in Impostazioni &gt; Notifiche."</string>
     <string name="permission_storage_summary" msgid="3918240895519506417"></string>
     <string name="permission_media_routing_control_summary" msgid="2714631092321412250">"Accedi a un elenco di dispositivi disponibili e controlla quale di questi riproduce in streaming o trasmette audio o video da altre app"</string>
-    <string name="device_type" product="default" msgid="8268703872070046263">"telefono"</string>
+    <string name="device_type" product="default" msgid="8268703872070046263">"smartphone"</string>
     <string name="device_type" product="tablet" msgid="5038791954983067774">"tablet"</string>
     <string name="device_type" product="tv" msgid="5355611506659405636">"della TV"</string>
     <string name="device_type" product="device" msgid="1526125965802507189">"del dispositivo"</string>

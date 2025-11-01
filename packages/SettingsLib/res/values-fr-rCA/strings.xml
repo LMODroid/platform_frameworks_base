@@ -37,18 +37,18 @@
     <string name="wifi_security_wep" msgid="1413627788581122366">"WEP"</string>
     <string name="wifi_security_wpa" msgid="1072450904799930636">"WPA-Personal"</string>
     <string name="wifi_security_wpa2" msgid="4038267581230425543">"WPA2-Personal"</string>
-    <string name="wifi_security_wpa_wpa2" msgid="946853615482465986">"WPA/WPA2-Personal"</string>
+    <string name="wifi_security_wpa_wpa2" msgid="946853615482465986">"WPA/WPA2 Personal"</string>
     <string name="wifi_security_eap" msgid="6179633834446852269">"WPA/WPA2/WPA3-Enterprise"</string>
     <string name="wifi_security_eap_wpa" msgid="6189023812330549957">"WPA-Enterprise"</string>
-    <string name="wifi_security_eap_wpa_wpa2" msgid="1089879674896108216">"WPA/WPA2-Enterprise"</string>
+    <string name="wifi_security_eap_wpa_wpa2" msgid="1089879674896108216">"WPA/WPA2 Enterprise"</string>
     <string name="wifi_security_eap_wpa2_wpa3" msgid="2952912020876252266">"WPA2/WPA3-Enterprise"</string>
-    <string name="wifi_security_eap_wpa3" msgid="7961135182909018796">"WPA3-Enterprise"</string>
+    <string name="wifi_security_eap_wpa3" msgid="7961135182909018796">"WPA3 Enterprise"</string>
     <string name="wifi_security_passpoint" msgid="2209078477216565387">"Passpoint"</string>
     <string name="wifi_security_sae" msgid="3644520541721422843">"WPA3-Personal"</string>
     <string name="wifi_security_psk_sae" msgid="8135104122179904684">"WPA2/WPA3-Personal"</string>
     <string name="wifi_security_none_owe" msgid="5241745828327404101">"Aucun/Enhanced Open"</string>
     <string name="wifi_security_owe" msgid="3343421403561657809">"Enhanced Open"</string>
-    <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3-Enterprise 192 bits"</string>
+    <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3 Enterprise 192 bits"</string>
     <string name="wifi_remembered" msgid="3266709779723179188">"Enregistré"</string>
     <string name="wifi_disconnected" msgid="7054450256284661757">"Déconnecté"</string>
     <string name="wifi_disabled_generic" msgid="2651916945380294607">"Désactivés"</string>
@@ -105,7 +105,7 @@
     <string name="bluetooth_battery_level_untethered_right" msgid="8377995536997790142">"Droite : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="tv_bluetooth_battery_level_untethered_left" msgid="337629670583744410">"Écouteur gauche : <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="tv_bluetooth_battery_level_untethered_right" msgid="8610019317279155595">"Écouteur droit : <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
-    <string name="bluetooth_active_no_battery_level" msgid="4155462233006205630">"Actif"</string>
+    <string name="bluetooth_active_no_battery_level" msgid="4155462233006205630">"En marche"</string>
     <string name="bluetooth_saved_device" msgid="4895871321722311428">"Enregistré"</string>
     <string name="bluetooth_hearing_aid_left_active" msgid="8330226430756799572">"Actif (gauche seulement)"</string>
     <string name="bluetooth_hearing_aid_right_active" msgid="2244728507170385397">"Actif (droite seulement)"</string>
@@ -116,7 +116,7 @@
     <string name="bluetooth_battery_level_untethered_lea_support" msgid="803110681688633362">"Connecté (prise en charge du partage audio). G. : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_0">%1$s</xliff:g>, D. : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_1">%2$s</xliff:g>."</string>
     <string name="bluetooth_battery_level_untethered_left_lea_support" msgid="7707464334346454950">"Connecté (prise en charge du partage audio). Gauche : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
     <string name="bluetooth_battery_level_untethered_right_lea_support" msgid="8941549024377771038">"Connecté (prise en charge du partage audio). Droite : pile à <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
-    <string name="bluetooth_no_battery_level_lea_support" msgid="5721725041048434075">"Connecté (prise en charge du partage audio)"</string>
+    <string name="bluetooth_no_battery_level_lea_support" msgid="5721725041048434075">"Connexion établie (prise en charge du partage audio)"</string>
     <string name="bluetooth_active_media_only_no_battery_level" msgid="71106861912593126">"Actif (contenu multimédia uniquement)"</string>
     <string name="bluetooth_saved_device_lea_support" msgid="7231323139968285768">"Prise en charge du partage audio"</string>
     <string name="bluetooth_hearing_aid_media_only_left_active" msgid="1632152540901488645">"Actif (contenu multimédia uniquement), côté gauche seulement"</string>
@@ -196,7 +196,7 @@
     <string name="launch_defaults_some" msgid="3631650616557252926">"Certaines préférences par défaut définies"</string>
     <string name="launch_defaults_none" msgid="8049374306261262709">"Aucune préférence par défaut définie"</string>
     <string name="tts_settings" msgid="8130616705989351312">"Paramètres de synthèse vocale"</string>
-    <string name="tts_settings_title" msgid="7602210956640483039">"Synthèse vocale"</string>
+    <string name="tts_settings_title" msgid="7602210956640483039">"Sortie de synthèse vocale"</string>
     <string name="tts_default_rate_title" msgid="3964187817364304022">"Débit"</string>
     <string name="tts_default_rate_summary" msgid="3781937042151716987">"Vitesse à laquelle le texte est énoncé"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"Ton"</string>
@@ -257,7 +257,7 @@
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Associer l\'appareil à l\'aide d\'un code QR"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Associer les nouveaux appareils à l\'aide d\'un lecteur de code QR"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Associer l\'appareil avec un code d\'association"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Associer les nouveaux appareils à l\'aide d\'un code à six chiffres"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Associez les nouveaux appareils à l\'aide d\'un code à six chiffres"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Appareils associés"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Actuellement connecté"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Renseignements sur l\'appareil"</string>
@@ -269,12 +269,12 @@
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Code d\'association Wi-Fi"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Échec de l\'association"</string>
     <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Vérifiez que l\'appareil est connecté au même réseau."</string>
-    <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Associez l\'appareil par Wi-Fi en numérisant un code QR"</string>
+    <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Associez l\'appareil par Wi-Fi en balayant un code QR"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Association de l\'appareil en cours…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Échec de l\'association de l\'appareil Soit le code QR est incorrect, soit l\'appareil n\'est pas connecté au même réseau."</string>
     <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"Adresse IP et port"</string>
     <string name="adb_wireless_qrcode_pairing_title" msgid="1906409667944674707">"Balayer le code QR"</string>
-    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Associer l\'appareil par Wi-Fi en numérisant un code QR"</string>
+    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Associez l\'appareil par Wi-Fi en balayant un code QR"</string>
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"Veuillez vous connecter à un réseau Wi-Fi"</string>
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, débogage, développeur"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"Raccourci de rapport de bogue"</string>
@@ -369,43 +369,43 @@
     <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Avant de s\'exécuter, l\'appli déboguée doit attendre que le débogueur soit attaché."</string>
     <string name="debug_input_category" msgid="7349460906970849771">"Entrée"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"Dessin"</string>
-    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Accélération matérielle"</string>
-    <string name="media_category" msgid="8122076702526144053">"Médias"</string>
+    <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Rendu accéléré par le matériel"</string>
+    <string name="media_category" msgid="8122076702526144053">"Éléments multimédias"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Surveillance"</string>
     <string name="strict_mode" msgid="889864762140862437">"Mode Strict activé"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"L\'écran clignote lors d\'opérations longues sur fil principal"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"L\'écran clignote lors d\'opérations longues sur le fil principal"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Emplacement du curseur"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"Superposition écran indiquant données des touchers"</string>
-    <string name="show_touches" msgid="8437666942161289025">"Afficher éléments touchés"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"Afficher repère visuel pour éléments sélectionnés"</string>
-    <string name="show_key_presses" msgid="6360141722735900214">"Afficher press. de touches"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"Afficher retour visuel pour press. de touches phys."</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"Superposition de l\'écran indiquant les données des touchers"</string>
+    <string name="show_touches" msgid="8437666942161289025">"Afficher les éléments touchés"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"Affichez un repère visuel pour les éléments touchés"</string>
+    <string name="show_key_presses" msgid="6360141722735900214">"Afficher la pression des touches"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"Affichez le retour visuel pour la pression des touches physiques"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Afficher l\'entrée du pavé tactile"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Superposition de l\'écran affichant les données d\'entrée du pavé tactile et les gestes reconnus"</string>
-    <string name="show_screen_updates" msgid="2078782895825535494">"Afficher mises à jour surface"</string>
+    <string name="show_screen_updates" msgid="2078782895825535494">"Afficher les mises à jour surface"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"Faites clignoter les surfaces à chaque mise à jour"</string>
-    <string name="show_hw_screen_updates" msgid="2021286231267747506">"Afficher m. à j. affichage"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Faites clignoter éléments dessinés dans les fenêtres"</string>
-    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Mises à jour couches mat."</string>
-    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Couches matérielles en vert une fois mises à jour"</string>
-    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Déboguer les conflits GPU"</string>
-    <string name="disable_overlays" msgid="4206590799671557143">"Désact. superpos. matér."</string>
-    <string name="disable_overlays_summary" msgid="1954852414363338166">"Toujours utiliser le GPU pour la composition écran"</string>
-    <string name="simulate_color_space" msgid="1206503300335835151">"Simuler espace colorimétrique"</string>
+    <string name="show_hw_screen_updates" msgid="2021286231267747506">"Afficher mises à jour de l\'affichage"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Faites clignoter les éléments dessinés dans les fenêtres"</string>
+    <string name="show_hw_layers_updates" msgid="5268370750002509767">"Mises à jour couches matérielles"</string>
+    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Les couches matérielles clignotent en vert pendant leurs mises à jour"</string>
+    <string name="debug_hw_overdraw" msgid="8944851091008756796">"Déboguer les dépassements GPU"</string>
+    <string name="disable_overlays" msgid="4206590799671557143">"Désactiver superpositions matérielles"</string>
+    <string name="disable_overlays_summary" msgid="1954852414363338166">"Utilisez toujours le GPU pour la composition des écrans"</string>
+    <string name="simulate_color_space" msgid="1206503300335835151">"Simuler l\'espace colorimétrique"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"Enable OpenGL traces"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Désactiver le routage audio USB"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Désactivez le routage automatique vers les périphériques audio USB"</string>
     <string name="debug_layout" msgid="1659216803043339741">"Afficher les contours"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"Affichez les contours de découpe, les marges, etc."</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Forcer droite à gauche"</string>
-    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Forcez l\'orientation de droite à gauche (toutes langues)"</string>
+    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Forcez l\'orientation de droite à gauche (pour toutes les langues)"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Barre de navigation transparente"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Rendez la couleur d\'arrière-plan de la barre de navigation transparente par défaut"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Autoriser le flou au niveau des fenêtres"</string>
     <string name="force_msaa" msgid="4081288296137775550">"Forcer MSAA 4x"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Activer MSAA 4x dans les applis OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Déboguer opérations de découpage non rectangulaire"</string>
-    <string name="track_frame_time" msgid="522674651937771106">"Profiler le rendu HWUI"</string>
+    <string name="track_frame_time" msgid="522674651937771106">"Analyser le rendu HWUI"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Activer couches débogage UTG"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Autoriser couches débogage UTG pour applis de débogage"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Activer le journal détaillé des fournisseurs"</string>
@@ -416,22 +416,22 @@
     <string name="verbose_vendor_logging_notification_action" msgid="1190831050259046071">"Activer pour une journée de plus"</string>
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Se désactive après une journée"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Activé indéfiniment"</string>
-    <string name="window_animation_scale_title" msgid="5236381298376812508">"Échelle animation fenêtres"</string>
+    <string name="window_animation_scale_title" msgid="5236381298376812508">"Échelle d\'animation des fenêtres"</string>
     <string name="transition_animation_scale_title" msgid="1278477690695439337">"Éch. d\'animation des transitions"</string>
-    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Échelle durée animation"</string>
+    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Échelle de durée des animations"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simuler des écrans secondaires"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Applis"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Ne pas conserver activités"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Supprimez immédiatement les activités abandonnées"</string>
     <string name="app_process_limit_title" msgid="8361367869453043007">"Limite processus arr.-plan"</string>
-    <string name="show_all_anrs" msgid="9160563836616468726">"Afficher ANR arrière-plan"</string>
-    <string name="show_all_anrs_summary" msgid="8562788834431971392">"Afficher le message « L\'appli ne répond plus » pour les applis en arrière-plan"</string>
-    <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Affich. avertiss. canal notification"</string>
+    <string name="show_all_anrs" msgid="9160563836616468726">"Afficher les ANR en arrière-plan"</string>
+    <string name="show_all_anrs_summary" msgid="8562788834431971392">"Affichez le message « L\'appli ne répond pas » pour les applis en arrière-plan"</string>
+    <string name="show_notification_channel_warnings" msgid="3448282400127597331">"Afficher avertiss. canaux de notification"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"Affichez avertiss. à l\'écran quand une appli présente une notif. sans canal valide"</string>
-    <string name="force_allow_on_external" msgid="9187902444231637880">"Forcer l\'autor. d\'applis sur stockage externe"</string>
+    <string name="force_allow_on_external" msgid="9187902444231637880">"Forcer l\'autorisation d\'applis sur stockage externe"</string>
     <string name="force_allow_on_external_summary" msgid="8525425782530728238">"Rend possible l\'enregistrement de toute appli sur un espace de stockage externe, indépendamment des valeurs du fichier de configuration"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"Forcer les activités à être redimensionnables"</string>
-    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Permet de redimensionner toutes les activités pour le mode multi-fenêtre, indépendamment des valeurs du fichier de configuration."</string>
+    <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Permet de redimensionner toutes les activités pour le mode Multifenêtre, indépendamment des valeurs du fichier de configuration."</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"Activer les fenêtres de forme libre"</string>
     <string name="local_backup_password_title" msgid="4631017948933578709">"Mot de passe sauvegarde PC"</string>
     <string name="local_backup_password_summary_none" msgid="7646898032616361714">"Les sauvegardes complètes sur PC ne sont pas protégées actuellement"</string>
@@ -518,7 +518,7 @@
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"Recharge rapide"</string>
     <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"Contrôlé par l\'administrateur"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"Contrôlé par les paramètres restreints"</string>
-    <string name="disabled" msgid="8017887509554714950">"Désactivée"</string>
+    <string name="disabled" msgid="8017887509554714950">"Désactivé"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"Autorisée"</string>
     <string name="external_source_untrusted" msgid="5037891688911672227">"Élément non autorisé"</string>
     <string name="install_other_apps" msgid="3232595082023199454">"Installer les applis inconnues"</string>
@@ -668,7 +668,7 @@
     <string name="not_grant_admin" msgid="3557849576157702485">"Non, ne pas le définir comme administrateur"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Quitter"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Enregistrer l\'activité d\'invité?"</string>
-    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Vous pouvez enregistrer l\'activité de session ou supprimer les applis et données"</string>
+    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Vous pouvez enregistrer l\'activité de la session ou supprimer les applis et données"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Supprimer"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Enregistrer"</string>
     <string name="guest_exit_button" msgid="5774985819191803960">"Quitter le mode Invité"</string>

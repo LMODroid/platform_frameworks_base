@@ -2040,31 +2040,70 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         t.traceEnd();
 
         t.traceBegin("addSharedUsers");
-        mSettings.addSharedUserLPw("android.uid.system", Process.SYSTEM_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
-        mSettings.addSharedUserLPw("android.uid.phone", RADIO_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
-        mSettings.addSharedUserLPw("android.uid.log", LOG_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
-        mSettings.addSharedUserLPw("android.uid.nfc", NFC_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
-        mSettings.addSharedUserLPw("android.uid.bluetooth", BLUETOOTH_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
-        mSettings.addSharedUserLPw("android.uid.shell", SHELL_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
-        mSettings.addSharedUserLPw("android.uid.se", SE_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
-        mSettings.addSharedUserLPw("android.uid.networkstack", NETWORKSTACK_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
-        mSettings.addSharedUserLPw("android.uid.uwb", UWB_UID,
-                ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
+        mSettings.addSharedUserLPw(
+                "android.uid.system",
+                Process.SYSTEM_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
+        mSettings.addSharedUserLPw(
+                "android.uid.phone",
+                RADIO_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
+        mSettings.addSharedUserLPw(
+                "android.uid.log",
+                LOG_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
+        mSettings.addSharedUserLPw(
+                "android.uid.nfc",
+                NFC_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
+        mSettings.addSharedUserLPw(
+                "android.uid.bluetooth",
+                BLUETOOTH_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
+        mSettings.addSharedUserLPw(
+                "android.uid.shell",
+                SHELL_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
+        mSettings.addSharedUserLPw(
+                "android.uid.se",
+                SE_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
+        mSettings.addSharedUserLPw(
+                "android.uid.networkstack",
+                NETWORKSTACK_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
+        mSettings.addSharedUserLPw(
+                "android.uid.uwb",
+                UWB_UID,
+                ApplicationInfo.FLAG_SYSTEM,
+                ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                0);
         final ArrayMap<String, Integer> oemDefinedUids = systemConfig.getOemDefinedUids();
         final int numOemDefinedUids = oemDefinedUids.size();
         for (int i = 0; i < numOemDefinedUids; i++) {
-            mSettings.addOemSharedUserLPw(oemDefinedUids.keyAt(i), oemDefinedUids.valueAt(i),
-                    ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
+            mSettings.addOemSharedUserLPw(
+                    oemDefinedUids.keyAt(i),
+                    oemDefinedUids.valueAt(i),
+                    ApplicationInfo.FLAG_SYSTEM,
+                    ApplicationInfo.PRIVATE_FLAG_PRIVILEGED,
+                    0 /* pkgPrivateFlagsExt */);
         }
-
         t.traceEnd();
 
         String separateProcesses = SystemProperties.get("debug.separate_processes");
@@ -5133,7 +5172,8 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         @Override
         public byte[] getDomainVerificationBackup(int userId) {
             if (Binder.getCallingUid() != Process.SYSTEM_UID) {
-                throw new SecurityException("Only the system may call getDomainVerificationBackup()");
+                throw new SecurityException(
+                        "Only the system may call getDomainVerificationBackup()");
             }
 
             try {
@@ -5145,7 +5185,10 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 }
             } catch (Exception e) {
                 if (PackageManagerService.DEBUG_BACKUP) {
-                    Slog.e(PackageManagerService.TAG, "Unable to write domain verification for backup", e);
+                    Slog.e(
+                            PackageManagerService.TAG,
+                            "Unable to write domain verification for backup",
+                            e);
                 }
                 return null;
             }
@@ -5769,7 +5812,8 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         @Override
         public void restoreDomainVerification(byte[] backup, int userId) {
             if (Binder.getCallingUid() != Process.SYSTEM_UID) {
-                throw new SecurityException("Only the system may call restorePreferredActivities()");
+                throw new SecurityException(
+                        "Only the system may call restorePreferredActivities()");
             }
 
             try {
@@ -5782,7 +5826,9 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 input.close();
             } catch (Exception e) {
                 if (PackageManagerService.DEBUG_BACKUP) {
-                    Slog.e(PackageManagerService.TAG, "Exception restoring domain verification: " + e.getMessage());
+                    Slog.e(
+                            PackageManagerService.TAG,
+                            "Exception restoring domain verification: " + e.getMessage());
                 }
             }
         }
@@ -5884,9 +5930,11 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 return false;
             }
 
-            // Do not allow "android" is being disabled
-            if ("android".equals(packageName)) {
-                Slog.w(TAG, "Cannot hide package: android");
+            // Don't allow hiding "android" or SysUI as it makes device unusable.
+            if ("android".equals(packageName)
+                    || LocalServices.getService(PackageManagerInternal.class)
+                            .getSystemUiServiceComponent().getPackageName().equals(packageName)) {
+                Slog.w(TAG, "Cannot hide package: " + packageName);
                 return false;
             }
 
@@ -5972,16 +6020,24 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 AndroidPackage pkg = packageState.getPkg();
                 // Cannot block uninstall SDK libs as they are controlled by SDK manager.
                 if (pkg.getSdkLibraryName() != null) {
-                    Slog.w(PackageManagerService.TAG, "Cannot block uninstall of package: " + packageName
-                            + " providing SDK library: " + pkg.getSdkLibraryName());
+                    Slog.w(
+                            PackageManagerService.TAG,
+                            "Cannot block uninstall of package: "
+                                    + packageName
+                                    + " providing SDK library: "
+                                    + pkg.getSdkLibraryName());
                     return false;
                 }
                 // Cannot block uninstall of static shared libs as they are
                 // considered a part of the using app (emulating static linking).
                 // Also static libs are installed always on internal storage.
                 if (pkg.getStaticSharedLibraryName() != null) {
-                    Slog.w(PackageManagerService.TAG, "Cannot block uninstall of package: " + packageName
-                            + " providing static shared library: " + pkg.getStaticSharedLibraryName());
+                    Slog.w(
+                            PackageManagerService.TAG,
+                            "Cannot block uninstall of package: "
+                                    + packageName
+                                    + " providing static shared library: "
+                                    + pkg.getStaticSharedLibraryName());
                     return false;
                 }
             }
@@ -7214,6 +7270,28 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         public boolean isUpgradingFromLowerThan(int sdkVersion) {
             final boolean isUpgrading = mPriorSdkVersion != -1;
             return isUpgrading && mPriorSdkVersion < sdkVersion;
+        }
+
+        public void setDisplayCompat(String packageName, int userId, boolean enabled) {
+            final int callingUid = Binder.getCallingUid();
+            final Computer snapshot = snapshotComputer();
+            snapshot.enforceCrossUserPermission(
+                    callingUid,
+                    userId,
+                    false /* requireFullPermission */,
+                    false /* checkShell */,
+                    "setDisplayCompat");
+            enforceOwnerRights(snapshot, packageName, callingUid);
+
+            PackageStateInternal packageState =
+                    snapshot.getPackageStateForInstalledAndFiltered(
+                            packageName, callingUid, userId);
+            if (packageState == null) {
+                return;
+            }
+
+            PackageManagerService.this.commitPackageStateMutation(
+                    null, packageName, state -> state.userState(userId).setDisplayCompat(enabled));
         }
     }
 

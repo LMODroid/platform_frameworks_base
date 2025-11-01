@@ -174,7 +174,7 @@
     <string name="accessibility_phone_button" msgid="4256353121703100427">"Telefon"</string>
     <string name="accessibility_voice_assist_button" msgid="6497706615649754510">"Taleassistent"</string>
     <string name="accessibility_wallet_button" msgid="1458258783460555507">"Wallet"</string>
-    <string name="accessibility_qr_code_scanner_button" msgid="7521277927692910795">"QR-kodescanner"</string>
+    <string name="accessibility_qr_code_scanner_button" msgid="7521277927692910795">"QR-kode­scanner"</string>
     <string name="accessibility_unlock_button" msgid="3613812140816244310">"Låst op"</string>
     <string name="accessibility_lock_icon" msgid="661492842417875775">"Enheden er låst"</string>
     <string name="accessibility_scanning_face" msgid="3093828357921541387">"Scanner ansigt"</string>
@@ -712,7 +712,7 @@
     <string name="wallet_secondary_label_device_locked" msgid="5175862019125370506">"Lås op for at bruge"</string>
     <string name="wallet_error_generic" msgid="257704570182963611">"Dine kort kunne ikke hentes. Prøv igen senere."</string>
     <string name="wallet_lockscreen_settings_label" msgid="3539105300870383570">"Lås skærmindstillinger"</string>
-    <string name="qr_code_scanner_title" msgid="1938155688725760702">"QR-kodescanner"</string>
+    <string name="qr_code_scanner_title" msgid="1938155688725760702">"QR-kode­scanner"</string>
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"Opdaterer"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"Arbejdsprofil"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"Flytilstand"</string>
@@ -976,7 +976,7 @@
     <string name="instant_apps_title" msgid="8942706782103036910">"<xliff:g id="APP">%1$s</xliff:g> kører"</string>
     <string name="instant_apps_message" msgid="6112428971833011754">"En app blev åbnet uden at blive installeret."</string>
     <string name="instant_apps_message_with_help" msgid="1816952263531203932">"En app blev åbnet uden at blive installeret. Tryk for at få flere oplysninger."</string>
-    <string name="app_info" msgid="5153758994129963243">"Appinfo"</string>
+    <string name="app_info" msgid="5153758994129963243">"Appoplysninger"</string>
     <string name="go_to_web" msgid="636673528981366511">"Gå til en browser"</string>
     <string name="mobile_data" msgid="4564407557775397216">"Mobildata"</string>
     <string name="mobile_data_text_format" msgid="6806501540022589786">"<xliff:g id="ID_1">%1$s</xliff:g> – <xliff:g id="ID_2">%2$s</xliff:g>"</string>
@@ -1339,7 +1339,7 @@
     <string name="stylus_battery_low_percentage" msgid="2564243323894629626">"Batteriniveau på styluspen: <xliff:g id="PERCENTAGE">%s</xliff:g>"</string>
     <string name="stylus_battery_low_subtitle" msgid="3583843128908823273">"Slut din styluspen til en oplader"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Lavt batteriniveau på styluspen"</string>
-    <string name="video_camera" msgid="7654002575156149298">"Videokamera"</string>
+    <string name="video_camera" msgid="7654002575156149298">"Video­kamera"</string>
     <string name="call_from_work_profile_title" msgid="5418253516453177114">"Du kan ikke foretage opkald via en personlig app"</string>
     <string name="call_from_work_profile_text" msgid="2856337395968118274">"Din organisation tillader kun, at du foretager opkald via arbejdsapps"</string>
     <string name="call_from_work_profile_action" msgid="2937701298133010724">"Skift til arbejdsprofil"</string>

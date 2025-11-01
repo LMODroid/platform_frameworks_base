@@ -36,19 +36,19 @@
     <string name="wifi_security_none" msgid="7392696451280611452">"Keine"</string>
     <string name="wifi_security_wep" msgid="1413627788581122366">"WEP"</string>
     <string name="wifi_security_wpa" msgid="1072450904799930636">"WPA-Personal"</string>
-    <string name="wifi_security_wpa2" msgid="4038267581230425543">"WPA2-Personal"</string>
-    <string name="wifi_security_wpa_wpa2" msgid="946853615482465986">"WPA/WPA2-Personal"</string>
-    <string name="wifi_security_eap" msgid="6179633834446852269">"WPA/WPA2/WPA3-Enterprise"</string>
+    <string name="wifi_security_wpa2" msgid="4038267581230425543">"WPA2 Personal"</string>
+    <string name="wifi_security_wpa_wpa2" msgid="946853615482465986">"WPA/WPA2 Personal"</string>
+    <string name="wifi_security_eap" msgid="6179633834446852269">"WPA/WPA2/WPA3 Enterprise"</string>
     <string name="wifi_security_eap_wpa" msgid="6189023812330549957">"WPA-Enterprise"</string>
-    <string name="wifi_security_eap_wpa_wpa2" msgid="1089879674896108216">"WPA/WPA2-Enterprise"</string>
-    <string name="wifi_security_eap_wpa2_wpa3" msgid="2952912020876252266">"WPA2/WPA3-Enterprise"</string>
-    <string name="wifi_security_eap_wpa3" msgid="7961135182909018796">"WPA3-Enterprise"</string>
+    <string name="wifi_security_eap_wpa_wpa2" msgid="1089879674896108216">"WPA/WPA2 Enterprise"</string>
+    <string name="wifi_security_eap_wpa2_wpa3" msgid="2952912020876252266">"WPA2/WPA3 Enterprise"</string>
+    <string name="wifi_security_eap_wpa3" msgid="7961135182909018796">"WPA3 Enterprise"</string>
     <string name="wifi_security_passpoint" msgid="2209078477216565387">"Passpoint"</string>
     <string name="wifi_security_sae" msgid="3644520541721422843">"WPA3-Personal"</string>
     <string name="wifi_security_psk_sae" msgid="8135104122179904684">"WPA2/WPA3-Personal"</string>
     <string name="wifi_security_none_owe" msgid="5241745828327404101">"Keinse/Enhanced Open"</string>
     <string name="wifi_security_owe" msgid="3343421403561657809">"Enhanced Open"</string>
-    <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3-Enterprise 192 Bit"</string>
+    <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3 Enterprise 192 Bit"</string>
     <string name="wifi_remembered" msgid="3266709779723179188">"Gespeichert"</string>
     <string name="wifi_disconnected" msgid="7054450256284661757">"Nicht verbunden"</string>
     <string name="wifi_disabled_generic" msgid="2651916945380294607">"Deaktiviert"</string>
@@ -292,7 +292,7 @@
     <string name="mock_location_app_set" msgid="4706722469342913843">"App für simulierte Standorte: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="debug_networking_category" msgid="6829757985772659599">"Netzwerke"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"Zertifizierung für kabellose Übertragung"</string>
-    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Ausführliche WLAN-Protokollierung aktivieren"</string>
+    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Ausführliches WLAN-Logging aktivieren"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Drosselung der WLAN-Suche"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Nicht persistente, zufällige Generierung von MAC-Adressen für WLAN"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"Mobile Datennutzung immer aktiviert"</string>
@@ -351,7 +351,7 @@
     <string name="dev_settings_warning_message" msgid="37741686486073668">"Diese Einstellungen sind ausschließlich für Entwicklungszwecke gedacht. Sie können dein Gerät und die darauf installierten Apps beschädigen oder zu unerwünschtem Verhalten führen."</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"Über USB installierte Apps prüfen"</string>
     <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"Über ADB/ADT installierte Apps werden auf schädliches Verhalten geprüft"</string>
-    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Bluetooth-Geräte werden ohne Namen und nur mit ihren MAC-Adressen angezeigt"</string>
+    <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"Bluetooth-Geräte werden ohne Namen und nur mit ihrer MAC-Adresse angezeigt"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"Deaktiviert die Funktion „Absolute Lautstärkeregelung“ für Bluetooth-Geräte, falls auf Remote-Geräten Probleme mit der Lautstärke auftreten, wie beispielsweise übermäßig laute Wiedergabe oder fehlende Steuerungsmöglichkeiten."</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"Aktiviert das Bluetooth-Gabeldorsche-Funktionspaket."</string>
     <string name="enhanced_connectivity_summary" msgid="1576414159820676330">"Aktiviert die Funktion \"Verbesserte Konnektivität\"."</string>
@@ -408,7 +408,7 @@
     <string name="track_frame_time" msgid="522674651937771106">"HWUI-Rendering-Profil"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"GPU-Debug-Ebenen zulassen"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Debug-Apps das Laden von GPU-Debug-Ebenen erlauben"</string>
-    <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Ausführliche Protokollierung aktivieren"</string>
+    <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Ausführliches Vendor-Logging aktivieren"</string>
     <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"Nimmt zusätzliche gerätespezifische Vendor-Logs in Fehlerberichte auf, die private Informationen enthalten, den Akkuverbrauch erhöhen und/oder zusätzlichen Speicher benötigen können."</string>
     <string name="enable_verbose_vendor_logging_checkbox" msgid="3864578373293835530">"Nach einem Tag deaktivieren"</string>
     <string name="verbose_vendor_logging_notification_title" msgid="6811217272559843592">"Ausführliches Vendor-Logging beendet"</string>

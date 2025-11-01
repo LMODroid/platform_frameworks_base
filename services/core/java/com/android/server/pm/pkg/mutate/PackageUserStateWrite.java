@@ -74,4 +74,7 @@ public interface PackageUserStateWrite {
     /** @see PackageUserStateImpl#setMinAspectRatio(int) */
     @NonNull
     PackageUserStateWrite setMinAspectRatio(@PackageManager.UserMinAspectRatio int aspectRatio);
+
+    @NonNull
+    PackageUserStateWrite setDisplayCompat(boolean enabled);
 }

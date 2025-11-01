@@ -258,7 +258,7 @@
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Sambungkan perangkat baru menggunakan pemindai kode QR"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Sambungkan perangkat dengan kode penyambungan"</string>
     <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Sambungkan perangkat baru menggunakan kode enam digit"</string>
-    <string name="adb_paired_devices_title" msgid="5268997341526217362">"Perangkat disambungkan"</string>
+    <string name="adb_paired_devices_title" msgid="5268997341526217362">"Perangkat yang tersambung"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Saat ini terhubung"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Detail perangkat"</string>
     <string name="adb_device_forget" msgid="193072400783068417">"Lupakan"</string>
@@ -588,7 +588,7 @@
     <string name="media_transfer_internal_mic" msgid="797333824290228595">"Mikrofon (internal)"</string>
     <string name="media_transfer_dock_speaker_device_name" msgid="2856219597113881950">"Speaker dok"</string>
     <string name="media_transfer_external_device_name" msgid="2588672258721846418">"Perangkat Eksternal"</string>
-    <string name="media_transfer_default_device_name" msgid="4315604017399871828">"Perangkat yang terhubung"</string>
+    <string name="media_transfer_default_device_name" msgid="4315604017399871828">"Perangkat terhubung"</string>
     <string name="media_transfer_this_phone" msgid="7194341457812151531">"Ponsel ini"</string>
     <string name="media_output_status_unknown_error" msgid="5098565887497902222">"Tidak dapat memutar di perangkat ini"</string>
     <string name="media_output_status_require_premium" msgid="8411255800047014822">"Upgrade akun untuk beralih"</string>
@@ -668,7 +668,7 @@
     <string name="not_grant_admin" msgid="3557849576157702485">"Tidak, jangan jadikan sebagai admin"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"Keluar"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"Simpan aktivitas tamu?"</string>
-    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Anda bisa menyimpan aktivitas sesi saat ini atau menghapus semua aplikasi &amp; data"</string>
+    <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"Anda dapat menyimpan aktivitas sesi ini atau menghapus semua aplikasi dan data"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"Hapus"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"Simpan"</string>
     <string name="guest_exit_button" msgid="5774985819191803960">"Keluar dari mode tamu"</string>
@@ -676,7 +676,7 @@
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"Keluar dari mode tamu"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Semua aktivitas akan dihapus saat Anda keluar"</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"Anda dapat menyimpan atau menghapus aktivitas saat keluar"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Reset untuk hapus aktivitas sesi sekarang, atau simpan atau hapus aktivitas saat keluar"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Reset untuk menghapus aktivitas sesi sekarang, atau simpan atau hapus aktivitas saat keluar"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"Pilih foto"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"Terlalu banyak percobaan yang salah. Data perangkat ini akan dihapus."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"Terlalu banyak percobaan yang salah. Pengguna ini akan dihapus."</string>

@@ -52,7 +52,7 @@
     <string name="accessibility_split_right" msgid="8441001008181296837">"Dividi a destra"</string>
     <string name="accessibility_split_top" msgid="2789329702027147146">"Dividi in alto"</string>
     <string name="accessibility_split_bottom" msgid="8694551025220868191">"Dividi in basso"</string>
-    <string name="one_handed_tutorial_title" msgid="4583241688067426350">"Usare la modalità a una mano"</string>
+    <string name="one_handed_tutorial_title" msgid="4583241688067426350">"Utilizzo della modalità a una mano"</string>
     <string name="one_handed_tutorial_description" msgid="3486582858591353067">"Per uscire, scorri verso l\'alto dalla parte inferiore dello schermo oppure tocca un punto qualsiasi sopra l\'app"</string>
     <string name="accessibility_action_start_one_handed" msgid="5070337354072861426">"Avvia la modalità a una mano"</string>
     <string name="accessibility_action_stop_one_handed" msgid="1369940261782179442">"Esci dalla modalità a una mano"</string>

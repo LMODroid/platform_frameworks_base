@@ -129,6 +129,8 @@ public class PackageUserStateImpl extends WatchableImpl implements PackageUserSt
 
     private @CurrentTimeMillisLong long mFirstInstallTimeMillis;
 
+    private boolean mDisplayCompat;
+
     // TODO(b/239050028): Remove, enforce notifying parent through PMS commit method
     @Nullable
     private Watchable mWatchable;
@@ -188,6 +190,7 @@ public class PackageUserStateImpl extends WatchableImpl implements PackageUserSt
                 ? null : other.mComponentLabelIconOverrideMap.snapshot();
         mFirstInstallTimeMillis = other.mFirstInstallTimeMillis;
         mArchiveState = other.mArchiveState;
+        mDisplayCompat = other.mDisplayCompat;
         mSnapshot = new SnapshotCache.Sealed<>();
     }
 
@@ -617,6 +620,12 @@ public class PackageUserStateImpl extends WatchableImpl implements PackageUserSt
         return this;
     }
 
+    public @NonNull PackageUserStateImpl setDisplayCompat(boolean value) {
+        mDisplayCompat = value;
+        onChanged();
+        return this;
+    }
+
     @NonNull
     @Override
     public Map<String, OverlayPaths> getSharedLibraryOverlayPaths() {
@@ -805,6 +814,11 @@ public class PackageUserStateImpl extends WatchableImpl implements PackageUserSt
     }
 
     @DataClass.Generated.Member
+    public boolean isDisplayCompat() {
+        return mDisplayCompat;
+    }
+
+    @DataClass.Generated.Member
     public @NonNull SnapshotCache<PackageUserStateImpl> getSnapshot() {
         return mSnapshot;
     }
@@ -879,6 +893,7 @@ public class PackageUserStateImpl extends WatchableImpl implements PackageUserSt
                 && Objects.equals(mSuspendParams, that.mSuspendParams)
                 && Objects.equals(mComponentLabelIconOverrideMap, that.mComponentLabelIconOverrideMap)
                 && mFirstInstallTimeMillis == that.mFirstInstallTimeMillis
+                && mDisplayCompat == that.mDisplayCompat
                 && watchableEquals(that.mWatchable)
                 && Objects.equals(mArchiveState, that.mArchiveState)
                 && snapshotEquals(that.mSnapshot);
@@ -909,6 +924,7 @@ public class PackageUserStateImpl extends WatchableImpl implements PackageUserSt
         _hash = 31 * _hash + Objects.hashCode(mSuspendParams);
         _hash = 31 * _hash + Objects.hashCode(mComponentLabelIconOverrideMap);
         _hash = 31 * _hash + Long.hashCode(mFirstInstallTimeMillis);
+        _hash = 31 * _hash + Boolean.hashCode(mDisplayCompat);
         _hash = 31 * _hash + watchableHashCode();
         _hash = 31 * _hash + Objects.hashCode(mArchiveState);
         _hash = 31 * _hash + snapshotHashCode();

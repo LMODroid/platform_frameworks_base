@@ -77,7 +77,7 @@
     <string name="osu_sign_up_failed" msgid="5605453599586001793">"Dovršavanje registracije nije uspelo. Dodirnite da biste probali ponovo."</string>
     <string name="osu_sign_up_complete" msgid="7640183358878916847">"Registracija je dovršena. Povezuje se…"</string>
     <string name="speed_label_slow" msgid="6069917670665664161">"Spora"</string>
-    <string name="speed_label_okay" msgid="1253594383880810424">"Potvrdi"</string>
+    <string name="speed_label_okay" msgid="1253594383880810424">"Važi"</string>
     <string name="speed_label_fast" msgid="2677719134596044051">"Brza"</string>
     <string name="speed_label_very_fast" msgid="8215718029533182439">"Veoma brza"</string>
     <string name="wifi_passpoint_expired" msgid="6540867261754427561">"Isteklo"</string>
@@ -219,7 +219,7 @@
     <string name="tts_status_checking" msgid="8026559918948285013">"Proverava se..."</string>
     <string name="tts_engine_settings_title" msgid="7849477533103566291">"Podešavanja za <xliff:g id="TTS_ENGINE_NAME">%s</xliff:g>"</string>
     <string name="tts_engine_settings_button" msgid="477155276199968948">"Pokreni podešavanja mašine"</string>
-    <string name="tts_engine_preference_section_title" msgid="3861562305498624904">"Željena mašina"</string>
+    <string name="tts_engine_preference_section_title" msgid="3861562305498624904">"Željena alatka"</string>
     <string name="tts_general_section_title" msgid="8919671529502364567">"Opšta"</string>
     <string name="tts_reset_speech_pitch_title" msgid="7149398585468413246">"Resetujte visinu tona govora"</string>
     <string name="tts_reset_speech_pitch_summary" msgid="6822904157021406449">"Resetujte visinu tona kojom se tekst izgovara na podrazumevanu."</string>
@@ -250,7 +250,7 @@
     <string name="enable_adb_summary" msgid="3711526030096574316">"Režim otklanjanja grešaka kada je USB povezan"</string>
     <string name="clear_adb_keys" msgid="3010148733140369917">"Opozivanje odobrenja za uklanjanje USB grešaka"</string>
     <string name="enable_adb_wireless" msgid="6973226350963971018">"Bežično otklanjanje grešaka"</string>
-    <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Režim za otklanjanje grešaka kada je Wi‑Fi povezan"</string>
+    <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Režim za otklanjanje grešaka kada je WiFi povezan"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"Greška"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Bežično otklanjanje grešaka"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Da biste videli i koristili dostupne uređaje, uključite bežično otklanjanje grešaka"</string>
@@ -266,7 +266,7 @@
     <string name="adb_wireless_connection_failed_title" msgid="664211177427438438">"Povezivanje nije uspelo"</string>
     <string name="adb_wireless_connection_failed_message" msgid="9213896700171602073">"Uverite se da je <xliff:g id="DEVICE_NAME">%1$s</xliff:g> povezan sa odgovarajućom mrežom"</string>
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"Uparite sa uređajem"</string>
-    <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Kôd za uparivanje preko Wi‑Fi-ja"</string>
+    <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Kôd za uparivanje preko WiFi-ja"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Uparivanje nije uspelo"</string>
     <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Uverite se da je uređaj povezan na istu mrežu."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Uparite uređaj pomoću Wi‑Fi mreže ili tako što ćete skenirati QR kôd"</string>
@@ -324,7 +324,7 @@
     <string name="private_dns_mode_provider_hostname_hint" msgid="6564868953748514595">"Unesite ime hosta dobavljača usluge DNS-a"</string>
     <string name="private_dns_mode_provider_failure" msgid="8356259467861515108">"Povezivanje nije uspelo"</string>
     <string name="wifi_display_certification_summary" msgid="8111151348106907513">"Prikazuje opcije za sertifikaciju bežičnog ekrana"</string>
-    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Povećava nivo evidentiranja za Wi‑Fi. Prikaz po SSID RSSI-u u biraču Wi‑Fi mreže"</string>
+    <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Povećava nivo evidentiranja za WiFi. Prikaz po SSID RSSI-u u biraču WiFi mreže"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"Smanjuje potrošnju baterije i poboljšava učinak mreže"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"Kada je ovaj režim omogućen, MAC adresa ovog uređaja može da se promeni svaki put kada se poveže sa mrežom na kojoj je omogućeno nasumično razvrstavanje MAC adresa."</string>
     <string name="wifi_metered_label" msgid="8737187690304098638">"Sa ograničenjem"</string>
@@ -340,7 +340,7 @@
     <string name="allow_mock_location" msgid="2102650981552527884">"Dozvoli lažne lokacije"</string>
     <string name="allow_mock_location_summary" msgid="179780881081354579">"Dozvoli lažne lokacije"</string>
     <string name="debug_view_attributes" msgid="3539609843984208216">"Omogući proveru atributa za pregled"</string>
-    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Mobilni podaci su uvek aktivni, čak i kada je Wi‑Fi aktivan (radi brze promene mreže)."</string>
+    <string name="mobile_data_always_on_summary" msgid="1112156365594371019">"Mobilni podaci su uvek aktivni, čak i kada je WiFi aktivan (radi brze promene mreže)."</string>
     <string name="tethering_hardware_offload_summary" msgid="7801345335142803029">"Koristi se hardversko ubrzanje privezivanja ako je dostupno"</string>
     <string name="adb_warning_title" msgid="7708653449506485728">"Dozvoli otklanjanje USB grešaka?"</string>
     <string name="adb_warning_message" msgid="8145270656419669221">"Otklanjanje USB grešaka namenjeno je samo za svrhe programiranja. Koristite ga za kopiranje podataka sa računara na uređaj i obratno, instaliranje aplikacija na uređaju bez obaveštenja i čitanje podataka iz evidencije."</string>
@@ -378,7 +378,7 @@
     <string name="pointer_location_summary" msgid="957120116989798464">"Preklopni element sa trenutnim podacima o dodiru"</string>
     <string name="show_touches" msgid="8437666942161289025">"Prikazuj dodire"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Prikazuje vizuelne povratne informacije za dodire"</string>
-    <string name="show_key_presses" msgid="6360141722735900214">"Prikazuj pritiske tastera"</string>
+    <string name="show_key_presses" msgid="6360141722735900214">"Prikaži pritiske tastera"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"Prikazuje povratne informacije za pritiske tastera"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Prikaži unos na tačpedu"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Element koji prekriva sadržaj ekrana prikazuje podatke iz unosa na tačpedu i prepoznaje pokrete"</string>
@@ -391,7 +391,7 @@
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Otkloni greške GPU preklapanja"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Onemogući HW postavljene elemente"</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Uvek se koristi GPU za komponovanje ekrana"</string>
-    <string name="simulate_color_space" msgid="1206503300335835151">"Simuliraj prostor boje"</string>
+    <string name="simulate_color_space" msgid="1206503300335835151">"Simulacija prostora boje"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"Omogući OpenGL tragove"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Onemogući USB preusm. zvuka"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Onemogućava automatsko preusmeravanje na USB audio periferne uređaje"</string>
@@ -405,7 +405,7 @@
     <string name="force_msaa" msgid="4081288296137775550">"Nametni 4x MSAA"</string>
     <string name="force_msaa_summary" msgid="9070437493586769500">"Omogućava 4x MSAA u OpenGL ES 2.0 aplikacijama"</string>
     <string name="show_non_rect_clip" msgid="7499758654867881817">"Otkloni greške isecanja oblasti nepravougaonog oblika"</string>
-    <string name="track_frame_time" msgid="522674651937771106">"Renderuj pomoću HWUI-a"</string>
+    <string name="track_frame_time" msgid="522674651937771106">"Renderovanje pomoću HWUI-a"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"Omogući slojeve za otklanjanje grešaka GPU-a"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Omogućite učitavanje slojeva za otklanjanje grešaka GPU-a u aplikacijama za otklanjanje grešaka"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Opširne evidencije prodavca"</string>
@@ -416,10 +416,10 @@
     <string name="verbose_vendor_logging_notification_action" msgid="1190831050259046071">"Omogući još jedan dan"</string>
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Onemogućeno posle jednog dana"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Omogućeno neograničeno"</string>
-    <string name="window_animation_scale_title" msgid="5236381298376812508">"Razmera animacije prozora"</string>
-    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Razmera animacije prelaza"</string>
-    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Animatorova razmera trajanja"</string>
-    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simuliraj sekundarne ekrane"</string>
+    <string name="window_animation_scale_title" msgid="5236381298376812508">"Brzina animacije prozora"</string>
+    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Brzina animacije prelaza"</string>
+    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Brzina generisanja animacije"</string>
+    <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simulacija sekundarnih ekrana"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplikacije"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Ne čuvaj aktivnosti"</string>
     <string name="immediately_destroy_activities_summary" msgid="6289590341144557614">"Uništava svaku aktivnost čim je korisnik napusti"</string>
@@ -557,7 +557,7 @@
     <string name="next" msgid="2699398661093607009">"Dalje"</string>
     <string name="back" msgid="5554327870352703710">"Nazad"</string>
     <string name="save" msgid="3745809743277153149">"Sačuvaj"</string>
-    <string name="okay" msgid="949938843324579502">"Potvrdi"</string>
+    <string name="okay" msgid="949938843324579502">"Važi"</string>
     <string name="done" msgid="381184316122520313">"Gotovo"</string>
     <string name="alarms_and_reminders_label" msgid="6918395649731424294">"Alarmi i podsetnici"</string>
     <string name="alarms_and_reminders_switch_title" msgid="4939393911531826222">"Omogući podešavanje alarma i podsetnika"</string>

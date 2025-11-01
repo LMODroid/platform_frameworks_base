@@ -44,6 +44,11 @@ class PackageUserStateDefault implements PackageUserStateInternal {
         return PackageManager.INSTALL_REASON_UNKNOWN;
     }
 
+    @Override
+    public boolean isDisplayCompat() {
+        return false;
+    }
+
     @NonNull
     @Override
     public Map<String, OverlayPaths> getSharedLibraryOverlayPaths() {

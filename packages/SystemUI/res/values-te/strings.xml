@@ -246,7 +246,7 @@
     <string name="accessibility_battery_unknown" msgid="1807789554617976440">"బ్యాటరీ శాతం తెలియదు."</string>
     <string name="accessibility_bluetooth_name" msgid="7300973230214067678">"<xliff:g id="BLUETOOTH">%s</xliff:g>కి కనెక్ట్ చేయబడింది."</string>
     <string name="accessibility_cast_name" msgid="7344437925388773685">"<xliff:g id="CAST">%s</xliff:g>కి కనెక్ట్ చేయబడింది."</string>
-    <string name="accessibility_not_connected" msgid="4061305616351042142">"కనెక్ట్ చేయబడలేదు."</string>
+    <string name="accessibility_not_connected" msgid="4061305616351042142">"కనెక్ట్ కాలేదు."</string>
     <string name="data_connection_roaming" msgid="375650836665414797">"రోమింగ్"</string>
     <string name="cell_data_off" msgid="4886198950247099526">"ఆఫ్ చేయండి"</string>
     <string name="accessibility_airplane_mode" msgid="1899529214045998505">"విమానం మోడ్."</string>
@@ -270,7 +270,7 @@
     <string name="accessibility_desc_close" msgid="8293708213442107755">"మూసివేస్తుంది"</string>
     <string name="accessibility_quick_settings_dnd_none_on" msgid="3235552940146035383">"మొత్తం నిశ్శబ్దం"</string>
     <string name="accessibility_quick_settings_dnd_alarms_on" msgid="3375848309132140014">"అలారాలు మాత్రమే"</string>
-    <string name="accessibility_quick_settings_dnd" msgid="2415967452264206047">"అంతరాయం కలిగించవద్దు."</string>
+    <string name="accessibility_quick_settings_dnd" msgid="2415967452264206047">"డిస్టర్బ్ చేయవద్దు."</string>
     <string name="accessibility_quick_settings_bluetooth" msgid="8250942386687551283">"బ్లూటూత్."</string>
     <string name="accessibility_quick_settings_bluetooth_on" msgid="3819082137684078013">"బ్లూటూత్ ఆన్‌లో ఉంది."</string>
     <string name="accessibility_quick_settings_alarm" msgid="558094529584082090">"<xliff:g id="TIME">%s</xliff:g>కి అలారం సెట్ చేయబడింది."</string>
@@ -292,7 +292,7 @@
     <string name="dessert_case" msgid="9104973640704357717">"డెజర్ట్ కేస్"</string>
     <string name="start_dreams" msgid="9131802557946276718">"స్క్రీన్ సేవర్"</string>
     <string name="ethernet_label" msgid="2203544727007463351">"ఈథర్‌నెట్"</string>
-    <string name="quick_settings_dnd_label" msgid="7728690179108024338">"అంతరాయం కలిగించవద్దు"</string>
+    <string name="quick_settings_dnd_label" msgid="7728690179108024338">"డిస్టర్బ్ చేయవద్దు"</string>
     <string name="quick_settings_modes_label" msgid="879156359479504244">"మోడ్‌లు"</string>
     <string name="quick_settings_bluetooth_label" msgid="7018763367142041481">"బ్లూటూత్"</string>
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"జత చేసిన పరికరాలు ఏవీ అందుబాటులో లేవు"</string>
@@ -407,17 +407,17 @@
     <string name="hearing_devices_preset_label" msgid="7878267405046232358">"ప్రీసెట్"</string>
     <string name="quick_settings_hearing_devices_live_caption_title" msgid="1054814050932225451">"లైవ్ క్యాప్షన్"</string>
     <string name="sensor_privacy_start_use_mic_dialog_title" msgid="563796653825944944">"పరికరం మైక్రోఫోన్‌ను అన్‌బ్లాక్ చేయమంటారా?"</string>
-    <string name="sensor_privacy_start_use_camera_dialog_title" msgid="8807639852654305227">"పరికరంలోని కెమెరాను అన్‌బ్లాక్ చేయమంటారా?"</string>
-    <string name="sensor_privacy_start_use_mic_camera_dialog_title" msgid="4316471859905020023">"పరికరంలోని కెమెరా, మైక్రోఫోన్‌లను అన్‌బ్లాక్ చేయమంటారా?"</string>
+    <string name="sensor_privacy_start_use_camera_dialog_title" msgid="8807639852654305227">"డివైజ్‌లోని కెమెరాను అన్‌బ్లాక్ చేయమంటారా?"</string>
+    <string name="sensor_privacy_start_use_mic_camera_dialog_title" msgid="4316471859905020023">"డివైజ్‌లోని కెమెరాను, మైక్రోఫోన్‌ను అన్‌బ్లాక్ చేయమంటారా?"</string>
     <string name="sensor_privacy_start_use_mic_dialog_content" msgid="1624701280680913717">"మీ మైక్రోఫోన్‌ను ఉపయోగించడానికి అనుమతి పొందిన అన్ని యాప్‌లు, సర్వీస్‌లకు యాక్సెస్‌ను ఇది అన్‌బ్లాక్ చేస్తుంది."</string>
     <string name="sensor_privacy_start_use_camera_dialog_content" msgid="4704948062372435963">"ఇది, మీ కెమెరాను ఉపయోగించడానికి అనుమతి పొందిన అన్ని యాప్‌లకు, సర్వీస్‌లకు యాక్సెస్‌ను అన్‌బ్లాక్ చేస్తుంది."</string>
     <string name="sensor_privacy_start_use_mic_camera_dialog_content" msgid="3577642558418404919">"ఇది, మీ కెమెరాను లేదా మైక్రోఫోన్‌ను ఉపయోగించడానికి అనుమతి పొందిన అన్ని యాప్‌లకు, సర్వీస్‌లకు యాక్సెస్‌ను అన్‌బ్లాక్ చేస్తుంది."</string>
     <string name="sensor_privacy_start_use_mic_blocked_dialog_title" msgid="2640140287496469689">"మైక్రోఫోన్ బ్లాక్ చేయబడింది"</string>
     <string name="sensor_privacy_start_use_camera_blocked_dialog_title" msgid="7398084286822440384">"కెమెరా బ్లాక్ చేయబడింది"</string>
     <string name="sensor_privacy_start_use_mic_camera_blocked_dialog_title" msgid="195236134743281973">"మైక్ &amp; కెమెరా బ్లాక్ చేయబడ్డాయి"</string>
-    <string name="sensor_privacy_start_use_mic_blocked_dialog_content" msgid="2138318880682877747">"అన్‌బ్లాక్ చేయడానికి, మైక్రోఫోన్ యాక్సెస్‌ను అనుమతించడానికి మీ పరికరంలోని గోప్యతా స్విచ్‌ను మైక్రోఫోన్‌ను ఆన్ చేయండి స్థానానికి తరలించండి. మీ పరికరంలో గోప్యతా స్విచ్‌ను గుర్తించడానికి పరికర మాన్యువల్‌ని చూడండి."</string>
-    <string name="sensor_privacy_start_use_camera_blocked_dialog_content" msgid="7216015168047965948">"అన్‌బ్లాక్ చేయడానికి, కెమెరా యాక్సెస్‌ను అనుమతించడానికి మీ పరికరంలోని గోప్యతా స్విచ్‌ను కెమెరాను ఆన్ చేయండి స్థానంలోకి తరలించండి. మీ పరికరంలో గోప్యతా స్విచ్‌ను గుర్తించడానికి పరికర మాన్యువల్‌ని చూడండి."</string>
-    <string name="sensor_privacy_start_use_mic_camera_blocked_dialog_content" msgid="3960837827570483762">"వాటిని అన్‌బ్లాక్ చేయడానికి, యాక్సెస్‌ని అనుమతించడానికి మీ పరికరంలోని గోప్యతా స్విచ్‌ను అన్‌బ్లాక్ చేయబడింది స్థానానికి తరలించండి. మీ పరికరంలో గోప్యతా స్విచ్‌ను గుర్తించడానికి పరికర మాన్యువల్‌ని చూడండి."</string>
+    <string name="sensor_privacy_start_use_mic_blocked_dialog_content" msgid="2138318880682877747">"అన్‌బ్లాక్ చేయడానికి, మీ డివైజ్‌లోని గోప్యతా స్విచ్‌ను \'మైక్రోఫోన్‌ను ఆన్ చేయండి\' అనే పొజిషన్‌లోకి మార్చండి, తద్వారా మైక్రోఫోన్ యాక్సెస్‌ను అనుమతించవచ్చు. మీ డివైజ్‌లో గోప్యతా స్విచ్‌ను గుర్తించడానికి డివైజ్ మాన్యువల్‌ను చూడండి."</string>
+    <string name="sensor_privacy_start_use_camera_blocked_dialog_content" msgid="7216015168047965948">"అన్‌బ్లాక్ చేయడానికి, మీ డివైజ్‌లోని గోప్యతా స్విచ్‌ను \'కెమెరాను ఆన్ చేయండి\' అనే పొజిషన్‌లోకి మార్చండి, తద్వారా కెమెరా యాక్సెస్‌ను అనుమతించవచ్చు. మీ డివైజ్‌లో గోప్యతా స్విచ్‌ను గుర్తించడానికి డివైజ్ మాన్యువల్‌ను చూడండి."</string>
+    <string name="sensor_privacy_start_use_mic_camera_blocked_dialog_content" msgid="3960837827570483762">"వాటిని అన్‌బ్లాక్ చేయడానికి, మీ డివైజ్‌లోని గోప్యతా స్విచ్‌ను \'అన్‌బ్లాక్ అయింది\' అనే పొజిషన్‌లోకి మార్చండి, తద్వారా యాక్సెస్‌ను అనుమతించవచ్చు. మీ డివైజ్‌లో గోప్యతా స్విచ్‌ను గుర్తించడానికి డివైజ్ మాన్యువల్‌ను చూడండి."</string>
     <string name="sensor_privacy_mic_unblocked_toast_content" msgid="306555320557065068">"మైక్రోఫోన్ అందుబాటులో ఉంది"</string>
     <string name="sensor_privacy_camera_unblocked_toast_content" msgid="7843105715964332311">"కెమెరా అందుబాటులో ఉంది"</string>
     <string name="sensor_privacy_mic_camera_unblocked_toast_content" msgid="7339355093282661115">"మైక్రోఫోన్, అలాగే కెమెరా అందుబాటులో ఉంది"</string>
@@ -739,14 +739,14 @@
     <string name="enable_bluetooth_confirmation_ok" msgid="2866408183324184876">"ఆన్ చేయి"</string>
     <string name="rotation_lock_camera_rotation_on" msgid="789434807790534274">"\'ముఖం ఆధారం\'ను - ఆన్ చేయండి"</string>
     <string name="inline_done_button" msgid="6043094985588909584">"పూర్తయింది"</string>
-    <string name="inline_ok_button" msgid="603075490581280343">"అప్లయి చేయి"</string>
+    <string name="inline_ok_button" msgid="603075490581280343">"వర్తింపజేయండి"</string>
     <string name="inline_turn_off_notifications" msgid="8543989584403106071">"నోటిఫికేషన్‌లను ఆఫ్ చేయి"</string>
     <string name="notification_silence_title" msgid="8608090968400832335">"నిశ్శబ్దం"</string>
     <string name="notification_alert_title" msgid="3656229781017543655">"ఆటోమేటిక్ సెట్టింగ్"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"ఆటోమేటిక్"</string>
     <string name="notification_channel_summary_low" msgid="4860617986908931158">"సౌండ్ లేదా వైబ్రేషన్‌లు ఏవీ ఉండవు"</string>
     <string name="notification_conversation_summary_low" msgid="3855696451919728790">"ఎటువంటి సౌండ్ లేదా వైబ్రేషన్ లేకుండా సంభాషణ విభాగంలో నోటిఫికేషన్ కనిపిస్తుంది"</string>
-    <string name="notification_channel_summary_default" msgid="777294388712200605">"పరికర సెట్టింగ్‌ల ఆధారంగా రింగ్ లేదా వైబ్రేట్ కావచ్చు"</string>
+    <string name="notification_channel_summary_default" msgid="777294388712200605">"డివైజ్‌‌ సెట్టింగ్‌ల ఆధారంగా రింగ్ లేదా వైబ్రేట్ కావచ్చు"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"పరికర సెట్టింగ్‌ల ఆధారంగా రింగ్ లేదా వైబ్రేట్ కావచ్చు. <xliff:g id="APP_NAME">%1$s</xliff:g> నుండి సంభాషణలు ఆటోమేటిక్‌గా బబుల్‌లో కనిపిస్తాయి."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"ఈ నోటిఫికేషన్ వచ్చినప్పుడు శబ్దం చేయాలా లేదా వైబ్రేట్ చేయాలా అనేది నిర్ణయించడానికి సిస్టమ్‌కు అనుమతి ఇవ్వండి"</string>
     <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;స్టేటస్:&lt;/b&gt; ఆటోమేటిక్ సెట్టింగ్‌కు ప్రోమోట్ చేయబడింది"</string>
@@ -865,7 +865,7 @@
     <string name="keyboard_shortcut_group_applications_calendar" msgid="4229602992120154157">"Calendar"</string>
     <string name="keyboard_shortcut_group_applications_calculator" msgid="6316043911946540137">"క్యాలిక్యులేటర్"</string>
     <string name="keyboard_shortcut_group_applications_maps" msgid="7312554713993114342">"Maps"</string>
-    <string name="volume_and_do_not_disturb" msgid="502044092739382832">"అంతరాయం కలిగించవద్దు"</string>
+    <string name="volume_and_do_not_disturb" msgid="502044092739382832">"డిస్టర్బ్ చేయవద్దు"</string>
     <string name="volume_dnd_silent" msgid="4154597281458298093">"వాల్యూమ్ బటన్‌ల షార్ట్‌కట్"</string>
     <string name="battery" msgid="769686279459897127">"బ్యాటరీ"</string>
     <string name="headset" msgid="4485892374984466437">"హెడ్‌సెట్"</string>
@@ -1447,7 +1447,7 @@
     <string name="accessibility_deprecate_extra_dim_dialog_button" msgid="3947537827396916005">"కాంతిని మరింత డిమ్ చేసే షార్ట్‌కట్‌లను తీసివేయండి"</string>
     <string name="accessibility_deprecate_extra_dim_dialog_toast" msgid="165474092660941104">"కాంతిని మరింత డిమ్ చేసే షార్ట్‌కట్‌లు తీసివేయబడ్డాయి"</string>
     <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"కనెక్టివిటీ"</string>
-    <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"Accessibility"</string>
+    <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"యాక్సెసిబిలిటీ"</string>
     <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"యుటిలిటీలు"</string>
     <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"గోప్యత"</string>
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"యాప్‌ల ద్వారా అందించబడినవి"</string>

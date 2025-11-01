@@ -272,14 +272,14 @@
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Muodosta laitepari Wi-Fi-yhteyden kautta skannaamalla QR-koodi"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Muodostetaan laiteparia…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Laiteparin muodostus ei onnistunut. QR-koodi oli virheellinen, tai laitetta ei ole yhdistetty samaan verkkoon."</string>
-    <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"IP-osoite &amp; portti"</string>
+    <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"IP-osoite ja portti"</string>
     <string name="adb_wireless_qrcode_pairing_title" msgid="1906409667944674707">"Skannaa QR-koodi"</string>
     <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Muodosta laitepari Wi-Fi-yhteyden kautta skannaamalla QR-koodi"</string>
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"Yhdistä langattomaan verkkoon"</string>
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, virheenkorjaus, kehittäminen"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"Virheraportin pikakuvake"</string>
     <string name="bugreport_in_power_summary" msgid="1885529649381831775">"Näytä virheraporttipainike virtavalikossa"</string>
-    <string name="keep_screen_on" msgid="1187161672348797558">"Pysy käynnissä"</string>
+    <string name="keep_screen_on" msgid="1187161672348797558">"Pidä päällä"</string>
     <string name="keep_screen_on_summary" msgid="1510731514101925829">"Näyttö ei sammu puhelimen latautuessa"</string>
     <string name="bt_hci_snoop_log" msgid="7291287955649081448">"Ota Bluetoothin HCI-tarkkailuloki käyttöön"</string>
     <string name="bt_hci_snoop_log_summary" msgid="6808538971394092284">"Tallenna Bluetoothin HCl-paketit tiedostoon (ota Bluetooth käyttöön asetuksen muuttamisen jälkeen)"</string>
@@ -366,7 +366,7 @@
     <string name="select_application" msgid="2543228890535466325">"Valitse sovellus"</string>
     <string name="no_application" msgid="9038334538870247690">"Ei mitään"</string>
     <string name="wait_for_debugger" msgid="7461199843335409809">"Odota vianetsintää"</string>
-    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Sovellus odottaa vianetsinnän lisäämistä, ja käynnistyy sen jälkeen"</string>
+    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"Sovellus odottaa vianetsinnän liittämistä ennen suorituksen aloittamista"</string>
     <string name="debug_input_category" msgid="7349460906970849771">"Syöte"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"Piirustus"</string>
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Laitteistokiihdytetty hahmonnus"</string>
@@ -383,7 +383,7 @@
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Näytä kosketuslevyn syöte"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Näytön peitto, jossa näkyy kosketuslevyn syötedata ja tunnistetut eleet"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Näytä pintapäivitykset"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Väläytä koko ikkunoiden pinnat päivitettäessä"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Näytä kaikki ikkunapinnat päivitettäessä"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Näytä näyttöpäivitykset"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Näytä ikkunoiden sisältö piirtämisen yhteydessä"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Näytä laitteistotason päivitykset"</string>
@@ -408,8 +408,8 @@
     <string name="track_frame_time" msgid="522674651937771106">"HWUI-profiilirenderöinti"</string>
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"GPU-virheenkorjaus päälle"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"Salli GPU:n virheenkorjauskerrosten lataus"</string>
-    <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Käytä laajennettua kirjausta"</string>
-    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"Sisällytä virheraportteihin muita laitekohtaisia myyjälokeja, jotka voivat sisältää yksityisiä tietoja, käyttää enemmän akkua ja/tai käyttää enemmän tallennustilaa"</string>
+    <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"Ota käyttöön laajennettu laitevalmistajan loki"</string>
+    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"Sisällytä virheraportteihin muita laitekohtaisia valmistajalokeja, jotka voivat sisältää yksityisiä tietoja, käyttää enemmän akkuvirtaa ja/tai käyttää enemmän tallennustilaa"</string>
     <string name="enable_verbose_vendor_logging_checkbox" msgid="3864578373293835530">"Poista käytöstä yhden päivän jälkeen"</string>
     <string name="verbose_vendor_logging_notification_title" msgid="6811217272559843592">"Tarjoajien laajennettu kirjaus on päättynyt"</string>
     <string name="verbose_vendor_logging_notification_summary" msgid="5226524769774370942">"Käytössä päivän ajan"</string>
@@ -632,8 +632,8 @@
     <string name="user_grant_admin_title" msgid="5157031020083343984">"Tehdäänkö tästä käyttäjästä järjestelmänvalvoja?"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"Järjestelmänvalvojilla on enemmän oikeuksia kuin muilla. Järjestelmänvalvoja voi hallinnoida kaikkia käyttäjiä, päivittää tai nollata tämän laitteen, muokata asetuksia, nähdä asennetut sovellukset ja antaa tai peruuttaa järjestelmänvalvojan oikeudet muilta."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Muuta järjestelmänvalvojaksi"</string>
-    <string name="user_setup_dialog_title" msgid="8037342066381939995">"Lisätäänkö käyttäjä nyt?"</string>
-    <string name="user_setup_dialog_message" msgid="269931619868102841">"Varmista, että käyttäjä voi ottaa laitteen nyt ja määrittää oman tilansa."</string>
+    <string name="user_setup_dialog_title" msgid="8037342066381939995">"Otetaanko käyttäjä nyt käyttöön?"</string>
+    <string name="user_setup_dialog_message" msgid="269931619868102841">"Varmista, että käyttäjä voi ottaa laitteen nyt ja ottaa oman tilansa käyttöön."</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"Määritetäänkö profiilin asetukset nyt?"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"Ota käyttöön nyt"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"Ei nyt"</string>
@@ -661,7 +661,7 @@
     <string name="guest_remove_guest_confirm_button" msgid="7858123434954143879">"Poista"</string>
     <string name="guest_resetting" msgid="7822120170191509566">"Nollataan vierasta…"</string>
     <string name="guest_reset_and_restart_dialog_title" msgid="3396657008451616041">"Nollataanko vierailija-käyttökerta?"</string>
-    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Tämä aloittaa uuden vierailija-käyttökerran ja kaikki nykyisen istunnon sovellukset ja data poistetaan"</string>
+    <string name="guest_reset_and_restart_dialog_message" msgid="2764425635305200790">"Uusi vierailija-käyttökerta aloitetaan ja kaikki nykyisen istunnon sovellukset ja data poistetaan"</string>
     <string name="guest_exit_dialog_title" msgid="1846494656849381804">"Poistutaanko vierastilasta?"</string>
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"Tämä poistaa nykyisen vierailija-käyttökerran sovellukset ja datan"</string>
     <string name="grant_admin" msgid="4323199171790522574">"Kyllä, tee hänestä järjestelmänvalvoja"</string>
@@ -674,9 +674,9 @@
     <string name="guest_exit_button" msgid="5774985819191803960">"Poistu vierastilasta"</string>
     <string name="guest_reset_button" msgid="2515069346223503479">"Nollaa vierailija-käyttökerta"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"Kirjaa vieras ulos"</string>
-    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Kaikki toiminta poistetaan uloskirjaamisen aikana"</string>
+    <string name="guest_notification_ephemeral" msgid="7263252466950923871">"Kaikki toiminta poistetaan poistuessasi"</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"Voit tallentaa tai poistaa toiminnan poistuessasi"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Nollaa poistaaksesi istunnon toiminnan nyt, tai voit tallentaa tai poistaa toimintaa poistuessasi"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"Poista istunnon toiminta nollaamalla nyt, tai voit tallentaa tai poistaa toimintaa poistuessasi"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"Valitse kuva"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"Liian monta virheellistä yritystä. Laitteen data poistetaan."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"Liian monta virheellistä yritystä. Tämä käyttäjä poistetaan."</string>

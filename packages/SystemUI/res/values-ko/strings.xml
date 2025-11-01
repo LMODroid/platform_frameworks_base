@@ -310,7 +310,7 @@
     <string name="turn_on_bluetooth_auto_info_disabled" msgid="682984290339848844">"Quick Share, 내 기기 찾기 등의 기능에서 블루투스를 사용합니다."</string>
     <string name="turn_on_bluetooth_auto_info_enabled" msgid="7440944034584560279">"블루투스가 내일 아침에 켜집니다."</string>
     <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"오디오 공유"</string>
-    <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"오디오 공유 중"</string>
+    <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"오디오 공유"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_accessibility" msgid="7604615019302091708">"오디오 공유 설정으로 이동"</string>
     <string name="quick_settings_bluetooth_secondary_label_battery_level" msgid="4182034939479344093">"배터리 <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%s</xliff:g>"</string>
     <string name="quick_settings_bluetooth_secondary_label_audio" msgid="780333390310051161">"오디오"</string>
@@ -676,7 +676,7 @@
     <string name="volume_stream_content_description_mute" msgid="4079046784917920984">"%1$s. 탭하여 음소거로 설정하세요. 접근성 서비스가 음소거될 수 있습니다."</string>
     <string name="volume_stream_content_description_vibrate_a11y" msgid="2742330052979397471">"%1$s. 탭하여 진동으로 설정하세요."</string>
     <string name="volume_stream_content_description_mute_a11y" msgid="5743548478357238156">"%1$s. 탭하여 음소거로 설정하세요."</string>
-    <string name="volume_panel_noise_control_title" msgid="7413949943872304474">"소음 제어"</string>
+    <string name="volume_panel_noise_control_title" msgid="7413949943872304474">"노이즈 제어"</string>
     <string name="volume_panel_spatial_audio_title" msgid="3367048857932040660">"공간 음향"</string>
     <string name="volume_panel_spatial_audio_off" msgid="4177490084606772989">"사용 안함"</string>
     <string name="volume_panel_spatial_audio_fixed" msgid="3136080137827746046">"고정됨"</string>

@@ -309,7 +309,7 @@
     <string name="turn_on_bluetooth_auto_tomorrow" msgid="3345758139235739006">"Washa kesho kiotomatiki"</string>
     <string name="turn_on_bluetooth_auto_info_disabled" msgid="682984290339848844">"Vipengele kama vile Kutuma Haraka na Tafuta Kifaa Changu hutumia Bluetooth"</string>
     <string name="turn_on_bluetooth_auto_info_enabled" msgid="7440944034584560279">"Bluetooth itawaka kesho asubuhi"</string>
-    <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"Sikiliza pamoja na wengine"</string>
+    <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"Sikiliza na wengine"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"Mnasikiliza pamoja"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_accessibility" msgid="7604615019302091708">"uweke mipangilio ya kusikiliza pamoja"</string>
     <string name="quick_settings_bluetooth_secondary_label_battery_level" msgid="4182034939479344093">"Chaji ni <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%s</xliff:g>"</string>
@@ -655,7 +655,7 @@
     <string name="screen_pinning_negative" msgid="6882816864569211666">"Hapana"</string>
     <string name="screen_pinning_start" msgid="7483998671383371313">"Programu imebandikwa"</string>
     <string name="screen_pinning_exit" msgid="4553787518387346893">"Programu imebanduliwa"</string>
-    <string name="stream_voice_call" msgid="7468348170702375660">"Piga simu"</string>
+    <string name="stream_voice_call" msgid="7468348170702375660">"Simu"</string>
     <string name="stream_system" msgid="7663148785370565134">"Mfumo"</string>
     <string name="stream_ring" msgid="7550670036738697526">"Mlio"</string>
     <string name="stream_music" msgid="2188224742361847580">"Maudhui"</string>

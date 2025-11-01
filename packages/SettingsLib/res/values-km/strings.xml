@@ -200,7 +200,7 @@
     <string name="tts_default_rate_title" msgid="3964187817364304022">"ល្បឿននិយាយ"</string>
     <string name="tts_default_rate_summary" msgid="3781937042151716987">"ល្បឿន​ពេល​អាន​​អត្ថបទ"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"សំឡេងទាបខ្ពស់"</string>
-    <string name="tts_default_pitch_summary" msgid="9132719475281551884">"ប៉ះពាល់ដល់សំឡេងនៃការនិយាយដែលបានបម្លែង"</string>
+    <string name="tts_default_pitch_summary" msgid="9132719475281551884">"ប៉ះពាល់ដល់សំឡេងនៃការនិយាយដែលបានសំយោគ"</string>
     <string name="tts_default_lang_title" msgid="4698933575028098940">"ភាសា"</string>
     <string name="tts_lang_use_system" msgid="6312945299804012406">"ប្រើ​ភាសា​ប្រព័ន្ធ"</string>
     <string name="tts_lang_not_selected" msgid="7927823081096056147">"មិន​បាន​ជ្រើស​ភាសា"</string>
@@ -350,7 +350,7 @@
     <string name="dev_settings_warning_title" msgid="8251234890169074553">"អនុញ្ញាត​កំណត់​ការ​អភិវឌ្ឍ?"</string>
     <string name="dev_settings_warning_message" msgid="37741686486073668">"ការ​កំណត់​ទាំង​នេះ​សម្រាប់​តែ​ការ​ប្រើ​ក្នុង​ការ​អភិវឌ្ឍ​ប៉ុណ្ណោះ។ ពួក​វា​អាច​ធ្វើ​ឲ្យ​ឧបករណ៍ និង​កម្មវិធី​របស់​អ្នក​ខូច ឬ​ដំណើរ​មិន​ត្រឹមត្រូវ។"</string>
     <string name="verify_apps_over_usb_title" msgid="6031809675604442636">"ផ្ទៀងផ្ទាត់​កម្មវិធី​តាម USB"</string>
-    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"ពិនិត្យ​កម្មវិធី​បាន​ដំឡើង​តាម​រយៈ ADB/ADT សម្រាប់​ឥរិយាបថ​ដែល​គ្រោះ​ថ្នាក់។"</string>
+    <string name="verify_apps_over_usb_summary" msgid="1317933737581167839">"ពិនិត្យ​កម្មវិធី​ដែល​ដំឡើង​តាម​រយៈ ADB/ADT ដើម្បីរកមើលឥរិយាបថ​​គ្រោះ​ថ្នាក់។"</string>
     <string name="bluetooth_show_devices_without_names_summary" msgid="780964354377854507">"​ឧបករណ៍​ប្ល៊ូធូសគ្មានឈ្មោះ​ (អាសយដ្ឋាន MAC តែប៉ុណ្ណោះ) នឹង​បង្ហាញ"</string>
     <string name="bluetooth_disable_absolute_volume_summary" msgid="2006309932135547681">"បិទមុខងារកម្រិតសំឡេងឮខ្លាំងពេលភ្ជាប់ប៊្លូធូសក្នុងករណីមានបញ្ហាជាមួយឧបករណ៍បញ្ជាពីចម្ងាយ ដូចជាកម្រិតសំឡេងឮខ្លាំងដែលមិនអាចទទួលយកបាន ឬខ្វះការគ្រប់គ្រង។"</string>
     <string name="bluetooth_enable_gabeldorsche_summary" msgid="2054730331770712629">"បើកជង់​មុខងារ​ប៊្លូធូស Gabeldorsche។"</string>
@@ -373,7 +373,7 @@
     <string name="media_category" msgid="8122076702526144053">"មេឌៀ"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"តាមដាន"</string>
     <string name="strict_mode" msgid="889864762140862437">"បាន​បើក​មុខងារតឹងរ៉ឹង"</string>
-    <string name="strict_mode_summary" msgid="1838248687233554654">"បញ្ចេញ​ពន្លឺ​អេក្រង់​ពេល​កម្មវិធី​ធ្វើ​ប្រតិបត្តិការ​យូរ​លើ​សែស្រឡាយ​​មេ"</string>
+    <string name="strict_mode_summary" msgid="1838248687233554654">"ភ្លឺភ្លឹបភ្លែតលើអេក្រង់​ពេល​កម្មវិធី​ធ្វើ​ប្រតិបត្តិការ​យូរ​លើសរសៃមេ"</string>
     <string name="pointer_location" msgid="7516929526199520173">"ទីតាំង​ទ្រនិច"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"អេក្រង់​ត្រួត​គ្នា​បង្ហាញ​ទិន្នន័យ​ប៉ះ​បច្ចុប្បន្ន"</string>
     <string name="show_touches" msgid="8437666942161289025">"បង្ហាញការចុច"</string>
@@ -383,7 +383,7 @@
     <string name="touchpad_visualizer" msgid="3707916068870825115">"បង្ហាញការបញ្ចូលតាមផ្ទាំងប៉ះ"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"ការត្រួតគ្នា​លើ​អេក្រង់ដែលបង្ហាញទិន្នន័យបញ្ចូលតាមផ្ទាំងប៉ះ និងចលនាដែលស្គាល់"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"បង្ហាញ​បច្ចុប្បន្នភាព​ផ្ទៃ"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"ផ្ទៃ​វីនដូទាំង​មូល​បញ្ចេញពន្លឺ​នៅពេល​ធ្វើ​បច្ចុប្បន្នភាព"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"ធ្វើឱ្យផ្ទៃវិនដូទាំង​មូលលោតភ្លើងភ្លឹបភ្លែតនៅពេល​ពួកគេធ្វើ​បច្ចុប្បន្នភាព"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"បង្ហាញ​បច្ចុប្បន្នភាពទិដ្ឋភាព"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"ទិដ្ឋភាព​បញ្ចេញពន្លឺភ្លឹបភ្លែត​នៅក្នុង​វិនដូនៅ​ពេលគូរ"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"បង្ហាញ​​បច្ចុប្បន្នភាព​ស្រទាប់​ហាតវែរ"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"ប្រើភាសាប្រព័ន្ធ"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"បាន​បរាជ័យ​ក្នុង​ការ​បើក​ការ​កំណត់​សម្រាប់ <xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g>"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"វិធី​សាស្ត្រ​បញ្ចូល​នេះ​អាច​​ប្រមូល​អត្ថបទ​ដែល​អ្នក​វាយ​ទាំងអស់ រួម​មាន​ទិន្នន័យ​ផ្ទាល់ខ្លួន ដូច​ជ ពាក្យ​សម្ងាត់ និង​លេខ​កាត​ឥណទាន។ វា​បាន​មក​ពី​កម្មវិធី <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> ។ ប្រើ​វិធី​សាស្ត្រ​បញ្ចូល​នេះ?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ចំណាំ៖ បន្ទាប់ពីបិទបើកឡើងវិញហើយ កម្មវិធីនេះមិនអាចចាប់ផ្តើមបានទេ រហូតទាល់តែអ្នកដោះសោទូរស័ព្ទរបស់អ្នក"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ចំណាំ៖ បន្ទាប់ពីចាប់ផ្ដើមឡើងវិញ កម្មវិធីនេះមិនអាចចាប់ផ្តើមបានទេ រហូតទាល់តែអ្នកដោះសោទូរស័ព្ទរបស់អ្នក"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"ស្ថានភាព​នៃការ​ចុះឈ្មោះ IMS"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"បាន​ចុះឈ្មោះ"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"មិនបាន​ចុះឈ្មោះ"</string>

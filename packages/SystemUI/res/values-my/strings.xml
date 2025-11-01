@@ -369,7 +369,7 @@
     <string name="quick_settings_night_secondary_label_until_sunrise" msgid="4063448287758262485">"နေထွက်ချိန် အထိ"</string>
     <string name="quick_settings_night_secondary_label_on_at" msgid="3584738542293528235">"<xliff:g id="TIME">%s</xliff:g> တွင် ဖွင့်ရန်"</string>
     <string name="quick_settings_secondary_label_until" msgid="1883981263191927372">"<xliff:g id="TIME">%s</xliff:g> အထိ"</string>
-    <string name="quick_settings_ui_mode_night_label" msgid="1398928270610780470">"အမှောင်နောက်ခံ"</string>
+    <string name="quick_settings_ui_mode_night_label" msgid="1398928270610780470">"အမှောင်အပြင်အဆင်"</string>
     <string name="quick_settings_dark_mode_secondary_label_battery_saver" msgid="4990712734503013251">"ဘက်ထရီ အားထိန်း"</string>
     <string name="quick_settings_dark_mode_secondary_label_on_at_sunset" msgid="6017379738102015710">"နေဝင်ချိန်၌ ဖွင့်ရန်"</string>
     <string name="quick_settings_dark_mode_secondary_label_until_sunrise" msgid="4404885070316716472">"နေထွက်ချိန် အထိ"</string>
@@ -522,7 +522,7 @@
     <string name="guest_wipe_session_wipe" msgid="8056836584445473309">"ပြန်စပါ"</string>
     <string name="guest_wipe_session_dontwipe" msgid="3211052048269304205">"ဆက်လုပ်ပါ"</string>
     <string name="guest_notification_app_name" msgid="2110425506754205509">"ဧည့်သည်မုဒ်"</string>
-    <string name="guest_notification_session_active" msgid="5567273684713471450">"သင်သည် ဧည့်သည်မုဒ်တွင် ဖြစ်သည်"</string>
+    <string name="guest_notification_session_active" msgid="5567273684713471450">"သင်သည် ဧည့်သည်အဖြစ် သုံးနေသည်"</string>
     <string name="user_add_user_message_guest_remove" msgid="5589286604543355007">\n\n"အသုံးပြုသူ အသစ်ထည့်ခြင်းက ဧည့်သည်မုဒ်မှ ထွက်သွားမည်ဖြစ်ပြီး လက်ရှိဧည့်သည် စက်ရှင်မှ အက်ပ်နှင့် ဒေတာအားလုံးကို ဖျက်လိုက်ပါမည်။"</string>
     <string name="user_limit_reached_title" msgid="2429229448830346057">"အသုံးပြုသူ အကန့်အသတ် ပြည့်သွားပါပြီ"</string>
     <string name="user_limit_reached_message" msgid="1070703858915935796">"{count,plural, =1{အသုံးပြုသူတစ်ဦးသာ ထည့်နိုင်သည်။}other{အသုံးပြုသူ # ယောက်အထိ ထည့်နိုင်သည်။}}"</string>
@@ -655,7 +655,7 @@
     <string name="screen_pinning_negative" msgid="6882816864569211666">"မလိုပါ"</string>
     <string name="screen_pinning_start" msgid="7483998671383371313">"အက်ပ်ကို ပင်ထိုးလိုက်သည်"</string>
     <string name="screen_pinning_exit" msgid="4553787518387346893">"အက်ပ်ကို ပင်ဖြုတ်လိုက်သည်"</string>
-    <string name="stream_voice_call" msgid="7468348170702375660">"ဖုန်းခေါ်ရန်"</string>
+    <string name="stream_voice_call" msgid="7468348170702375660">"ဖုန်းပြောသံ"</string>
     <string name="stream_system" msgid="7663148785370565134">"စနစ်"</string>
     <string name="stream_ring" msgid="7550670036738697526">"ဖုန်းမြည်သံ"</string>
     <string name="stream_music" msgid="2188224742361847580">"မီဒီယာ"</string>
@@ -759,7 +759,7 @@
     <string name="notification_channel_summary_priority_all" msgid="7151752959650048285">"စကားဝိုင်း အကြောင်းကြားချက်များ၏ ထိပ်ပိုင်းနှင့် ပရိုဖိုင်ပုံအဖြစ် လော့ခ်မျက်နှာပြင်တွင် ပြသည်။ ပူဖောင်းကွက်အဖြစ် မြင်ရပြီး ‘မနှောင့်ယှက်ရ’ ကို ကြားဖြတ်သည်"</string>
     <string name="notification_priority_title" msgid="2079708866333537093">"ဦးစားပေး"</string>
     <string name="no_shortcut" msgid="8257177117568230126">"<xliff:g id="APP_NAME">%1$s</xliff:g> က စကားဝိုင်းဝန်ဆောင်မှုများကို မပံ့ပိုးပါ"</string>
-    <string name="notification_unblockable_desc" msgid="2073030886006190804">"ဤအကြောင်းကြားချက်များကို ပြုပြင်၍ မရပါ။"</string>
+    <string name="notification_unblockable_desc" msgid="2073030886006190804">"ဤအကြောင်းကြားချက်များကို ပြင်၍ မရပါ။"</string>
     <string name="notification_unblockable_call_desc" msgid="5907328164696532169">"ခေါ်ဆိုမှုအကြောင်းကြားချက်များကို ပြင်၍မရပါ။"</string>
     <string name="notification_multichannel_desc" msgid="7414593090056236179">"ဤအကြောင်းကြားချက်အုပ်စုကို ဤနေရာတွင် စီစဉ်သတ်မှတ်၍ မရပါ"</string>
     <string name="notification_delegate_header" msgid="1264510071031479920">"ပရောက်စီထည့်ထားသော အကြောင်းကြားချက်"</string>
@@ -1426,7 +1426,7 @@
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"ကီးဘုတ်နောက်မီး"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"အဆင့် %2$d အနက် %1$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"အိမ်ထိန်းချုပ်မှုများ"</string>
-    <string name="home_controls_dream_description" msgid="4644150952104035789">"အိမ်ထိန်းချုပ်မှုများကို စခရင်နားချိန်ပုံအဖြစ် အမြန်ဝင်ကြည့်ရန်"</string>
+    <string name="home_controls_dream_description" msgid="4644150952104035789">"အိမ်ထိန်းချုပ်မှုများကို စခရင်နားချိန်ပုံအဖြစ် အမြန်ဝင်သုံးနိုင်သည်"</string>
     <string name="volume_undo_action" msgid="5815519725211877114">"နောက်ပြန်ရန်"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"နောက်ပြန်သွားရန် တာ့ချ်ပက်ပေါ်တွင် လက်သုံးချောင်းဖြင့် ဘယ် (သို့) ညာသို့ ပွတ်ဆွဲပါ"</string>
     <string name="home_edu_toast_content" msgid="3381071147871955415">"ပင်မစာမျက်နှာသို့ သွားရန် တာ့ချ်ပက်ပေါ်တွင် လက်သုံးချောင်းဖြင့် အပေါ်သို့ပွတ်ဆွဲပါ"</string>

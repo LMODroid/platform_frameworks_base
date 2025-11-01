@@ -24,7 +24,7 @@
     <string name="summary_watch" msgid="8134580124808507407">"Denne appen får tillatelse til å synkronisere informasjon, for eksempel navnet til folk som ringer, og har disse tillatelsene på enheten din (<xliff:g id="DEVICE_TYPE">%1$s</xliff:g>)"</string>
     <string name="confirmation_title_glasses" msgid="8288346850537727333">"Vil du la &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; administrere &lt;strong&gt;<xliff:g id="DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt;?"</string>
     <string name="profile_name_glasses" msgid="3506504967216601277">"enheten"</string>
-    <string name="summary_glasses" msgid="5469208629679579157">"Denne appen får disse tillatelsene på <xliff:g id="DEVICE_TYPE">%1$s</xliff:g>"</string>
+    <string name="summary_glasses" msgid="5469208629679579157">"Denne appen får disse tillatelsene på enheten din (<xliff:g id="DEVICE_TYPE">%1$s</xliff:g>)"</string>
     <string name="title_app_streaming" msgid="6845373585257287200">"Vil du la &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; strømme apper fra <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> til &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;?"</string>
     <string name="summary_app_streaming" msgid="1274464413649731829">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> får tilgang til alt som vises eller spilles av på <xliff:g id="DEVICE_TYPE">%2$s</xliff:g>, inkludert lyd, bilder, passord og meldinger.&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_1">%1$s</xliff:g> får muligheten til å strømme apper til <xliff:g id="DEVICE_NAME">%3$s</xliff:g> frem til du fjerner tilgangen til denne tillatelsen."</string>
     <string name="helper_summary_app_streaming" msgid="1944832605534698562">"<xliff:g id="APP_NAME">%1$s</xliff:g> ber om tillatelse til å vise og strømme apper mellom enhetene dine, på vegne av <xliff:g id="DEVICE_NAME">%2$s</xliff:g>"</string>
@@ -37,7 +37,7 @@
     <string name="summary_nearby_device_streaming" msgid="962267343109051648">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> får tilgang til alt som vises eller spilles av på <xliff:g id="DEVICE_TYPE">%2$s</xliff:g>, inkludert lyd, bilder, betalingsopplysninger, passord og meldinger.&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_1">%1$s</xliff:g> får muligheten til å strømme apper og systemfunksjoner til <xliff:g id="DEVICE_NAME">%3$s</xliff:g> frem til du fjerner tilgangen til denne tillatelsen."</string>
     <string name="helper_summary_nearby_device_streaming" msgid="8509848562931818793">"<xliff:g id="APP_NAME">%1$s</xliff:g> ber om tillatelse til å strømme apper og andre systemfunksjoner mellom enhetene dine på vegne av <xliff:g id="DEVICE_NAME">%2$s</xliff:g>"</string>
     <string name="profile_name_generic" msgid="6851028682723034988">"enhet"</string>
-    <string name="summary_generic" msgid="1761976003668044801">"Denne appen kan synkronisere informasjon som navnet til noen som ringer, mellom telefonen og den valgte enheten"</string>
+    <string name="summary_generic" msgid="1761976003668044801">"Denne appen kan synkronisere informasjon, for eksempel navnet til noen som ringer, mellom telefonen og den valgte enheten"</string>
     <string name="consent_yes" msgid="8344487259618762872">"Tillat"</string>
     <string name="consent_no" msgid="2640796915611404382">"Ikke tillat"</string>
     <string name="consent_cancel" msgid="5655005528379285841">"Avbryt"</string>
@@ -63,7 +63,7 @@
     <string name="permission_contacts_summary" msgid="2840800622763086808">"Se kontaktene dine"</string>
     <string name="permission_calendar_summary" msgid="8430353935747336165">"Åpne kalenderen din"</string>
     <string name="permission_microphone_summary" msgid="4862628553869973259">"Ta opp lyd"</string>
-    <string name="permission_nearby_devices_summary" msgid="1306752848196464817">"Finn, koble til og fastslå den relative posisjonen til enheter i nærheten"</string>
+    <string name="permission_nearby_devices_summary" msgid="1306752848196464817">"finne, koble til og fastslå den relative posisjonen til enheter i nærheten"</string>
     <string name="permission_notification_listener_access_summary" msgid="7856071768185367749">"Les alle varsler, inkludert informasjon som kontakter, meldinger og bilder"</string>
     <string name="permission_notifications_summary" msgid="2272810466047367030">"• Les alle varsler, inkludert informasjon som kontakter, meldinger og bilder&lt;br/&gt;• Send varsler&lt;br/&gt;&lt;br/&gt;Du kan når som helst administrere om denne appen kan lese og sende varsler, i Innstillinger &gt; Varsler."</string>
     <string name="permission_storage_summary" msgid="3918240895519506417"></string>

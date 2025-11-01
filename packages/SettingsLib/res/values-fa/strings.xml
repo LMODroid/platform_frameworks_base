@@ -156,7 +156,7 @@
     <string name="bluetooth_hid_profile_summary_use_for" msgid="4289460627406490952">"استفاده برای چاپ"</string>
     <string name="bluetooth_hearing_aid_profile_summary_use_for" msgid="3374057355721486932">"استفاده برای سمعک"</string>
     <string name="bluetooth_le_audio_profile_summary_use_for" msgid="2778318636027348572">"‏استفاده برای LE_AUDIO"</string>
-    <string name="bluetooth_pairing_accept" msgid="2054232610815498004">"مرتبط‌سازی"</string>
+    <string name="bluetooth_pairing_accept" msgid="2054232610815498004">"جفت کردن"</string>
     <string name="bluetooth_pairing_accept_all_caps" msgid="2734383073450506220">"مرتبط‌سازی"</string>
     <string name="bluetooth_pairing_decline" msgid="6483118841204885890">"لغو"</string>
     <string name="bluetooth_pairing_will_share_phonebook" msgid="3064334458659165176">"وقتی وصل باشید، مرتبط‌سازی اجازه دسترسی به مخاطبین و سابقه تماستان را فراهم می‌کند."</string>
@@ -255,9 +255,9 @@
     <string name="adb_wireless_settings" msgid="2295017847215680229">"اشکال‌زدایی بی‌سیم"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"برای مشاهده و استفاده از دستگاه‌های در دسترس، اشکال‌زدایی بی‌سیم را روشن کنید"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"جفت کردن دستگاه با رمزینه پاسخ‌سریع"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"دستگاه‌های جدید را بااستفاده از اسکنر رمزینه پاسخ‌سریع مرتبط کنید"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"دستگاه‌های جدید را بااستفاده از اسکنر رمزینه پاسخ‌سریع جفت کنید"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"جفت کردن دستگاه با کد مرتبط‌سازی"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"دستگاه‌های جدید را با استفاده از کد شش رقمی مرتبط کنید"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"دستگاه‌های جدید را با استفاده از کد شش رقمی چفت کنید"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"دستگاه‌های مرتبط‌شده"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"درحال‌حاضر متصل"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"جزئیات دستگاه"</string>
@@ -377,13 +377,13 @@
     <string name="pointer_location" msgid="7516929526199520173">"محل اشاره‌گر"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"هم‌پوشانی صفحه‌نمایش با نمایش داده لمسی فعلی"</string>
     <string name="show_touches" msgid="8437666942161289025">"نمایش تک‌ضرب‌ها"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"نمایش بازخورد تصویری برای ضربه‌ها"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"نمایش بازخورد تصویری برای تک‌ضرب‌ها"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"نمایش فشار کلیدها"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"نمایش بازخورد بصری برای فشار دادن کلیدهای فیزیکی"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"نمایش ورودی صفحه لمسی"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"رونهاد صفحه که داده‌های ورودی صفحه لمسی و اشاره‌های شناسایی‌شده را نمایش می‌دهد"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"نمایش به‌روزرسانی سطح"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"هنگام به‌روزرسانی سطوح پنجره همه فلش شوند"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"هنگام به‌روزرسانی کل سطوح پنجره فلش شوند"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"نمایش به‌روزرسانی‌های نما"</string>
     <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"هنگام طراحی، نماها در داخل پنجره‌ها فلش شوند"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"نمایش به‌روزرسانی‌های لایه‌های سخت‌افزار"</string>
@@ -519,8 +519,8 @@
     <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"توسط سرپرست سیستم کنترل می‌شود"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"با تنظیم «حالت محدود» کنترل می‌شود"</string>
     <string name="disabled" msgid="8017887509554714950">"غیر فعال شد"</string>
-    <string name="external_source_trusted" msgid="1146522036773132905">"مجاز بودن"</string>
-    <string name="external_source_untrusted" msgid="5037891688911672227">"مجاز نبودن"</string>
+    <string name="external_source_trusted" msgid="1146522036773132905">"اجازه داشتن"</string>
+    <string name="external_source_untrusted" msgid="5037891688911672227">"اجازه نداشتن"</string>
     <string name="install_other_apps" msgid="3232595082023199454">"نصب برنامه‌های ناشناس"</string>
     <string name="home" msgid="973834627243661438">"صفحه اصلی تنظیمات"</string>
   <string-array name="battery_labels">
@@ -676,12 +676,12 @@
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"خروج مهمان"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"همه فعالیت‌ها هنگام خروج حذف خواهد شد"</string>
     <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"می‌توانید فعالیتتان را هنگام خروج ذخیره یا حذف کنید"</string>
-    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"برای حذف فعالیت جلسه در این لحظه، بازنشانی کنید یا می‌توانید فعالیت را هنگام خروج ذخیره یا حذف کنید"</string>
+    <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"برای حذف فعالیت جلسه در این لحظه، بازنشانی کنید یا اینکه فعالیت را هنگام خروج ذخیره یا حذف کنید"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"انتخاب عکس"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"تلاش‌های نادرست بسیار زیادی انجام شده است. داده‌های این دستگاه حذف خواهد شد."</string>
     <string name="failed_attempts_now_wiping_user" msgid="469060411789668050">"تلاش‌های اشتباه بسیار زیادی انجام شده است. این کاربر حذف خواهد شد."</string>
     <string name="failed_attempts_now_wiping_profile" msgid="7626589520888963129">"تلاش‌های اشتباه بسیار زیادی انجام شده است. این نمایه کاری و داده‌های آن‌ حذف خواهند شد."</string>
-    <string name="failed_attempts_now_wiping_dialog_dismiss" msgid="2749889771223578925">"رد شدن"</string>
+    <string name="failed_attempts_now_wiping_dialog_dismiss" msgid="2749889771223578925">"بستن"</string>
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"پیش‌فرض دستگاه"</string>
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"غیرفعال"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"فعال"</string>

@@ -366,7 +366,7 @@
     <string name="select_application" msgid="2543228890535466325">"ਐਪਲੀਕੇਸ਼ਨ ਚੁਣੋ"</string>
     <string name="no_application" msgid="9038334538870247690">"ਕੁਝ ਨਹੀਂ"</string>
     <string name="wait_for_debugger" msgid="7461199843335409809">"ਡੀਬੱਗਰ ਦੀ ਉਡੀਕ ਕਰੋ"</string>
-    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"ਡੀਬੱਗ ਕੀਤੀ ਐਪਲੀਕੇਸ਼ਨ ਚਲਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਅਟੈਚ ਕਰਨ ਲਈ ਡੀਬੱਗਰ ਦੀ ਉਡੀਕ ਕਰਦੀ ਹੈ"</string>
+    <string name="wait_for_debugger_summary" msgid="6846330006113363286">"ਡੀਬੱਗ ਕੀਤੀ ਐਪਲੀਕੇਸ਼ਨ, ਪ੍ਰਕਿਰਿਆ ਸ਼ੁਰੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਡੀਬੱਗਰ ਦੇ ਅਟੈਚ ਹੋਣ ਦੀ ਉਡੀਕ ਕਰਦੀ ਹੈ"</string>
     <string name="debug_input_category" msgid="7349460906970849771">"ਇਨਪੁੱਟ"</string>
     <string name="debug_drawing_category" msgid="5066171112313666619">"ਡਰਾਇੰਗ"</string>
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"ਹਾਰਡਵੇਅਰ ਐਕਸੈੱਲਰੇਟਿਡ ਰੈਂਡਰਿੰਗ"</string>
@@ -375,13 +375,13 @@
     <string name="strict_mode" msgid="889864762140862437">"ਸਟ੍ਰਿਕਟ ਮੋਡ ਚਾਲੂ ਹੈ"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"ਐਪਾਂ ਵੱਲੋਂ ਮੁੱਖ ਥ੍ਰੈੱਡ \'ਤੇ ਲੰਬੀਆਂ ਕਾਰਵਾਈਆਂ ਕਰਨ \'ਤੇ ਸਕ੍ਰੀਨ ਫਲੈਸ਼ ਕਰੋ"</string>
     <string name="pointer_location" msgid="7516929526199520173">"ਪੁਆਇੰਟਰ ਟਿਕਾਣਾ"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"ਸਕ੍ਰੀਨ ਓਵਰਲੇ ਮੌਜੂਦਾ ਸਪਰਸ਼ ਡਾਟਾ ਦਿਖਾ ਰਿਹਾ ਹੈ"</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"ਸਕ੍ਰੀਨ ਓਵਰਲੇ ਵਿੱਚ ਮੌਜੂਦਾ ਸਪਰਸ਼ ਡਾਟਾ ਦੇਖੋ"</string>
     <string name="show_touches" msgid="8437666942161289025">"ਟੈਪ ਦਿਖਾਓ"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"ਟੈਪਾਂ ਲਈ ਦ੍ਰਿਸ਼ਟੀਗਤ ਪ੍ਰਤੀਕਰਮ ਦਿਖਾਓ"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"ਕੁੰਜੀ ਦਬਾਉਣ ਸੰਬੰਧੀ ਜਾਣਕਾਰੀ ਦਿਖਾਓ"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"ਭੌਤਿਕ ਕੁੰਜੀ ਦਬਾਉਣ ਸੰਬੰਧੀ ਦ੍ਰਿਸ਼ਟੀਗਤ ਵਿਚਾਰ ਦਿਖਾਓ"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"ਭੌਤਿਕ ਕੁੰਜੀ ਦਬਾਉਣ \'ਤੇ ਦ੍ਰਿਸ਼ਟੀਗਤ ਪ੍ਰਤੀਕਰਮ ਦਿਖਾਓ"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"ਟੱਚਪੈਡ ਇਨਪੁੱਟ ਦਿਖਾਓ"</string>
-    <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"ਸਕ੍ਰੀਨ ਓਵਰਲੇ ਵਿੱਚ ਟੱਚਪੈਡ ਇਨਪੁੱਟ ਡਾਟਾ ਅਤੇ ਪਛਾਣੇ ਗਏ ਇਸ਼ਾਰੇ ਦਿਖਾਈ ਦੇ ਰਹੇ ਹਨ"</string>
+    <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"ਸਕ੍ਰੀਨ ਓਵਰਲੇ ਵਿੱਚ ਟੱਚਪੈਡ ਇਨਪੁੱਟ ਡਾਟਾ ਅਤੇ ਪਛਾਣੇ ਗਏ ਇਸ਼ਾਰੇ ਦੇਖੋ"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"ਸਰਫ਼ੇਸ ਅੱਪਡੇਟ ਦਿਖਾਓ"</string>
     <string name="show_screen_updates_summary" msgid="2126932969682087406">"ਅੱਪਡੇਟ ਹੋਣ \'ਤੇ, ਸਮੁੱਚੀਆਂ ਵਿੰਡੋ ਸਰਫ਼ੇਸਾਂ ਫਲੈਸ਼ ਕਰੋ"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"\'ਅੱਪਡੇਟ ਦੇਖੋ\' ਨੂੰ ਦਿਖਾਓ"</string>
@@ -394,7 +394,7 @@
     <string name="simulate_color_space" msgid="1206503300335835151">"ਰੰਗ ਸਪੇਸ ਨੂੰ ਸਿਮੂਲੇਟ ਕਰੋ"</string>
     <string name="enable_opengl_traces_title" msgid="4638773318659125196">"OpenGL ਟ੍ਰੇਸਿਜ ਨੂੰ ਚਾਲੂ ਕਰੋ"</string>
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"USB ਆਡੀਓ ਰੂਟਿੰਗ ਨੂੰ ਬੰਦ ਕਰੋ"</string>
-    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"USB ਆਡੀਓ ਪੈਰੀਫਰਲ ਲਈ ਸਵੈਚਲਿਤ ਰੂਟਿੰਗ ਬੰਦ ਕਰੋ"</string>
+    <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"USB ਆਡੀਓ ਪੈਰੀਫਰਲਾਂ ਲਈ ਸਵੈਚਲਿਤ ਰੂਟਿੰਗ ਬੰਦ ਕਰੋ"</string>
     <string name="debug_layout" msgid="1659216803043339741">"ਖਾਕਾ ਸੀਮਾਵਾਂ ਦਿਖਾਓ"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"ਕਲਿੱਪ ਸੀਮਾਵਾਂ, ਹਾਸ਼ੀਏ ਆਦਿ ਦਿਖਾਓ"</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"ਸੱਜੇ ਤੋਂ ਖੱਬੇ ਵਾਲਾ ਖਾਕਾ ਲਾਗੂ ਕਰੋ"</string>
@@ -429,7 +429,7 @@
     <string name="show_notification_channel_warnings" msgid="3448282400127597331">"ਸੂਚਨਾ ਚੈਨਲ ਚਿਤਾਵਨੀਆਂ ਦਿਖਾਓ"</string>
     <string name="show_notification_channel_warnings_summary" msgid="68031143745094339">"ਐਪ ਵੱਲੋਂ ਵੈਧ ਚੈਨਲ ਤੋਂ ਬਿਨਾਂ ਸੂਚਨਾ ਪੋਸਟ ਕਰਨ \'ਤੇ ਸਕ੍ਰੀਨ \'ਤੇ ਚਿਤਾਵਨੀ ਦਿਖਾਉਂਦੀ ਹੈ"</string>
     <string name="force_allow_on_external" msgid="9187902444231637880">"ਐਪਾਂ ਨੂੰ ਜ਼ਬਰਦਸਤੀ ਬਾਹਰੀ ਸਟੋਰੇਜ \'ਤੇ ਆਗਿਆ ਦਿਓ"</string>
-    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ਮੈਨੀਫੈਸਟ ਮੁੱਲਾਂ ਦੀ ਪਰਵਾਹ ਕੀਤੇ ਬਿਨਾਂ, ਕਿਸੇ ਵੀ ਐਪ ਨੂੰ ਬਾਹਰੀ ਸਟੋਰੇਜ \'ਤੇ ਲਿਖਣ ਦੇ ਯੋਗ ਬਣਾਉਂਦੀ ਹੈ"</string>
+    <string name="force_allow_on_external_summary" msgid="8525425782530728238">"ਇਸ ਨਾਲ ਕੋਈ ਵੀ ਐਪ ਬਾਹਰੀ ਸਟੋਰੇਜ \'ਤੇ ਲਿਖਣ ਦੇ ਯੋਗ ਬਣ ਜਾਂਦੀ ਹੈ, ਭਾਂਵੇ ਉਸਦਾ ਮੈਨੀਫ਼ੈਸਟ ਮੁੱਲ ਕੋਈ ਵੀ ਹੋਵੇ"</string>
     <string name="force_resizable_activities" msgid="7143612144399959606">"ਸਰਗਰਮੀਆਂ ਨੂੰ ਜ਼ਬਰਦਸਤੀ ਆਕਾਰ ਬਦਲਣਯੋਗ ਬਣਾਓ"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"ਮੈਨੀਫ਼ੈਸਟ ਮੁੱਲਾਂ ਦੀ ਪਰਵਾਹ ਕੀਤੇ ਬਿਨਾਂ, ਮਲਟੀ-ਵਿੰਡੋ ਲਈ ਸਾਰੀਆਂ ਸਰਗਰਮੀਆਂ ਨੂੰ ਆਕਾਰ ਬਦਲਣਯੋਗ ਬਣਾਓ।"</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"ਫ੍ਰੀਫਾਰਮ ਵਿੰਡੋਜ਼ ਨੂੰ ਚਾਲੂ ਕਰੋ"</string>
@@ -518,7 +518,7 @@
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"ਤੇਜ਼ ਚਾਰਜਿੰਗ"</string>
     <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"ਪ੍ਰਸ਼ਾਸਕ ਵੱਲੋਂ ਕੰਟਰੋਲ ਕੀਤੀ ਗਈ"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"ਪ੍ਰਤਿਬੰਧਿਤ ਸੈਟਿੰਗ ਰਾਹੀਂ ਕੰਟਰੋਲ ਕੀਤੀ ਜਾਂਦੀ ਹੈ"</string>
-    <string name="disabled" msgid="8017887509554714950">"ਅਯੋਗ ਬਣਾਇਆ"</string>
+    <string name="disabled" msgid="8017887509554714950">"ਬੰਦ ਹੈ"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"ਮਨਜ਼ੂਰਸ਼ੁਦਾ"</string>
     <string name="external_source_untrusted" msgid="5037891688911672227">"ਗੈਰ-ਮਨਜ਼ੂਰਸ਼ੁਦਾ"</string>
     <string name="install_other_apps" msgid="3232595082023199454">"ਅਗਿਆਤ ਐਪਾਂ ਦੀ ਸਥਾਪਨਾ"</string>
@@ -544,7 +544,7 @@
     <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"ਸਿਸਟਮ ਭਾਸ਼ਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰੋ"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"<xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g> ਲਈ ਸੈਟਿੰਗਾਂ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਫਲ"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"ਇਹ ਇਨਪੁੱਟ ਵਿਧੀ ਤੁਹਾਡੇ ਵੱਲੋਂ ਟਾਈਪ ਕੀਤਾ ਜਾਣ ਵਾਲੀ ਸਾਰੀ ਲਿਖਤ ਇਕੱਤਰ ਕਰਨ ਵਿੱਚ ਸਮਰੱਥ ਹੋ ਸਕਦੀ ਹੈ, ਨਿੱਜੀ ਡਾਟਾ ਸਮੇਤ ਜਿਵੇਂ ਪਾਸਵਰਡ ਅਤੇ ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਨੰਬਰ। ਇਹ <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> ਐਪ ਤੋਂ ਆਉਂਦਾ ਹੈ। ਕੀ ਇਹ ਸਪੈੱਲ ਚੈਕਰ ਵਰਤਣਾ ਹੈ?"</string>
-    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ਨੋਟ ਕਰੋ: ਰੀਬੂਟ ਤੋਂ ਬਾਅਦ, ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਆਪਣਾ ਫ਼ੋਨ ਅਣਲਾਕ ਨਹੀਂ ਕਰਦੇ ਤਦ ਤੱਕ ਇਹ ਐਪ ਚਾਲੂ ਨਹੀਂ ਹੋ ਸਕਦੀ"</string>
+    <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"ਨੋਟ ਕਰੋ: ਰੀਬੂਟ ਤੋਂ ਬਾਅਦ, ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਆਪਣਾ ਫ਼ੋਨ ਅਣਲਾਕ ਨਹੀਂ ਕਰਦੇ ਉਦੋਂ ਤੱਕ ਇਹ ਐਪ ਚਾਲੂ ਨਹੀਂ ਹੋ ਸਕਦੀ"</string>
     <string name="ims_reg_title" msgid="8197592958123671062">"IMS ਰਜਿਸਟਰੇਸ਼ਨ ਸਥਿਤੀ"</string>
     <string name="ims_reg_status_registered" msgid="884916398194885457">"ਰਜਿਸਟਰ ਕੀਤੀ ਗਈ"</string>
     <string name="ims_reg_status_not_registered" msgid="2989287366045704694">"ਰਜਿਸਟਰ ਨਹੀਂ ਕੀਤੀ ਗਈ"</string>
@@ -628,7 +628,7 @@
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"ਪ੍ਰਤਿਬੰਧਿਤ ਪ੍ਰੋਫਾਈਲ"</string>
     <string name="user_add_user_title" msgid="5457079143694924885">"ਕੀ ਨਵਾਂ ਵਰਤੋਂਕਾਰ ਸ਼ਾਮਲ ਕਰਨਾ ਹੈ?"</string>
     <string name="user_add_user_message_long" msgid="1527434966294733380">"ਤੁਸੀਂ ਵਾਧੂ ਵਰਤੋਂਕਾਰ ਬਣਾ ਕੇ ਹੋਰਾਂ ਲੋਕਾਂ ਨਾਲ ਇਹ ਡੀਵਾਈਸ ਸਾਂਝਾ ਕਰ ਸਕਦੇ ਹੋ। ਹਰੇਕ ਵਰਤੋਂਕਾਰ ਦੀ ਆਪਣੀ ਖੁਦ ਦੀ ਜਗ੍ਹਾ ਹੁੰਦੀ ਹੈ, ਜਿਸਨੂੰ ਉਹ ਐਪਾਂ ਅਤੇ ਵਾਲਪੇਪਰ ਆਦਿ ਨਾਲ ਵਿਉਂਤਬੱਧ ਕਰ ਸਕਦੇ ਹਨ। ਵਰਤੋਂਕਾਰ ਵਾਈ-ਫਾਈ ਵਰਗੀਆਂ ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਨੂੰ ਵੀ ਵਿਵਸਥਿਤ ਕਰ ਸਕਦੇ ਹਨ, ਜਿਸ ਨਾਲ ਹਰੇਕ ਵਰਤੋਂਕਾਰ \'ਤੇ ਅਸਰ ਪੈਂਦਾ ਹੈ।\n\nਜਦੋਂ ਤੁਸੀਂ ਇੱਕ ਨਵਾਂ ਵਰਤੋਂਕਾਰ ਸ਼ਾਮਲ ਕਰਦੇ ਹੋ, ਉਸ ਵਿਅਕਤੀ ਨੂੰ ਆਪਣੀ ਜਗ੍ਹਾ ਸੈੱਟ ਅੱਪ ਕਰਨੀ ਪੈਂਦੀ ਹੈ।\n\nਕੋਈ ਵੀ ਵਰਤੋਂਕਾਰ ਬਾਕੀ ਸਾਰੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀਆਂ ਐਪਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰ ਸਕਦਾ ਹੈ। ਸ਼ਾਇਦ ਪਹੁੰਚਯੋਗਤਾ ਸੈਟਿੰਗਾਂ ਅਤੇ ਸੇਵਾਵਾਂ ਨੂੰ ਕਿਸੇ ਨਵੇਂ ਵਰਤੋਂਕਾਰ ਨੂੰ ਟ੍ਰਾਂਸਫਰ ਨਾ ਕੀਤਾ ਜਾ ਸਕੇ।"</string>
-    <string name="user_add_user_message_short" msgid="3295959985795716166">"ਜਦੋਂ ਤੁਸੀਂ ਇੱਕ ਨਵਾਂ ਵਰਤੋਂਕਾਰ ਸ਼ਾਮਲ ਕਰਦੇ ਹੋ, ਉਸ ਵਿਅਕਤੀ ਨੂੰ ਆਪਣੀ ਜਗ੍ਹਾ ਸੈੱਟਅੱਪ ਕਰਨ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।\n\nਕੋਈ ਵੀ ਵਰਤੋਂਕਾਰ ਹੋਰ ਸਾਰੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀਆਂ ਐਪਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰ ਸਕਦਾ ਹੈ।"</string>
+    <string name="user_add_user_message_short" msgid="3295959985795716166">"ਜਦੋਂ ਤੁਸੀਂ ਕੋਈ ਨਵਾਂ ਵਰਤੋਂਕਾਰ ਸ਼ਾਮਲ ਕਰਦੇ ਹੋ, ਤਾਂ ਉਸ ਵਿਅਕਤੀ ਨੂੰ ਆਪਣੀ ਜਗ੍ਹਾ ਸੈੱਟਅੱਪ ਕਰਨ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।\n\nਕੋਈ ਵੀ ਵਰਤੋਂਕਾਰ ਬਾਕੀ ਸਾਰੇ ਵਰਤੋਂਕਾਰਾਂ ਲਈ ਐਪਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰ ਸਕਦਾ ਹੈ।"</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"ਕੀ ਇਸ ਵਰਤੋਂਕਾਰ ਨੂੰ ਪ੍ਰਸ਼ਾਸਕ ਬਣਾਉਣਾ ਹੈ?"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"ਪ੍ਰਸ਼ਾਸਕਾਂ ਕੋਲ ਵਿਸ਼ੇਸ਼ ਅਧਿਕਾਰ ਹੁੰਦੇ ਹਨ ਜੋ ਹੋਰ ਵਰਤੋਂਕਾਰਾਂ ਕੋਲ ਨਹੀਂ ਹੁੰਦੇ। ਇੱਕ ਪ੍ਰਸ਼ਾਸਕ ਸਾਰੇ ਵਰਤੋਂਕਾਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ, ਇਸ ਡੀਵਾਈਸ ਨੂੰ ਅੱਪਡੇਟ ਜਾਂ ਰੀਸੈੱਟ ਕਰ ਸਕਦਾ ਹੈ, ਸੈਟਿੰਗਾਂ ਨੂੰ ਸੋਧ ਸਕਦਾ ਹੈ, ਸਾਰੀਆਂ ਸਥਾਪਤ ਐਪਾਂ ਨੂੰ ਦੇਖ ਸਕਦਾ ਹੈ, ਅਤੇ ਦੂਜਿਆਂ ਲਈ ਪ੍ਰਸ਼ਾਸਕ ਦੇ ਅਧਿਕਾਰਾਂ ਨੂੰ ਮਨਜ਼ੂਰ ਜਾਂ ਰੱਦ ਕਰ ਸਕਦਾ ਹੈ।"</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"ਪ੍ਰਸ਼ਾਸਕ ਬਣਾਓ"</string>
@@ -636,7 +636,7 @@
     <string name="user_setup_dialog_message" msgid="269931619868102841">"ਇਹ ਪੱਕਾ ਕਰੋ ਕਿ ਵਿਅਕਤੀ ਡੀਵਾਈਸ ਵਰਤਣ ਅਤੇ ਆਪਣੀ ਜਗ੍ਹਾ ਦੇ ਸੈੱਟਅੱਪ ਲਈ ਉਪਲਬਧ ਹੈ"</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"ਕੀ ਹੁਣ ਪ੍ਰੋਫਾਈਲ ਸੈੱਟ ਅੱਪ ਕਰਨੀ ਹੈ?"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"ਹੁਣੇ ਸੈੱਟ ਅੱਪ ਕਰੋ"</string>
-    <string name="user_setup_button_setup_later" msgid="8712980133555493516">"ਅਜੇ ਨਹੀਂ"</string>
+    <string name="user_setup_button_setup_later" msgid="8712980133555493516">"ਹੁਣੇ ਨਹੀਂ"</string>
     <string name="user_add_user_type_title" msgid="551279664052914497">"ਸ਼ਾਮਲ ਕਰੋ"</string>
     <string name="user_new_user_name" msgid="60979820612818840">"ਨਵਾਂ ਵਰਤੋਂਕਾਰ"</string>
     <string name="user_new_profile_name" msgid="2405500423304678841">"ਨਵੀਂ ਪ੍ਰੋਫਾਈਲ"</string>

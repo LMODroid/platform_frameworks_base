@@ -18,6 +18,7 @@ package com.android.server.wm;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.pm.PackageManager;
+import android.util.proto.ProtoOutputStream;
 
 import com.android.server.wm.utils.OptPropFactory;
 
@@ -52,7 +53,7 @@ class AppCompatController {
     private final AppCompatSizeCompatModePolicy mAppCompatSizeCompatModePolicy;
 
     AppCompatController(@NonNull WindowManagerService wmService,
-                        @NonNull ActivityRecord activityRecord) {
+            @NonNull ActivityRecord activityRecord) {
         mActivityRecord = activityRecord;
         final PackageManager packageManager = wmService.mContext.getPackageManager();
         final OptPropFactory optPropBuilder = new OptPropFactory(packageManager,
@@ -174,5 +175,9 @@ class AppCompatController {
         getAppCompatLetterboxPolicy().dump(pw, prefix);
         getAppCompatSizeCompatModePolicy().dump(pw, prefix);
         getSafeRegionPolicy().dump(pw, prefix);
+    }
+
+    void dumpDebug(@NonNull ProtoOutputStream proto) {
+        getSafeRegionPolicy().dumpDebug(proto);
     }
 }

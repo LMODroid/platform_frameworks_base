@@ -268,13 +268,13 @@
     <string name="adb_pairing_device_dialog_title" msgid="7141739231018530210">"Párosítás eszközzel"</string>
     <string name="adb_pairing_device_dialog_pairing_code_label" msgid="3639239786669722731">"Wi‑Fi-párosítókód"</string>
     <string name="adb_pairing_device_dialog_failed_title" msgid="3426758947882091735">"Sikertelen párosítás"</string>
-    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Győződjön meg arról, hogy az eszköz a megfelelő hálózathoz csatlakozik."</string>
+    <string name="adb_pairing_device_dialog_failed_msg" msgid="6611097519661997148">"Figyeljen arra, hogy az eszköz ugyanahhoz a hálózathoz csatlakozzon."</string>
     <string name="adb_wireless_qrcode_summary" msgid="8051414549011801917">"Párosítsa az eszközt Wi-Fi-n keresztül QR-kód beolvasásával"</string>
     <string name="adb_wireless_verifying_qrcode_text" msgid="6123192424916029207">"Eszköz párosítása…"</string>
     <string name="adb_qrcode_pairing_device_failed_msg" msgid="6936292092592914132">"Nem sikerült az eszközzel való párosítás. Vagy helytelen volt a QR-kód, vagy az eszköz másik hálózathoz csatlakozott."</string>
     <string name="adb_wireless_ip_addr_preference_title" msgid="8335132107715311730">"IP-cím és port"</string>
     <string name="adb_wireless_qrcode_pairing_title" msgid="1906409667944674707">"QR-kód beolvasása"</string>
-    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Párosítsa az eszközt Wi-Fi-n keresztül QR-kód beolvasásával"</string>
+    <string name="adb_wireless_qrcode_pairing_description" msgid="6014121407143607851">"Párosítsa az eszközt Wi-Fi-n keresztül QR-kód beolvasásával."</string>
     <string name="adb_wireless_no_network_msg" msgid="2365795244718494658">"Csatlakozzon Wi-Fi-hálózathoz"</string>
     <string name="keywords_adb_wireless" msgid="6507505581882171240">"adb, debug, dev"</string>
     <string name="bugreport_in_power" msgid="8664089072534638709">"Hibabejelentési gomb"</string>
@@ -377,15 +377,15 @@
     <string name="pointer_location" msgid="7516929526199520173">"Mutató helye"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"A fedvény mutatja az aktuális érintési adatokat"</string>
     <string name="show_touches" msgid="8437666942161289025">"Koppintások megjelenítése"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"Koppintások vizuális visszajelzésének megjelenítése"</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"Koppintások vizuális visszajelzése"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"Gomblenyomások mutatása"</string>
-    <string name="show_key_presses_summary" msgid="725387457373015024">"Fizikai gomblenyomások vizuális visszajelzéseinek mutatása"</string>
+    <string name="show_key_presses_summary" msgid="725387457373015024">"Fizikai gomblenyomások vizuális visszajelzése"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Az érintőpados bevitel megjelenítése"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Képernyőfedvény érintőpados beviteli adatokkal és felismert kézmozdulatokkal"</string>
-    <string name="show_screen_updates" msgid="2078782895825535494">"Felületfrissítések megj."</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"A teljes ablakfelület villogjon frissítéskor."</string>
+    <string name="show_screen_updates" msgid="2078782895825535494">"Felületfrissítések"</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"A teljes ablakfelület villogjon frissítéskor"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Frissítések megjelenítése"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Ablakos Flash-nézetek megjelenítéskor"</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Nézetek villogtatása ablakokon belül rajzoláskor"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Hardverréteg-frissítések"</string>
     <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Frissítéskor a hardverrétegek zölden villognak."</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"GPU tartalom-felülírási hibakeresés"</string>
@@ -396,7 +396,7 @@
     <string name="usb_audio_disable_routing" msgid="3367656923544254975">"Hangátirányítás tiltása - USB"</string>
     <string name="usb_audio_disable_routing_summary" msgid="8768242894849534699">"Hangátirányítás tiltása az USB-s hangeszközöknél"</string>
     <string name="debug_layout" msgid="1659216803043339741">"Elrendezéshatárok"</string>
-    <string name="debug_layout_summary" msgid="8825829038287321978">"Kliphatárok, margók stb. megjelenítése."</string>
+    <string name="debug_layout_summary" msgid="8825829038287321978">"Kliphatárok, margók stb. megjelenítése"</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Elrendezés jobbról balra"</string>
     <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Elrendezés jobbról balra minden nyelvnél"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Átlátszó navigációs sáv"</string>
@@ -516,7 +516,7 @@
     <string name="battery_info_status_charging_on_hold" msgid="6364355145521694438">"A töltés szünetel"</string>
     <string name="battery_info_status_charging_v2" msgid="6118522107222245505">"Töltés…"</string>
     <string name="battery_info_status_charging_fast_v2" msgid="1825439848151256589">"Gyors töltés…"</string>
-    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"Rendszergazda által irányítva"</string>
+    <string name="disabled_by_admin_summary_text" msgid="5343911767402923057">"A rendszergazda felügyeli"</string>
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"Korlátozott beállítás vezérli"</string>
     <string name="disabled" msgid="8017887509554714950">"Letiltva"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"Engedélyezett"</string>

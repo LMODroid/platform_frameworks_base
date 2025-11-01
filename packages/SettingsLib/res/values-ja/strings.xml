@@ -256,7 +256,7 @@
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"利用可能なデバイスを確認して使用するには、ワイヤレス デバッグを ON にしてください"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"QR コードによるデバイスのペア設定"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR コードをスキャンして新しいデバイスをペア設定します"</string>
-    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"ペア設定コードによるデバイスのペア設定"</string>
+    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"専用コードによるデバイスのペア設定"</string>
     <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"6 桁のコードを使って新しいデバイスをペア設定します"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"ペア設定済みのデバイス"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"現在接続"</string>
@@ -292,7 +292,7 @@
     <string name="mock_location_app_set" msgid="4706722469342913843">"現在地情報の強制変更アプリ: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="debug_networking_category" msgid="6829757985772659599">"ネットワーク"</string>
     <string name="wifi_display_certification" msgid="1805579519992520381">"ワイヤレス ディスプレイ認証"</string>
-    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Wi-Fi 詳細ログの有効化"</string>
+    <string name="wifi_verbose_logging" msgid="1785910450009679371">"Wi-Fi 詳細ログを有効化"</string>
     <string name="wifi_scan_throttling" msgid="2985624788509913617">"Wi‑Fi スキャン スロットリング"</string>
     <string name="wifi_non_persistent_mac_randomization" msgid="7482769677894247316">"Wi-Fi 非永続的 MAC ランダム化"</string>
     <string name="mobile_data_always_on" msgid="8275958101875563572">"モバイルデータを常に ON にする"</string>
@@ -409,7 +409,7 @@
     <string name="enable_gpu_debug_layers" msgid="4986675516188740397">"GPU デバッグレイヤを有効化"</string>
     <string name="enable_gpu_debug_layers_summary" msgid="4921521407377170481">"デバッグアプリに GPU デバッグレイヤの読み込みを許可します"</string>
     <string name="enable_verbose_vendor_logging" msgid="1196698788267682072">"ベンダーの詳細なロギングを有効化"</string>
-    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"バグレポートには、その他のデバイス固有のベンダーログが含まれます。これには、非公開の情報が含まれることがあります。また、バッテリーやストレージの使用量が増えることもあります。"</string>
+    <string name="enable_verbose_vendor_logging_summary" msgid="5426292185780393708">"バグレポートには、デバイス固有の詳細なベンダーログが含まれます。これには、非公開の情報が含まれることがあります。また、バッテリーやストレージの使用量が増えることもあります。"</string>
     <string name="enable_verbose_vendor_logging_checkbox" msgid="3864578373293835530">"1 日後に無効にする"</string>
     <string name="verbose_vendor_logging_notification_title" msgid="6811217272559843592">"ベンダーの詳細なロギングが終了しました"</string>
     <string name="verbose_vendor_logging_notification_summary" msgid="5226524769774370942">"1 日間有効にしました"</string>
@@ -633,7 +633,7 @@
     <string name="user_grant_admin_message" msgid="1673791931033486709">"管理者には、他のユーザーにはない特別な権限が与えられます。管理者は、すべてのユーザーの管理、このデバイスの更新やリセット、設定の変更、インストール済みのすべてのアプリの確認、他のユーザーに対する管理者権限の許可や取り消しを行えます。"</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"管理者にする"</string>
     <string name="user_setup_dialog_title" msgid="8037342066381939995">"ユーザーを今すぐセットアップ"</string>
-    <string name="user_setup_dialog_message" msgid="269931619868102841">"ユーザーがデバイスを使って各自のスペースをセットアップできるようにします"</string>
+    <string name="user_setup_dialog_message" msgid="269931619868102841">"ユーザーがデバイス上で独自のスペースをセットアップできるようにします"</string>
     <string name="user_setup_profile_dialog_message" msgid="4788197052296962620">"プロファイルを今すぐセットアップしますか？"</string>
     <string name="user_setup_button_setup_now" msgid="1708269547187760639">"今すぐセットアップ"</string>
     <string name="user_setup_button_setup_later" msgid="8712980133555493516">"後で行う"</string>
@@ -675,7 +675,7 @@
     <string name="guest_reset_button" msgid="2515069346223503479">"ゲスト セッションをリセット"</string>
     <string name="guest_exit_quick_settings_button" msgid="1912362095913765471">"ゲストを終了"</string>
     <string name="guest_notification_ephemeral" msgid="7263252466950923871">"終了時にすべてのアクティビティが削除されます"</string>
-    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"終了時にアクティビティを保存、削除できます"</string>
+    <string name="guest_notification_non_ephemeral" msgid="6843799963012259330">"終了時にアクティビティを保存または削除できます"</string>
     <string name="guest_notification_non_ephemeral_non_first_login" msgid="8009307983766934876">"アクティビティは、リセットして今すぐ削除するか、終了時に保存または削除できます"</string>
     <string name="user_image_photo_selector" msgid="433658323306627093">"写真を選択"</string>
     <string name="failed_attempts_now_wiping_device" msgid="4016329172216428897">"試行回数が上限に達しました。このデバイスのデータが削除されます。"</string>

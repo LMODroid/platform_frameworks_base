@@ -1001,8 +1001,8 @@
     <string name="lockscreen_emergency_call" msgid="7500692654885445299">"Hitne službe"</string>
     <string name="lockscreen_return_to_call" msgid="3156883574692006382">"Uzvrati poziv"</string>
     <string name="lockscreen_pattern_correct" msgid="8050630103651508582">"Ispravno!"</string>
-    <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"Pokušajte ponovo"</string>
-    <string name="lockscreen_password_wrong" msgid="8605355913868947490">"Pokušajte ponovo"</string>
+    <string name="lockscreen_pattern_wrong" msgid="2940138714468358458">"Pokušajte ponovno"</string>
+    <string name="lockscreen_password_wrong" msgid="8605355913868947490">"Pokušajte ponovno"</string>
     <string name="lockscreen_storage_locked" msgid="634993789186443380">"Otključajte za sve značajke i podatke"</string>
     <string name="faceunlock_multiple_failures" msgid="681991538434031708">"Premašen je maksimalni broj pokušaja otključavanja licem"</string>
     <string name="lockscreen_missing_sim_message_short" msgid="1229301273156907613">"Nema SIM-a"</string>
@@ -2009,7 +2009,7 @@
     <string name="work_mode_turn_on" msgid="5316648862401307800">"Ponovno pokreni"</string>
     <string name="work_mode_emergency_call_button" msgid="6818855962881612322">"Hitni slučaj"</string>
     <string name="set_up_screen_lock_title" msgid="8346083801616474030">"Postavite zaključavanje zaslona"</string>
-    <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"Postavi zaključavanje zaslona"</string>
+    <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"Postavite zaključavanje zaslona"</string>
     <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"Da biste upotrebljavali privatni prostor, postavite zaključavanje zaslona na ovom uređaju"</string>
     <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"Za upotrebu privatnog prostora postavite zaključavanje zaslona."</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"Aplikacija nije dostupna"</string>

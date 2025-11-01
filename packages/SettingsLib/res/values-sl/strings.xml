@@ -105,7 +105,7 @@
     <string name="bluetooth_battery_level_untethered_right" msgid="8377995536997790142">"Desno – baterija: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="tv_bluetooth_battery_level_untethered_left" msgid="337629670583744410">"Leva: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="tv_bluetooth_battery_level_untethered_right" msgid="8610019317279155595">"Desna: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
-    <string name="bluetooth_active_no_battery_level" msgid="4155462233006205630">"Aktivna"</string>
+    <string name="bluetooth_active_no_battery_level" msgid="4155462233006205630">"Aktivno"</string>
     <string name="bluetooth_saved_device" msgid="4895871321722311428">"Shranjeno"</string>
     <string name="bluetooth_hearing_aid_left_active" msgid="8330226430756799572">"Aktivno (samo levo)"</string>
     <string name="bluetooth_hearing_aid_right_active" msgid="2244728507170385397">"Aktivno (samo desno)"</string>
@@ -375,19 +375,19 @@
     <string name="strict_mode" msgid="889864762140862437">"Strog način je omogočen"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Osveži zaslon pri dolgih postopkih v glavni niti."</string>
     <string name="pointer_location" msgid="7516929526199520173">"Mesto kazalca"</string>
-    <string name="pointer_location_summary" msgid="957120116989798464">"Prekrivanje zaslona prikazuje trenutni dotik."</string>
+    <string name="pointer_location_summary" msgid="957120116989798464">"Prekrivanje zaslona prikazuje trenutni dotik"</string>
     <string name="show_touches" msgid="8437666942161289025">"Prikaži dotike"</string>
-    <string name="show_touches_summary" msgid="3692861665994502193">"Prikaži vizualne povratne informacije za dotike."</string>
+    <string name="show_touches_summary" msgid="3692861665994502193">"Prikaži vizualne povratne informacije za dotike"</string>
     <string name="show_key_presses" msgid="6360141722735900214">"Pokaži pritiske tipk"</string>
     <string name="show_key_presses_summary" msgid="725387457373015024">"Pokaži vizualne povratne informacije za pritiske fizičnih tipk"</string>
     <string name="touchpad_visualizer" msgid="3707916068870825115">"Pokaži vnos prek sledilne ploščice"</string>
     <string name="touchpad_visualizer_summary" msgid="4056080018119847449">"Prekrivanje zaslona, na katerem so prikazani podatki vnosa prek sledilne ploščice in prepoznane poteze"</string>
     <string name="show_screen_updates" msgid="2078782895825535494">"Pokaži posodob. površine"</string>
-    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Ob posodobitvi osveži celotne površine oken."</string>
+    <string name="show_screen_updates_summary" msgid="2126932969682087406">"Ob posodobitvi osveži celotne površine oken"</string>
     <string name="show_hw_screen_updates" msgid="2021286231267747506">"Prikaži posodob. pogleda"</string>
-    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Osveži poglede v oknih pri risanju."</string>
+    <string name="show_hw_screen_updates_summary" msgid="3539770072741435691">"Osveži poglede v oknih pri risanju"</string>
     <string name="show_hw_layers_updates" msgid="5268370750002509767">"Pokaži posodobitve slojev strojne opreme"</string>
-    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Obarvaj sloje strojne opreme zeleno ob posodobitvi."</string>
+    <string name="show_hw_layers_updates_summary" msgid="5850955890493054618">"Obarvaj sloje strojne opreme zeleno ob posodobitvi"</string>
     <string name="debug_hw_overdraw" msgid="8944851091008756796">"Prekoračitev območja GPE"</string>
     <string name="disable_overlays" msgid="4206590799671557143">"Onem. strojni medp."</string>
     <string name="disable_overlays_summary" msgid="1954852414363338166">"Za sestavljanje slike vedno uporabi GPE."</string>
@@ -398,7 +398,7 @@
     <string name="debug_layout" msgid="1659216803043339741">"Prikaži meje postavitve"</string>
     <string name="debug_layout_summary" msgid="8825829038287321978">"Pokaži meje obrezovanja, obrobe ipd."</string>
     <string name="force_rtl_layout_all_locales" msgid="8690762598501599796">"Vsili od desne proti levi"</string>
-    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Vsili smer postavitve na zaslonu od desne proti levi za vse jezike."</string>
+    <string name="force_rtl_layout_all_locales_summary" msgid="6663016859517239880">"Vsili smer postavitve na zaslonu od desne proti levi za vse jezike"</string>
     <string name="transparent_navigation_bar" msgid="1933192171384678484">"Prosojna vrstica za krmarjenje"</string>
     <string name="transparent_navigation_bar_summary" msgid="5454359021817330722">"Privzeta nastavitev prosojne barve ozadja vrstice za krmarjenje"</string>
     <string name="window_blurs" msgid="6831008984828425106">"Dovoli zameglitve na ravni okna"</string>
@@ -416,8 +416,8 @@
     <string name="verbose_vendor_logging_notification_action" msgid="1190831050259046071">"Omogoči za še en dan"</string>
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Onemogočeno bo čez en dan"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Omogočeno brez časovne omejitve"</string>
-    <string name="window_animation_scale_title" msgid="5236381298376812508">"Merilo animacije okna"</string>
-    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Merilo animacije prehoda"</string>
+    <string name="window_animation_scale_title" msgid="5236381298376812508">"Hitrost animacije okna"</string>
+    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Hitrost animacije prehoda"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Merilo trajanja animacije"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simuliraj sekundarne zaslone"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplikacije"</string>

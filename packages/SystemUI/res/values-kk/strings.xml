@@ -670,7 +670,7 @@
     <string name="media_device_cast" msgid="4786241789687569892">"Трансляциялау"</string>
     <string name="stream_notification_unavailable" msgid="4313854556205836435">"Телефонның дыбысы өшіп тұрғанда қолжетімсіз."</string>
     <string name="stream_alarm_unavailable" msgid="4059817189292197839">"Мазаламау режимі қосылғандықтан өзгерту мүмкін емес."</string>
-    <string name="stream_media_unavailable" msgid="6823020894438959853">"Мазаламау режимі қосылғандықтан өзгерту мүмкін емес."</string>
+    <string name="stream_media_unavailable" msgid="6823020894438959853">"Мазаламау режимі қосылғандықтан, өзгерту мүмкін емес."</string>
     <string name="volume_stream_content_description_unmute" msgid="7729576371406792977">"%1$s. Дыбысын қосу үшін түртіңіз."</string>
     <string name="volume_stream_content_description_vibrate" msgid="4858111994183089761">"%1$s. Діріл режимін орнату үшін түртіңіз. Арнайы мүмкіндік қызметтерінің дыбысы өшуі мүмкін."</string>
     <string name="volume_stream_content_description_mute" msgid="4079046784917920984">"%1$s. Дыбысын өшіру үшін түртіңіз. Арнайы мүмкіндік қызметтерінің дыбысы өшуі мүмкін."</string>
@@ -1446,7 +1446,7 @@
     <string name="accessibility_deprecate_extra_dim_dialog_description" msgid="4453123359258743230">"Экранның жарықтық деңгейін көбірек төмендету арқылы оны қарайта аласыз.\n\nБұл функция енді жарықтық жүгірткісіне қосылғандықтан, экранды қарайту жылдам пәрмендері өшіріліп жатыр."</string>
     <string name="accessibility_deprecate_extra_dim_dialog_button" msgid="3947537827396916005">"Экранды қарайту жылдам пәрмендерін өшіру"</string>
     <string name="accessibility_deprecate_extra_dim_dialog_toast" msgid="165474092660941104">"Экранды қарайту жылдам пәрмендері өшірілді."</string>
-    <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"Қосылу мүмкіндігі"</string>
+    <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"Байланыс"</string>
     <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"Арнайы мүмкіндіктер"</string>
     <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"Утилиталар"</string>
     <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"Құпиялық"</string>

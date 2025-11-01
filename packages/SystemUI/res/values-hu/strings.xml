@@ -699,7 +699,7 @@
     <string name="media_output_title_ongoing_call" msgid="208426888064112006">"Hívás folyamatban itt:"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"Kezelőfelület-hangoló"</string>
     <string name="status_bar" msgid="4357390266055077437">"Állapotsor"</string>
-    <string name="demo_mode" msgid="263484519766901593">"A rendszer kezelőfelületének demómódja"</string>
+    <string name="demo_mode" msgid="263484519766901593">"A rendszer kezelőfelületének demó módja"</string>
     <string name="enable_demo_mode" msgid="3180345364745966431">"Demó mód engedélyezése"</string>
     <string name="show_demo_mode" msgid="3677956462273059726">"Demó mód megjelenítése"</string>
     <string name="status_bar_ethernet" msgid="5690979758988647484">"Ethernet"</string>
@@ -1369,7 +1369,7 @@
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Kibontás és lehetőségek megjelenítése"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"Összecsukás"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"Az alkalmazás bezárása"</string>
-    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"<xliff:g id="APP_NAME">%1$s</xliff:g> lezárva"</string>
+    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"<xliff:g id="APP_NAME">%1$s</xliff:g> bezárva"</string>
     <string name="privacy_dialog_manage_service" msgid="8320590856621823604">"Szolgáltatás kezelése"</string>
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"Hozzáférés kezelése"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"Telefonhívás által használatban"</string>

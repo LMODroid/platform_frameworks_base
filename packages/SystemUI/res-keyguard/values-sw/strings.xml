@@ -58,7 +58,7 @@
     <string name="kg_wrong_pin_try_again" msgid="3129729383303430190">"PIN si sahihi. Jaribu tena."</string>
     <string name="kg_wrong_input_try_fp_suggestion" msgid="3143861542242024833">"Au fungua kwa alama ya kidole"</string>
     <string name="kg_fp_not_recognized" msgid="5183108260932029241">"Alama ya kidole haijatambuliwa"</string>
-    <string name="bouncer_face_not_recognized" msgid="1666128054475597485">"Sura haikutambulika"</string>
+    <string name="bouncer_face_not_recognized" msgid="1666128054475597485">"Uso haukutambulika"</string>
     <string name="kg_bio_try_again_or_pin" msgid="4752168242723808390">"Jaribu tena au uweke PIN"</string>
     <string name="kg_bio_try_again_or_password" msgid="1473132729225398039">"Jaribu tena au uweke nenosiri"</string>
     <string name="kg_bio_try_again_or_pattern" msgid="4867893307468801501">"Jaribu tena au uchore mchoro"</string>

@@ -655,7 +655,7 @@
     <string name="screen_pinning_negative" msgid="6882816864569211666">"ಬೇಡ"</string>
     <string name="screen_pinning_start" msgid="7483998671383371313">"ಆ್ಯಪ್ ಪಿನ್ ಮಾಡಲಾಗಿದೆ"</string>
     <string name="screen_pinning_exit" msgid="4553787518387346893">"ಆ್ಯಪ್ ಅನ್‌ಪಿನ್ ಮಾಡಲಾಗಿದೆ"</string>
-    <string name="stream_voice_call" msgid="7468348170702375660">"ಕರೆ ಮಾಡಿ"</string>
+    <string name="stream_voice_call" msgid="7468348170702375660">"ಕರೆ"</string>
     <string name="stream_system" msgid="7663148785370565134">"ಸಿಸ್ಟಂ"</string>
     <string name="stream_ring" msgid="7550670036738697526">"ರಿಂಗ್"</string>
     <string name="stream_music" msgid="2188224742361847580">"ಮಾಧ್ಯಮ"</string>
@@ -696,7 +696,7 @@
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"ವೈಬ್ರೇಟ್‌"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"<xliff:g id="LABEL">%s</xliff:g> ನಲ್ಲಿ ಪ್ಲೇ ಆಗು..."</string>
     <string name="media_output_title_without_playing" msgid="3825663683169305013">"ಇದರಲ್ಲಿ ಪ್ಲೇ ಆಗುತ್ತದೆ"</string>
-    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"ಕರೆ ಮಾಡಲಾಗುತ್ತಿದೆ"</string>
+    <string name="media_output_title_ongoing_call" msgid="208426888064112006">"ಕರೆಯಲ್ಲಿದ್ದೀರಿ"</string>
     <string name="system_ui_tuner" msgid="1471348823289954729">"ಸಿಸ್ಟಂ UI ಟ್ಯೂನರ್"</string>
     <string name="status_bar" msgid="4357390266055077437">"ಸ್ಥಿತಿ ಪಟ್ಟಿ"</string>
     <string name="demo_mode" msgid="263484519766901593">"ಸಿಸ್ಟಂ UI ಡೆಮೋ ಮೋಡ್"</string>
@@ -744,7 +744,7 @@
     <string name="notification_silence_title" msgid="8608090968400832335">"ನಿಶ್ಶಬ್ದ"</string>
     <string name="notification_alert_title" msgid="3656229781017543655">"ಡೀಫಾಲ್ಟ್"</string>
     <string name="notification_automatic_title" msgid="3745465364578762652">"ಸ್ವಯಂಚಾಲಿತ"</string>
-    <string name="notification_channel_summary_low" msgid="4860617986908931158">"ಯಾವುದೇ ಧ್ವನಿ ಅಥವಾ ವೈಬ್ರೇಷನ್‌ ಆಗುವುದಿಲ್ಲ"</string>
+    <string name="notification_channel_summary_low" msgid="4860617986908931158">"ಯಾವುದೇ ಸೌಂಡ್ ಅಥವಾ ವೈಬ್ರೇಷನ್‌ ಬರುವುದಿಲ್ಲ"</string>
     <string name="notification_conversation_summary_low" msgid="3855696451919728790">"ಯಾವುದೇ ಸೌಂಡ್ ಅಥವಾ ವೈಬ್ರೇಷನ್‌ ಇಲ್ಲ, ಆದರೆ ಇದು ಇನ್ನೂ ಸಂಭಾಷಣೆಗಳ ವಿಭಾಗದಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ"</string>
     <string name="notification_channel_summary_default" msgid="777294388712200605">"ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಆಧರಿಸಿ ಸಾಧನ ರಿಂಗ್ ಅಥವಾ ವೈಬ್ರೇಟ್ ಆಗುತ್ತದೆ"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಆಧರಿಸಿ ಫೋನ್ ರಿಂಗ್ ಅಥವಾ ವೈಬ್ರೇಟ್ ಆಗುತ್ತದೆ. ಡಿಫಾಲ್ಟ್ ಆಗಿ, <xliff:g id="APP_NAME">%1$s</xliff:g> ಬಬಲ್ ಸಂಭಾಷಣೆಗಳು."</string>
@@ -1374,7 +1374,7 @@
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"ಆ್ಯಕ್ಸೆಸ್ ಅನ್ನು ನಿರ್ವಹಿಸಿ"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"ಫೋನ್ ಕರೆ ಮೂಲಕ ಬಳಕೆಯಲ್ಲಿದೆ"</string>
     <string name="privacy_dialog_recent_call_usage" msgid="1214810644978167344">"ಫೋನ್ ಕರೆಯಲ್ಲಿ ಇತ್ತೀಚಿಗೆ ಬಳಸಲಾಗಿದೆ"</string>
-    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"<xliff:g id="APP_NAME">%1$s</xliff:g> ನಿಂದ ಬಳಕೆಯಲ್ಲಿದೆ"</string>
+    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"<xliff:g id="APP_NAME">%1$s</xliff:g> ಬಳಸುತ್ತಿದೆ"</string>
     <string name="privacy_dialog_recent_app_usage" msgid="4883417856848222450">"<xliff:g id="APP_NAME">%1$s</xliff:g> ಇತ್ತೀಚೆಗೆ ಇದನ್ನು ಬಳಸಿದೆ"</string>
     <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"<xliff:g id="APP_NAME">%1$s</xliff:g> ನಿಂದ ಬಳಕೆಯಲ್ಲಿದೆ (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
     <string name="privacy_dialog_recent_app_usage_1" msgid="2551340497722370109">"ಇತ್ತೀಚೆಗೆ <xliff:g id="APP_NAME">%1$s</xliff:g> ಇದನ್ನು ಬಳಸಿದೆ (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
@@ -1403,18 +1403,18 @@
     <string name="launch_touchpad_tutorial_notification_content" msgid="7931085031240753226">"ಟಚ್‌ಪ್ಯಾಡ್ ಜೆಸ್ಚರ್‌ಗಳನ್ನು ಕಲಿಯಿರಿ"</string>
     <string name="launch_keyboard_touchpad_tutorial_notification_title" msgid="1940023776496198762">"ನಿಮ್ಮ ಕೀಬೋರ್ಡ್ ಮತ್ತು ಟಚ್‌ಪ್ಯಾಡ್ ಬಳಸಿ ನ್ಯಾವಿಗೇಟ್ ಮಾಡಿ"</string>
     <string name="launch_keyboard_touchpad_tutorial_notification_content" msgid="1780725168171929365">"ಟಚ್‌ಪ್ಯಾಡ್ ಗೆಸ್ಚರ್‌ಗಳು, ಕೀಬೋರ್ಡ್‌ಗಳ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು ಮತ್ತು ಹೆಚ್ಚಿನದನ್ನು ತಿಳಿಯಿರಿ"</string>
-    <string name="touchpad_tutorial_back_gesture_button" msgid="2746834288077265946">"ಹಿಂಬದಿ ಗೆಸ್ಚರ್"</string>
-    <string name="touchpad_tutorial_home_gesture_button" msgid="7640544867625955304">"ಹೋಮ್ ಗೆಸ್ಚರ್"</string>
+    <string name="touchpad_tutorial_back_gesture_button" msgid="2746834288077265946">"ಹಿಂಬದಿ ಜೆಸ್ಚರ್"</string>
+    <string name="touchpad_tutorial_home_gesture_button" msgid="7640544867625955304">"ಹೋಮ್ ಜೆಸ್ಚರ್"</string>
     <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"ಇತ್ತೀಚಿನ ಆ್ಯಪ್‌ಗಳನ್ನು ವೀಕ್ಷಿಸಿ"</string>
     <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"ಮುಗಿದಿದೆ"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"ಹಿಂತಿರುಗಿ"</string>
     <string name="touchpad_back_gesture_guidance" msgid="6263750214998421587">"ಹಿಂತಿರುಗಲು, ಟಚ್‌ಪ್ಯಾಡ್‌ನಲ್ಲಿ ಎಲ್ಲಿಯಾದರೂ ಮೂರು ಬೆರಳುಗಳನ್ನು ಬಳಸಿ ಎಡ ಅಥವಾ ಬಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ.\n\nಇದಕ್ಕಾಗಿ ನೀವು ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್ Action + ESC ಅನ್ನು ಸಹ ಬಳಸಬಹುದು."</string>
     <string name="touchpad_back_gesture_success_title" msgid="7240576648330612171">"ಭೇಷ್!"</string>
-    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"ನೀವು ಗೋ ಬ್ಯಾಕ್ ಗೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ."</string>
+    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"ನೀವು ಗೋ ಬ್ಯಾಕ್ ಜೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ."</string>
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ನಿಮ್ಮ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ಗೆ ಹೋಗಲು, ನಿಮ್ಮ ಸ್ಕ್ರೀನ್ ಕೆಳಗಿನಿಂದ ಮೂರು ಬೆರಳುಗಳಿಂದ ಮೇಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"ಭೇಷ್!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"ನೀವು ಗೋ ಹೋಮ್ ಗೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ."</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"ನೀವು ಗೋ ಹೋಮ್ ಜೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ."</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"ಇತ್ತೀಚಿನ ಆ್ಯಪ್‌ಗಳನ್ನು ವೀಕ್ಷಿಸಿ"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"ನಿಮ್ಮ ಟಚ್‌ಪ್ಯಾಡ್‌ನಲ್ಲಿ ಮೂರು ಬೆರಳುಗಳನ್ನು ಬಳಸಿ ಮೇಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ ಮತ್ತು ಹಿಡಿದುಕೊಳ್ಳಿ."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"ಭೇಷ್‌!"</string>
@@ -1422,7 +1422,7 @@
     <string name="tutorial_action_key_title" msgid="2659466586996495447">"ಆ್ಯಕ್ಷನ್‌ ಕೀ"</string>
     <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"ನಿಮ್ಮ ಆ್ಯಪ್‌ಗಳನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು, ನಿಮ್ಮ ಕೀಬೋರ್ಡ್‌ನಲ್ಲಿರುವ ಆ್ಯಕ್ಷನ್‌ ಕೀಯನ್ನು ಒತ್ತಿರಿ."</string>
     <string name="tutorial_action_key_success_title" msgid="466467860120112933">"ಅಭಿನಂದನೆಗಳು!"</string>
-    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"ನೀವು ಆ್ಯಕ್ಷನ್‌ ಕೀ ಗೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ.\n\nನಿಮಗೆ ಲಭ್ಯವಿರುವ ಎಲ್ಲಾ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಆ್ಯಕ್ಷನ್‌ + / ತೋರಿಸುತ್ತದೆ."</string>
+    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"ನೀವು ಆ್ಯಕ್ಷನ್‌ ಕೀ ಜೆಸ್ಚರ್ ಅನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ.\n\nನಿಮಗೆ ಲಭ್ಯವಿರುವ ಎಲ್ಲಾ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಆ್ಯಕ್ಷನ್‌ + / ತೋರಿಸುತ್ತದೆ."</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"ಕೀಬೋರ್ಡ್ ಬ್ಯಾಕ್‌ಲೈಟ್"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"%2$d ರಲ್ಲಿ %1$d ಮಟ್ಟ"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"ಮನೆ ನಿಯಂತ್ರಣಗಳು"</string>

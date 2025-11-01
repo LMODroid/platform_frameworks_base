@@ -9,6 +9,8 @@ huiwang@google.com
 jayachandranc@google.com
 amruthr@google.com
 sasindran@google.com
+# TODO(b/449213597): Remove jmattis@ after Minimal Telephony changes are merged.
+jmattis@google.com
 
 # Requiring TL ownership for new carrier config keys.
 per-file CarrierConfigManager.java=set noparent
