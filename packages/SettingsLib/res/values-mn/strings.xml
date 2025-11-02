@@ -541,7 +541,7 @@
     <string name="retail_demo_reset_next" msgid="3688129033843885362">"Дараагийн"</string>
     <string name="retail_demo_reset_title" msgid="1866911701095959800">"Нууц үг шаардлагатай"</string>
     <string name="active_input_method_subtypes" msgid="4232680535471633046">"Оруулах аргуудыг идэвхжүүлэх"</string>
-    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Системийн хэлүүдийг ашиглах"</string>
+    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Системийн хэлнүүдийг ашиглах"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"<xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g>-н тохиргоог нээж чадсангүй"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"Энэ оруулах арга нь таны нууц үгс, зээлийн картын дугаар гэх мэт бичсэн хувийн мэдээллийг цуглуулах боломжтой байж болно. Үүнийг <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> апп нийлүүлдэг. Энэ оруулах аргыг ашиглах уу?"</string>
     <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Санамж: Дахин асаасны дараа энэ апп нь таныг утасны түгжээгээ тайлах хүртэл эхлэх боломжгүй"</string>
