@@ -59,7 +59,7 @@
     <string name="hdmi_cec_set_menu_language_description" msgid="8176716678074126619">"دستگاه دیگری درخواست کرده است زبان سیستم تغییر کند"</string>
     <string name="hdmi_cec_set_menu_language_accept" msgid="2513689457281009578">"تغییر زبان"</string>
     <string name="hdmi_cec_set_menu_language_decline" msgid="7650721096558646011">"حفظ زبان فعلی"</string>
-    <string name="share_wifi_button_text" msgid="1285273973812029240">"‏اشتراک‌گذاری Wi‑Fi"</string>
+    <string name="share_wifi_button_text" msgid="1285273973812029240">"‏هم‌رسانی کردن Wi‑Fi"</string>
     <string name="wifi_debugging_title" msgid="7300007687492186076">"اشکال‌زدایی بی‌سیم در این شبکه مجاز شود؟"</string>
     <string name="wifi_debugging_message" msgid="5461204211731802995">"‏نام شبکه (SSID)\n<xliff:g id="SSID_0">%1$s</xliff:g>\n\nنشانی Wi‑Fi (BSSID)‎\n<xliff:g id="BSSID_1">%2$s</xliff:g>"</string>
     <string name="wifi_debugging_always" msgid="2968383799517975155">"همیشه در این شبکه مجاز شود"</string>

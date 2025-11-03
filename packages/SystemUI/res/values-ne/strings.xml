@@ -495,7 +495,7 @@
     <string name="edit_widget" msgid="9030848101135393954">"विजेट सम्पादन गर्नुहोस्"</string>
     <string name="button_to_remove_widget" msgid="3948204829181214098">"हटाउनुहोस्"</string>
     <string name="hub_mode_add_widget_button_text" msgid="4831464661209971729">"विजेट हाल्नुहोस्"</string>
-    <string name="hub_mode_editing_exit_button_text" msgid="3704686734192264771">"पूरा भयो"</string>
+    <string name="hub_mode_editing_exit_button_text" msgid="3704686734192264771">"भयो"</string>
     <string name="label_for_button_in_empty_state_cta" msgid="7314975555382055823">"विजेट हाल्नुहोस्"</string>
     <string name="title_for_empty_state_cta" msgid="6161654421223450530">"ट्याब्लेट अनलक नगरिकनै आफूलाई मन पर्ने एपका विजेटहरू तुरुन्तै एक्सेस गर्नुहोस्।"</string>
     <string name="dialog_title_to_allow_any_widget" msgid="1004820948962675644">"लक स्क्रिनमा कुनै विजेट देखाउने हो?"</string>
@@ -1365,7 +1365,7 @@
     <string name="privacy_dialog_title" msgid="7839968133469098311">"माइक्रोफोन तथा क्यामेरा"</string>
     <string name="privacy_dialog_summary" msgid="2458769652125995409">"एपको हालसालैको प्रयोग"</string>
     <string name="privacy_dialog_more_button" msgid="7610604080293562345">"हालसालै एक्सेस गर्ने एप हेर्नुहोस्"</string>
-    <string name="privacy_dialog_done_button" msgid="4504330708531434263">"पूरा भयो"</string>
+    <string name="privacy_dialog_done_button" msgid="4504330708531434263">"भयो"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"एक्स्पान्ड गर्नुहोस् र विकल्पहरू देखाउनुहोस्"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"कोल्याप्स गर्नुहोस्"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"यो एप बन्द गर्नुहोस्"</string>
