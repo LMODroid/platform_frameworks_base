@@ -396,7 +396,7 @@
     <string name="custom" msgid="3337456985275158299">"பிரத்தியேகம்"</string>
     <string name="custom_trace_settings_dialog_title" msgid="2608570500144830554">"பிரத்தியேக டிரேஸ் அமைப்புகள்"</string>
     <string name="restore_default" msgid="5259420807486239755">"இயல்புக்கு மீட்டெடு"</string>
-    <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"ஒற்றைக் கைப் பயன்முறை"</string>
+    <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"ஒற்றைக் கை மோட்"</string>
     <string name="quick_settings_hearing_devices_label" msgid="7277170419679404129">"செவித்துணைக் கருவிகள்"</string>
     <string name="quick_settings_hearing_devices_connected" msgid="6519069502397037781">"செயலில் உள்ளது"</string>
     <string name="quick_settings_hearing_devices_disconnected" msgid="8907061223998176187">"இணைக்கப்படவில்லை"</string>
