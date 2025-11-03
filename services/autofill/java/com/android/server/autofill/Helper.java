@@ -16,8 +16,13 @@
 
 package com.android.server.autofill;
 
+import static android.Manifest.permission.INTERACT_ACROSS_USERS;
+
+import static com.android.server.autofill.Helper.sDebug;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.assist.AssistStructure;
@@ -26,8 +31,11 @@ import android.app.assist.AssistStructure.WindowNode;
 import android.app.slice.Slice;
 import android.app.slice.SliceItem;
 import android.content.ComponentName;
+import android.content.Context;
 import android.graphics.drawable.Icon;
 import android.metrics.LogMaker;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.service.autofill.Dataset;
 import android.service.autofill.InternalSanitizer;
 import android.service.autofill.SaveInfo;
@@ -40,6 +48,7 @@ import android.view.WindowManager;
 import android.view.autofill.AutofillId;
 import android.view.autofill.AutofillValue;
 import android.widget.RemoteViews;
+
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.ArrayUtils;
@@ -93,6 +102,26 @@ public final class Helper {
         });
 
         return permissionsOk.get();
+    }
+
+    /**
+     * Creates the context as the foreground user
+     *
+     * <p>Returns the current context as the current foreground user
+     */
+    @RequiresPermission(INTERACT_ACROSS_USERS)
+    public static Context getUserContext(Context context) {
+        int userId = ActivityManager.getCurrentUser();
+        Context c = context.createContextAsUser(UserHandle.of(userId), /* flags= */ 0);
+        if (sDebug) {
+            Slog.d(
+                    TAG,
+                    "Current User: "
+                            + userId
+                            + ", context created as: "
+                            + c.getContentResolver().getUserId());
+        }
+        return c;
     }
 
     /**

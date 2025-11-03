@@ -38,6 +38,7 @@ import static com.android.server.companion.PermissionsUtils.enforceCallerCanMana
 import static com.android.server.companion.PermissionsUtils.enforceCallerIsSystemOr;
 import static com.android.server.companion.PermissionsUtils.enforceCallerIsSystemOrCanInteractWithUserId;
 import static com.android.server.companion.PermissionsUtils.sanitizeWithCallerChecks;
+import static com.android.server.companion.RolesUtils.NLS_PROFILES;
 import static com.android.server.companion.RolesUtils.addRoleHolderForAssociation;
 import static com.android.server.companion.RolesUtils.removeRoleHolderForAssociation;
 
@@ -63,10 +64,12 @@ import android.companion.ICompanionDeviceManager;
 import android.companion.IOnAssociationsChangedListener;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
+import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.net.MacAddress;
 import android.net.NetworkPolicyManager;
@@ -83,6 +86,7 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.service.notification.NotificationListenerService;
 import android.util.ArraySet;
 import android.util.ExceptionUtils;
 import android.util.Log;
@@ -401,6 +405,27 @@ public class CompanionDeviceManagerService extends SystemService {
         final String packageName = association.getPackageName();
 
         if (changeType == AssociationStore.CHANGE_TYPE_REMOVED) {
+            // Revoke NLS if the last association has been removed for the package
+            Binder.withCleanCallingIdentity(() -> {
+                if (mAssociationStore.getAssociationsForPackage(userId, packageName).isEmpty()) {
+                    if (association.getDeviceProfile() != null
+                        && NLS_PROFILES.contains(association.getDeviceProfile())) {
+                        NotificationManager nm = getContext().getSystemService(
+                                NotificationManager.class);
+                        Intent nlsIntent = new Intent(
+                                NotificationListenerService.SERVICE_INTERFACE);
+                        List<ResolveInfo> matchedServiceList = getContext().getPackageManager()
+                                .queryIntentServicesAsUser(nlsIntent, /* flags */ 0, userId);
+                        for (ResolveInfo service : matchedServiceList) {
+                            if (service.getComponentInfo().getComponentName().getPackageName()
+                                    .equals(packageName)) {
+                                nm.setNotificationListenerAccessGranted(
+                                        service.getComponentInfo().getComponentName(), false, false);
+                            }
+                        }
+                    }
+                }
+            });
             markIdAsPreviouslyUsedForPackage(id, userId, packageName);
         }
 
