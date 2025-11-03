@@ -1763,7 +1763,7 @@
     <string name="accessibility_button_prompt_text" msgid="6105393217162198616">"Funktion auswählen"</string>
     <string name="accessibility_gesture_prompt_text" msgid="6452246951969541792">"Funktion auswählen"</string>
     <string name="accessibility_gesture_3finger_prompt_text" msgid="77745752309056152">"Funktion auswählen"</string>
-    <string name="accessibility_button_instructional_text" msgid="6831154884557881996">"Die Funktion wird geöffnet, wenn du das nächste Mal auf die Schaltfläche „Bedienungshilfen“ tippst"</string>
+    <string name="accessibility_button_instructional_text" msgid="6831154884557881996">"Die Funktion wird geöffnet, wenn du das nächste Mal auf den Button „Bedienungshilfen“ tippst"</string>
     <string name="accessibility_gesture_instructional_text" msgid="4133877896011098550">"Die Funktion wird geöffnet, wenn du diese Touchgeste für Bedienungshilfen das nächste Mal verwendest. Wische mit 2 Fingern vom unteren Displayrand nach oben und lass dann schnell los."</string>
     <string name="accessibility_gesture_3finger_instructional_text" msgid="1124458279366968154">"Die Funktion wird geöffnet, wenn du diese Touchgeste für Bedienungshilfen das nächste Mal verwendest. Wische mit 3 Fingern vom unteren Displayrand nach oben und lass dann schnell los."</string>
     <string name="accessibility_magnification_chooser_text" msgid="1502075582164931596">"Vergrößerung"</string>
