@@ -1011,7 +1011,7 @@
     <string name="lockscreen_missing_sim_instructions" msgid="5823469004536805423">"سیم‌کارت اضافه کنید."</string>
     <string name="lockscreen_missing_sim_instructions_long" msgid="4403843937236648032">"سیم‌کارت موجود نیست یا قابل‌خواندن نیست. سیم‌کارت اضافه کنید."</string>
     <string name="lockscreen_permanent_disabled_sim_message_short" msgid="1925200607820809677">"سیم‌کارت قابل‌استفاده نیست."</string>
-    <string name="lockscreen_permanent_disabled_sim_instructions" msgid="6902979937802238429">"سیم‌کارت شما برای همیشه غیرفعال شده است.\n برای دریافت سیم‌کارتی دیگر، با رساننده خدمات بی‌سیم خود تماس بگیرید."</string>
+    <string name="lockscreen_permanent_disabled_sim_instructions" msgid="6902979937802238429">"سیم‌کارت شما برای همیشه غیرفعال شده است.\n برای دریافت سیم‌کارتی دیگر، با فراهم‌ساز خدمات بی‌سیم خود تماس بگیرید."</string>
     <string name="lockscreen_transport_prev_description" msgid="2879469521751181478">"آهنگ قبلی"</string>
     <string name="lockscreen_transport_next_description" msgid="2931509904881099919">"آهنگ بعدی"</string>
     <string name="lockscreen_transport_pause_description" msgid="6705284702135372494">"مکث"</string>
@@ -1180,7 +1180,7 @@
     <string name="paste_as_plain_text" msgid="7664800665823182587">"جای‌گذاری به عنوان متن ساده"</string>
     <string name="replace" msgid="7842675434546657444">"جایگزین شود…"</string>
     <string name="delete" msgid="1514113991712129054">"حذف"</string>
-    <string name="copyUrl" msgid="6229645005987260230">"‏کپی URL"</string>
+    <string name="copyUrl" msgid="6229645005987260230">"کپی کردن نشانی وب"</string>
     <string name="selectTextMode" msgid="3225108910999318778">"انتخاب متن"</string>
     <string name="undo" msgid="3175318090002654673">"واگرد"</string>
     <string name="redo" msgid="7231448494008532233">"ازنو انجام دادن"</string>
