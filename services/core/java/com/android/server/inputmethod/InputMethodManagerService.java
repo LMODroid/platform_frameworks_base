@@ -163,6 +163,7 @@ import com.android.internal.inputmethod.InputMethodDebug;
 import com.android.internal.inputmethod.InputMethodInfoSafeList;
 import com.android.internal.inputmethod.InputMethodNavButtonFlags;
 import com.android.internal.inputmethod.InputMethodSubtypeHandle;
+import com.android.internal.inputmethod.InputMethodSubtypeSafeList;
 import com.android.internal.inputmethod.SoftInputShowHideReason;
 import com.android.internal.inputmethod.StartInputFlags;
 import com.android.internal.inputmethod.StartInputReason;
@@ -1677,7 +1678,7 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
             final int[] resolvedUserIds = InputMethodUtils.resolveUserId(userId,
                     mCurrentUserId, null);
             if (resolvedUserIds.length != 1) {
-                return InputMethodInfoSafeList.empty();
+                return InputMethodInfoSafeList.create(null);
             }
             final int callingUid = Binder.getCallingUid();
             final long ident = Binder.clearCallingIdentity();
@@ -1702,7 +1703,7 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
             final int[] resolvedUserIds = InputMethodUtils.resolveUserId(userId,
                     mCurrentUserId, null);
             if (resolvedUserIds.length != 1) {
-                return InputMethodInfoSafeList.empty();
+                return InputMethodInfoSafeList.create(null);
             }
             final int callingUid = Binder.getCallingUid();
             final long ident = Binder.clearCallingIdentity();
@@ -1845,8 +1846,9 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
      *                                        subtypes
      * @param userId                          the user ID to be queried about
      */
+    @NonNull
     @Override
-    public List<InputMethodSubtype> getEnabledInputMethodSubtypeList(String imiId,
+    public InputMethodSubtypeSafeList getEnabledInputMethodSubtypeList(String imiId,
             boolean allowsImplicitlyEnabledSubtypes, @UserIdInt int userId) {
         if (UserHandle.getCallingUserId() != userId) {
             mContext.enforceCallingOrSelfPermission(
@@ -1857,8 +1859,9 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
             final int callingUid = Binder.getCallingUid();
             final long ident = Binder.clearCallingIdentity();
             try {
-                return getEnabledInputMethodSubtypeListLocked(imiId,
-                        allowsImplicitlyEnabledSubtypes, userId, callingUid);
+                return InputMethodSubtypeSafeList.create(
+                        getEnabledInputMethodSubtypeListLocked(imiId,
+                                allowsImplicitlyEnabledSubtypes, userId, callingUid));
             } finally {
                 Binder.restoreCallingIdentity(ident);
             }
