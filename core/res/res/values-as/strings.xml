@@ -321,7 +321,7 @@
     <string name="permgroupdesc_contacts" msgid="9163927941244182567">"আপোনাৰ সম্পৰ্কসূচী চাব পাৰে"</string>
     <string name="permgrouplab_location" msgid="1858277002233964394">"অৱস্থান"</string>
     <string name="permgroupdesc_location" msgid="1995955142118450685">"এই ডিভাইচৰ অৱস্থান ব্যৱহাৰ কৰিব পাৰে"</string>
-    <string name="permgrouplab_calendar" msgid="6426860926123033230">"Calendar"</string>
+    <string name="permgrouplab_calendar" msgid="6426860926123033230">"কেলেণ্ডাৰ"</string>
     <string name="permgroupdesc_calendar" msgid="6762751063361489379">"আপোনাৰ কেলেণ্ডাৰ ব্যৱহাৰ কৰিব পাৰে"</string>
     <string name="permgrouplab_sms" msgid="795737735126084874">"এছএমএছ"</string>
     <string name="permgroupdesc_sms" msgid="5726462398070064542">"এছএমএছ বার্তা পঠিয়াব আৰু চাব পাৰে"</string>

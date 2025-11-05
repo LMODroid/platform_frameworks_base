@@ -1750,7 +1750,7 @@
     <string name="accessibility_uncheck_legacy_item_warning" msgid="8047830891064817447">"<xliff:g id="SERVICE_NAME">%s</xliff:g> on laitettu pois päältä"</string>
     <string name="edit_accessibility_shortcut_menu_button" msgid="8885752738733772935">"Muokkaa pikakuvakkeita"</string>
     <string name="done_accessibility_shortcut_menu_button" msgid="3668407723770815708">"Valmis"</string>
-    <string name="disable_accessibility_shortcut" msgid="5806091378745232383">"Poista pikanäppäin käytöstä"</string>
+    <string name="disable_accessibility_shortcut" msgid="5806091378745232383">"Laita pikanäppäin pois päältä"</string>
     <string name="leave_accessibility_shortcut_on" msgid="6543362062336990814">"Käytä pikanäppäintä"</string>
     <string name="color_inversion_feature_name" msgid="2672824491933264951">"Käänteiset värit"</string>
     <string name="color_correction_feature_name" msgid="7975133554160979214">"Värinkorjaus"</string>

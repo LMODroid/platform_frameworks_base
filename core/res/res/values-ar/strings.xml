@@ -1190,7 +1190,7 @@
     <string name="redo" msgid="7231448494008532233">"إعادة"</string>
     <string name="autofill" msgid="511224882647795296">"الملء التلقائي"</string>
     <string name="textSelectionCABTitle" msgid="5151441579532476940">"تحديد النص"</string>
-    <string name="addToDictionary" msgid="8041821113480950096">"إضافة إلى القاموس"</string>
+    <string name="addToDictionary" msgid="8041821113480950096">"الإضافة إلى القاموس"</string>
     <string name="deleteText" msgid="4200807474529938112">"حذف"</string>
     <string name="inputMethod" msgid="1784759500516314751">"طريقة الإرسال"</string>
     <string name="editTextMenuTitle" msgid="857666911134482176">"إجراءات النص"</string>
