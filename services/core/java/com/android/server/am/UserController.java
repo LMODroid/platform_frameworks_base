@@ -30,6 +30,7 @@ import static android.app.ActivityManagerInternal.ALLOW_FULL_ONLY;
 import static android.app.ActivityManagerInternal.ALLOW_NON_FULL;
 import static android.app.ActivityManagerInternal.ALLOW_NON_FULL_IN_PROFILE;
 import static android.app.ActivityManagerInternal.ALLOW_PROFILES_OR_NON_FULL;
+import static android.app.KeyguardManager.LOCK_ON_USER_SWITCH_CALLBACK;
 import static android.os.PowerWhitelistManager.REASON_BOOT_COMPLETED;
 import static android.os.PowerWhitelistManager.REASON_LOCKED_BOOT_COMPLETED;
 import static android.os.PowerWhitelistManager.TEMPORARY_ALLOWLIST_TYPE_FOREGROUND_SERVICE_ALLOWED;
@@ -103,7 +104,6 @@ import android.util.proto.ProtoOutputStream;
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.Preconditions;
@@ -128,6 +128,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -1591,7 +1593,8 @@ class UserController implements Handler.Callback {
                     mInjector.getWindowManager().setSwitchingUser(true);
                     // Only lock if the user has a secure keyguard PIN/Pattern/Pwd
                     if (mInjector.getKeyguardManager().isDeviceSecure(userId)) {
-                        mInjector.getWindowManager().lockNow(null);
+                        // Make sure the device is locked before moving on with the user switch
+                        mInjector.lockDeviceNowAndWaitForKeyguardShown();
                     }
                 }
             } else {
@@ -2066,20 +2069,7 @@ class UserController implements Handler.Callback {
     @VisibleForTesting
     void completeUserSwitch(int newUserId) {
         if (isUserSwitchUiEnabled()) {
-            // If there is no challenge set, dismiss the keyguard right away
-            if (!mInjector.getKeyguardManager().isDeviceSecure(newUserId)) {
-                // Wait until the keyguard is dismissed to unfreeze
-                mInjector.dismissKeyguard(
-                        new Runnable() {
-                            public void run() {
-                                unfreezeScreen();
-                            }
-                        },
-                        "User Switch");
-                return;
-            } else {
-                unfreezeScreen();
-            }
+            unfreezeScreen();
         }
     }
 
@@ -3446,23 +3436,28 @@ class UserController implements Handler.Callback {
             return IStorageManager.Stub.asInterface(ServiceManager.getService("mount"));
         }
 
-        protected void dismissKeyguard(Runnable runnable, String reason) {
-            getWindowManager().dismissKeyguard(new IKeyguardDismissCallback.Stub() {
-                @Override
-                public void onDismissError() throws RemoteException {
-                    mHandler.post(runnable);
-                }
+        void lockDeviceNowAndWaitForKeyguardShown() {
+            final TimingsTraceAndSlog t = new TimingsTraceAndSlog();
+            t.traceBegin("lockDeviceNowAndWaitForKeyguardShown");
 
-                @Override
-                public void onDismissSucceeded() throws RemoteException {
-                    mHandler.post(runnable);
+            final CountDownLatch latch = new CountDownLatch(1);
+            Bundle bundle = new Bundle();
+            bundle.putBinder(LOCK_ON_USER_SWITCH_CALLBACK, new IRemoteCallback.Stub() {
+                public void sendResult(Bundle data) {
+                    latch.countDown();
                 }
-
-                @Override
-                public void onDismissCancelled() throws RemoteException {
-                    mHandler.post(runnable);
+            });
+            getWindowManager().lockNow(bundle);
+            try {
+                if (!latch.await(20, TimeUnit.SECONDS)) {
+                    throw new RuntimeException("User controller expected a callback while waiting "
+                            + "to show the keyguard. Timed out after 20 seconds.");
                 }
-            }, reason);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } finally {
+                t.traceEnd();
+            }
         }
     }
 }
