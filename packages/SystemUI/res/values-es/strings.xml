@@ -1363,7 +1363,7 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"Cerrar"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"Pantalla conectada"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"Micrófono y cámara"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Uso reciente en apps"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Uso reciente en aplicaciones"</string>
     <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Ver acceso reciente"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Hecho"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Desplegar y mostrar opciones"</string>

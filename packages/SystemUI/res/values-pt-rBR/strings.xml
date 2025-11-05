@@ -1259,7 +1259,7 @@
     <string name="wifi_empty_list_wifi_on" msgid="3864376632067585377">"Procurando redes…"</string>
     <string name="wifi_failed_connect_message" msgid="4161863112079000071">"Falha ao conectar à rede"</string>
     <string name="wifi_wont_autoconnect_for_now" msgid="5782282612749867762">"A conexão automática ao Wi-Fi ficará indisponível"</string>
-    <string name="see_all_networks" msgid="3773666844913168122">"Ver tudo"</string>
+    <string name="see_all_networks" msgid="3773666844913168122">"Ver todas"</string>
     <string name="to_switch_networks_disconnect_ethernet" msgid="6698111101156951955">"Para mudar de rede, desconecte o cabo Ethernet"</string>
     <string name="wifi_scan_notify_message" msgid="3753839537448621794">"Para melhorar a experiência no dispositivo, os apps e serviços ainda podem procurar redes Wi-Fi a qualquer momento, mesmo quando o Wi-Fi estiver desativado. Você pode mudar essa opção nas configurações de busca por Wi-Fi. "<annotation id="link">"Mudar"</annotation></string>
     <string name="turn_off_airplane_mode" msgid="8425587763226548579">"Desativar modo avião"</string>
@@ -1364,7 +1364,7 @@
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"Tela conectada"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"Microfone e câmera"</string>
     <string name="privacy_dialog_summary" msgid="2458769652125995409">"Uso recente do app"</string>
-    <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Consultar acessos recentes"</string>
+    <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Ver acessos recentes"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Concluído"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Abrir e mostrar opções"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"Fechar"</string>

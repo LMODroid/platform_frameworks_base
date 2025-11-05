@@ -1374,11 +1374,11 @@
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"Quản lý quyền truy cập"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"Đang được dùng trong cuộc gọi điện thoại"</string>
     <string name="privacy_dialog_recent_call_usage" msgid="1214810644978167344">"Đã dùng gần đây trong cuộc gọi điện thoại"</string>
-    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"<xliff:g id="APP_NAME">%1$s</xliff:g> đang dùng"</string>
+    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"Ứng dụng <xliff:g id="APP_NAME">%1$s</xliff:g> đang dùng"</string>
     <string name="privacy_dialog_recent_app_usage" msgid="4883417856848222450">"<xliff:g id="APP_NAME">%1$s</xliff:g> đã dùng gần đây"</string>
-    <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"<xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>) đang dùng"</string>
+    <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"Ứng dụng <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>) đang dùng"</string>
     <string name="privacy_dialog_recent_app_usage_1" msgid="2551340497722370109">"<xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>) đã dùng gần đây"</string>
-    <string name="privacy_dialog_active_app_usage_2" msgid="2770926061339921767">"<xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>) đang dùng"</string>
+    <string name="privacy_dialog_active_app_usage_2" msgid="2770926061339921767">"Ứng dụng <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>) đang dùng"</string>
     <string name="privacy_dialog_recent_app_usage_2" msgid="2874689735085367167">"<xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>) đã dùng gần đây"</string>
     <string name="shortcut_helper_category_system" msgid="462110876978937359">"Hệ thống"</string>
     <string name="shortcut_helper_category_system_controls" msgid="3153344561395751020">"Điều khiển hệ thống"</string>
