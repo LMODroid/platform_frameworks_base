@@ -919,7 +919,7 @@
     <item msgid="8619482474544321778">"این نماد نشان داده نشود"</item>
   </string-array>
     <string name="tuner_low_priority" msgid="8412666814123009820">"نمایش نمادهای اعلان کم‌اهمیت"</string>
-    <string name="other" msgid="429768510980739978">"موارد دیگر"</string>
+    <string name="other" msgid="429768510980739978">"غیره"</string>
     <string name="accessibility_qs_edit_remove_tile_action" msgid="775511891457193480">"برداشتن کاشی"</string>
     <string name="accessibility_qs_edit_tile_add_action" msgid="5051211910345301833">"افزودن کاشی به انتها"</string>
     <string name="accessibility_qs_edit_tile_start_move" msgid="2009373939914517817">"انتقال کاشی"</string>
@@ -1104,7 +1104,7 @@
     <string name="controls_favorite_back_to_editing" msgid="184125114090062713">"برگشتن به ویرایش"</string>
     <string name="controls_favorite_load_error" msgid="5126216176144877419">"کنترل‌ها بار نشدند. برنامه <xliff:g id="APP">%s</xliff:g> را بررسی کنید تا مطمئن شوید تنظیمات برنامه تغییر نکرده باشد."</string>
     <string name="controls_favorite_load_none" msgid="7687593026725357775">"کنترل‌های سازگار دردسترس نیستند"</string>
-    <string name="controls_favorite_other_zone_header" msgid="9089613266575525252">"موارد دیگر"</string>
+    <string name="controls_favorite_other_zone_header" msgid="9089613266575525252">"غیره"</string>
     <string name="controls_dialog_title" msgid="2343565267424406202">"افزودن به کنترل‌های دستگاه"</string>
     <string name="controls_dialog_ok" msgid="2770230012857881822">"افزودن"</string>
     <string name="controls_dialog_remove" msgid="3775288002711561936">"برداشتن"</string>

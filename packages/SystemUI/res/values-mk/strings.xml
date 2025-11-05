@@ -1363,7 +1363,7 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"Отфрли"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"Екранот е поврзан"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"Микрофон и камера"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Неодамнешно користење од апликациите"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Скорешно користење од апликациите"</string>
     <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Видете го скорешниот пристап"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Готово"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Проширување и прикажување на опциите"</string>
@@ -1374,7 +1374,7 @@
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"Управувајте со пристапот"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"Се користи од телефонски повик"</string>
     <string name="privacy_dialog_recent_call_usage" msgid="1214810644978167344">"Неодамна користено во телефонски повик"</string>
-    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"Се користи од <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
+    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"Се користи од „<xliff:g id="APP_NAME">%1$s</xliff:g>“"</string>
     <string name="privacy_dialog_recent_app_usage" msgid="4883417856848222450">"Неодамна користено од <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"Се користи од <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
     <string name="privacy_dialog_recent_app_usage_1" msgid="2551340497722370109">"Неодамна користено од <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>

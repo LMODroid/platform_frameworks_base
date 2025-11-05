@@ -198,7 +198,7 @@
     <string name="biometric_dialog_cancel_authentication" msgid="981316588773442637">"ప్రామాణీకరణను రద్దు చేయండి"</string>
     <string name="biometric_dialog_content_view_more_options_button" msgid="2663810393874865475">"మరిన్ని ఆప్షన్‌లు"</string>
     <string name="biometric_dialog_use_pin" msgid="8385294115283000709">"PINను ఉపయోగించండి"</string>
-    <string name="biometric_dialog_use_pattern" msgid="2315593393167211194">"ఆకృతిని ఉపయోగించండి"</string>
+    <string name="biometric_dialog_use_pattern" msgid="2315593393167211194">"ఆకృతి (ప్యాటర్న్) ఉపయోగించండి"</string>
     <string name="biometric_dialog_use_password" msgid="3445033859393474779">"పాస్‌వర్డ్‌ను ఉపయోగించండి"</string>
     <string name="biometric_dialog_wrong_pin" msgid="1878539073972762803">"PIN తప్పు"</string>
     <string name="biometric_dialog_wrong_pattern" msgid="8954812279840889029">"ఆకృతి తప్పు"</string>

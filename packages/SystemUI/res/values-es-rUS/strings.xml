@@ -1374,7 +1374,7 @@
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"Administrar acceso"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"En uso por una llamada telefónica"</string>
     <string name="privacy_dialog_recent_call_usage" msgid="1214810644978167344">"Uso reciente en una llamada telefónica"</string>
-    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"En uso por <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
+    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"En uso en <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="privacy_dialog_recent_app_usage" msgid="4883417856848222450">"Uso reciente en <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"En uso por <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
     <string name="privacy_dialog_recent_app_usage_1" msgid="2551340497722370109">"Uso reciente en <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
