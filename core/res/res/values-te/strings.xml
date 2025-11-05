@@ -1186,7 +1186,7 @@
     <string name="redo" msgid="7231448494008532233">"చర్యను రిపీట్‌ చేయి"</string>
     <string name="autofill" msgid="511224882647795296">"ఆటోఫిల్"</string>
     <string name="textSelectionCABTitle" msgid="5151441579532476940">"వచన ఎంపిక"</string>
-    <string name="addToDictionary" msgid="8041821113480950096">"నిఘంటువుకు జోడించండి"</string>
+    <string name="addToDictionary" msgid="8041821113480950096">"డిక్షనరీకి జోడించండి"</string>
     <string name="deleteText" msgid="4200807474529938112">"తొలగించండి"</string>
     <string name="inputMethod" msgid="1784759500516314751">"ఇన్‌పుట్ పద్ధతి"</string>
     <string name="editTextMenuTitle" msgid="857666911134482176">"వచనానికి సంబంధించిన చర్యలు"</string>

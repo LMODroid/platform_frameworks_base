@@ -881,7 +881,7 @@
   <string-array name="emailAddressTypes">
     <item msgid="7786349763648997741">"خانه"</item>
     <item msgid="435564470865989199">"کاری"</item>
-    <item msgid="4199433197875490373">"سایر موارد"</item>
+    <item msgid="4199433197875490373">"غیره"</item>
     <item msgid="3233938986670468328">"سفارشی"</item>
   </string-array>
   <string-array name="postalAddressTypes">
@@ -918,7 +918,7 @@
     <string name="phoneTypeFaxWork" msgid="6757519896109439123">"نمابر محل کار"</string>
     <string name="phoneTypeFaxHome" msgid="6678559953115904345">"نمابر خانه"</string>
     <string name="phoneTypePager" msgid="576402072263522767">"پی‌جو"</string>
-    <string name="phoneTypeOther" msgid="6918196243648754715">"سایر موارد"</string>
+    <string name="phoneTypeOther" msgid="6918196243648754715">"غیره"</string>
     <string name="phoneTypeCallback" msgid="3455781500844157767">"برگرداندن تماس"</string>
     <string name="phoneTypeCar" msgid="4604775148963129195">"خودرو"</string>
     <string name="phoneTypeCompanyMain" msgid="4482773154536455441">"شماره اصلی شرکت"</string>
@@ -944,11 +944,11 @@
     <string name="postalTypeCustom" msgid="5645590470242939129">"سفارشی"</string>
     <string name="postalTypeHome" msgid="7562272480949727912">"خانه"</string>
     <string name="postalTypeWork" msgid="8553425424652012826">"محل کار"</string>
-    <string name="postalTypeOther" msgid="7094245413678857420">"سایر موارد"</string>
+    <string name="postalTypeOther" msgid="7094245413678857420">"غیره"</string>
     <string name="imTypeCustom" msgid="5653384545085765570">"سفارشی"</string>
     <string name="imTypeHome" msgid="6996507981044278216">"خانه"</string>
     <string name="imTypeWork" msgid="2099668940169903123">"محل کار"</string>
-    <string name="imTypeOther" msgid="8068447383276219810">"سایر موارد"</string>
+    <string name="imTypeOther" msgid="8068447383276219810">"غیره"</string>
     <string name="imProtocolCustom" msgid="4437878287653764692">"سفارشی"</string>
     <string name="imProtocolAim" msgid="4050198236506604378">"AIM"</string>
     <string name="imProtocolMsn" msgid="2257148557766499232">"Windows Live"</string>
@@ -960,7 +960,7 @@
     <string name="imProtocolJabber" msgid="7919269388889582015">"Jabber"</string>
     <string name="imProtocolNetMeeting" msgid="4985002408136148256">"NetMeeting"</string>
     <string name="orgTypeWork" msgid="8684458700669564172">"کاری"</string>
-    <string name="orgTypeOther" msgid="5450675258408005553">"سایر موارد"</string>
+    <string name="orgTypeOther" msgid="5450675258408005553">"غیره"</string>
     <string name="orgTypeCustom" msgid="1126322047677329218">"سفارشی"</string>
     <string name="relationTypeCustom" msgid="282938315217441351">"سفارشی"</string>
     <string name="relationTypeAssistant" msgid="4057605157116589315">"دستیار"</string>
@@ -980,7 +980,7 @@
     <string name="sipAddressTypeCustom" msgid="6283889809842649336">"سفارشی"</string>
     <string name="sipAddressTypeHome" msgid="5918441930656878367">"صفحهٔ اصلی"</string>
     <string name="sipAddressTypeWork" msgid="7873967986701216770">"محل کار"</string>
-    <string name="sipAddressTypeOther" msgid="6317012577345187275">"سایر موارد"</string>
+    <string name="sipAddressTypeOther" msgid="6317012577345187275">"غیره"</string>
     <string name="quick_contacts_not_available" msgid="1262709196045052223">"هیچ برنامه‌ای برای مشاهده این مخاطب پیدا نشد."</string>
     <string name="keyguard_password_enter_pin_code" msgid="6401406801060956153">"پین کد را وارد کنید"</string>
     <string name="keyguard_password_enter_puk_code" msgid="3112256684547584093">"‏PUK و پین کد جدید را تایپ کنید"</string>
