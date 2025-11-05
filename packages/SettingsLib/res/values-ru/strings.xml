@@ -541,7 +541,7 @@
     <string name="retail_demo_reset_next" msgid="3688129033843885362">"Далее"</string>
     <string name="retail_demo_reset_title" msgid="1866911701095959800">"Требуется пароль"</string>
     <string name="active_input_method_subtypes" msgid="4232680535471633046">"Активные способы ввода"</string>
-    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Языки системы"</string>
+    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Использовать языки системы"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"Не удалось открыть настройки приложения \"<xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g>\""</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"При использовании этого способа могут собираться все вводимые данные, в том числе пароли и номера кредитных карт. Запрос поступил от приложения \"<xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g>\". Использовать этот способ ввода?"</string>
     <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Примечание. После перезагрузки это приложение не запустится, пока вы не разблокируете устройство."</string>

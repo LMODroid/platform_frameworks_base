@@ -49,7 +49,7 @@
     <string name="wifi_security_none_owe" msgid="5241745828327404101">"None/Enhanced Open"</string>
     <string name="wifi_security_owe" msgid="3343421403561657809">"Enhanced Open"</string>
     <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3-ఎంటర్‌ప్రయిజ్ 192-బిట్"</string>
-    <string name="wifi_remembered" msgid="3266709779723179188">"సేవ్ చేయబడింది"</string>
+    <string name="wifi_remembered" msgid="3266709779723179188">"సేవ్ అయింది"</string>
     <string name="wifi_disconnected" msgid="7054450256284661757">"డిస్‌కనెక్ట్ అయ్యింది"</string>
     <string name="wifi_disabled_generic" msgid="2651916945380294607">"డిజేబుల్ చేయబడింది"</string>
     <string name="wifi_disabled_network_failure" msgid="2660396183242399585">"IP కాన్ఫిగరేషన్ వైఫల్యం"</string>
@@ -106,7 +106,7 @@
     <string name="tv_bluetooth_battery_level_untethered_left" msgid="337629670583744410">"ఎడమ వైపు <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="tv_bluetooth_battery_level_untethered_right" msgid="8610019317279155595">"కుడి వైపు <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="bluetooth_active_no_battery_level" msgid="4155462233006205630">"యాక్టివ్‌గా ఉంది"</string>
-    <string name="bluetooth_saved_device" msgid="4895871321722311428">"సేవ్ చేయబడింది"</string>
+    <string name="bluetooth_saved_device" msgid="4895871321722311428">"సేవ్ అయింది"</string>
     <string name="bluetooth_hearing_aid_left_active" msgid="8330226430756799572">"యాక్టివ్‌గా ఉంది (ఎడమ వైపు మాత్రమే)"</string>
     <string name="bluetooth_hearing_aid_right_active" msgid="2244728507170385397">"యాక్టివ్‌గా ఉంది (కుడి వైపు మాత్రమే)"</string>
     <string name="bluetooth_hearing_aid_left_and_right_active" msgid="4294571497939983181">"యాక్టివ్‌గా ఉంది (ఎడమ వైపు, కుడి వైపు)"</string>
