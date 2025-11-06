@@ -1383,10 +1383,42 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         return homeStarted;
     }
 
-    void startHomeOnDisplaysWithNoHome(String reason) {
+    /**
+     * Checks if the home is required in the given {@link TaskDisplayArea} for the specified user.
+     *
+     * @param userId          The ID of the user.
+     * @param taskDisplayArea The {@link TaskDisplayArea} to check.
+     * @return {@code true} if there is no home present in the given {@link TaskDisplayArea} or if
+     * the home component names are different; {@code false} otherwise.
+     */
+    private boolean needsHomeLaunchOnDisplay(int userId, TaskDisplayArea taskDisplayArea) {
+        if (!taskDisplayArea.canHostHomeTask()) {
+            return false;
+        }
+        final ActivityRecord existingHomeForUserOnDisplay =
+                taskDisplayArea.getHomeActivityForUser(userId);
+        if (existingHomeForUserOnDisplay == null) {
+            // Even when no home activity for the given userId is on this display, a home activity
+            // for a different user might still be present. This code does not explicitly finish
+            // the old home activity; instead, relies on other system mechanisms for cleanup.
+            return true;
+        }
+
+        // Even if a home activity for the given userId is present, it could be a different
+        // component and thereby requiring launch of the correctly resolved home activity.
+        final ActivityInfo resolvedHomeComponent = resolveHomeActivity(userId,
+                mService.getHomeIntent());
+        if (resolvedHomeComponent == null) {
+            return false;
+        }
+        return !Objects.equals(resolvedHomeComponent.getComponentName(),
+                existingHomeForUserOnDisplay.mActivityComponent);
+    }
+
+    void startHomeOnDisplaysIfNeeded(String reason) {
         forAllTaskDisplayAreas(taskDisplayArea -> {
-            if (taskDisplayArea.getHomeActivity() == null) {
-                int userId = mWmService.getUserAssignedToDisplay(taskDisplayArea.getDisplayId());
+            final int userId = mWmService.getUserAssignedToDisplay(taskDisplayArea.getDisplayId());
+            if (needsHomeLaunchOnDisplay(userId, taskDisplayArea)) {
                 startHomeOnTaskDisplayArea(userId, reason, taskDisplayArea,
                         false /* allowInstrumenting */, false /* fromHomeKey */, false /* onTop */);
             }

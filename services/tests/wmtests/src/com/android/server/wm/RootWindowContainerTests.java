@@ -52,10 +52,12 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.ArgumentMatchers.refEq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -87,6 +89,7 @@ import com.android.internal.app.ResolverActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1335,6 +1338,43 @@ public class RootWindowContainerTests extends WindowTestsBase {
         clearInvocations(controller);
         mWm.mRoot.lockAllProfileTasks(profileUserId);
         verify(controller, never()).notifyTaskProfileLocked(any(), anyInt());
+    }
+
+    @Test
+    public void testStartHomeOnDisplays_withExistingHome_butDifferentResolvedHome() {
+        // Create a display with an existing home activity.
+        final TestDisplayContent displayWithExistingHome = new TestDisplayContent.Builder(mAtm,
+                1000,
+                1500).build();
+        final TaskDisplayArea taskDisplayArea = displayWithExistingHome.getDefaultTaskDisplayArea();
+        doReturn(true).when(taskDisplayArea).canHostHomeTask();
+        final String existingPkg = "com.android.server.wm.test.existing.app";
+        new ActivityBuilder(mAtm)
+                .setComponent(new ComponentName(existingPkg, ".ExistingHomeActivity"))
+                .setTask(displayWithExistingHome.getDefaultTaskDisplayArea().createRootTask(
+                        WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_HOME, true /* onTop */)).build();
+
+        // Mock that the resolved home activity is different from the existing one.
+        final ActivityInfo resolvedHomeInfo = new ActivityInfo();
+        resolvedHomeInfo.applicationInfo = new ApplicationInfo();
+        resolvedHomeInfo.applicationInfo.packageName = "com.android.server.wm.test.resolved.app";
+        resolvedHomeInfo.name = ".ResolvedHomeActivity";
+        resolvedHomeInfo.packageName = "com.android.server.wm.test.resolved.app";
+        doReturn(resolvedHomeInfo).when(mRootWindowContainer).resolveHomeActivity(anyInt(), any());
+
+        mRootWindowContainer.startHomeOnDisplaysIfNeeded("test");
+
+        // Capture the TaskDisplayArea arguments passed to startHomeOnTaskDisplayArea.
+        ArgumentCaptor<TaskDisplayArea> tdaCaptor = ArgumentCaptor.forClass(
+                TaskDisplayArea.class);
+        verify(mRootWindowContainer, atLeastOnce()).startHomeOnTaskDisplayArea(anyInt(),
+                anyString(), tdaCaptor.capture(), anyBoolean(), anyBoolean(), anyBoolean());
+
+        List<TaskDisplayArea> capturedTdas = tdaCaptor.getAllValues();
+
+        // Verify that home was started on the display with the different home package.
+        assertTrue(capturedTdas.stream().anyMatch(
+                tda -> tda == displayWithExistingHome.getDefaultTaskDisplayArea()));
     }
 
     /**
