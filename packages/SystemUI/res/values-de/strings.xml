@@ -1068,7 +1068,7 @@
     <string name="accessibility_floating_button_docking_tooltip" msgid="6814897496767461517">"Durch Ziehen an den Rand wird die Schaltfläche zeitweise ausgeblendet"</string>
     <string name="accessibility_floating_button_undo" msgid="511112888715708241">"Rückgängig machen"</string>
     <string name="accessibility_floating_button_hidden_notification_title" msgid="4115036997406994799">"Button „Bedienungshilfen“ ausgeblendet"</string>
-    <string name="accessibility_floating_button_hidden_notification_text" msgid="1457021647040915658">"Tippen, um die Schaltfläche „Bedienungshilfen“ aufzurufen"</string>
+    <string name="accessibility_floating_button_hidden_notification_text" msgid="1457021647040915658">"Tippen, um den Button „Bedienungshilfen“ aufzurufen"</string>
     <string name="accessibility_floating_button_undo_message_label_text" msgid="9017658016426242640">"Verknüpfung für „<xliff:g id="FEATURE_NAME">%s</xliff:g>“ entfernt"</string>
     <string name="accessibility_floating_button_undo_message_number_text" msgid="4909270290725226075">"{count,plural, =1{# Verknüpfung entfernt}other{# Verknüpfungen entfernt}}"</string>
     <string name="accessibility_floating_button_action_move_top_left" msgid="6253520703618545705">"Nach oben links verschieben"</string>
@@ -1363,8 +1363,8 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"Schließen"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"Bildschirm verbunden"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"Mikrofon &amp; Kamera"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Kürzliche App-Nutzung"</string>
-    <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Kürzliche Zugriffe ansehen"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Von folgenden Apps zuletzt verwendet"</string>
+    <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Letzte Zugriffe ansehen"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Fertig"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Maximieren und Optionen einblenden"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"Minimieren"</string>

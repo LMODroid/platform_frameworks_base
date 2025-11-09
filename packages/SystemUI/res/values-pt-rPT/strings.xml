@@ -322,8 +322,8 @@
     <string name="accessibility_quick_settings_rotation" msgid="4800050198392260738">"Rodar o ecrã automaticamente"</string>
     <string name="quick_settings_location_label" msgid="2621868789013389163">"Localização"</string>
     <string name="quick_settings_screensaver_label" msgid="1495003469366524120">"Proteção ecrã"</string>
-    <string name="quick_settings_camera_label" msgid="5612076679385269339">"Acesso câmara"</string>
-    <string name="quick_settings_mic_label" msgid="8392773746295266375">"Acesso micro"</string>
+    <string name="quick_settings_camera_label" msgid="5612076679385269339">"Acesso à câmara"</string>
+    <string name="quick_settings_mic_label" msgid="8392773746295266375">"Acesso ao microfone"</string>
     <string name="quick_settings_camera_mic_available" msgid="1453719768420394314">"Disponível"</string>
     <string name="quick_settings_camera_mic_blocked" msgid="4710884905006788281">"Bloqueado"</string>
     <string name="quick_settings_media_device_label" msgid="8034019242363789941">"Dispositivo multimédia"</string>
