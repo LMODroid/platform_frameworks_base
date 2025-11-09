@@ -132,8 +132,8 @@
     <string name="bluetooth_profile_pan_nap" msgid="7871974753822470050">"Dijeljenje internet veze"</string>
     <string name="bluetooth_profile_map" msgid="8907204701162107271">"SMS-ovi"</string>
     <string name="bluetooth_profile_sap" msgid="8304170950447934386">"Pristup SIM-u"</string>
-    <string name="bluetooth_profile_a2dp_high_quality" msgid="4739440941324792775">"HD audio: <xliff:g id="CODEC_NAME">%1$s</xliff:g>"</string>
-    <string name="bluetooth_profile_a2dp_high_quality_unknown_codec" msgid="2477639096903834374">"HD audio"</string>
+    <string name="bluetooth_profile_a2dp_high_quality" msgid="4739440941324792775">"HD zvuk: <xliff:g id="CODEC_NAME">%1$s</xliff:g>"</string>
+    <string name="bluetooth_profile_a2dp_high_quality_unknown_codec" msgid="2477639096903834374">"HD zvuk"</string>
     <string name="bluetooth_profile_hearing_aid" msgid="2607867572569689732">"Slušni aparati"</string>
     <string name="bluetooth_profile_le_audio" msgid="1725521360076451751">"LE Audio"</string>
     <string name="bluetooth_hearing_aid_profile_summary_connected" msgid="5757754050938807276">"Povezano je sa slušnim aparatima"</string>
@@ -416,8 +416,8 @@
     <string name="verbose_vendor_logging_notification_action" msgid="1190831050259046071">"Omogući još jedan dan"</string>
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Onemogućava se nakon jednog dana"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Omogućeno je na neograničeno vrijeme"</string>
-    <string name="window_animation_scale_title" msgid="5236381298376812508">"Skala animacije prozora"</string>
-    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Skala animacije prelaza"</string>
+    <string name="window_animation_scale_title" msgid="5236381298376812508">"Brzina animacije prozora"</string>
+    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Brzina animacije prelaza"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Skala trajanja animatora"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simulacija sekundarnih ekrana"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplikacije"</string>
