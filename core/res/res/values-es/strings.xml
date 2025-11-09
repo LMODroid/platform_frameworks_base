@@ -1315,7 +1315,7 @@
     <string name="dump_heap_ready_text" msgid="5849618132123045516">"Hay un volcado de montículo del proceso <xliff:g id="PROC">%1$s</xliff:g> que puedes compartir. Ten cuidado, ya que puede incluir información personal sensible a la que el proceso puede acceder, como texto que hayas introducido."</string>
     <string name="sendText" msgid="493003724401350724">"Selecciona una acción para el texto"</string>
     <string name="volume_ringtone" msgid="134784084629229029">"Volumen del timbre"</string>
-    <string name="volume_music" msgid="7727274216734955095">"Volumen de multimedia"</string>
+    <string name="volume_music" msgid="7727274216734955095">"Volumen multimedia"</string>
     <string name="volume_music_hint_playing_through_bluetooth" msgid="2614142915948898228">"Reproduciendo a través de Bluetooth"</string>
     <string name="volume_music_hint_silent_ringtone_selected" msgid="1514829655029062233">"Tono de silencio establecido"</string>
     <string name="volume_call" msgid="7625321655265747433">"Volumen de llamadas"</string>
@@ -1326,7 +1326,7 @@
     <string name="volume_icon_description_bluetooth" msgid="7540388479345558400">"Volumen de Bluetooth"</string>
     <string name="volume_icon_description_ringer" msgid="2187800636867423459">"Volumen del tono"</string>
     <string name="volume_icon_description_incall" msgid="4491255105381227919">"Volumen de llamadas"</string>
-    <string name="volume_icon_description_media" msgid="4997633254078171233">"Volumen de multimedia"</string>
+    <string name="volume_icon_description_media" msgid="4997633254078171233">"Volumen multimedia"</string>
     <string name="volume_icon_description_notification" msgid="579091344110747279">"Volumen de notificaciones"</string>
     <string name="ringtone_default" msgid="9118299121288174597">"Tono por defecto"</string>
     <string name="ringtone_default_with_actual" msgid="2709686194556159773">"Predeterminado (<xliff:g id="ACTUAL_RINGTONE">%1$s</xliff:g>)"</string>
@@ -2049,7 +2049,7 @@
     <string name="pin_specific_target" msgid="7824671240625957415">"Fijar <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="unpin_target" msgid="3963318576590204447">"No fijar"</string>
     <string name="unpin_specific_target" msgid="3859828252160908146">"No fijar <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="app_info" msgid="6113278084877079851">"Información de la app"</string>
+    <string name="app_info" msgid="6113278084877079851">"Información de la aplicación"</string>
     <string name="negative_duration" msgid="1938335096972945232">"−<xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="demo_starting_message" msgid="6577581216125805905">"Iniciando demostración…"</string>
     <string name="demo_restarting_message" msgid="1160053183701746766">"Restableciendo dispositivo…"</string>
