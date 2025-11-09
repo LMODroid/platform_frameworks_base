@@ -86,7 +86,7 @@
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Novi pogovori so prikazani kot ikone v enem od spodnjih kotov zaslona. Z dotikom pogovore razširite, z vlečenjem jih opustite."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Upravljanje oblačkov"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Dotaknite se tukaj za upravljanje aplikacij in pogovorov, ki so lahko prikazani v oblačkih"</string>
-    <string name="notification_bubble_title" msgid="6082910224488253378">"Mehurček"</string>
+    <string name="notification_bubble_title" msgid="6082910224488253378">"Oblaček"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Upravljanje"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"Oblaček je bil opuščen."</string>
     <string name="bubble_shortcut_label" msgid="666269077944378311">"Oblački"</string>
