@@ -396,7 +396,7 @@
     <string name="custom" msgid="3337456985275158299">"Egendefinert"</string>
     <string name="custom_trace_settings_dialog_title" msgid="2608570500144830554">"Innstillinger for egendefinert spor"</string>
     <string name="restore_default" msgid="5259420807486239755">"Gjenopprett standard"</string>
-    <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"Enhånds&amp;#173;modus"</string>
+    <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"Enhåndsmodus"</string>
     <string name="quick_settings_hearing_devices_label" msgid="7277170419679404129">"Høreapparater"</string>
     <string name="quick_settings_hearing_devices_connected" msgid="6519069502397037781">"Aktiv"</string>
     <string name="quick_settings_hearing_devices_disconnected" msgid="8907061223998176187">"Frakoblet"</string>

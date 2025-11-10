@@ -325,7 +325,7 @@
     <string name="quick_settings_camera_label" msgid="5612076679385269339">"కెమెరా యాక్సెస్"</string>
     <string name="quick_settings_mic_label" msgid="8392773746295266375">"మైక్ యాక్సెస్"</string>
     <string name="quick_settings_camera_mic_available" msgid="1453719768420394314">"అందుబాటులో ఉంది"</string>
-    <string name="quick_settings_camera_mic_blocked" msgid="4710884905006788281">"బ్లాక్ చేయబడింది"</string>
+    <string name="quick_settings_camera_mic_blocked" msgid="4710884905006788281">"బ్లాక్ అయింది"</string>
     <string name="quick_settings_media_device_label" msgid="8034019242363789941">"ప్రసార మాధ్యమ పరికరం"</string>
     <string name="quick_settings_user_title" msgid="8673045967216204537">"యూజర్"</string>
     <string name="quick_settings_wifi_label" msgid="2879507532983487244">"Wi-Fi"</string>
@@ -1374,7 +1374,7 @@
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"యాక్సెస్‌ను మేనేజ్ చేయండి"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"ఫోన్ కాల్ ద్వారా వినియోగంలో ఉంది"</string>
     <string name="privacy_dialog_recent_call_usage" msgid="1214810644978167344">"ఇటీవల ఫోన్ కాల్‌లో వినియోగించబడింది"</string>
-    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"<xliff:g id="APP_NAME">%1$s</xliff:g> వినియోగిస్తోంది"</string>
+    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"<xliff:g id="APP_NAME">%1$s</xliff:g> ఉపయోగిస్తోంది"</string>
     <string name="privacy_dialog_recent_app_usage" msgid="4883417856848222450">"ఇటీవల <xliff:g id="APP_NAME">%1$s</xliff:g> వినియోగించింది"</string>
     <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"<xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>) ద్వారా వినియోగంలో ఉంది"</string>
     <string name="privacy_dialog_recent_app_usage_1" msgid="2551340497722370109">"<xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>) ద్వారా ఇటీవల వినియోగించబడింది"</string>
