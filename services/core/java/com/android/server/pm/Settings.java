@@ -919,10 +919,11 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
                 p.getAppId(), p.getVersionCode(), p.getFlags(), p.getPrivateFlags(),
                 p.getUsesSdkLibraries(), p.getUsesSdkLibrariesVersionsMajor(),
                 p.getUsesStaticLibraries(), p.getUsesStaticLibrariesVersions(), p.getMimeGroups(),
-                mDomainVerificationManager.generateNewId());
+                mDomainVerificationManager.generateNewId(), p.hasSharedUser());
         if (ret != null) {
             ret.setAppMetadataFilePath(p.getAppMetadataFilePath());
             ret.getPkgState().setUpdatedSystemApp(false);
+            ret.setSharedUserAppId(p.getSharedUserAppId());
         }
         mDisabledSysPackages.remove(name);
         return ret;
@@ -949,7 +950,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
             int pkgFlags, int pkgPrivateFlags, String[] usesSdkLibraries,
             long[] usesSdkLibrariesVersions, String[] usesStaticLibraries,
             long[] usesStaticLibrariesVersions, Map<String, Set<String>> mimeGroups,
-            @NonNull UUID domainSetId) {
+            @NonNull UUID domainSetId, boolean hasSharedUser) {
         PackageSetting p = mPackages.get(name);
         if (p != null) {
             if (p.getAppId() == uid) {
@@ -964,7 +965,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
                 pkgPrivateFlags, 0 /*userId*/, usesSdkLibraries, usesSdkLibrariesVersions,
                 usesStaticLibraries, usesStaticLibrariesVersions, mimeGroups, domainSetId);
         p.setAppId(uid);
-        if (mAppIds.registerExistingAppId(uid, p, name)) {
+        if (mAppIds.registerExistingAppId(uid, p, name) || hasSharedUser) {
             mPackages.put(name, p);
             return p;
         }
@@ -3900,7 +3901,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
                         cpuAbiOverrideString, appId, versionCode, pkgFlags, pkgPrivateFlags,
                         null /* usesSdkLibraries */, null /* usesSdkLibraryVersions */,
                         null /* usesStaticLibraries */, null /* usesStaticLibraryVersions */,
-                        null /* mimeGroups */, domainSetId);
+                        null /* mimeGroups */, domainSetId, /* hasSharedUser= */ false);
                 if (PackageManagerService.DEBUG_SETTINGS)
                     Log.i(PackageManagerService.TAG, "Reading package " + name + ": appId="
                             + appId + " pkg=" + packageSetting);
