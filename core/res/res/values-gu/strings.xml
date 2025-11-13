@@ -2185,7 +2185,7 @@
     <string name="bluetooth_airplane_mode_toast" msgid="2066399056595768554">"એરપ્લેન મોડ દરમિયાન બ્લૂટૂથ ચાલુ રહેશે"</string>
     <string name="car_loading_profile" msgid="8219978381196748070">"લોડિંગ"</string>
     <string name="file_count" msgid="3220018595056126969">"{count,plural, =1{{file_name} + # ફાઇલ}one{{file_name} + # ફાઇલ}other{{file_name} + # ફાઇલો}}"</string>
-    <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"શેર કરવા માટે સુઝાવ આપવામાં આવેલા કોઈ લોકો નથી"</string>
+    <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"શેર કરવા માટે સુઝાવ આપવામાં આવેલી કોઈ વ્યક્તિ નથી"</string>
     <string name="chooser_all_apps_button_label" msgid="3230427756238666328">"ઍપની સૂચિ"</string>
     <string name="usb_device_resolve_prompt_warn" msgid="325871329788064199">"આ ઍપને રેકૉર્ડ કરવાની પરવાનગી આપવામાં આવી નથી પરંતુ તે આ USB ડિવાઇસ મારફતે ઑડિયો કૅપ્ચર કરી શકે છે."</string>
     <string name="accessibility_system_action_home_label" msgid="3234748160850301870">"હોમ"</string>

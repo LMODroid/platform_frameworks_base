@@ -2185,7 +2185,7 @@
     <string name="bluetooth_airplane_mode_toast" msgid="2066399056595768554">"啟用飛行模式期間，藍牙會保持開啟"</string>
     <string name="car_loading_profile" msgid="8219978381196748070">"正在載入"</string>
     <string name="file_count" msgid="3220018595056126969">"{count,plural, =1{「{file_name}」和另外 # 個檔案}other{「{file_name}」和另外 # 個檔案}}"</string>
-    <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"沒有推薦的分享對象"</string>
+    <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"沒有建議分享對象"</string>
     <string name="chooser_all_apps_button_label" msgid="3230427756238666328">"應用程式清單"</string>
     <string name="usb_device_resolve_prompt_warn" msgid="325871329788064199">"此應用程式尚未獲授予錄音權限，但可透過此 USB 裝置記錄音訊。"</string>
     <string name="accessibility_system_action_home_label" msgid="3234748160850301870">"主頁"</string>

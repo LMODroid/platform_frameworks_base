@@ -2104,7 +2104,7 @@
     <string name="etws_primary_default_message_tsunami" msgid="5828171463387976279">"فوراً مناطق ساحلی و محدوده رودخانه را ترک کنید و به جایی امن، مثل ارتفاعات بروید."</string>
     <string name="etws_primary_default_message_earthquake_and_tsunami" msgid="4888224011071875068">"آرام باشید و پناهگاهی در این اطراف پیدا کنید."</string>
     <string name="etws_primary_default_message_test" msgid="4583367373909549421">"آزمایش پیام‌های اضطراری"</string>
-    <string name="notification_reply_button_accessibility" msgid="5235776156579456126">"پاسخ"</string>
+    <string name="notification_reply_button_accessibility" msgid="5235776156579456126">"پاسخ دادن"</string>
     <string name="etws_primary_default_message_others" msgid="7958161706019130739"></string>
     <string name="mmcc_authentication_reject" msgid="4891965994643876369">"سیم‌کارت برای عملیات صوتی مجاز نیست"</string>
     <string name="mmcc_imsi_unknown_in_hlr" msgid="227760698553988751">"سیم‌کارت مجوز لازم برای عملیات صوتی را ندارد"</string>

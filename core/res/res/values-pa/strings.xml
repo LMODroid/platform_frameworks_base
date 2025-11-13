@@ -716,7 +716,7 @@
     <string name="face_acquired_too_right" msgid="6245286514593540859">"ਫ਼ੋਨ ਨੂੰ ਆਪਣੇ ਖੱਬੇ ਪਾਸੇ ਲਿਜਾਓ"</string>
     <string name="face_acquired_too_left" msgid="9201762240918405486">"ਫ਼ੋਨ ਨੂੰ ਆਪਣੇ ਸੱਜੇ ਪਾਸੇ ਲਿਜਾਓ"</string>
     <string name="face_acquired_poor_gaze" msgid="4427153558773628020">"ਕਿਰਪਾ ਕਰਕੇ ਸਿੱਧਾ ਆਪਣੇ ਡੀਵਾਈਸ ਵੱਲ ਦੇਖੋ।"</string>
-    <string name="face_acquired_not_detected" msgid="1057966913397548150">"ਤੁਹਾਡਾ ਚਿਹਰਾ ਨਹੀਂ ਦਿਸ ਰਿਹਾ। ਆਪਣੇ ਫ਼ੋਨ ਨੂੰ ਅੱਖਾਂ ਦੀ ਸੀਧ ਵਿੱਚ ਰੱਖੋ।"</string>
+    <string name="face_acquired_not_detected" msgid="1057966913397548150">"ਤੁਹਾਡਾ ਚਿਹਰਾ ਨਹੀਂ ਦਿਖ ਰਿਹਾ। ਆਪਣੇ ਫ਼ੋਨ ਨੂੰ ਅੱਖਾਂ ਦੀ ਸੇਧ ਵਿੱਚ ਰੱਖੋ।"</string>
     <string name="face_acquired_too_much_motion" msgid="8199691445085189528">"ਬਹੁਤ ਜ਼ਿਆਦਾ ਹਿਲਜੁਲ। ਫ਼ੋਨ ਨੂੰ ਸਥਿਰ ਰੱਖੋ।"</string>
     <string name="face_acquired_recalibrate" msgid="8724013080976469746">"ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਚਿਹਰਾ ਦੁਬਾਰਾ ਦਰਜ ਕਰੋ।"</string>
     <string name="face_acquired_too_different" msgid="4505278456634706967">"ਚਿਹਰੇ ਦੀ ਪਛਾਣ ਨਹੀਂ ਹੋਈ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"</string>

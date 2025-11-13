@@ -266,7 +266,7 @@
     <string name="global_action_logout" msgid="6093581310002476511">"सेशन समाप्त करा"</string>
     <string name="global_action_screenshot" msgid="2610053466156478564">"स्क्रीनशॉट"</string>
     <string name="bugreport_title" msgid="8549990811777373050">"बग रिपोर्ट"</string>
-    <string name="bugreport_message" msgid="5212529146119624326">"ईमेल मेसेज म्हणून पाठविण्यासाठी, हे तुमच्या सध्याच्या डिव्हाइस स्थितीविषयी माहिती संकलित करेल. बग रिपोर्ट सुरू करण्यापासून तो पाठवण्यापर्यंत थोडा वेळ लागेल; कृपया धीर धरा."</string>
+    <string name="bugreport_message" msgid="5212529146119624326">"ईमेल मेसेज म्हणून पाठवण्यासाठी, हे तुमच्या सद्य डिव्हाइस स्थितीविषयी माहिती संकलित करेल. बग रिपोर्ट सुरू करण्यापासून तो पाठवण्यापर्यंत थोडा वेळ लागेल; कृपया धीर धरा."</string>
     <string name="bugreport_option_interactive_title" msgid="7968287837902871289">"परस्परसंवादी अहवाल"</string>
     <string name="bugreport_option_interactive_summary" msgid="8493795476325339542">"बहुतांश प्रसंगांमध्ये याचा वापर करा. ते तुम्हाला अहवालाच्या प्रगतीचा मागोवा घेण्याची, समस्येविषयी आणखी तपाशील एंटर करण्याची आणि स्क्रीनशॉट घेण्याची अनुमती देते. ते कदाचित अहवाल देण्यासाठी बराच वेळ घेणारे कमी-वापरलेले विभाग वगळू शकते."</string>
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"संपूर्ण अहवाल"</string>
@@ -403,7 +403,7 @@
     <string name="permdesc_receiveWapPush" msgid="1638677888301778457">"WAP मेसेज प्राप्त करण्यास आणि त्यावर प्रक्रिया करण्यासाठी अ‍ॅप ला अनुमती देते. ही परवानगी तुम्हाला पाठविलेले मेसेज तुम्हाला न दर्शविता त्यांचे परीक्षण करण्याची आणि ते हटविण्याची क्षमता समाविष्ट करते."</string>
     <string name="permlab_getTasks" msgid="7460048811831750262">"चालणारे अ‍ॅप्स पुनर्प्राप्त करा"</string>
     <string name="permdesc_getTasks" msgid="7388138607018233726">"सध्या आणि अलीकडे चालणार्‍या कार्यांविषयी माहिती पुनर्प्राप्त करण्यासाठी अ‍ॅप ला अनुमती देते. हे डिव्हाइसवर कोणते अ‍ॅप्लिकेशन वापरले जात आहेत त्याविषयी माहिती शोधण्यासाठी अ‍ॅप ला अनुमती देऊ शकतात."</string>
-    <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"प्रोफाईल आणि डिव्हाइस मालक व्यवस्थापित करा"</string>
+    <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"प्रोफाइल आणि डिव्हाइस मालक व्यवस्थापित करा"</string>
     <string name="permdesc_manageProfileAndDeviceOwners" msgid="7304240671781989283">"प्रोफाईल मालक आणि डिव्हाइस मालक सेट करण्याची ॲप्सना अनुमती द्या."</string>
     <string name="permlab_reorderTasks" msgid="7598562301992923804">"चालणारे अ‍ॅप्स पुनर्क्रमित करा"</string>
     <string name="permdesc_reorderTasks" msgid="8796089937352344183">"समोर आणि पार्श्वभूमीवर कार्ये हलविण्यासाठी अ‍ॅप ला अनुमती देते. अ‍ॅप हे आपल्या इनपुटशिवाय करू शकतो."</string>
@@ -859,7 +859,7 @@
     <string name="policydesc_wipeData_secondaryUser" product="automotive" msgid="4658832487305780879">"कोणत्याही चेतावणीशिवाय या इंफोटेनमेंट सिस्टीमवरील प्रोफाइलचा डेटा मिटवा."</string>
     <string name="policydesc_wipeData_secondaryUser" product="default" msgid="2788325512167208654">"कोणत्याही चेतावणी शिवाय या वापरकर्त्याचा या फोनवरील डेटा मिटवा."</string>
     <string name="policylab_setGlobalProxy" msgid="215332221188670221">"डिव्हाइस समग्र प्रॉक्सी सेट करा"</string>
-    <string name="policydesc_setGlobalProxy" msgid="7149665222705519604">"धोरण सक्षम असताना वापरण्यासाठी डिव्हाइस समग्र प्रॉक्सी सेट करा. फक्त डिव्हाइस मालक समग्र प्रॉक्सी सेट करु शकतो."</string>
+    <string name="policydesc_setGlobalProxy" msgid="7149665222705519604">"धोरण सक्षम असताना वापरण्यासाठी डिव्हाइस ग्लोबल प्रॉक्सी सेट करा. फक्त डिव्हाइसचा मालक ग्लोबल प्रॉक्सी सेट करु शकतो."</string>
     <string name="policylab_expirePassword" msgid="6015404400532459169">"स्क्रीन लॉक पासवर्ड कालबाह्यता सेट करा"</string>
     <string name="policydesc_expirePassword" msgid="9136524319325960675">"लॉक-स्क्रीन पासवर्ड किती वारंवार बदलणे आवश्यक आहे ते बदला."</string>
     <string name="policylab_encryptedStorage" msgid="9012936958126670110">"स्टोरेज एंक्रिप्शन सेट करा"</string>
@@ -975,7 +975,7 @@
     <string name="relationTypePartner" msgid="4018017075116766194">"भागीदार"</string>
     <string name="relationTypeReferredBy" msgid="5285082289602849400">"द्वारा संदर्भित"</string>
     <string name="relationTypeRelative" msgid="3396498519818009134">"नातेवाईक"</string>
-    <string name="relationTypeSister" msgid="3721676005094140671">"बहिण"</string>
+    <string name="relationTypeSister" msgid="3721676005094140671">"बहीण"</string>
     <string name="relationTypeSpouse" msgid="6916682664436031703">"पती/पत्नी"</string>
     <string name="sipAddressTypeCustom" msgid="6283889809842649336">"कस्टम"</string>
     <string name="sipAddressTypeHome" msgid="5918441930656878367">"घर"</string>
@@ -1096,7 +1096,7 @@
     <string name="js_dialog_before_unload_title" msgid="7012587995876771246">"नेव्हिगेशनची पुष्टी करा"</string>
     <string name="js_dialog_before_unload_positive_button" msgid="4274257182303565509">"हे पेज सोडा"</string>
     <string name="js_dialog_before_unload_negative_button" msgid="3873765747622415310">"या पेजवर रहा"</string>
-    <string name="js_dialog_before_unload" msgid="7213364985774778744">"<xliff:g id="MESSAGE">%s</xliff:g>\n\nआपल्‍याला खात्री आहे की तुम्ही या पृष्‍ठावरून नेव्‍हिगेट करू इच्‍छिता?"</string>
+    <string name="js_dialog_before_unload" msgid="7213364985774778744">"<xliff:g id="MESSAGE">%s</xliff:g>\n\nतुम्हाला नक्की या पेजवरून नेव्‍हिगेट करायचे आहे का?"</string>
     <string name="autofill_window_title" msgid="4379134104008111961">"<xliff:g id="SERVICENAME">%1$s</xliff:g> सह ऑटोफील करा"</string>
     <string name="permlab_setAlarm" msgid="1158001610254173567">"अलार्म सेट करा"</string>
     <string name="permdesc_setAlarm" msgid="2185033720060109640">"इंस्टॉल केलेल्या अलार्म घड्याळ ॲपमध्ये अलार्म सेट करण्यासाठी ॲपला अनुमती देते. काही अलार्म घड्याळ ॲप्समध्ये हे वैशिष्ट्य नसू शकते."</string>

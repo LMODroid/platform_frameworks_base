@@ -970,7 +970,7 @@
     <string name="relationTypeDomesticPartner" msgid="7825306887697559238">"Nevjenčani partner"</string>
     <string name="relationTypeFather" msgid="3856225062864790596">"Otac"</string>
     <string name="relationTypeFriend" msgid="3192092625893980574">"Prijatelj"</string>
-    <string name="relationTypeManager" msgid="2272860813153171857">"Šef"</string>
+    <string name="relationTypeManager" msgid="2272860813153171857">"Upravitelj"</string>
     <string name="relationTypeMother" msgid="2331762740982699460">"Majka"</string>
     <string name="relationTypeParent" msgid="4177920938333039882">"Roditelj"</string>
     <string name="relationTypePartner" msgid="4018017075116766194">"Partner"</string>
