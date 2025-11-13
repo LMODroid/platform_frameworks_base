@@ -2185,7 +2185,7 @@
     <string name="bluetooth_airplane_mode_toast" msgid="2066399056595768554">"在飞行模式下，蓝牙将保持开启状态"</string>
     <string name="car_loading_profile" msgid="8219978381196748070">"正在加载"</string>
     <string name="file_count" msgid="3220018595056126969">"{count,plural, =1{{file_name} 以及另外 # 个文件}other{{file_name} 以及另外 # 个文件}}"</string>
-    <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"没有任何推荐的分享对象"</string>
+    <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"没有推荐的分享对象"</string>
     <string name="chooser_all_apps_button_label" msgid="3230427756238666328">"应用列表"</string>
     <string name="usb_device_resolve_prompt_warn" msgid="325871329788064199">"此应用未获得录音权限，但能通过此 USB 设备录制音频。"</string>
     <string name="accessibility_system_action_home_label" msgid="3234748160850301870">"主屏幕"</string>
