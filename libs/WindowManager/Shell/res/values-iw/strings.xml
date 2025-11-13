@@ -72,16 +72,16 @@
     <string name="bubble_accessibility_announce_expand" msgid="5388792092888203776">"הרחבה של <xliff:g id="BUBBLE_TITLE">%1$s</xliff:g>"</string>
     <string name="bubble_accessibility_announce_collapse" msgid="3178806224494537097">"כיווץ של <xliff:g id="BUBBLE_TITLE">%1$s</xliff:g>"</string>
     <string name="bubbles_app_settings" msgid="3617224938701566416">"הגדרות <xliff:g id="NOTIFICATION_TITLE">%1$s</xliff:g>"</string>
-    <string name="bubble_dismiss_text" msgid="8816558050659478158">"סגירת בועה"</string>
+    <string name="bubble_dismiss_text" msgid="8816558050659478158">"סגירת הבועה"</string>
     <string name="bubble_fullscreen_text" msgid="1006758103218086231">"הצגה במסך מלא"</string>
-    <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"אין להציג בועות לשיחה"</string>
-    <string name="bubbles_user_education_title" msgid="2112319053732691899">"לדבר בבועות"</string>
-    <string name="bubbles_user_education_description" msgid="4215862563054175407">"שיחות חדשות מופיעות כסמלים צפים, או בועות. יש ללחוץ כדי לפתוח בועה. יש לגרור כדי להזיז אותה."</string>
+    <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"להפסיק להציג בועות לשיחה"</string>
+    <string name="bubbles_user_education_title" msgid="2112319053732691899">"שיחות בבועות"</string>
+    <string name="bubbles_user_education_description" msgid="4215862563054175407">"שיחות חדשות מופיעות כסמלים צפים או בועות. כדי לפתוח בועה, לוחצים עליה. כדי להזיז בועה, גוררים אותה."</string>
     <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"שליטה בבועות, בכל זמן"</string>
-    <string name="bubbles_user_education_manage" msgid="3460756219946517198">"יש ללחוץ על \'ניהול\' כדי להשבית את הבועות מהאפליקציה הזו"</string>
+    <string name="bubbles_user_education_manage" msgid="3460756219946517198">"כדי להשבית את הבועות מהאפליקציה הזו, צריך ללחוץ על \"ניהול\""</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"הבנתי"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"אין בועות מהזמן האחרון"</string>
-    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"בועות אחרונות ובועות שנסגרו יופיעו כאן"</string>
+    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"בועות מהזמן האחרון ובועות שנסגרו יופיעו כאן"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"צ\'אט בבועות"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"שיחות חדשות מופיעות כסמלים בפינה התחתונה של המסך. אפשר ללחוץ כדי להרחיב אותן או לגרור כדי לסגור אותן."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"שליטה בבועות בכל זמן"</string>

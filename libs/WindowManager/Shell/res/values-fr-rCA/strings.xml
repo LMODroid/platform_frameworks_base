@@ -83,7 +83,7 @@
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Aucune bulle récente"</string>
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Les bulles récentes et les bulles ignorées s\'afficheront ici"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Clavarder en utilisant des bulles"</string>
-    <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Les nouvelles conversations apparaissent sous forme d\'icônes dans le coin inférieur de votre écran. Touchez-les icônes pour développer les conversations ou faites-les glisser pour les supprimer."</string>
+    <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Les nouvelles conversations apparaissent sous forme d\'icônes dans un coin inférieur de votre écran. Touchez-les icônes pour développer les conversations ou faites-les glisser pour les supprimer."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Gérez les bulles en tout temps"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Touchez ici pour gérer les applis et les conversations à inclure aux bulles"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"Bulle"</string>

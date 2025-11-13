@@ -84,8 +84,8 @@
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"हालैका बबल र खारेज गरिएका बबलहरू यहाँ देखिने छन्"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"बबल प्रयोग गरी कुराकानी गर्नुहोस्"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"नयाँ वार्तालापहरू तपाईंको डिभाइसको स्क्रिनको पुछारको कुनामा आइकनका रूपमा देखिन्छन्। ती आइकन ठुलो बनाउन ट्याप गर्नुहोस् वा ती आइकन हटाउन ड्र्याग गर्नुहोस्।"</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"जुनसुकै बेला बबलसम्बन्धी सुविधा नियन्त्रण गर्नुहोस्"</string>
-    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"कुन एप र कुराकानी बबल प्रयोग गर्न सक्छन् भन्ने कुराको व्यवस्थापन गर्न यहाँ ट्याप गर्नुहोस्"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"जुनसुकै बेला बबलहरू नियन्त्रण गर्नुहोस्"</string>
+    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"कुन-कुन एप तथा वार्तालापहरू बबल हुन सक्छन् भन्ने कुरा व्यवस्थापन गर्न यहाँ ट्याप गर्नुहोस्"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"बबल"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"व्यवस्थापन गर्नुहोस्"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"बबल हटाइयो।"</string>
