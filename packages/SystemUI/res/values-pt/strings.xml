@@ -1365,7 +1365,7 @@
     <string name="privacy_dialog_title" msgid="7839968133469098311">"Microfone e câmera"</string>
     <string name="privacy_dialog_summary" msgid="2458769652125995409">"Uso recente do app"</string>
     <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Ver acessos recentes"</string>
-    <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Concluído"</string>
+    <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Concluir"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Abrir e mostrar opções"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"Fechar"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"Fechar este app"</string>

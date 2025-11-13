@@ -341,7 +341,7 @@
     <string name="quick_settings_cast_no_network" msgid="3863016850468559522">"Wi-Fi (သို့) အီသာနက်ချိတ်ဆက်မှု မရှိပါ"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="4980669966716685588">"အလင်းတောက်ပမှု"</string>
     <string name="quick_settings_inversion_label" msgid="3501527749494755688">"အရောင်ပြောင်းပြန်ပြုလုပ်ရန်"</string>
-    <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"အရောင် အမှန်ပြင်ခြင်း"</string>
+    <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"အရောင်အမှန်ပြင်ရန်"</string>
     <string name="quick_settings_font_scaling_label" msgid="5289001009876936768">"ဖောင့်အရွယ်"</string>
     <string name="quick_settings_more_user_settings" msgid="7634653308485206306">"အသုံးပြုသူများ စီမံရန်"</string>
     <string name="quick_settings_done" msgid="2163641301648855793">"ပြီးပါပြီ"</string>
