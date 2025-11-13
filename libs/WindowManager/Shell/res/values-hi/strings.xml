@@ -80,9 +80,9 @@
     <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"जब चाहें, बबल्स को कंट्रोल करें"</string>
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"इस ऐप्लिकेशन पर बबल्स को बंद करने के लिए \'मैनेज करें\' पर टैप करें"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"ठीक है"</string>
-    <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"हाल ही के कोई बबल्स नहीं हैं"</string>
+    <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"हाल ही के कोई बबल नहीं हैं"</string>
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"हाल ही के बबल्स और हटाए गए बबल्स यहां दिखेंगे"</string>
-    <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"बबल्स का इस्तेमाल करके चैट करें"</string>
+    <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"बबल का इस्तेमाल करके चैट करें"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"नई बातचीत, आपकी स्क्रीन पर सबसे नीचे आइकॉन के तौर पर दिखती हैं. किसी आइकॉन को बड़ा करने के लिए उस पर टैप करें या खारिज करने के लिए उसे खींचें और छोड़ें."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"जब चाहें, बबल्स को कंट्रोल करें"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"किसी ऐप्लिकेशन और बातचीत के लिए बबल की सुविधा को मैनेज करने के लिए यहां टैप करें"</string>

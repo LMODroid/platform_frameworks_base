@@ -84,8 +84,8 @@
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"حالیہ بلبلے اور برخاست شدہ بلبلے یہاں ظاہر ہوں گے"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"بلبلے کے ذریعے چیٹ کریں"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"نئی گفتگوئیں آپ کی اسکرین کے نیچے کونے میں آئیکنز کے طور پر ظاہر ہوتی ہیں۔ انہیں پھیلانے کے لیے تھپتھپائیں یا انہیں برخاست کرنے کے لیے گھسیٹیں۔"</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"کسی بھی وقت بلبلے کو کنٹرول کریں"</string>
-    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"یہ نظم کرنے کے لیے یہاں تھپتھپائیں کہ کون سی ایپس اور گفتگوئیں بلبلہ سکتی ہیں"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"کسی بھی وقت بلبلوں کو کنٹرول کریں"</string>
+    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"یہ نظم کرنے کیلئے یہاں تھپتھپائیں کہ کون سی ایپس اور گفتگوئیں بلبلہ ہو سکتی ہیں"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"بلبلہ"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"نظم کریں"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"بلبلہ برخاست کر دیا گیا۔"</string>

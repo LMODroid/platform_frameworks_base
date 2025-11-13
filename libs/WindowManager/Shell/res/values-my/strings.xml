@@ -76,7 +76,7 @@
     <string name="bubble_fullscreen_text" msgid="1006758103218086231">"ဖန်သားပြင်အပြည့်သို့ ရွှေ့ရန်"</string>
     <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"စကားဝိုင်းကို ပူဖောင်းကွက် မပြုလုပ်ပါနှင့်"</string>
     <string name="bubbles_user_education_title" msgid="2112319053732691899">"ပူဖောင်းကွက် သုံး၍ ချတ်လုပ်ခြင်း"</string>
-    <string name="bubbles_user_education_description" msgid="4215862563054175407">"စကားဝိုင်းအသစ်များကို မျောနေသည့် သင်္ကေတများ သို့မဟုတ် ပူဖောင်းကွက်များအဖြစ် မြင်ရပါမည်။ ပူဖောင်းကွက်ကိုဖွင့်ရန် တို့ပါ။ ရွှေ့ရန် ၎င်းကို ဖိဆွဲပါ။"</string>
+    <string name="bubbles_user_education_description" msgid="4215862563054175407">"စကားဝိုင်းအသစ်များကို မျောနေသည့် သင်္ကေတ (သို့) ပူဖောင်းကွက်အဖြစ် မြင်ရမည်။ ပူဖောင်းကွက်ဖွင့်ရန် တို့ပါ။ ရွှေ့ရန် ၎င်းကို ဖိဆွဲပါ။"</string>
     <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"ပူဖောင်းကွက်ကို အချိန်မရွေး ထိန်းချုပ်ရန်"</string>
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"ဤအက်ပ်မှနေ၍ ပူဖောင်းများကို ပိတ်ရန်အတွက် \'စီမံရန်\' ကို တို့ပါ"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"နားလည်ပြီ"</string>

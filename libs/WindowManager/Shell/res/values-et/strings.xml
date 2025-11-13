@@ -85,7 +85,7 @@
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Vestelge mullide abil"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Uued vestlused kuvatakse ekraanikuva alanurgas ikoonidena. Puudutage nende laiendamiseks või lohistage neist loobumiseks."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Juhtige mulle igal ajal"</string>
-    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Puudutage siin, et hallata, milliseid rakendusi ja vestlusi saab mullina kuvada"</string>
+    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Puudutage siin, et hallata, milliseid rakendusi ja vestlusi saab mullina kuvada."</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"Mull"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Haldamine"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"Mullist loobuti."</string>
