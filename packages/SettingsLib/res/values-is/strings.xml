@@ -621,7 +621,7 @@
     <string name="accessor_no_description_text" msgid="7510967452505591456">"Forritið er ekki með neina lýsingu."</string>
     <string name="accessor_expires_text" msgid="4625619273236786252">"Leiga rennur út <xliff:g id="DATE">%s</xliff:g>"</string>
     <string name="delete_blob_text" msgid="2819192607255625697">"Eyða deildum gögnum"</string>
-    <string name="delete_blob_confirmation_text" msgid="7807446938920827280">"Ertu viss um að þú viljir eyða þessum deildu gögnum?"</string>
+    <string name="delete_blob_confirmation_text" msgid="7807446938920827280">"Ertu viss um að þú viljir eyða þessum samnýttu gögnum?"</string>
     <string name="user_add_user_item_summary" msgid="5748424612724703400">"Notendur hafa sín eigin forrit og efni"</string>
     <string name="user_add_profile_item_summary" msgid="5418602404308968028">"Hægt er að takmarka aðgang að forritum og efni á reikningnum þínum"</string>
     <string name="user_add_user_item_title" msgid="2394272381086965029">"Notandi"</string>

@@ -473,7 +473,7 @@
     <string name="daltonizer_mode_protanomaly" msgid="7805583306666608440">"Protanomalie (rood-groen)"</string>
     <string name="daltonizer_mode_tritanomaly" msgid="7135266249220732267">"Tritanomalie (blauw-geel)"</string>
     <string name="accessibility_display_daltonizer_preference_title" msgid="1810693571332381974">"Kleurcorrectie"</string>
-    <string name="accessibility_display_daltonizer_preference_subtitle" msgid="1522101114585266455">"Kleurcorrectie kan handig zijn als je het volgende wilt doen:&lt;br/&gt; &lt;ol&gt; &lt;li&gt;&amp;nbsp;Kleuren duidelijker zien&lt;/li&gt; &lt;li&gt;&amp;nbsp;Kleuren verwijderen om je beter te kunnen concentreren&lt;/li&gt; &lt;/ol&gt;"</string>
+    <string name="accessibility_display_daltonizer_preference_subtitle" msgid="1522101114585266455">"Kleurcorrectie kan handig zijn als je het volgende wilt:&lt;br/&gt; &lt;ol&gt; &lt;li&gt;&amp;nbsp;Kleuren duidelijker zien&lt;/li&gt; &lt;li&gt;&amp;nbsp;Kleuren verwijderen om je beter te kunnen concentreren&lt;/li&gt; &lt;/ol&gt;"</string>
     <string name="daltonizer_type_overridden" msgid="4509604753672535721">"Overschreven door <xliff:g id="TITLE">%1$s</xliff:g>"</string>
     <string name="power_remaining_settings_home_page" msgid="4885165789445462557">"<xliff:g id="PERCENTAGE">%1$s</xliff:g> - <xliff:g id="TIME_STRING">%2$s</xliff:g>"</string>
     <string name="power_charging_on_hold_settings_home_page" msgid="7690464049464805856">"<xliff:g id="LEVEL">%1$s</xliff:g>: opladen is in de wacht gezet om de batterij te beschermen"</string>
