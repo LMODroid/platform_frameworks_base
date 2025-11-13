@@ -349,7 +349,7 @@
     <string name="quick_settings_connected" msgid="3873605509184830379">"Disambungkan"</string>
     <string name="quick_settings_connected_battery_level" msgid="1322075669498906959">"Disambungkan, bateri <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="quick_settings_connecting" msgid="2381969772953268809">"Menyambung..."</string>
-    <string name="quick_settings_hotspot_label" msgid="1199196300038363424">"Tempat liputan"</string>
+    <string name="quick_settings_hotspot_label" msgid="1199196300038363424">"Tempat Liputan"</string>
     <string name="quick_settings_hotspot_secondary_label_transient" msgid="7585604088079160564">"Menghidupkan…"</string>
     <string name="quick_settings_hotspot_secondary_label_data_saver_enabled" msgid="1280433136266439372">"Penjimat Data dihidupkan"</string>
     <string name="quick_settings_hotspot_secondary_label_num_devices" msgid="7536823087501239457">"{count,plural, =1{# peranti}other{# peranti}}"</string>
@@ -719,7 +719,7 @@
     <string name="zen_alarm_warning" msgid="7844303238486849503">"Anda tidak akan mendengar penggera yang seterusnya <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template" msgid="2234991538018805736">"pada <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template_far" msgid="3561752195856839456">"pada <xliff:g id="WHEN">%1$s</xliff:g>"</string>
-    <string name="accessibility_status_bar_hotspot" msgid="2888479317489131669">"Tempat liputan"</string>
+    <string name="accessibility_status_bar_hotspot" msgid="2888479317489131669">"Tempat Liputan"</string>
     <string name="accessibility_status_bar_satellite_no_connection" msgid="3001571744269917762">"Satelit, tiada sambungan"</string>
     <string name="accessibility_status_bar_satellite_poor_connection" msgid="5231478574952724160">"Satelit, sambungan yang lemah"</string>
     <string name="accessibility_status_bar_satellite_good_connection" msgid="308079391708578704">"Satelit, sambungan yang baik"</string>

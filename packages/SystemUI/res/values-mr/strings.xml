@@ -398,7 +398,7 @@
     <string name="restore_default" msgid="5259420807486239755">"डीफॉल्ट रिस्टोअर करा"</string>
     <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"एकहाती मोड"</string>
     <string name="quick_settings_hearing_devices_label" msgid="7277170419679404129">"श्रवणयंत्रे"</string>
-    <string name="quick_settings_hearing_devices_connected" msgid="6519069502397037781">"ॲक्टिव्ह आहे"</string>
+    <string name="quick_settings_hearing_devices_connected" msgid="6519069502397037781">"ॲक्टिव्ह"</string>
     <string name="quick_settings_hearing_devices_disconnected" msgid="8907061223998176187">"डिस्कनेक्ट केले आहे"</string>
     <string name="quick_settings_hearing_devices_dialog_title" msgid="9004774017688484981">"श्रवणयंत्रे"</string>
     <string name="quick_settings_pair_hearing_devices" msgid="5987105102207447322">"नवीन डिव्हाइस पेअर करा"</string>
@@ -542,7 +542,7 @@
     <!-- no translation found for media_projection_entry_app_permission_dialog_option_text_entire_screen (5100078808078139706) -->
     <skip />
     <string name="media_projection_entry_app_permission_dialog_warning_entire_screen" msgid="5504288438067851086">"तुम्ही तुमची संपूर्ण स्क्रीन कास्ट करता, तेव्हा तुमच्या स्क्रीनवरील कोणत्याही गोष्टी <xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g> साठी दृश्यमान असतात. त्यामुळे पासवर्ड, पेमेंट तपशील, मेसेज, फोटो आणि ऑडिओ व व्हिडिओ यांसारख्या गोष्टींबाबत सावधगिरी बाळगा."</string>
-    <string name="media_projection_entry_app_permission_dialog_warning_single_app" msgid="7094417930857938876">"तुम्ही अ‍ॅप शेअर करता, तेव्हा त्या अ‍ॅपमध्ये दाखवल्या किंवा प्ले होणाऱ्या कोणत्याही गोष्टी <xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g> साठी दृश्यमान असतात. त्यामुळे पासवर्ड, पेमेंट तपशील, मेसेज, फोटो आणि ऑडिओ व व्हिडिओ यांसारख्या गोष्टींबाबत सावधगिरी बाळगा."</string>
+    <string name="media_projection_entry_app_permission_dialog_warning_single_app" msgid="7094417930857938876">"तुम्ही अ‍ॅप शेअर करता, तेव्हा त्या अ‍ॅपमध्ये दाखवलेल्या किंवा प्ले होणाऱ्या कोणत्याही गोष्टी <xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g> साठी दृश्यमान असतात. त्यामुळे पासवर्ड, पेमेंट तपशील, मेसेज, फोटो आणि ऑडिओ व व्हिडिओ यांसारख्या गोष्टींबाबत सावधगिरी बाळगा."</string>
     <string name="media_projection_entry_app_permission_dialog_continue_entire_screen" msgid="1850848182344377579">"स्क्रीन शेअर करा"</string>
     <string name="media_projection_entry_app_permission_dialog_single_app_disabled" msgid="8999903044874669995">"<xliff:g id="APP_NAME">%1$s</xliff:g> हा पर्याय बंद केला आहे"</string>
     <string name="media_projection_entry_share_app_selector_title" msgid="1419515119767501822">"शेअर करण्यासाठी अ‍ॅप निवडा"</string>
