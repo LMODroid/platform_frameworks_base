@@ -1426,7 +1426,7 @@
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"الإضاءة الخلفية للوحة المفاتيح"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"‏مستوى الإضاءة: %1$d من %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"إدارة المنزل آليًّا"</string>
-    <string name="home_controls_dream_description" msgid="4644150952104035789">"يمكنك إدارة المنزل آليًّا بسرعة من شاشة الاستراحة"</string>
+    <string name="home_controls_dream_description" msgid="4644150952104035789">"لإدارة المنزل آليًّا بسرعة من شاشة الاستراحة"</string>
     <string name="volume_undo_action" msgid="5815519725211877114">"تراجع"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"للرجوع، مرِّر سريعًا لليمين أو لليسار على لوحة اللمس باستخدام 3 أصابع"</string>
     <string name="home_edu_toast_content" msgid="3381071147871955415">"للانتقال إلى الشاشة الرئيسية، مرِّر سريعًا للأعلى على لوحة اللمس باستخدام 3 أصابع"</string>
