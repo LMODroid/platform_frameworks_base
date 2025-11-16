@@ -73,7 +73,7 @@
     <string name="bubble_accessibility_announce_collapse" msgid="3178806224494537097">"kunja <xliff:g id="BUBBLE_TITLE">%1$s</xliff:g>"</string>
     <string name="bubbles_app_settings" msgid="3617224938701566416">"Mipangilio ya <xliff:g id="NOTIFICATION_TITLE">%1$s</xliff:g>"</string>
     <string name="bubble_dismiss_text" msgid="8816558050659478158">"Ondoa kiputo"</string>
-    <string name="bubble_fullscreen_text" msgid="1006758103218086231">"Hamishia kwenye skrini nzima"</string>
+    <string name="bubble_fullscreen_text" msgid="1006758103218086231">"Angalia kwenye skrini nzima"</string>
     <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"Usiweke viputo kwenye mazungumzo"</string>
     <string name="bubbles_user_education_title" msgid="2112319053732691899">"Piga gumzo ukitumia viputo"</string>
     <string name="bubbles_user_education_description" msgid="4215862563054175407">"Mazungumzo mapya huonekena kama aikoni au viputo vinavyoelea. Gusa ili ufungue kiputo. Buruta ili ukisogeze."</string>
@@ -81,7 +81,7 @@
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Gusa Dhibiti ili uzime viputo kwenye programu hii"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"Nimeelewa"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Hakuna viputo vya hivi majuzi"</string>
-    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Viputo vya hivi karibuni na vile vilivyoondolewa vitaonekana hapa"</string>
+    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Viputo vya hivi majuzi na vilivyoondolewa vitaonekana hapa"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Piga gumzo ukitumia viputo"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Mazungumzo mapya huonekana kama aikoni katika kona ya chini ya skrini yako. Gusa ili uyapanue au buruta ili uyaondoe."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Dhibiti viputo wakati wowote"</string>

@@ -84,8 +84,8 @@
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Tu sa budú zobrazovať nedávne a zavreté bubliny"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Čet v bublinách"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Nové konverzácie sa zobrazujú ako ikony v dolnom rohu obrazovky. Klepnutím ich rozbalíte, potiahnutím zavriete."</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Ovládajte bubliny kedykoľvek"</string>
-    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Klepnite tu a spravujte, ktoré aplikácie a konverzácie môžu ovládať bubliny"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Nastavenie bublín môžete kedykoľvek zmeniť"</string>
+    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Klepnutím tu spravujte, ktoré aplikácie a konverzácie môžu používať bubliny"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"Bublina"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Spravovať"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"Bublina bola zavretá."</string>

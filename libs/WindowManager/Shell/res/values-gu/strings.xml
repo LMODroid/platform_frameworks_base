@@ -84,7 +84,7 @@
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"તાજેતરના બબલ અને છોડી દીધેલા બબલ અહીં દેખાશે"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"બબલનો ઉપયોગ કરીને ચૅટ કરો"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"નવી વાતચીતો તમારી સ્ક્રીનના નીચેના ખૂણામાં આઇકન તરીકે દેખાય છે. તેમને મોટી કરવા માટે, તેમના પર ટૅપ કરો અથવા તેમને છોડી દેવા માટે, તેમને ખેંચો."</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"બબલને કોઈપણ સમયે નિયંત્રિત કરે છે"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"બબલને કોઈપણ સમયે નિયંત્રિત કરો"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"કઈ ઍપ અને વાતચીતોને બબલ કરવા માગો છો તે મેનેજ કરવા માટે, અહીં ટૅપ કરો"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"બબલ"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"મેનેજ કરો"</string>

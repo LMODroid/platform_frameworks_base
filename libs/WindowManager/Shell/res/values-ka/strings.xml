@@ -84,7 +84,7 @@
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"აქ გამოჩნდება ბოლოდროინდელი ბუშტები და უარყოფილი ბუშტები"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"ჩეთი ბუშტების გამოყენებით"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"ახალი საუბრები ხატულას სახით გამოჩნდება თქვენი ეკრანის ქვედა კუთხეში. შეეხეთ გასაფართოებლად და ჩაავლეთ მათ დასახურად."</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"ამოხტომის გაკონტროლება ნებისმიერ დროს"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"მართეთ ბუშტები ნებისმიერ დროს"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"აქ შეეხეთ იმის სამართავად, თუ რომელი აპები და საუბრები ამოხტეს"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"ბუშტი"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"მართვა"</string>
