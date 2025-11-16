@@ -1738,7 +1738,7 @@
     <string name="accessibility_service_warning_description" msgid="291674995220940133">"ઍક્સેસિબિલિટી સંબંધિત આવશ્યકતા માટે સહાય કરતી ઍપ માટે સંપૂર્ણ નિયંત્રણ યોગ્ય છે, પણ મોટા ભાગની ઍપ માટે યોગ્ય નથી."</string>
     <string name="accessibility_service_screen_control_title" msgid="190017412626919776">"જોવા અને નિયંત્રણ માટેની સ્ક્રીન"</string>
     <string name="accessibility_service_screen_control_description" msgid="6946315917771791525">"તે સ્ક્રીન પરનું બધું કન્ટેન્ટ વાંચી શકે છે અને કન્ટેન્ટને અન્ય ઍપ પર બતાવી શકે છે."</string>
-    <string name="accessibility_service_action_perform_title" msgid="779670378951658160">"ક્રિયાઓ જુઓ અને કરો"</string>
+    <string name="accessibility_service_action_perform_title" msgid="779670378951658160">"ઍક્શન જુઓ અને તેને પર્ફોર્મ કરો"</string>
     <string name="accessibility_service_action_perform_description" msgid="2718852014003170558">"તે ઍપ અથવા હાર્ડવેર સેન્સર વડે તમારી ક્રિયાપ્રતિક્રિયાને ટ્રૅક કરી શકે છે અને તમારા વતી ઍપ સાથે ક્રિયાપ્રતિક્રિયા કરી શકે છે."</string>
     <string name="accessibility_dialog_button_allow" msgid="2092558122987144530">"મંજૂરી આપો"</string>
     <string name="accessibility_dialog_button_deny" msgid="4129575637812472671">"નકારો"</string>

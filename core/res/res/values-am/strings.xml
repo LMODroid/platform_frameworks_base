@@ -973,7 +973,7 @@
     <string name="relationTypeMother" msgid="2331762740982699460">"እናት"</string>
     <string name="relationTypeParent" msgid="4177920938333039882">"ወላጅ"</string>
     <string name="relationTypePartner" msgid="4018017075116766194">"አጋር"</string>
-    <string name="relationTypeReferredBy" msgid="5285082289602849400">"በ ተጠቅሷል"</string>
+    <string name="relationTypeReferredBy" msgid="5285082289602849400">"የተጠቀሰው"</string>
     <string name="relationTypeRelative" msgid="3396498519818009134">"ዘመድ"</string>
     <string name="relationTypeSister" msgid="3721676005094140671">"እህት"</string>
     <string name="relationTypeSpouse" msgid="6916682664436031703">"የትዳር ጓደኛ"</string>

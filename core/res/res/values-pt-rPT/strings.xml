@@ -1056,7 +1056,7 @@
     <string name="lockscreen_access_pattern_cleared" msgid="7493849102641167049">"Sequência apagada"</string>
     <string name="lockscreen_access_pattern_cell_added" msgid="6746676335293144163">"Célula adicionada"</string>
     <string name="lockscreen_access_pattern_cell_added_verbose" msgid="2931364927622563465">"Célula <xliff:g id="CELL_INDEX">%1$s</xliff:g> adicionada"</string>
-    <string name="lockscreen_access_pattern_detected" msgid="3931150554035194012">"Sequência concluída"</string>
+    <string name="lockscreen_access_pattern_detected" msgid="3931150554035194012">"Padrão concluído"</string>
     <string name="lockscreen_access_pattern_area" msgid="1288780416685002841">"Área da sequência."</string>
     <string name="keyguard_accessibility_widget_changed" msgid="7298011259508200234">"%1$s. Widget %2$d de %3$d."</string>
     <string name="keyguard_accessibility_add_widget" msgid="8245795023551343672">"Adicionar widget."</string>
