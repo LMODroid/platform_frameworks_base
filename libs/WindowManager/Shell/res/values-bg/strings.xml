@@ -84,7 +84,7 @@
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Скорошните и отхвърлените балончета ще се показват тук"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Чат с балончета"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Новите разговори се показват като икони в долния ъгъл на екрана ви. Докоснете, за да ги разгънете, или ги плъзнете за отхвърляне."</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Управление на балончетата по всяко време"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Управление на балончетата"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Докоснете тук, за да управл. кои прил. и разговори могат да показват балончета"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"Балонче"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Управление"</string>

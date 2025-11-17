@@ -85,7 +85,7 @@
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"使用消息气泡，聊天更便捷"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"新对话会以图标形式显示在屏幕底部的角落中。点按图标即可展开对话，拖动图标即可关闭对话。"</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"随时控制消息气泡"</string>
-    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"点按此处即可管理哪些应用和对话可以显示消息气泡"</string>
+    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"点按此处来管理可显示消息气泡的应用和对话"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"气泡"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"管理"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"已关闭消息气泡。"</string>
