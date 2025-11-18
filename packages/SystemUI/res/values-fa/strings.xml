@@ -1419,10 +1419,10 @@
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"با سه انگشت روی صفحه لمسی تند به‌بالا بکشید و نگه دارید."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"عالی است!"</string>
     <string name="touchpad_recent_apps_gesture_success_body" msgid="4334263906697493273">"اشاره «مشاهده برنامه‌های اخیر» را تمام کردید"</string>
-    <string name="tutorial_action_key_title" msgid="2659466586996495447">"دکمه کنش"</string>
-    <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"برای دسترسی به برنامه‌هایتان، دکمه کنش در صفحه‌کلید را فشار دهید."</string>
+    <string name="tutorial_action_key_title" msgid="2659466586996495447">"کلید کنش"</string>
+    <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"برای دسترسی به برنامه‌هایتان، کلید کنش در صفحه‌کلید را فشار دهید."</string>
     <string name="tutorial_action_key_success_title" msgid="466467860120112933">"تبریک!"</string>
-    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"اشاره دکمه کنش را تکمیل کردید.\n\n«کنش» + / همه میان‌برهای دردسترس را نمایش می‌دهد."</string>
+    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"اشاره کلید کنش را تکمیل کردید.\n\n«کنش» + / همه میان‌برهای دردسترس را نشان می‌دهد."</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"نور پس‌زمینه صفحه‌کلید"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"‏سطح %1$d از %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"کنترل خانه هوشمند"</string>
@@ -1431,7 +1431,7 @@
     <string name="back_edu_toast_content" msgid="4530314597378982956">"برای برگشتن، در صفحه لمسی با سه انگشت تند به‌چپ یا راست بکشید"</string>
     <string name="home_edu_toast_content" msgid="3381071147871955415">"برای رفتن به صفحه اصلی، در صفحه لمسی با سه انگشت تند به‌بالا بکشید"</string>
     <string name="overview_edu_toast_content" msgid="5797030644017804518">"برای مشاهده برنامه‌های اخیر، در صفحه لمسی با سه انگشت تند به‌بالا بکشید و نگه دارید"</string>
-    <string name="all_apps_edu_toast_content" msgid="8807496014667211562">"برای مشاهده همه برنامه‌ها، دکمه کنش در صفحه‌کلید را فشار دهید"</string>
+    <string name="all_apps_edu_toast_content" msgid="8807496014667211562">"برای مشاهده همه برنامه‌ها، کلید کنش در صفحه‌کلید را فشار دهید"</string>
     <string name="redacted_notification_single_line_title" msgid="212019960919261670">"محوشده"</string>
     <string name="redacted_notification_single_line_text" msgid="8684166405005242945">"برای مشاهده، قفل را باز کنید"</string>
     <string name="back_edu_notification_title" msgid="5624780717751357278">"برای برگشتن از صفحه لمسی استفاده کنید"</string>
@@ -1441,7 +1441,7 @@
     <string name="overview_edu_notification_title" msgid="1265824157319562406">"برای مشاهده برنامه‌های اخیر از صفحه لمسی استفاده کنید"</string>
     <string name="overview_edu_notification_content" msgid="3578204677648432500">"با سه انگشت تند به‌بالا بکشید و نگه دارید. برای آشنایی با اشاره‌های بیشتر، تک‌ضرب بزنید."</string>
     <string name="all_apps_edu_notification_title" msgid="372262997265569063">"برای مشاهده همه برنامه‌ها، از صفحه‌کلید استفاده کنید"</string>
-    <string name="all_apps_edu_notification_content" msgid="3255070575694025585">"در هرزمانی دکمه کنش را فشار دهید. برای آشنایی با اشاره‌های بیشتر، تک‌ضرب بزنید."</string>
+    <string name="all_apps_edu_notification_content" msgid="3255070575694025585">"در هرزمانی کلید کنش را فشار دهید. برای آشنایی با اشاره‌های بیشتر، تک‌ضرب بزنید."</string>
     <string name="accessibility_deprecate_extra_dim_dialog_title" msgid="910988771011857460">"«بسیار کم‌نور» اکنون بخشی از لغزنده روشنایی است"</string>
     <string name="accessibility_deprecate_extra_dim_dialog_description" msgid="4453123359258743230">"اکنون می‌توانید با پایین‌تر آوردن سطح روشنایی، صفحه‌نمایش را بسیار کم‌نور کنید.\n\nاز آنجایی‌که این ویژگی اکنون بخشی از لغزنده روشنایی است، میان‌برهای بسیار کم‌نور برداشته می‌شوند."</string>
     <string name="accessibility_deprecate_extra_dim_dialog_button" msgid="3947537827396916005">"برداشتن میان‌برهای بسیار کم‌نور"</string>
