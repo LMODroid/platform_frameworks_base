@@ -56,6 +56,9 @@ interface UserTracker : UserContentResolverProvider, UserContextProvider {
      */
     val userProfiles: List<UserInfo>
 
+    /** Is the system in the process of switching users? */
+    val isUserSwitching: Boolean
+
     /**
      * Add a [Callback] to be notified of chances, on a particular [Executor]
      */
