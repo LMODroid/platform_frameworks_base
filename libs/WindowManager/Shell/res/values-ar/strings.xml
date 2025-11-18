@@ -80,9 +80,9 @@
     <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"التحكّم في فقاعات المحادثات في أي وقت"</string>
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"انقر على \"إدارة\" لإيقاف فقاعات المحادثات من هذا التطبيق."</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"حسنًا"</string>
-    <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"ليس هناك فقاعات محادثات"</string>
-    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"ستظهر هنا أحدث فقاعات المحادثات وفقاعات المحادثات التي تم إغلاقها."</string>
-    <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"الدردشة باستخدام فقاعات المحادثات"</string>
+    <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"ما من فقاعات حديثة"</string>
+    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"ستظهر الفقاعات الحديثة والفقاعات التي تم إغلاقها"</string>
+    <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"الدردشة باستخدام الفقاعات"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"تظهر المحادثات الجديدة في شكل رموز بأسفل أحد جانبَي الشاشة. انقر على الرمز لتوسيع المحادثة أو اسحبه لإخفائها."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"التحكّم في إظهار الفقاعات في أي وقت"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"يُرجى النقر هنا للتحكّم في إظهار فقاعات التطبيقات والمحادثات التي تريدها."</string>
