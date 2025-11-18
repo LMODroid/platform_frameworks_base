@@ -688,7 +688,7 @@
     <string name="fingerprint_error_no_fingerprints" msgid="3144806556204061862">"ما مِن بصمات إصبع مسجَّلة"</string>
     <string name="fingerprint_error_hw_not_present" msgid="5898827259419366359">"لا يحتوي هذا الجهاز على جهاز استشعار بصمات الأصابع."</string>
     <string name="fingerprint_error_security_update_required" msgid="8440349108169661934">"تم مؤقتًا إيقاف أداة الاستشعار"</string>
-    <string name="fingerprint_error_bad_calibration" msgid="6770614925736183528">"يتعذّر استخدام أداة استشعار بصمة الإصبع. يُرجى التواصل مع مقدِّم خدمات إصلاح."</string>
+    <string name="fingerprint_error_bad_calibration" msgid="6770614925736183528">"لا يمكن استخدام أداة استشعار بصمة الإصبع. يُرجى التواصل مع مقدِّم خدمات إصلاح."</string>
     <string name="fingerprint_error_power_pressed" msgid="5479524500542129414">"تم الضغط على زر التشغيل"</string>
     <string name="fingerprint_name_template" msgid="8941662088160289778">"الإصبع <xliff:g id="FINGERID">%d</xliff:g>"</string>
     <string name="fingerprint_app_setting_name" msgid="4253767877095495844">"استخدام بصمة الإصبع"</string>
