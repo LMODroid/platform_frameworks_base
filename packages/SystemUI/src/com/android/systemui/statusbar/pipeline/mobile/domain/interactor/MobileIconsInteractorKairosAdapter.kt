@@ -57,6 +57,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @ExperimentalKairosApi
 @SysUISingleton
@@ -169,6 +170,8 @@ constructor(
     override val isDeviceInEmergencyCallsOnlyMode: Flow<Boolean>
         get() = repo.isDeviceEmergencyCallCapable
 
+    override val isRoamingForceHidden: StateFlow<Boolean> = MutableStateFlow(false)
+
     override fun getMobileConnectionInteractorForSubId(subId: Int): MobileIconInteractor =
         object : MobileIconInteractor {
             override val tableLogBuffer: TableLogBuffer =
@@ -190,6 +193,7 @@ constructor(
             override val carrierName: Flow<String> = latest { carrierName }
             override val isSingleCarrier: Flow<Boolean> = latest { isSingleCarrier }
             override val isRoaming: Flow<Boolean> = latest { isRoaming }
+            override val isRoamingForceHidden: Flow<Boolean> = latest { isRoamingForceHidden }
             override val isForceHidden: Flow<Boolean> = latest { isForceHidden }
             override val isAllowedDuringAirplaneMode: Flow<Boolean> = latest {
                 isAllowedDuringAirplaneMode

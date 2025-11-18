@@ -26,6 +26,7 @@ import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconMod
 import com.android.systemui.statusbar.pipeline.shared.data.model.DataActivityModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @ExperimentalKairosApi
 fun BuildScope.MobileIconInteractorKairosAdapter(
@@ -49,6 +50,7 @@ fun BuildScope.MobileIconInteractorKairosAdapter(
             carrierName = carrierName.toStateFlow(),
             isSingleCarrier = isSingleCarrier.toStateFlow(),
             isRoaming = isRoaming.toStateFlow(),
+            isRoamingForceHidden = MutableStateFlow(false),
             isForceHidden = isForceHidden.toColdConflatedFlow(kairosNetwork),
             isAllowedDuringAirplaneMode = isAllowedDuringAirplaneMode.toStateFlow(),
             carrierNetworkChangeActive = carrierNetworkChangeActive.toStateFlow(),
@@ -72,6 +74,7 @@ private class MobileIconInteractorKairosAdapter(
     override val carrierName: StateFlow<String>,
     override val isSingleCarrier: StateFlow<Boolean>,
     override val isRoaming: StateFlow<Boolean>,
+    override val isRoamingForceHidden: StateFlow<Boolean>,
     override val isForceHidden: Flow<Boolean>,
     override val isAllowedDuringAirplaneMode: StateFlow<Boolean>,
     override val carrierNetworkChangeActive: StateFlow<Boolean>,
