@@ -1121,9 +1121,9 @@
     <string name="searchview_description_clear" msgid="1989371719192982900">"Anfrage löschen"</string>
     <string name="searchview_description_submit" msgid="6771060386117334686">"Anfrage senden"</string>
     <string name="searchview_description_voice" msgid="42360159504884679">"Sprachsuche"</string>
-    <string name="enable_explore_by_touch_warning_title" msgid="5095399706284943314">"\"Tippen &amp; Entdecken\" aktivieren?"</string>
+    <string name="enable_explore_by_touch_warning_title" msgid="5095399706284943314">"„Bei Berühren vorlesen“ aktivieren?"</string>
     <string name="enable_explore_by_touch_warning_message" product="tablet" msgid="1037295476738940824">"<xliff:g id="ACCESSIBILITY_SERVICE_NAME">%1$s</xliff:g> fordert die Aktivierung von \"Tippen &amp; Entdecken\" an. Wenn \"Tippen &amp; Entdecken\" aktiviert ist, kannst du Beschreibungen dessen hören oder sehen, was sich unter deinen Fingern befindet, oder über Touch-Gesten mit dem Tablet kommunizieren."</string>
-    <string name="enable_explore_by_touch_warning_message" product="default" msgid="4312979647356179250">"<xliff:g id="ACCESSIBILITY_SERVICE_NAME">%1$s</xliff:g> fordert die Aktivierung von \"Tippen &amp; Entdecken\" an. Wenn \"Tippen &amp; Entdecken\" aktiviert ist, kannst du Beschreibungen dessen hören oder sehen, was sich unter deinen Fingern befindet, oder über Touch-Gesten mit dem Telefon kommunizieren."</string>
+    <string name="enable_explore_by_touch_warning_message" product="default" msgid="4312979647356179250">"<xliff:g id="ACCESSIBILITY_SERVICE_NAME">%1$s</xliff:g> fordert die Aktivierung von „Bei Berühren vorlesen“ an. Wenn „Bei Berühren vorlesen“ aktiviert ist, kannst du Beschreibungen dessen hören oder sehen, was sich unter deinen Fingern befindet, oder über Touch-Gesten mit dem Telefon kommunizieren."</string>
     <string name="oneMonthDurationPast" msgid="4538030857114635777">"Vor 1 Monat"</string>
     <string name="beforeOneMonthDurationPast" msgid="8315149541372065392">"Vor mehr als 1 Monat"</string>
     <string name="last_num_days" msgid="2393660431490280537">"{count,plural, =1{Letzter Tag}other{Letzte # Tage}}"</string>

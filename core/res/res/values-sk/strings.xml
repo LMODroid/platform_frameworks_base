@@ -1676,7 +1676,7 @@
     <string name="media_route_status_scanning" msgid="8045156315309594482">"Prebieha vyhľadávanie..."</string>
     <string name="media_route_status_connecting" msgid="5845597961412010540">"Prebieha pripájanie…"</string>
     <string name="media_route_status_available" msgid="1477537663492007608">"K dispozícii"</string>
-    <string name="media_route_status_not_available" msgid="480912417977515261">"Nie je k dispozícii"</string>
+    <string name="media_route_status_not_available" msgid="480912417977515261">"Nie je k dispozícii"</string>
     <string name="media_route_status_in_use" msgid="6684112905244944724">"Používa sa"</string>
     <string name="display_manager_built_in_display_name" msgid="1015775198829722440">"Vstavaná obrazovka"</string>
     <string name="display_manager_hdmi_display_name" msgid="1022758026251534975">"Obrazovka HDMI"</string>
