@@ -77,14 +77,14 @@
     <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"대화를 대화창으로 표시하지 않기"</string>
     <string name="bubbles_user_education_title" msgid="2112319053732691899">"대화창으로 채팅하기"</string>
     <string name="bubbles_user_education_description" msgid="4215862563054175407">"새로운 대화가 플로팅 아이콘인 대화창으로 표시됩니다. 대화창을 열려면 탭하세요. 드래그하여 이동할 수 있습니다."</string>
-    <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"언제든지 대화창을 제어하세요"</string>
+    <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"원하는 대로 대화창 관리하기"</string>
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"이 앱에서 대화창을 사용 중지하려면 관리를 탭하세요."</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"확인"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"최근 대화창 없음"</string>
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"최근 대화창과 내가 닫은 대화창이 여기에 표시됩니다."</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"대화창으로 채팅하기"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"새 대화는 화면 하단에 아이콘으로 표시됩니다. 아이콘을 탭하여 펼치거나 드래그하여 닫습니다."</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"언제든지 대화창을 제어하세요"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"원하는 대로 대화창 관리하기"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"대화창을 만들 수 있는 앱과 대화를 관리하려면 여기를 탭하세요."</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"버블"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"관리"</string>

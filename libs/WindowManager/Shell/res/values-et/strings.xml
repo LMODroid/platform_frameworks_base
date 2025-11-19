@@ -80,7 +80,7 @@
     <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"Juhtige mulle igal ajal"</string>
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Selle rakenduse puhul mullide väljalülitamiseks puudutage valikut Haldamine."</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"Selge"</string>
-    <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Hiljutisi mulle pole"</string>
+    <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Hiljutisi mulle pole."</string>
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Siin kuvatakse hiljutised ja suletud mullid."</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Vestelge mullide abil"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Uued vestlused kuvatakse ekraanikuva alanurgas ikoonidena. Puudutage nende laiendamiseks või lohistage neist loobumiseks."</string>

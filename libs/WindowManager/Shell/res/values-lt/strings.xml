@@ -86,7 +86,7 @@
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Nauji pokalbiai rodomi kaip piktogramos apatiniame ekrano kampe. Palieskite piktogramą, jei norite išplėsti pokalbį, arba nuvilkite, kad atsisakytumėte."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Bet kada valdyti burbulus"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Palietę čia valdykite, kurie pokalbiai ir programos gali būti rodomi burbuluose"</string>
-    <string name="notification_bubble_title" msgid="6082910224488253378">"Debesėlis"</string>
+    <string name="notification_bubble_title" msgid="6082910224488253378">"Burbulas"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Tvarkyti"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"Debesėlio atsisakyta."</string>
     <string name="bubble_shortcut_label" msgid="666269077944378311">"Burbulai"</string>
