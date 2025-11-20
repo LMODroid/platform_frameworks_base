@@ -2727,8 +2727,6 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
                 } break;
                 case START_HOME_MSG: {
                     mHandler.removeMessages(START_HOME_MSG);
-
-                    // Start home activities on displays with no home.
                     mRootWindowContainer.startHomeOnDisplaysIfNeeded((String) msg.obj);
                 } break;
                 case TOP_RESUMED_STATE_LOSS_TIMEOUT_MSG: {

@@ -1472,6 +1472,36 @@ public interface WindowManager extends ViewManager {
             "android.window.PROPERTY_COMPAT_ALLOW_SAFE_REGION_LETTERBOXING";
 
     /**
+     * {@link android.content.pm.PackageManager.Property} for an activity that is a home activity
+     * (i.e. has a {@link android.content.Intent#CATEGORY_HOME} or
+     * {@link android.content.Intent#CATEGORY_SECONDARY_HOME} category).
+     *
+     * <p>If this property is set to {@code true} for a home activity, the system will ensure
+     * that the home activity is always present on every available display. This behavior will only
+     * be applied if the target home activity is privileged and the system default home activity.
+     * If the home activity goes away for any reason, system will relaunch the activity and move
+     * it to the back.
+     *
+     * <p>Example:
+     * <pre>
+     * &lt;activity android:name=".HomeActivity" android:exported="true"&gt;
+     *   &lt;intent-filter&gt;
+     *     &lt;action android:name="android.intent.action.MAIN" /&gt;
+     *     &lt;category android:name="android.intent.category.HOME" /&gt;
+     *     &lt;category android:name="android.intent.category.DEFAULT" /&gt;
+     *   &lt;/intent-filter&gt;
+     *   &lt;property android:name="android.window.ALLOW_HOME_ACTIVITY_ALWAYS_PRESENT"
+     *             android:value="true" /&gt;
+     * &lt;/activity&gt;
+     * </pre>
+     *
+     * <p>The default value is {@code false}.
+     *
+     * @hide
+     */
+    String ALLOW_HOME_ACTIVITY_ALWAYS_PRESENT = "android.window.ALLOW_HOME_ACTIVITY_ALWAYS_PRESENT";
+
+    /**
      * @hide
      */
     public static final String PARCEL_KEY_SHORTCUTS_ARRAY = "shortcuts_array";
