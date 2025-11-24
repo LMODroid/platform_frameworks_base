@@ -56,7 +56,6 @@ import static android.app.AppOpsManager.SAMPLING_STRATEGY_BOOT_TIME_SAMPLING;
 import static android.app.AppOpsManager.SAMPLING_STRATEGY_RARELY_USED;
 import static android.app.AppOpsManager.SAMPLING_STRATEGY_UNIFORM;
 import static android.app.AppOpsManager.SAMPLING_STRATEGY_UNIFORM_OPS;
-import static android.app.AppOpsManager.SECURITY_EXCEPTION_ON_INVALID_ATTRIBUTION_TAG_CHANGE;
 import static android.app.AppOpsManager.UID_STATE_BACKGROUND;
 import static android.app.AppOpsManager.UID_STATE_CACHED;
 import static android.app.AppOpsManager.UID_STATE_FOREGROUND;
@@ -4758,19 +4757,7 @@ public class AppOpsService extends IAppOpsService.Stub {
                     msg = "package " + packageName + " not found, can't check for "
                             + "attributionTag " + attributionTag;
                 }
-
-                try {
-                    if (!mPlatformCompat.isChangeEnabledByPackageName(
-                            SECURITY_EXCEPTION_ON_INVALID_ATTRIBUTION_TAG_CHANGE, packageName,
-                            userId) || !mPlatformCompat.isChangeEnabledByUid(
-                                    SECURITY_EXCEPTION_ON_INVALID_ATTRIBUTION_TAG_CHANGE,
-                            callingUid)) {
-                        // Do not override tags if overriding is not enabled for this package
-                        isAttributionTagValid = true;
-                    }
-                    Slog.e(TAG, msg);
-                } catch (RemoteException neverHappens) {
-                }
+                Slog.e(TAG, msg);
             }
         } finally {
             Binder.restoreCallingIdentity(ident);
