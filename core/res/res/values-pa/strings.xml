@@ -1083,7 +1083,7 @@
     <string name="password_keyboard_label_symbol_key" msgid="2716255580853511949">"?123"</string>
     <string name="password_keyboard_label_alpha_key" msgid="5294837425652726684">"ABC"</string>
     <string name="password_keyboard_label_alt_key" msgid="8528261816395508841">"ALT"</string>
-    <string name="granularity_label_character" msgid="8903387663153706317">"ਅੱਖਰ"</string>
+    <string name="granularity_label_character" msgid="8903387663153706317">"ਅੱਖਰ-ਚਿੰਨ੍ਹ"</string>
     <string name="granularity_label_word" msgid="3686589158760620518">"ਸ਼ਬਦ"</string>
     <string name="granularity_label_link" msgid="9007852307112046526">"ਲਿੰਕ"</string>
     <string name="granularity_label_line" msgid="376204904280620221">"ਲਾਈਨ"</string>

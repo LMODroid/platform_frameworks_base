@@ -2441,8 +2441,8 @@
     <string name="biometric_dangling_notification_action_not_now" msgid="8095249216864443491">"حالا نه"</string>
     <string name="bg_user_sound_notification_title_alarm" msgid="5251678483393143527">"زنگ هشدار برای <xliff:g id="USER_NAME">%s</xliff:g>"</string>
     <string name="bg_user_sound_notification_button_switch_user" msgid="3091969648572788946">"تعویض کاربر"</string>
-    <string name="bg_user_sound_notification_button_mute" msgid="4942158515665615243">"بی‌صدا کردن"</string>
-    <string name="bg_user_sound_notification_message" msgid="8613881975316976673">"برای بی‌صدا کردن، تک‌ضرب بزنید"</string>
+    <string name="bg_user_sound_notification_button_mute" msgid="4942158515665615243">"صامت کردن"</string>
+    <string name="bg_user_sound_notification_message" msgid="8613881975316976673">"برای صامت کردن، تک‌ضرب بزنید"</string>
     <string name="keyboard_shortcut_group_applications_browser" msgid="6535007304687100909">"مرورگر"</string>
     <string name="keyboard_shortcut_group_applications_contacts" msgid="2750702518068326356">"مخاطبین"</string>
     <string name="keyboard_shortcut_group_applications_email" msgid="4229037666415353683">"ایمیل"</string>
