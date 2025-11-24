@@ -244,7 +244,7 @@
     <string name="accessibility_bluetooth_device_settings_see_all" msgid="9111952496905423543">"Кликнете, за да видите всички устройства"</string>
     <string name="accessibility_bluetooth_device_settings_pair_new_device" msgid="2435184865793496966">"Кликнете за сдвояване на ново устройство"</string>
     <string name="accessibility_battery_unknown" msgid="1807789554617976440">"Процентът на батерията е неизвестен."</string>
-    <string name="accessibility_bluetooth_name" msgid="7300973230214067678">"Има връзка с <xliff:g id="BLUETOOTH">%s</xliff:g>."</string>
+    <string name="accessibility_bluetooth_name" msgid="7300973230214067678">"Установена е връзка с/ъс <xliff:g id="BLUETOOTH">%s</xliff:g>."</string>
     <string name="accessibility_cast_name" msgid="7344437925388773685">"Установена е връзка с/ъс <xliff:g id="CAST">%s</xliff:g>."</string>
     <string name="accessibility_not_connected" msgid="4061305616351042142">"Няма връзка."</string>
     <string name="data_connection_roaming" msgid="375650836665414797">"Роуминг"</string>

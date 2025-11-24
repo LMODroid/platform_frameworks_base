@@ -671,7 +671,7 @@
     <string name="stream_notification_unavailable" msgid="4313854556205836435">"دردسترس نیست، چون زنگ بی‌صدا شده است"</string>
     <string name="stream_alarm_unavailable" msgid="4059817189292197839">"دردسترس نیست زیرا «مزاحم نشوید» روشن است"</string>
     <string name="stream_media_unavailable" msgid="6823020894438959853">"دردسترس نیست زیرا «مزاحم نشوید» روشن است"</string>
-    <string name="volume_stream_content_description_unmute" msgid="7729576371406792977">"‏%1$s. برای باصدا کردن تک‌ضرب بزنید."</string>
+    <string name="volume_stream_content_description_unmute" msgid="7729576371406792977">"‏%1$s. برای صدادار کردن تک‌ضرب بزنید."</string>
     <string name="volume_stream_content_description_vibrate" msgid="4858111994183089761">"‏%1$s. برای تنظیم روی لرزش تک‌ضرب بزنید. ممکن است سرویس‌های دسترس‌پذیری بی‌صدا شوند."</string>
     <string name="volume_stream_content_description_mute" msgid="4079046784917920984">"‏%1$s. برای صامت کردن تک‌ضرب بزنید. ممکن است سرویس‌های دسترس‌پذیری صامت شود."</string>
     <string name="volume_stream_content_description_vibrate_a11y" msgid="2742330052979397471">"‏%1$s. برای تنظیم روی لرزش، تک‌ضرب بزنید."</string>
@@ -683,15 +683,15 @@
     <string name="volume_panel_spatial_audio_tracking" msgid="5711115234001762974">"ردیابی سر"</string>
     <string name="volume_ringer_change" msgid="3574969197796055532">"برای تغییر حالت زنگ، تک‌ضرب بزنید"</string>
     <string name="volume_ringer_hint_mute" msgid="4263821214125126614">"صامت کردن"</string>
-    <string name="volume_ringer_hint_unmute" msgid="6119086890306456976">"باصدا کردن"</string>
+    <string name="volume_ringer_hint_unmute" msgid="6119086890306456976">"صدادار کردن"</string>
     <string name="volume_ringer_hint_vibrate" msgid="6211609047099337509">"لرزش"</string>
     <string name="volume_dialog_title" msgid="6502703403483577940">"‏%s کنترل‌های میزان صدا"</string>
     <string name="volume_dialog_ringer_guidance_ring" msgid="9143194270463146858">"تماس‌ها و اعلان‌ها زنگ می‌خورند (<xliff:g id="VOLUME_LEVEL">%1$s</xliff:g>)"</string>
     <string name="volume_panel_enter_media_output_settings" msgid="8824244246272552669">"تنظیمات خروجی را وارد کنید"</string>
     <string name="volume_panel_expanded_sliders" msgid="1885750987768506271">"لغزنده‌های صدا ازهم باز شدند"</string>
     <string name="volume_panel_collapsed_sliders" msgid="1413383759434791450">"لغزنده‌های صدا جمع شدند"</string>
-    <string name="volume_panel_hint_mute" msgid="2153922288568199077">"‏بی‌صدا کردن %s"</string>
-    <string name="volume_panel_hint_unmute" msgid="4831850937582282340">"‏باصدا کردن %s"</string>
+    <string name="volume_panel_hint_mute" msgid="2153922288568199077">"‏صامت کردن %s"</string>
+    <string name="volume_panel_hint_unmute" msgid="4831850937582282340">"‏صدادار کردن %s"</string>
     <string name="volume_panel_hint_muted" msgid="1124844870181285320">"بی‌صدا شد"</string>
     <string name="volume_panel_hint_vibrate" msgid="4136223145435914132">"لرزش"</string>
     <string name="media_output_label_title" msgid="872824698593182505">"درحال پخش <xliff:g id="LABEL">%s</xliff:g> در"</string>
