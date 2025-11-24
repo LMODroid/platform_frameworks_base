@@ -77,7 +77,7 @@
     <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"Без балончета за разговора"</string>
     <string name="bubbles_user_education_title" msgid="2112319053732691899">"Чат с балончета"</string>
     <string name="bubbles_user_education_description" msgid="4215862563054175407">"Новите разговори се показват като плаващи икони, или балончета. Докоснете балонче, за да го отворите, или го плъзнете, за да го преместите."</string>
-    <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"Управление на балончетата по всяко време"</string>
+    <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"Управление на балончетата"</string>
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Докоснете „Управление“, за да изключите балончетата от това приложение"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"Разбрах"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Няма скорошни балончета"</string>
