@@ -262,7 +262,7 @@
     <string name="accessibility_ringer_silent" msgid="8994620163934249882">"Stille modus."</string>
     <!-- no translation found for accessibility_casting (8708751252897282313) -->
     <skip />
-    <string name="accessibility_desc_notification_shade" msgid="5355229129428759989">"Varselskygge."</string>
+    <string name="accessibility_desc_notification_shade" msgid="5355229129428759989">"Varselpanel."</string>
     <string name="accessibility_desc_quick_settings" msgid="4374766941484719179">"Hurtiginnstillinger."</string>
     <string name="accessibility_desc_qs_notification_shade" msgid="8327226953072700376">"Hurtiginnstillinger og varselpanelet"</string>
     <string name="accessibility_desc_lock_screen" msgid="409034672704273634">"Låseskjerm"</string>

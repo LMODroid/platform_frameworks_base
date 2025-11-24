@@ -856,7 +856,7 @@
     <string name="input_access_emoji" msgid="8105642858900406351">"इमोजी प्रयोग गर्नुहोस्"</string>
     <string name="input_access_voice_typing" msgid="7291201476395326141">"भ्वाइस टाइपिङ प्रयोग गर्नुहोस्"</string>
     <string name="keyboard_shortcut_group_applications" msgid="7386239431100651266">"एपहरू"</string>
-    <string name="keyboard_shortcut_group_applications_assist" msgid="6772492350416591448">"एसिस्टेन्ट"</string>
+    <string name="keyboard_shortcut_group_applications_assist" msgid="6772492350416591448">"सहायक"</string>
     <string name="keyboard_shortcut_group_applications_browser" msgid="2776211137869809251">"ब्राउजर"</string>
     <string name="keyboard_shortcut_group_applications_contacts" msgid="2807268086386201060">"कन्ट्याक्टहरू"</string>
     <string name="keyboard_shortcut_group_applications_email" msgid="7852376788894975192">"इमेल"</string>
