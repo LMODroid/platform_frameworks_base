@@ -177,6 +177,7 @@ public class UserControllerTest {
             doNothing().when(mInjector).activityManagerOnUserStopped(anyInt());
             doNothing().when(mInjector).clearBroadcastQueueForUser(anyInt());
             doNothing().when(mInjector).taskSupervisorRemoveUser(anyInt());
+            doNothing().when(mInjector).lockDeviceNowAndWaitForKeyguardShown();
             // All UserController params are set to default.
             mUserController = new UserController(mInjector);
 
@@ -366,28 +367,6 @@ public class UserControllerTest {
         mInjector.mHandler.clearAllRecordedMessages();
         // Verify that continueUserSwitch worked as expected
         continueAndCompleteUserSwitch(userState, oldUserId, newUserId);
-        verify(mInjector, times(0)).dismissKeyguard(any(), anyString());
-        verify(mInjector.getWindowManager(), times(1)).stopFreezingScreen();
-        continueUserSwitchAssertions(TEST_USER_ID, false);
-    }
-
-    @Test
-    public void testContinueUserSwitchDismissKeyguard() throws RemoteException {
-        when(mInjector.mKeyguardManagerMock.isDeviceSecure(anyInt())).thenReturn(false);
-        mUserController.setInitialConfig(/* userSwitchUiEnabled= */ true,
-                /* maxRunningUsers= */ 3, /* delayUserDataLocking= */ false);
-        // Start user -- this will update state of mUserController
-        mUserController.startUser(TEST_USER_ID, true);
-        Message reportMsg = mInjector.mHandler.getMessageForCode(REPORT_USER_SWITCH_MSG);
-        assertNotNull(reportMsg);
-        UserState userState = (UserState) reportMsg.obj;
-        int oldUserId = reportMsg.arg1;
-        int newUserId = reportMsg.arg2;
-        mInjector.mHandler.clearAllRecordedMessages();
-        // Verify that continueUserSwitch worked as expected
-        continueAndCompleteUserSwitch(userState, oldUserId, newUserId);
-        verify(mInjector, times(1)).dismissKeyguard(any(), anyString());
-        verify(mInjector.getWindowManager(), times(1)).stopFreezingScreen();
         continueUserSwitchAssertions(TEST_USER_ID, false);
     }
 
@@ -467,25 +446,25 @@ public class UserControllerTest {
 
         setUpUser(TEST_USER_ID1, 0);
         setUpUser(TEST_USER_ID2, 0);
-        int numerOfUserSwitches = 1;
+        int numberOfUserSwitches = 1;
         addForegroundUserAndContinueUserSwitch(TEST_USER_ID, UserHandle.USER_SYSTEM,
-                numerOfUserSwitches, false);
+                numberOfUserSwitches, false);
         // running: user 0, USER_ID
         assertTrue(mUserController.canStartMoreUsers());
         assertEquals(Arrays.asList(new Integer[] {0, TEST_USER_ID}),
                 mUserController.getRunningUsersLU());
 
-        numerOfUserSwitches++;
+        numberOfUserSwitches++;
         addForegroundUserAndContinueUserSwitch(TEST_USER_ID1, TEST_USER_ID,
-                numerOfUserSwitches, false);
+                numberOfUserSwitches, false);
         // running: user 0, USER_ID, USER_ID1
         assertFalse(mUserController.canStartMoreUsers());
         assertEquals(Arrays.asList(new Integer[] {0, TEST_USER_ID, TEST_USER_ID1}),
                 mUserController.getRunningUsersLU());
 
-        numerOfUserSwitches++;
+        numberOfUserSwitches++;
         addForegroundUserAndContinueUserSwitch(TEST_USER_ID2, TEST_USER_ID1,
-                numerOfUserSwitches, false);
+                numberOfUserSwitches, false);
         UserState ussUser2 = mUserStates.get(TEST_USER_ID2);
         // skip middle step and call this directly.
         mUserController.finishUserSwitch(ussUser2);
@@ -510,20 +489,20 @@ public class UserControllerTest {
 
         setUpUser(TEST_USER_ID1, 0);
         setUpUser(TEST_USER_ID2, 0);
-        int numerOfUserSwitches = 1;
+        int numberOfUserSwitches = 1;
         addForegroundUserAndContinueUserSwitch(TEST_USER_ID, UserHandle.USER_SYSTEM,
-                numerOfUserSwitches, false);
+                numberOfUserSwitches, false);
         // running: user 0, USER_ID
         assertTrue(mUserController.canStartMoreUsers());
         assertEquals(Arrays.asList(new Integer[] {0, TEST_USER_ID}),
                 mUserController.getRunningUsersLU());
-        numerOfUserSwitches++;
+        numberOfUserSwitches++;
 
         addForegroundUserAndContinueUserSwitch(TEST_USER_ID1, TEST_USER_ID,
-                numerOfUserSwitches, true);
+                numberOfUserSwitches, true);
         // running: user 0, USER_ID1
         // stopped + unlocked: USER_ID
-        numerOfUserSwitches++;
+        numberOfUserSwitches++;
         assertTrue(mUserController.canStartMoreUsers());
         assertEquals(Arrays.asList(new Integer[] {0, TEST_USER_ID1}),
                 mUserController.getRunningUsersLU());
@@ -538,7 +517,7 @@ public class UserControllerTest {
                 .lockUserKey(anyInt());
 
         addForegroundUserAndContinueUserSwitch(TEST_USER_ID2, TEST_USER_ID1,
-                numerOfUserSwitches, true);
+                numberOfUserSwitches, true);
         // running: user 0, USER_ID2
         // stopped + unlocked: USER_ID1
         // stopped + locked: USER_ID
@@ -1013,11 +992,6 @@ public class UserControllerTest {
         @Override
         protected IStorageManager getStorageManager() {
             return mStorageManagerMock;
-        }
-
-        @Override
-        protected void dismissKeyguard(Runnable runnable, String reason) {
-            runnable.run();
         }
     }
 
