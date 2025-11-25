@@ -177,9 +177,6 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
 
     private FakeFeatureFlags mFeatureFlags;
     private int mInitialUserId;
-    private final int mDefaultUserId = 100;
-    private boolean mUsePostAfterTraversalRunnable;
-    private Runnable mPostAfterTraversalRunnable;
 
     @Before
     public void setUp() throws Exception {
@@ -248,61 +245,9 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
                 null, callback);
         processAllMessagesAndBgExecutorMessages();
 
-        // Followed by a request to dismiss the keyguard completely, which needs to be rejected
-        mViewMediator.mViewMediatorCallback.keyguardDonePending(true, mDefaultUserId);
-        mViewMediator.mViewMediatorCallback.readyForKeyguardDone();
-
         // The call to exit should be rejected, and keyguard should still be visible
         verify(mKeyguardUnlockAnimationController, never()).notifyStartSurfaceBehindRemoteAnimation(
                 any(), any(), anyLong(), anyBoolean());
-        assertTrue(mViewMediator.isShowingAndNotOccluded());
-    }
-
-    @Test
-    @TestableLooper.RunWithLooper(setAsMainLooper = true)
-    public void testGoingAwayFollowedByBeforeUserSwitchWithDelayedExitAnimationDoesNotHideKeyguard() {
-        mUsePostAfterTraversalRunnable = true;
-
-        int insecureUserId = 1099;
-        setCurrentUser(/* userId= */insecureUserId, /* isSecure= */false);
-
-        // Setup keyguard
-        mViewMediator.onSystemReady();
-        processAllMessagesAndBgExecutorMessages();
-        mViewMediator.setShowingLocked(true);
-
-        // Request keyguard going away
-        when(mKeyguardStateController.isKeyguardGoingAway()).thenReturn(true);
-        mViewMediator.showSurfaceBehindKeyguard();
-
-        // WM will have started the exit animation...
-        RemoteAnimationTarget[] apps = new RemoteAnimationTarget[]{
-                mock(RemoteAnimationTarget.class)
-        };
-        RemoteAnimationTarget[] wallpapers = new RemoteAnimationTarget[]{
-                mock(RemoteAnimationTarget.class)
-        };
-        IRemoteAnimationFinishedCallback callback = mock(IRemoteAnimationFinishedCallback.class);
-        mViewMediator.startKeyguardExitAnimation(TRANSIT_OLD_KEYGUARD_GOING_AWAY, apps, wallpapers,
-                null, callback);
-        processAllMessagesAndBgExecutorMessages();
-
-        // Followed by a request to dismiss the keyguard completely
-        mViewMediator.mViewMediatorCallback.keyguardDonePending(true, insecureUserId);
-        mViewMediator.mViewMediatorCallback.readyForKeyguardDone();
-
-        // ...but while the exit animation is running, a user switch comes in
-        int nextUserId = 500;
-        setCurrentUser(nextUserId, /* isSecure= */true);
-
-        processAllMessagesAndBgExecutorMessages();
-
-        // This simulates the race condition in DejankUtils.postAfterTraversal()
-        mPostAfterTraversalRunnable.run();
-
-        // At this point, the exit animation should have been canceled, with a true value
-        // indicating that keyguard will be showing
-        verify(mKeyguardUnlockAnimationController).notifyFinishedKeyguardExitAnimation(eq(true));
         assertTrue(mViewMediator.isShowingAndNotOccluded());
     }
 
@@ -335,7 +280,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         assertFalse(mViewMediator.isShowingAndNotOccluded());
 
         // WHEN lockdown occurs
-        when(mUpdateMonitor.isUserInLockdown(anyInt())).thenReturn(true);
+        when(mLockPatternUtils.isUserInLockdown(anyInt())).thenReturn(true);
         mKeyguardUpdateMonitorCallbackCaptor.getValue().onStrongAuthStateChanged(0);
 
         // THEN keyguard is shown
@@ -351,7 +296,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         mViewMediator.setKeyguardEnabled(true);
         TestableLooper.get(this).processAllMessages();
         captureKeyguardUpdateMonitorCallback();
-        when(mUpdateMonitor.isUserInLockdown(anyInt())).thenReturn(true);
+        when(mLockPatternUtils.isUserInLockdown(anyInt())).thenReturn(true);
         mKeyguardUpdateMonitorCallbackCaptor.getValue().onStrongAuthStateChanged(0);
         assertTrue(mViewMediator.isShowingAndNotOccluded());
 
@@ -693,7 +638,8 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
         IRemoteAnimationFinishedCallback callback = mock(IRemoteAnimationFinishedCallback.class);
 
         when(mKeyguardStateController.isKeyguardGoingAway()).thenReturn(true);
-        mViewMediator.mKeyguardGoingAwayRunnable.run();
+        mViewMediator.hideLocked();
+        processAllMessagesAndBgExecutorMessages();
         mViewMediator.startKeyguardExitAnimation(TRANSIT_OLD_KEYGUARD_GOING_AWAY, apps, wallpapers,
                 null, callback);
         processAllMessagesAndBgExecutorMessages();
@@ -943,6 +889,71 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
 
         // THEN keyguard shows due to the pending SIM PIN lock
         assertTrue(mViewMediator.isShowingAndNotOccluded());
+    }
+
+    @Test
+    public void biometricAuthSuccessForCurrentUserDoesProceed() {
+        final int currentUser = 25;
+        setCurrentUser(currentUser, true);
+
+        mViewMediator.mUpdateCallback.onBiometricAuthenticated(currentUser, null, false);
+
+        verify(mDevicePolicyManager).reportSuccessfulBiometricAttempt(currentUser);
+    }
+
+    @Test
+    public void biometricAuthSuccessForDifferentUserDoesNotProceed() {
+        final int newUser = 40;
+        setCurrentUser(newUser, true);
+
+        final int oldUser = 25;
+        mViewMediator.mUpdateCallback.onBiometricAuthenticated(oldUser, null, false);
+
+        verify(mDevicePolicyManager, never()).reportSuccessfulBiometricAttempt(anyInt());
+    }
+
+    @Test
+    public void testDonePendingExecutesOnHideAnimationFinished() {
+        final int currentUser = 25;
+        setCurrentUser(currentUser, true);
+        mViewMediator.mViewMediatorCallback.keyguardDonePending(true, currentUser);
+
+        final ArgumentCaptor<Runnable> onHideAnimationFinished =
+                ArgumentCaptor.forClass(Runnable.class);
+        verify(mStatusBarKeyguardViewManager).startPreHideAnimation(
+                onHideAnimationFinished.capture());
+
+        onHideAnimationFinished.getValue().run();
+
+        // This is executed when the user is incorrect. Should not be called
+        verify(mShadeController, never()).instantCollapseShade();
+    }
+
+    @Test
+    public void testDonePendingExecutesOnHideAnimationFinishedButTerminatesWhenUserHasChanged() {
+        final int currentUser = 25;
+        setCurrentUser(currentUser, true);
+        mViewMediator.mViewMediatorCallback.keyguardDonePending(true, currentUser);
+
+        final ArgumentCaptor<Runnable> onHideAnimationFinished =
+                ArgumentCaptor.forClass(Runnable.class);
+        verify(mStatusBarKeyguardViewManager).startPreHideAnimation(
+                onHideAnimationFinished.capture());
+
+        // User switched before runnable could execute
+        final int newUser = 40;
+        setCurrentUser(newUser, true);
+
+        onHideAnimationFinished.getValue().run();
+
+        // This is executed when the user is incorrect
+        verify(mShadeController).instantCollapseShade();
+    }
+
+    @Test
+    public void testBouncerSwipeDown() {
+        mViewMediator.getViewMediatorCallback().onBouncerSwipeDown();
+        verify(mStatusBarKeyguardViewManager).reset(true);
     }
 
     private void createAndStartViewMediator() {
