@@ -1357,7 +1357,7 @@
   </string-array>
     <string name="network_switch_type_name_unknown" msgid="3665696841646851068">"نوع شبکه نامشخص"</string>
     <string name="accept" msgid="5447154347815825107">"پذیرفتن"</string>
-    <string name="decline" msgid="6490507610282145874">"نپذیرفتن"</string>
+    <string name="decline" msgid="6490507610282145874">"رد کردن"</string>
     <string name="select_character" msgid="3352797107930786979">"درج نویسه"</string>
     <string name="sms_control_title" msgid="4748684259903148341">"درحال ارسال پیامک‌ها"</string>
     <string name="sms_control_message" msgid="6574313876316388239">"‏&lt;b&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/b&gt; درحال ارسال تعداد زیادی پیامک است. آیا اجازه می‌دهید این برنامه همچنان پیامک ارسال کند؟"</string>
@@ -1428,7 +1428,7 @@
     <string name="sharing_remote_bugreport_notification_title" msgid="3077385149217638550">"درحال اشتراک‌گذاری گزارش اشکال…‏"</string>
     <string name="share_remote_bugreport_notification_message_finished" msgid="7325635795739260135">"سرپرست سیستم شما برای کمک به عیب‌یابی این دستگاه، گزارش اشکال درخواست کرده است. ممکن است برنامه‌ها و داده‌ها به اشتراک گذاشته شوند."</string>
     <string name="share_remote_bugreport_action" msgid="7630880678785123682">"اشتراک‌گذاری"</string>
-    <string name="decline_remote_bugreport_action" msgid="4040894777519784346">"نپذیرفتن"</string>
+    <string name="decline_remote_bugreport_action" msgid="4040894777519784346">"رد کردن"</string>
     <string name="select_input_method" msgid="3971267998568587025">"انتخاب روش ورودی"</string>
     <string name="input_method_language_settings" msgid="8069089418056819437">"تنظیمات زبان"</string>
     <string name="show_ime" msgid="6406112007347443383">"وقتی صفحه‌کلید فیزیکی فعال است این ویرایشگر را روی صفحه نگه‌می‌دارد"</string>
@@ -1972,7 +1972,7 @@
     <string name="maximize_button_text" msgid="4258922519914732645">"بزرگ کردن"</string>
     <string name="close_button_text" msgid="10603510034455258">"بستن"</string>
     <string name="notification_messaging_title_template" msgid="772857526770251989">"<xliff:g id="CONVERSATION_TITLE">%1$s</xliff:g>:‏ <xliff:g id="SENDER_NAME">%2$s</xliff:g>"</string>
-    <string name="call_notification_answer_action" msgid="5999246836247132937">"پاسخ دادن"</string>
+    <string name="call_notification_answer_action" msgid="5999246836247132937">"جواب"</string>
     <string name="call_notification_answer_video_action" msgid="2086030940195382249">"ویدیو"</string>
     <string name="call_notification_decline_action" msgid="3700345945214000726">"رد کردن"</string>
     <string name="call_notification_hang_up_action" msgid="9130720590159188131">"قطع تماس"</string>

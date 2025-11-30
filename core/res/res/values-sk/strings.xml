@@ -268,7 +268,7 @@
     <string name="global_action_logout" msgid="6093581310002476511">"Ukončiť reláciu"</string>
     <string name="global_action_screenshot" msgid="2610053466156478564">"Snímka obrazovky"</string>
     <string name="bugreport_title" msgid="8549990811777373050">"Nahlásiť chybu"</string>
-    <string name="bugreport_message" msgid="5212529146119624326">"Týmto zhromaždíte informácie o aktuálnom stave zariadenia. Informácie je potom možné odoslať e-mailom, chvíľu však potrvá, kým bude hlásenie chyby pripravené na odoslanie. Prosíme vás preto o trpezlivosť."</string>
+    <string name="bugreport_message" msgid="5212529146119624326">"Týmto zhromaždíte informácie o aktuálnom stave zariadenia. Informácie je potom možné odoslať e‑mailom, chvíľu však potrvá, kým bude hlásenie chyby pripravené na odoslanie. Prosíme vás preto o trpezlivosť."</string>
     <string name="bugreport_option_interactive_title" msgid="7968287837902871289">"Interaktívne nahlásenie"</string>
     <string name="bugreport_option_interactive_summary" msgid="8493795476325339542">"Táto možnosť je vhodná pre väčšinu prípadov. Umožňuje sledovať priebeh nahlásenia, zadávať ďalšie podrobnosti o probléme a vytvárať snímky obrazovky. Môžu byť vynechané niektoré menej používané sekcie, ktorých nahlásenie trvá dlho."</string>
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Úplné nahlásenie"</string>
@@ -1629,7 +1629,7 @@
     <string name="data_usage_mobile_limit_snoozed_title" msgid="101888478915677895">"Prekročený limit mobilných dát"</string>
     <string name="data_usage_wifi_limit_snoozed_title" msgid="1622359254521960508">"Prekročený limit dát cez Wi-Fi"</string>
     <string name="data_usage_limit_snoozed_body" msgid="545146591766765678">"Prekročili ste stanovený limit o <xliff:g id="SIZE">%s</xliff:g>"</string>
-    <string name="data_usage_restricted_title" msgid="126711424380051268">"Dátové prenosy obmedzené"</string>
+    <string name="data_usage_restricted_title" msgid="126711424380051268">"Dátové prenosy sú obmedzené"</string>
     <string name="data_usage_restricted_body" msgid="5338694433686077733">"Klepnutím odstránite obmedzenie."</string>
     <string name="data_usage_rapid_title" msgid="2950192123248740375">"Vysoké využitie mobilných dát"</string>
     <string name="data_usage_rapid_body" msgid="3886676853263693432">"Vaše aplikácie využili viac dát než zvyčajne"</string>

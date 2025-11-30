@@ -293,7 +293,7 @@
     <string name="notification_channel_account" msgid="6436294521740148173">"Аккаунт күйі"</string>
     <string name="notification_channel_developer" msgid="1691059964407549150">"Әзірлеуші хабарлары"</string>
     <string name="notification_channel_developer_important" msgid="7197281908918789589">"Әзірлеушілердің маңызды хабарлары"</string>
-    <string name="notification_channel_updates" msgid="7907863984825495278">"Жаңартылған нұсқалар"</string>
+    <string name="notification_channel_updates" msgid="7907863984825495278">"Жаңартулар"</string>
     <string name="notification_channel_network_status" msgid="2127687368725272809">"Желі күйі"</string>
     <string name="notification_channel_network_alerts" msgid="6312366315654526528">"Желі дабылдары"</string>
     <string name="notification_channel_network_available" msgid="6083697929214165169">"Желі қолжетімді"</string>

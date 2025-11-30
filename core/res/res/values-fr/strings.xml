@@ -972,7 +972,7 @@
     <string name="relationTypeFriend" msgid="3192092625893980574">"Ami(e)"</string>
     <string name="relationTypeManager" msgid="2272860813153171857">"Responsable"</string>
     <string name="relationTypeMother" msgid="2331762740982699460">"Mère"</string>
-    <string name="relationTypeParent" msgid="4177920938333039882">"Parent(e)"</string>
+    <string name="relationTypeParent" msgid="4177920938333039882">"Parent"</string>
     <string name="relationTypePartner" msgid="4018017075116766194">"Conjoint(e)"</string>
     <string name="relationTypeReferredBy" msgid="5285082289602849400">"Parrain(ne)"</string>
     <string name="relationTypeRelative" msgid="3396498519818009134">"Proche"</string>

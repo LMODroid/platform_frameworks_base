@@ -2340,7 +2340,7 @@
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUBSET_PUK_SUCCESS" msgid="2861223407953766632">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_SIM_CORPORATE_PUK_SUCCESS" msgid="5345648571175243272">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_PUK_SUCCESS" msgid="3725278343103422466">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
-    <string name="PERSOSUBSTATE_SIM_SIM_PUK_SUCCESS" msgid="6998502547560297983">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
+    <string name="PERSOSUBSTATE_SIM_SIM_PUK_SUCCESS" msgid="6998502547560297983">"‏تم فتح القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK1_PUK_SUCCESS" msgid="8555433771162560361">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK2_PUK_SUCCESS" msgid="3555767296933606232">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_RUIM_HRPD_PUK_SUCCESS" msgid="6778051818199974237">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
