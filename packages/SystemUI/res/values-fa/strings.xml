@@ -520,7 +520,7 @@
     <string name="guest_wipe_session_title" msgid="7147965814683990944">"مهمان گرامی، بازگشتتان را خوش آمد می‌گوییم!"</string>
     <string name="guest_wipe_session_message" msgid="3393823610257065457">"آیا می‌خواهید جلسه‌تان را ادامه دهید؟"</string>
     <string name="guest_wipe_session_wipe" msgid="8056836584445473309">"شروع مجدد"</string>
-    <string name="guest_wipe_session_dontwipe" msgid="3211052048269304205">"بله، ادامه داده شود"</string>
+    <string name="guest_wipe_session_dontwipe" msgid="3211052048269304205">"بله، ادامه دادن"</string>
     <string name="guest_notification_app_name" msgid="2110425506754205509">"حالت مهمان"</string>
     <string name="guest_notification_session_active" msgid="5567273684713471450">"در حالت مهمان هستید"</string>
     <string name="user_add_user_message_guest_remove" msgid="5589286604543355007">\n\n"با افزودن کاربر جدید، از حالت مهمان خارج خواهید شد و همه برنامه‌ها و داده‌ها از جلسه مهمان کنونی حذف خواهند شد."</string>
@@ -894,7 +894,7 @@
     <item msgid="7453955063378349599">"متمایل به چپ"</item>
     <item msgid="5874146774389433072">"متمایل به راست"</item>
   </string-array>
-    <string name="save" msgid="3392754183673848006">"ذخیره کردن"</string>
+    <string name="save" msgid="3392754183673848006">"ذخیره"</string>
     <string name="reset" msgid="8715144064608810383">"بازنشانی"</string>
     <string name="clipboard" msgid="8517342737534284617">"بریده‌دان"</string>
     <string name="accessibility_key" msgid="3471162841552818281">"دکمه پیمایش سفارشی"</string>
@@ -1189,7 +1189,7 @@
     <string name="media_output_broadcasting_message" msgid="4150299923404886073">"‏افرادی که در اطرافتان دستگاه Bluetooth سازگار دارند می‌توانند با اسکن کردن کد QR شما یا بااستفاده از نام و گذرواژه همه‌فرستی‌تان به آن گوش دهند"</string>
     <string name="media_output_broadcast_name" msgid="8786127091542624618">"نام همه‌فرستی"</string>
     <string name="media_output_broadcast_code" msgid="870795639644728542">"گذرواژه"</string>
-    <string name="media_output_broadcast_dialog_save" msgid="7910865591430010198">"ذخیره کردن"</string>
+    <string name="media_output_broadcast_dialog_save" msgid="7910865591430010198">"ذخیره"</string>
     <string name="media_output_broadcast_starting" msgid="8130153654166235557">"درحال شروع…"</string>
     <string name="media_output_broadcast_start_failed" msgid="3670835946856129775">"همه‌فرستی انجام نشد"</string>
     <string name="media_output_broadcast_update_error" msgid="1420868236079122521">"ذخیره نشد. دوباره امتحان کنید."</string>
