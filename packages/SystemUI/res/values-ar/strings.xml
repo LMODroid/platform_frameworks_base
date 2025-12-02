@@ -935,7 +935,7 @@
     <string name="accessibility_quick_settings_settings" msgid="7098489591715844713">"فتح الإعدادات."</string>
     <string name="accessibility_quick_settings_expand" msgid="2609275052412521467">"فتح الإعدادات السريعة."</string>
     <string name="accessibility_quick_settings_collapse" msgid="4674876336725041982">"إغلاق الإعدادات السريعة."</string>
-    <string name="accessibility_quick_settings_user" msgid="505821942882668619">"تم تسجيل الدخول باعتبارك <xliff:g id="ID_1">%s</xliff:g>"</string>
+    <string name="accessibility_quick_settings_user" msgid="505821942882668619">"تم تسجيل الدخول باسم <xliff:g id="ID_1">%s</xliff:g>"</string>
     <string name="accessibility_quick_settings_choose_user_action" msgid="4554388498186576087">"اختيار مستخدم"</string>
     <string name="data_connection_no_internet" msgid="691058178914184544">"لا يتوفر اتصال إنترنت."</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"فتح إعدادات <xliff:g id="ID_1">%s</xliff:g>."</string>

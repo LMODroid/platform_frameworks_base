@@ -749,8 +749,8 @@
     <string name="notification_channel_summary_default" msgid="777294388712200605">"ייתכן שיופעל צלצול או רטט בהתאם להגדרות במכשיר"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"ייתכן שיופעל צלצול או רטט בהתאם להגדרות במכשיר. שיחות מהאפליקציה <xliff:g id="APP_NAME">%1$s</xliff:g> מופיעות בבועות כברירת מחדל."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"אפשר לתת למערכת לקבוע אם ההתראה הזאת צריכה להיות מלווה בצליל או ברטט"</string>
-    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; הועלה בדרגה ל\'ברירת מחדל\'"</string>
-    <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; הורד בדרגה ל\'שקט\'"</string>
+    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; הועלה בדרגה ל\'ברירת מחדל‘"</string>
+    <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; הורד בדרגה ל\'שקט‘"</string>
     <string name="notification_channel_summary_automatic_promoted" msgid="1301710305149590426">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; דורג גבוה יותר"</string>
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; דורג נמוך יותר"</string>
     <string name="notification_channel_summary_priority_baseline" msgid="46674690072551234">"מוצגת בחלק העליון של קטע ההתראות וכתמונת פרופיל במסך הנעילה"</string>
