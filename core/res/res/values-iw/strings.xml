@@ -1370,7 +1370,7 @@
     <string name="sms_short_code_confirm_allow" msgid="920477594325526691">"שליחה"</string>
     <string name="sms_short_code_confirm_deny" msgid="1356917469323768230">"ביטול"</string>
     <string name="sms_short_code_remember_choice" msgid="1374526438647744862">"תזכרו את הבחירה שלי"</string>
-    <string name="sms_short_code_remember_undo_instruction" msgid="2620984439143080410">"‏ניתן לשנות זאת מאוחר יותר ב\'הגדרות\' &gt; \'אפליקציות\'"</string>
+    <string name="sms_short_code_remember_undo_instruction" msgid="2620984439143080410">"‏ניתן לשנות זאת מאוחר יותר ב\'הגדרות\' &gt; \'אפליקציות‘"</string>
     <string name="sms_short_code_confirm_always_allow" msgid="2223014893129755950">"אפשר תמיד"</string>
     <string name="sms_short_code_confirm_never_allow" msgid="2688828813521652079">"לא לאפשר אף פעם"</string>
     <string name="sim_removed_title" msgid="1349026474932481037">"‏כרטיס ה-SIM הוסר"</string>
