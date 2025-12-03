@@ -69,7 +69,7 @@ import java.util.List;
  *  @hide
  */
 @SystemApi
-@FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
+@SuppressLint("UnflaggedApi")
 public final class SharedSessionConfiguration {
     private static final String TAG = "SharedSessionConfiguration";
     // Metadata android.info.availableSharedOutputConfigurations has list of shared output
@@ -80,6 +80,7 @@ public final class SharedSessionConfiguration {
     /**
      * Immutable class to store shared output stream information.
      */
+    @SuppressLint("UnflaggedApi")
     public static final class SharedOutputConfiguration {
         private final int mSurfaceType;
         private final Size mSize;
@@ -137,6 +138,7 @@ public final class SharedSessionConfiguration {
          *          SURFACE_TYPE_MEDIA_CODEC = 3
          *          SURFACE_TYPE_IMAGE_READER = 4
          */
+        @SuppressLint("UnflaggedApi")
         public int getSurfaceType() {
             return mSurfaceType;
         }
@@ -147,6 +149,7 @@ public final class SharedSessionConfiguration {
          *     {@link android.graphics.ImageFormat} or {@link android.graphics.PixelFormat}
          *     constants. Note that not all formats are supported by the camera device.
          */
+        @SuppressLint("UnflaggedApi")
         public @Format int getFormat() {
             return mFormat;
         }
@@ -156,6 +159,7 @@ public final class SharedSessionConfiguration {
          * @return surfaceSize Size for the shared output configuration
          *
          */
+        @SuppressLint("UnflaggedApi")
         public @NonNull Size getSize() {
             return mSize;
         }
@@ -165,6 +169,7 @@ public final class SharedSessionConfiguration {
          *
          * @return {@link Dataspace#NamedDataSpace} configured for shared session
          */
+        @SuppressLint("UnflaggedApi")
         public @NamedDataSpace int getDataspace() {
             return mDataspace;
         }
@@ -174,6 +179,7 @@ public final class SharedSessionConfiguration {
          *
          * @return {@link OutputConfiguration#MirrorMode} configured for the shared session
          */
+        @SuppressLint("UnflaggedApi")
         public @MirrorMode int getMirrorMode() {
             return mMirrorMode;
         }
@@ -183,6 +189,7 @@ public final class SharedSessionConfiguration {
          *
          * @return {@link OutputConfiguration#StreamUseCase} configured for the shared session
          */
+        @SuppressLint("UnflaggedApi")
         public @StreamUseCase long getStreamUseCase() {
             return mStreamUseCase;
         }
@@ -192,6 +199,7 @@ public final class SharedSessionConfiguration {
          *
          * @return {@link OutputConfiguration#TimestampBase} configured for the shared session
          */
+        @SuppressLint("UnflaggedApi")
         public @TimestampBase int getTimestampBase() {
             return mTimestampBase;
         }
@@ -199,6 +207,7 @@ public final class SharedSessionConfiguration {
         /** Whether readout timestamp is used for this shared output configuration.
          *
          */
+        @SuppressLint("UnflaggedApi")
         public boolean isReadoutTimestampEnabled() {
             return mReadoutTimestampEnabled;
         }
@@ -208,10 +217,12 @@ public final class SharedSessionConfiguration {
          * @return {@link HardwareBuffer#Usage} flags if set for shared output configuration with
          *         the ImageReader output surface.
          */
+        @SuppressLint("UnflaggedApi")
         public @Usage long getUsage() {
             return mUsage;
         }
 
+        @SuppressLint("UnflaggedApi")
         public @Nullable String getPhysicalCameraId() {
             return mPhysicalCameraId.isEmpty() ? null : mPhysicalCameraId;
         }
@@ -230,6 +241,7 @@ public final class SharedSessionConfiguration {
      * @hide
      */
     @TestApi
+    @SuppressLint("UnflaggedApi")
     public SharedSessionConfiguration(int sharedColorSpace,
             @NonNull long[] sharedOutputConfigurations) {
         mColorSpace = sharedColorSpace;
@@ -289,7 +301,7 @@ public final class SharedSessionConfiguration {
      *
      * @return the shared session color space
      */
-    @SuppressLint("MethodNameUnits")
+    @SuppressLint({"MethodNameUnits", "UnflaggedApi"})
     public @Nullable ColorSpace getColorSpace() {
         if (mColorSpace != ColorSpaceProfiles.UNSPECIFIED) {
             return ColorSpace.get(ColorSpace.Named.values()[mColorSpace]);
@@ -303,6 +315,7 @@ public final class SharedSessionConfiguration {
      * @return Non-modifiable list of output configuration.
      *
      */
+    @SuppressLint("UnflaggedApi")
     public @NonNull List<SharedOutputConfiguration> getOutputStreamsInformation() {
         return Collections.unmodifiableList(mOutputStreamConfigurations);
     }

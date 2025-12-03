@@ -25,6 +25,7 @@ import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
@@ -990,8 +991,8 @@ public final class CameraManager {
      * @see #getCameraIdList()
      * @hide
      */
-    @FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
     @SystemApi
+    @SuppressLint("UnflaggedApi")
     public boolean isCameraDeviceSharingSupported(@NonNull String cameraId)
             throws CameraAccessException {
         if (cameraId == null) {
@@ -1353,7 +1354,7 @@ public final class CameraManager {
             android.Manifest.permission.SYSTEM_CAMERA,
             android.Manifest.permission.CAMERA,
     })
-    @FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
+    @SuppressLint("UnflaggedApi")
     public void openSharedCamera(@NonNull String cameraId,
             @NonNull @CallbackExecutor Executor executor,
             @NonNull final CameraDevice.StateCallback callback)

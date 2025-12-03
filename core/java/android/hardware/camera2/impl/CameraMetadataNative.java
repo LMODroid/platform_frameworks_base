@@ -1640,9 +1640,6 @@ public class CameraMetadataNative implements Parcelable {
     }
 
     private SharedSessionConfiguration getSharedSessionConfiguration() {
-        if (!Flags.cameraMultiClient()) {
-            return null;
-        }
         Integer sharedSessionColorSpace = getBase(
                 CameraCharacteristics.SHARED_SESSION_COLOR_SPACE);
         long[] sharedOutputConfigurations = getBase(

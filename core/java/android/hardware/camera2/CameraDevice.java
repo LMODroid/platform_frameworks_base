@@ -22,6 +22,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.params.ExtensionSessionConfiguration;
@@ -454,7 +455,7 @@ public abstract class CameraDevice implements AutoCloseable {
      * @hide
      */
     @SystemApi
-    @FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
+    @SuppressLint("UnflaggedApi")
     public static final int SESSION_OPERATION_MODE_SHARED =
             2; // ICameraDeviceUser.SHARED_MODE;
 
@@ -1590,7 +1591,7 @@ public abstract class CameraDevice implements AutoCloseable {
          * @hide
          */
         @SystemApi
-        @FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
+        @SuppressLint("UnflaggedApi")
         public void onOpenedInSharedMode(@NonNull CameraDevice camera, boolean isPrimaryClient) {
           // Default empty implementation
         }
@@ -1612,7 +1613,7 @@ public abstract class CameraDevice implements AutoCloseable {
          * @hide
          */
         @SystemApi
-        @FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
+        @SuppressLint("UnflaggedApi")
         public void onClientSharedAccessPriorityChanged(@NonNull CameraDevice camera,
                 boolean isPrimaryClient) {
           // Default empty implementation

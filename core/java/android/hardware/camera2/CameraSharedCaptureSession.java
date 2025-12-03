@@ -19,6 +19,7 @@ package android.hardware.camera2;
 import android.annotation.CallbackExecutor;
 import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.view.Surface;
 
@@ -116,8 +117,8 @@ import java.util.concurrent.Executor;
  *
  * @hide
  */
-@FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
 @SystemApi
+@SuppressLint("UnflaggedApi")
 public abstract class CameraSharedCaptureSession extends CameraCaptureSession {
 
     /**
@@ -155,8 +156,8 @@ public abstract class CameraSharedCaptureSession extends CameraCaptureSession {
      *
      * @hide
      */
-    @FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
     @SystemApi
+    @SuppressLint("UnflaggedApi")
     public abstract int startStreaming(@NonNull List<Surface> surfaces,
             @NonNull @CallbackExecutor Executor executor, @NonNull CaptureCallback listener)
             throws CameraAccessException;
@@ -174,7 +175,7 @@ public abstract class CameraSharedCaptureSession extends CameraCaptureSession {
      *
      * @hide
      */
-    @FlaggedApi(Flags.FLAG_CAMERA_MULTI_CLIENT)
     @SystemApi
+    @SuppressLint("UnflaggedApi")
     public abstract void stopStreaming() throws CameraAccessException;
 }
