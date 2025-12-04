@@ -1065,4 +1065,7 @@
     enable the desktop specific features.
     -->
     <bool name="config_enableDesktopFeatureSet">false</bool>
+
+    <!-- Enable/disable keyguard connected display presentation -->
+    <bool name="config_enableKeyguardOnConnectedDisplay">true</bool>
 </resources>
