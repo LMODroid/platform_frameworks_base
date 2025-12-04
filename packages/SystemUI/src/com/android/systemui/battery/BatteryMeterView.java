@@ -661,7 +661,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 
         mBatteryStateAlert = isAlert;
         if (!newStatusBarIcons()) {
-            mDrawable.setAlertEnabled(isAlert);
+            mAccessorizedDrawable.setAlertEnabled(isAlert);
         }
     }
 
