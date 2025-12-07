@@ -404,7 +404,7 @@
     <string name="permdesc_receiveWapPush" msgid="1638677888301778457">"Aplikaciji omogućuje primanje i obradu WAP poruka. Ta dozvola uključuje mogućnost nadziranja ili brisanja vama poslanih poruka, a da vam ih ne prikaže."</string>
     <string name="permlab_getTasks" msgid="7460048811831750262">"dohvaćanje pokrenutih aplikacija"</string>
     <string name="permdesc_getTasks" msgid="7388138607018233726">"Aplikaciji omogućuje dohvaćanje informacija o trenutačnim i nedavnim tekućim zadacima. To aplikaciji može omogućiti otkrivanje informacija o tome koje se aplikacije upotrebljavaju na uređaju."</string>
-    <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"upravljati vlasnicima profila i uređaja"</string>
+    <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"upravljanje vlasnicima profila i uređaja"</string>
     <string name="permdesc_manageProfileAndDeviceOwners" msgid="7304240671781989283">"Omogućuje aplikaciji postavljanje vlasnika profila i vlasnika uređaja."</string>
     <string name="permlab_reorderTasks" msgid="7598562301992923804">"promjena redoslijeda pokrenutih aplikacija"</string>
     <string name="permdesc_reorderTasks" msgid="8796089937352344183">"Aplikaciji omogućuje premještanje zadataka u prednji plan ili pozadinu. Aplikacija to može napraviti bez vašeg naloga."</string>
@@ -964,13 +964,13 @@
     <string name="orgTypeOther" msgid="5450675258408005553">"Ostalo"</string>
     <string name="orgTypeCustom" msgid="1126322047677329218">"Prilagođeno"</string>
     <string name="relationTypeCustom" msgid="282938315217441351">"Prilagođeno"</string>
-    <string name="relationTypeAssistant" msgid="4057605157116589315">"Pomoćnik"</string>
+    <string name="relationTypeAssistant" msgid="4057605157116589315">"Asistent"</string>
     <string name="relationTypeBrother" msgid="7141662427379247820">"Brat"</string>
     <string name="relationTypeChild" msgid="9076258911292693601">"Dijete"</string>
-    <string name="relationTypeDomesticPartner" msgid="7825306887697559238">"Vanbračni partner"</string>
+    <string name="relationTypeDomesticPartner" msgid="7825306887697559238">"Izvanbračni partner"</string>
     <string name="relationTypeFather" msgid="3856225062864790596">"Otac"</string>
     <string name="relationTypeFriend" msgid="3192092625893980574">"Prijatelj"</string>
-    <string name="relationTypeManager" msgid="2272860813153171857">"Voditelj"</string>
+    <string name="relationTypeManager" msgid="2272860813153171857">"Upravitelj"</string>
     <string name="relationTypeMother" msgid="2331762740982699460">"Majka"</string>
     <string name="relationTypeParent" msgid="4177920938333039882">"Roditelj"</string>
     <string name="relationTypePartner" msgid="4018017075116766194">"Partner"</string>
@@ -1990,7 +1990,7 @@
     <string name="notification_history_title_placeholder" msgid="7748630986182249599">"Prilagođena obavijest aplikacije"</string>
     <string name="user_creation_account_exists" msgid="2239146360099708035">"Dopustiti aplikaciji <xliff:g id="APP">%1$s</xliff:g> da izradi novog korisnika s računom <xliff:g id="ACCOUNT">%2$s</xliff:g> (korisnik s ovim računom već postoji)?"</string>
     <string name="user_creation_adding" msgid="7305185499667958364">"Dopustiti aplikaciji <xliff:g id="APP">%1$s</xliff:g> da izradi novog korisnika s računom <xliff:g id="ACCOUNT">%2$s</xliff:g>?"</string>
-    <string name="supervised_user_creation_label" msgid="6884904353827427515">"Dodaj nadziranog korisnika"</string>
+    <string name="supervised_user_creation_label" msgid="6884904353827427515">"Dodajte nadziranog korisnika"</string>
     <string name="language_selection_title" msgid="52674936078683285">"Dodavanje jezika"</string>
     <string name="country_selection_title" msgid="5221495687299014379">"Postavke regije"</string>
     <string name="search_language_hint" msgid="7004225294308793583">"Unesite naziv jezika"</string>

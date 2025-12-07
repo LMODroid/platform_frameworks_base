@@ -277,7 +277,7 @@
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"சைலன்ட் பயன்முறை"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"ஒலி முடக்கத்தில் உள்ளது"</string>
     <string name="global_action_silent_mode_off_status" msgid="6608006545950920042">"ஒலி இயக்கத்தில் உள்ளது"</string>
-    <string name="global_actions_toggle_airplane_mode" msgid="6911684460146916206">"விமானப் பயன்முறை"</string>
+    <string name="global_actions_toggle_airplane_mode" msgid="6911684460146916206">"விமான மோட்"</string>
     <string name="global_actions_airplane_mode_on_status" msgid="5508025516695361936">"விமானப் பயன்முறை இயக்கத்தில் உள்ளது"</string>
     <string name="global_actions_airplane_mode_off_status" msgid="8522219771500505475">"விமானப் பயன்முறை முடக்கத்தில் உள்ளது"</string>
     <string name="global_action_settings" msgid="4671878836947494217">"அமைப்பு"</string>

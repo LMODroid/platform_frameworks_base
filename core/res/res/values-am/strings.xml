@@ -406,7 +406,7 @@
     <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"የመገለጫ እና የመሣሪያ ባለቤቶችን ማቀናበር"</string>
     <string name="permdesc_manageProfileAndDeviceOwners" msgid="7304240671781989283">"የመገለጫ ባለቤቶችን እና የመሣሪያውን ባለቤት መተግበሪያዎች እንዲያዋቅሩ ይፈቅዳል።"</string>
     <string name="permlab_reorderTasks" msgid="7598562301992923804">"አሂድ ትግበራዎችን ድጋሚ ደርድር"</string>
-    <string name="permdesc_reorderTasks" msgid="8796089937352344183">"መተግበሪያው ተግባሮችን ወደ ቅድመ ገጹ እና ወደ ዳራው እንዲያንቀሳቅስ ይፈቅድለታል። መተግበሪያው ይህንን ያላንተ ግብዓት ሊያደርግ ይችላል።"</string>
+    <string name="permdesc_reorderTasks" msgid="8796089937352344183">"መተግበሪያው ተግባሮችን ወደ ቅድመገጹ እና ወደ ዳራው እንዲወስድ ይፈቅድለታል። መተግበሪያው ይህንን ያለእርስዎ ግብዓት ሊያደርግ ይችላል።"</string>
     <string name="permlab_enableCarMode" msgid="893019409519325311">"የመኪና ሁነታ አንቃ"</string>
     <string name="permdesc_enableCarMode" msgid="56419168820473508">"የመኪና ሁኔታ ለማንቃት ለመተግበሪያው ይፈቅዳሉ።"</string>
     <string name="permlab_killBackgroundProcesses" msgid="6559320515561928348">"ሌሎች መተግበሪያዎችን ዝጋ"</string>
