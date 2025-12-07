@@ -715,7 +715,7 @@
     <string name="qr_code_scanner_title" msgid="1938155688725760702">"QR குறியீடு ஸ்கேனர்"</string>
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"புதுப்பிக்கிறது"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"பணிக் கணக்கு"</string>
-    <string name="status_bar_airplane" msgid="4848702508684541009">"விமானப் பயன்முறை"</string>
+    <string name="status_bar_airplane" msgid="4848702508684541009">"விமான மோட்"</string>
     <string name="zen_alarm_warning" msgid="7844303238486849503">"அடுத்த அலாரத்தை <xliff:g id="WHEN">%1$s</xliff:g> மணிக்கு கேட்க மாட்டீர்கள்"</string>
     <string name="alarm_template" msgid="2234991538018805736">"<xliff:g id="WHEN">%1$s</xliff:g> மணிக்கு"</string>
     <string name="alarm_template_far" msgid="3561752195856839456">"<xliff:g id="WHEN">%1$s</xliff:g> மணிக்கு"</string>

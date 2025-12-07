@@ -67,7 +67,7 @@
     <string name="wifi_debugging_secondary_user_title" msgid="2493201475880517725">"Bezdrátové ladění není povoleno"</string>
     <string name="wifi_debugging_secondary_user_message" msgid="9085779370142222881">"Uživatel aktuálně přihlášený k tomuto zařízení nemůže zapnout bezdrátové ladění. Pokud chcete tuto funkci používat, přepněte na administrativního uživatele."</string>
     <string name="usb_contaminant_title" msgid="894052515034594113">"Port USB je deaktivován"</string>
-    <string name="usb_contaminant_message" msgid="7730476585174719805">"Kvůli ochraně vašeho zařízení před tekutinami a nečistotami je port USB zakázán a nerozpozná žádné příslušenství.\n\nAž bude opět bezpečné port USB použít, budeme vás informovat."</string>
+    <string name="usb_contaminant_message" msgid="7730476585174719805">"Kvůli ochraně vašeho zařízení před tekutinami a nečistotami je port USB zakázán a nerozpozná žádné příslušenství.\n\nAž bude opět bezpečné port USB použít, budeme vás informovat."</string>
     <string name="usb_port_enabled" msgid="531823867664717018">"Port USB může zjišťovat nabíječky a příslušenství"</string>
     <string name="usb_disable_contaminant_detection" msgid="3827082183595978641">"Aktivovat USB"</string>
     <string name="learn_more" msgid="4690632085667273811">"Další informace"</string>
@@ -937,7 +937,7 @@
     <string name="accessibility_quick_settings_collapse" msgid="4674876336725041982">"Zavřít rychlé nastavení."</string>
     <string name="accessibility_quick_settings_user" msgid="505821942882668619">"Jste přihlášeni jako <xliff:g id="ID_1">%s</xliff:g>."</string>
     <string name="accessibility_quick_settings_choose_user_action" msgid="4554388498186576087">"zvolit uživatele"</string>
-    <string name="data_connection_no_internet" msgid="691058178914184544">"Nejste připojeni k internetu"</string>
+    <string name="data_connection_no_internet" msgid="691058178914184544">"Nemáte připojení k internetu"</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"Otevřít nastavení aplikace <xliff:g id="ID_1">%s</xliff:g>."</string>
     <string name="accessibility_quick_settings_edit" msgid="1523745183383815910">"Upravit pořadí nastavení."</string>
     <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"Nabídka vypínače"</string>
