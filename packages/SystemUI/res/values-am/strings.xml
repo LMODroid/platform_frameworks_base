@@ -728,7 +728,7 @@
     <string name="satellite_emergency_only_carrier_text" msgid="828510231597991206">"የአደጋ ጥሪዎች ወይም ኤስኦኤስ"</string>
     <string name="accessibility_managed_profile" msgid="4703836746209377356">"የስራ መገለጫ"</string>
     <string name="tuner_warning_title" msgid="7721976098452135267">"ለአንዳንዶች አስደሳች ቢሆንም ለሁሉም አይደለም"</string>
-    <string name="tuner_warning" msgid="1861736288458481650">"የስርዓት በይነገጽ መቃኛ የAndroid ተጠቃሚ በይነገጹን የሚነካኩበት እና የሚያበጁበት ተጨማሪ መንገዶች ይሰጠዎታል። እነዚህ የሙከራ ባህሪዎች ወደፊት በሚኖሩ ልቀቶች ላይ ሊለወጡ፣ ሊሰበሩ ወይም ሊጠፉ ይችላሉ። ከጥንቃቄ ጋር ወደፊት ይቀጥሉ።"</string>
+    <string name="tuner_warning" msgid="1861736288458481650">"የሥርዓት የተጠቃሚ በይነገጽ መቃኛ የAndroid ተጠቃሚ በይነገጹን የሚነካኩበት እና የሚያበጁበት ተጨማሪ መንገዶች ይሰጠዎታል። እነዚህ የሙከራ ባህሪዎች ወደፊት በሚኖሩ ልቀቶች ላይ ሊለወጡ፣ ሊሰበሩ ወይም ሊጠፉ ይችላሉ። ከጥንቃቄ ጋር ወደፊት ይቀጥሉ።"</string>
     <string name="tuner_persistent_warning" msgid="230466285569307806">"እነዚህ የሙከራ ባህሪዎች ወደፊት በሚኖሩ ልቀቶች ላይ ሊለወጡ፣ ሊሰበሩ ወይም ሊጠፉ ይችላሉ። ከጥንቃቄ ጋር ወደፊት ይቀጥሉ።"</string>
     <string name="got_it" msgid="477119182261892069">"ገባኝ"</string>
     <string name="tuner_toast" msgid="3812684836514766951">"እንኳን ደስ ያለዎት! የስርዓት በይነገጽ መቃኛ ወደ ቅንብሮች ታክሏል"</string>

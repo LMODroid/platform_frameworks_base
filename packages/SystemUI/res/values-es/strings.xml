@@ -522,7 +522,7 @@
     <string name="guest_wipe_session_wipe" msgid="8056836584445473309">"Volver a empezar"</string>
     <string name="guest_wipe_session_dontwipe" msgid="3211052048269304205">"Sí, continuar"</string>
     <string name="guest_notification_app_name" msgid="2110425506754205509">"Modo Invitado"</string>
-    <string name="guest_notification_session_active" msgid="5567273684713471450">"Estás en modo Invitado"</string>
+    <string name="guest_notification_session_active" msgid="5567273684713471450">"Estás en modo Invitado/a"</string>
     <string name="user_add_user_message_guest_remove" msgid="5589286604543355007">\n\n"Si añades un nuevo usuario, saldrás del modo Invitado y se eliminarán todas las aplicaciones y los datos de la sesión de invitado actual."</string>
     <string name="user_limit_reached_title" msgid="2429229448830346057">"Has alcanzado el límite de usuarios"</string>
     <string name="user_limit_reached_message" msgid="1070703858915935796">"{count,plural, =1{Solo se puede crear 1 usuario.}many{Puedes añadir # usuarios como máximo.}other{Puedes añadir # usuarios como máximo.}}"</string>
@@ -749,7 +749,7 @@
     <string name="notification_channel_summary_default" msgid="777294388712200605">"Puede sonar o vibrar según los ajustes del dispositivo"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"Puede sonar o vibrar según los ajustes del dispositivo. Las conversaciones de <xliff:g id="APP_NAME">%1$s</xliff:g> aparecen como burbujas de forma predeterminada."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"Haz que el sistema determine si con esta notificación el dispositivo debe sonar o vibrar"</string>
-    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;Estado:&lt;/b&gt; cambio a Predeterminado"</string>
+    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;Estado:&lt;/b&gt; cambiado a Predeterminado"</string>
     <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"&lt;b&gt;Estado:&lt;/b&gt; cambio a Silencio"</string>
     <string name="notification_channel_summary_automatic_promoted" msgid="1301710305149590426">"&lt;b&gt;Estado:&lt;/b&gt; posición más alta"</string>
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"&lt;b&gt;Estado:&lt;/b&gt; posición más baja"</string>
