@@ -220,7 +220,7 @@
     <string name="tts_engine_settings_title" msgid="7849477533103566291">"تنظیمات برای <xliff:g id="TTS_ENGINE_NAME">%s</xliff:g>"</string>
     <string name="tts_engine_settings_button" msgid="477155276199968948">"راه‌اندازی تنظیمات موتور"</string>
     <string name="tts_engine_preference_section_title" msgid="3861562305498624904">"موتور ترجیحی"</string>
-    <string name="tts_general_section_title" msgid="8919671529502364567">"کلی"</string>
+    <string name="tts_general_section_title" msgid="8919671529502364567">"عمومی"</string>
     <string name="tts_reset_speech_pitch_title" msgid="7149398585468413246">"بازنشانی زیروبمی گفتار"</string>
     <string name="tts_reset_speech_pitch_summary" msgid="6822904157021406449">"بازنشانی زیروبمی صدای گفته شدن نوشتار روی مقدار پیش‌فرض."</string>
   <string-array name="tts_rate_entries">
