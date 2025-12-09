@@ -20,6 +20,7 @@ import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREG
 import static android.companion.AssociationRequest.DEVICE_PROFILE_AUTOMOTIVE_PROJECTION;
 
 import static com.android.internal.util.CollectionUtils.any;
+import static com.android.server.companion.utils.RolesUtils.NLS_PROFILES;
 import static com.android.server.companion.utils.RolesUtils.removeRoleHolderForAssociation;
 
 import static java.util.concurrent.TimeUnit.DAYS;
@@ -32,6 +33,7 @@ import android.app.NotificationManager;
 import android.companion.AssociationInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
 import android.content.pm.ResolveInfo;
 import android.os.Binder;
@@ -66,6 +68,8 @@ public class DisassociationProcessor {
     @NonNull
     private final PackageManagerInternal mPackageManagerInternal;
     @NonNull
+    private final PackageManager mPackageManager;
+    @NonNull
     private final DevicePresenceProcessor mDevicePresenceMonitor;
     @NonNull
     private final SystemDataTransferRequestStore mSystemDataTransferRequestStore;
@@ -97,6 +101,7 @@ public class DisassociationProcessor {
         mSystemDataTransferRequestStore = systemDataTransferRequestStore;
         mTransportManager = companionTransportManager;
         mNotificationManager = notificationManager;
+        mPackageManager = context.getPackageManager();
     }
 
     /**
@@ -139,15 +144,18 @@ public class DisassociationProcessor {
         // Revoke NLS if the last association has been removed for the package
         Binder.withCleanCallingIdentity(() -> {
             if (mAssociationStore.getAssociationsByPackage(userId, packageName).isEmpty()) {
-                Intent nlsIntent = new Intent(
-                        NotificationListenerService.SERVICE_INTERFACE);
-                List<ResolveInfo> matchedServiceList = mContext.getPackageManager()
-                        .queryIntentServicesAsUser(nlsIntent, /* flags */ 0, userId);
-                for (ResolveInfo service : matchedServiceList) {
-                    if (service.getComponentInfo().getComponentName().getPackageName()
-                            .equals(packageName)) {
-                        mNotificationManager.setNotificationListenerAccessGranted(
-                                service.getComponentInfo().getComponentName(), false);
+                if (association.getDeviceProfile() != null
+                        && NLS_PROFILES.contains(association.getDeviceProfile())) {
+                    Intent nlsIntent = new Intent(
+                            NotificationListenerService.SERVICE_INTERFACE);
+                    List<ResolveInfo> matchedServiceList = mContext.getPackageManager()
+                            .queryIntentServicesAsUser(nlsIntent, /* flags */ 0, userId);
+                    for (ResolveInfo service : matchedServiceList) {
+                        if (service.getComponentInfo().getComponentName().getPackageName()
+                                .equals(packageName)) {
+                            mNotificationManager.setNotificationListenerAccessGranted(
+                                    service.getComponentInfo().getComponentName(), false, false);
+                        }
                     }
                 }
             }
@@ -276,16 +284,20 @@ public class DisassociationProcessor {
                 return;
             }
 
-            final String packageName = mPackageManagerInternal.getNameForUid(uid);
-            if (packageName == null) {
+            // A UID can be shared by multiple packages if android:sharedUserId is used.
+            // We must get all packages for the UID to ensure we find the correct one.
+            final String[] packageNames = mPackageManager.getPackagesForUid(uid);
+            if (packageNames == null || packageNames.length == 0) {
                 // Not interested in this uid.
                 return;
             }
 
             int userId = UserHandle.getUserId(uid);
-            for (AssociationInfo association : mAssociationStore.getRevokedAssociations(userId,
-                    packageName)) {
-                disassociate(association.getId());
+            for (String packageName : packageNames) {
+                for (AssociationInfo association : mAssociationStore.getRevokedAssociations(userId,
+                        packageName)) {
+                    disassociate(association.getId());
+                }
             }
 
             if (mAssociationStore.getRevokedAssociations().isEmpty()) {
