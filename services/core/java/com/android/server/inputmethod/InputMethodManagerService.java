@@ -1780,7 +1780,8 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
     private void onClientRemovedInternalLocked(ClientState client, @NonNull UserData userData) {
         final int userId = userData.mUserId;
         if (userData.mCurClient == client) {
-            hideCurrentInputLocked(userData.mImeBindingState.mFocusedWindow, 0 /* flags */,
+            hideCurrentInputLocked(userData.mImeBindingState.mFocusedWindow,
+                    InputMethodManager.HIDE_FORCE,
                     SoftInputShowHideReason.HIDE_REMOVE_CLIENT, userId);
             if (userData.mBoundToMethod) {
                 userData.mBoundToMethod = false;
@@ -3646,7 +3647,8 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
         final var userData = getUserData(userId);
         final var bindingController = userData.mBindingController;
         final var visibilityStateComputer = userData.mVisibilityStateComputer;
-        if (!visibilityStateComputer.canHideIme(statsToken, flags)) {
+        if (flags != InputMethodManager.HIDE_FORCE && !visibilityStateComputer.canHideIme(
+                statsToken, flags)) {
             return false;
         }
 
@@ -3671,7 +3673,7 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
             // the final state.
             ImeTracker.forLogging().onProgress(statsToken, ImeTracker.PHASE_SERVER_SHOULD_HIDE);
             mVisibilityApplier.performHideIme(windowToken, statsToken, resultReceiver, reason,
-                    userId);
+                    userId, flags);
         } else {
             ImeTracker.forLogging().onCancelled(statsToken, ImeTracker.PHASE_SERVER_SHOULD_HIDE);
         }

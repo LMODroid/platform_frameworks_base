@@ -2490,6 +2490,20 @@ public final class InputMethodManager {
     public static final int HIDE_NOT_ALWAYS = 0x0002;
 
     /**
+     * Unofficial hidden IMF internal flag, to force hide the IME window. To be used on app crashes.
+     *
+     * <p>On Android 15 and earlier, closing the IME involved two round-trip calls. In the event
+     * of an app crash, the second call, which is responsible for hiding the IME window, might not
+     * execute. This could leave the IME window visible on the screen.</p>
+     *
+     * <p>When this flag is used, it forces the IME window to be hidden during the first
+     * close-IME round-trip call, mitigating the issue.</p>
+     *
+     * @hide
+     */
+    public static final int HIDE_FORCE = 0x0004;
+
+    /**
      * Synonym for {@link #hideSoftInputFromWindow(IBinder, int, ResultReceiver)}
      * without a result: request to hide the soft input window from the
      * context of the window that is currently accepting input.
@@ -2536,8 +2550,9 @@ public final class InputMethodManager {
                 SoftInputShowHideReason.HIDE_SOFT_INPUT);
     }
 
-    private boolean hideSoftInputFromWindow(IBinder windowToken, @HideFlags int flags,
+    private boolean hideSoftInputFromWindow(IBinder windowToken, @HideFlags int hideFlags,
             ResultReceiver resultReceiver, @SoftInputShowHideReason int reason) {
+        final int cleanedHideFlags = clearForceHideFlag(hideFlags);
         // Get served view initially for statsToken creation.
         final View initialServedView;
         synchronized (mH) {
@@ -2572,7 +2587,8 @@ public final class InputMethodManager {
                 return true;
             } else {
                 return IInputMethodManagerGlobalInvoker.hideSoftInput(mClient, windowToken,
-                        statsToken, flags, resultReceiver, reason, ASYNC_SHOW_HIDE_METHOD_ENABLED);
+                        statsToken, cleanedHideFlags, resultReceiver, reason,
+                        ASYNC_SHOW_HIDE_METHOD_ENABLED);
             }
         }
     }
@@ -2585,8 +2601,9 @@ public final class InputMethodManager {
      *             this {@link View} is serving as an IME target.
      * @hide
      */
-    public boolean hideSoftInputFromView(@NonNull View view, @HideFlags int flags) {
+    public boolean hideSoftInputFromView(@NonNull View view, @HideFlags int hideFlags) {
         checkFocus();
+        final int cleanedHideFlags = clearForceHideFlag(hideFlags);
         final boolean isFocusedAndWindowFocused = view.hasWindowFocus() && view.isFocused();
         synchronized (mH) {
             final boolean hasServedByInputMethod = hasServedByInputMethodLocked(view);
@@ -2615,8 +2632,12 @@ public final class InputMethodManager {
             ImeTracker.forLogging().onProgress(statsToken, ImeTracker.PHASE_CLIENT_VIEW_SERVED);
 
             return IInputMethodManagerGlobalInvoker.hideSoftInput(mClient, view.getWindowToken(),
-                    statsToken, flags, null, reason, ASYNC_SHOW_HIDE_METHOD_ENABLED);
+                    statsToken, cleanedHideFlags, null, reason, ASYNC_SHOW_HIDE_METHOD_ENABLED);
         }
+    }
+
+    private int clearForceHideFlag(@HideFlags int flags) {
+        return flags & ~HIDE_FORCE;
     }
 
     /**
@@ -3075,6 +3096,7 @@ public final class InputMethodManager {
     @Deprecated
     public void toggleSoftInputFromWindow(IBinder windowToken, @ShowFlags int showFlags,
             @HideFlags int hideFlags) {
+        final int cleanedHideFlags = clearForceHideFlag(hideFlags);
         ImeTracing.getInstance().triggerClientDump(
                 "InputMethodManager#toggleSoftInputFromWindow", InputMethodManager.this,
                 null /* icProto */);
@@ -3083,7 +3105,7 @@ public final class InputMethodManager {
             if (servedView == null || servedView.getWindowToken() != windowToken) {
                 return;
             }
-            toggleSoftInput(showFlags, hideFlags);
+            toggleSoftInput(showFlags, cleanedHideFlags);
         }
     }
 
@@ -3101,6 +3123,7 @@ public final class InputMethodManager {
      */
     @Deprecated
     public void toggleSoftInput(@ShowFlags int showFlags, @HideFlags int hideFlags) {
+        final int cleanedHideFlags = clearForceHideFlag(hideFlags);
         ImeTracing.getInstance().triggerClientDump(
                 "InputMethodManager#toggleSoftInput", InputMethodManager.this,
                 null /* icProto */);
@@ -3109,7 +3132,7 @@ public final class InputMethodManager {
             if (view != null) {
                 final WindowInsets rootInsets = view.getRootWindowInsets();
                 if (rootInsets != null && rootInsets.isVisible(WindowInsets.Type.ime())) {
-                    hideSoftInputFromWindow(view.getWindowToken(), hideFlags,
+                    hideSoftInputFromWindow(view.getWindowToken(), cleanedHideFlags,
                             null /* resultReceiver */,
                             SoftInputShowHideReason.HIDE_TOGGLE_SOFT_INPUT);
                 } else {
@@ -4153,12 +4176,13 @@ public final class InputMethodManager {
      * class are intended for app developers interacting with the IME.
      */
     @Deprecated
-    public void hideSoftInputFromInputMethod(IBinder token, @HideFlags int flags) {
+    public void hideSoftInputFromInputMethod(IBinder token, @HideFlags int hideFlags) {
+        final int cleanedHideFlags = clearForceHideFlag(hideFlags);
         final int reason = SoftInputShowHideReason.HIDE_SOFT_INPUT_IMM_DEPRECATION;
         final var statsToken = ImeTracker.forLogging().onStart(ImeTracker.TYPE_HIDE,
                 ImeTracker.ORIGIN_CLIENT, reason, false /* fromUser */);
-        InputMethodPrivilegedOperationsRegistry.get(token).hideMySoftInput(statsToken, flags,
-                reason);
+        InputMethodPrivilegedOperationsRegistry.get(token).hideMySoftInput(statsToken,
+                cleanedHideFlags, reason);
     }
 
     /**
