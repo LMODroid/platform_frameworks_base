@@ -1375,7 +1375,7 @@
     <string name="sms_short_code_confirm_never_allow" msgid="2688828813521652079">"No permitir nunca"</string>
     <string name="sim_removed_title" msgid="1349026474932481037">"Se quitó la tarjeta SIM"</string>
     <string name="sim_removed_message" msgid="8469588437451533845">"La red móvil no estará disponible hasta que reinicies, luego de insertar una tarjeta SIM válida."</string>
-    <string name="sim_done_button" msgid="6464250841528410598">"Finalizar"</string>
+    <string name="sim_done_button" msgid="6464250841528410598">"Listo"</string>
     <string name="sim_added_title" msgid="2976783426741012468">"Se introdujo la tarjeta SIM"</string>
     <string name="sim_added_message" msgid="6602906609509958680">"Reinicia el dispositivo para acceder a la red móvil."</string>
     <string name="sim_restart_button" msgid="8481803851341190038">"Reiniciar"</string>

@@ -972,7 +972,7 @@
     <string name="relationTypeManager" msgid="2272860813153171857">"মেনেজাৰ"</string>
     <string name="relationTypeMother" msgid="2331762740982699460">"মাতৃ"</string>
     <string name="relationTypeParent" msgid="4177920938333039882">"অভিভাৱক"</string>
-    <string name="relationTypePartner" msgid="4018017075116766194">"সংগী"</string>
+    <string name="relationTypePartner" msgid="4018017075116766194">"অংশীদাৰ"</string>
     <string name="relationTypeReferredBy" msgid="5285082289602849400">"মাধ্যমেৰে"</string>
     <string name="relationTypeRelative" msgid="3396498519818009134">"সম্বন্ধীয়"</string>
     <string name="relationTypeSister" msgid="3721676005094140671">"ভনী"</string>
@@ -1083,7 +1083,7 @@
     <string name="password_keyboard_label_symbol_key" msgid="2716255580853511949">"?১২৩"</string>
     <string name="password_keyboard_label_alpha_key" msgid="5294837425652726684">"ABC"</string>
     <string name="password_keyboard_label_alt_key" msgid="8528261816395508841">"ALT"</string>
-    <string name="granularity_label_character" msgid="8903387663153706317">"বর্ণ"</string>
+    <string name="granularity_label_character" msgid="8903387663153706317">"বর্ণসংখ্য়া"</string>
     <string name="granularity_label_word" msgid="3686589158760620518">"শব্দ"</string>
     <string name="granularity_label_link" msgid="9007852307112046526">"লিংক"</string>
     <string name="granularity_label_line" msgid="376204904280620221">"লাইন"</string>

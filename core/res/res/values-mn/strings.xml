@@ -305,7 +305,7 @@
     <string name="notification_channel_heavy_weight_app" msgid="17455756500828043">"Апп ажиллаж байна"</string>
     <string name="notification_channel_foreground_service" msgid="7102189948158885178">"Апп батарей ашиглаж байна"</string>
     <string name="notification_channel_accessibility_magnification" msgid="1707913872219798098">"Томруулах"</string>
-    <string name="notification_channel_accessibility_security_policy" msgid="1727787021725251912">"Хандалтын ашиглалт"</string>
+    <string name="notification_channel_accessibility_security_policy" msgid="1727787021725251912">"Хүртээмжтэй ашиглалт"</string>
     <string name="notification_channel_display" msgid="6905032605735615090">"Дэлгэц"</string>
     <string name="foreground_service_app_in_background" msgid="1439289699671273555">"<xliff:g id="APP_NAME">%1$s</xliff:g> батарей ашиглаж байна"</string>
     <string name="foreground_service_apps_in_background" msgid="7340037176412387863">"<xliff:g id="NUMBER">%1$d</xliff:g> апп батарей ашиглаж байна"</string>
@@ -1528,7 +1528,7 @@
     <string name="forward_intent_to_work" msgid="3620262405636021151">"Та энэ апп-г өөрийн ажлын профайл дотор ашиглаж байна"</string>
     <string name="input_method_binding_label" msgid="1166731601721983656">"Оруулах арга"</string>
     <string name="sync_binding_label" msgid="469249309424662147">"Синк"</string>
-    <string name="accessibility_binding_label" msgid="1974602776545801715">"Хандалт"</string>
+    <string name="accessibility_binding_label" msgid="1974602776545801715">"Хүртээмж"</string>
     <string name="wallpaper_binding_label" msgid="1197440498000786738">"Дэлгэцийн зураг"</string>
     <string name="chooser_wallpaper" msgid="3082405680079923708">"Дэлгэцийн зураг солих"</string>
     <string name="notification_listener_binding_label" msgid="2702165274471499713">"Мэдэгдэл сонсогч"</string>
@@ -1724,18 +1724,18 @@
     <string name="csd_dose_reached_warning" product="default" msgid="491875107583931974">"Өндөр дууны түвшинд сонссоор байх уу?\n\nЧихэвчийн дууны түвшин санал болгосноос удаан хугацааны турш өндөр байгаа бөгөөд таны сонсголыг гэмтээх боломжтой"</string>
     <string name="csd_momentary_exposure_warning" product="default" msgid="7730840903435405501">"Чанга дуу чимээ илэрлээ\n\nЧихэвчийн дууны түвшин санал болгосноос өндөр байгаа нь таны сонсголыг гэмтээх боломжтой"</string>
     <string name="accessibility_shortcut_warning_dialog_title" msgid="4017995837692622933">"Хүртээмжийн товчлолыг ашиглах уу?"</string>
-    <string name="accessibility_shortcut_toogle_warning" msgid="4161716521310929544">"Товчлол асаалттай үед дууны түвшний хоёр товчлуурыг хамтад нь 3 секунд дарснаар хандалтын онцлогийг эхлүүлнэ."</string>
-    <string name="accessibility_shortcut_multiple_service_warning_title" msgid="3135860819356676426">"Хандалтын онцлогуудын товчлолыг асаах уу?"</string>
-    <string name="accessibility_shortcut_multiple_service_warning" msgid="3740723309483706911">"Дууны түвшний түлхүүрийг хэдэн секундийн турш зэрэг дарснаар хандалтын онцлогууд асна. Энэ нь таны төхөөрөмжийн ажиллах зарчмыг өөрчилж болзошгүй.\n\nОдоогийн онцлогууд:\n<xliff:g id="SERVICE">%1$s</xliff:g>\nТа сонгосон онцлогуудыг Тохиргоо &gt; Хандалт хэсэгт өөрчлөх боломжтой."</string>
+    <string name="accessibility_shortcut_toogle_warning" msgid="4161716521310929544">"Товчлол асаалттай үед дууны түвшний хоёр товчлуурыг хамтад нь 3 секунд дарснаар хүртээмжтэй онцлогийг эхлүүлнэ."</string>
+    <string name="accessibility_shortcut_multiple_service_warning_title" msgid="3135860819356676426">"Хүртээмжтэй онцлогуудын товчлолыг асаах уу?"</string>
+    <string name="accessibility_shortcut_multiple_service_warning" msgid="3740723309483706911">"Дууны түвшний түлхүүрийг хэдэн секундийн турш зэрэг дарснаар хүртээмжтэй онцлогууд асна. Энэ нь таны төхөөрөмжийн ажиллах зарчмыг өөрчилж болзошгүй.\n\nОдоогийн онцлогууд:\n<xliff:g id="SERVICE">%1$s</xliff:g>\nТа сонгосон онцлогуудыг Тохиргоо &gt; Хүртээмж хэсэгт өөрчлөх боломжтой."</string>
     <string name="accessibility_shortcut_multiple_service_list" msgid="2128323171922023762">" • <xliff:g id="SERVICE">%1$s</xliff:g>\n"</string>
     <string name="accessibility_shortcut_single_service_warning_title" msgid="1909518473488345266">"<xliff:g id="SERVICE">%1$s</xliff:g>-н товчлолыг асаах уу?"</string>
-    <string name="accessibility_shortcut_single_service_warning" msgid="6363127705112844257">"Дууны түвшний түлхүүрийг хэдэн секундийн турш зэрэг дарах нь хандалтын онцлог болох <xliff:g id="SERVICE">%1$s</xliff:g>-г асаадаг. Энэ нь таны төхөөрөмжийн ажиллах зарчмыг өөрчилж болзошгүй.\n\nТа Тохиргоо &gt; Хандалт хэсэгт энэ товчлолыг өөр онцлогт оноож өөрчлөх боломжтой."</string>
+    <string name="accessibility_shortcut_single_service_warning" msgid="6363127705112844257">"Дууны түвшний түлхүүрийг хэдэн секундийн турш зэрэг дарах нь хүртээмжтэй онцлог болох <xliff:g id="SERVICE">%1$s</xliff:g>-г асаадаг. Энэ нь таны төхөөрөмжийн ажиллах зарчмыг өөрчилж болзошгүй.\n\nТа Тохиргоо &gt; Хүртээмжийн хэсэгт энэ товчлолыг өөр онцлогт оноож өөрчлөх боломжтой."</string>
     <string name="accessibility_shortcut_on" msgid="5463618449556111344">"Асаах"</string>
     <string name="accessibility_shortcut_off" msgid="3651336255403648739">"Бүү асаа"</string>
     <string name="accessibility_shortcut_menu_item_status_on" msgid="6608392117189732543">"ИДЭВХТЭЙ"</string>
     <string name="accessibility_shortcut_menu_item_status_off" msgid="5531598275559472393">"ИДЭВХГҮЙ"</string>
     <string name="accessibility_enable_service_title" msgid="3931558336268541484">"<xliff:g id="SERVICE">%1$s</xliff:g>-д таны төхөөрөмжийг бүрэн хянахыг зөвшөөрөх үү?"</string>
-    <string name="accessibility_service_warning_description" msgid="291674995220940133">"Бүрэн хянах нь таны хандалтын үйлчилгээний шаардлагад тусалдаг аппуудад тохиромжтой боловч ихэнх аппад тохиромжгүй байдаг."</string>
+    <string name="accessibility_service_warning_description" msgid="291674995220940133">"Бүрэн хяналт нь хүртээмжийн хэрэгцээг дэмждэг аппуудад тохиромжтой боловч ихэнх аппад тохиромжгүй байдаг."</string>
     <string name="accessibility_service_screen_control_title" msgid="190017412626919776">"Дэлгэцийг харах ба хянах"</string>
     <string name="accessibility_service_screen_control_description" msgid="6946315917771791525">"Энэ нь дэлгэц дээрх бүх контентыг унших болон контентыг бусад аппад харуулах боломжтой."</string>
     <string name="accessibility_service_action_perform_title" msgid="779670378951658160">"Үйлдлийг харах болон гүйцэтгэх"</string>
@@ -1745,7 +1745,7 @@
     <string name="accessibility_dialog_button_uninstall" msgid="2952465517671708108">"Устгах"</string>
     <string name="accessibility_dialog_touch_filtered_warning" msgid="3741940116597822451">"Апп зөвшөөрлийн хүсэлтийг хааж байгаа тул таны хариултыг баталгаажуулах боломжгүй."</string>
     <string name="accessibility_select_shortcut_menu_title" msgid="6002726538854613272">"Үүнийг ашиглаж эхлэхийн тулд онцлог дээр товшино уу:"</string>
-    <string name="accessibility_edit_shortcut_menu_button_title" msgid="239446795930436325">"Хандалтын товчлуурын тусламжтай ашиглах онцлогуудыг сонгоно уу"</string>
+    <string name="accessibility_edit_shortcut_menu_button_title" msgid="239446795930436325">"Хүртээмжтэй товчны тусламжтай ашиглах онцлогуудыг сонгоно уу"</string>
     <string name="accessibility_edit_shortcut_menu_volume_title" msgid="2245540598834891500">"Дууны түвшний товчийн товчлолоор ашиглах онцлогуудыг сонгоно уу"</string>
     <string name="accessibility_uncheck_legacy_item_warning" msgid="8047830891064817447">"<xliff:g id="SERVICE_NAME">%s</xliff:g>-г унтраалаа"</string>
     <string name="edit_accessibility_shortcut_menu_button" msgid="8885752738733772935">"Товчлолуудыг засах"</string>
@@ -1763,7 +1763,7 @@
     <string name="accessibility_button_prompt_text" msgid="6105393217162198616">"Онцлог сонгоно уу"</string>
     <string name="accessibility_gesture_prompt_text" msgid="6452246951969541792">"Онцлог сонгоно уу"</string>
     <string name="accessibility_gesture_3finger_prompt_text" msgid="77745752309056152">"Онцлог сонгоно уу"</string>
-    <string name="accessibility_button_instructional_text" msgid="6831154884557881996">"Таныг дараагийн удаа хандалтын товчийг товших үед тус онцлог нээгдэнэ"</string>
+    <string name="accessibility_button_instructional_text" msgid="6831154884557881996">"Таныг дараагийн удаа хүртээмжтэй товчийг товших үед тус онцлог нээгдэнэ"</string>
     <string name="accessibility_gesture_instructional_text" msgid="4133877896011098550">"Таныг дараагийн удаа энэ товчлолыг ашиглах үед тус онцлог нээгдэнэ. Дэлгэцийнхээ доод талаас 2 хуруугаараа дээш шудраад, түргэн суллана уу."</string>
     <string name="accessibility_gesture_3finger_instructional_text" msgid="1124458279366968154">"Таныг дараагийн удаа энэ товчлолыг ашиглах үед тус онцлог нээгдэнэ. Дэлгэцийнхээ доод талаас 3 хуруугаараа дээш шудраад, түргэн суллана уу."</string>
     <string name="accessibility_magnification_chooser_text" msgid="1502075582164931596">"Томруулах"</string>
@@ -2063,7 +2063,7 @@
     <string name="app_category_news" msgid="1172762719574964544">"Мэдээ &amp; сэтгүүл"</string>
     <string name="app_category_maps" msgid="6395725487922533156">"Газрын зураг &amp; зүг чиг"</string>
     <string name="app_category_productivity" msgid="1844422703029557883">"Бүтээмж"</string>
-    <string name="app_category_accessibility" msgid="6643521607848547683">"Хандалт"</string>
+    <string name="app_category_accessibility" msgid="6643521607848547683">"Хүртээмж"</string>
     <string name="device_storage_monitor_notification_channel" msgid="5164244565844470758">"Төхөөрөмжийн сан"</string>
     <string name="adb_debugging_notification_channel_tv" msgid="4764046459631031496">"USB дебаг хийлт"</string>
     <string name="time_picker_hour_label" msgid="4208590187662336864">"Цаг"</string>
@@ -2197,9 +2197,9 @@
     <string name="accessibility_system_action_lock_screen_label" msgid="5484190691945563838">"Дэлгэцийг түгжих"</string>
     <string name="accessibility_system_action_screenshot_label" msgid="3581566515062741676">"Дэлгэцийн зураг дарах"</string>
     <string name="accessibility_system_action_headset_hook_label" msgid="8524691721287425468">"Чихэвч дэгээдэгч"</string>
-    <string name="accessibility_system_action_on_screen_a11y_shortcut_label" msgid="8488701469459210309">"Дэлгэц дээрх хандалтын товчлол"</string>
-    <string name="accessibility_system_action_on_screen_a11y_shortcut_chooser_label" msgid="1057878690209817886">"Дэлгэц дээрх хандалтын товчлол сонгогч"</string>
-    <string name="accessibility_system_action_hardware_a11y_shortcut_label" msgid="5764644187715255107">"Хандалтын товчлол"</string>
+    <string name="accessibility_system_action_on_screen_a11y_shortcut_label" msgid="8488701469459210309">"Дэлгэц дээрх хүртээмжтэй товчлол"</string>
+    <string name="accessibility_system_action_on_screen_a11y_shortcut_chooser_label" msgid="1057878690209817886">"Дэлгэц дээрх хүртээмжтэй товчлол сонгогч"</string>
+    <string name="accessibility_system_action_hardware_a11y_shortcut_label" msgid="5764644187715255107">"Хүртээмжтэй товчлол"</string>
     <string name="accessibility_system_action_dismiss_notification_shade" msgid="8931637495533770352">"Мэдэгдлийн хураангуй самбарыг хаах"</string>
     <string name="accessibility_system_action_menu_label" msgid="3385283204496447040">"Цэс"</string>
     <string name="accessibility_system_action_media_play_pause_label" msgid="1905647491347119748">"Медиаг тоглуулах/түр зогсоох"</string>
