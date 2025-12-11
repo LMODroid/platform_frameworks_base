@@ -827,7 +827,7 @@ public final class ProgramSelector implements Parcelable {
             if (this == obj) return true;
             if (!(obj instanceof Identifier)) return false;
             Identifier other = (Identifier) obj;
-            return other.getType() == mType && other.getValue() == mValue;
+            return other.getType() == getType() && other.getValue() == getValue();
         }
 
         private Identifier(Parcel in) {
