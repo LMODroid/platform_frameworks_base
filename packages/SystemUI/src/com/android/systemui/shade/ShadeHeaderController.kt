@@ -61,6 +61,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.demomode.DemoMode
 import com.android.systemui.demomode.DemoModeController
 import com.android.systemui.dump.DumpManager
+import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.qs.ChipVisibilityListener
 import com.android.systemui.qs.HeaderPrivacyIconsController
@@ -85,7 +86,7 @@ import com.android.systemui.statusbar.phone.domain.interactor.IsAreaDark
 import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.phone.ui.TintedIconManager
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryWithChargeStatus
-import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryWithEstimate
+import com.android.systemui.statusbar.pipeline.battery.ui.composable.BatteryWithPercent
 import com.android.systemui.statusbar.pipeline.battery.ui.composable.ShowPercentMode
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryNextToPercentViewModel
 import com.android.systemui.statusbar.pipeline.battery.ui.viewmodel.BatteryViewModel
@@ -125,7 +126,7 @@ constructor(
     private val shadeDisplaysRepositoryLazy: Lazy<ShadeDisplaysRepository>,
     private val variableDateViewControllerFactory: VariableDateViewController.Factory,
     @Named(SHADE_HEADER) private val batteryMeterViewController: BatteryMeterViewController,
-    private val unifiedBatteryViewModelFactory: BatteryViewModel.AlwaysShowPercent.Factory,
+    private val unifiedBatteryViewModelFactory: BatteryViewModel.BasedOnUserSetting.Factory,
     private val tandemBatteryViewModelFactory: BatteryNextToPercentViewModel.Factory,
     private val dumpManager: DumpManager,
     private val shadeCarrierGroupControllerBuilder: ShadeCarrierGroupController.Builder,
@@ -466,14 +467,15 @@ constructor(
                         id = R.id.battery_meter_composable_view
                         val showBatteryEstimate by showBatteryEstimate.collectAsStateWithLifecycle()
                         val dark = isSystemInDarkTheme()
-                        BatteryWithEstimate(
+                        val viewModel =
+                            rememberViewModel(traceName = "UnifiedBattery") {
+                                unifiedBatteryViewModelFactory.create()
+                            }
+                        BatteryWithPercent(
                             modifier = Modifier.wrapContentSize(),
-                            viewModelFactory = unifiedBatteryViewModelFactory,
+                            viewModel = viewModel,
                             isDarkProvider = { IsAreaDark { dark } },
-                            textColor =
-                                if (notificationShadeBlur())
-                                    Color(context.getColor(R.color.shade_header_text_color))
-                                else Color.White,
+                            showPercent = viewModel.isBatteryPercentSettingEnabled,
                             showEstimate = showBatteryEstimate,
                         )
                     }
