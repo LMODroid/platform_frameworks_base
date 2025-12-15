@@ -971,7 +971,7 @@
     <string name="notification_channel_setup" msgid="7660580986090760350">"Тохируулга"</string>
     <string name="notification_channel_storage" msgid="2720725707628094977">"Хадгалах сан"</string>
     <string name="notification_channel_hints" msgid="7703783206000346876">"Заавар"</string>
-    <string name="notification_channel_accessibility" msgid="8956203986976245820">"Хандалт"</string>
+    <string name="notification_channel_accessibility" msgid="8956203986976245820">"Хүртээмж"</string>
     <string name="instant_apps" msgid="8337185853050247304">"Шуурхай апп"</string>
     <string name="instant_apps_title" msgid="8942706782103036910">"<xliff:g id="APP">%1$s</xliff:g>-г ажиллуулж байна"</string>
     <string name="instant_apps_message" msgid="6112428971833011754">"Аппыг суулгахгүйгээр нээсэн."</string>
@@ -1064,11 +1064,11 @@
     <string name="accessibility_magnification_done" msgid="263349129937348512">"Болсон"</string>
     <string name="accessibility_magnifier_edit" msgid="1522877239671820636">"Засах"</string>
     <string name="accessibility_magnification_magnifier_window_settings" msgid="2834685072221468434">"Томруулагчийн цонхны тохиргоо"</string>
-    <string name="accessibility_floating_button_migration_tooltip" msgid="5217151214439341902">"Хандалтын онцлогуудыг нээхийн тулд товшино уу. Энэ товчлуурыг Тохиргоо хэсэгт өөрчилж эсвэл солиорой.\n\n"<annotation id="link">"Тохиргоог харах"</annotation></string>
+    <string name="accessibility_floating_button_migration_tooltip" msgid="5217151214439341902">"Хүртээмжтэй онцлогуудыг нээхийн тулд товшино уу. Энэ товчлуурыг Тохиргоо хэсэгт өөрчилж эсвэл солиорой.\n\n"<annotation id="link">"Тохиргоог харах"</annotation></string>
     <string name="accessibility_floating_button_docking_tooltip" msgid="6814897496767461517">"Үүнийг түр нуухын тулд товчлуурыг зах руу зөөнө үү"</string>
     <string name="accessibility_floating_button_undo" msgid="511112888715708241">"Болих"</string>
-    <string name="accessibility_floating_button_hidden_notification_title" msgid="4115036997406994799">"Хандалтын товчлуурыг нуусан"</string>
-    <string name="accessibility_floating_button_hidden_notification_text" msgid="1457021647040915658">"Хандалтын товчлуурыг харуулахын тулд товшино уу"</string>
+    <string name="accessibility_floating_button_hidden_notification_title" msgid="4115036997406994799">"Хүртээмжтэй товчийг нуусан"</string>
+    <string name="accessibility_floating_button_hidden_notification_text" msgid="1457021647040915658">"Хүртээмжтэй товчийг харуулахын тулд товшино уу"</string>
     <string name="accessibility_floating_button_undo_message_label_text" msgid="9017658016426242640">"<xliff:g id="FEATURE_NAME">%s</xliff:g>-н товчлолыг хассан"</string>
     <string name="accessibility_floating_button_undo_message_number_text" msgid="4909270290725226075">"{count,plural, =1{# товчлолыг хассан}other{# товчлолыг хассан}}"</string>
     <string name="accessibility_floating_button_action_move_top_left" msgid="6253520703618545705">"Зүүн дээш зөөх"</string>
@@ -1389,7 +1389,7 @@
     <string name="shortcut_helper_category_input" msgid="8674018654124839566">"Оролт"</string>
     <string name="shortcut_helper_category_app_shortcuts" msgid="8010249408308587117">"Аппын товчлол"</string>
     <string name="shortcut_helper_category_current_app_shortcuts" msgid="4017840565974573628">"Одоогийн апп"</string>
-    <string name="shortcut_helper_category_a11y" msgid="6314444792641773464">"Хандалт"</string>
+    <string name="shortcut_helper_category_a11y" msgid="6314444792641773464">"Хүртээмж"</string>
     <string name="shortcut_helper_title" msgid="8567500639300970049">"Товчлуурын шууд холбоос"</string>
     <string name="shortcut_helper_search_placeholder" msgid="5488547526269871819">"Товчлолууд хайх"</string>
     <string name="shortcut_helper_no_search_results" msgid="8554756497996692160">"Ямар ч хайлтын илэрц байхгүй"</string>
@@ -1447,7 +1447,7 @@
     <string name="accessibility_deprecate_extra_dim_dialog_button" msgid="3947537827396916005">"Хэт бүүдгэр онцлогийн товчлолыг хасах"</string>
     <string name="accessibility_deprecate_extra_dim_dialog_toast" msgid="165474092660941104">"Хэт бүүдгэр онцлогийн товчлолыг хассан"</string>
     <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"Холболт"</string>
-    <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"Хандалт"</string>
+    <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"Хүртээмж"</string>
     <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"Хэрэгсэл"</string>
     <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"Нууцлал"</string>
     <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"Аппуудаас өгсөн"</string>

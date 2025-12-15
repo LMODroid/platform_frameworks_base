@@ -349,7 +349,7 @@
     <string name="quick_settings_connected" msgid="3873605509184830379">"已連線"</string>
     <string name="quick_settings_connected_battery_level" msgid="1322075669498906959">"已連線，電量為 <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="quick_settings_connecting" msgid="2381969772953268809">"連線中..."</string>
-    <string name="quick_settings_hotspot_label" msgid="1199196300038363424">"無線基地台"</string>
+    <string name="quick_settings_hotspot_label" msgid="1199196300038363424">"熱點"</string>
     <string name="quick_settings_hotspot_secondary_label_transient" msgid="7585604088079160564">"開啟中…"</string>
     <string name="quick_settings_hotspot_secondary_label_data_saver_enabled" msgid="1280433136266439372">"數據節省模式已開啟"</string>
     <string name="quick_settings_hotspot_secondary_label_num_devices" msgid="7536823087501239457">"{count,plural, =1{# 部裝置}other{# 部裝置}}"</string>
@@ -719,7 +719,7 @@
     <string name="zen_alarm_warning" msgid="7844303238486849503">"你不會聽到下一個<xliff:g id="WHEN">%1$s</xliff:g> 的鬧鐘"</string>
     <string name="alarm_template" msgid="2234991538018805736">"於<xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template_far" msgid="3561752195856839456">"於<xliff:g id="WHEN">%1$s</xliff:g>"</string>
-    <string name="accessibility_status_bar_hotspot" msgid="2888479317489131669">"無線基地台"</string>
+    <string name="accessibility_status_bar_hotspot" msgid="2888479317489131669">"熱點"</string>
     <string name="accessibility_status_bar_satellite_no_connection" msgid="3001571744269917762">"衛星，沒有連線"</string>
     <string name="accessibility_status_bar_satellite_poor_connection" msgid="5231478574952724160">"衛星，連線品質不佳"</string>
     <string name="accessibility_status_bar_satellite_good_connection" msgid="308079391708578704">"衛星，連線品質良好"</string>

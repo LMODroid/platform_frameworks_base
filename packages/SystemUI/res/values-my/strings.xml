@@ -79,7 +79,7 @@
     <string name="screenshot_saving_private_profile" msgid="8934706048497093297">"ဖန်သားပြင်ဓာတ်ပုံကို သီးသန့်ပရိုဖိုင်တွင် သိမ်းနေသည်"</string>
     <string name="screenshot_saved_title" msgid="8893267638659083153">"ဖန်သားပြင်ဓာတ်ပုံကို သိမ်းပြီးပါပြီ"</string>
     <string name="screenshot_failed_title" msgid="3259148215671936891">"မျက်နှာပြင်ပုံကို သိမ်း၍မရပါ"</string>
-    <string name="screenshot_failed_external_display_indication" msgid="6555673132061101936">"ပြင်ပဖန်သားပြင်"</string>
+    <string name="screenshot_failed_external_display_indication" msgid="6555673132061101936">"ပြင်ပပြကွက်"</string>
     <string name="screenshot_failed_to_save_user_locked_text" msgid="6156607948256936920">"ဖန်သားပြင်ဓာတ်ပုံကို မသိမ်းမီ စက်ပစ္စည်းကို လော့ခ်ဖွင့်ထားရမည်"</string>
     <string name="screenshot_failed_to_save_unknown_text" msgid="1506621600548684129">"မျက်နှာပြင်ပုံကို ထပ်ရိုက်ကြည့်ပါ"</string>
     <string name="screenshot_failed_to_save_text" msgid="7232739948999195960">"ဖန်သားပြင်ဓာတ်ပုံကို သိမ်း၍မရပါ"</string>
