@@ -128,6 +128,25 @@ final class DefaultImeVisibilityApplier {
     void performHideIme(IBinder hideInputToken, @NonNull ImeTracker.Token statsToken,
             ResultReceiver resultReceiver, @SoftInputShowHideReason int reason,
             @UserIdInt int userId) {
+        performHideIme(hideInputToken, statsToken, resultReceiver, reason, userId, 0 /* flags */);
+    }
+
+    /**
+     * Hides the IME with additional flags.
+     *
+     * <p>Same as {@link #performHideIme(IBinder, ImeTracker.Token, ResultReceiver, int, int)}
+     * except that it allows for more granular control over the hiding behavior through the
+     * {@code flags} parameter.
+     *
+     * The only flag currently in use is
+     * {@link android.view.inputmethod.InputMethodManager#HIDE_FORCE}. This flag is used to force
+     * the Input Method Editor (IME) to hide. Any other flag values provided are ignored.
+     * </p>
+     */
+    @GuardedBy("ImfLock.class")
+    void performHideIme(IBinder hideInputToken, @NonNull ImeTracker.Token statsToken,
+            ResultReceiver resultReceiver, @SoftInputShowHideReason int reason,
+            @UserIdInt int userId, int flags) {
         final var userData = mService.getUserData(userId);
         final var bindingController = userData.mBindingController;
         final IInputMethodInvoker curMethod = bindingController.getCurMethod();
@@ -142,7 +161,7 @@ final class DefaultImeVisibilityApplier {
                         + InputMethodDebug.softInputDisplayReasonToString(reason));
             }
             // TODO(b/192412909): Check if we can always call onShowHideSoftInputRequested() or not.
-            if (curMethod.hideSoftInput(hideInputToken, statsToken, 0, resultReceiver)) {
+            if (curMethod.hideSoftInput(hideInputToken, statsToken, flags, resultReceiver)) {
                 if (DEBUG_IME_VISIBILITY) {
                     EventLog.writeEvent(IMF_HIDE_IME,
                             statsToken != null ? statsToken.getTag() : ImeTracker.TOKEN_NONE,
