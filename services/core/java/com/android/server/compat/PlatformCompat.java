@@ -39,6 +39,7 @@ import android.os.Build;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserHandle;
+import android.provider.DeviceConfig;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -532,10 +533,35 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     private void checkAllCompatOverridesAreOverridable(Collection<Long> changeIds) {
+        // TODO(b/469480715): Remove the DCL Override Logic once the GMSCoreAuto Supports AdMob
+        final long enforceReadOnlyJavaDcl = 218865702L;
+
         for (Long changeId : changeIds) {
-            if (isKnownChangeId(changeId) && !mCompatConfig.isOverridable(changeId)) {
+            boolean allowOverrideForDcl = false;
+
+            if (changeId == enforceReadOnlyJavaDcl) {
+                boolean allowDclBypass = false;
+                try {
+                    // Read live — DeviceConfig can change at runtime
+                    allowDclBypass = DeviceConfig.getBoolean(
+                            "car",
+                            "car_allow_dcl_bypass",
+                            /* defaultValue */ true);
+                } catch (SecurityException se) {
+                    Slog.w(TAG, "No permission to read DeviceConfig.");
+                } catch (Exception e) {
+                    Slog.w(TAG, "Error reading DeviceConfig", e);
+                }
+
+                Slog.i(TAG, "allowDclBypass value: " + allowDclBypass);
+                allowOverrideForDcl = allowDclBypass;
+            }
+
+            if (isKnownChangeId(changeId)
+                    && !allowOverrideForDcl
+                    && !mCompatConfig.isOverridable(changeId)) {
                 throw new SecurityException("Only change ids marked as Overridable can be "
-                        + "overridden.");
+                        + "overridden: " + changeId);
             }
         }
     }
