@@ -605,13 +605,13 @@
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"Permite que la aplicación vea la configuración de Bluetooth del dispositivo y que cree y acepte conexiones con los dispositivos vinculados."</string>
     <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"descubrir y vincular disp. Bluetooth cercanos"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Permite que la app descubra dispositivos Bluetooth cercanos y se conecte a ellos"</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"conectarse a dispositivos Bluetooth vinculados"</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"Conectarse a dispositivos Bluetooth vinculados"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Permite que la app se conecte a dispositivos Bluetooth vinculados"</string>
-    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"mostrar anuncios a dispositivos Bluetooth cercanos"</string>
+    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"Mostrar anuncios a dispositivos Bluetooth cercanos"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Permite que la app muestre anuncios a dispositivos Bluetooth cercanos"</string>
     <string name="permlab_uwb_ranging" msgid="8141915781475770665">"determinar posición entre disposit. Ultra Wideband"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Permite que la app determine la posición relativa con dispositivos Ultra Wideband cercanos"</string>
-    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"interactuar con dispositivos Wi-Fi cercanos"</string>
+    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"Interactuar con dispositivos Wi-Fi cercanos"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"Permite que la app muestre anuncios, se conecte y determine la posición relativa de los dispositivos Wi-Fi cercanos"</string>
     <string name="permlab_preferredPaymentInfo" msgid="5274423844767445054">"Información sobre servicio de pago NFC preferido"</string>
     <string name="permdesc_preferredPaymentInfo" msgid="8583552469807294967">"Permite que la app reciba información del servicio de pago NFC preferido, como el servicio de asistencia registrado y el destino de la ruta."</string>
@@ -769,9 +769,9 @@
     <string name="permdesc_readMediaAudio" msgid="5299772574434619399">"Permite que la app lea los archivos de audio del almacenamiento compartido."</string>
     <string name="permlab_readMediaVideo" msgid="7768003311260655007">"leer los archivos de video del almacenamiento compartido"</string>
     <string name="permdesc_readMediaVideo" msgid="3846400073770403528">"Permite que la app lea los archivos de video del almacenamiento compartido."</string>
-    <string name="permlab_readMediaImages" msgid="4057590631020986789">"leer los archivos de imagen del almacenamiento compartido"</string>
+    <string name="permlab_readMediaImages" msgid="4057590631020986789">"Leer los archivos de imagen del almacenamiento compartido"</string>
     <string name="permdesc_readMediaImages" msgid="5836219373138469259">"Permite que la app lea los archivos de imagen del almacenamiento compartido."</string>
-    <string name="permlab_readVisualUserSelect" msgid="5516204215354667586">"leer los archivos de imagen y video que el usuario haya seleccionado del almacenamiento compartido"</string>
+    <string name="permlab_readVisualUserSelect" msgid="5516204215354667586">"Leer los archivos de imagen y video que el usuario haya seleccionado del almacenamiento compartido"</string>
     <string name="permdesc_readVisualUserSelect" msgid="8027174717714968217">"Permite que la app lea los archivos de imagen y video que selecciones del almacenamiento compartido."</string>
     <string name="permlab_sdcardWrite" msgid="4863021819671416668">"cambiar o borrar contenido de almacenamiento compartido"</string>
     <string name="permdesc_sdcardWrite" msgid="8376047679331387102">"Editar almacen. compartido"</string>

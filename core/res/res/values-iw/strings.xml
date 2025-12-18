@@ -603,13 +603,13 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"‏מאפשר לאפליקציה להציג את תצורת ה-Bluetooth בטאבלט, וכן ליצור ולקבל חיבורים עם מכשירים מותאמים."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"‏מאפשרת לאפליקציה להציג את הגדרת ה-Bluetooth במכשיר ה-Android TV, וליצור ולקבל חיבורים עם מכשירים מותאמים."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"‏מאפשרת לאפליקציה להציג את תצורת ה-Bluetooth בטלפון, וכן ליצור ולקבל חיבורים עם מכשירים מותאמים."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"‏גילוי מכשירי Bluetooth בקרבת מקום והתאמה ביניהם"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"‏זיהוי והתאמה עם מכשירי Bluetooth קרובים"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"‏מאפשרת לאפליקציה לגלות מכשירי Bluetooth בקרבת מקום ולבצע התאמה איתם"</string>
     <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"‏התחברות למכשירי Bluetooth מתאימים"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"‏מאפשרת לאפליקציה להתחבר למכשירי Bluetooth מותאמים"</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"‏פרסום במכשירי Bluetooth בקרבת מקום"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"‏האפליקציה תוכל לפרסם במכשירי Bluetooth בקרבת מקום"</string>
-    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"‏זיהוי מיקום יחסי בין מכשירי Ultra Wideband ‏(UWB) קרובים"</string>
+    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"‏זיהוי מיקום יחסי בין מכשירים קרובים בטכנולוגיית Ultra Wideband ‏(UWB)"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"‏האפליקציה תזהה את המיקום היחסי בין מכשירים קרובים שמשדרים בטכנולוגיית Ultra Wideband ‏(UWB)"</string>
     <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"‏אינטראקציה עם מכשירי Wi-Fi בקרבת מקום"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"‏האפליקציה תוכל לפרסם במכשירי Wi-Fi בקרבת מקום, להתחבר אליהם ולהעריך את המיקום היחסי שלהם"</string>

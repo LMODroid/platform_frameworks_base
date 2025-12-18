@@ -971,12 +971,12 @@
     <string name="relationTypeFriend" msgid="3192092625893980574">"මිත්‍රයා"</string>
     <string name="relationTypeManager" msgid="2272860813153171857">"කළමනාකරු"</string>
     <string name="relationTypeMother" msgid="2331762740982699460">"මව"</string>
-    <string name="relationTypeParent" msgid="4177920938333039882">"මව්පිය"</string>
+    <string name="relationTypeParent" msgid="4177920938333039882">"මාපිය"</string>
     <string name="relationTypePartner" msgid="4018017075116766194">"හවුල්කරුවා"</string>
     <string name="relationTypeReferredBy" msgid="5285082289602849400">"යොමුකරන ලද්දේ"</string>
     <string name="relationTypeRelative" msgid="3396498519818009134">"නෑයා"</string>
     <string name="relationTypeSister" msgid="3721676005094140671">"සහෝදරිය"</string>
-    <string name="relationTypeSpouse" msgid="6916682664436031703">"භාර්යාව හෝ ස්වාමිපුරුෂයා"</string>
+    <string name="relationTypeSpouse" msgid="6916682664436031703">"භාර්යාව හෝ පුරුෂයා"</string>
     <string name="sipAddressTypeCustom" msgid="6283889809842649336">"අභිරුචි"</string>
     <string name="sipAddressTypeHome" msgid="5918441930656878367">"නිවස"</string>
     <string name="sipAddressTypeWork" msgid="7873967986701216770">"කාර්යාලය"</string>
@@ -1771,7 +1771,7 @@
     <string name="user_switching_message" msgid="1912993630661332336">"<xliff:g id="NAME">%1$s</xliff:g> වෙත මාරු කරමින්…"</string>
     <string name="user_logging_out_message" msgid="7216437629179710359">"<xliff:g id="NAME">%1$s</xliff:g> වරමින්…"</string>
     <string name="owner_name" msgid="8713560351570795743">"හිමිකරු"</string>
-    <string name="guest_name" msgid="8502103277839834324">"ආගන්තුක"</string>
+    <string name="guest_name" msgid="8502103277839834324">"අමුත්තා"</string>
     <string name="error_message_title" msgid="4082495589294631966">"දෝෂය"</string>
     <string name="error_message_change_not_allowed" msgid="843159705042381454">"ඔබගේ පරිපාලක විසින් මෙම වෙනස් කිරීමට ඉඩ නොදේ"</string>
     <string name="app_not_found" msgid="3429506115332341800">"මෙම ක්‍රියාව හසුරුවීමට යෙදුමක් සොයාගත්තේ නැත"</string>
@@ -1818,7 +1818,7 @@
     <string name="mediasize_na_index_3x5" msgid="990821038991491710">"සුචි කාඩ් පත 3x5"</string>
     <string name="mediasize_na_index_4x6" msgid="4414381976602032401">"සුචි කාඩ් පත 4x6"</string>
     <string name="mediasize_na_index_5x8" msgid="4499341583361946948">"සුචි කාඩ් පත 5x8"</string>
-    <string name="mediasize_na_monarch" msgid="4396943937986136896">"Monarch"</string>
+    <string name="mediasize_na_monarch" msgid="4396943937986136896">"රාජාණ්ඩුව"</string>
     <string name="mediasize_na_quarto" msgid="2119101847712239885">"Quarto"</string>
     <string name="mediasize_na_foolscap" msgid="5011612828564394648">"ෆුල්ස්කැප්"</string>
     <string name="mediasize_na_ansi_c" msgid="3104916921818289618">"ANSI C"</string>

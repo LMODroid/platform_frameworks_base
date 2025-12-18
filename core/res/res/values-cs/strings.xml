@@ -1237,7 +1237,7 @@
     <string name="whichSendToApplication" msgid="77101541959464018">"Odeslat pomocí aplikace"</string>
     <string name="whichSendToApplicationNamed" msgid="3385686512014670003">"Odeslat pomocí aplikace %1$s"</string>
     <string name="whichSendToApplicationLabel" msgid="3543240188816513303">"Odeslat"</string>
-    <string name="whichHomeApplication" msgid="8276350727038396616">"Výběr aplikace na plochu"</string>
+    <string name="whichHomeApplication" msgid="8276350727038396616">"Výběr vstupní aplikace"</string>
     <string name="whichHomeApplicationNamed" msgid="5855990024847433794">"Jako plochu používat aplikaci %1$s."</string>
     <string name="whichHomeApplicationLabel" msgid="8907334282202933959">"Vyfotit"</string>
     <string name="whichImageCaptureApplication" msgid="2737413019463215284">"Vyfotit pomocí aplikace"</string>

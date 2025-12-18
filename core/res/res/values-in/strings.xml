@@ -381,7 +381,7 @@
     <string name="permdesc_answerPhoneCalls" msgid="894386681983116838">"Mengizinkan aplikasi menjawab panggilan telepon masuk."</string>
     <string name="permlab_receiveSms" msgid="505961632050451881">"terima pesan teks (SMS)"</string>
     <string name="permdesc_receiveSms" msgid="1797345626687832285">"Memungkinkan aplikasi menerima dan memproses pesan SMS. Ini artinya aplikasi dapat memantau atau menghapus pesan yang dikirim ke perangkat Anda tanpa menunjukkannya kepada Anda."</string>
-    <string name="permlab_receiveMms" msgid="4000650116674380275">"terima pesan teks (MMS)"</string>
+    <string name="permlab_receiveMms" msgid="4000650116674380275">"menerima pesan teks (MMS)"</string>
     <string name="permdesc_receiveMms" msgid="958102423732219710">"Memungkinkan aplikasi menerima dan memproses pesan MMS. Ini artinya aplikasi dapat memantau atau menghapus pesan yang dikirim ke perangkat Anda tanpa menunjukkannya kepada Anda."</string>
     <string name="permlab_bindCellBroadcastService" msgid="586746677002040651">"Teruskan pesan cell broadcast"</string>
     <string name="permdesc_bindCellBroadcastService" msgid="6540910200973641606">"Mengizinkan aplikasi mem-binding ke modul cell broadcast untuk meneruskan pesan cell broadcast saat pesan tersebut diterima. Notifikasi cell broadcast dikirim di beberapa lokasi untuk memperingatkan Anda tentang situasi darurat. Aplikasi berbahaya dapat mengganggu performa atau operasi perangkat saat cell broadcast darurat diterima."</string>
@@ -602,11 +602,11 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"Memungkinkan aplikasi melihat konfigurasi Bluetooth di tablet, dan membuat serta menerima sambungan dengan perangkat yang disandingkan."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"Mengizinkan aplikasi melihat konfigurasi Bluetooth di perangkat Android TV, serta melakukan dan menerima sambungan dengan perangkat yang terhubung."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"Memungkinkan aplikasi melihat konfigurasi Bluetooth di ponsel, dan membuat serta menerima sambungan dengan perangkat yang disandingkan."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"temukan &amp; sambungkan perangkat Bluetooth di sekitar"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"menemukan &amp; menyambungkan perangkat Bluetooth di sekitar"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Mengizinkan aplikasi menemukan dan menyambungkan perangkat Bluetooth di sekitar"</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"hubungkan ke perangkat Bluetooth yang disambungkan"</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"terhubung ke perangkat Bluetooth yang disambungkan"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Mengizinkan aplikasi terhubung ke perangkat Bluetooth yang disambungkan"</string>
-    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"tampilkan iklan ke perangkat Bluetooth di sekitar"</string>
+    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"menampilkan iklan ke perangkat Bluetooth di sekitar"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Mengizinkan aplikasi untuk menampilkan iklan ke perangkat Bluetooth di sekitar"</string>
     <string name="permlab_uwb_ranging" msgid="8141915781475770665">"menentukan posisi relatif antar-perangkat Ultra-Wideband di sekitar"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Mengizinkan aplikasi menentukan posisi relatif antar-perangkat Ultra-Wideband di sekitar"</string>

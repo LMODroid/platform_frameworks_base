@@ -875,7 +875,7 @@
     <item msgid="8150904584178569699">"نمابر محل کار"</item>
     <item msgid="4537253139152229577">"نمابر خانه"</item>
     <item msgid="6751245029698664340">"پی‌جو"</item>
-    <item msgid="1692790665884224905">"سایر موارد"</item>
+    <item msgid="1692790665884224905">"غیره"</item>
     <item msgid="6216981255272016212">"سفارشی"</item>
   </string-array>
   <string-array name="emailAddressTypes">
@@ -887,18 +887,18 @@
   <string-array name="postalAddressTypes">
     <item msgid="3861463339764243038">"خانه"</item>
     <item msgid="5472578890164979109">"محل کار"</item>
-    <item msgid="5718921296646594739">"سایر موارد"</item>
+    <item msgid="5718921296646594739">"غیره"</item>
     <item msgid="5523122236731783179">"سفارشی"</item>
   </string-array>
   <string-array name="imAddressTypes">
     <item msgid="588088543406993772">"خانه"</item>
     <item msgid="5503060422020476757">"کاری"</item>
-    <item msgid="2530391194653760297">"سایر موارد"</item>
+    <item msgid="2530391194653760297">"غیره"</item>
     <item msgid="7640927178025203330">"سفارشی"</item>
   </string-array>
   <string-array name="organizationTypes">
     <item msgid="6144047813304847762">"محل کار"</item>
-    <item msgid="7402720230065674193">"سایر موارد"</item>
+    <item msgid="7402720230065674193">"غیره"</item>
     <item msgid="808230403067569648">"سفارشی"</item>
   </string-array>
   <string-array name="imProtocols">
@@ -935,11 +935,11 @@
     <string name="eventTypeCustom" msgid="3257367158986466481">"سفارشی"</string>
     <string name="eventTypeBirthday" msgid="7770026752793912283">"تاریخ تولد"</string>
     <string name="eventTypeAnniversary" msgid="4684702412407916888">"سالگرد"</string>
-    <string name="eventTypeOther" msgid="530671238533887997">"سایر موارد"</string>
+    <string name="eventTypeOther" msgid="530671238533887997">"غیره"</string>
     <string name="emailTypeCustom" msgid="1809435350482181786">"سفارشی"</string>
     <string name="emailTypeHome" msgid="1597116303154775999">"خانه"</string>
     <string name="emailTypeWork" msgid="2020095414401882111">"کاری"</string>
-    <string name="emailTypeOther" msgid="5131130857030897465">"سایر موارد"</string>
+    <string name="emailTypeOther" msgid="5131130857030897465">"غیره"</string>
     <string name="emailTypeMobile" msgid="787155077375364230">"تلفن همراه"</string>
     <string name="postalTypeCustom" msgid="5645590470242939129">"سفارشی"</string>
     <string name="postalTypeHome" msgid="7562272480949727912">"خانه"</string>
@@ -1231,7 +1231,7 @@
     <string name="whichEditApplicationLabel" msgid="1463288652070140285">"ویرایش"</string>
     <string name="whichSendApplication" msgid="4143847974460792029">"هم‌رسانی"</string>
     <string name="whichSendApplicationNamed" msgid="4470386782693183461">"‏اشتراک‌گذاری با %1$s"</string>
-    <string name="whichSendApplicationLabel" msgid="7467813004769188515">"اشتراک‌گذاری"</string>
+    <string name="whichSendApplicationLabel" msgid="7467813004769188515">"هم‌رسانی"</string>
     <string name="whichSendToApplication" msgid="77101541959464018">"ارسال با استفاده از"</string>
     <string name="whichSendToApplicationNamed" msgid="3385686512014670003">"‏ارسال با استفاده از %1$s"</string>
     <string name="whichSendToApplicationLabel" msgid="3543240188816513303">"ارسال"</string>
@@ -1427,7 +1427,7 @@
     <string name="share_remote_bugreport_notification_title" msgid="6708897723753334999">"گزارش اشکال به اشتراک گذاشته شود؟"</string>
     <string name="sharing_remote_bugreport_notification_title" msgid="3077385149217638550">"درحال اشتراک‌گذاری گزارش اشکال…‏"</string>
     <string name="share_remote_bugreport_notification_message_finished" msgid="7325635795739260135">"سرپرست سیستم شما برای کمک به عیب‌یابی این دستگاه، گزارش اشکال درخواست کرده است. ممکن است برنامه‌ها و داده‌ها به اشتراک گذاشته شوند."</string>
-    <string name="share_remote_bugreport_action" msgid="7630880678785123682">"اشتراک‌گذاری"</string>
+    <string name="share_remote_bugreport_action" msgid="7630880678785123682">"هم‌رسانی"</string>
     <string name="decline_remote_bugreport_action" msgid="4040894777519784346">"رد کردن"</string>
     <string name="select_input_method" msgid="3971267998568587025">"انتخاب روش ورودی"</string>
     <string name="input_method_language_settings" msgid="8069089418056819437">"تنظیمات زبان"</string>

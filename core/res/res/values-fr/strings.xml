@@ -1598,7 +1598,7 @@
     <string name="keyboardview_keycode_alt" msgid="8997420058584292385">"Alt"</string>
     <string name="keyboardview_keycode_cancel" msgid="2134624484115716975">"Annuler"</string>
     <string name="keyboardview_keycode_delete" msgid="2661117313730098650">"Supprimer"</string>
-    <string name="keyboardview_keycode_done" msgid="2524518019001653851">"Terminé"</string>
+    <string name="keyboardview_keycode_done" msgid="2524518019001653851">"OK"</string>
     <string name="keyboardview_keycode_mode_change" msgid="2743735349997999020">"Changement de mode"</string>
     <string name="keyboardview_keycode_shift" msgid="3026509237043975573">"Maj"</string>
     <string name="keyboardview_keycode_enter" msgid="168054869339091055">"Entrée"</string>
@@ -2076,7 +2076,7 @@
     <string name="time_picker_radial_mode_description" msgid="1222342577115016953">"Passer en mode horloge pour la saisie de l\'heure."</string>
     <string name="autofill_picker_accessibility_title" msgid="4425806874792196599">"Options de saisie automatique"</string>
     <string name="autofill_save_accessibility_title" msgid="1523225776218450005">"Enregistrer pour la saisie automatique"</string>
-    <string name="autofill_error_cannot_autofill" msgid="6528827648643138596">"Le contenu ne peut pas être saisi automatiquement"</string>
+    <string name="autofill_error_cannot_autofill" msgid="6528827648643138596">"Le contenu ne peut pas être complété automatiquement"</string>
     <string name="autofill_picker_no_suggestions" msgid="1076022650427481509">"Aucune suggestion de saisie automatique"</string>
     <string name="autofill_picker_some_suggestions" msgid="5560549696296202701">"{count,plural, =1{1 suggestion de saisie automatique}one{# suggestion de saisie automatique}many{# suggestions de saisie automatique}other{# suggestions de saisie automatique}}"</string>
     <string name="autofill_save_title" msgid="7719802414283739775">"Enregistrer dans "<b>"<xliff:g id="LABEL">%1$s</xliff:g>"</b>" ?"</string>

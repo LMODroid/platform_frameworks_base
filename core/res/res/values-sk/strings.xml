@@ -604,15 +604,15 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"Umožňuje aplikácii zobraziť informácie o konfigurácii Bluetooth na tablete. Taktiež jej umožňuje nadväzovať a akceptovať spojenia so spárovanými zariadeniami."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"Umožňuje aplikácii zobraziť konfiguráciu rozhrania Bluetooth v zariadení Android TV, ako aj nadväzovať a prijímať pripojenia so spárovanými zariadeniami."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"Umožňuje aplikácii zobraziť informácie o konfigurácii Bluetooth na telefóne. Taktiež jej umožňuje nadväzovať a akceptovať spojenia so spárovanými zariadeniami."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"objaviť zariad. Bluetooth nablízku a spárovať sa"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"objaviť a spárovať zariadenia Bluetooth v okolí"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Umožňuje aplikácii objaviť zariadenia s rozhraním Bluetooth nablízku a spárovať sa s nimi"</string>
     <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"pripojiť sa k spárovaným zariadeniam Bluetooth"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Umožňuje aplikácii pripojiť sa k spárovaným zariadeniam s rozhraním Bluetooth"</string>
-    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"zobrazovanie reklamy v zariad. Bluetooth v okolí"</string>
+    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"zobrazovať reklamu v zariadeniach Bluetooth v okolí"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Umožňuje aplikácii zobrazovať reklamu v zariadeniach s rozhraním Bluetooth v okolí"</string>
     <string name="permlab_uwb_ranging" msgid="8141915781475770665">"určovať relatívnu polohu medzi zariadeniami so ultraširokopásmovým pripojením v okolí"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Povoľte aplikácii určovať relatívnu polohu medzi zariadeniami s ultraširokopásmovým pripojením v okolí"</string>
-    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"interakcia so zariadeniami Wi-Fi v okolí"</string>
+    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"interagovať so zariadeniami Wi-Fi v okolí"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"Umožňuje aplikácii oznamovať a rozpoznávať relatívnu polohu zariadení Wi‑Fi v okolí a pripájať sa k nim"</string>
     <string name="permlab_preferredPaymentInfo" msgid="5274423844767445054">"Preferované informácie platenej služby NFC"</string>
     <string name="permdesc_preferredPaymentInfo" msgid="8583552469807294967">"Umožňuje aplikácii získavať preferované informácie platenej služby NFC, napríklad o registrovanej pomoci a trasách k cieľu."</string>

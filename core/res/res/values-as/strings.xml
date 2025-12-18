@@ -403,7 +403,7 @@
     <string name="permdesc_receiveWapPush" msgid="1638677888301778457">"এপ্‌টোক WAP বাৰ্তাবোৰ পাবলৈ আৰু প্ৰক্ৰিয়া সম্পন্ন কৰিবলৈ অনুমতি দিয়ে৷ এই অনুমতিত আপোনালৈ পঠিওৱা বাৰ্তাবোৰ আপোনাক নেদেখুৱাকৈয়ে নিৰীক্ষণ বা মচাৰ সক্ষমতা অন্তৰ্ভুক্ত থাকে৷"</string>
     <string name="permlab_getTasks" msgid="7460048811831750262">"চলি থকা এপ্‌সমূহ বিচাৰি উলিয়াওক"</string>
     <string name="permdesc_getTasks" msgid="7388138607018233726">"এপ্‌টোক বৰ্তমানে আৰু শেহতীয়াভাৱে চলি থকা কাৰ্যসমূহৰ বিষয়ে তথ্য পুনৰুদ্ধাৰ কৰিবলৈ অনুমতি দিয়ে৷ এইটোৱে এপ্‌টোক ডিভাইচটোত কোনবোৰ এপ্লিকেশ্বন ব্যৱহাৰ হৈ আছে তাৰ বিষয়ে তথ্য বিচাৰি উলিয়াবলৈ অনুমতি দিব পাৰে৷"</string>
-    <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"প্ৰ\'ফাইল আৰু ডিভাইচৰ গৰাকীসকলক পৰিচালনা কৰিব পাৰে"</string>
+    <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"প্ৰ’ফাইল আৰু ডিভাইচৰ গৰাকীসকলক পৰিচালনা কৰিব পাৰে"</string>
     <string name="permdesc_manageProfileAndDeviceOwners" msgid="7304240671781989283">"প্ৰ\'ফাইলৰ গৰাকী আৰু ডিভাইচৰ গৰাকী ছেট কৰিবলৈ এপ্‌টোক অনুমতি দিয়ে।"</string>
     <string name="permlab_reorderTasks" msgid="7598562301992923804">"চলি থকা এপসমূহক পুনৰাই ক্ৰমবদ্ধ কৰক"</string>
     <string name="permdesc_reorderTasks" msgid="8796089937352344183">"গতিবিধিক অগ্ৰভাগ আৰু নেপথ্যলৈ নিবলৈ এপক অনুমতি দিয়ে। এপে এই কার্য আপোনাৰ ইনপুট অবিহনেই কৰিব পাৰে।"</string>
@@ -969,7 +969,7 @@
     <string name="relationTypeDomesticPartner" msgid="7825306887697559238">"সংগী"</string>
     <string name="relationTypeFather" msgid="3856225062864790596">"দেউতা"</string>
     <string name="relationTypeFriend" msgid="3192092625893980574">"বন্ধু"</string>
-    <string name="relationTypeManager" msgid="2272860813153171857">"মেনেজাৰ"</string>
+    <string name="relationTypeManager" msgid="2272860813153171857">"পৰিচালক"</string>
     <string name="relationTypeMother" msgid="2331762740982699460">"মাতৃ"</string>
     <string name="relationTypeParent" msgid="4177920938333039882">"অভিভাৱক"</string>
     <string name="relationTypePartner" msgid="4018017075116766194">"অংশীদাৰ"</string>
