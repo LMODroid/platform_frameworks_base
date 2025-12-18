@@ -140,7 +140,7 @@
     <string name="bluetooth_le_audio_profile_summary_connected" msgid="6916226974453480650">"Connecté à LE Audio"</string>
     <string name="bluetooth_a2dp_profile_summary_connected" msgid="7422607970115444153">"Connecté aux paramètres audio du média"</string>
     <string name="bluetooth_headset_profile_summary_connected" msgid="2420981566026949688">"Connecté aux paramètres audio du téléphone"</string>
-    <string name="bluetooth_opp_profile_summary_connected" msgid="2393521801478157362">"Connexion au serveur de transfert de fichiers"</string>
+    <string name="bluetooth_opp_profile_summary_connected" msgid="2393521801478157362">"Connecté au serveur de transfert de fichiers"</string>
     <string name="bluetooth_map_profile_summary_connected" msgid="4141725591784669181">"Connecté à la carte"</string>
     <string name="bluetooth_sap_profile_summary_connected" msgid="1280297388033001037">"Connecté au point d\'accès au service"</string>
     <string name="bluetooth_opp_profile_summary_not_connected" msgid="3959741824627764954">"Connexion au serveur de transfert de fichiers non établie"</string>
