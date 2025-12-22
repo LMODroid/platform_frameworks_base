@@ -298,7 +298,7 @@
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"Der er ingen tilgængelige parrede enheder"</string>
     <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"Tryk for at oprette eller afbryde forbindelse til en enhed"</string>
     <string name="pair_new_bluetooth_devices" msgid="4601767620843349645">"Par ny enhed"</string>
-    <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"Se alt"</string>
+    <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"Se alle"</string>
     <string name="turn_on_bluetooth" msgid="5681370462180289071">"Brug Bluetooth"</string>
     <string name="quick_settings_bluetooth_device_connected" msgid="7884777006729260996">"Der er oprettet forbindelse"</string>
     <string name="quick_settings_bluetooth_device_audio_sharing" msgid="1496358082943301670">"Lyddeling"</string>
