@@ -606,7 +606,7 @@
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Қолданбаға маңайдағы Bluetooth құрылғыларын анықтап, жұптауға рұқсат береді."</string>
     <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"жұпталған Bluetooth құрылғыларына қосылу"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Қолданбаға жұпталған Bluetooth құрылғыларына қосылуға рұқсат береді."</string>
-    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"Жарнаманы маңайдағы Bluetooth құрылғыларына беру"</string>
+    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"маңайдағы Bluetooth құрылғыларына жарнама жіберу"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Қолданба жарнаманы маңайдағы Bluetooth құрылғыларына бере алады."</string>
     <string name="permlab_uwb_ranging" msgid="8141915781475770665">"маңайдағы кең жолақты құрылғылардың бір-біріне қатысты орнын анықтау"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Қолданбаға маңайдағы кең жолақты құрылғылардың бір-біріне қатысты орнын анықтауға мүмкіндік береді."</string>

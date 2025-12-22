@@ -602,13 +602,13 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"એપ્લિકેશનને ટેબ્લેટ પર બ્લૂટૂથ ની ગોઠવણી જોવાની અને જોડી કરેલ ઉપકરણો સાથે કનેક્શન્સ કરવાની અને સ્વીકારવાની મંજૂરી આપે છે."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"ઍપને તમારા Android TV ડિવાઇસ પર બ્લૂટૂથની ગોઠવણી જોવાની અને જોડાણ કરેલા ડિવાઇસની સાથે કનેક્શન કરવાની અને સ્વીકારવાની મંજૂરી આપે છે."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"એપ્લિકેશનને ફોન પર બ્લૂટૂથ ની ગોઠવણી જોવાની અને જોડી કરેલ ઉપકરણો સાથે કનેક્શન્સ કરવાની અને સ્વીકારવાની મંજૂરી આપે છે."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"આસપાસના બ્લૂટૂથ ડિવાઇસ શોધો અને તેની સાથે જોડી કરો"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"નજીકના બ્લૂટૂથ ડિવાઇસ શોધો અને તેની સાથે જોડાણ કરો"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"ઍપને આસપાસના બ્લૂટૂથ ડિવાઇસ શોધવાની અને તેની સાથે જોડી કરવાની મંજૂરી આપે છે"</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"જોડી કરેલા બ્લૂટૂથ ડિવાઇસ સાથે કનેક્ટ કરો"</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"જોડાણ કરેલા બ્લૂટૂથ ડિવાઇસ સાથે કનેક્ટ કરો"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"ઍપને જોડી કરેલા બ્લૂટૂથ ડિવાઇસ સાથે કનેક્ટ કરવાની મંજૂરી આપે છે"</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"નજીકના બ્લૂટૂથ ડિવાઇસ પર જાહેરાત કરો"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"નજીકના બ્લૂટૂથ ડિવાઇસ પર ઍપને જાહેરાત કરવાની મંજૂરી આપે છે"</string>
-    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"અલ્ટ્રા-વાઇડબૅન્ડ ડિવાઇસની વચ્ચેનું અંતર નક્કી કરો"</string>
+    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"નજીકના અલ્ટ્રા-વાઇડબૅન્ડ ડિવાઇસની વચ્ચેનું અંતર નક્કી કરો"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"ઍપને નજીકના અલ્ટ્રા-વાઇડબૅન્ડ ડિવાઇસની વચ્ચેનું સંબંધિત અંતર નક્કી કરવાની મંજૂરી આપો"</string>
     <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"નજીકના વાઇ-ફાઇ ડિવાઇસ સાથે ક્રિયાપ્રતિક્રિયા કરો"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"ઍપને નજીકના વાઇ-ફાઇ ડિવાઇસની માહિતી બતાવવાની, તેની સાથે કનેક્ટ કરવાની અને તેની સંબંધિત સ્થિતિ નક્કી કરવાની મંજૂરી આપો"</string>
