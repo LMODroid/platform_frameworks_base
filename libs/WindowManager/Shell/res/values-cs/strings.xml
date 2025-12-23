@@ -85,7 +85,7 @@
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Chatujte pomocí bublin"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Nové konverzace se zobrazí jako ikony v dolním rohu obrazovky. Klepnutím je rozbalíte, přetažením zavřete."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Nastavení bublin můžete kdykoli upravit"</string>
-    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Klepnutím sem lze spravovat, které aplikace a konverzace mohou vytvářet bubliny"</string>
+    <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Klepnutím sem určíte, které aplikace a konverzace můžou vytvářet bubliny"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"Bublina"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Spravovat"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"Bublina byla zavřena."</string>
