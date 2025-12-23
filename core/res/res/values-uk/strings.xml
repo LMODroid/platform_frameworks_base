@@ -606,11 +606,11 @@
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"Дозволяє програмі переглядати конфігурацію Bluetooth на телефоні, а також створювати та приймати з’єднання зі спареними пристроями."</string>
     <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"знаходити пристрої з Bluetooth і створювати пару"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Дозволяє додатку знаходити поблизу пристрої Bluetooth і створювати з ними пару"</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"підключатися до пристроїв із Bluetooth, з якими є пара"</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"підключатися до зв’язаних пристроїв із Bluetooth"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Дозволяє додатку підключатися до пристроїв із Bluetooth, з якими створено пару"</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"показувати рекламу на пристроях із Bluetooth поблизу"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Додаток зможе показувати рекламу на пристроях із Bluetooth поблизу"</string>
-    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"визначення відстані між пристроями поблизу з надширокосмуговим зв’язком"</string>
+    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"визначати відстань між пристроями поблизу з надширокосмуговим зв’язком"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"З цим дозволом додаток може визначати відстань між розташованими поблизу пристроями з надширокосмуговим зв’язком"</string>
     <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"взаємодіяти з пристроями Wi‑Fi поблизу"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"Додаток може виявляти пристрої Wi‑Fi поблизу, підключатися до них і визначати їх відносне розташування"</string>

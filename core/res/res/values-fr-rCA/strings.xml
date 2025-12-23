@@ -607,7 +607,7 @@
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Permet à l\'appli de découvrir les appareils Bluetooth à proximité et de s\'y connecter"</string>
     <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"se connecter aux appareils Bluetooth associés"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Permet à l\'appli de se connecter aux appareils Bluetooth associés"</string>
-    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"envoyer annonces aux appareils Bluetooth à proxim."</string>
+    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"s\'annoncer aux appareils Bluetooth à proximité"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Permet à l\'appli d\'envoyer des annonces aux appareils Bluetooth à proximité"</string>
     <string name="permlab_uwb_ranging" msgid="8141915781475770665">"déterminer la position relative entre des appareils à bande ultralarge à proximité"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Autorisez l\'appli à déterminer la position relative entre des appareils à bande ultralarge à proximité"</string>

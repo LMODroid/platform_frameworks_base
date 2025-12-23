@@ -603,13 +603,13 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"Permite que la aplicación vea la configuración de Bluetooth de la tablet y que cree y acepte conexiones con los dispositivos vinculados."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"Permite que la app vea la configuración de Bluetooth del dispositivo Android TV, así como que cree y acepte conexiones con los dispositivos vinculados."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"Permite que la aplicación vea la configuración de Bluetooth del dispositivo y que cree y acepte conexiones con los dispositivos vinculados."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"descubrir y vincular disp. Bluetooth cercanos"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"Descubrir y vincular disp. Bluetooth cercanos"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Permite que la app descubra dispositivos Bluetooth cercanos y se conecte a ellos"</string>
     <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"Conectarse a dispositivos Bluetooth vinculados"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Permite que la app se conecte a dispositivos Bluetooth vinculados"</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"Mostrar anuncios a dispositivos Bluetooth cercanos"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Permite que la app muestre anuncios a dispositivos Bluetooth cercanos"</string>
-    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"determinar posición entre disposit. Ultra Wideband"</string>
+    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"Definir posición entre dispositivos de banda ultraancha"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Permite que la app determine la posición relativa con dispositivos Ultra Wideband cercanos"</string>
     <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"Interactuar con dispositivos Wi-Fi cercanos"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"Permite que la app muestre anuncios, se conecte y determine la posición relativa de los dispositivos Wi-Fi cercanos"</string>

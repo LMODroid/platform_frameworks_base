@@ -1263,7 +1263,7 @@
     <string name="anr_application_process" msgid="4978772139461676184">"<xliff:g id="APPLICATION">%1$s</xliff:g> پاسخ نمی‌دهد"</string>
     <string name="anr_process" msgid="1664277165911816067">"فرآیند <xliff:g id="PROCESS">%1$s</xliff:g> پاسخ نمی‌دهد"</string>
     <string name="force_close" msgid="9035203496368973803">"تأیید"</string>
-    <string name="report" msgid="2149194372340349521">"گزارش"</string>
+    <string name="report" msgid="2149194372340349521">"گزارش کردن"</string>
     <string name="wait" msgid="7765985809494033348">"منتظر بمانید"</string>
     <string name="webpage_unresponsive" msgid="7850879412195273433">"این صفحه پاسخ نمی‌دهد.\n\nآیا می‌خواهید آن را ببندید؟"</string>
     <string name="launch_warning_title" msgid="6725456009564953595">"برنامه مجدداً هدایت شد"</string>
@@ -2359,7 +2359,7 @@
     <string name="sensor_privacy_start_use_mic_notification_content_title" msgid="2420858361276370367">"لغو انسداد میکروفون دستگاه"</string>
     <string name="sensor_privacy_start_use_camera_notification_content_title" msgid="7287720213963466672">"لغو انسداد دوربین دستگاه"</string>
     <string name="sensor_privacy_start_use_notification_content_text" msgid="7595608891015777346">"‏برای &lt;b&gt;<xliff:g id="APP">%s</xliff:g>&lt;/b&gt; و همه برنامه‌ها و سرویس‌ها"</string>
-    <string name="sensor_privacy_start_use_dialog_turn_on_button" msgid="7089318886628390827">"لغو انسداد"</string>
+    <string name="sensor_privacy_start_use_dialog_turn_on_button" msgid="7089318886628390827">"رفع انسداد"</string>
     <string name="sensor_privacy_notification_channel_label" msgid="936036783155261349">"حریم خصوصی حسگر"</string>
     <string name="splash_screen_view_icon_description" msgid="180638751260598187">"نماد برنامه"</string>
     <string name="splash_screen_view_branding_description" msgid="7911129347402728216">"تصویر نمانام‌سازی برنامه"</string>

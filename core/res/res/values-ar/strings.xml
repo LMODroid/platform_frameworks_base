@@ -608,7 +608,7 @@
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"للسماح للتطبيق بعرض إعداد البلوتوث على الهاتف وإجراء اتصالات وقبولها مع الأجهزة المقترنة."</string>
     <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"اكتشاف أجهزة قريبة تتضمّن بلوتوث والاقتران بها"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"يسمح هذا الإذن للتطبيق باكتشاف الأجهزة القريبة التي تتضمّن بلوتوث والاقتران بها."</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"تسمح بالربط الأجهزة المقترنة التي تتضمّن بلوتوث."</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"الاتصال بالأجهزة المقترنة التي تتضمّن بلوتوث"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"يسمح هذا الإذن للتطبيق بالارتباط بالأجهزة المقترنة التي تتضمّن بلوتوث."</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"عرض الإعلانات على الأجهزة القريبة التي تتضمن بلوتوث"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"للسماح للتطبيق بعرض إعلانات على الأجهزة القريبة التي تتضمّن بلوتوث."</string>

@@ -304,7 +304,7 @@
     <string name="notification_channel_usb" msgid="1528280969406244896">"USB जडान"</string>
     <string name="notification_channel_heavy_weight_app" msgid="17455756500828043">"एप चलिरहेको छ"</string>
     <string name="notification_channel_foreground_service" msgid="7102189948158885178">"एपहरूले ब्याट्री खपत गर्दै छन्"</string>
-    <string name="notification_channel_accessibility_magnification" msgid="1707913872219798098">"जुम इन गर्ने सुविधा"</string>
+    <string name="notification_channel_accessibility_magnification" msgid="1707913872219798098">"जुम इन"</string>
     <string name="notification_channel_accessibility_security_policy" msgid="1727787021725251912">"सर्वसुलभतासम्बन्धी सेवाहरूको प्रयोग"</string>
     <string name="notification_channel_display" msgid="6905032605735615090">"डिस्प्ले"</string>
     <string name="foreground_service_app_in_background" msgid="1439289699671273555">"<xliff:g id="APP_NAME">%1$s</xliff:g> ले ब्याट्री प्रयोग गर्दै छ"</string>
@@ -1766,7 +1766,7 @@
     <string name="accessibility_button_instructional_text" msgid="6831154884557881996">"तपाईंले अर्को पटक एक्सेसिबिलिटी बटनमा ट्याप गर्दा यो सुविधा खुल्ने छ"</string>
     <string name="accessibility_gesture_instructional_text" msgid="4133877896011098550">"तपाईंले अर्को पटक यो सर्टकट प्रयोग गर्दा यो सुविधा खुल्ने छ। २ वटा औँलाले स्क्रिनको पुछारबाट माथितिर स्वाइप गर्नुहोस् र तुरुन्तै औँला उठाउनुहोस्।"</string>
     <string name="accessibility_gesture_3finger_instructional_text" msgid="1124458279366968154">"तपाईंले अर्को पटक यो सर्टकट प्रयोग गर्दा यो सुविधा खुल्ने छ। ३ वटा औँलाले स्क्रिनको पुछारबाट माथितिर स्वाइप गर्नुहोस् र तुरुन्तै औँला उठाउनुहोस्।"</string>
-    <string name="accessibility_magnification_chooser_text" msgid="1502075582164931596">"म्याग्निफिकेसन"</string>
+    <string name="accessibility_magnification_chooser_text" msgid="1502075582164931596">"जुम इन"</string>
     <string name="user_switched" msgid="7249833311585228097">"अहिलेको प्रयोगकर्ता <xliff:g id="NAME">%1$s</xliff:g>।"</string>
     <string name="user_switching_message" msgid="1912993630661332336">"बदलेर <xliff:g id="NAME">%1$s</xliff:g> बनाइँदै छ…"</string>
     <string name="user_logging_out_message" msgid="7216437629179710359">"लग आउट गर्दै <xliff:g id="NAME">%1$s</xliff:g>…"</string>
