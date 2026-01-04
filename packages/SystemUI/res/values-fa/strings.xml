@@ -51,7 +51,7 @@
     <string name="always_use_accessory" msgid="1977225429341838444">"همیشه هنگام اتصال <xliff:g id="USB_ACCESSORY">%2$s</xliff:g>، <xliff:g id="APPLICATION">%1$s</xliff:g> باز شود"</string>
     <string name="usb_debugging_title" msgid="8274884945238642726">"‏اشکال‌زدایی USB مجاز است؟"</string>
     <string name="usb_debugging_message" msgid="5794616114463921773">"‏اثر انگشت کلید RSA رایانه: \n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
-    <string name="usb_debugging_always" msgid="4003121804294739548">"همیشه از این رایانه انجام شود"</string>
+    <string name="usb_debugging_always" msgid="4003121804294739548">"از این رایانه همیشه اجازه داشتن"</string>
     <string name="usb_debugging_allow" msgid="1722643858015321328">"اجازه دادن"</string>
     <string name="usb_debugging_secondary_user_title" msgid="7843050591380107998">"‏اشکال‌زدایی USB مجاز نیست"</string>
     <string name="usb_debugging_secondary_user_message" msgid="1888835696965417845">"‏کاربری که درحال‌حاضر به سیستم این دستگاه وارد شده است نمی‌تواند اشکال‌زدایی USB را روشن کند. برای استفاده از این ویژگی، به کاربر سرپرست تغییر وضعیت دهید."</string>
@@ -62,7 +62,7 @@
     <string name="share_wifi_button_text" msgid="1285273973812029240">"‏هم‌رسانی کردن Wi‑Fi"</string>
     <string name="wifi_debugging_title" msgid="7300007687492186076">"اشکال‌زدایی بی‌سیم در این شبکه مجاز شود؟"</string>
     <string name="wifi_debugging_message" msgid="5461204211731802995">"‏نام شبکه (SSID)\n<xliff:g id="SSID_0">%1$s</xliff:g>\n\nنشانی Wi‑Fi (BSSID)‎\n<xliff:g id="BSSID_1">%2$s</xliff:g>"</string>
-    <string name="wifi_debugging_always" msgid="2968383799517975155">"همیشه در این شبکه مجاز شود"</string>
+    <string name="wifi_debugging_always" msgid="2968383799517975155">"در این شبکه همیشه اجازه داشتن"</string>
     <string name="wifi_debugging_allow" msgid="4573224609684957886">"اجازه دادن"</string>
     <string name="wifi_debugging_secondary_user_title" msgid="2493201475880517725">"اشکال‌زدایی بی‌سیم مجاز نیست"</string>
     <string name="wifi_debugging_secondary_user_message" msgid="9085779370142222881">"کاربری که درحال‌حاضر به سیستم این دستگاه وارد شده است نمی‌تواند اشکال‌زدایی بی‌سیم را روشن کند. برای استفاده از این ویژگی، به کاربر سرپرست تغییر وضعیت دهید."</string>
@@ -125,7 +125,7 @@
     <string name="screenrecord_ongoing_screen_only" msgid="4459670242451527727">"درحال ضبط صفحه‌نمایش"</string>
     <string name="screenrecord_ongoing_screen_and_audio" msgid="5351133763125180920">"درحال ضبط صفحه‌نمایش و صدا"</string>
     <string name="screenrecord_taps_label" msgid="1595690528298857649">"نمایش نقاط لمس روی صفحه‌نمایش"</string>
-    <string name="screenrecord_stop_label" msgid="72699670052087989">"متوقف کردن"</string>
+    <string name="screenrecord_stop_label" msgid="72699670052087989">"ایست"</string>
     <string name="screenrecord_share_label" msgid="5025590804030086930">"هم‌رسانی"</string>
     <string name="screenrecord_save_title" msgid="1886652605520893850">"قطعه ضبط‌شده از صفحه‌نمایش ذخیره شد"</string>
     <string name="screenrecord_save_text" msgid="3008973099800840163">"برای مشاهده تک‌ضرب بزنید"</string>
@@ -382,10 +382,10 @@
     <string name="quick_settings_nfc_on" msgid="1004976611203202230">"‏NFC فعال است"</string>
     <string name="quick_settings_screen_record_label" msgid="8650355346742003694">"ضبط صفحه‌نمایش"</string>
     <string name="quick_settings_screen_record_start" msgid="1574725369331638985">"شروع"</string>
-    <string name="quick_settings_screen_record_stop" msgid="8087348522976412119">"متوقف کردن"</string>
+    <string name="quick_settings_screen_record_stop" msgid="8087348522976412119">"ایست"</string>
     <string name="qs_record_issue_label" msgid="8166290137285529059">"مشکل ضبط"</string>
     <string name="qs_record_issue_start" msgid="2979831312582567056">"شروع"</string>
-    <string name="qs_record_issue_stop" msgid="3531747965741982657">"توقف"</string>
+    <string name="qs_record_issue_stop" msgid="3531747965741982657">"ایست"</string>
     <string name="qs_record_issue_bug_report" msgid="8229031766918650079">"گزارش اشکال"</string>
     <string name="qs_record_issue_dropdown_header" msgid="5995983175678658329">"کدام بخش تجربه استفاده از دستگاه تحت‌تأثیر قرار گرفت؟"</string>
     <string name="qs_record_issue_dropdown_prompt" msgid="2526949919167046219">"انتخاب نوع مشکل"</string>
@@ -794,7 +794,7 @@
     <string name="keyboard_key_enter" msgid="8633362970109751646">"Enter"</string>
     <string name="keyboard_key_backspace" msgid="4095278312039628074">"Backspace"</string>
     <string name="keyboard_key_media_play_pause" msgid="8389984232732277478">"پخش/مکث"</string>
-    <string name="keyboard_key_media_stop" msgid="1509943745250377699">"متوقف کردن"</string>
+    <string name="keyboard_key_media_stop" msgid="1509943745250377699">"ایست"</string>
     <string name="keyboard_key_media_next" msgid="8502476691227914952">"بعدی"</string>
     <string name="keyboard_key_media_previous" msgid="5637875709190955351">"قبلی"</string>
     <string name="keyboard_key_media_rewind" msgid="3450387734224327577">"عقب بردن"</string>
@@ -1182,7 +1182,7 @@
     <string name="media_input_group_title" msgid="2057057473860783021">"ورودی"</string>
     <string name="media_output_group_title" msgid="6789001895863332576">"برونداد"</string>
     <string name="media_output_end_session_dialog_summary" msgid="5954520685989877347">"جلسه مشترک برای انتقال رسانه به دستگاهی دیگر متوقف می‌شود"</string>
-    <string name="media_output_end_session_dialog_stop" msgid="208189434474624412">"توقف"</string>
+    <string name="media_output_end_session_dialog_stop" msgid="208189434474624412">"ایست"</string>
     <string name="media_output_first_broadcast_title" msgid="6292237789860753022">"همه‌فرتستی چطور کار می‌کند"</string>
     <string name="media_output_broadcast" msgid="3555580945878071543">"همه‌فرستی"</string>
     <string name="media_output_first_notify_broadcast_message" msgid="6353857724136398494">"‏افرادی که در اطرافتان دستگاه‌های Bluetooth سازگار دارند می‌توانند به رسانه‌ای که همه‌فرستی می‌کنید گوش کنند"</string>
@@ -1271,7 +1271,7 @@
     <string name="fgs_dot_content_description" msgid="2865071539464777240">"اطلاعات جدید"</string>
     <string name="fgs_manager_dialog_title" msgid="5879184257257718677">"برنامه‌های فعال"</string>
     <string name="fgs_manager_dialog_message" msgid="2670045017200730076">"این برنامه‌ها فعال هستند و اجرا می‌شوند، حتی وقتی که از آن‌ها استفاده نکنید. این کار باعث بهبود عملکرد برنامه‌ها می‌شود، اما بر عمر باتری نیز تأثیر می‌گذارد."</string>
-    <string name="fgs_manager_app_item_stop_button_label" msgid="7188317969020801156">"متوقف کردن"</string>
+    <string name="fgs_manager_app_item_stop_button_label" msgid="7188317969020801156">"ایست"</string>
     <string name="fgs_manager_app_item_stop_button_stopped_label" msgid="6950382004441263922">"متوقف شده"</string>
     <string name="clipboard_edit_text_done" msgid="4551887727694022409">"تمام"</string>
     <string name="clipboard_overlay_text_copied" msgid="1872624400464891363">"کپی شد"</string>

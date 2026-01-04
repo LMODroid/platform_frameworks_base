@@ -512,7 +512,7 @@
     <string name="communal_widget_picker_description" msgid="490515450110487871">"Siapa saja dapat melihat widget di layar kunci Anda, meskipun tablet terkunci."</string>
     <string name="accessibility_action_label_unselect_widget" msgid="1041811747619468698">"batalkan pilihan widget"</string>
     <string name="communal_widgets_disclaimer_title" msgid="1150954395585308868">"Widget layar kunci"</string>
-    <string name="communal_widgets_disclaimer_text" msgid="1423545475160506349">"Untuk membuka aplikasi menggunakan widget, Anda perlu memverifikasi diri Anda. Selain itu, harap ingat bahwa siapa saja dapat melihatnya, bahkan saat tablet Anda terkunci. Beberapa widget mungkin tidak dirancang untuk layar kunci Anda dan mungkin tidak aman untuk ditambahkan di sini."</string>
+    <string name="communal_widgets_disclaimer_text" msgid="1423545475160506349">"Untuk membuka aplikasi menggunakan widget, Anda perlu memverifikasi diri. Selain itu, ingat bahwa siapa saja dapat melihat widget, bahkan saat tablet terkunci. Sebagian widget mungkin tidak dirancang untuk layar kunci dan mungkin tidak aman untuk ditambahkan di sini."</string>
     <string name="communal_widgets_disclaimer_button" msgid="4423059765740780753">"Oke"</string>
     <string name="accessibility_multi_user_switch_switcher" msgid="5330448341251092660">"Ganti pengguna"</string>
     <string name="accessibility_multi_user_list_switcher" msgid="8574105376229857407">"menu pulldown"</string>
