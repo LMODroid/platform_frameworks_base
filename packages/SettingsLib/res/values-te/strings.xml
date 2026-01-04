@@ -36,7 +36,7 @@
     <string name="wifi_security_none" msgid="7392696451280611452">"ఏదీ లేదు"</string>
     <string name="wifi_security_wep" msgid="1413627788581122366">"WEP"</string>
     <string name="wifi_security_wpa" msgid="1072450904799930636">"WPA-Personal"</string>
-    <string name="wifi_security_wpa2" msgid="4038267581230425543">"WPA2-Personal"</string>
+    <string name="wifi_security_wpa2" msgid="4038267581230425543">"WPA2-వ్య‌క్తిగ‌తం"</string>
     <string name="wifi_security_wpa_wpa2" msgid="946853615482465986">"WPA/WPA2-వ్యక్తిగత"</string>
     <string name="wifi_security_eap" msgid="6179633834446852269">"WPA/WPA2/WPA3-Enterprise"</string>
     <string name="wifi_security_eap_wpa" msgid="6189023812330549957">"WPA-Enterprise"</string>
@@ -45,7 +45,7 @@
     <string name="wifi_security_eap_wpa3" msgid="7961135182909018796">"WPA3-ఎంటర్‌ప్రయిజ్"</string>
     <string name="wifi_security_passpoint" msgid="2209078477216565387">"పాస్ పాయింట్"</string>
     <string name="wifi_security_sae" msgid="3644520541721422843">"WPA3-వ్యక్తిగత"</string>
-    <string name="wifi_security_psk_sae" msgid="8135104122179904684">"WPA2/WPA3-Personal"</string>
+    <string name="wifi_security_psk_sae" msgid="8135104122179904684">"WPA2/WPA3-వ్య‌క్తిగ‌తం"</string>
     <string name="wifi_security_none_owe" msgid="5241745828327404101">"None/Enhanced Open"</string>
     <string name="wifi_security_owe" msgid="3343421403561657809">"Enhanced Open"</string>
     <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3-ఎంటర్‌ప్రయిజ్ 192-బిట్"</string>
@@ -684,7 +684,7 @@
     <string name="failed_attempts_now_wiping_dialog_dismiss" msgid="2749889771223578925">"విస్మరించండి"</string>
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"డివైజ్ ఆటోమేటిక్ సెట్టింగ్"</string>
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"డిజేబుల్ చేయబడింది"</string>
-    <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"ఎనేబుల్ చేయబడింది"</string>
+    <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"ఎనేబుల్ అయింది"</string>
     <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"ఈ మార్పును వర్తింపజేయాలంటే మీరు మీ డివైజ్‌ను తప్పనిసరిగా రీబూట్ చేయాలి. ఇప్పుడే రీబూట్ చేయండి లేదా రద్దు చేయండి."</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"వైర్ ఉన్న హెడ్‌ఫోన్"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"హెడ్‌ఫోన్"</string>

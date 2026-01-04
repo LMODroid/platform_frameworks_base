@@ -185,7 +185,7 @@
     <string name="data_usage_uninstalled_apps" msgid="1933665711856171491">"ဖယ်ရှားထားသော အက်ပ်များ"</string>
     <string name="data_usage_uninstalled_apps_users" msgid="5533981546921913295">"ဖယ်ရှားထားသော အပလီကေးရှင်းနှင့် သုံးစွဲသူများ"</string>
     <string name="data_usage_ota" msgid="7984667793701597001">"စနစ် အပ်ဒိတ်လုပ်ခြင်းများ"</string>
-    <string name="tether_settings_title_usb" msgid="3728686573430917722">"USB သုံး၍ချိတ်ဆက်ရန်"</string>
+    <string name="tether_settings_title_usb" msgid="3728686573430917722">"USB သုံး၍ချိတ်ဆက်ခြင်း"</string>
     <string name="tether_settings_title_wifi" msgid="4803402057533895526">"ရွေ့လျားနိုင်သောဟော့စပေါ့"</string>
     <string name="tether_settings_title_bluetooth" msgid="916519902721399656">"ဘလူးတုသ်သုံးချိတ်ဆက်ခြင်း"</string>
     <string name="tether_settings_title_usb_bluetooth" msgid="1727111807207577322">"မိုဘိုင်းသုံး၍ ချိတ်ဆက်ခြင်း"</string>
@@ -327,7 +327,7 @@
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Wi‑Fi မှတ်တမ်းတင်နှုန်းမြှင့်ပြီး Wi‑Fi ရွေးစနစ်တွင် SSID RSSI အလိုက်ပြသည်"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"ဘက်ထရီအသုံးပြုမှု လျှော့ချပြီး ကွန်ရက်စွမ်းဆောင်ရည် ပိုမိုကောင်းမွန်သည်"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"ဤမုဒ်ကို ဖွင့်ထားသည့်အခါ MAC ကျပန်းပြုလုပ်ထားသည့် ကွန်ရက်သို့ ချိတ်ဆက်လိုက်သည့်အခါတိုင်း ဤစက်၏ MAC လိပ်စာ ပြောင်းသွားနိုင်သည်။"</string>
-    <string name="wifi_metered_label" msgid="8737187690304098638">"အခမဲ့ မဟုတ်ပါ"</string>
+    <string name="wifi_metered_label" msgid="8737187690304098638">"အခပေး"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"အခမဲ့"</string>
     <string name="select_logd_size_title" msgid="1604578195914595173">"မှတ်တမ်းကြားခံနယ် အရွယ်အစားများ"</string>
     <string name="select_logd_size_dialog_title" msgid="2105401994681013578">"လော့ ဘာဖားတွက် လော့ဂါးဆိုက် ရွေး"</string>
