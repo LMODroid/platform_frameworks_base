@@ -916,7 +916,7 @@
     <string name="phoneTypeMobile" msgid="1178852541462086735">"Mobile"</string>
     <string name="phoneTypeWork" msgid="6604967163358864607">"Trabaho"</string>
     <string name="phoneTypeFaxWork" msgid="6757519896109439123">"Fax sa Trabaho"</string>
-    <string name="phoneTypeFaxHome" msgid="6678559953115904345">"Fax sa Tahanan"</string>
+    <string name="phoneTypeFaxHome" msgid="6678559953115904345">"Home Fax"</string>
     <string name="phoneTypePager" msgid="576402072263522767">"Pager"</string>
     <string name="phoneTypeOther" msgid="6918196243648754715">"Iba pa"</string>
     <string name="phoneTypeCallback" msgid="3455781500844157767">"Callback"</string>
