@@ -947,7 +947,6 @@ public final class TelephonyPermissions {
                 Process.SHELL_UID);
     }
 
-
     /**
      * @return true if the specified {@code uid} is for a SHELL process, no matter if runs
      * as system user or not.
