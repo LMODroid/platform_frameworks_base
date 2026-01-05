@@ -1619,13 +1619,13 @@
     <string name="storage_usb_drive_label" msgid="6631740655876540521">"<xliff:g id="MANUFACTURER">%s</xliff:g> U 盘"</string>
     <string name="storage_usb" msgid="2391213347883616886">"USB存储器"</string>
     <string name="extract_edit_menu_button" msgid="63954536535863040">"修改"</string>
-    <string name="data_usage_warning_title" msgid="9034893717078325845">"数据流量警告"</string>
+    <string name="data_usage_warning_title" msgid="9034893717078325845">"流量用量警告"</string>
     <string name="data_usage_warning_body" msgid="1669325367188029454">"您已使用 <xliff:g id="APP">%s</xliff:g> 的数据流量"</string>
-    <string name="data_usage_mobile_limit_title" msgid="3911447354393775241">"已达到移动流量使用上限"</string>
-    <string name="data_usage_wifi_limit_title" msgid="2069698056520812232">"已达到 WLAN 流量上限"</string>
+    <string name="data_usage_mobile_limit_title" msgid="3911447354393775241">"已达到移动流量用量上限"</string>
+    <string name="data_usage_wifi_limit_title" msgid="2069698056520812232">"已达到 WLAN 流量用量上限"</string>
     <string name="data_usage_limit_body" msgid="3567699582000085710">"已暂停使用数据网络连接，直到这个周期结束为止"</string>
-    <string name="data_usage_mobile_limit_snoozed_title" msgid="101888478915677895">"已超出移动数据流量上限"</string>
-    <string name="data_usage_wifi_limit_snoozed_title" msgid="1622359254521960508">"已超出 WLAN 数据流量上限"</string>
+    <string name="data_usage_mobile_limit_snoozed_title" msgid="101888478915677895">"已超出移动流量用量上限"</string>
+    <string name="data_usage_wifi_limit_snoozed_title" msgid="1622359254521960508">"已超出 WLAN 流量用量上限"</string>
     <string name="data_usage_limit_snoozed_body" msgid="545146591766765678">"您已使用 <xliff:g id="SIZE">%s</xliff:g>，超出所设上限"</string>
     <string name="data_usage_restricted_title" msgid="126711424380051268">"后台流量受限制"</string>
     <string name="data_usage_restricted_body" msgid="5338694433686077733">"点按即可取消限制。"</string>

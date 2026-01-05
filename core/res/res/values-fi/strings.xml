@@ -2186,7 +2186,7 @@
     <string name="car_loading_profile" msgid="8219978381196748070">"Ladataan"</string>
     <string name="file_count" msgid="3220018595056126969">"{count,plural, =1{{file_name} + # tiedosto}other{{file_name} + # tiedostoa}}"</string>
     <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"Ei suosituksia kenelle jakaa"</string>
-    <string name="chooser_all_apps_button_label" msgid="3230427756238666328">"Sovellusluettelo"</string>
+    <string name="chooser_all_apps_button_label" msgid="3230427756238666328">"Sovelluslista"</string>
     <string name="usb_device_resolve_prompt_warn" msgid="325871329788064199">"Sovellus ei ole saanut tallennuslupaa mutta voi tallentaa ääntä tämän USB-laitteen avulla."</string>
     <string name="accessibility_system_action_home_label" msgid="3234748160850301870">"Aloitusnäyttö"</string>
     <string name="accessibility_system_action_back_label" msgid="4205361367345537608">"Takaisin"</string>
