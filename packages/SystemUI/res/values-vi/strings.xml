@@ -1046,7 +1046,7 @@
     <string name="magnification_close_settings_click_label" msgid="4642477260651704517">"Đóng bảng cài đặt tính năng phóng to"</string>
     <string name="magnification_exit_edit_mode_click_label" msgid="1664818325144887117">"Thoát chế độ chỉnh sửa"</string>
     <string name="magnification_drag_corner_to_resize" msgid="1249766311052418130">"Kéo góc để thay đổi kích thước"</string>
-    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"Cho phép cuộn chéo"</string>
+    <string name="accessibility_allow_diagonal_scrolling" msgid="3258050349191496398">"Cho phép di chuyển theo đường chéo"</string>
     <string name="accessibility_resize" msgid="5733759136600611551">"Đổi kích thước"</string>
     <string name="accessibility_change_magnification_type" msgid="666000085077432421">"Thay đổi kiểu phóng to"</string>
     <string name="accessibility_magnification_end_resizing" msgid="4881690585800302628">"Dừng đổi kích thước"</string>

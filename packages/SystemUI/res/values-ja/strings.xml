@@ -512,7 +512,7 @@
     <string name="communal_widget_picker_description" msgid="490515450110487871">"タブレットがロックされていても、ロック画面のウィジェットは誰でも見ることができます。"</string>
     <string name="accessibility_action_label_unselect_widget" msgid="1041811747619468698">"ウィジェットの選択を解除する"</string>
     <string name="communal_widgets_disclaimer_title" msgid="1150954395585308868">"ロック画面ウィジェット"</string>
-    <string name="communal_widgets_disclaimer_text" msgid="1423545475160506349">"ウィジェットを使用してアプリを起動するには、本人確認が必要です。タブレットがロックされた状態でも他のユーザーにウィジェットが表示されますので、注意してください。一部のウィジェットについてはロック画面での使用を想定していないため、ロック画面への追加は危険な場合があります。"</string>
+    <string name="communal_widgets_disclaimer_text" msgid="1423545475160506349">"ウィジェットを使用してアプリを起動するには、本人確認が必要になります。タブレットがロックされた状態でも他のユーザーにウィジェットが表示されますので、注意してください。一部のウィジェットについてはロック画面での使用を想定していないため、ロック画面への追加は危険な場合があります。"</string>
     <string name="communal_widgets_disclaimer_button" msgid="4423059765740780753">"OK"</string>
     <string name="accessibility_multi_user_switch_switcher" msgid="5330448341251092660">"ユーザーを切り替える"</string>
     <string name="accessibility_multi_user_list_switcher" msgid="8574105376229857407">"プルダウン メニュー"</string>

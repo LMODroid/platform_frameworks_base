@@ -712,7 +712,7 @@
     <string name="wallet_secondary_label_device_locked" msgid="5175862019125370506">"Lås opp for å bruke"</string>
     <string name="wallet_error_generic" msgid="257704570182963611">"Det oppsto et problem med henting av kortene. Prøv på nytt senere"</string>
     <string name="wallet_lockscreen_settings_label" msgid="3539105300870383570">"Innstillinger for låseskjermen"</string>
-    <string name="qr_code_scanner_title" msgid="1938155688725760702">"QR-kodeskanner"</string>
+    <string name="qr_code_scanner_title" msgid="1938155688725760702">"QR-kode­skanner"</string>
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"Oppdaterer"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"Work-profil"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"Flymodus"</string>
@@ -1339,7 +1339,7 @@
     <string name="stylus_battery_low_percentage" msgid="2564243323894629626">"Batteri i pekepennen: <xliff:g id="PERCENTAGE">%s</xliff:g>"</string>
     <string name="stylus_battery_low_subtitle" msgid="3583843128908823273">"Koble pekepennen til en lader"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Det er lite batteri i pekepennen"</string>
-    <string name="video_camera" msgid="7654002575156149298">"Videokamera"</string>
+    <string name="video_camera" msgid="7654002575156149298">"Video­kamera"</string>
     <string name="call_from_work_profile_title" msgid="5418253516453177114">"Kan ikke ringe fra personlige apper"</string>
     <string name="call_from_work_profile_text" msgid="2856337395968118274">"Organisasjonen din tillater bare at du ringer fra jobbapper"</string>
     <string name="call_from_work_profile_action" msgid="2937701298133010724">"Bytt til jobbprofilen"</string>

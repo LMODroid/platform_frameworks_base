@@ -1006,7 +1006,7 @@
     <string name="slice_permission_deny" msgid="6870256451658176895">"ଅଗ୍ରାହ୍ୟ କରନ୍ତୁ"</string>
     <string name="auto_saver_title" msgid="6873691178754086596">"ବ୍ୟାଟେରୀ ସେଭର୍‌ ଅନ୍‌ ହେବାର ସମୟ ସେଟ୍‌ କରିବାକୁ ଟାପ୍‌ କରନ୍ତୁ"</string>
     <string name="auto_saver_text" msgid="3214960308353838764">"ବ୍ୟାଟେରୀ ସରିବାକୁ ଥିବା ସମୟରେ ଚାଲୁ କରନ୍ତୁ"</string>
-    <string name="no_auto_saver_action" msgid="7467924389609773835">"ନାହିଁ, ଥାଉ"</string>
+    <string name="no_auto_saver_action" msgid="7467924389609773835">"ନା, ଧନ୍ୟବାଦ"</string>
     <string name="ongoing_privacy_dialog_a11y_title" msgid="2205794093673327974">"ବ୍ୟବହାର ହେଉଛି"</string>
     <string name="ongoing_privacy_chip_content_multiple_apps" msgid="8341216022442383954">"ଆପ୍ଲିକେସନ୍‍ଗୁଡିକ ଆପଣଙ୍କ <xliff:g id="TYPES_LIST">%s</xliff:g> ବ୍ୟବହାର କରୁଛନ୍ତି।"</string>
     <string name="ongoing_privacy_dialog_separator" msgid="1866222499727706187">", "</string>

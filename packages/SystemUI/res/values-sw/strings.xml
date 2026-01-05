@@ -1245,7 +1245,7 @@
     <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"Tumia alama ya kidole kufungua"</string>
     <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"Uthibitishaji unahitajika. Gusa kitambua alama ya kidole ili uthibitishe."</string>
     <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"Simu inayoendelea"</string>
-    <string name="mobile_data_settings_title" msgid="3955246641380064901">"Data ya mtandao wa simu"</string>
+    <string name="mobile_data_settings_title" msgid="3955246641380064901">"Data ya simu"</string>
     <string name="mobile_data_connection_active" msgid="944490013299018227">"Imeunganishwa"</string>
     <string name="mobile_data_temp_connection_active" msgid="4590222725908806824">"Imeunganishwa kwa muda"</string>
     <string name="mobile_data_poor_connection" msgid="819617772268371434">"Muunganisho duni"</string>

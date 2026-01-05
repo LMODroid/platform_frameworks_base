@@ -97,8 +97,8 @@
     <string name="screenshot_bottom_boundary_pct" msgid="3880821519814946478">"దిగువ సరిహద్దు <xliff:g id="PERCENT">%1$d</xliff:g> శాతం"</string>
     <string name="screenshot_left_boundary_pct" msgid="8502323556112287469">"ఎడమ వైపు సరిహద్దు <xliff:g id="PERCENT">%1$d</xliff:g> శాతం"</string>
     <string name="screenshot_right_boundary_pct" msgid="1201150713021779321">"కుడి వైపు సరిహద్దు <xliff:g id="PERCENT">%1$d</xliff:g> శాతం"</string>
-    <string name="screenshot_work_profile_notification" msgid="203041724052970693">"వర్క్ ప్రొఫైల్‌లోని <xliff:g id="APP">%1$s</xliff:g>‌లో సేవ్ చేయబడింది"</string>
-    <string name="screenshot_private_profile_notification" msgid="1704440899154243171">"ప్రైవేట్ ప్రొఫైల్‌లోని <xliff:g id="APP">%1$s</xliff:g>‌లో సేవ్ చేయబడింది"</string>
+    <string name="screenshot_work_profile_notification" msgid="203041724052970693">"వర్క్ ప్రొఫైల్‌లోని <xliff:g id="APP">%1$s</xliff:g>‌లో సేవ్ అయింది"</string>
+    <string name="screenshot_private_profile_notification" msgid="1704440899154243171">"ప్రైవేట్ ప్రొఫైల్‌లోని <xliff:g id="APP">%1$s</xliff:g>‌లో సేవ్ అయింది"</string>
     <string name="screenshot_default_files_app_name" msgid="8721579578575161912">"ఫైల్స్"</string>
     <string name="screenshot_detected_template" msgid="7940376642921719915">"<xliff:g id="APPNAME">%1$s</xliff:g>, ఈ స్క్రీన్‌షాట్‌ను గుర్తించింది."</string>
     <string name="screenshot_detected_multiple_template" msgid="7644827792093819241">"<xliff:g id="APPNAME">%1$s</xliff:g>, ఇతర ఓపెన్ యాప్‌లు ఈ స్క్రీన్‌షాట్‌ను గుర్తించాయి."</string>
