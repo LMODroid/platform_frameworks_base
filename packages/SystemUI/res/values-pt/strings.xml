@@ -72,7 +72,7 @@
     <string name="usb_disable_contaminant_detection" msgid="3827082183595978641">"Ativar USB"</string>
     <string name="learn_more" msgid="4690632085667273811">"Saiba mais"</string>
     <string name="global_action_screenshot" msgid="2760267567509131654">"Capturar tela"</string>
-    <string name="global_action_smart_lock_disabled" msgid="6286551337177954859">"Desbloqueio compartilhado desativado"</string>
+    <string name="global_action_smart_lock_disabled" msgid="6286551337177954859">"Desbloqueio Compartilhado desativado"</string>
     <string name="remote_input_image_insertion_text" msgid="4850791636452521123">"enviou uma imagem"</string>
     <string name="screenshot_saving_title" msgid="2298349784913287333">"Salvando captura de tela..."</string>
     <string name="screenshot_saving_work_profile_title" msgid="5332829607308450880">"Salvando captura de tela no perfil de trabalho…"</string>
