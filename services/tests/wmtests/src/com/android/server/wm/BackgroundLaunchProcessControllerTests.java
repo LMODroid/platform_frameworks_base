@@ -57,6 +57,7 @@ public class BackgroundLaunchProcessControllerTests {
 
     Set<IBinder> mActivityStartAllowed = new HashSet<>();
     Set<Integer> mHasActiveVisibleWindow = new HashSet<>();
+    Set<Integer> mHasActiveNotPinnedVisibleWindow = new HashSet<>();
 
     BackgroundActivityStartCallback mCallback = new BackgroundActivityStartCallback() {
         @Override
@@ -76,7 +77,8 @@ public class BackgroundLaunchProcessControllerTests {
         }
     };
     BackgroundLaunchProcessController mController = new BackgroundLaunchProcessController(
-            mHasActiveVisibleWindow::contains, mCallback);
+            mHasActiveVisibleWindow::contains, mHasActiveNotPinnedVisibleWindow::contains,
+            mCallback);
 
     int mPid = 123;
     int mUid = 234;
@@ -84,7 +86,7 @@ public class BackgroundLaunchProcessControllerTests {
     int mAppSwitchState = APP_SWITCH_DISALLOW;
     boolean mIsCheckingForFgsStart = false;
     boolean mHasActivityInVisibleTask = false;
-    boolean mInPinnedWindoMode = false;
+    boolean mInPinnedWindowMode = false;
     boolean mHasBackgroundActivityStartPrivileges = false;
     long mLastStopAppSwitchesTime = 0L;
     long mLastActivityLaunchTime = 0L;
@@ -95,7 +97,7 @@ public class BackgroundLaunchProcessControllerTests {
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
                 mAppSwitchState, mIsCheckingForFgsStart,
-                mHasActivityInVisibleTask, mInPinnedWindoMode,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
                 mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
@@ -108,7 +110,7 @@ public class BackgroundLaunchProcessControllerTests {
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
                 mAppSwitchState, mIsCheckingForFgsStart,
-                mHasActivityInVisibleTask, mInPinnedWindoMode,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
                 mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
@@ -118,7 +120,7 @@ public class BackgroundLaunchProcessControllerTests {
     @Test
     public void testAllowedByTokenNoCallback() {
         mController = new BackgroundLaunchProcessController(mHasActiveVisibleWindow::contains,
-                null);
+                mHasActiveNotPinnedVisibleWindow::contains, null);
         Binder token = new Binder();
         mActivityStartAllowed.add(token);
         mController.addOrUpdateAllowBackgroundStartPrivileges(token,
@@ -126,7 +128,7 @@ public class BackgroundLaunchProcessControllerTests {
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
                 mAppSwitchState, mIsCheckingForFgsStart,
-                mHasActivityInVisibleTask, mInPinnedWindoMode,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
                 mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
@@ -142,7 +144,7 @@ public class BackgroundLaunchProcessControllerTests {
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
                 mAppSwitchState, mIsCheckingForFgsStart,
-                mHasActivityInVisibleTask, mInPinnedWindoMode,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
                 mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
@@ -150,14 +152,29 @@ public class BackgroundLaunchProcessControllerTests {
     }
 
     @Test
-    public void testBoundByForeground() {
+    public void testBoundByForegroundFgs() {
         mAppSwitchState = APP_SWITCH_ALLOW;
         mController.addBoundClientUid(999, "visible.package", Context.BIND_ALLOW_ACTIVITY_STARTS);
         mHasActiveVisibleWindow.add(999);
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
                 mAppSwitchState, mIsCheckingForFgsStart,
-                mHasActivityInVisibleTask, mInPinnedWindoMode,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
+                mHasBackgroundActivityStartPrivileges,
+                mLastStopAppSwitchesTime, mLastActivityLaunchTime,
+                mLastActivityFinishTime);
+        assertThat(balVerdict.getCode()).isEqualTo(BAL_ALLOW_VISIBLE_WINDOW);
+    }
+
+    @Test
+    public void testBoundByForeground() {
+        mAppSwitchState = APP_SWITCH_ALLOW;
+        mController.addBoundClientUid(999, "visible.package", Context.BIND_ALLOW_ACTIVITY_STARTS);
+        mHasActiveNotPinnedVisibleWindow.add(999);
+        BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
+                mPid, mUid, mPackageName,
+                mAppSwitchState, mIsCheckingForFgsStart,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
                 mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
@@ -168,11 +185,11 @@ public class BackgroundLaunchProcessControllerTests {
     public void testForegroundTaskBlockedIfPinned() {
         mAppSwitchState = APP_SWITCH_ALLOW;
         mHasActivityInVisibleTask = true;
-        mInPinnedWindoMode = true;
+        mInPinnedWindowMode = true;
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
                 mAppSwitchState, mIsCheckingForFgsStart,
-                mHasActivityInVisibleTask, mInPinnedWindoMode,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
                 mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
@@ -183,11 +200,11 @@ public class BackgroundLaunchProcessControllerTests {
     public void testForegroundTask() {
         mAppSwitchState = APP_SWITCH_ALLOW;
         mHasActivityInVisibleTask = true;
-        mInPinnedWindoMode = false;
+        mInPinnedWindowMode = false;
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
                 mAppSwitchState, mIsCheckingForFgsStart,
-                mHasActivityInVisibleTask, mInPinnedWindoMode,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
                 mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
@@ -204,7 +221,7 @@ public class BackgroundLaunchProcessControllerTests {
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
                 mAppSwitchState, mIsCheckingForFgsStart,
-                mHasActivityInVisibleTask, mInPinnedWindoMode,
+                mHasActivityInVisibleTask, mInPinnedWindowMode,
                 mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
