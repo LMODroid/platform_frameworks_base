@@ -8348,6 +8348,13 @@ public class WindowManagerService extends IWindowManager.Stub
         }
 
         @Override
+        public Context getDisplayUiContext(int displayId) {
+            synchronized (mGlobalLock) {
+                return mRoot.getDisplayUiContext(displayId);
+            }
+        }
+
+        @Override
         public void setNonDefaultDisplayRotation(int displayId, @Surface.Rotation int rotation,
                 @NonNull String caller) {
             if (displayId == Display.DEFAULT_DISPLAY || displayId == Display.INVALID_DISPLAY) {

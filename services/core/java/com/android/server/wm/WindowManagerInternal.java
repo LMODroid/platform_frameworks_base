@@ -830,6 +830,13 @@ public abstract class WindowManagerInternal {
     public abstract Context getTopFocusedDisplayUiContext();
 
     /**
+     * @return The UI context of the display.
+     *
+     * @param displayId The id of the display
+     */
+    public abstract Context getDisplayUiContext(int displayId);
+
+    /**
      * Sets the rotation of a non-default display.
      *
      * @param displayId The id of the display
