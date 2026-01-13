@@ -2010,7 +2010,7 @@
     <string name="work_mode_emergency_call_button" msgid="6818855962881612322">"Urgence"</string>
     <string name="set_up_screen_lock_title" msgid="8346083801616474030">"Config. verrouillage d\'écran"</string>
     <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"Config. verrouillage d\'écran"</string>
-    <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"Configurez verrouillage de l\'écran pour utiliser Espace privé"</string>
+    <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"Configurez un verrouillage de l\'écran pour utiliser l\'espace privé"</string>
     <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"Réglez le verrouillage de l\'écran pour supprimer l\'espace privé"</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"L\'appli n\'est pas accessible"</string>
     <string name="app_blocked_message" msgid="542972921087873023">"<xliff:g id="APP_NAME">%1$s</xliff:g> n\'est pas accessible pour le moment."</string>
