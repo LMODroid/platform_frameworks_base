@@ -310,7 +310,7 @@
     <string name="turn_on_bluetooth_auto_info_disabled" msgid="682984290339848844">"Quick Share や「デバイスを探す」などの機能は Bluetooth を使用します"</string>
     <string name="turn_on_bluetooth_auto_info_enabled" msgid="7440944034584560279">"明日の朝に Bluetooth が ON になります"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"音声を共有"</string>
-    <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"音声を共有中"</string>
+    <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"音声を共有しています"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_accessibility" msgid="7604615019302091708">"音声の共有設定を開く"</string>
     <string name="quick_settings_bluetooth_secondary_label_battery_level" msgid="4182034939479344093">"バッテリー <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%s</xliff:g>"</string>
     <string name="quick_settings_bluetooth_secondary_label_audio" msgid="780333390310051161">"オーディオ"</string>
@@ -1302,7 +1302,7 @@
     <string name="dream_overlay_weather_complication_desc" msgid="824503662089783824">"<xliff:g id="WEATHER_CONDITION">%1$s</xliff:g>、<xliff:g id="TEMPERATURE">%2$s</xliff:g>"</string>
     <string name="note_task_button_label" msgid="230135078402003532">"メモ"</string>
     <string name="note_task_shortcut_long_label" msgid="7729325091147319409">"メモ、<xliff:g id="NOTE_TAKING_APP">%1$s</xliff:g>"</string>
-    <string name="audio_sharing_description" msgid="8849060142768870004">"音声を共有中"</string>
+    <string name="audio_sharing_description" msgid="8849060142768870004">"音声を共有しています"</string>
     <string name="broadcasting_description_is_broadcasting" msgid="765627502786404290">"ブロードキャスト"</string>
     <string name="bt_le_audio_broadcast_dialog_title" msgid="3605428497924077811">"<xliff:g id="APP_NAME">%1$s</xliff:g> のブロードキャストを停止しますか？"</string>
     <string name="bt_le_audio_broadcast_dialog_sub_title" msgid="7889684551194225793">"<xliff:g id="SWITCHAPP">%1$s</xliff:g> をブロードキャストしたり、出力を変更したりすると、現在のブロードキャストが停止します。"</string>

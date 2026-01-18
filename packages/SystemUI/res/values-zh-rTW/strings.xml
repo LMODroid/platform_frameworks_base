@@ -189,11 +189,11 @@
     <string name="biometric_dialog_face_icon_description_authenticated" msgid="2242167416140740920">"臉孔驗證成功"</string>
     <string name="biometric_dialog_face_icon_description_confirmed" msgid="7918067993953940778">"確認完畢"</string>
     <string name="biometric_dialog_tap_confirm" msgid="9166350738859143358">"輕觸 [確認] 完成驗證設定"</string>
-    <string name="biometric_dialog_tap_confirm_with_face" msgid="2378151312221818694">"裝置已透過你的臉解鎖"</string>
-    <string name="biometric_dialog_tap_confirm_with_face_alt_1" msgid="439152621640507113">"裝置已透過你的臉解鎖，按下即可繼續操作。"</string>
+    <string name="biometric_dialog_tap_confirm_with_face" msgid="2378151312221818694">"裝置已透過臉孔解鎖"</string>
+    <string name="biometric_dialog_tap_confirm_with_face_alt_1" msgid="439152621640507113">"裝置已透過臉孔解鎖，點按即可繼續操作。"</string>
     <string name="biometric_dialog_tap_confirm_with_face_alt_2" msgid="8586608186457385108">"臉孔辨識完成，按下即可繼續操作。"</string>
     <string name="biometric_dialog_tap_confirm_with_face_alt_3" msgid="2192670471930606539">"臉孔辨識完成，按下「解鎖」圖示即可繼續操作。"</string>
-    <string name="biometric_dialog_tap_confirm_with_face_sfps" msgid="2499213248903257928">"裝置已透過你的臉解鎖，輕觸這裡即可繼續。"</string>
+    <string name="biometric_dialog_tap_confirm_with_face_sfps" msgid="2499213248903257928">"裝置已透過臉孔解鎖，輕觸即可繼續。"</string>
     <string name="biometric_dialog_authenticated" msgid="7337147327545272484">"已通過驗證"</string>
     <string name="biometric_dialog_cancel_authentication" msgid="981316588773442637">"取消驗證"</string>
     <string name="biometric_dialog_content_view_more_options_button" msgid="2663810393874865475">"更多選項"</string>
@@ -454,10 +454,10 @@
     <string name="keyguard_unlock_press" msgid="9140109453735019209">"按下「解鎖」圖示即可開啟"</string>
     <string name="keyguard_face_successful_unlock_swipe" msgid="6180997591385846073">"你已用自己的臉解鎖裝置，向上滑動即可開啟。"</string>
     <string name="keyguard_face_successful_unlock_press" msgid="25520941264602588">"裝置已透過人臉解鎖，按下「解鎖」圖示即可開啟。"</string>
-    <string name="keyguard_face_successful_unlock_press_alt_1" msgid="5715461103913071474">"裝置已透過你的臉解鎖，按下即可開啟。"</string>
+    <string name="keyguard_face_successful_unlock_press_alt_1" msgid="5715461103913071474">"裝置已透過臉孔解鎖，按下即可開啟。"</string>
     <string name="keyguard_face_successful_unlock_press_alt_2" msgid="8310787946357120406">"臉孔辨識完成，按下即可開啟。"</string>
     <string name="keyguard_face_successful_unlock_press_alt_3" msgid="7219030481255573962">"臉孔辨識完成，按下「解鎖」圖示即可開啟。"</string>
-    <string name="keyguard_face_successful_unlock" msgid="4203999851465708287">"裝置已透過你的臉解鎖"</string>
+    <string name="keyguard_face_successful_unlock" msgid="4203999851465708287">"裝置已透過臉孔解鎖"</string>
     <string name="keyguard_face_successful_unlock_alt1" msgid="5853906076353839628">"臉孔辨識完成"</string>
     <string name="keyguard_retry" msgid="886802522584053523">"向上滑動即可重試"</string>
     <string name="accesssibility_keyguard_retry" msgid="8880238862712870676">"向上滑動即可再次執行人臉解鎖功能"</string>
