@@ -272,7 +272,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Teljes jelentés"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"Ezt a beállítást minimális rendszerzavar esetén használja, amikor eszköze nem válaszol, túl lassú, illetve ha minden jelentésrészre szüksége van. A rendszer nem teszi lehetővé további részletek megadását, illetve további képernyőképek készítését."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{Képernyőkép készítése a hibajelentéshez # másodpercen belül.}other{Képernyőkép készítése a hibajelentéshez # másodpercen belül.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Sikerült a képernyőkép elkészítése a hibajelentéshez"</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Képernyőkép készült a hibajelentéshez"</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"Nem sikerült képernyőképet készíteni a hibajelentéshez"</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"Néma üzemmód"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"Hang kikapcsolva"</string>

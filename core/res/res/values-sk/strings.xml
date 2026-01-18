@@ -264,7 +264,7 @@
     <string name="global_action_power_options" msgid="1185286119330160073">"Vypnúť"</string>
     <string name="global_action_restart" msgid="4678451019561687074">"Reštartovať"</string>
     <string name="global_action_emergency" msgid="1387617624177105088">"Tieseň"</string>
-    <string name="global_action_bug_report" msgid="5127867163044170003">"Hlásenie o chybách"</string>
+    <string name="global_action_bug_report" msgid="5127867163044170003">"Hlásenie o chybách"</string>
     <string name="global_action_logout" msgid="6093581310002476511">"Ukončiť reláciu"</string>
     <string name="global_action_screenshot" msgid="2610053466156478564">"Snímka obrazovky"</string>
     <string name="bugreport_title" msgid="8549990811777373050">"Nahlásiť chybu"</string>
@@ -274,7 +274,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Úplné nahlásenie"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"Táto možnosť slúži na minimalizáciu zásahov do systému, keď zariadenie neodpovedá, je príliš pomalé alebo potrebujete zahrnúť všetky sekcie hlásenia. Neumožňuje zadať ďalšie podrobnosti ani vytvoriť dodatočné snímky obrazovky."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{Snímka obrazovky pre hlásenie chyby sa vytvorí o # sekundu.}few{Snímka obrazovky pre hlásenie chyby sa vytvorí o # sekundy.}many{Snímka obrazovky pre hlásenie chyby sa vytvorí o # sekundy.}other{Snímka obrazovky pre hlásenie chyby sa vytvorí o # sekúnd.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Bola vytvorená snímka obrazovky s hlásením chyby"</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Hlásenie chyby so snímkou obrazovky "</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"Nepodarilo sa vytvoriť snímku obrazovky s hlásením chyby"</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"Tichý režim"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"Zvuk je VYPNUTÝ."</string>

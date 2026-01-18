@@ -669,7 +669,7 @@
   </string-array>
     <string name="fingerprint_error_not_match" msgid="4599441812893438961">"వేలిముద్ర (ఫింగర్-ప్రింట్) మ్యాచ్ కాలేదు"</string>
     <string name="fingerprint_udfps_error_not_match" msgid="8236930793223158856">"వేలిముద్ర (ఫింగర్-ప్రింట్) మ్యాచ్ కాలేదు"</string>
-    <string name="fingerprint_dialog_use_fingerprint_instead" msgid="5590293588784953188">"ముఖం గుర్తించలేదు. బదులుగా వేలిముద్ర ఉపయోగించండి."</string>
+    <string name="fingerprint_dialog_use_fingerprint_instead" msgid="5590293588784953188">"ముఖాన్ని గుర్తించలేదు. వేలిముద్రను ఉపయోగించండి."</string>
     <string name="fingerprint_authenticated" msgid="2024862866860283100">"వేలిముద్ర ప్రమాణీకరించబడింది"</string>
     <string name="face_authenticated_no_confirmation_required" msgid="8867889115112348167">"ముఖం ప్రమాణీకరించబడింది"</string>
     <string name="face_authenticated_confirmation_required" msgid="6872632732508013755">"ముఖం ప్రమాణీకరించబడింది, దయచేసి ధృవీకరించును నొక్కండి"</string>
@@ -2010,7 +2010,7 @@
     <string name="set_up_screen_lock_title" msgid="8346083801616474030">"స్క్రీన్ లాక్‌ను సెట్ చేయండి"</string>
     <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"స్క్రీన్ లాక్‌ను సెట్ చేయండి"</string>
     <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"మీ ప్రైవేట్ స్పేస్‌ను ఉపయోగించడానికి, ఈ డివైజ్‌లో స్క్రీన్ లాక్ సెట్ చేయండి"</string>
-    <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"ప్రైవేట్ స్పేస్‌ను తొలగించడానికి, ఈ పరికరంలో స్క్రీన్ లాక్‌ను సెట్ చేయండి"</string>
+    <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"ప్రైవేట్ స్పేస్‌ను తొలగించడానికి, ఈ డివైజ్‌లో స్క్రీన్ లాక్‌ను సెట్ చేయండి"</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"యాప్ అందుబాటులో లేదు"</string>
     <string name="app_blocked_message" msgid="542972921087873023">"<xliff:g id="APP_NAME">%1$s</xliff:g> ప్రస్తుతం అందుబాటులో లేదు."</string>
     <string name="app_streaming_blocked_title" msgid="6090945835898766139">"<xliff:g id="ACTIVITY">%1$s</xliff:g> అందుబాటులో లేదు"</string>

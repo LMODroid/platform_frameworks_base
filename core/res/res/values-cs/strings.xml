@@ -274,7 +274,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Úplný přehled"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"Tato možnost slouží k rychlému nahlášení, když zařízení neodpovídá, je příliš pomalé nebo pokud potřebujete zahrnout všechny sekce. Tímto způsobem nelze zadat více podrobností ani pořídit snímek obrazovky."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{Snímek obrazovky pro zprávu o chybě bude pořízen za # sekundu.}few{Snímek obrazovky pro zprávu o chybě bude pořízen za # sekundy.}many{Snímek obrazovky pro zprávu o chybě bude pořízen za # sekundy.}other{Snímek obrazovky pro zprávu o chybě bude pořízen za # sekund.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Se zprávou o chybě byl pořízen snímek obrazovky"</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Zpráva o chybě obsahuje screenshot"</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"Pořízení snímku obrazovky se zprávou o chybě se nezdařilo"</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"Tichý režim"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"Zvuk je VYPNUTÝ."</string>
