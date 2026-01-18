@@ -94,8 +94,8 @@
     <string name="bluetooth_connected_no_headset_battery_level" msgid="2661863370509206428">"Туташып турат (телефониясыз), батареянын деңгээли – <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g><xliff:g id="ACTIVE_DEVICE">%2$s</xliff:g>"</string>
     <string name="bluetooth_connected_no_a2dp_battery_level" msgid="6499078454894324287">"Туташып турат (медиасыз), батареянын деңгээли – <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g><xliff:g id="ACTIVE_DEVICE">%2$s</xliff:g>"</string>
     <string name="bluetooth_connected_no_headset_no_a2dp_battery_level" msgid="8477440576953067242">"Туташып турат (телефониясыз же медиасыз), батареянын деңгээли – <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g><xliff:g id="ACTIVE_DEVICE">%2$s</xliff:g>"</string>
-    <string name="bluetooth_active_battery_level" msgid="2685517576209066008">"Жигердүү. Батарея: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
-    <string name="bluetooth_active_battery_level_untethered" msgid="4961338936672922617">"Жигердүү. Батарея: L: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_0">%1$s</xliff:g>, R: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_1">%2$s</xliff:g>."</string>
+    <string name="bluetooth_active_battery_level" msgid="2685517576209066008">"Иштеп жатат. Батарея: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
+    <string name="bluetooth_active_battery_level_untethered" msgid="4961338936672922617">"Иштеп жатат. Батарея: L: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_0">%1$s</xliff:g>, R: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_1">%2$s</xliff:g>."</string>
     <string name="bluetooth_active_battery_level_untethered_left" msgid="2895644748625343977">"Иштеп жатат. Сол: Батареянын кубаты <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
     <string name="bluetooth_active_battery_level_untethered_right" msgid="7407517998880370179">"Иштеп жатат. Оң: Батареянын кубаты <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
     <string name="bluetooth_battery_level" msgid="2893696778200201555">"Батареянын деңгээли: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
@@ -110,8 +110,8 @@
     <string name="bluetooth_hearing_aid_left_active" msgid="8330226430756799572">"Иштеп жатат (сол тарап гана)"</string>
     <string name="bluetooth_hearing_aid_right_active" msgid="2244728507170385397">"Иштеп жатат (оң тарап гана)"</string>
     <string name="bluetooth_hearing_aid_left_and_right_active" msgid="4294571497939983181">"Иштеп жатат (сол жана оң)"</string>
-    <string name="bluetooth_active_media_only_battery_level" msgid="7772517511061834073">"Жигердүү (медиа үчүн гана). Батарея: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
-    <string name="bluetooth_active_media_only_battery_level_untethered" msgid="7444753133664620926">"Жигердүү (медиа үчүн гана). Батарея: L: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_0">%1$s</xliff:g>, R: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_1">%2$s</xliff:g>."</string>
+    <string name="bluetooth_active_media_only_battery_level" msgid="7772517511061834073">"Иштеп жатат (медиа үчүн гана). Батарея: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
+    <string name="bluetooth_active_media_only_battery_level_untethered" msgid="7444753133664620926">"Иштеп жатат (медиа үчүн гана). Батарея: L: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_0">%1$s</xliff:g>, R: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_1">%2$s</xliff:g>."</string>
     <string name="bluetooth_battery_level_lea_support" msgid="5968584103507988820">"Туташып турат (чогуу уксаңыз болот). Батарея: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
     <string name="bluetooth_battery_level_untethered_lea_support" msgid="803110681688633362">"Туташып турат (чогуу уксаңыз болот). Батарея: L: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_0">%1$s</xliff:g>, R: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE_1">%2$s</xliff:g>."</string>
     <string name="bluetooth_battery_level_untethered_left_lea_support" msgid="7707464334346454950">"Туташып турат (чогуу уксаңыз болот). Сол кулак – батареянын деңгээли: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>."</string>
@@ -254,10 +254,10 @@
     <string name="adb_wireless_error" msgid="721958772149779856">"Ката"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Мүчүлүштүктөрдү Wi-Fi аркылуу аныктоо"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Жеткиликтүү түзмөктөрдү көрүү үчүн мүчүлүштүктөрдү Wi-Fi аркылуу аныктоону күйгүзүңүз"</string>
-    <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Түзмөктү QR код аркылуу жупташтыруу"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR кодунун сканерин колдонуп, жаңы түзмөктөрдү жупташтырыңыз"</string>
-    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Түзмөктү атайын код аркылуу жупташтыруу"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Жаңы түзмөктөрдү алты сандан турган код аркылуу жупташтырасыз"</string>
+    <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Түзмөктү QR код аркылуу байланыштыруу"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR кодду скандап, жаңы түзмөктөрдү байланыштырасыз"</string>
+    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Түзмөктү атайын код аркылуу байланыштыруу"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Жаңы түзмөктөрдү алты сандан турган код аркылуу байланыштырасыз"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Байланышкан түзмөктөр"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Учурда туташып турган түзмөктөр"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Түзмөктүн чоо-жайы"</string>

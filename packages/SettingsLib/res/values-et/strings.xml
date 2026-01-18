@@ -255,7 +255,7 @@
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Juhtmevaba silumine"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Saadaolevate seadmete nägemiseks ja kasutamiseks lülitage sisse juhtmevaba silumine."</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Seadme sidumine QR-koodiga"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Uute seadmete sidumine QR-koodiskanneriga"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Uute seadmete sidumine QR-koodi skanneriga"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Seadme sidumine sidumiskoodiga"</string>
     <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Uute seadmete sidumine kuuekohalise koodiga"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Seotud seadmed"</string>

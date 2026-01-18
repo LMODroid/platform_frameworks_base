@@ -253,9 +253,9 @@
     <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"Mode Débogage lorsque le Wi-Fi est connecté"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"Erreur"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"Débogage sans fil"</string>
-    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Pour afficher et utiliser les appareils à proximité, activez le débogage sans fil"</string>
+    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Pour afficher et utiliser les appareils disponibles, activez le débogage sans fil"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Associer l\'appareil à l\'aide d\'un code QR"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Associer les nouveaux appareils à l\'aide d\'un lecteur de code QR"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Associez les nouveaux appareils à l\'aide d\'un lecteur de code QR"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Associer l\'appareil avec un code d\'association"</string>
     <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Associez les nouveaux appareils à l\'aide d\'un code à six chiffres"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Appareils associés"</string>
@@ -433,7 +433,7 @@
     <string name="force_resizable_activities" msgid="7143612144399959606">"Forcer les activités à être redimensionnables"</string>
     <string name="force_resizable_activities_summary" msgid="2490382056981583062">"Permet de redimensionner toutes les activités pour le mode Multifenêtre, indépendamment des valeurs du fichier de configuration."</string>
     <string name="enable_freeform_support" msgid="7599125687603914253">"Activer les fenêtres de forme libre"</string>
-    <string name="local_backup_password_title" msgid="4631017948933578709">"Mot de passe sauvegarde PC"</string>
+    <string name="local_backup_password_title" msgid="4631017948933578709">"Mot de passe de sauvegarde du PC"</string>
     <string name="local_backup_password_summary_none" msgid="7646898032616361714">"Les sauvegardes complètes sur PC ne sont pas protégées actuellement"</string>
     <string name="local_backup_password_summary_change" msgid="1707357670383995567">"Touchez pour modifier ou supprimer le mot de passe utilisé pour les sauvegardes complètes sur ordinateur."</string>
     <string name="local_backup_password_toast_success" msgid="4891666204428091604">"Le nouveau mot de passe de secours a bien été défini."</string>

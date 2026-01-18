@@ -254,11 +254,11 @@
     <string name="adb_wireless_error" msgid="721958772149779856">"ದೋಷ"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"ವೈರ್‌ಲೆಸ್ ಡೀಬಗಿಂಗ್"</string>
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"ಲಭ್ಯವಿರುವ ಸಾಧನಗಳನ್ನು ನೋಡಲು ಮತ್ತು ಬಳಸಲು, ವೈರ್‌ಲೆಸ್ ಡೀಬಗ್ ಮಾಡುವಿಕೆಯನ್ನು ಆನ್ ಮಾಡಿ"</string>
-    <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"QR ಕೋಡ್ ಬಳಸಿ ಸಾಧನವನ್ನು ಜೋಡಿಸಿ"</string>
-    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR ಕೋಡ್ ಸ್ಕ್ಯಾನರ್ ಬಳಸಿ ಹೊಸ ಸಾಧನಗಳನ್ನು ಜೋಡಿಸಿ"</string>
-    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"ಜೋಡಿಸುವ ಕೋಡ್ ಬಳಸಿ ಸಾಧನವನ್ನು ಜೋಡಿಸಿ"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"ಆರು ಅಂಕಿಯ ಕೋಡ್ ಬಳಸಿ ಹೊಸ ಸಾಧನಗಳನ್ನು ಜೋಡಿಸಿ"</string>
-    <string name="adb_paired_devices_title" msgid="5268997341526217362">"ಜೋಡಿಸಲಾದ ಸಾಧನಗಳು"</string>
+    <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"QR ಕೋಡ್ ಬಳಸಿ ಸಾಧನವನ್ನು ಪೇರ್ ಮಾಡಿ"</string>
+    <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR ಕೋಡ್ ಸ್ಕ್ಯಾನರ್ ಬಳಸಿ ಹೊಸ ಸಾಧನಗಳನ್ನು ಪೇರ್ ಮಾಡಿ"</string>
+    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"ಪೇರ್ ಮಾಡುವ ಕೋಡ್ ಬಳಸಿ ಸಾಧನವನ್ನು ಪೇರ್ ಮಾಡಿ"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"ಆರು ಅಂಕಿಯ ಕೋಡ್ ಬಳಸಿ ಹೊಸ ಸಾಧನಗಳನ್ನು ಪೇರ್ ಮಾಡಿ"</string>
+    <string name="adb_paired_devices_title" msgid="5268997341526217362">"ಪೇರ್ ಮಾಡಲಾದ ಸಾಧನಗಳು"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"ಪ್ರಸ್ತುತ ಕನೆಕ್ಟ್ ಮಾಡಲಾಗಿದೆ"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"ಸಾಧನದ ವಿವರಗಳು"</string>
     <string name="adb_device_forget" msgid="193072400783068417">"ಮರೆತುಬಿಡಿ"</string>
@@ -644,7 +644,7 @@
     <string name="profile_info_settings_title" msgid="105699672534365099">"ಪ್ರೊಫೈಲ್‌‌ ಮಾಹಿತಿ"</string>
     <string name="user_need_lock_message" msgid="4311424336209509301">"ನೀವು ನಿರ್ಬಂಧಿತ ಪ್ರೊಫೈಲ್ ಅನ್ನು ರಚಿಸಬಹುದಾದರ ಮೊದಲು, ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು ಮತ್ತು ವೈಯಕ್ತಿಕ ಡೇಟಾವನ್ನು ರಕ್ಷಿಸಲು ನೀವು ಪರದೆಯ ಲಾಕ್‌ ಹೊಂದಿಸುವ ಅಗತ್ಯವಿದೆ."</string>
     <string name="user_set_lock_button" msgid="1427128184982594856">"ಲಾಕ್ ಸೆಟ್ ಮಾಡಿ"</string>
-    <string name="user_switch_to_user" msgid="6975428297154968543">"<xliff:g id="USER_NAME">%s</xliff:g>ಗೆ ಬದಲಿಸಿ"</string>
+    <string name="user_switch_to_user" msgid="6975428297154968543">"<xliff:g id="USER_NAME">%s</xliff:g> ಗೆ ಬದಲಿಸಿ"</string>
     <string name="creating_new_user_dialog_message" msgid="7232880257538970375">"ಹೊಸ ಬಳಕೆದಾರರನ್ನು ರಚಿಸಲಾಗುತ್ತಿದೆ…"</string>
     <string name="creating_new_guest_dialog_message" msgid="1114905602181350690">"ಹೊಸ ಅತಿಥಿಯನ್ನು ರಚಿಸಲಾಗುತ್ತಿದೆ…"</string>
     <string name="add_user_failed" msgid="4809887794313944872">"ಹೊಸ ಬಳಕೆದಾರರನ್ನು ರಚಿಸಲು ವಿಫಲವಾಗಿದೆ"</string>

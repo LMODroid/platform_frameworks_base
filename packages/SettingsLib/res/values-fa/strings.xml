@@ -666,7 +666,7 @@
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"با این کار، برنامه‌ها و داده‌ها از جلسه مهمان کنونی حذف خواهند شد."</string>
     <string name="grant_admin" msgid="4323199171790522574">"بله، سرپرست شود"</string>
     <string name="not_grant_admin" msgid="3557849576157702485">"نه، سرپرست نشود"</string>
-    <string name="guest_exit_dialog_button" msgid="1736401897067442044">"خروج"</string>
+    <string name="guest_exit_dialog_button" msgid="1736401897067442044">"خارج شدن"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"فعالیت مهمان ذخیره شود؟"</string>
     <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"می‌توانید فعالیت جلسه کنونی را ذخیره کنید یا همه برنامه و داده‌ها را حذف کنید"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"حذف"</string>
