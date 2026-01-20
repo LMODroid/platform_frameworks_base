@@ -60,7 +60,7 @@
     <string name="hdmi_cec_set_menu_language_accept" msgid="2513689457281009578">"மொழியை மாற்று"</string>
     <string name="hdmi_cec_set_menu_language_decline" msgid="7650721096558646011">"தற்போதைய மொழியை வைத்திரு"</string>
     <string name="share_wifi_button_text" msgid="1285273973812029240">"வைஃபையைப் பகிர்"</string>
-    <string name="wifi_debugging_title" msgid="7300007687492186076">"இந்த நெட்வொர்க்கில் வைஃபை பிழைதிருத்தத்தை அனுமதிக்கவா?"</string>
+    <string name="wifi_debugging_title" msgid="7300007687492186076">"இந்த நெட்வொர்க்கில் வயர்லெஸ் பிழைதிருத்தத்தை அனுமதிக்கவா?"</string>
     <string name="wifi_debugging_message" msgid="5461204211731802995">"நெட்வொர்க் பெயர் (SSID)\n<xliff:g id="SSID_0">%1$s</xliff:g>\n\nவைஃபை முகவரி (BSSID)\n<xliff:g id="BSSID_1">%2$s</xliff:g>"</string>
     <string name="wifi_debugging_always" msgid="2968383799517975155">"இந்த நெட்வொர்க்கில் எப்போதும் அனுமதி"</string>
     <string name="wifi_debugging_allow" msgid="4573224609684957886">"அனுமதி"</string>

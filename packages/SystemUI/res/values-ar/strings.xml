@@ -954,7 +954,7 @@
     <string name="lockscreen_shortcut_right" msgid="4138414674531853719">"اختصار اليمين"</string>
     <string name="lockscreen_unlock_left" msgid="1417801334370269374">"اختصار اليسار يلغي أيضًا تأمين"</string>
     <string name="lockscreen_unlock_right" msgid="4658008735541075346">"اختصار اليمين يلغي أيضًا تأمين"</string>
-    <string name="lockscreen_none" msgid="4710862479308909198">"بدون"</string>
+    <string name="lockscreen_none" msgid="4710862479308909198">"بدون اختصار"</string>
     <string name="tuner_launch_app" msgid="3906265365971743305">"تشغيل <xliff:g id="APP">%1$s</xliff:g>"</string>
     <string name="tuner_other_apps" msgid="7767462881742291204">"تطبيقات أخرى"</string>
     <string name="tuner_circle" msgid="5270591778160525693">"دائرة"</string>

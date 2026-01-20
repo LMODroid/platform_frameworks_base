@@ -61,7 +61,7 @@
     <string name="hdmi_cec_set_menu_language_decline" msgid="7650721096558646011">"Задржи актуелни језик"</string>
     <string name="share_wifi_button_text" msgid="1285273973812029240">"Дели WiFi"</string>
     <string name="wifi_debugging_title" msgid="7300007687492186076">"Желите да дозволите бежично отклањање грешака на овој мрежи?"</string>
-    <string name="wifi_debugging_message" msgid="5461204211731802995">"Назив мреже (SSID)\n<xliff:g id="SSID_0">%1$s</xliff:g>\n\nWi‑Fi адреса (BSSID)\n<xliff:g id="BSSID_1">%2$s</xliff:g>"</string>
+    <string name="wifi_debugging_message" msgid="5461204211731802995">"Назив мреже (SSID)\n<xliff:g id="SSID_0">%1$s</xliff:g>\n\nWiFi адреса (BSSID)\n<xliff:g id="BSSID_1">%2$s</xliff:g>"</string>
     <string name="wifi_debugging_always" msgid="2968383799517975155">"Увек дозволи на овој мрежи"</string>
     <string name="wifi_debugging_allow" msgid="4573224609684957886">"Дозволи"</string>
     <string name="wifi_debugging_secondary_user_title" msgid="2493201475880517725">"Бежично отклањање грешака није дозвољено"</string>

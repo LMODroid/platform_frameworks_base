@@ -79,7 +79,7 @@
     <string name="screenshot_saving_private_profile" msgid="8934706048497093297">"Сохранение скриншота в частный профиль…"</string>
     <string name="screenshot_saved_title" msgid="8893267638659083153">"Скриншот сохранен"</string>
     <string name="screenshot_failed_title" msgid="3259148215671936891">"Не удалось сохранить скриншот"</string>
-    <string name="screenshot_failed_external_display_indication" msgid="6555673132061101936">"Внешний дисплей"</string>
+    <string name="screenshot_failed_external_display_indication" msgid="6555673132061101936">"Внешний экран"</string>
     <string name="screenshot_failed_to_save_user_locked_text" msgid="6156607948256936920">"Чтобы сохранить скриншот, разблокируйте устройство."</string>
     <string name="screenshot_failed_to_save_unknown_text" msgid="1506621600548684129">"Попробуйте сделать скриншот снова."</string>
     <string name="screenshot_failed_to_save_text" msgid="7232739948999195960">"Не удалось сохранить скриншот."</string>
@@ -310,7 +310,7 @@
     <string name="turn_on_bluetooth_auto_info_disabled" msgid="682984290339848844">"Bluetooth используется в таких функциях и сервисах, как \"Быстрая отправка\" и \"Найти устройство\""</string>
     <string name="turn_on_bluetooth_auto_info_enabled" msgid="7440944034584560279">"Bluetooth включится завтра утром"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"Отправить аудио"</string>
-    <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"Отправка аудио"</string>
+    <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"Передача аудио"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_accessibility" msgid="7604615019302091708">"перейти в настройки передачи аудио"</string>
     <string name="quick_settings_bluetooth_secondary_label_battery_level" msgid="4182034939479344093">"Заряд: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%s</xliff:g>"</string>
     <string name="quick_settings_bluetooth_secondary_label_audio" msgid="780333390310051161">"Аудиоустройство"</string>
