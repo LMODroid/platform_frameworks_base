@@ -273,7 +273,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Viss pārskats"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"Izmantojiet, lai minimāli iejauktos sistēmā, ja ierīce nereaģē, darbojas pārāk lēni vai ja ir nepieciešamas visas pārskata sadaļas. Nevar ievadīt papildu informāciju vai izveidot papildu ekrānuzņēmumus."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{Pēc # sekundes tiks izveidots ekrānuzņēmums kļūdas pārskatam.}zero{Pēc # sekundēm tiks izveidots ekrānuzņēmums kļūdas pārskatam.}one{Pēc # sekundes tiks izveidots ekrānuzņēmums kļūdas pārskatam.}other{Pēc # sekundēm tiks izveidots ekrānuzņēmums kļūdas pārskatam.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Izveidots ekrānuzņēmums ar kļūdas pārskatu."</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Ekrānuzņēmums ar kļūdas pārskatu."</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"Neizdevās izveidot ekrānuzņēmumu ar kļūdas pārskatu."</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"Klusuma režīms"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"Skaņa ir IZSLĒGTA."</string>

@@ -913,7 +913,7 @@
   </string-array>
     <string name="phoneTypeCustom" msgid="5120365721260686814">"Gepasmaak"</string>
     <string name="phoneTypeHome" msgid="3880132427643623588">"Tuis"</string>
-    <string name="phoneTypeMobile" msgid="1178852541462086735">"Mobiel"</string>
+    <string name="phoneTypeMobile" msgid="1178852541462086735">"Selfoon"</string>
     <string name="phoneTypeWork" msgid="6604967163358864607">"Werk"</string>
     <string name="phoneTypeFaxWork" msgid="6757519896109439123">"Werkfaks"</string>
     <string name="phoneTypeFaxHome" msgid="6678559953115904345">"Tuisfaks"</string>

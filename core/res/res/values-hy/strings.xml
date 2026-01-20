@@ -716,7 +716,7 @@
     <string name="face_acquired_too_right" msgid="6245286514593540859">"Հեռախոսը շարժեք դեպի ձախ"</string>
     <string name="face_acquired_too_left" msgid="9201762240918405486">"Հեռախոսը շարժեք դեպի աջ"</string>
     <string name="face_acquired_poor_gaze" msgid="4427153558773628020">"Նայեք ուղիղ էկրանին։"</string>
-    <string name="face_acquired_not_detected" msgid="1057966913397548150">"Դեմքը չի երևում։ Հեռախոսը պահեք աչքերի մա­­կարդակում։"</string>
+    <string name="face_acquired_not_detected" msgid="1057966913397548150">"Դեմքը չի երևում։ Հեռախոսը պահեք աչքերի մա­­կարդակին։"</string>
     <string name="face_acquired_too_much_motion" msgid="8199691445085189528">"Շատ եք շարժում։ Հեռախոսն անշարժ պահեք։"</string>
     <string name="face_acquired_recalibrate" msgid="8724013080976469746">"Նորից փորձեք։"</string>
     <string name="face_acquired_too_different" msgid="4505278456634706967">"Դեմքը չի ճանաչվել։ Նորից փորձեք։"</string>
