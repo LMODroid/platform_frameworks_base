@@ -954,7 +954,7 @@
     <string name="lockscreen_shortcut_right" msgid="4138414674531853719">"Rechte Verknüpfung"</string>
     <string name="lockscreen_unlock_left" msgid="1417801334370269374">"Linke Verknüpfung entsperrt außerdem"</string>
     <string name="lockscreen_unlock_right" msgid="4658008735541075346">"Rechte Verknüpfung entsperrt außerdem"</string>
-    <string name="lockscreen_none" msgid="4710862479308909198">"Keine"</string>
+    <string name="lockscreen_none" msgid="4710862479308909198">"Keiner"</string>
     <string name="tuner_launch_app" msgid="3906265365971743305">"<xliff:g id="APP">%1$s</xliff:g> starten"</string>
     <string name="tuner_other_apps" msgid="7767462881742291204">"Sonstige Apps"</string>
     <string name="tuner_circle" msgid="5270591778160525693">"Kreis"</string>
@@ -1414,7 +1414,7 @@
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"Startbildschirm"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"Du kannst jederzeit zum Startbildschirm gehen, indem du mit drei Fingern vom unteren Displayrand nach oben wischst."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Sehr gut!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du hast den Schritt für die Touchgeste „Zum Startbildschirm“ abgeschlossen"</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du hast das Tutorial für die Touchgeste „Zum Startbildschirm“ abgeschlossen"</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Letzte Apps aufrufen"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"Wische mit 3 Fingern nach oben und halte das Touchpad gedrückt."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Gut gemacht!"</string>

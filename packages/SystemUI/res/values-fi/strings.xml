@@ -1414,7 +1414,7 @@
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"Siirry etusivulle"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"Voit siirtyä aloitusnäytölle milloin tahansa pyyhkäisemällä ylös näytön alareunasta kolmella sormella."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Hienoa!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Olet oppinut aloitusnäytölle palaamiseleen."</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Olet oppinut siirry aloitusnäytölle -eleen."</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Katso viimeisimmät sovellukset"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"Pyyhkäise ylös ja pidä kosketuslevyä painettuna kolmella sormella."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Hienoa!"</string>

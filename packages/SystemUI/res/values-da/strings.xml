@@ -1410,11 +1410,11 @@
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"Gå tilbage"</string>
     <string name="touchpad_back_gesture_guidance" msgid="6263750214998421587">"Du kan gå tilbage ved at stryge mod venstre eller højre med tre fingre et vilkårligt sted på touchpladen.\n\nDu kan også bruge tastaturgenvejen Alt + Esc."</string>
     <string name="touchpad_back_gesture_success_title" msgid="7240576648330612171">"Flot!"</string>
-    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"Du har udført bevægelsen for Gå tilbage."</string>
+    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"Du har udført bevægelsen for at gå tilbage."</string>
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"Gå til startskærmen"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"Du kan til enhver tid stryge opad med tre fingre fra bunden af skærmen, hvis du vil gå til startskærmen."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Sådan!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du har fuldført bevægelsen for Gå til startskærmen."</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du har udført bevægelsen for at gå til startskærmen."</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Se seneste apps"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"Stryg opad, og hold tre fingre på touchpladen."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Godt klaret!"</string>
@@ -1422,7 +1422,7 @@
     <string name="tutorial_action_key_title" msgid="2659466586996495447">"Handlingstast"</string>
     <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"Du kan tilgå alle dine apps ved at trykke på handlingstasten på dit tastatur."</string>
     <string name="tutorial_action_key_success_title" msgid="466467860120112933">"Tillykke!"</string>
-    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"Du har fuldført bevægelsen for handlingstasten.\n\nHandling + / viser alle de tilgængelige genveje."</string>
+    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"Du har udført bevægelsen for handlingstasten.\n\nHandling + / viser alle de tilgængelige genveje."</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Tastaturets baggrundslys"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Niveau %1$d af %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"Hjemmestyring"</string>
