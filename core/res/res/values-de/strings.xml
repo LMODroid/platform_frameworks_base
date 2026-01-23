@@ -1980,9 +1980,9 @@
     <string name="call_notification_ongoing_text" msgid="3880832933933020875">"Aktueller Anruf"</string>
     <string name="call_notification_screening_text" msgid="8396931408268940208">"Filter für eingehenden Anruf"</string>
     <string name="default_notification_channel_label" msgid="3697928973567217330">"Unkategorisiert"</string>
-    <string name="promotional_notification_channel_label" msgid="7414844730492860233">"Werbeaktionen"</string>
+    <string name="promotional_notification_channel_label" msgid="7414844730492860233">"Werbung"</string>
     <string name="social_notification_channel_label" msgid="106520267132019945">"Soziale Netzwerke"</string>
-    <string name="news_notification_channel_label" msgid="4299937455247883311">"Neuigkeiten"</string>
+    <string name="news_notification_channel_label" msgid="4299937455247883311">"Aktuelles"</string>
     <string name="recs_notification_channel_label" msgid="4945985121418684297">"Empfehlungen"</string>
     <string name="importance_from_user" msgid="2782756722448800447">"Du hast die Wichtigkeit dieser Benachrichtigungen festgelegt."</string>
     <string name="importance_from_person" msgid="4235804979664465383">"Diese Benachrichtigung ist aufgrund der beteiligten Personen wichtig."</string>

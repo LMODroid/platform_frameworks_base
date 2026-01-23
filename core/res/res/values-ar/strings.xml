@@ -276,7 +276,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"تقرير كامل"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"يمكنك استخدام هذا الخيار للحصول على حد أدنى من تدخل النظام عند توقف استجابة الجهاز أو عند بطئها الشديد أو عند الحاجة إلى جميع أقسام التقرير. ولا يسمح لك هذا الخيار بالحصول على مزيد من التفاصيل أو تسجيل لقطات شاشة إضافية."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال ثانية واحدة.}zero{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال # ثانية.}two{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال ثانيتين.}few{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال # ثوانٍ.}many{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال # ثانية.}other{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال # ثانية.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"تم التقاط لقطة شاشة من خلال تقرير خطأ."</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"تم التقاط لقطة شاشة من خلال تقرير خطأ"</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"تعذّر التقاط لقطة شاشة من خلال تقرير خطأ."</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"وضع صامت"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"الصوت متوقف"</string>

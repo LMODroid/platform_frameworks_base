@@ -1153,7 +1153,7 @@
     <string name="duration_hours_shortest_future" msgid="2979276794547981674">"om <xliff:g id="COUNT">%d</xliff:g> t."</string>
     <string name="duration_days_shortest_future" msgid="3392722163935571543">"om <xliff:g id="COUNT">%d</xliff:g> d."</string>
     <string name="duration_years_shortest_future" msgid="5537464088352970388">"om <xliff:g id="COUNT">%d</xliff:g> år"</string>
-    <string name="duration_minutes_relative" msgid="8620337701051015593">"{count,plural, =1{For # minut siden}one{For # minut siden}other{For # minutter siden}}"</string>
+    <string name="duration_minutes_relative" msgid="8620337701051015593">"{count,plural, =1{# minut siden}one{# minut siden}other{# minutter siden}}"</string>
     <string name="duration_hours_relative" msgid="4836449961693180253">"{count,plural, =1{# time siden}one{# time siden}other{# timer siden}}"</string>
     <string name="duration_days_relative" msgid="621965767567258302">"{count,plural, =1{1 dag siden}one{1 dag siden}other{# dag siden}}"</string>
     <string name="duration_years_relative" msgid="8731202348869424370">"{count,plural, =1{For # år siden}one{For # år siden}other{For # år siden}}"</string>

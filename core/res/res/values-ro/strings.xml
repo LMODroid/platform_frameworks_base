@@ -321,7 +321,7 @@
     <string name="permgrouplab_contacts" msgid="4254143639307316920">"Agendă"</string>
     <string name="permgroupdesc_contacts" msgid="9163927941244182567">"să acceseze agenda"</string>
     <string name="permgrouplab_location" msgid="1858277002233964394">"Locație"</string>
-    <string name="permgroupdesc_location" msgid="1995955142118450685">"să acceseze locația acestui dispozitiv"</string>
+    <string name="permgroupdesc_location" msgid="1995955142118450685">"accesează locația acestui dispozitiv"</string>
     <string name="permgrouplab_calendar" msgid="6426860926123033230">"Calendar"</string>
     <string name="permgroupdesc_calendar" msgid="6762751063361489379">"să acceseze calendarul"</string>
     <string name="permgrouplab_sms" msgid="795737735126084874">"SMS"</string>

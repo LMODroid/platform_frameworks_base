@@ -1550,7 +1550,7 @@
     <string name="submit" msgid="862795280643405865">"ارسال"</string>
     <string name="car_mode_disable_notification_title" msgid="8450693275833142896">"برنامه رانندگی درحال اجرا است"</string>
     <string name="car_mode_disable_notification_message" msgid="8954550232288567515">"برای خروج از برنامه رانندگی تک‌ضرب بزنید."</string>
-    <string name="back_button_label" msgid="4078224038025043387">"برگشت"</string>
+    <string name="back_button_label" msgid="4078224038025043387">"برگشتن"</string>
     <string name="next_button_label" msgid="6040209156399907780">"بعدی"</string>
     <string name="skip_button_label" msgid="3566599811326688389">"رد شدن"</string>
     <string name="no_matches" msgid="6472699895759164599">"مورد منطبقی موجود نیست"</string>
@@ -2189,7 +2189,7 @@
     <string name="chooser_all_apps_button_label" msgid="3230427756238666328">"فهرست برنامه‌ها"</string>
     <string name="usb_device_resolve_prompt_warn" msgid="325871329788064199">"‏مجوز ضبط به این برنامه داده نشده است اما می‌تواند صدا را ازطریق این دستگاه USB ضبط کند."</string>
     <string name="accessibility_system_action_home_label" msgid="3234748160850301870">"صفحه اصلی"</string>
-    <string name="accessibility_system_action_back_label" msgid="4205361367345537608">"برگشت"</string>
+    <string name="accessibility_system_action_back_label" msgid="4205361367345537608">"برگشتن"</string>
     <string name="accessibility_system_action_recents_label" msgid="4782875610281649728">"برنامه‌های اخیر"</string>
     <string name="accessibility_system_action_notifications_label" msgid="6083767351772162010">"اعلان‌ها"</string>
     <string name="accessibility_system_action_quick_settings_label" msgid="4583900123506773783">"تنظیمات سریع"</string>
