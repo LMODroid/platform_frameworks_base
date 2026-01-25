@@ -255,6 +255,50 @@ fun ContentScope.BouncerContent(
     }
 }
 
+// Legacy
+
+@Composable
+fun BouncerContent(
+    viewModel: BouncerOverlayContentViewModel,
+    dialogFactory: BouncerDialogFactory,
+    modifier: Modifier = Modifier,
+) {
+    val isOneHandedModeSupported by viewModel.isOneHandedModeSupported.collectAsStateWithLifecycle()
+    val layout = calculateLayout(isOneHandedModeSupported = isOneHandedModeSupported)
+
+    BouncerContent(layout, viewModel, dialogFactory, modifier)
+}
+
+@Composable
+fun BouncerContent(
+    layout: BouncerOverlayLayout,
+    viewModel: BouncerOverlayContentViewModel,
+    dialogFactory: BouncerDialogFactory,
+    modifier: Modifier,
+) {
+    val scale by viewModel.scale.collectAsStateWithLifecycle()
+    Box(
+        // Allows the content within each of the layouts to react to the appearance and
+        // disappearance of the IME, which is also known as the software keyboard.
+        //
+        // Despite the keyboard only being part of the password bouncer, adding it at this level is
+        // both necessary to properly handle the keyboard in all layouts and harmless in cases when
+        // the keyboard isn't used (like the PIN or pattern auth methods).
+        modifier = modifier.imePadding().onKeyEvent(viewModel::onKeyEvent).scale(scale)
+    ) {
+        when (layout) {
+            BouncerOverlayLayout.STANDARD_BOUNCER -> StandardLayout(viewModel = viewModel)
+            BouncerOverlayLayout.BESIDE_USER_SWITCHER ->
+                BesideUserSwitcherLayout(viewModel = viewModel)
+            BouncerOverlayLayout.BELOW_USER_SWITCHER ->
+                BelowUserSwitcherLayout(viewModel = viewModel)
+            BouncerOverlayLayout.SPLIT_BOUNCER -> SplitLayout(viewModel = viewModel)
+        }
+
+        Dialog(bouncerViewModel = viewModel, dialogFactory = dialogFactory)
+    }
+}
+
 /**
  * Renders the contents of the actual bouncer UI, the area that takes user input to do an
  * authentication attempt, including all messaging UI (directives, reasoning, errors, etc.).
