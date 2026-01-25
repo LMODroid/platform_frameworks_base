@@ -55,6 +55,7 @@ import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -105,6 +106,7 @@ fun EditModeButton(
         val tertiaryColor = MaterialTheme.colorScheme.tertiary
         val caretPath = remember { mutableStateOf(Path()) }
         val coroutineScope = rememberCoroutineScope()
+        val anchorLayoutCoordinates = remember { mutableStateOf<LayoutCoordinates?>(null) }
 
         TooltipBox(
             modifier = modifier,
@@ -132,7 +134,7 @@ fun EditModeButton(
                                 windowContainerSizePx,
                                 DpSize(12.dp, 8.dp),
                             ) {
-                                obtainAnchorBounds()
+                                anchorLayoutCoordinates.value
                             }
                             .drawWithContent {
                                 drawContent()
@@ -151,10 +153,12 @@ fun EditModeButton(
                 onClick = viewModel::onButtonClick,
                 shape = RoundedCornerShape(CornerSize(28.dp)),
                 modifier =
-                    Modifier.borderOnFocus(
-                        color = MaterialTheme.colorScheme.secondary,
-                        cornerSize = CornerSize(24.dp),
-                    ),
+                    Modifier
+                        .borderOnFocus(
+                            color = MaterialTheme.colorScheme.secondary,
+                            cornerSize = CornerSize(24.dp),
+                        )
+                        .onGloballyPositioned { anchorLayoutCoordinates.value = it },
             ) {
                 Icon(
                     imageVector = if (Flags.iconRefresh2025()) Edit else Icons.Default.Edit,
