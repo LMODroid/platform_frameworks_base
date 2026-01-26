@@ -374,7 +374,7 @@
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Monitorovanie"</string>
     <string name="strict_mode" msgid="889864762140862437">"Povoliť prísny režim"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Blikať pri dlhých operáciách hlavného vlákna"</string>
-    <string name="pointer_location" msgid="7516929526199520173">"Umiestnenie kurzora"</string>
+    <string name="pointer_location" msgid="7516929526199520173">"Umiestnenie ukazovateľa"</string>
     <string name="pointer_location_summary" msgid="957120116989798464">"Prekrývajúci prvok zobrazujúci aktuálne údaje o klepnutiach"</string>
     <string name="show_touches" msgid="8437666942161289025">"Zobrazovať klepnutia"</string>
     <string name="show_touches_summary" msgid="3692861665994502193">"Vizuálne znázorňovať klepnutia"</string>
@@ -417,7 +417,7 @@
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Deaktivuje sa po jednom dni"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Aktivované na neurčito"</string>
     <string name="window_animation_scale_title" msgid="5236381298376812508">"Mierka animácie okna"</string>
-    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Mierka animácie premeny"</string>
+    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Mierka animácie prechodu"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Mierka dĺžky animácie"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simulovať sekundárne obrazovky"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplikácie"</string>

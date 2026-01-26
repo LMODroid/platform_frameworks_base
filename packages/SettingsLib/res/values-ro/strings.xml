@@ -417,7 +417,7 @@
     <string name="verbose_vendor_logging_preference_summary_will_disable" msgid="6175431593394522553">"Se dezactivează după o zi"</string>
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Activată pe termen nedefinit"</string>
     <string name="window_animation_scale_title" msgid="5236381298376812508">"Scară animație fereastră"</string>
-    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Scară tranziție animații"</string>
+    <string name="transition_animation_scale_title" msgid="1278477690695439337">"Scară tranziție animație"</string>
     <string name="animator_duration_scale_title" msgid="7082913931326085176">"Scară durată Animator"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simulează afișaje secundare"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplicații"</string>
