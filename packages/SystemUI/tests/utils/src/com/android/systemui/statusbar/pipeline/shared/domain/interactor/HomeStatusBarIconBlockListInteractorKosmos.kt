@@ -25,7 +25,13 @@ import com.android.systemui.shared.settings.data.repository.fakeSecureSettingsRe
 import com.android.systemui.shared.settings.data.repository.secureSettingsRepository
 
 val Kosmos.homeStatusBarIconBlockListInteractor by
-    Kosmos.Fixture { HomeStatusBarIconBlockListInteractor(mainResources, secureSettingsRepository) }
+    Kosmos.Fixture {
+        HomeStatusBarIconBlockListInteractor(
+            testCase.context,
+            mainResources,
+            secureSettingsRepository,
+        )
+    }
 
 /**
  * [icons] can be a list of icons that should appear on the blocklist. Note that this should be
