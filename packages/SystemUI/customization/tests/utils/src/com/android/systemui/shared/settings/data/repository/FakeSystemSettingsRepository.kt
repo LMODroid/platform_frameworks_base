@@ -32,6 +32,10 @@ class FakeSystemSettingsRepository : SystemSettingsRepository {
         return intSetting(name, if (defaultValue) 1 else 0).map { it != 0 }
     }
 
+    override fun stringSetting(name: String): Flow<String?> {
+        return settings.map { it[name] }
+    }
+
     override suspend fun setInt(name: String, value: Int) {
         settings.value = settings.value.toMutableMap().apply { this[name] = value.toString() }
     }
