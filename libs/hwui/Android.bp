@@ -346,6 +346,7 @@ cc_defaults {
         "jni/AnimatedImageDrawable.cpp",
         "jni/Bitmap.cpp",
         "jni/BitmapFactory.cpp",
+        "jni/BitmapRegionDecoder.cpp",
         "jni/ByteBufferStreamAdaptor.cpp",
         "jni/Camera.cpp",
         "jni/CanvasProperty.cpp",
@@ -411,7 +412,6 @@ cc_defaults {
         android: {
             srcs: [ // sources that depend on android only libraries
                 "jni/android_graphics_TextureLayer.cpp",
-                "jni/BitmapRegionDecoder.cpp",
                 "jni/GIFMovie.cpp",
                 "jni/GraphicsStatsService.cpp",
                 "jni/Movie.cpp",
