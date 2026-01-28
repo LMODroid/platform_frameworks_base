@@ -27,6 +27,7 @@
 using namespace std;
 
 int register_android_graphics_Bitmap(JNIEnv*);
+int register_android_graphics_BitmapRegionDecoder(JNIEnv*);
 int register_android_graphics_BitmapFactory(JNIEnv*);
 int register_android_graphics_ByteBufferStreamAdaptor(JNIEnv* env);
 int register_android_graphics_CreateJavaOutputStreamAdaptor(JNIEnv* env);
@@ -79,6 +80,7 @@ struct RegJNIRec {
 static const RegJNIRec graphicsJNI[] = {
         REG_JNI(register_android_graphics_Bitmap),
         REG_JNI(register_android_graphics_BitmapFactory),
+        REG_JNI(register_android_graphics_BitmapRegionDecoder),
         REG_JNI(register_android_graphics_ByteBufferStreamAdaptor),
         REG_JNI(register_android_graphics_Canvas),
         REG_JNI(register_android_graphics_CanvasProperty),
