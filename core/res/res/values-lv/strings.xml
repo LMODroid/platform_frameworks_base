@@ -273,7 +273,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Viss pārskats"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"Izmantojiet, lai minimāli iejauktos sistēmā, ja ierīce nereaģē, darbojas pārāk lēni vai ja ir nepieciešamas visas pārskata sadaļas. Nevar ievadīt papildu informāciju vai izveidot papildu ekrānuzņēmumus."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{Pēc # sekundes tiks izveidots ekrānuzņēmums kļūdas pārskatam.}zero{Pēc # sekundēm tiks izveidots ekrānuzņēmums kļūdas pārskatam.}one{Pēc # sekundes tiks izveidots ekrānuzņēmums kļūdas pārskatam.}other{Pēc # sekundēm tiks izveidots ekrānuzņēmums kļūdas pārskatam.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Izveidots ekrānuzņēmums ar kļūdas pārskatu."</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Ekrānuzņēmums ar kļūdas pārskatu."</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"Neizdevās izveidot ekrānuzņēmumu ar kļūdas pārskatu."</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"Klusuma režīms"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"Skaņa ir IZSLĒGTA."</string>
@@ -1924,7 +1924,7 @@
     <string name="zen_mode_duration_hours_summary_short" msgid="687919813833347945">"{count,plural, =1{1 h (līdz {formattedTime})}zero{# h (līdz {formattedTime})}one{# h (līdz {formattedTime})}other{# h (līdz {formattedTime})}}"</string>
     <string name="zen_mode_duration_minutes" msgid="2340007982276569054">"{count,plural, =1{Vienu minūti}zero{# minūtes}one{# minūti}other{# minūtes}}"</string>
     <string name="zen_mode_duration_minutes_short" msgid="2435756450204526554">"{count,plural, =1{1 min}zero{# min}one{# min}other{# min}}"</string>
-    <string name="zen_mode_duration_hours" msgid="7841806065034711849">"{count,plural, =1{1 stundu}zero{# stundas}one{# stundu}other{# stundas}}"</string>
+    <string name="zen_mode_duration_hours" msgid="7841806065034711849">"{count,plural, =1{1 stunda}zero{# stundas}one{# stunda}other{# stundas}}"</string>
     <string name="zen_mode_duration_hours_short" msgid="3666949653933099065">"{count,plural, =1{1 h}zero{# h}one{# h}other{# h}}"</string>
     <string name="zen_mode_until_next_day" msgid="1403042784161725038">"Līdz: <xliff:g id="FORMATTEDTIME">%1$s</xliff:g>"</string>
     <string name="zen_mode_until" msgid="2250286190237669079">"Līdz <xliff:g id="FORMATTEDTIME">%1$s</xliff:g>"</string>

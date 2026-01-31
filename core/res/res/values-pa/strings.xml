@@ -716,7 +716,7 @@
     <string name="face_acquired_too_right" msgid="6245286514593540859">"ਫ਼ੋਨ ਨੂੰ ਆਪਣੇ ਖੱਬੇ ਪਾਸੇ ਲਿਜਾਓ"</string>
     <string name="face_acquired_too_left" msgid="9201762240918405486">"ਫ਼ੋਨ ਨੂੰ ਆਪਣੇ ਸੱਜੇ ਪਾਸੇ ਲਿਜਾਓ"</string>
     <string name="face_acquired_poor_gaze" msgid="4427153558773628020">"ਕਿਰਪਾ ਕਰਕੇ ਸਿੱਧਾ ਆਪਣੇ ਡੀਵਾਈਸ ਵੱਲ ਦੇਖੋ।"</string>
-    <string name="face_acquired_not_detected" msgid="1057966913397548150">"ਤੁਹਾਡਾ ਚਿਹਰਾ ਨਹੀਂ ਦਿਸ ਰਿਹਾ। ਆਪਣੇ ਫ਼ੋਨ ਨੂੰ ਅੱਖਾਂ ਦੀ ਸੀਧ ਵਿੱਚ ਰੱਖੋ।"</string>
+    <string name="face_acquired_not_detected" msgid="1057966913397548150">"ਤੁਹਾਡਾ ਚਿਹਰਾ ਨਹੀਂ ਦਿਖ ਰਿਹਾ। ਆਪਣੇ ਫ਼ੋਨ ਨੂੰ ਅੱਖਾਂ ਦੀ ਸੇਧ ਵਿੱਚ ਰੱਖੋ।"</string>
     <string name="face_acquired_too_much_motion" msgid="8199691445085189528">"ਬਹੁਤ ਜ਼ਿਆਦਾ ਹਿਲਜੁਲ। ਫ਼ੋਨ ਨੂੰ ਸਥਿਰ ਰੱਖੋ।"</string>
     <string name="face_acquired_recalibrate" msgid="8724013080976469746">"ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਚਿਹਰਾ ਦੁਬਾਰਾ ਦਰਜ ਕਰੋ।"</string>
     <string name="face_acquired_too_different" msgid="4505278456634706967">"ਚਿਹਰੇ ਦੀ ਪਛਾਣ ਨਹੀਂ ਹੋਈ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"</string>
@@ -1083,7 +1083,7 @@
     <string name="password_keyboard_label_symbol_key" msgid="2716255580853511949">"?123"</string>
     <string name="password_keyboard_label_alpha_key" msgid="5294837425652726684">"ABC"</string>
     <string name="password_keyboard_label_alt_key" msgid="8528261816395508841">"ALT"</string>
-    <string name="granularity_label_character" msgid="8903387663153706317">"ਅੱਖਰ"</string>
+    <string name="granularity_label_character" msgid="8903387663153706317">"ਅੱਖਰ-ਚਿੰਨ੍ਹ"</string>
     <string name="granularity_label_word" msgid="3686589158760620518">"ਸ਼ਬਦ"</string>
     <string name="granularity_label_link" msgid="9007852307112046526">"ਲਿੰਕ"</string>
     <string name="granularity_label_line" msgid="376204904280620221">"ਲਾਈਨ"</string>
@@ -1914,7 +1914,7 @@
     <string name="confirm_battery_saver" msgid="5247976246208245754">"ਠੀਕ ਹੈ"</string>
     <string name="battery_saver_description_with_learn_more" msgid="5444908404021316250">"ਬੈਟਰੀ ਸੇਵਰ ਗੂੜ੍ਹੇ ਥੀਮ ਨੂੰ ਚਾਲੂ ਕਰਦਾ ਹੈ ਅਤੇ ਬੈਕਗ੍ਰਾਊਂਡ ਸਰਗਰਮੀ, ਕੁਝ ਦ੍ਰਿਸ਼ਟੀਗਤ ਪ੍ਰਭਾਵਾਂ, ਕੁਝ ਖਾਸ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਅਤੇ ਕੁਝ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨਾਂ ਨੂੰ ਸੀਮਤ ਜਾਂ ਬੰਦ ਕਰਦਾ ਹੈ।"</string>
     <string name="battery_saver_description" msgid="8518809702138617167">"ਬੈਟਰੀ ਸੇਵਰ ਗੂੜ੍ਹੇ ਥੀਮ ਨੂੰ ਚਾਲੂ ਕਰਦਾ ਹੈ ਅਤੇ ਬੈਕਗ੍ਰਾਊਂਡ ਸਰਗਰਮੀ, ਕੁਝ ਦ੍ਰਿਸ਼ਟੀਗਤ ਪ੍ਰਭਾਵਾਂ, ਕੁਝ ਖਾਸ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਅਤੇ ਕੁਝ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨਾਂ ਨੂੰ ਸੀਮਤ ਜਾਂ ਬੰਦ ਕਰਦਾ ਹੈ।"</string>
-    <string name="data_saver_description" msgid="4995164271550590517">"ਡਾਟਾ ਵਰਤੋਂ ਘਟਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰਨ ਲਈ, ਡਾਟਾ ਸੇਵਰ ਵਿਸ਼ੇਸ਼ਤਾ ਕੁਝ ਐਪਾਂ ਨੂੰ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਡਾਟਾ ਭੇਜਣ ਜਾਂ ਪ੍ਰਾਪਤ ਕਰਨ ਤੋਂ ਰੋਕਦੀ ਹੈ। ਤੁਹਾਡੇ ਵੱਲੋਂ ਮੌਜੂਦਾ ਤੌਰ \'ਤੇ ਵਰਤੀ ਜਾ ਰਹੀ ਐਪ ਡਾਟਾ ਤੱਕ ਪਹੁੰਚ ਕਰ ਸਕਦੀ ਹੈ, ਪਰ ਉਹ ਇੰਝ ਕਦੇ-ਕਦਾਈਂ ਕਰ ਸਕਦੀ ਹੈ। ਉਦਾਹਰਨ ਲਈ, ਇਸ ਦਾ ਮਤਲਬ ਇਹ ਹੋ ਸਕਦਾ ਹੈ ਕਿ ਚਿੱਤਰ ਉਦੋਂ ਤੱਕ ਨਹੀਂ ਦਿਖਾਏ ਜਾਂਦੇ, ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਉਨ੍ਹਾਂ \'ਤੇ ਟੈਪ ਨਹੀਂ ਕਰਦੇ।"</string>
+    <string name="data_saver_description" msgid="4995164271550590517">"ਡਾਟਾ ਵਰਤੋਂ ਘਟਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰਨ ਲਈ, ਡਾਟਾ ਸੇਵਰ ਵਿਸ਼ੇਸ਼ਤਾ ਕੁਝ ਐਪਾਂ ਨੂੰ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਡਾਟਾ ਭੇਜਣ ਜਾਂ ਪ੍ਰਾਪਤ ਕਰਨ ਤੋਂ ਰੋਕਦੀ ਹੈ। ਤੁਹਾਡੇ ਵੱਲੋਂ ਮੌਜੂਦਾ ਤੌਰ \'ਤੇ ਵਰਤੀ ਜਾ ਰਹੀ ਐਪ ਡਾਟੇ ਤੱਕ ਪਹੁੰਚ ਕਰ ਸਕਦੀ ਹੈ, ਪਰ ਉਹ ਇੰਝ ਕਦੇ-ਕਦਾਈਂ ਕਰ ਸਕਦੀ ਹੈ। ਉਦਾਹਰਨ ਲਈ, ਇਸ ਦਾ ਮਤਲਬ ਇਹ ਹੋ ਸਕਦਾ ਹੈ ਕਿ ਚਿੱਤਰ ਉਦੋਂ ਤੱਕ ਨਹੀਂ ਦਿਖਾਏ ਜਾਂਦੇ, ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਉਨ੍ਹਾਂ \'ਤੇ ਟੈਪ ਨਹੀਂ ਕਰਦੇ।"</string>
     <string name="data_saver_enable_title" msgid="7080620065745260137">"ਕੀ ਡਾਟਾ ਸੇਵਰ ਚਾਲੂ ਕਰਨਾ ਹੈ?"</string>
     <string name="data_saver_enable_button" msgid="4399405762586419726">"ਚਾਲੂ ਕਰੋ"</string>
     <string name="zen_mode_duration_minutes_summary" msgid="4555514757230849789">"{count,plural, =1{ਇੱਕ ਮਿੰਟ ਲਈ ({formattedTime} ਤੱਕ)}one{# ਮਿੰਟ ਲਈ ({formattedTime} ਤੱਕ)}other{# ਮਿੰਟਾਂ ਲਈ ({formattedTime} ਤੱਕ)}}"</string>

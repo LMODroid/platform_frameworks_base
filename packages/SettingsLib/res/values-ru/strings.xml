@@ -48,7 +48,7 @@
     <string name="wifi_security_psk_sae" msgid="8135104122179904684">"WPA2/WPA3-Personal"</string>
     <string name="wifi_security_none_owe" msgid="5241745828327404101">"Не настроено/Enhanced Open"</string>
     <string name="wifi_security_owe" msgid="3343421403561657809">"Enhanced Open"</string>
-    <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3-Enterprise 192 бита"</string>
+    <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3-Enterprise (192 бита)"</string>
     <string name="wifi_remembered" msgid="3266709779723179188">"Сохранено"</string>
     <string name="wifi_disconnected" msgid="7054450256284661757">"Не подключено"</string>
     <string name="wifi_disabled_generic" msgid="2651916945380294607">"Отключено"</string>
@@ -256,7 +256,7 @@
     <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"Чтобы просматривать и использовать доступные устройства, включите отладку по Wi-Fi."</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Подключить устройство с помощью QR-кода"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Отсканировать QR-код для подключения устройства"</string>
-    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Подключить устройство с помощью кода подключения"</string>
+    <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Подключить устройство с помощью кода"</string>
     <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Ввести шестизначный код для подключения устройства"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Подключенные устройства"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Текущие подключения"</string>
@@ -541,7 +541,7 @@
     <string name="retail_demo_reset_next" msgid="3688129033843885362">"Далее"</string>
     <string name="retail_demo_reset_title" msgid="1866911701095959800">"Требуется пароль"</string>
     <string name="active_input_method_subtypes" msgid="4232680535471633046">"Активные способы ввода"</string>
-    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Языки системы"</string>
+    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"Использовать языки системы"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"Не удалось открыть настройки приложения \"<xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g>\""</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"При использовании этого способа могут собираться все вводимые данные, в том числе пароли и номера кредитных карт. Запрос поступил от приложения \"<xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g>\". Использовать этот способ ввода?"</string>
     <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"Примечание. После перезагрузки это приложение не запустится, пока вы не разблокируете устройство."</string>

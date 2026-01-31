@@ -94,7 +94,7 @@
     <string name="Parse_error_dlg_text" msgid="1661404001063076789">"حدثت مشكلة أثناء تحليل الحزمة."</string>
     <string name="message_staging" msgid="8032722385658438567">"جارٍ الطرح المرحلي للتطبيق…"</string>
     <string name="app_name_unknown" msgid="6881210203354323926">"غير معروف"</string>
-    <string name="untrusted_external_source_warning" product="tablet" msgid="7067510047443133095">"لأغراض الأمان، غير مسموح حاليًا لجهازك اللوحي بتثبيت تطبيقات غير معروفة من هذا المصدر. ويمكنك تغيير ذلك في \"الإعدادات\"."</string>
+    <string name="untrusted_external_source_warning" product="tablet" msgid="7067510047443133095">"للحفاظ على أمانك، غير مسموح حاليًا لجهازك اللوحي بتثبيت تطبيقات غير معروفة من هذا المصدر. ويمكنك تغيير ذلك في \"الإعدادات\"."</string>
     <string name="untrusted_external_source_warning" product="tv" msgid="7057271609532508035">"لأغراض الأمان، غير مسموح حاليًا لجهاز التلفزيون الذي تستخدمه بتثبيت تطبيقات غير معروفة من هذا المصدر. ويمكنك تغيير ذلك في \"الإعدادات\"."</string>
     <string name="untrusted_external_source_warning" product="watch" msgid="7195163388090818636">"للحفاظ على أمانك، غير مسموح حاليًا لساعتك بتثبيت تطبيقات غير معروفة من هذا المصدر. يمكنك تغيير ذلك في الإعدادات."</string>
     <string name="untrusted_external_source_warning" product="default" msgid="8444191224459138919">"لأغراض الأمان، غير مسموح حاليًا لهاتفك بتثبيت تطبيقات غير معروفة من هذا المصدر. يمكنك تغيير ذلك في \"الإعدادات\"."</string>

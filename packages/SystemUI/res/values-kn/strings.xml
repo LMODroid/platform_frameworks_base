@@ -34,13 +34,13 @@
     <string name="standard_battery_saver_text" msgid="6855876746552374119">"ಪ್ರಮಾಣಿತ"</string>
     <string name="extreme_battery_saver_text" msgid="8455810156739865335">"ತೀವ್ರ"</string>
     <string name="status_bar_settings_auto_rotation" msgid="8329080442278431708">"ಪರದೆಯನ್ನು ಸ್ವಯಂ-ತಿರುಗಿಸಿ"</string>
-    <string name="usb_device_permission_prompt" msgid="4414719028369181772">"<xliff:g id="USB_DEVICE">%2$s</xliff:g> ಪ್ರವೇಶಿಸಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ಅನುಮತಿಸುವುದೇ?"</string>
-    <string name="usb_device_permission_prompt_warn" msgid="2309129784984063656">"<xliff:g id="USB_DEVICE">%2$s</xliff:g> ಅನ್ನು ಪ್ರವೇಶಿಸಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ಅನುಮತಿಸುವುದೇ?\nಈ ಆ್ಯಪ್‌ಗೆ ರೆಕಾರ್ಡ್ ಅನುಮತಿಯನ್ನು ನೀಡಲಾಗಿಲ್ಲ, ಆದರೆ ಈ USB ಸಾಧನದ ಮೂಲಕ ಆಡಿಯೊವನ್ನು ಸೆರೆಹಿಡಿಯಬಹುದು."</string>
+    <string name="usb_device_permission_prompt" msgid="4414719028369181772">"<xliff:g id="USB_DEVICE">%2$s</xliff:g> ಅನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಗೆ ಅನುಮತಿಸಬೇಕೇ?"</string>
+    <string name="usb_device_permission_prompt_warn" msgid="2309129784984063656">"<xliff:g id="USB_DEVICE">%2$s</xliff:g> ಅನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಗೆ ಅನುಮತಿಸಬೇಕೇ?\nಈ ಆ್ಯಪ್‌ಗೆ ರೆಕಾರ್ಡ್ ಅನುಮತಿಯನ್ನು ನೀಡಲಾಗಿಲ್ಲ, ಆದರೆ ಈ USB ಸಾಧನದ ಮೂಲಕ ಆಡಿಯೊವನ್ನು ಸೆರೆಹಿಡಿಯಬಹುದು."</string>
     <string name="usb_audio_device_permission_prompt_title" msgid="4221351137250093451">"<xliff:g id="USB_DEVICE">%2$s</xliff:g> ಗೆ ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ಅನುಮತಿಸುವುದೇ?"</string>
     <string name="usb_audio_device_confirm_prompt_title" msgid="8828406516732985696">"<xliff:g id="USB_DEVICE">%2$s</xliff:g> ಅನ್ನು ನಿರ್ವಹಿಸಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ತೆರೆಯುವುದೇ?"</string>
     <string name="usb_audio_device_prompt_warn" msgid="2504972133361130335">"ಈ ಆ್ಯಪ್‌ಗೆ ರೆಕಾರ್ಡ್ ಅನುಮತಿಯನ್ನು ನೀಡಲಾಗಿಲ್ಲ, ಆದರೆ ಈ USB ಸಾಧನದ ಮೂಲಕ ಆಡಿಯೊವನ್ನು ಸೆರೆಹಿಡಿಯಬಲ್ಲದು. ಈ ಸಾಧನದ ಮೂಲಕ <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ಬಳಸುವುದರಿಂದ ಕರೆಗಳು, ಅಧಿಸೂಚನೆಗಳು ಮತ್ತು ಅಲಾರಾಂಗಳನ್ನು ಕೇಳುವುದನ್ನು ತಡೆಯಬಹುದು."</string>
     <string name="usb_audio_device_prompt" msgid="7944987408206252949">"ಈ ಸಾಧನದ ಮೂಲಕ <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ಬಳಸುವುದರಿಂದ ಕರೆಗಳು, ಅಧಿಸೂಚನೆಗಳು ಮತ್ತು ಅಲಾರಾಂಗಳನ್ನು ಕೇಳುವುದನ್ನು ತಡೆಯಬಹುದು."</string>
-    <string name="usb_accessory_permission_prompt" msgid="717963550388312123">"<xliff:g id="USB_ACCESSORY">%2$s</xliff:g> ಗೆ ಪ್ರವೇಶಿಸಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ಅನುಮತಿಸುವುದೇ?"</string>
+    <string name="usb_accessory_permission_prompt" msgid="717963550388312123">"<xliff:g id="USB_ACCESSORY">%2$s</xliff:g> ಅನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಗೆ ಅನುಮತಿಸಬೇಕೇ?"</string>
     <string name="usb_device_confirm_prompt" msgid="4091711472439910809">"<xliff:g id="USB_DEVICE">%2$s</xliff:g> ಅನ್ನು ನಿರ್ವಹಿಸಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ತೆರೆಯುವುದೇ?"</string>
     <string name="usb_device_confirm_prompt_warn" msgid="990208659736311769">"<xliff:g id="USB_DEVICE">%2$s</xliff:g> ಅನ್ನು ನಿಯಂತ್ರಿಸಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ತೆರೆಯುವುದೇ?\nಈ ಆ್ಯಪ್‌ಗೆ ರೆಕಾರ್ಡ್ ಅನುಮತಿಯನ್ನು ನೀಡಲಾಗಿಲ್ಲ, ಆದರೆ ಈ USB ಸಾಧನದ ಮೂಲಕ ಆಡಿಯೊವನ್ನು ಸೆರೆಹಿಡಿಯಬಹುದು."</string>
     <string name="usb_accessory_confirm_prompt" msgid="5728408382798643421">"<xliff:g id="USB_ACCESSORY">%2$s</xliff:g> ಅನ್ನು ನಿರ್ವಹಿಸಲು <xliff:g id="APPLICATION">%1$s</xliff:g> ಅನ್ನು ತೆರೆಯುವುದೇ?"</string>
@@ -341,7 +341,7 @@
     <string name="quick_settings_cast_no_network" msgid="3863016850468559522">"ಯಾವುದೇ ವೈ-ಫೈ ಅಥವಾ ಇಥರ್ನೆಟ್ ಕನೆಕ್ಷನ್ ಇಲ್ಲ"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="4980669966716685588">"ಪ್ರಕಾಶಮಾನ"</string>
     <string name="quick_settings_inversion_label" msgid="3501527749494755688">"ಕಲರ್ ಇನ್‍ವರ್ಶನ್"</string>
-    <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"ಬಣ್ಣದ ತಿದ್ದುಪಡಿ"</string>
+    <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"ಕಲರ್ ಕರೆಕ್ಷನ್"</string>
     <string name="quick_settings_font_scaling_label" msgid="5289001009876936768">"ಫಾಂಟ್ ಗಾತ್ರ"</string>
     <string name="quick_settings_more_user_settings" msgid="7634653308485206306">"ಬಳಕೆದಾರರನ್ನು ನಿರ್ವಹಿಸಿ"</string>
     <string name="quick_settings_done" msgid="2163641301648855793">"ಮುಗಿದಿದೆ"</string>
@@ -606,7 +606,7 @@
     <string name="monitoring_button_view_policies" msgid="3869724835853502410">"ಕಾರ್ಯನೀತಿಗಳನ್ನು ವೀಕ್ಷಿಸಿ"</string>
     <string name="monitoring_button_view_controls" msgid="8316440345340701117">"ನಿಯಂತ್ರಣಗಳನ್ನು ವೀಕ್ಷಿಸಿ"</string>
     <string name="monitoring_description_named_management" msgid="505833016545056036">"ಈ ಸಾಧನವು <xliff:g id="ORGANIZATION_NAME">%1$s</xliff:g> ಗೆ ಸೇರಿದೆ.\n\nಸೆಟ್ಟಿಂಗ್‌ಗಳು, ಕಾರ್ಪೊರೇಟ್ ಆ್ಯಕ್ಸೆಸ್, ಆ್ಯಪ್‌ಗಳು, ನಿಮ್ಮ ಸಾಧನಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ಡೇಟಾ ಮತ್ತು ನಿಮ್ಮ ಸಾಧನದ ಸ್ಥಳದ ಮಾಹಿತಿಯನ್ನು ನಿಮ್ಮ IT ನಿರ್ವಾಹಕರು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಬಹುದು ಮತ್ತು ನಿರ್ವಹಿಸಬಹುದು.\n\nಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ ನಿಮ್ಮ IT ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ."</string>
-    <string name="monitoring_financed_description_named_management" msgid="6108439201399938668">"<xliff:g id="ORGANIZATION_NAME_0">%1$s</xliff:g> ಗೆ ಈ ಸಾಧನದ ಜೊತೆಗೆ ಸಂಯೋಜಿತವಾಗಿರುವ ಡೇಟಾವನ್ನು ಪ್ರವೇಶಿಸಲು, ಆ್ಯಪ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಲು ಮತ್ತು ಈ ಸಾಧನಗಳ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಬದಲಾಯಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತದೆ.\n\nನಿಮ್ಮ ಬಳಿ ಪ್ರಶ್ನೆಗಳಿದ್ದರೆ, <xliff:g id="ORGANIZATION_NAME_1">%2$s</xliff:g> ಅನ್ನು ಸಂಪರ್ಕಿಸಿ."</string>
+    <string name="monitoring_financed_description_named_management" msgid="6108439201399938668">"<xliff:g id="ORGANIZATION_NAME_0">%1$s</xliff:g> ಗೆ ಈ ಸಾಧನದ ಜೊತೆಗೆ ಸಂಯೋಜಿತವಾಗಿರುವ ಡೇಟಾವನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು, ಆ್ಯಪ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಲು ಮತ್ತು ಈ ಸಾಧನಗಳ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಬದಲಾಯಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತದೆ.\n\nನಿಮ್ಮ ಬಳಿ ಪ್ರಶ್ನೆಗಳಿದ್ದರೆ, <xliff:g id="ORGANIZATION_NAME_1">%2$s</xliff:g> ಅನ್ನು ಸಂಪರ್ಕಿಸಿ."</string>
     <string name="monitoring_description_management" msgid="4308879039175729014">"ಈ ಸಾಧನವು ನಿಮ್ಮ ಸಂಸ್ಥೆಗೆ ಸೇರಿದೆ.\n\nಸೆಟ್ಟಿಂಗ್‌ಗಳು, ಕಾರ್ಪೊರೇಟ್ ಆ್ಯಕ್ಸೆಸ್, ಆ್ಯಪ್‌ಗಳು, ನಿಮ್ಮ ಸಾಧನಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ಡೇಟಾ ಮತ್ತು ನಿಮ್ಮ ಸಾಧನದ ಸ್ಥಳದ ಮಾಹಿತಿಯನ್ನು ನಿಮ್ಮ IT ನಿರ್ವಾಹಕರು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಬಹುದು ಮತ್ತು ನಿರ್ವಹಿಸಬಹುದು.\n\nಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ ನಿಮ್ಮ IT ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ."</string>
     <string name="monitoring_description_management_ca_certificate" msgid="7785013130658110130">"ನಿಮ್ಮ ಸಂಸ್ಥೆಯು ಈ ಸಾಧನದಲ್ಲಿ ಪ್ರಮಾಣಪತ್ರ ಅಂಗೀಕಾರವನ್ನು ಸ್ಥಾಪಿಸಿದೆ. ನಿಮ್ಮ ಸುರಕ್ಷಿತ ನೆಟ್‌ವರ್ಕ್ ಟ್ರಾಫಿಕ್ ಅನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಬಹುದು ಅಥವಾ ಮಾರ್ಪಡಿಸಬಹುದು."</string>
     <string name="monitoring_description_managed_profile_ca_certificate" msgid="7904323416598435647">"ನಿಮ್ಮ ಸಂಸ್ಥೆಯು ನಿಮ್ಮ ಉದ್ಯೋಗ ಪ್ರೊಫೈಲ್‌ನಲ್ಲಿ ಪ್ರಮಾಣಪತ್ರ ಅಂಗೀಕಾರವನ್ನು ಸ್ಥಾಪಿಸಿದೆ. ನಿಮ್ಮ ಸುರಕ್ಷಿತ ನೆಟ್‌ವರ್ಕ್ ಟ್ರಾಫಿಕ್ ಅನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಬಹುದು ಅಥವಾ ಮಾರ್ಪಡಿಸಬಹುದು."</string>
@@ -1314,7 +1314,7 @@
     <string name="log_access_confirmation_title" msgid="4843557604739943395">"ಎಲ್ಲಾ ಸಾಧನದ ಲಾಗ್‌ಗಳನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು <xliff:g id="LOG_ACCESS_APP_NAME">%s</xliff:g> ಗೆ ಅನುಮತಿಸಬೇಕೆ?"</string>
     <string name="log_access_confirmation_allow" msgid="752147861593202968">"ಒಂದು ಬಾರಿಯ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ"</string>
     <string name="log_access_confirmation_deny" msgid="2389461495803585795">"ಅನುಮತಿಸಬೇಡಿ"</string>
-    <string name="log_access_confirmation_body" msgid="6883031912003112634">"ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿನ ಕಾರ್ಯಾಚರಣೆಗಳನ್ನು ಸಾಧನದ ಲಾಗ್‌ಗಳು ರೆಕಾರ್ಡ್ ಮಾಡುತ್ತವೆ. ಸಮಸ್ಯೆಗಳನ್ನು ಪತ್ತೆಹಚ್ಚಲು ಮತ್ತು ಪರಿಹರಿಸಲು ಆ್ಯಪ್‌ಗಳು ಈ ಲಾಗ್ ಅನ್ನು ಬಳಸಬಹುದು.\n\nಕೆಲವು ಲಾಗ್‌ಗಳು ಸೂಕ್ಷ್ಮ ಮಾಹಿತಿಯನ್ನು ಒಳಗೊಂಡಿರಬಹುದು, ಆದ್ದರಿಂದ ನಿಮ್ಮ ವಿಶ್ವಾಸಾರ್ಹ ಆ್ಯಪ್‌ಗಳಿಗೆ ಮಾತ್ರ ಸಾಧನದ ಎಲ್ಲಾ ಲಾಗ್‌ಗಳಿಗೆ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ. \n\nಎಲ್ಲಾ ಸಾಧನ ಲಾಗ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಲು ನೀವು ಈ ಆ್ಯಪ್‌ಗೆ ಅನುಮತಿಸದಿದ್ದರೆ, ಅದು ಆಗಲೂ ತನ್ನದೇ ಆದ ಲಾಗ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಬಹುದು. ನಿಮ್ಮ ಸಾಧನ ತಯಾರಕರಿಗೆ ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿನ ಕೆಲವು ಲಾಗ್‌ಗಳು ಅಥವಾ ಮಾಹಿತಿಯನ್ನು ಪ್ರವೇಶಿಸಲು ಈಗಲೂ ಸಾಧ್ಯವಾಗುತ್ತದೆ."</string>
+    <string name="log_access_confirmation_body" msgid="6883031912003112634">"ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿನ ಕಾರ್ಯಾಚರಣೆಗಳನ್ನು ಸಾಧನದ ಲಾಗ್‌ಗಳು ರೆಕಾರ್ಡ್ ಮಾಡುತ್ತವೆ. ಸಮಸ್ಯೆಗಳನ್ನು ಪತ್ತೆಹಚ್ಚಲು ಮತ್ತು ಪರಿಹರಿಸಲು ಆ್ಯಪ್‌ಗಳು ಈ ಲಾಗ್ ಅನ್ನು ಬಳಸಬಹುದು.\n\nಕೆಲವು ಲಾಗ್‌ಗಳು ಸೂಕ್ಷ್ಮ ಮಾಹಿತಿಯನ್ನು ಒಳಗೊಂಡಿರಬಹುದು, ಆದ್ದರಿಂದ ನಿಮ್ಮ ವಿಶ್ವಾಸಾರ್ಹ ಆ್ಯಪ್‌ಗಳಿಗೆ ಮಾತ್ರ ಸಾಧನದ ಎಲ್ಲಾ ಲಾಗ್‌ಗಳಿಗೆ ಆ್ಯಕ್ಸೆಸ್ ಅನ್ನು ಅನುಮತಿಸಿ. \n\nಎಲ್ಲಾ ಸಾಧನ ಲಾಗ್‌ಗಳನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು ನೀವು ಈ ಆ್ಯಪ್‌ಗೆ ಅನುಮತಿಸದಿದ್ದರೆ, ಅದು ಆಗಲೂ ತನ್ನದೇ ಆದ ಲಾಗ್‌ಗಳನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಬಹುದು. ನಿಮ್ಮ ಸಾಧನ ತಯಾರಕರಿಗೆ ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿನ ಕೆಲವು ಲಾಗ್‌ಗಳು ಅಥವಾ ಮಾಹಿತಿಯನ್ನು ಆ್ಯಕ್ಸೆಸ್ ಮಾಡಲು ಈಗಲೂ ಸಾಧ್ಯವಾಗುತ್ತದೆ."</string>
     <string name="log_access_confirmation_learn_more" msgid="3134565480986328004">"ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ"</string>
     <string name="log_access_confirmation_learn_more_at" msgid="5635666259505215905">"<xliff:g id="URL">%s</xliff:g> ನಲ್ಲಿ ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ"</string>
     <string name="keyguard_affordance_enablement_dialog_action_template" msgid="8164857863036314664">"<xliff:g id="APPNAME">%1$s</xliff:g> ಅನ್ನು ತೆರೆಯಿರಿ"</string>

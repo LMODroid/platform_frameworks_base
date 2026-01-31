@@ -602,13 +602,13 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"એપ્લિકેશનને ટેબ્લેટ પર બ્લૂટૂથ ની ગોઠવણી જોવાની અને જોડી કરેલ ઉપકરણો સાથે કનેક્શન્સ કરવાની અને સ્વીકારવાની મંજૂરી આપે છે."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"ઍપને તમારા Android TV ડિવાઇસ પર બ્લૂટૂથની ગોઠવણી જોવાની અને જોડાણ કરેલા ડિવાઇસની સાથે કનેક્શન કરવાની અને સ્વીકારવાની મંજૂરી આપે છે."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"એપ્લિકેશનને ફોન પર બ્લૂટૂથ ની ગોઠવણી જોવાની અને જોડી કરેલ ઉપકરણો સાથે કનેક્શન્સ કરવાની અને સ્વીકારવાની મંજૂરી આપે છે."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"આસપાસના બ્લૂટૂથ ડિવાઇસ શોધો અને તેની સાથે જોડી કરો"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"નજીકના બ્લૂટૂથ ડિવાઇસ શોધો અને તેની સાથે જોડાણ કરો"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"ઍપને આસપાસના બ્લૂટૂથ ડિવાઇસ શોધવાની અને તેની સાથે જોડી કરવાની મંજૂરી આપે છે"</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"જોડી કરેલા બ્લૂટૂથ ડિવાઇસ સાથે કનેક્ટ કરો"</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"જોડાણ કરેલા બ્લૂટૂથ ડિવાઇસ સાથે કનેક્ટ કરો"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"ઍપને જોડી કરેલા બ્લૂટૂથ ડિવાઇસ સાથે કનેક્ટ કરવાની મંજૂરી આપે છે"</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"નજીકના બ્લૂટૂથ ડિવાઇસ પર જાહેરાત કરો"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"નજીકના બ્લૂટૂથ ડિવાઇસ પર ઍપને જાહેરાત કરવાની મંજૂરી આપે છે"</string>
-    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"અલ્ટ્રા-વાઇડબૅન્ડ ડિવાઇસની વચ્ચેનું અંતર નક્કી કરો"</string>
+    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"નજીકના અલ્ટ્રા-વાઇડબૅન્ડ ડિવાઇસની વચ્ચેનું અંતર નક્કી કરો"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"ઍપને નજીકના અલ્ટ્રા-વાઇડબૅન્ડ ડિવાઇસની વચ્ચેનું સંબંધિત અંતર નક્કી કરવાની મંજૂરી આપો"</string>
     <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"નજીકના વાઇ-ફાઇ ડિવાઇસ સાથે ક્રિયાપ્રતિક્રિયા કરો"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"ઍપને નજીકના વાઇ-ફાઇ ડિવાઇસની માહિતી બતાવવાની, તેની સાથે કનેક્ટ કરવાની અને તેની સંબંધિત સ્થિતિ નક્કી કરવાની મંજૂરી આપો"</string>
@@ -1738,7 +1738,7 @@
     <string name="accessibility_service_warning_description" msgid="291674995220940133">"ઍક્સેસિબિલિટી સંબંધિત આવશ્યકતા માટે સહાય કરતી ઍપ માટે સંપૂર્ણ નિયંત્રણ યોગ્ય છે, પણ મોટા ભાગની ઍપ માટે યોગ્ય નથી."</string>
     <string name="accessibility_service_screen_control_title" msgid="190017412626919776">"જોવા અને નિયંત્રણ માટેની સ્ક્રીન"</string>
     <string name="accessibility_service_screen_control_description" msgid="6946315917771791525">"તે સ્ક્રીન પરનું બધું કન્ટેન્ટ વાંચી શકે છે અને કન્ટેન્ટને અન્ય ઍપ પર બતાવી શકે છે."</string>
-    <string name="accessibility_service_action_perform_title" msgid="779670378951658160">"ક્રિયાઓ જુઓ અને કરો"</string>
+    <string name="accessibility_service_action_perform_title" msgid="779670378951658160">"ઍક્શન જુઓ અને તેને પર્ફોર્મ કરો"</string>
     <string name="accessibility_service_action_perform_description" msgid="2718852014003170558">"તે ઍપ અથવા હાર્ડવેર સેન્સર વડે તમારી ક્રિયાપ્રતિક્રિયાને ટ્રૅક કરી શકે છે અને તમારા વતી ઍપ સાથે ક્રિયાપ્રતિક્રિયા કરી શકે છે."</string>
     <string name="accessibility_dialog_button_allow" msgid="2092558122987144530">"મંજૂરી આપો"</string>
     <string name="accessibility_dialog_button_deny" msgid="4129575637812472671">"નકારો"</string>
@@ -2010,7 +2010,7 @@
     <string name="set_up_screen_lock_title" msgid="8346083801616474030">"સ્ક્રીન લૉક સેટ કરો"</string>
     <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"સ્ક્રીન લૉક સેટ કરો"</string>
     <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"તમારી ખાનગી સ્પેસનો ઉપયોગ કરવા, આ ડિવાઇસ પર સ્ક્રીન લૉક સેટ કરો"</string>
-    <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"ખાનગી સ્પેસનો ડિલીટ કરવા, આ ડિવાઇસ પર સ્ક્રીન લૉક સેટ કરો"</string>
+    <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"ખાનગી સ્પેસને ડિલીટ કરવા, આ ડિવાઇસ પર સ્ક્રીન લૉક સેટ કરો"</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"ઍપ ઉપલબ્ધ નથી"</string>
     <string name="app_blocked_message" msgid="542972921087873023">"<xliff:g id="APP_NAME">%1$s</xliff:g> હાલમાં ઉપલબ્ધ નથી."</string>
     <string name="app_streaming_blocked_title" msgid="6090945835898766139">"<xliff:g id="ACTIVITY">%1$s</xliff:g> ઉપલબ્ધ નથી"</string>
@@ -2185,7 +2185,7 @@
     <string name="bluetooth_airplane_mode_toast" msgid="2066399056595768554">"એરપ્લેન મોડ દરમિયાન બ્લૂટૂથ ચાલુ રહેશે"</string>
     <string name="car_loading_profile" msgid="8219978381196748070">"લોડિંગ"</string>
     <string name="file_count" msgid="3220018595056126969">"{count,plural, =1{{file_name} + # ફાઇલ}one{{file_name} + # ફાઇલ}other{{file_name} + # ફાઇલો}}"</string>
-    <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"શેર કરવા માટે સુઝાવ આપવામાં આવેલા કોઈ લોકો નથી"</string>
+    <string name="chooser_no_direct_share_targets" msgid="1511722103987329028">"શેર કરવા માટે સુઝાવ આપવામાં આવેલી કોઈ વ્યક્તિ નથી"</string>
     <string name="chooser_all_apps_button_label" msgid="3230427756238666328">"ઍપની સૂચિ"</string>
     <string name="usb_device_resolve_prompt_warn" msgid="325871329788064199">"આ ઍપને રેકૉર્ડ કરવાની પરવાનગી આપવામાં આવી નથી પરંતુ તે આ USB ડિવાઇસ મારફતે ઑડિયો કૅપ્ચર કરી શકે છે."</string>
     <string name="accessibility_system_action_home_label" msgid="3234748160850301870">"હોમ"</string>

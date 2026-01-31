@@ -77,14 +77,14 @@
     <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"Не прикажувај го разговорот во балончиња"</string>
     <string name="bubbles_user_education_title" msgid="2112319053732691899">"Разговор во балончиња"</string>
     <string name="bubbles_user_education_description" msgid="4215862563054175407">"Новите разговори ќе се појавуваат како лебдечки икони или балончиња. Допрете за отворање на балончето. Повлечете за да го преместите."</string>
-    <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"Контролирајте ги балончињата во секое време"</string>
+    <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"Контролирајте ги балончињата кога било"</string>
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Допрете „Управувајте“ за да ги исклучите балончињата од апликацијава"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"Сфатив"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Нема неодамнешни балончиња"</string>
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Неодамнешните и отфрлените балончиња ќе се појавуваат тука"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Разговор со балончиња"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Новите разговори се појавуваат како икони во долниот агол од екранот. Допрете за да ги проширите или повлечете за да ги отфрлите."</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Контролирајте ги балончињата во секое време"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Контролирајте ги балончињата кога било"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Допрете тука за да одредите на кои апл. и разговори може да се појават балончиња"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"Балонче"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Управувајте"</string>

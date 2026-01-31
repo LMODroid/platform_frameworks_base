@@ -25,6 +25,7 @@ import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
@@ -972,7 +973,47 @@ public final class CameraManager {
     }
 
     /**
-     * Constructs an AttributionSourceState with only the uid, pid, and deviceId fields set
+     * Checks if a camera device can be opened in a shared mode for a given {@code cameraId}.
+     * If this method returns false for a {@code cameraId}, calling {@link #openSharedCamera}
+     * for that {@code cameraId} will throw an {@link UnsupportedOperationException}.
+     *
+     * @param cameraId The unique identifier of the camera device for which sharing support is
+     *                 being queried. This identifier must be present in
+     *                 {@link #getCameraIdList()}.
+     *
+     * @return {@code true} if camera can be opened in shared mode
+     *                      for the provided {@code cameraId}; {@code false} otherwise.
+     *
+     * @throws IllegalArgumentException If {@code cameraId} is null, or if {@code cameraId} does not
+     *                                  match any device in {@link #getCameraIdList()}.
+     * @throws CameraAccessException    if the camera device has been disconnected.
+     *
+     * @see #getCameraIdList()
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("UnflaggedApi")
+    public boolean isCameraDeviceSharingSupported(@NonNull String cameraId)
+            throws CameraAccessException {
+        if (cameraId == null) {
+            throw new IllegalArgumentException("Camera ID was null");
+        }
+
+        if (CameraManagerGlobal.sCameraServiceDisabled
+                || !Arrays.asList(CameraManagerGlobal.get().getCameraIdList(mContext.getDeviceId(),
+                getDevicePolicyFromContext(mContext))).contains(cameraId)) {
+            throw new IllegalArgumentException(
+                    "Camera ID '" + cameraId + "' not available on device.");
+        }
+
+        CameraCharacteristics chars = getCameraCharacteristics(cameraId);
+        long[] sharedOutputConfiguration =
+                chars.get(CameraCharacteristics.SHARED_SESSION_OUTPUT_CONFIGURATIONS);
+        return (sharedOutputConfiguration != null);
+    }
+
+    /**
+     *  Constructs an AttributionSourceState with only the uid, pid, and deviceId fields set
      *
      * <p>This method is a temporary stopgap in the transition to using AttributionSource. Currently
      * AttributionSourceState is only used as a vehicle for passing deviceId, uid, and pid
@@ -1001,6 +1042,9 @@ public final class CameraManager {
      * @param cameraId The unique identifier of the camera device to open
      * @param callback The callback for the camera. Must not be null.
      * @param executor The executor to invoke the callback with. Must not be null.
+     * @param oomScoreOffset The minimum oom score that cameraservice must see for this client.
+     * @param rotationOverride The type of rotation override.
+     * @param sharedMode Parameter specifying if the camera should be opened in shared mode.
      *
      * @throws CameraAccessException if the camera is disabled by device policy,
      * too many camera devices are already open, or the cameraId does not match
@@ -1016,7 +1060,8 @@ public final class CameraManager {
      */
     private CameraDevice openCameraDeviceUserAsync(String cameraId,
             CameraDevice.StateCallback callback, Executor executor,
-            final int oomScoreOffset, int rotationOverride) throws CameraAccessException {
+            final int oomScoreOffset, int rotationOverride, boolean sharedMode)
+            throws CameraAccessException {
         CameraCharacteristics characteristics = getCameraCharacteristics(cameraId);
         CameraDevice device = null;
         synchronized (mLock) {
@@ -1035,7 +1080,7 @@ public final class CameraManager {
                         characteristics,
                         this,
                         mContext.getApplicationInfo().targetSdkVersion,
-                        mContext, cameraDeviceSetup);
+                        mContext, cameraDeviceSetup, sharedMode);
             ICameraDeviceCallbacks callbacks = deviceImpl.getCallbacks();
 
             try {
@@ -1056,7 +1101,7 @@ public final class CameraManager {
                                 mContext.getApplicationInfo().targetSdkVersion,
                                 rotationOverride,
                                 clientAttribution,
-                                getDevicePolicyFromContext(mContext));
+                                getDevicePolicyFromContext(mContext), sharedMode);
             } catch (ServiceSpecificException e) {
                 if (e.errorCode == ICameraService.ERROR_DEPRECATED_HAL) {
                     throw new AssertionError("Should've gone down the shim path");
@@ -1183,7 +1228,8 @@ public final class CameraManager {
             @NonNull final CameraDevice.StateCallback callback, @Nullable Handler handler)
             throws CameraAccessException {
 
-        openCameraImpl(cameraId, callback, CameraDeviceImpl.checkAndWrapHandler(handler));
+        openCameraImpl(cameraId, callback, CameraDeviceImpl.checkAndWrapHandler(handler),
+                /*oomScoreOffset*/0, getRotationOverride(mContext), /*sharedMode*/false);
     }
 
     /**
@@ -1223,7 +1269,7 @@ public final class CameraManager {
                          /*oomScoreOffset*/0,
                          overrideToPortrait
                                  ? ICameraService.ROTATION_OVERRIDE_OVERRIDE_TO_PORTRAIT
-                                 : ICameraService.ROTATION_OVERRIDE_NONE);
+                                 : ICameraService.ROTATION_OVERRIDE_NONE, /*sharedMode*/false);
     }
 
     /**
@@ -1268,8 +1314,62 @@ public final class CameraManager {
         if (executor == null) {
             throw new IllegalArgumentException("executor was null");
         }
-        openCameraImpl(cameraId, callback, executor);
+        openCameraImpl(cameraId, callback, executor, /*oomScoreOffset*/0,
+                getRotationOverride(mContext), /*sharedMode*/false);
     }
+
+    /**
+     * Opens a shared connection to a camera with the given ID.
+     *
+     * <p>The behavior of this method matches that of
+     * {@link #openCamera(String, Executor, StateCallback)}, except that it opens the camera in
+     * shared mode where more than one client can access the camera at the same time.</p>
+     *
+     * @param cameraId The unique identifier of the camera device to open.
+     * @param executor The executor which will be used when invoking the callback.
+     * @param callback The callback which is invoked once the camera is opened
+     *
+     * @throws CameraAccessException if the camera is disabled by device policy, or is being used
+     *                               by a higher-priority client in non-shared mode or the device
+     *                               has reached its maximal resource and cannot open this camera
+     *                               device.
+     *
+     * @throws IllegalArgumentException if cameraId, the callback or the executor was null,
+     *                                  or the cameraId does not match any currently or previously
+     *                                  available camera device.
+     *
+     * @throws SecurityException if the application does not have permission to
+     *                           access the camera
+     *
+     * @throws UnsupportedOperationException if {@link #isCameraDeviceSharingSupported} returns
+     *                                       false for the given {@code cameraId}.
+     *
+     * @see #getCameraIdList
+     * @see android.app.admin.DevicePolicyManager#setCameraDisabled
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.SYSTEM_CAMERA,
+            android.Manifest.permission.CAMERA,
+    })
+    @SuppressLint("UnflaggedApi")
+    public void openSharedCamera(@NonNull String cameraId,
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull final CameraDevice.StateCallback callback)
+            throws CameraAccessException {
+        if (executor == null) {
+            throw new IllegalArgumentException("executor was null");
+        }
+        if (!isCameraDeviceSharingSupported(cameraId)) {
+            throw new UnsupportedOperationException(
+                    "CameraDevice sharing is not supported for Camera ID: " + cameraId);
+        }
+        openCameraImpl(cameraId, callback, executor, /*oomScoreOffset*/0,
+                getRotationOverride(mContext), /*sharedMode*/true);
+    }
+
 
     /**
      * Open a connection to a camera with the given ID. Also specify what oom score must be offset
@@ -1337,29 +1437,35 @@ public final class CameraManager {
                     "oomScoreOffset < 0, cannot increase priority of camera client");
         }
         openCameraImpl(cameraId, callback, executor, oomScoreOffset,
-                getRotationOverride(mContext));
+                getRotationOverride(mContext), /*sharedMode*/false);
     }
 
     /**
      * Open a connection to a camera with the given ID, on behalf of another application.
-     * Also specify the minimum oom score and process state the application
-     * should have, as seen by the cameraserver.
      *
-     * <p>The behavior of this method matches that of {@link #openCamera}, except that it allows
-     * the caller to specify the UID to use for permission/etc verification. This can only be
-     * done by services trusted by the camera subsystem to act on behalf of applications and
-     * to forward the real UID.</p>
-     *
+     * @param cameraId
+     *             The unique identifier of the camera device to open
+     * @param callback
+     *             The callback which is invoked once the camera is opened
+     * @param executor
+     *             The executor which will be used when invoking the callback.
      * @param oomScoreOffset
      *             The minimum oom score that cameraservice must see for this client.
      * @param rotationOverride
      *             The type of rotation override (none, override_to_portrait, rotation_only)
      *             that should be followed for this camera id connection
+     * @param sharedMode
+     *             Parameter specifying if the camera should be opened in shared mode.
+     *
+     * @throws CameraAccessException if the camera is disabled by device policy,
+     * has been disconnected, or is being used by a higher-priority camera API client in
+     * non shared mode.
+     *
      * @hide
      */
     public void openCameraImpl(@NonNull String cameraId,
             @NonNull final CameraDevice.StateCallback callback, @NonNull Executor executor,
-            int oomScoreOffset, int rotationOverride)
+            int oomScoreOffset, int rotationOverride, boolean sharedMode)
             throws CameraAccessException {
 
         if (cameraId == null) {
@@ -1372,24 +1478,7 @@ public final class CameraManager {
         }
 
         openCameraDeviceUserAsync(cameraId, callback, executor, oomScoreOffset,
-                rotationOverride);
-    }
-
-    /**
-     * Open a connection to a camera with the given ID, on behalf of another application.
-     *
-     * <p>The behavior of this method matches that of {@link #openCamera}, except that it allows
-     * the caller to specify the UID to use for permission/etc verification. This can only be
-     * done by services trusted by the camera subsystem to act on behalf of applications and
-     * to forward the real UID.</p>
-     *
-     * @hide
-     */
-    public void openCameraImpl(@NonNull String cameraId,
-            @NonNull final CameraDevice.StateCallback callback, @NonNull Executor executor)
-            throws CameraAccessException {
-        openCameraImpl(cameraId, callback, executor, /*oomScoreOffset*/0,
-                getRotationOverride(mContext));
+                rotationOverride, sharedMode);
     }
 
     /**
@@ -2482,6 +2571,10 @@ public final class CameraManager {
                 }
                 @Override
                 public void onCameraClosed(String id, int deviceId) {
+                }
+                @Override
+                public void onCameraOpenedInSharedMode(String id, String clientPackageId,
+                        int deviceId, boolean primaryClient) {
                 }};
 
             String[] cameraIds;
@@ -3250,6 +3343,11 @@ public final class CameraManager {
                     postSingleAccessPriorityChangeUpdate(callback, executor);
                 }
             }
+        }
+
+        @Override
+        public void onCameraOpenedInSharedMode(String cameraId, String clientPackageId,
+                int deviceId, boolean primaryClient) {
         }
 
         @Override

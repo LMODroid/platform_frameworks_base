@@ -262,7 +262,7 @@
     <string name="accessibility_ringer_silent" msgid="8994620163934249882">"Stille modus."</string>
     <!-- no translation found for accessibility_casting (8708751252897282313) -->
     <skip />
-    <string name="accessibility_desc_notification_shade" msgid="5355229129428759989">"Varselskygge."</string>
+    <string name="accessibility_desc_notification_shade" msgid="5355229129428759989">"Varselpanel."</string>
     <string name="accessibility_desc_quick_settings" msgid="4374766941484719179">"Hurtiginnstillinger."</string>
     <string name="accessibility_desc_qs_notification_shade" msgid="8327226953072700376">"Hurtiginnstillinger og varselpanelet"</string>
     <string name="accessibility_desc_lock_screen" msgid="409034672704273634">"Låseskjerm"</string>
@@ -323,7 +323,7 @@
     <string name="quick_settings_location_label" msgid="2621868789013389163">"Sted"</string>
     <string name="quick_settings_screensaver_label" msgid="1495003469366524120">"Skjermsparer"</string>
     <string name="quick_settings_camera_label" msgid="5612076679385269339">"Kameratilgang"</string>
-    <string name="quick_settings_mic_label" msgid="8392773746295266375">"Mikrofontilgang"</string>
+    <string name="quick_settings_mic_label" msgid="8392773746295266375">"Mikrofon­tilgang"</string>
     <string name="quick_settings_camera_mic_available" msgid="1453719768420394314">"Tilgjengelig"</string>
     <string name="quick_settings_camera_mic_blocked" msgid="4710884905006788281">"Blokkert"</string>
     <string name="quick_settings_media_device_label" msgid="8034019242363789941">"Medieenhet"</string>
@@ -340,8 +340,8 @@
     <string name="quick_settings_cast_detail_empty_text" msgid="2846282280014617785">"Ingen enheter er tilgjengelige"</string>
     <string name="quick_settings_cast_no_network" msgid="3863016850468559522">"Ingen wifi- eller Ethernet-tilkobling"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="4980669966716685588">"Lysstyrke"</string>
-    <string name="quick_settings_inversion_label" msgid="3501527749494755688">"Farge&amp;#173;invertering"</string>
-    <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"Fargekorrigering"</string>
+    <string name="quick_settings_inversion_label" msgid="3501527749494755688">"Farge­invertering"</string>
+    <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"Farge­korrigering"</string>
     <string name="quick_settings_font_scaling_label" msgid="5289001009876936768">"Skriftstørrelse"</string>
     <string name="quick_settings_more_user_settings" msgid="7634653308485206306">"Brukervalg"</string>
     <string name="quick_settings_done" msgid="2163641301648855793">"Ferdig"</string>
@@ -396,11 +396,11 @@
     <string name="custom" msgid="3337456985275158299">"Egendefinert"</string>
     <string name="custom_trace_settings_dialog_title" msgid="2608570500144830554">"Innstillinger for egendefinert spor"</string>
     <string name="restore_default" msgid="5259420807486239755">"Gjenopprett standard"</string>
-    <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"Enhånds&amp;#173;modus"</string>
-    <string name="quick_settings_hearing_devices_label" msgid="7277170419679404129">"Høreapparater"</string>
+    <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"Enhånds­modus"</string>
+    <string name="quick_settings_hearing_devices_label" msgid="7277170419679404129">"Høre­apparater"</string>
     <string name="quick_settings_hearing_devices_connected" msgid="6519069502397037781">"Aktiv"</string>
     <string name="quick_settings_hearing_devices_disconnected" msgid="8907061223998176187">"Frakoblet"</string>
-    <string name="quick_settings_hearing_devices_dialog_title" msgid="9004774017688484981">"Høreapparater"</string>
+    <string name="quick_settings_hearing_devices_dialog_title" msgid="9004774017688484981">"Høre­apparater"</string>
     <string name="quick_settings_pair_hearing_devices" msgid="5987105102207447322">"Koble til en ny enhet"</string>
     <string name="accessibility_hearing_device_pair_new_device" msgid="8440082580186130090">"Klikk for å koble til en ny enhet"</string>
     <string name="hearing_devices_presets_error" msgid="350363093458408536">"Kunne ikke oppdatere forhåndsinnstillingen"</string>
@@ -712,7 +712,7 @@
     <string name="wallet_secondary_label_device_locked" msgid="5175862019125370506">"Lås opp for å bruke"</string>
     <string name="wallet_error_generic" msgid="257704570182963611">"Det oppsto et problem med henting av kortene. Prøv på nytt senere"</string>
     <string name="wallet_lockscreen_settings_label" msgid="3539105300870383570">"Innstillinger for låseskjermen"</string>
-    <string name="qr_code_scanner_title" msgid="1938155688725760702">"QR-kodeskanner"</string>
+    <string name="qr_code_scanner_title" msgid="1938155688725760702">"QR-kode­skanner"</string>
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"Oppdaterer"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"Work-profil"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"Flymodus"</string>
@@ -1339,7 +1339,7 @@
     <string name="stylus_battery_low_percentage" msgid="2564243323894629626">"Batteri i pekepennen: <xliff:g id="PERCENTAGE">%s</xliff:g>"</string>
     <string name="stylus_battery_low_subtitle" msgid="3583843128908823273">"Koble pekepennen til en lader"</string>
     <string name="stylus_battery_low" msgid="7134370101603167096">"Det er lite batteri i pekepennen"</string>
-    <string name="video_camera" msgid="7654002575156149298">"Videokamera"</string>
+    <string name="video_camera" msgid="7654002575156149298">"Video­kamera"</string>
     <string name="call_from_work_profile_title" msgid="5418253516453177114">"Kan ikke ringe fra personlige apper"</string>
     <string name="call_from_work_profile_text" msgid="2856337395968118274">"Organisasjonen din tillater bare at du ringer fra jobbapper"</string>
     <string name="call_from_work_profile_action" msgid="2937701298133010724">"Bytt til jobbprofilen"</string>

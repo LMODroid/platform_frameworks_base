@@ -602,9 +602,9 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"Tillader, at appen kan læse konfigurationen af ​​Bluetooth på tabletten samt kan oprette og acceptere forbindelser med parrede enheder."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"Tillader, at appen kan se konfigurationen af Bluetooth på din Android TV-enhed samt oprette og acceptere forbindelser med parrede enheder."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"Tillader, at appen kan læse konfigurationen af ​​Bluetooth på telefonen samt kan oprette og acceptere forbindelser med parrede enheder."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"registrer og par med Bluetooth-enheder i nærheden"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"registrere og pare med Bluetooth-enheder i nærheden"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Tillader, at appen registrerer og parrer Bluetooth-enheder i nærheden"</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"opret forbindelse til parrede Bluetooth-enheder"</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"oprette forbindelse til parrede Bluetooth-enheder"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Tillader, at appen opretter forbindelse til parrede Bluetooth-enheder"</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"give sig til kende for Bluetooth-enheder i nærheden"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Giver appen tilladelse til at give sig til kende for Bluetooth-enheder i nærheden"</string>
@@ -1153,7 +1153,7 @@
     <string name="duration_hours_shortest_future" msgid="2979276794547981674">"om <xliff:g id="COUNT">%d</xliff:g> t."</string>
     <string name="duration_days_shortest_future" msgid="3392722163935571543">"om <xliff:g id="COUNT">%d</xliff:g> d."</string>
     <string name="duration_years_shortest_future" msgid="5537464088352970388">"om <xliff:g id="COUNT">%d</xliff:g> år"</string>
-    <string name="duration_minutes_relative" msgid="8620337701051015593">"{count,plural, =1{For # minut siden}one{For # minut siden}other{For # minutter siden}}"</string>
+    <string name="duration_minutes_relative" msgid="8620337701051015593">"{count,plural, =1{# minut siden}one{# minut siden}other{# minutter siden}}"</string>
     <string name="duration_hours_relative" msgid="4836449961693180253">"{count,plural, =1{# time siden}one{# time siden}other{# timer siden}}"</string>
     <string name="duration_days_relative" msgid="621965767567258302">"{count,plural, =1{1 dag siden}one{1 dag siden}other{# dag siden}}"</string>
     <string name="duration_years_relative" msgid="8731202348869424370">"{count,plural, =1{For # år siden}one{For # år siden}other{For # år siden}}"</string>

@@ -52,10 +52,12 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.ArgumentMatchers.refEq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -87,6 +89,7 @@ import com.android.internal.app.ResolverActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,6 +110,7 @@ public class RootWindowContainerTests extends WindowTestsBase {
     @Before
     public void setUp() throws Exception {
         doNothing().when(mAtm).updateSleepIfNeededLocked();
+        spyOn(mRootWindowContainer);
     }
 
     @Test
@@ -1337,6 +1341,158 @@ public class RootWindowContainerTests extends WindowTestsBase {
         verify(controller, never()).notifyTaskProfileLocked(any(), anyInt());
     }
 
+    @Test
+    public void testStartHomeOnDisplaysWithNoHome() {
+        mockResolveHomeActivity(true /* primaryHome */, false /* forceSystemProvided */);
+        final ActivityInfo resolvedHomeInfo = getFakeHomeActivityInfo(true /* primaryHome */);
+        doReturn(true).when(mRootWindowContainer).isHomeAlwaysPresentAllowed(any(), anyInt());
+
+        // Create a display with no home activity.
+        final TestDisplayContent displayWithNoHome = new TestDisplayContent.Builder(mAtm, 1000,
+                1500).build();
+        final TaskDisplayArea tdaWithNoHome = displayWithNoHome.getDefaultTaskDisplayArea();
+        doReturn(true).when(tdaWithNoHome).canHostHomeTask();
+        // Ensure there are no tasks on the display.
+        tdaWithNoHome.removeIfPossible();
+
+        // Create a display with a home activity.
+        final TestDisplayContent displayWithHome = new TestDisplayContent.Builder(mAtm, 1000,
+                1500).build();
+        final TaskDisplayArea tdaWithHome = displayWithHome.getDefaultTaskDisplayArea();
+        doReturn(false).when(tdaWithHome).canHostHomeTask();
+        new ActivityBuilder(mAtm)
+                .setComponent(new ComponentName(resolvedHomeInfo.applicationInfo.packageName,
+                        resolvedHomeInfo.name))
+                .setTask(tdaWithHome.createRootTask(
+                        WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_HOME, true /* onTop */)).build();
+
+        mRootWindowContainer.startHomeOnDisplaysIfNeeded("test");
+
+        // Verify that home was started on the display with no home.
+        verify(mRootWindowContainer).startHomeOnTaskDisplayArea(anyInt(),
+                anyString(), any(), anyBoolean(),
+                anyBoolean(), anyBoolean());
+        // Verify that home was NOT started on the display that already had a home.
+        verify(mRootWindowContainer, never()).startHomeOnTaskDisplayArea(anyInt(),
+                anyString(), eq(tdaWithHome), anyBoolean(),
+                anyBoolean(), anyBoolean());
+    }
+
+    @Test
+    public void testNeedsHomeLaunchOnDisplay_noExistingHome() {
+        final TestDisplayContent display = new TestDisplayContent.Builder(mAtm, 1000, 1500).build();
+        final TaskDisplayArea taskDisplayArea = display.getDefaultTaskDisplayArea();
+        doReturn(true).when(taskDisplayArea).canHostHomeTask();
+        // No existing home activity, so resolveHomeActivity returns null or no activity is found.
+        doReturn(null).when(mRootWindowContainer).resolveHomeActivity(anyInt(), any());
+
+        assertTrue(mRootWindowContainer.needsHomeLaunchOnDisplay(0, taskDisplayArea));
+    }
+
+    @Test
+    public void testNeedsHomeLaunchOnDisplay_withExistingHome_samePackage() {
+        final TestDisplayContent display = new TestDisplayContent.Builder(mAtm, 1000, 1500).build();
+        final TaskDisplayArea taskDisplayArea = display.getDefaultTaskDisplayArea();
+        doReturn(true).when(taskDisplayArea).canHostHomeTask();
+        final String existingPkg = "com.android.server.wm.test.existing.app";
+        // Create an existing home activity
+        new ActivityBuilder(mAtm)
+                .setComponent(new ComponentName(existingPkg, ".ExistingHomeActivity"))
+                .setTask(display.getDefaultTaskDisplayArea().createRootTask(
+                        WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_HOME, true /* onTop */)).build();
+
+        // Mock that the resolved home activity has the same package name
+        final ActivityInfo resolvedHomeInfo = new ActivityInfo();
+        resolvedHomeInfo.applicationInfo = new ApplicationInfo();
+        resolvedHomeInfo.applicationInfo.packageName = existingPkg;
+        resolvedHomeInfo.name = ".DifferentHomeActivityExistingPackage";
+        resolvedHomeInfo.packageName = existingPkg;
+        doReturn(resolvedHomeInfo).when(mRootWindowContainer).resolveHomeActivity(anyInt(), any());
+
+        assertFalse(mRootWindowContainer.needsHomeLaunchOnDisplay(0, taskDisplayArea));
+    }
+
+    @Test
+    public void testNeedsHomeLaunchOnDisplay_withExistingHome_differentPackage() {
+        final TaskDisplayArea taskDisplayArea = mRootWindowContainer.getDefaultTaskDisplayArea();
+        taskDisplayArea.getRootHomeTask().removeIfPossible();
+
+        final String existingPkg = "com.android.server.wm.test.existing.app";
+        final ComponentName existingHomeComponent = new ComponentName(existingPkg,
+                ".ExistingHomeActivity");
+        final ActivityRecord existingHomeForUserOnDisplay = new ActivityBuilder(mAtm)
+                .setComponent(existingHomeComponent)
+                .setTask(taskDisplayArea.createRootTask(
+                        WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_HOME, true /* onTop */)).build();
+        doReturn(existingHomeForUserOnDisplay).when(taskDisplayArea).getHomeActivityForUser(
+                anyInt());
+
+        // Mock that the resolved home activity has a different package name.
+        final ActivityInfo resolvedHomeInfo = new ActivityInfo();
+        resolvedHomeInfo.applicationInfo = new ApplicationInfo();
+        resolvedHomeInfo.applicationInfo.packageName = "com.android.server.wm.test.resolved.app";
+        resolvedHomeInfo.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_PRIVILEGED;
+        resolvedHomeInfo.name = ".ResolvedHomeActivity";
+        resolvedHomeInfo.packageName = "com.android.server.wm.test.resolved.app";
+        doReturn(resolvedHomeInfo).when(mRootWindowContainer).resolveHomeActivity(anyInt(), any());
+        doReturn(true).when(mRootWindowContainer).isHomeAlwaysPresentAllowed(any(), anyInt());
+
+        mRootWindowContainer.startHomeOnDisplaysIfNeeded("test");
+
+        assertTrue(mRootWindowContainer.needsHomeLaunchOnDisplay(0, taskDisplayArea));
+        // Capture the TaskDisplayArea arguments passed to startHomeOnTaskDisplayArea.
+        ArgumentCaptor<TaskDisplayArea> tdaCaptor = ArgumentCaptor.forClass(
+                TaskDisplayArea.class);
+        verify(mRootWindowContainer, atLeastOnce()).startHomeOnTaskDisplayArea(anyInt(),
+                anyString(), tdaCaptor.capture(), anyBoolean(), anyBoolean(), anyBoolean());
+        List<TaskDisplayArea> capturedTdas = tdaCaptor.getAllValues();
+        // Verify that home was started on the display with the different home package.
+        assertTrue(capturedTdas.stream().anyMatch(
+                tda -> tda == taskDisplayArea));
+    }
+
+    @Test
+    public void testNeedsHomeLaunchOnDisplay_canHostHomeTaskFalse() {
+        final TestDisplayContent display = new TestDisplayContent.Builder(mAtm, 1000, 1500).build();
+        final TaskDisplayArea taskDisplayArea = display.getDefaultTaskDisplayArea();
+        doReturn(false).when(taskDisplayArea).canHostHomeTask();
+
+        assertFalse(mRootWindowContainer.needsHomeLaunchOnDisplay(0, taskDisplayArea));
+    }
+
+    @Test
+    public void testIsHomeAlwaysPresent_Allowed_returnsTrue() {
+        final ActivityInfo aInfo = new ActivityInfo();
+        aInfo.applicationInfo = new ApplicationInfo();
+        aInfo.applicationInfo.packageName = "com.android.test.home";
+
+        doReturn(true).when(mRootWindowContainer).isHomeAlwaysPresentAllowed(eq(aInfo), anyInt());
+
+        assertTrue(mRootWindowContainer.isHomeAlwaysPresentAllowed(aInfo, 0));
+    }
+
+    @Test
+    public void testIsHomeAlwaysPresent_Allowed_returnsFalse() {
+        final ActivityInfo aInfo = new ActivityInfo();
+        aInfo.applicationInfo = new ApplicationInfo();
+        aInfo.applicationInfo.packageName = "com.android.test.home";
+
+        doReturn(false).when(mRootWindowContainer).isHomeAlwaysPresentAllowed(eq(aInfo), anyInt());
+
+        assertFalse(mRootWindowContainer.isHomeAlwaysPresentAllowed(aInfo, 0));
+    }
+
+    @Test
+    public void testIsHomeAlwaysPresent_Allowed_packageNotFound() {
+        final ActivityInfo aInfo = new ActivityInfo();
+        aInfo.applicationInfo = new ApplicationInfo();
+        aInfo.applicationInfo.packageName = "com.android.test.home";
+
+        doReturn(false).when(mRootWindowContainer).isHomeAlwaysPresentAllowed(eq(aInfo), anyInt());
+
+        assertFalse(mRootWindowContainer.isHomeAlwaysPresentAllowed(aInfo, 0));
+    }
+
     /**
      * Mock {@link RootWindowContainer#resolveHomeActivity} for returning consistent activity
      * info for test cases.
@@ -1384,4 +1540,3 @@ public class RootWindowContainerTests extends WindowTestsBase {
         return  aInfo;
     }
 }
-

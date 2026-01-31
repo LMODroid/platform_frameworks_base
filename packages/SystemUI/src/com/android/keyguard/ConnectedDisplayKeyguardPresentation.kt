@@ -25,6 +25,8 @@ import android.view.Display
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -53,7 +55,7 @@ constructor(
         context,
         display,
         R.style.Theme_SystemUI_KeyguardPresentation,
-        WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG
+        WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG,
     ) {
 
     private lateinit var rootView: FrameLayout
@@ -82,7 +84,7 @@ constructor(
                 oldLeft: Int,
                 oldTop: Int,
                 oldRight: Int,
-                oldBottom: Int
+                oldBottom: Int,
             ) {
                 clock?.let {
                     faceController.events.onTargetRegionChanged(
@@ -166,8 +168,14 @@ constructor(
                 context.resources.getDimensionPixelSize(R.dimen.keyguard_presentation_width),
                 WRAP_CONTENT,
                 Gravity.CENTER,
-            )
+            ),
         )
+
+        if (!context.resources.getBoolean(R.bool.config_enableKeyguardOnConnectedDisplay)) {
+            clock?.setVisibility(GONE)
+        } else {
+            clock?.setVisibility(VISIBLE)
+        }
 
         clockEventController.clock = clockController
         clockEventController.setLargeClockOnSecondaryDisplay(true)
@@ -190,8 +198,6 @@ constructor(
     @AssistedFactory
     interface Factory {
         /** Creates a new [Presentation] for the given [display]. */
-        fun create(
-            display: Display,
-        ): ConnectedDisplayKeyguardPresentation
+        fun create(display: Display): ConnectedDisplayKeyguardPresentation
     }
 }

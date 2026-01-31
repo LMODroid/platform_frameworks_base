@@ -992,6 +992,10 @@ public class InputMethodService extends AbstractInputMethodService {
                 // side, finally reaching here, marking this the end state.
                 ImeTracker.forLogging().onHidden(statsToken);
             }
+
+            if (flags == InputMethodManager.HIDE_FORCE) {
+                removeImeSurface();
+            }
         }
 
         /**

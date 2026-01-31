@@ -67,7 +67,7 @@
     <string name="wifi_debugging_secondary_user_title" msgid="2493201475880517725">"Bezdrátové ladění není povoleno"</string>
     <string name="wifi_debugging_secondary_user_message" msgid="9085779370142222881">"Uživatel aktuálně přihlášený k tomuto zařízení nemůže zapnout bezdrátové ladění. Pokud chcete tuto funkci používat, přepněte na administrativního uživatele."</string>
     <string name="usb_contaminant_title" msgid="894052515034594113">"Port USB je deaktivován"</string>
-    <string name="usb_contaminant_message" msgid="7730476585174719805">"Kvůli ochraně vašeho zařízení před tekutinami a nečistotami je port USB zakázán a nerozpozná žádné příslušenství.\n\nAž bude opět bezpečné port USB použít, budeme vás informovat."</string>
+    <string name="usb_contaminant_message" msgid="7730476585174719805">"Kvůli ochraně vašeho zařízení před tekutinami a nečistotami je port USB zakázán a nerozpozná žádné příslušenství.\n\nAž bude opět bezpečné port USB použít, budeme vás informovat."</string>
     <string name="usb_port_enabled" msgid="531823867664717018">"Port USB může zjišťovat nabíječky a příslušenství"</string>
     <string name="usb_disable_contaminant_detection" msgid="3827082183595978641">"Aktivovat USB"</string>
     <string name="learn_more" msgid="4690632085667273811">"Další informace"</string>
@@ -937,7 +937,7 @@
     <string name="accessibility_quick_settings_collapse" msgid="4674876336725041982">"Zavřít rychlé nastavení."</string>
     <string name="accessibility_quick_settings_user" msgid="505821942882668619">"Jste přihlášeni jako <xliff:g id="ID_1">%s</xliff:g>."</string>
     <string name="accessibility_quick_settings_choose_user_action" msgid="4554388498186576087">"zvolit uživatele"</string>
-    <string name="data_connection_no_internet" msgid="691058178914184544">"Nejste připojeni k internetu"</string>
+    <string name="data_connection_no_internet" msgid="691058178914184544">"Nemáte připojení k internetu"</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"Otevřít nastavení aplikace <xliff:g id="ID_1">%s</xliff:g>."</string>
     <string name="accessibility_quick_settings_edit" msgid="1523745183383815910">"Upravit pořadí nastavení."</string>
     <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"Nabídka vypínače"</string>
@@ -1320,7 +1320,7 @@
     <string name="keyguard_affordance_enablement_dialog_action_template" msgid="8164857863036314664">"Otevřít <xliff:g id="APPNAME">%1$s</xliff:g>"</string>
     <string name="wallet_quick_affordance_unavailable_install_the_app" msgid="7298552910007208368">"Pokud chcete přidat aplikaci Peněženka jako zkratku, nainstalujte ji"</string>
     <string name="wallet_quick_affordance_unavailable_configure_the_app" msgid="4387433357429873258">"Pokud chcete přidat aplikaci Peněženka jako zkratku, přidejte alespoň jednu kartu"</string>
-    <string name="home_quick_affordance_unavailable_install_the_app" msgid="6187820778998446168">"Pokud chcete přidat aplikaci Home jako zkratku, nainstalujte ji"</string>
+    <string name="home_quick_affordance_unavailable_install_the_app" msgid="6187820778998446168">"Pokud chcete přidat vstupní aplikaci jako zkratku, nainstalujte ji"</string>
     <string name="home_quick_affordance_unavailable_configure_the_app" msgid="604424593994493281">"• Je k dispozici alespoň jedno zařízení nebo panel zařízení"</string>
     <string name="notes_app_quick_affordance_unavailable_explanation" msgid="4796955161600178530">"Vyberte výchozí aplikaci k psaní poznámek, ke které přidružíte zkratku pro poznámky"</string>
     <string name="keyguard_affordance_enablement_dialog_notes_app_action" msgid="6821710209675089470">"Vyberte aplikaci"</string>
@@ -1374,7 +1374,7 @@
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"Spravovat přístup"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"Právě používán telefonním hovorem"</string>
     <string name="privacy_dialog_recent_call_usage" msgid="1214810644978167344">"Nedávno použito při telefonním hovoru"</string>
-    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"Právě používán aplikací <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
+    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"Používá aplikace <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="privacy_dialog_recent_app_usage" msgid="4883417856848222450">"Nedávno použila aplikace <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"Právě používán aplikací <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
     <string name="privacy_dialog_recent_app_usage_1" msgid="2551340497722370109">"Nedávno použila aplikace <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>

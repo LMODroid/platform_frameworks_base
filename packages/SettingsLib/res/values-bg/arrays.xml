@@ -41,7 +41,7 @@
     <item msgid="3028983857109369308">"Удостоверява се с/ъс <xliff:g id="NETWORK_NAME">%1$s</xliff:g>..."</item>
     <item msgid="4287401332778341890">"IP адресът от <xliff:g id="NETWORK_NAME">%1$s</xliff:g> се получава..."</item>
     <item msgid="1043944043827424501">"Установена е връзка с(ъс) <xliff:g id="NETWORK_NAME">%1$s</xliff:g>"</item>
-    <item msgid="7445993821842009653">"Прекъсната"</item>
+    <item msgid="7445993821842009653">"Спряна"</item>
     <item msgid="1175040558087735707">"Изключва се от <xliff:g id="NETWORK_NAME">%1$s</xliff:g>..."</item>
     <item msgid="699832486578171722">"Изкл."</item>
     <item msgid="522383512264986901">"Неуспешно"</item>

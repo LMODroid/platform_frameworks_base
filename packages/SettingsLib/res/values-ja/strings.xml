@@ -628,7 +628,7 @@
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"制限付きプロファイル"</string>
     <string name="user_add_user_title" msgid="5457079143694924885">"新しいユーザーを追加しますか？"</string>
     <string name="user_add_user_message_long" msgid="1527434966294733380">"追加したユーザーとは、このデバイスを共有できます。各ユーザーには独自のスペースが作成され、アプリや壁紙などをカスタマイズできます。Wi-Fi など、すべてのユーザーに影響するデバイス設定を変更することもできます。\n\n新しいユーザーは各自でスペースをセットアップする必要があります。\n\nアプリの更新は、すべてのユーザーが行えます。ユーザー補助機能の設定とサービスは新しいユーザーに引き継がれないことがあります。"</string>
-    <string name="user_add_user_message_short" msgid="3295959985795716166">"新しく追加したユーザーは各自でスペースをセットアップする必要があります。\n\nすべてのユーザーがアプリを更新でき、その影響は他のユーザーにも及びます。"</string>
+    <string name="user_add_user_message_short" msgid="3295959985795716166">"新しく追加されたユーザーは各自でスペースをセットアップする必要があります。\n\nすべてのユーザーがアプリを更新でき、その影響は他のユーザーにも及びます。"</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"このユーザーを管理者にしますか？"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"管理者には、他のユーザーにはない特別な権限が与えられます。管理者は、すべてのユーザーの管理、このデバイスの更新やリセット、設定の変更、インストール済みのすべてのアプリの確認、他のユーザーに対する管理者権限の許可や取り消しを行えます。"</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"管理者にする"</string>
@@ -650,7 +650,7 @@
     <string name="add_user_failed" msgid="4809887794313944872">"新しいユーザーを作成できませんでした"</string>
     <string name="add_guest_failed" msgid="8074548434469843443">"新しいゲストを作成できませんでした"</string>
     <string name="user_nickname" msgid="262624187455825083">"ニックネーム"</string>
-    <string name="edit_user_info_message" msgid="6677556031419002895">"選択した名前と写真は、このデバイスを使用しているすべてのユーザーが見ることができます。"</string>
+    <string name="edit_user_info_message" msgid="6677556031419002895">"選択した名前と写真は、このデバイスを使用するすべてのユーザーに表示されます。"</string>
     <string name="user_add_user" msgid="7876449291500212468">"ユーザーを追加"</string>
     <string name="guest_new_guest" msgid="3482026122932643557">"ゲストを追加"</string>
     <string name="guest_exit_guest" msgid="5908239569510734136">"ゲストを削除"</string>
@@ -667,7 +667,7 @@
     <string name="grant_admin" msgid="4323199171790522574">"はい、管理者にします"</string>
     <string name="not_grant_admin" msgid="3557849576157702485">"いいえ、管理者にしません"</string>
     <string name="guest_exit_dialog_button" msgid="1736401897067442044">"終了"</string>
-    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"ゲストアクティビティの保存"</string>
+    <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"ゲスト アクティビティを保存"</string>
     <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"現在のセッションのアクティビティの保存や、すべてのアプリとデータの削除を行えます"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"削除"</string>
     <string name="guest_exit_save_data_button" msgid="3690974510644963547">"保存"</string>

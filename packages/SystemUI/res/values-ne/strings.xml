@@ -435,7 +435,7 @@
     <string name="media_seamless_other_device" msgid="4654849800789196737">"अर्को डिभाइड"</string>
     <string name="quick_step_accessibility_toggle_overview" msgid="7908949976727578403">"परिदृश्य टगल गर्नुहोस्"</string>
     <string name="zen_modes_dialog_title" msgid="8854640808100096934">"मोडहरू"</string>
-    <string name="zen_modes_dialog_done" msgid="6654130880256438950">"सम्पन्न भयो"</string>
+    <string name="zen_modes_dialog_done" msgid="6654130880256438950">"भयो"</string>
     <string name="zen_modes_dialog_settings" msgid="2310248023728936697">"सेटिङ"</string>
     <string name="zen_mode_on" msgid="9085304934016242591">"अन छ"</string>
     <string name="zen_mode_on_with_details" msgid="7416143430557895497">"अन छ • <xliff:g id="TRIGGER_DESCRIPTION">%1$s</xliff:g>"</string>
@@ -495,7 +495,7 @@
     <string name="edit_widget" msgid="9030848101135393954">"विजेट सम्पादन गर्नुहोस्"</string>
     <string name="button_to_remove_widget" msgid="3948204829181214098">"हटाउनुहोस्"</string>
     <string name="hub_mode_add_widget_button_text" msgid="4831464661209971729">"विजेट हाल्नुहोस्"</string>
-    <string name="hub_mode_editing_exit_button_text" msgid="3704686734192264771">"पूरा भयो"</string>
+    <string name="hub_mode_editing_exit_button_text" msgid="3704686734192264771">"भयो"</string>
     <string name="label_for_button_in_empty_state_cta" msgid="7314975555382055823">"विजेट हाल्नुहोस्"</string>
     <string name="title_for_empty_state_cta" msgid="6161654421223450530">"ट्याब्लेट अनलक नगरिकनै आफूलाई मन पर्ने एपका विजेटहरू तुरुन्तै एक्सेस गर्नुहोस्।"</string>
     <string name="dialog_title_to_allow_any_widget" msgid="1004820948962675644">"लक स्क्रिनमा कुनै विजेट देखाउने हो?"</string>
@@ -856,7 +856,7 @@
     <string name="input_access_emoji" msgid="8105642858900406351">"इमोजी प्रयोग गर्नुहोस्"</string>
     <string name="input_access_voice_typing" msgid="7291201476395326141">"भ्वाइस टाइपिङ प्रयोग गर्नुहोस्"</string>
     <string name="keyboard_shortcut_group_applications" msgid="7386239431100651266">"एपहरू"</string>
-    <string name="keyboard_shortcut_group_applications_assist" msgid="6772492350416591448">"एसिस्टेन्ट"</string>
+    <string name="keyboard_shortcut_group_applications_assist" msgid="6772492350416591448">"सहायक"</string>
     <string name="keyboard_shortcut_group_applications_browser" msgid="2776211137869809251">"ब्राउजर"</string>
     <string name="keyboard_shortcut_group_applications_contacts" msgid="2807268086386201060">"कन्ट्याक्टहरू"</string>
     <string name="keyboard_shortcut_group_applications_email" msgid="7852376788894975192">"इमेल"</string>
@@ -1363,9 +1363,9 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"खारेज गर्नुहोस्"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"डिस्प्ले कनेक्ट गरिएको छ"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"माइक्रोफोन तथा क्यामेरा"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"एपको हालसालैको प्रयोग"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"हालसालै प्रयोग गर्ने एप"</string>
     <string name="privacy_dialog_more_button" msgid="7610604080293562345">"हालसालै एक्सेस गर्ने एप हेर्नुहोस्"</string>
-    <string name="privacy_dialog_done_button" msgid="4504330708531434263">"पूरा भयो"</string>
+    <string name="privacy_dialog_done_button" msgid="4504330708531434263">"भयो"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"एक्स्पान्ड गर्नुहोस् र विकल्पहरू देखाउनुहोस्"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"कोल्याप्स गर्नुहोस्"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"यो एप बन्द गर्नुहोस्"</string>
@@ -1406,7 +1406,7 @@
     <string name="touchpad_tutorial_back_gesture_button" msgid="2746834288077265946">"ब्याक जेस्चर"</string>
     <string name="touchpad_tutorial_home_gesture_button" msgid="7640544867625955304">"होम जेस्चर"</string>
     <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"हालसालै चलाइएका एपहरू हेर्नुहोस्"</string>
-    <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"सम्पन्न भयो"</string>
+    <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"भयो"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"पछाडि जानुहोस्"</string>
     <string name="touchpad_back_gesture_guidance" msgid="6263750214998421587">"पछाडि जान तीन वटा औँलाले टचप्याडमा कतै छोएर बायाँ वा दायाँतिर स्वाइप गर्नुहोस्।\n\nतपाईं यसका लागि किबोर्डको सर्टकट \"Action + ESC\" पनि प्रयोग गर्न सक्नुहुन्छ।"</string>
     <string name="touchpad_back_gesture_success_title" msgid="7240576648330612171">"अद्भुत!"</string>

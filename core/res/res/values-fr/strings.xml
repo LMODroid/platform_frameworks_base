@@ -470,7 +470,7 @@
     <string name="permdesc_broadcastSticky" product="tablet" msgid="5058486069846384013">"Permet à l\'application d\'envoyer des intentions de diffusion \"persistantes\", qui perdurent une fois la diffusion terminée. Une utilisation excessive peut ralentir la tablette ou la rendre instable en l\'obligeant à utiliser trop de mémoire."</string>
     <string name="permdesc_broadcastSticky" product="tv" msgid="2338185920171000650">"Permet à l\'application d\'envoyer des diffusions \"persistantes\", qui perdurent une fois la diffusion effectuée. Une utilisation excessive peut ralentir votre appareil Android TV ou le rendre instable en l\'obligeant à utiliser trop de mémoire."</string>
     <string name="permdesc_broadcastSticky" product="default" msgid="134529339678913453">"Permet à l\'application d\'envoyer des intentions de diffusion \"persistantes\", qui perdurent une fois la diffusion terminée. Une utilisation excessive peut ralentir le téléphone ou le rendre instable en l\'obligeant à utiliser trop de mémoire."</string>
-    <string name="permlab_readContacts" msgid="8776395111787429099">"Voir les contacts"</string>
+    <string name="permlab_readContacts" msgid="8776395111787429099">"voir les contacts"</string>
     <string name="permdesc_readContacts" product="tablet" msgid="6430093481659992692">"Permet à l\'application de lire les données liées aux contacts stockés sur votre tablette. Les applications auront également accès aux comptes de votre tablette pour lesquels des contacts ont été créés. Cela peut inclure les comptes créés via des applications que vous avez installées. Cette autorisation permet aux applications d\'enregistrer les données liées à vos contacts. Des applications malveillantes peuvent exploiter cette fonctionnalité pour partager ces données à votre insu."</string>
     <string name="permdesc_readContacts" product="tv" msgid="8400138591135554789">"Permet à l\'application de lire les données liées aux contacts stockés sur votre appareil Android TV. Les applications auront également accès aux comptes de votre appareil Android TV pour lesquels des contacts ont été créés. Cela peut inclure les comptes créés via des applications que vous avez installées. Cette autorisation permet aux applications d\'enregistrer les données liées à vos contacts. Des applications malveillantes peuvent exploiter cette fonctionnalité pour partager ces données à votre insu."</string>
     <string name="permdesc_readContacts" product="default" msgid="4911989776203207644">"Permet à l\'application de lire les données liées aux contacts stockés sur votre téléphone. Les applications auront également accès aux comptes de votre téléphone pour lesquels des contacts ont été créés. Cela peut inclure les comptes créés via des applications que vous avez installées. Cette autorisation permet aux applications d\'enregistrer les données liées à vos contacts. Des applications malveillantes peuvent exploiter cette fonctionnalité pour partager ces données à votre insu."</string>
@@ -972,7 +972,7 @@
     <string name="relationTypeFriend" msgid="3192092625893980574">"Ami(e)"</string>
     <string name="relationTypeManager" msgid="2272860813153171857">"Responsable"</string>
     <string name="relationTypeMother" msgid="2331762740982699460">"Mère"</string>
-    <string name="relationTypeParent" msgid="4177920938333039882">"Parent(e)"</string>
+    <string name="relationTypeParent" msgid="4177920938333039882">"Parent"</string>
     <string name="relationTypePartner" msgid="4018017075116766194">"Conjoint(e)"</string>
     <string name="relationTypeReferredBy" msgid="5285082289602849400">"Parrain(ne)"</string>
     <string name="relationTypeRelative" msgid="3396498519818009134">"Proche"</string>
@@ -1145,7 +1145,7 @@
     <string name="weeks" msgid="3516247214269821391">"semaines"</string>
     <string name="year" msgid="5182610307741238982">"année"</string>
     <string name="years" msgid="5797714729103773425">"années"</string>
-    <string name="now_string_shortest" msgid="3684914126941650330">"maintenant"</string>
+    <string name="now_string_shortest" msgid="3684914126941650330">"Maintenant"</string>
     <string name="duration_minutes_shortest" msgid="5744379079540806690">"<xliff:g id="COUNT">%d</xliff:g> min"</string>
     <string name="duration_hours_shortest" msgid="1477752094141971675">"<xliff:g id="COUNT">%d</xliff:g> h"</string>
     <string name="duration_days_shortest" msgid="4083124701676227233">"<xliff:g id="COUNT">%d</xliff:g> j"</string>
@@ -1598,7 +1598,7 @@
     <string name="keyboardview_keycode_alt" msgid="8997420058584292385">"Alt"</string>
     <string name="keyboardview_keycode_cancel" msgid="2134624484115716975">"Annuler"</string>
     <string name="keyboardview_keycode_delete" msgid="2661117313730098650">"Supprimer"</string>
-    <string name="keyboardview_keycode_done" msgid="2524518019001653851">"Terminé"</string>
+    <string name="keyboardview_keycode_done" msgid="2524518019001653851">"OK"</string>
     <string name="keyboardview_keycode_mode_change" msgid="2743735349997999020">"Changement de mode"</string>
     <string name="keyboardview_keycode_shift" msgid="3026509237043975573">"Maj"</string>
     <string name="keyboardview_keycode_enter" msgid="168054869339091055">"Entrée"</string>
@@ -1675,7 +1675,7 @@
     <string name="media_route_status_scanning" msgid="8045156315309594482">"Analyse en cours..."</string>
     <string name="media_route_status_connecting" msgid="5845597961412010540">"Connexion en cours..."</string>
     <string name="media_route_status_available" msgid="1477537663492007608">"Disponible"</string>
-    <string name="media_route_status_not_available" msgid="480912417977515261">"Indisponible"</string>
+    <string name="media_route_status_not_available" msgid="480912417977515261">"Non disponible"</string>
     <string name="media_route_status_in_use" msgid="6684112905244944724">"En cours d\'utilisation"</string>
     <string name="display_manager_built_in_display_name" msgid="1015775198829722440">"Écran intégré"</string>
     <string name="display_manager_hdmi_display_name" msgid="1022758026251534975">"Écran HDMI"</string>
@@ -2076,7 +2076,7 @@
     <string name="time_picker_radial_mode_description" msgid="1222342577115016953">"Passer en mode horloge pour la saisie de l\'heure."</string>
     <string name="autofill_picker_accessibility_title" msgid="4425806874792196599">"Options de saisie automatique"</string>
     <string name="autofill_save_accessibility_title" msgid="1523225776218450005">"Enregistrer pour la saisie automatique"</string>
-    <string name="autofill_error_cannot_autofill" msgid="6528827648643138596">"Le contenu ne peut pas être saisi automatiquement"</string>
+    <string name="autofill_error_cannot_autofill" msgid="6528827648643138596">"Le contenu ne peut pas être complété automatiquement"</string>
     <string name="autofill_picker_no_suggestions" msgid="1076022650427481509">"Aucune suggestion de saisie automatique"</string>
     <string name="autofill_picker_some_suggestions" msgid="5560549696296202701">"{count,plural, =1{1 suggestion de saisie automatique}one{# suggestion de saisie automatique}many{# suggestions de saisie automatique}other{# suggestions de saisie automatique}}"</string>
     <string name="autofill_save_title" msgid="7719802414283739775">"Enregistrer dans "<b>"<xliff:g id="LABEL">%1$s</xliff:g>"</b>" ?"</string>

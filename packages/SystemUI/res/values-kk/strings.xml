@@ -196,7 +196,7 @@
     <string name="biometric_dialog_tap_confirm_with_face_sfps" msgid="2499213248903257928">"Бетпен ашылды. Жалғастыру үшін түртіңіз."</string>
     <string name="biometric_dialog_authenticated" msgid="7337147327545272484">"Аутентификацияланған"</string>
     <string name="biometric_dialog_cancel_authentication" msgid="981316588773442637">"Аутентификациядан бас тарту"</string>
-    <string name="biometric_dialog_content_view_more_options_button" msgid="2663810393874865475">"Қосымша опциялар"</string>
+    <string name="biometric_dialog_content_view_more_options_button" msgid="2663810393874865475">"Басқа опциялар"</string>
     <string name="biometric_dialog_use_pin" msgid="8385294115283000709">"PIN кодын пайдалану"</string>
     <string name="biometric_dialog_use_pattern" msgid="2315593393167211194">"Өрнекті пайдалану"</string>
     <string name="biometric_dialog_use_password" msgid="3445033859393474779">"Құпия сөзді пайдалану"</string>

@@ -81,7 +81,7 @@
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Toque em Gerir para desativar os balões desta app."</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"OK"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Nenhum balão recente"</string>
-    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Os balões recentes e ignorados vão aparecer aqui."</string>
+    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Os balões recentes e ignorados vão aparecer aqui"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Converse no chat através de balões"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"As novas conversas aparecem como ícones no canto inferior do ecrã. Toque para as expandir ou arraste para as ignorar."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Controle os balões em qualquer altura"</string>

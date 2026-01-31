@@ -298,7 +298,7 @@
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"Der er ingen tilgængelige parrede enheder"</string>
     <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"Tryk for at oprette eller afbryde forbindelse til en enhed"</string>
     <string name="pair_new_bluetooth_devices" msgid="4601767620843349645">"Par ny enhed"</string>
-    <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"Se alt"</string>
+    <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"Se alle"</string>
     <string name="turn_on_bluetooth" msgid="5681370462180289071">"Brug Bluetooth"</string>
     <string name="quick_settings_bluetooth_device_connected" msgid="7884777006729260996">"Der er oprettet forbindelse"</string>
     <string name="quick_settings_bluetooth_device_audio_sharing" msgid="1496358082943301670">"Lyddeling"</string>
@@ -1093,7 +1093,7 @@
     <string name="accessibility_control_change_favorite" msgid="2943178027582253261">"markere som favorit"</string>
     <string name="accessibility_control_change_unfavorite" msgid="6997408061750740327">"fjerne som favorit"</string>
     <string name="accessibility_control_move" msgid="8980344493796647792">"Flyt til position <xliff:g id="NUMBER">%d</xliff:g>"</string>
-    <string name="controls_favorite_default_title" msgid="967742178688938137">"Betjeningselementer"</string>
+    <string name="controls_favorite_default_title" msgid="967742178688938137">"Styring"</string>
     <string name="controls_favorite_subtitle" msgid="5818709315630850796">"Vælg, hvilke enhedsindstillinger du vil have hurtig adgang til"</string>
     <string name="controls_favorite_rearrange" msgid="5616952398043063519">"Flyt et felt ved at holde det nede og trække"</string>
     <string name="controls_favorite_removed" msgid="5276978408529217272">"Alle styringselementerne blev fjernet"</string>
@@ -1410,11 +1410,11 @@
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"Gå tilbage"</string>
     <string name="touchpad_back_gesture_guidance" msgid="6263750214998421587">"Du kan gå tilbage ved at stryge mod venstre eller højre med tre fingre et vilkårligt sted på touchpladen.\n\nDu kan også bruge tastaturgenvejen Alt + Esc."</string>
     <string name="touchpad_back_gesture_success_title" msgid="7240576648330612171">"Flot!"</string>
-    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"Du har udført bevægelsen for Gå tilbage."</string>
+    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"Du har udført bevægelsen for at gå tilbage."</string>
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"Gå til startskærmen"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"Du kan til enhver tid stryge opad med tre fingre fra bunden af skærmen, hvis du vil gå til startskærmen."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Sådan!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du har fuldført bevægelsen for Gå til startskærmen."</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du har udført bevægelsen for at gå til startskærmen."</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Se seneste apps"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"Stryg opad, og hold tre fingre på touchpladen."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Godt klaret!"</string>
@@ -1422,7 +1422,7 @@
     <string name="tutorial_action_key_title" msgid="2659466586996495447">"Handlingstast"</string>
     <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"Du kan tilgå alle dine apps ved at trykke på handlingstasten på dit tastatur."</string>
     <string name="tutorial_action_key_success_title" msgid="466467860120112933">"Tillykke!"</string>
-    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"Du har fuldført bevægelsen for handlingstasten.\n\nHandling + / viser alle de tilgængelige genveje."</string>
+    <string name="tutorial_action_key_success_body" msgid="7201991081652850430">"Du har udført bevægelsen for handlingstasten.\n\nHandling + / viser alle de tilgængelige genveje."</string>
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"Tastaturets baggrundslys"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"Niveau %1$d af %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"Hjemmestyring"</string>

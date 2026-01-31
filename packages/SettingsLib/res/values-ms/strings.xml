@@ -588,7 +588,7 @@
     <string name="media_transfer_internal_mic" msgid="797333824290228595">"Mikrofon (dalaman)"</string>
     <string name="media_transfer_dock_speaker_device_name" msgid="2856219597113881950">"Pembesar suara dok"</string>
     <string name="media_transfer_external_device_name" msgid="2588672258721846418">"Peranti Luar"</string>
-    <string name="media_transfer_default_device_name" msgid="4315604017399871828">"Peranti yang disambungkan"</string>
+    <string name="media_transfer_default_device_name" msgid="4315604017399871828">"Peranti tersambung"</string>
     <string name="media_transfer_this_phone" msgid="7194341457812151531">"Telefon ini"</string>
     <string name="media_output_status_unknown_error" msgid="5098565887497902222">"Tidak dapat dimainkan pada peranti ini"</string>
     <string name="media_output_status_require_premium" msgid="8411255800047014822">"Tingkatkan akaun untuk beralih"</string>

@@ -320,7 +320,7 @@
     <string name="managed_profile_app_label" msgid="367401088383965725">"Passer à <xliff:g id="APP_NAME">%1$s</xliff:g> dans le profil professionnel"</string>
     <string name="permgrouplab_contacts" msgid="4254143639307316920">"Contacts"</string>
     <string name="permgroupdesc_contacts" msgid="9163927941244182567">"accéder à vos contacts"</string>
-    <string name="permgrouplab_location" msgid="1858277002233964394">"Localisation"</string>
+    <string name="permgrouplab_location" msgid="1858277002233964394">"Position"</string>
     <string name="permgroupdesc_location" msgid="1995955142118450685">"accéder à la position de cet appareil"</string>
     <string name="permgrouplab_calendar" msgid="6426860926123033230">"Agenda"</string>
     <string name="permgroupdesc_calendar" msgid="6762751063361489379">"accéder à votre agenda"</string>
@@ -607,7 +607,7 @@
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Permet à l\'appli de découvrir les appareils Bluetooth à proximité et de s\'y connecter"</string>
     <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"se connecter aux appareils Bluetooth associés"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Permet à l\'appli de se connecter aux appareils Bluetooth associés"</string>
-    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"envoyer annonces aux appareils Bluetooth à proxim."</string>
+    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"s\'annoncer aux appareils Bluetooth à proximité"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Permet à l\'appli d\'envoyer des annonces aux appareils Bluetooth à proximité"</string>
     <string name="permlab_uwb_ranging" msgid="8141915781475770665">"déterminer la position relative entre des appareils à bande ultralarge à proximité"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Autorisez l\'appli à déterminer la position relative entre des appareils à bande ultralarge à proximité"</string>
@@ -1029,7 +1029,7 @@
     <string name="lockscreen_too_many_failed_attempts_dialog_message" msgid="6458790975898594240">"Vous avez dessiné un schéma de déverrouillage incorrect à <xliff:g id="NUMBER_0">%1$d</xliff:g> reprises.\n\nVeuillez réessayer dans <xliff:g id="NUMBER_1">%2$d</xliff:g> secondes."</string>
     <string name="lockscreen_too_many_failed_password_attempts_dialog_message" msgid="3118353451602377380">"Vous avez saisi un mot de passe incorrect à <xliff:g id="NUMBER_0">%1$d</xliff:g> reprises. \n\nVeuillez réessayer dans <xliff:g id="NUMBER_1">%2$d</xliff:g> secondes."</string>
     <string name="lockscreen_too_many_failed_pin_attempts_dialog_message" msgid="2874278239714821984">"Vous avez saisi un NIP incorrect à <xliff:g id="NUMBER_0">%1$d</xliff:g> reprises. \n\nVeuillez réessayer dans <xliff:g id="NUMBER_1">%2$d</xliff:g> secondes."</string>
-    <string name="lockscreen_failed_attempts_almost_glogin" product="tablet" msgid="3069635524964070596">"Vous avez dessiné un schéma de déverrouillage incorrect à <xliff:g id="NUMBER_0">%1$d</xliff:g> reprises. Au bout de <xliff:g id="NUMBER_1">%2$d</xliff:g> échecs supplémentaires, vous devrez déverrouiller votre tablette à l\'aide de votre identifiant Google.\n\nVeuillez réessayer dans <xliff:g id="NUMBER_2">%3$d</xliff:g> secondes."</string>
+    <string name="lockscreen_failed_attempts_almost_glogin" product="tablet" msgid="3069635524964070596">"Vous avez dessiné un schéma de déverrouillage incorrect à <xliff:g id="NUMBER_0">%1$d</xliff:g> reprises. Au bout de <xliff:g id="NUMBER_1">%2$d</xliff:g> échecs supplémentaires, vous devrez déverrouiller votre tablette à l\'aide de votre identifiant Google.\n\nVeuillez réessayer dans <xliff:g id="NUMBER_2">%3$d</xliff:g> secondes."</string>
     <string name="lockscreen_failed_attempts_almost_glogin" product="tv" msgid="6399092175942158529">"Vous avez dessiné votre schéma de déverrouillage incorrectement à <xliff:g id="NUMBER_0">%1$d</xliff:g> reprise(s). Après <xliff:g id="NUMBER_1">%2$d</xliff:g> autre(s) tentative(s) incorrecte(s), vous devrez déverrouiller votre appareil Android TV en vous connectant à votre compte Google.\n\n Réessayez dans <xliff:g id="NUMBER_2">%3$d</xliff:g> secondes."</string>
     <string name="lockscreen_failed_attempts_almost_glogin" product="default" msgid="5691623136957148335">"Vous avez dessiné un schéma de déverrouillage incorrect à <xliff:g id="NUMBER_0">%1$d</xliff:g> reprises. Au bout de <xliff:g id="NUMBER_1">%2$d</xliff:g> échecs supplémentaires, vous devrez déverrouiller votre téléphone à l\'aide de votre identifiant Google.\n\nVeuillez réessayer dans <xliff:g id="NUMBER_2">%3$d</xliff:g> secondes."</string>
     <string name="lockscreen_failed_attempts_almost_at_wipe" product="tablet" msgid="7914445759242151426">"Vous avez tenté de déverrouiller la tablette de façon incorrecte à <xliff:g id="NUMBER_0">%1$d</xliff:g> reprises. Si vous échouez encore <xliff:g id="NUMBER_1">%2$d</xliff:g> fois, ses paramètres par défaut seront rétablis, et toutes les données d\'utilisateur seront perdues."</string>
@@ -2010,7 +2010,7 @@
     <string name="work_mode_emergency_call_button" msgid="6818855962881612322">"Urgence"</string>
     <string name="set_up_screen_lock_title" msgid="8346083801616474030">"Config. verrouillage d\'écran"</string>
     <string name="set_up_screen_lock_action_label" msgid="2687634803649209367">"Config. verrouillage d\'écran"</string>
-    <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"Configurez verrouillage de l\'écran pour utiliser Espace privé"</string>
+    <string name="private_space_set_up_screen_lock_message" msgid="1109956797005149814">"Configurez un verrouillage de l\'écran pour utiliser l\'espace privé"</string>
     <string name="private_space_set_up_screen_lock_for_reset" msgid="7817091386408432097">"Réglez le verrouillage de l\'écran pour supprimer l\'espace privé"</string>
     <string name="app_blocked_title" msgid="7353262160455028160">"L\'appli n\'est pas accessible"</string>
     <string name="app_blocked_message" msgid="542972921087873023">"<xliff:g id="APP_NAME">%1$s</xliff:g> n\'est pas accessible pour le moment."</string>

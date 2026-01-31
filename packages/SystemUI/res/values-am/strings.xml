@@ -290,7 +290,7 @@
     <string name="accessibility_rotation_lock_on_landscape" msgid="936972553861524360">"ማያ ገፅ በወርድ ገፅ አቀማመጥ ተቆልፏል።"</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="2356633398683813837">"ማያ ገፅ በቁም ገፅ አቀማመጥ ተቆልፏል።"</string>
     <string name="dessert_case" msgid="9104973640704357717">"የማወራረጃ ምግቦች መያዣ"</string>
-    <string name="start_dreams" msgid="9131802557946276718">"የማያ ገፅ ማቆያ"</string>
+    <string name="start_dreams" msgid="9131802557946276718">"የማያ ገጽ ማቆያ"</string>
     <string name="ethernet_label" msgid="2203544727007463351">"ኤተርኔት"</string>
     <string name="quick_settings_dnd_label" msgid="7728690179108024338">"አትረብሽ"</string>
     <string name="quick_settings_modes_label" msgid="879156359479504244">"ሁነታዎች"</string>
@@ -321,7 +321,7 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="2359922767950346112">"በራስ ሰር አሽከርክር"</string>
     <string name="accessibility_quick_settings_rotation" msgid="4800050198392260738">"ማያ ገጽን በራስ-አሽከርክር"</string>
     <string name="quick_settings_location_label" msgid="2621868789013389163">"አካባቢ"</string>
-    <string name="quick_settings_screensaver_label" msgid="1495003469366524120">"የማያ ገፅ ማቆያ"</string>
+    <string name="quick_settings_screensaver_label" msgid="1495003469366524120">"የማያ ገጽ ማቆያ"</string>
     <string name="quick_settings_camera_label" msgid="5612076679385269339">"የካሜራ መዳረሻ"</string>
     <string name="quick_settings_mic_label" msgid="8392773746295266375">"የማይክሮፎን መዳረሻ"</string>
     <string name="quick_settings_camera_mic_available" msgid="1453719768420394314">"ይገኛል"</string>
@@ -728,7 +728,7 @@
     <string name="satellite_emergency_only_carrier_text" msgid="828510231597991206">"የአደጋ ጥሪዎች ወይም ኤስኦኤስ"</string>
     <string name="accessibility_managed_profile" msgid="4703836746209377356">"የስራ መገለጫ"</string>
     <string name="tuner_warning_title" msgid="7721976098452135267">"ለአንዳንዶች አስደሳች ቢሆንም ለሁሉም አይደለም"</string>
-    <string name="tuner_warning" msgid="1861736288458481650">"የስርዓት በይነገጽ መቃኛ የAndroid ተጠቃሚ በይነገጹን የሚነካኩበት እና የሚያበጁበት ተጨማሪ መንገዶች ይሰጠዎታል። እነዚህ የሙከራ ባህሪዎች ወደፊት በሚኖሩ ልቀቶች ላይ ሊለወጡ፣ ሊሰበሩ ወይም ሊጠፉ ይችላሉ። ከጥንቃቄ ጋር ወደፊት ይቀጥሉ።"</string>
+    <string name="tuner_warning" msgid="1861736288458481650">"የሥርዓት የተጠቃሚ በይነገጽ መቃኛ የAndroid ተጠቃሚ በይነገጹን የሚነካኩበት እና የሚያበጁበት ተጨማሪ መንገዶች ይሰጠዎታል። እነዚህ የሙከራ ባህሪዎች ወደፊት በሚኖሩ ልቀቶች ላይ ሊለወጡ፣ ሊሰበሩ ወይም ሊጠፉ ይችላሉ። ከጥንቃቄ ጋር ወደፊት ይቀጥሉ።"</string>
     <string name="tuner_persistent_warning" msgid="230466285569307806">"እነዚህ የሙከራ ባህሪዎች ወደፊት በሚኖሩ ልቀቶች ላይ ሊለወጡ፣ ሊሰበሩ ወይም ሊጠፉ ይችላሉ። ከጥንቃቄ ጋር ወደፊት ይቀጥሉ።"</string>
     <string name="got_it" msgid="477119182261892069">"ገባኝ"</string>
     <string name="tuner_toast" msgid="3812684836514766951">"እንኳን ደስ ያለዎት! የስርዓት በይነገጽ መቃኛ ወደ ቅንብሮች ታክሏል"</string>
@@ -841,7 +841,7 @@
     <string name="group_system_access_all_apps_search" msgid="1553588630154197469">"የመተግበሪያ ዝርዝር ክፈት"</string>
     <string name="group_system_access_system_settings" msgid="8731721963449070017">"ቅንብሮችን ክፈት"</string>
     <string name="group_system_access_google_assistant" msgid="7210074957915968110">"ረዳትን ክፈት"</string>
-    <string name="group_system_lock_screen" msgid="7391191300363416543">"ማያ ገፅ ቁልፍ"</string>
+    <string name="group_system_lock_screen" msgid="7391191300363416543">"ማያ ገጽ ቁልፍ"</string>
     <string name="group_system_quick_memo" msgid="3764560265935722903">"ማስታወሻ ይውሰዱ"</string>
     <string name="keyboard_shortcut_group_system_multitasking" msgid="6967816258924795558">"ብዙ ተግባራትን በተመሳሳይ ጊዜ ማከናወን"</string>
     <string name="system_multitasking_rhs" msgid="8714224917276297810">"የአሁኑ መተግበሪያ በስተቀኝ ላይ ሆኖ የተከፈለ ማያ ገጽን ይጠቀሙ"</string>

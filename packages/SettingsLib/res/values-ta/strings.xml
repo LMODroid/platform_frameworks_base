@@ -196,7 +196,7 @@
     <string name="launch_defaults_some" msgid="3631650616557252926">"சில இயல்புநிலைகள் அமைக்கப்பட்டன"</string>
     <string name="launch_defaults_none" msgid="8049374306261262709">"இயல்புநிலைகள் எதுவும் அமைக்கப்படவில்லை"</string>
     <string name="tts_settings" msgid="8130616705989351312">"\'எழுத்திலிருந்து பேச்சு\' அமைப்புகள்"</string>
-    <string name="tts_settings_title" msgid="7602210956640483039">"வார்த்தையைப் பேச்சாக மாற்றுதல்"</string>
+    <string name="tts_settings_title" msgid="7602210956640483039">"எழுத்தைப் பேச்சாக மாற்றுதல்"</string>
     <string name="tts_default_rate_title" msgid="3964187817364304022">"பேச்சு வீதம்"</string>
     <string name="tts_default_rate_summary" msgid="3781937042151716987">"வார்த்தைகள் பேசப்படும் வேகம்"</string>
     <string name="tts_default_pitch_title" msgid="6988592215554485479">"ஒலித்திறன்"</string>
@@ -253,7 +253,7 @@
     <string name="enable_adb_wireless_summary" msgid="7344391423657093011">"வைஃபையை இணைக்கும்போது பிழைதிருத்தப் பயன்முறை இயக்கப்படும்"</string>
     <string name="adb_wireless_error" msgid="721958772149779856">"பிழை"</string>
     <string name="adb_wireless_settings" msgid="2295017847215680229">"வைஃபை பிழைதிருத்தம்"</string>
-    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"கிடைக்கும் சாதனங்களைப் பார்க்கவும் பயன்படுத்தவும் வைஃபை பிழைதிருத்தத்தை ஆன் செய்யவும்"</string>
+    <string name="adb_wireless_list_empty_off" msgid="1713707973837255490">"கிடைக்கும் சாதனங்களைப் பார்க்கவும் பயன்படுத்தவும் வயர்லெஸ் பிழைதிருத்தத்தை ஆன் செய்யவும்"</string>
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"QR குறியீட்டின் மூலம் சாதனத்தை இணைத்தல்"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"QR குறியீடு ஸ்கேனரைப் பயன்படுத்தி புதிய சாதனங்களை இணைக்கலாம்"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"இணைத்தல் குறியீட்டின் மூலம் சாதனத்தை இணைத்தல்"</string>

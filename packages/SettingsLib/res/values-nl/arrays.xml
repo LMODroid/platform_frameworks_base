@@ -56,7 +56,7 @@
   <string-array name="hdcp_checking_summaries">
     <item msgid="4045840870658484038">"HDCP-controle nooit gebruiken"</item>
     <item msgid="8254225038262324761">"Gebruik HDCP-controle alleen voor DRM-content"</item>
-    <item msgid="6421717003037072581">"HDCP-controle altijd gebruiken"</item>
+    <item msgid="6421717003037072581">"Gebruik altijd HDCP-controle"</item>
   </string-array>
   <string-array name="bt_hci_snoop_log_entries">
     <item msgid="695678520785580527">"Uitgezet"</item>

@@ -73,15 +73,15 @@
     <string name="bubble_accessibility_announce_collapse" msgid="3178806224494537097">"sužavanje oblačića <xliff:g id="BUBBLE_TITLE">%1$s</xliff:g>"</string>
     <string name="bubbles_app_settings" msgid="3617224938701566416">"Postavke aplikacije <xliff:g id="NOTIFICATION_TITLE">%1$s</xliff:g>"</string>
     <string name="bubble_dismiss_text" msgid="8816558050659478158">"Odbaci oblačić"</string>
-    <string name="bubble_fullscreen_text" msgid="1006758103218086231">"Prikaži preko cijelog ekrana"</string>
+    <string name="bubble_fullscreen_text" msgid="1006758103218086231">"Prebaci na cijeli ekran"</string>
     <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"Nemoj prikazivati razgovor u oblačićima"</string>
     <string name="bubbles_user_education_title" msgid="2112319053732691899">"Chatajte koristeći oblačiće"</string>
     <string name="bubbles_user_education_description" msgid="4215862563054175407">"Novi razgovori se prikazuju kao plutajuće ikone ili oblačići. Dodirnite da otvorite oblačić. Prevucite da ga premjestite."</string>
     <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"Upravljajte oblačićima u svakom trenutku"</string>
-    <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Dodirnite Upravljaj da isključite oblačiće iz ove aplikacije"</string>
+    <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Dodirnite Upravljajte da isključite oblačiće iz ove aplikacije"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"Razumijem"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Nema nedavnih oblačića"</string>
-    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Nedavni i odbačeni oblačići će se pojaviti ovdje"</string>
+    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Nedavni i odbačeni oblačići će se prikazivati ovdje"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Chatajte koristeći oblačiće"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Novi razgovori se pojavljuju kao ikone u donjem uglu ekrana. Dodirnite da ih proširite ili prevucite da ih odbacite."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Upravljajte oblačićima u svakom trenutku"</string>

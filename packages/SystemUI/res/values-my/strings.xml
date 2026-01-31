@@ -79,7 +79,7 @@
     <string name="screenshot_saving_private_profile" msgid="8934706048497093297">"ဖန်သားပြင်ဓာတ်ပုံကို သီးသန့်ပရိုဖိုင်တွင် သိမ်းနေသည်"</string>
     <string name="screenshot_saved_title" msgid="8893267638659083153">"ဖန်သားပြင်ဓာတ်ပုံကို သိမ်းပြီးပါပြီ"</string>
     <string name="screenshot_failed_title" msgid="3259148215671936891">"မျက်နှာပြင်ပုံကို သိမ်း၍မရပါ"</string>
-    <string name="screenshot_failed_external_display_indication" msgid="6555673132061101936">"ပြင်ပဖန်သားပြင်"</string>
+    <string name="screenshot_failed_external_display_indication" msgid="6555673132061101936">"ပြင်ပပြကွက်"</string>
     <string name="screenshot_failed_to_save_user_locked_text" msgid="6156607948256936920">"ဖန်သားပြင်ဓာတ်ပုံကို မသိမ်းမီ စက်ပစ္စည်းကို လော့ခ်ဖွင့်ထားရမည်"</string>
     <string name="screenshot_failed_to_save_unknown_text" msgid="1506621600548684129">"မျက်နှာပြင်ပုံကို ထပ်ရိုက်ကြည့်ပါ"</string>
     <string name="screenshot_failed_to_save_text" msgid="7232739948999195960">"ဖန်သားပြင်ဓာတ်ပုံကို သိမ်း၍မရပါ"</string>
@@ -341,7 +341,7 @@
     <string name="quick_settings_cast_no_network" msgid="3863016850468559522">"Wi-Fi (သို့) အီသာနက်ချိတ်ဆက်မှု မရှိပါ"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="4980669966716685588">"အလင်းတောက်ပမှု"</string>
     <string name="quick_settings_inversion_label" msgid="3501527749494755688">"အရောင်ပြောင်းပြန်ပြုလုပ်ရန်"</string>
-    <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"အရောင် အမှန်ပြင်ခြင်း"</string>
+    <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"အရောင်အမှန်ပြင်ရန်"</string>
     <string name="quick_settings_font_scaling_label" msgid="5289001009876936768">"ဖောင့်အရွယ်"</string>
     <string name="quick_settings_more_user_settings" msgid="7634653308485206306">"အသုံးပြုသူများ စီမံရန်"</string>
     <string name="quick_settings_done" msgid="2163641301648855793">"ပြီးပါပြီ"</string>
@@ -396,7 +396,7 @@
     <string name="custom" msgid="3337456985275158299">"စိတ်ကြိုက်"</string>
     <string name="custom_trace_settings_dialog_title" msgid="2608570500144830554">"စိတ်ကြိုက်လုပ်ဆောင်ချက်မှတ်တမ်း ဆက်တင်များ"</string>
     <string name="restore_default" msgid="5259420807486239755">"မူရင်းအတိုင်း ပြန်ပြောင်းရန်"</string>
-    <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"လက်တစ်ဖက်သုံးမုဒ်"</string>
+    <string name="quick_settings_onehanded_label" msgid="2416537930246274991">"လက်တစ်ဖက်မုဒ်"</string>
     <string name="quick_settings_hearing_devices_label" msgid="7277170419679404129">"နားကြားကိရိယာ"</string>
     <string name="quick_settings_hearing_devices_connected" msgid="6519069502397037781">"သုံးနေသည်"</string>
     <string name="quick_settings_hearing_devices_disconnected" msgid="8907061223998176187">"ချိတ်ဆက်မထားပါ"</string>

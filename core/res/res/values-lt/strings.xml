@@ -274,7 +274,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Išsami ataskaita"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"Naudokite šią parinktį, kad sistemos veikimas būtų kuo mažiau trikdomas, kai įrenginys nereaguoja ar yra per lėtas arba kai jums reikia visų ataskaitos skilčių. Negalėsite įvesti daugiau išsamios informacijos ar padaryti papildomų ekrano kopijų."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{Pranešimo apie riktą ekrano kopija bus užfiksuota po # sekundės.}one{Pranešimo apie riktą ekrano kopija bus užfiksuota po # sekundės.}few{Pranešimo apie riktą ekrano kopija bus užfiksuota po # sekundžių.}many{Pranešimo apie riktą ekrano kopija bus užfiksuota po # sekundės.}other{Pranešimo apie riktą ekrano kopija bus užfiksuota po # sekundžių.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Sukurta ekrano kopija su pranešimu apie riktą"</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Ekrano kopija su pranešimu apie riktą"</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"Nepavyko sukurti ekrano kopijos su pranešimu apie riktą"</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"Tylus režimas"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"Garsas IŠJUNGTAS"</string>

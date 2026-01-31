@@ -441,7 +441,7 @@
     <string name="local_backup_password_toast_validation_failure" msgid="714669442363647122">"बॅक अप पासवर्ड सेट करणे अयशस्वी"</string>
     <string name="loading_injected_setting_summary" msgid="8394446285689070348">"लोड करत आहे…"</string>
   <string-array name="color_mode_names">
-    <item msgid="3836559907767149216">"सशक्त (डीफॉल्ट)"</item>
+    <item msgid="3836559907767149216">"व्हायब्रंट (डीफॉल्ट)"</item>
     <item msgid="9112200311983078311">"नैसर्गिक"</item>
     <item msgid="6564241960833766170">"मानक"</item>
   </string-array>
@@ -683,7 +683,7 @@
     <string name="failed_attempts_now_wiping_profile" msgid="7626589520888963129">"बरेच चुकीचे प्रयत्‍न. ही कार्य प्रोफाइल आणि त्यामधील डेटा हटवला जाईल."</string>
     <string name="failed_attempts_now_wiping_dialog_dismiss" msgid="2749889771223578925">"डिसमिस करा"</string>
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"डिव्हाइस डीफॉल्ट"</string>
-    <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"बंद केले आहे"</string>
+    <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"बंद केले"</string>
     <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"सुरू केले आहे"</string>
     <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"हा बदल लागू करण्यासाठी तुमचे डिव्हाइस रीबूट करणे आवश्यक आहे. आता रीबूट करा किंवा रद्द करा."</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"वायर्ड हेडफोन"</string>

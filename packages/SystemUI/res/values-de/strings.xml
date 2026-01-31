@@ -62,7 +62,7 @@
     <string name="share_wifi_button_text" msgid="1285273973812029240">"WLAN teilen"</string>
     <string name="wifi_debugging_title" msgid="7300007687492186076">"Debugging über WLAN in diesem Netzwerk zulassen?"</string>
     <string name="wifi_debugging_message" msgid="5461204211731802995">"Netzwerkname (SSID)\n<xliff:g id="SSID_0">%1$s</xliff:g>\n\nWLAN-Adresse (BSSID)\n<xliff:g id="BSSID_1">%2$s</xliff:g>"</string>
-    <string name="wifi_debugging_always" msgid="2968383799517975155">"Immer in diesem Netzwerk zulassen"</string>
+    <string name="wifi_debugging_always" msgid="2968383799517975155">"In diesem Netzwerk immer zulassen"</string>
     <string name="wifi_debugging_allow" msgid="4573224609684957886">"Zulassen"</string>
     <string name="wifi_debugging_secondary_user_title" msgid="2493201475880517725">"\"Debugging über WLAN\" nicht zulässig"</string>
     <string name="wifi_debugging_secondary_user_message" msgid="9085779370142222881">"Der momentan auf diesem Gerät angemeldete Nutzer kann das Debugging über WLAN nicht aktivieren. Um diese Funktion zu verwenden, muss sich ein Administrator anmelden."</string>
@@ -189,8 +189,8 @@
     <string name="biometric_dialog_face_icon_description_authenticated" msgid="2242167416140740920">"Gesicht authentifiziert"</string>
     <string name="biometric_dialog_face_icon_description_confirmed" msgid="7918067993953940778">"Bestätigt"</string>
     <string name="biometric_dialog_tap_confirm" msgid="9166350738859143358">"Zum Abschließen auf \"Bestätigen\" tippen"</string>
-    <string name="biometric_dialog_tap_confirm_with_face" msgid="2378151312221818694">"Mit Gesicht entsperrt"</string>
-    <string name="biometric_dialog_tap_confirm_with_face_alt_1" msgid="439152621640507113">"Gerät mit dem Gesicht entsperrt. Tippe, um fortzufahren."</string>
+    <string name="biometric_dialog_tap_confirm_with_face" msgid="2378151312221818694">"Per Gesichtserkennung entsperrt."</string>
+    <string name="biometric_dialog_tap_confirm_with_face_alt_1" msgid="439152621640507113">"Per Gesichtserkennung entsperrt. Tippe, um fortzufahren."</string>
     <string name="biometric_dialog_tap_confirm_with_face_alt_2" msgid="8586608186457385108">"Gesicht erkannt. Tippe, um fortzufahren."</string>
     <string name="biometric_dialog_tap_confirm_with_face_alt_3" msgid="2192670471930606539">"Gesicht erkannt. Tippe zum Fortfahren auf das Symbol „Entsperren“."</string>
     <string name="biometric_dialog_tap_confirm_with_face_sfps" msgid="2499213248903257928">"Per Gesichtserkennung entsperrt. Tippe, um fortzufahren."</string>
@@ -296,7 +296,7 @@
     <string name="quick_settings_modes_label" msgid="879156359479504244">"Modi"</string>
     <string name="quick_settings_bluetooth_label" msgid="7018763367142041481">"Bluetooth"</string>
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"Keine gekoppelten Geräte verfügbar"</string>
-    <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"Zum Verbinden oder Trennen eines Geräts tippen"</string>
+    <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"Tippe auf ein Gerät, um es zu verbinden oder zu trennen"</string>
     <string name="pair_new_bluetooth_devices" msgid="4601767620843349645">"Neues Gerät koppeln"</string>
     <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"Alle anzeigen"</string>
     <string name="turn_on_bluetooth" msgid="5681370462180289071">"Bluetooth verwenden"</string>
@@ -452,12 +452,12 @@
     <string name="tap_again" msgid="1315420114387908655">"Noch einmal tippen"</string>
     <string name="keyguard_unlock" msgid="8031975796351361601">"Zum Öffnen nach oben wischen"</string>
     <string name="keyguard_unlock_press" msgid="9140109453735019209">"Tippe zum Öffnen auf das Symbol „Entsperren“"</string>
-    <string name="keyguard_face_successful_unlock_swipe" msgid="6180997591385846073">"Gerät mit Gesicht entsperrt. Zum Öffnen nach oben wischen."</string>
-    <string name="keyguard_face_successful_unlock_press" msgid="25520941264602588">"Gerät mit dem Gesicht entsperrt. Tippe zum Öffnen auf das Symbol „Entsperren“."</string>
-    <string name="keyguard_face_successful_unlock_press_alt_1" msgid="5715461103913071474">"Gerät mit dem Gesicht entsperrt. Tippe zum Öffnen."</string>
+    <string name="keyguard_face_successful_unlock_swipe" msgid="6180997591385846073">"Per Gesichtserkennung entsperrt. Zum Öffnen nach oben wischen."</string>
+    <string name="keyguard_face_successful_unlock_press" msgid="25520941264602588">"Per Gesichtserkennung entsperrt. Tippe zum Öffnen auf das Symbol „Entsperren“."</string>
+    <string name="keyguard_face_successful_unlock_press_alt_1" msgid="5715461103913071474">"Per Gesichtserkennung entsperrt. Tippe zum Öffnen."</string>
     <string name="keyguard_face_successful_unlock_press_alt_2" msgid="8310787946357120406">"Gesicht erkannt. Tippe zum Öffnen."</string>
     <string name="keyguard_face_successful_unlock_press_alt_3" msgid="7219030481255573962">"Gesicht erkannt. Tippe zum Öffnen auf das Symbol „Entsperren“."</string>
-    <string name="keyguard_face_successful_unlock" msgid="4203999851465708287">"Gerät mit Gesicht entsperrt"</string>
+    <string name="keyguard_face_successful_unlock" msgid="4203999851465708287">"Per Gesichtserkennung entsperrt"</string>
     <string name="keyguard_face_successful_unlock_alt1" msgid="5853906076353839628">"Gesicht erkannt"</string>
     <string name="keyguard_retry" msgid="886802522584053523">"Zum Wiederholen nach oben wischen"</string>
     <string name="accesssibility_keyguard_retry" msgid="8880238862712870676">"Nach oben wischen &amp; Gesichtsentsperrung erneut versuchen"</string>
@@ -954,7 +954,7 @@
     <string name="lockscreen_shortcut_right" msgid="4138414674531853719">"Rechte Verknüpfung"</string>
     <string name="lockscreen_unlock_left" msgid="1417801334370269374">"Linke Verknüpfung entsperrt außerdem"</string>
     <string name="lockscreen_unlock_right" msgid="4658008735541075346">"Rechte Verknüpfung entsperrt außerdem"</string>
-    <string name="lockscreen_none" msgid="4710862479308909198">"Keine"</string>
+    <string name="lockscreen_none" msgid="4710862479308909198">"Keiner"</string>
     <string name="tuner_launch_app" msgid="3906265365971743305">"<xliff:g id="APP">%1$s</xliff:g> starten"</string>
     <string name="tuner_other_apps" msgid="7767462881742291204">"Sonstige Apps"</string>
     <string name="tuner_circle" msgid="5270591778160525693">"Kreis"</string>
@@ -1068,7 +1068,7 @@
     <string name="accessibility_floating_button_docking_tooltip" msgid="6814897496767461517">"Durch Ziehen an den Rand wird die Schaltfläche zeitweise ausgeblendet"</string>
     <string name="accessibility_floating_button_undo" msgid="511112888715708241">"Rückgängig machen"</string>
     <string name="accessibility_floating_button_hidden_notification_title" msgid="4115036997406994799">"Button „Bedienungshilfen“ ausgeblendet"</string>
-    <string name="accessibility_floating_button_hidden_notification_text" msgid="1457021647040915658">"Tippen, um die Schaltfläche „Bedienungshilfen“ aufzurufen"</string>
+    <string name="accessibility_floating_button_hidden_notification_text" msgid="1457021647040915658">"Tippen, um den Button „Bedienungshilfen“ aufzurufen"</string>
     <string name="accessibility_floating_button_undo_message_label_text" msgid="9017658016426242640">"Verknüpfung für „<xliff:g id="FEATURE_NAME">%s</xliff:g>“ entfernt"</string>
     <string name="accessibility_floating_button_undo_message_number_text" msgid="4909270290725226075">"{count,plural, =1{# Verknüpfung entfernt}other{# Verknüpfungen entfernt}}"</string>
     <string name="accessibility_floating_button_action_move_top_left" msgid="6253520703618545705">"Nach oben links verschieben"</string>
@@ -1363,8 +1363,8 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"Schließen"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"Bildschirm verbunden"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"Mikrofon &amp; Kamera"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Kürzliche App-Nutzung"</string>
-    <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Kürzliche Zugriffe ansehen"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Von folgenden Apps zuletzt verwendet"</string>
+    <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Letzte Zugriffe ansehen"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Fertig"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Maximieren und Optionen einblenden"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"Minimieren"</string>
@@ -1414,7 +1414,7 @@
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"Startbildschirm"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"Du kannst jederzeit zum Startbildschirm gehen, indem du mit drei Fingern vom unteren Displayrand nach oben wischst."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Sehr gut!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du hast den Schritt für die Touchgeste „Zum Startbildschirm“ abgeschlossen"</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Du hast das Tutorial für die Touchgeste „Zum Startbildschirm“ abgeschlossen"</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Letzte Apps aufrufen"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"Wische mit 3 Fingern nach oben und halte das Touchpad gedrückt."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Gut gemacht!"</string>

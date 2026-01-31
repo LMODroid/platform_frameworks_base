@@ -84,9 +84,9 @@
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Соңғы және жабылған қалқыма хабарлар осы жерде көрсетіледі."</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Қалқыма хабарлар арқылы чатта сөйлесу"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Жаңа әңгімелер экранның төменгі бөлігінде белгіше түрінде көрсетіледі. Оларды жаю үшін түртіңіз, ал жабу үшін сүйреңіз."</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Қалқыма хабарларды кез келген уақытта басқарыңыз"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Қалқыма хабарларды басқару"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Қалқыма хабарда көрсетілетін қолданбалар мен әңгімелерді реттеу үшін осы жерді түртіңіз."</string>
-    <string name="notification_bubble_title" msgid="6082910224488253378">"Көпіршік"</string>
+    <string name="notification_bubble_title" msgid="6082910224488253378">"Қалқыма хабар"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Басқару"</string>
     <string name="accessibility_bubble_dismissed" msgid="8367471990421247357">"Қалқыма хабар жабылды."</string>
     <string name="bubble_shortcut_label" msgid="666269077944378311">"Қалқыма хабарлар"</string>

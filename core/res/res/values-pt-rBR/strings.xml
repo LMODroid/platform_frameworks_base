@@ -320,7 +320,7 @@
     <string name="managed_profile_app_label" msgid="367401088383965725">"Mudar para o app <xliff:g id="APP_NAME">%1$s</xliff:g> do perfil de trabalho"</string>
     <string name="permgrouplab_contacts" msgid="4254143639307316920">"Contatos"</string>
     <string name="permgroupdesc_contacts" msgid="9163927941244182567">"acesse seus contatos"</string>
-    <string name="permgrouplab_location" msgid="1858277002233964394">"localização"</string>
+    <string name="permgrouplab_location" msgid="1858277002233964394">"Localização"</string>
     <string name="permgroupdesc_location" msgid="1995955142118450685">"acesse o local do dispositivo"</string>
     <string name="permgrouplab_calendar" msgid="6426860926123033230">"Agenda"</string>
     <string name="permgroupdesc_calendar" msgid="6762751063361489379">"acessar sua agenda"</string>
@@ -723,8 +723,8 @@
     <string name="face_acquired_too_different" msgid="4505278456634706967">"Rosto não reconhecido. Tente de novo."</string>
     <string name="face_acquired_too_similar" msgid="8882920552674125694">"Mude a posição da cabeça ligeiramente"</string>
     <string name="face_acquired_pan_too_extreme" msgid="5417928604710621088">"Olhe diretamente para o smartphone"</string>
-    <string name="face_acquired_tilt_too_extreme" msgid="5715715666540716620">"Olhe diretamente para o smartphone"</string>
-    <string name="face_acquired_roll_too_extreme" msgid="8261939882838881194">"Olhe diretamente para o smartphone"</string>
+    <string name="face_acquired_tilt_too_extreme" msgid="5715715666540716620">"Olhe diretamente para o celular"</string>
+    <string name="face_acquired_roll_too_extreme" msgid="8261939882838881194">"Olhe diretamente para o celular"</string>
     <string name="face_acquired_obscured" msgid="4917643294953326639">"Tire tudo que possa esconder seu rosto."</string>
     <string name="face_acquired_sensor_dirty" msgid="8968391891086721678">"Limpe a parte superior da tela, inclusive a barra preta"</string>
     <!-- no translation found for face_acquired_dark_glasses_detected (5643703296620631986) -->

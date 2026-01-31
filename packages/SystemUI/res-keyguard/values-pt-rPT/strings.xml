@@ -27,7 +27,7 @@
     <string name="keyguard_enter_your_password" msgid="7225626204122735501">"Introduza a palavra-passe"</string>
     <string name="keyguard_enter_password" msgid="6483623792371009758">"Introduza a palavra-passe"</string>
     <string name="keyguard_sim_error_message_short" msgid="633630844240494070">"Cartão inválido."</string>
-    <string name="keyguard_charged" msgid="5478247181205188995">"Bateria carregada"</string>
+    <string name="keyguard_charged" msgid="5478247181205188995">"Carregada"</string>
     <string name="keyguard_plugged_in_wireless" msgid="2537874724955057383">"<xliff:g id="PERCENTAGE">%s</xliff:g> • A carregar sem fios"</string>
     <string name="keyguard_plugged_in_dock" msgid="2122073051904360987">"<xliff:g id="PERCENTAGE">%s</xliff:g> • A carregar"</string>
     <string name="keyguard_plugged_in" msgid="8169926454348380863">"<xliff:g id="PERCENTAGE">%s</xliff:g> • A carregar…"</string>
@@ -116,7 +116,7 @@
     <string name="kg_prompt_added_security_password" msgid="6053156069765029006">"Para segurança adicional, é necessária uma palavra-passe"</string>
     <string name="kg_prompt_reason_device_admin" msgid="6961159596224055685">"Dispositivo bloqueado pelo gestor"</string>
     <string name="kg_prompt_reason_user_request" msgid="6015774877733717904">"O dispositivo foi bloqueado manualmente"</string>
-    <string name="kg_face_not_recognized" msgid="7903950626744419160">"Não reconhecido."</string>
+    <string name="kg_face_not_recognized" msgid="7903950626744419160">"Não reconhecido"</string>
     <string name="kg_face_sensor_privacy_enabled" msgid="939511161763558512">"Ative acesso à câmara nas Def. p/ usar Desbl. facial"</string>
     <string name="kg_password_default_pin_message" msgid="1434544655827987873">"{count,plural, =1{Introduza o PIN do SIM. Tem mais # tentativa antes de ser necessário contactar o operador para desbloquear o dispositivo.}many{Introduza o PIN do SIM. Tem mais # tentativas.}other{Introduza o PIN do SIM. Tem mais # tentativas.}}"</string>
     <string name="kg_password_default_puk_message" msgid="1025139786449741950">"{count,plural, =1{O SIM está desativado. Introduza o código PUK para continuar. Tem mais # tentativa antes de o SIM ficar permanentemente inutilizável. Contacte o operador para obter mais detalhes.}many{O SIM está desativado. Introduza o código PUK para continuar. Tem mais # tentativas antes de o SIM ficar permanentemente inutilizável. Contacte o operador para obter mais detalhes.}other{O SIM está desativado. Introduza o código PUK para continuar. Tem mais # tentativas antes de o SIM ficar permanentemente inutilizável. Contacte o operador para obter mais detalhes.}}"</string>

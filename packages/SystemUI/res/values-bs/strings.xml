@@ -750,7 +750,7 @@
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"Može zvoniti ili vibrirati na osnovu postavki uređaja. Razgovori iz aplikacije <xliff:g id="APP_NAME">%1$s</xliff:g> prikazuju se u oblačićima prema zadanim postavkama."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"Neka sistem odluči treba li se ovo obavještenje oglasiti zvukom ili vibracijom"</string>
     <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;Status:&lt;/b&gt; je unaprijeđen u Zadano"</string>
-    <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"&lt;b&gt;Status:&lt;/b&gt; je unazađen u Nečujno"</string>
+    <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"&lt;b&gt;Status:&lt;/b&gt; je unazađen u Utišano"</string>
     <string name="notification_channel_summary_automatic_promoted" msgid="1301710305149590426">"&lt;b&gt;Status:&lt;/b&gt; je rangiran više"</string>
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"&lt;b&gt;Status:&lt;/b&gt; je rangiran niže"</string>
     <string name="notification_channel_summary_priority_baseline" msgid="46674690072551234">"Prikazuje se na vrhu obavještenja u razgovorima i kao slika profila na zaključanom ekranu"</string>
@@ -1077,7 +1077,7 @@
     <string name="accessibility_floating_button_action_move_bottom_right" msgid="6196904373227440500">"Pomjeranje dolje desno"</string>
     <string name="accessibility_floating_button_action_move_to_edge_and_hide_to_half" msgid="662401168245782658">"Pomjeranje do ivice i sakrivanje"</string>
     <string name="accessibility_floating_button_action_move_out_edge_and_show" msgid="8354760891651663326">"Pomjeranje izvan ivice i prikaz"</string>
-    <string name="accessibility_floating_button_action_remove_menu" msgid="6730432848162552135">"Uklanjanje"</string>
+    <string name="accessibility_floating_button_action_remove_menu" msgid="6730432848162552135">"Ukloni"</string>
     <string name="accessibility_floating_button_action_double_tap_to_toggle" msgid="7976492639670692037">"aktiviranje/deaktiviranje"</string>
     <string name="accessibility_floating_button_action_edit" msgid="1688227814600463987">"Uređivanje"</string>
     <string name="quick_controls_title" msgid="6839108006171302273">"Kontrole uređaja"</string>

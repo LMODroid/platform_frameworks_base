@@ -137,18 +137,18 @@
     <item msgid="1212577207279552119">"32 bitů / vzorek"</item>
   </string-array>
   <string-array name="bluetooth_a2dp_codec_bits_per_sample_summaries">
-    <item msgid="9196208128729063711">"Použít systémový výběr (výchozí)"</item>
+    <item msgid="9196208128729063711">"Výběr systému (výchozí)"</item>
     <item msgid="1084497364516370912">"16 bitů / vzorek"</item>
     <item msgid="2077889391457961734">"24 bitů / vzorek"</item>
     <item msgid="3836844909491316925">"32 bitů / vzorek"</item>
   </string-array>
   <string-array name="bluetooth_a2dp_codec_channel_mode_titles">
-    <item msgid="3014194562841654656">"Použít systémový výběr (výchozí)"</item>
+    <item msgid="3014194562841654656">"Výběr systému (výchozí)"</item>
     <item msgid="5982952342181788248">"Mono"</item>
     <item msgid="927546067692441494">"Stereo"</item>
   </string-array>
   <string-array name="bluetooth_a2dp_codec_channel_mode_summaries">
-    <item msgid="1997302811102880485">"Použít systémový výběr (výchozí)"</item>
+    <item msgid="1997302811102880485">"Výběr systému (výchozí)"</item>
     <item msgid="8005696114958453588">"Mono"</item>
     <item msgid="1333279807604675720">"Stereo"</item>
   </string-array>

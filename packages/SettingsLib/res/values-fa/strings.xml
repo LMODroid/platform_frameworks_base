@@ -127,7 +127,7 @@
     <string name="bluetooth_profile_opp" msgid="6692618568149493430">"انتقال فایل"</string>
     <string name="bluetooth_profile_hid" msgid="2969922922664315866">"دستگاه ورودی"</string>
     <string name="bluetooth_profile_pan" msgid="1006235139308318188">"دسترسی به اینترنت"</string>
-    <string name="bluetooth_profile_pbap" msgid="2103406516858653017">"مجاز کردن دسترسی به مخاطبین و سابقه تماس"</string>
+    <string name="bluetooth_profile_pbap" msgid="2103406516858653017">"اجازه دادن دسترسی به مخاطبین و سابقه تماس"</string>
     <string name="bluetooth_profile_pbap_summary" msgid="402819589201138227">"از اطلاعات برای اعلام تماس‌ها و موارد دیگر استفاده خواهد شد"</string>
     <string name="bluetooth_profile_pan_nap" msgid="7871974753822470050">"اشتراک‌گذاری اتصال اینترنت"</string>
     <string name="bluetooth_profile_map" msgid="8907204701162107271">"پیام‌های نوشتاری"</string>
@@ -220,7 +220,7 @@
     <string name="tts_engine_settings_title" msgid="7849477533103566291">"تنظیمات برای <xliff:g id="TTS_ENGINE_NAME">%s</xliff:g>"</string>
     <string name="tts_engine_settings_button" msgid="477155276199968948">"راه‌اندازی تنظیمات موتور"</string>
     <string name="tts_engine_preference_section_title" msgid="3861562305498624904">"موتور ترجیحی"</string>
-    <string name="tts_general_section_title" msgid="8919671529502364567">"کلی"</string>
+    <string name="tts_general_section_title" msgid="8919671529502364567">"عمومی"</string>
     <string name="tts_reset_speech_pitch_title" msgid="7149398585468413246">"بازنشانی زیروبمی گفتار"</string>
     <string name="tts_reset_speech_pitch_summary" msgid="6822904157021406449">"بازنشانی زیروبمی صدای گفته شدن نوشتار روی مقدار پیش‌فرض."</string>
   <string-array name="tts_rate_entries">
@@ -521,7 +521,7 @@
     <string name="disabled" msgid="8017887509554714950">"غیر فعال شد"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"اجازه داشتن"</string>
     <string name="external_source_untrusted" msgid="5037891688911672227">"اجازه نداشتن"</string>
-    <string name="install_other_apps" msgid="3232595082023199454">"نصب برنامه‌های ناشناس"</string>
+    <string name="install_other_apps" msgid="3232595082023199454">"نصب کردن برنامه‌های ناشناس"</string>
     <string name="home" msgid="973834627243661438">"صفحه اصلی تنظیمات"</string>
   <string-array name="battery_labels">
     <item msgid="7878690469765357158">"٪۰"</item>
@@ -666,7 +666,7 @@
     <string name="guest_exit_dialog_message" msgid="1743218864242719783">"با این کار، برنامه‌ها و داده‌ها از جلسه مهمان کنونی حذف خواهند شد."</string>
     <string name="grant_admin" msgid="4323199171790522574">"بله، سرپرست شود"</string>
     <string name="not_grant_admin" msgid="3557849576157702485">"نه، سرپرست نشود"</string>
-    <string name="guest_exit_dialog_button" msgid="1736401897067442044">"خروج"</string>
+    <string name="guest_exit_dialog_button" msgid="1736401897067442044">"خارج شدن"</string>
     <string name="guest_exit_dialog_title_non_ephemeral" msgid="7675327443743162986">"فعالیت مهمان ذخیره شود؟"</string>
     <string name="guest_exit_dialog_message_non_ephemeral" msgid="223385323235719442">"می‌توانید فعالیت جلسه کنونی را ذخیره کنید یا همه برنامه و داده‌ها را حذف کنید"</string>
     <string name="guest_exit_clear_data_button" msgid="3425812652180679014">"حذف"</string>

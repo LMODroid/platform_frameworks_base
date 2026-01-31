@@ -304,7 +304,7 @@
     <string name="notification_channel_usb" msgid="1528280969406244896">"USB जडान"</string>
     <string name="notification_channel_heavy_weight_app" msgid="17455756500828043">"एप चलिरहेको छ"</string>
     <string name="notification_channel_foreground_service" msgid="7102189948158885178">"एपहरूले ब्याट्री खपत गर्दै छन्"</string>
-    <string name="notification_channel_accessibility_magnification" msgid="1707913872219798098">"जुम इन गर्ने सुविधा"</string>
+    <string name="notification_channel_accessibility_magnification" msgid="1707913872219798098">"जुम इन"</string>
     <string name="notification_channel_accessibility_security_policy" msgid="1727787021725251912">"सर्वसुलभतासम्बन्धी सेवाहरूको प्रयोग"</string>
     <string name="notification_channel_display" msgid="6905032605735615090">"डिस्प्ले"</string>
     <string name="foreground_service_app_in_background" msgid="1439289699671273555">"<xliff:g id="APP_NAME">%1$s</xliff:g> ले ब्याट्री प्रयोग गर्दै छ"</string>
@@ -610,7 +610,7 @@
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"यो एपले नजिकै रहेका ब्लुटुथ चल्ने डिभाइसहरूमा विज्ञापन गर्न पाउँछ"</string>
     <string name="permlab_uwb_ranging" msgid="8141915781475770665">"नजिकै रहेका अल्ट्रा-वाइडब्यान्ड चल्ने डिभाइसहरूबिचको तुलनात्मक स्थान पत्ता लगाउने"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"यो एपलाई नजिकै रहेका अल्ट्रा-वाइडब्यान्ड चल्ने डिभाइसहरूबिचको तुलनात्मक स्थान पत्ता लगाउन दिनुहोस्"</string>
-    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"Wi-Fi चल्ने नजिकै रहेका डिभाइसहरूमा चलाउन दिन्छ"</string>
+    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"नजिकैका Wi-Fi डिभाइसहरूसँग अन्तर्क्रिया गर्ने"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"यसले एपलाई Wi-Fi चल्ने नजिकै रहेका डिभाइसहरूमा विज्ञापन गर्न, कनेक्ट गर्न र सापेक्ष स्थिति निर्धारण गर्न दिन्छ"</string>
     <string name="permlab_preferredPaymentInfo" msgid="5274423844767445054">"NFC भुक्तानी सेवासम्बन्धी रुचाइएको जानकारी"</string>
     <string name="permdesc_preferredPaymentInfo" msgid="8583552469807294967">"यसले एपलाई दर्ता गरिएका सहायता तथा मार्गको गन्तव्य जस्ता रुचाइएका NFC भुक्तानी सेवासम्बन्धी जानकारी प्राप्त गर्न दिन्छ।"</string>
@@ -1176,8 +1176,8 @@
     <string name="cut" msgid="2561199725874745819">"कट् गर्नुहोस्"</string>
     <string name="copy" msgid="5472512047143665218">"कपी गर्नुहोस्"</string>
     <string name="failed_to_copy_to_clipboard" msgid="725919885138539875">"क्लिपबोर्डमा कपी गर्न सकिएन"</string>
-    <string name="paste" msgid="461843306215520225">"टाँस्नुहोस्"</string>
-    <string name="paste_as_plain_text" msgid="7664800665823182587">"सामान्य पाठको रूपमा टाँस्नुहोस्"</string>
+    <string name="paste" msgid="461843306215520225">"पेस्ट गर्नुहोस्"</string>
+    <string name="paste_as_plain_text" msgid="7664800665823182587">"सामान्य पाठको रूपमा पेस्ट गर्नुहोस्"</string>
     <string name="replace" msgid="7842675434546657444">"विस्थापन गर्नुहोस्…"</string>
     <string name="delete" msgid="1514113991712129054">"मेट्नुहोस्"</string>
     <string name="copyUrl" msgid="6229645005987260230">"URL को प्रतिलिप गर्नुहोस्"</string>
@@ -1766,7 +1766,7 @@
     <string name="accessibility_button_instructional_text" msgid="6831154884557881996">"तपाईंले अर्को पटक एक्सेसिबिलिटी बटनमा ट्याप गर्दा यो सुविधा खुल्ने छ"</string>
     <string name="accessibility_gesture_instructional_text" msgid="4133877896011098550">"तपाईंले अर्को पटक यो सर्टकट प्रयोग गर्दा यो सुविधा खुल्ने छ। २ वटा औँलाले स्क्रिनको पुछारबाट माथितिर स्वाइप गर्नुहोस् र तुरुन्तै औँला उठाउनुहोस्।"</string>
     <string name="accessibility_gesture_3finger_instructional_text" msgid="1124458279366968154">"तपाईंले अर्को पटक यो सर्टकट प्रयोग गर्दा यो सुविधा खुल्ने छ। ३ वटा औँलाले स्क्रिनको पुछारबाट माथितिर स्वाइप गर्नुहोस् र तुरुन्तै औँला उठाउनुहोस्।"</string>
-    <string name="accessibility_magnification_chooser_text" msgid="1502075582164931596">"म्याग्निफिकेसन"</string>
+    <string name="accessibility_magnification_chooser_text" msgid="1502075582164931596">"जुम इन"</string>
     <string name="user_switched" msgid="7249833311585228097">"अहिलेको प्रयोगकर्ता <xliff:g id="NAME">%1$s</xliff:g>।"</string>
     <string name="user_switching_message" msgid="1912993630661332336">"बदलेर <xliff:g id="NAME">%1$s</xliff:g> बनाइँदै छ…"</string>
     <string name="user_logging_out_message" msgid="7216437629179710359">"लग आउट गर्दै <xliff:g id="NAME">%1$s</xliff:g>…"</string>
@@ -2075,8 +2075,8 @@
     <string name="time_picker_radial_mode_description" msgid="1222342577115016953">"समय इनपुट गर्न घडी मोडमा स्विच गर्नुहोस्।"</string>
     <string name="autofill_picker_accessibility_title" msgid="4425806874792196599">"स्वतः भरणका विकल्पहरू"</string>
     <string name="autofill_save_accessibility_title" msgid="1523225776218450005">"स्वत: भरणका लागि सेभ गर्नुहोस्‌"</string>
-    <string name="autofill_error_cannot_autofill" msgid="6528827648643138596">"सामग्रीहरूलाई स्वत: भरण गर्न मिल्दैन"</string>
-    <string name="autofill_picker_no_suggestions" msgid="1076022650427481509">"कुनै स्वत: भरण सुझाव छैन"</string>
+    <string name="autofill_error_cannot_autofill" msgid="6528827648643138596">"सामग्रीहरूलाई अटोफिल गर्न मिल्दैन"</string>
+    <string name="autofill_picker_no_suggestions" msgid="1076022650427481509">"कुनै अटोफिल सुझाव छैन"</string>
     <string name="autofill_picker_some_suggestions" msgid="5560549696296202701">"{count,plural, =1{स्वतः भर्ने एउटा सुझाव}other{स्वतः भर्ने # वटा सुझाव}}"</string>
     <string name="autofill_save_title" msgid="7719802414283739775"><b>"<xliff:g id="LABEL">%1$s</xliff:g>"</b>" मा सुरक्षित गर्ने हो?"</string>
     <string name="autofill_save_title_with_type" msgid="3002460014579799605">"<xliff:g id="TYPE">%1$s</xliff:g> लाई "<b>"<xliff:g id="LABEL">%2$s</xliff:g>"</b>" मा सुरक्षित गर्ने हो?"</string>

@@ -57,7 +57,7 @@
     <item msgid="4875147066469902392">"الميزة مفعّلة"</item>
   </string-array>
   <string-array name="tile_states_flashlight">
-    <item msgid="3465257127433353857">"الميزة غير متاحة"</item>
+    <item msgid="3465257127433353857">"غير متوفّر"</item>
     <item msgid="5044688398303285224">"مطفأ"</item>
     <item msgid="8527389108867454098">"الميزة مفعّلة"</item>
   </string-array>
@@ -107,7 +107,7 @@
     <item msgid="630890598801118771">"الميزة مفعّلة"</item>
   </string-array>
   <string-array name="tile_states_work">
-    <item msgid="389523503690414094">"الميزة غير متاحة"</item>
+    <item msgid="389523503690414094">"غير متاحة"</item>
     <item msgid="8045580926543311193">"الميزة غير مفعّلة"</item>
     <item msgid="4913460972266982499">"الميزة مفعّلة"</item>
   </string-array>

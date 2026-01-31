@@ -197,7 +197,7 @@
     <string name="biometric_dialog_authenticated" msgid="7337147327545272484">"Autentifikacija izvršena"</string>
     <string name="biometric_dialog_cancel_authentication" msgid="981316588773442637">"Otkaži autentifikaciju"</string>
     <string name="biometric_dialog_content_view_more_options_button" msgid="2663810393874865475">"Više opcija"</string>
-    <string name="biometric_dialog_use_pin" msgid="8385294115283000709">"Koristite PIN"</string>
+    <string name="biometric_dialog_use_pin" msgid="8385294115283000709">"Upotrijebite PIN"</string>
     <string name="biometric_dialog_use_pattern" msgid="2315593393167211194">"Koristite uzorak"</string>
     <string name="biometric_dialog_use_password" msgid="3445033859393474779">"Koristite zaporku"</string>
     <string name="biometric_dialog_wrong_pin" msgid="1878539073972762803">"Pogrešan PIN"</string>
@@ -307,9 +307,9 @@
     <string name="accessibility_quick_settings_bluetooth_device_tap_to_disconnect" msgid="415980329093277342">"prekini vezu"</string>
     <string name="accessibility_quick_settings_bluetooth_device_tap_to_activate" msgid="3724301751036877403">"aktiviraj"</string>
     <string name="turn_on_bluetooth_auto_tomorrow" msgid="3345758139235739006">"Automatski uključi sutra"</string>
-    <string name="turn_on_bluetooth_auto_info_disabled" msgid="682984290339848844">"Značajke kao što su brzo dijeljenje i Pronađi moj uređaj koriste Bluetooth"</string>
+    <string name="turn_on_bluetooth_auto_info_disabled" msgid="682984290339848844">"Značajke kao što su Brzo dijeljenje i Pronađi moj uređaj koriste Bluetooth"</string>
     <string name="turn_on_bluetooth_auto_info_enabled" msgid="7440944034584560279">"Bluetooth će se uključiti sutra ujutro"</string>
-    <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"Zajednički slušajte"</string>
+    <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"Podijelite zvuk"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"Zajedničko slušanje"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_accessibility" msgid="7604615019302091708">"unesite postavke zajedničkog slušanja"</string>
     <string name="quick_settings_bluetooth_secondary_label_battery_level" msgid="4182034939479344093">"<xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%s</xliff:g> baterije"</string>
@@ -749,8 +749,8 @@
     <string name="notification_channel_summary_default" msgid="777294388712200605">"Može zvoniti ili vibrirati ovisno o postavkama uređaja"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"Možda će zvoniti ili vibrirati, ovisno o postavkama uređaja. Razgovori iz aplikacije <xliff:g id="APP_NAME">%1$s</xliff:g> prikazuju se u oblačiću prema zadanim postavkama."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"Neka sustav odredi treba li obavijest najaviti zvukom ili vibracijom"</string>
-    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;Status:&lt;/b&gt; promaknuta u zadanu"</string>
-    <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"&lt;b&gt;Status:&lt;/b&gt; prebačena u bešumnu"</string>
+    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;Status:&lt;/b&gt; promijenjeno u zadano"</string>
+    <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"&lt;b&gt;Status:&lt;/b&gt; vraćeno na bešumno"</string>
     <string name="notification_channel_summary_automatic_promoted" msgid="1301710305149590426">"&lt;b&gt;Status:&lt;/b&gt; više rangirana"</string>
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"&lt;b&gt;Status:&lt;/b&gt; niže rangirana"</string>
     <string name="notification_channel_summary_priority_baseline" msgid="46674690072551234">"Prikazuje se pri vrhu obavijesti razgovora i kao profilna slika na zaključanom zaslonu"</string>
@@ -1363,7 +1363,7 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"Odbaci"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"Zaslon je povezan"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"Mikrofon i kamera"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Nedavna upotreba aplikacije"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"Nedavna upotreba u aplikacijama"</string>
     <string name="privacy_dialog_more_button" msgid="7610604080293562345">"Pogledajte nedavni pristup"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"Gotovo"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"Opcije proširivanja i prikazivanja"</string>

@@ -112,8 +112,6 @@ public class BackgroundActivityStartControllerTests {
     AppOpsManager mAppOpsManager;
     MirrorActiveUids mActiveUids = new MirrorActiveUids();
     WindowProcessControllerMap mProcessMap = new WindowProcessControllerMap();
-    @Mock
-    VisibleActivityProcessTracker mVisibleActivityProcessTracker;
 
     @Mock
     ActivityTaskSupervisor mSupervisor;
@@ -201,8 +199,6 @@ public class BackgroundActivityStartControllerTests {
         mService.mRootWindowContainer = mRootWindowContainer;
         Mockito.when(mService.getAppOpsManager()).thenReturn(mAppOpsManager);
         setViaReflection(mService, "mProcessMap", mProcessMap);
-        setViaReflection(mService, "mVisibleActivityProcessTracker",
-                mVisibleActivityProcessTracker);
 
         //Mockito.when(mSupervisor.getBackgroundActivityLaunchController()).thenReturn(mController);
         setViaReflection(mSupervisor, "mRecentTasks", mRecentTasks);
@@ -560,9 +556,7 @@ public class BackgroundActivityStartControllerTests {
                         + "callingUid: 10001; "
                         + "callingPid: 11001; "
                         + "appSwitchState: 0; "
-                        + "callingUidHasVisibleActivity: false; "
-                        + "callingUidHasVisibleNotPinnedActivity: false; "
-                        + "callingUidHasNonAppVisibleWindow: false; "
+                        + "callingUidHasAnyVisibleWindow: false; "
                         + "callingUidProcState: NONEXISTENT; "
                         + "isCallingUidPersistentSystemProcess: false; "
                         + "forcedBalByPiSender: BSP.NONE; "
@@ -581,9 +575,7 @@ public class BackgroundActivityStartControllerTests {
                         + "realCallingPackageTargetSdk: -1; "
                         + "realCallingUid: 1; "
                         + "realCallingPid: 1; "
-                        + "realCallingUidHasVisibleActivity: false; "
-                        + "realCallingUidHasVisibleNotPinnedActivity: false; "
-                        + "realCallingUidHasNonAppVisibleWindow: false; "
+                        + "realCallingUidHasAnyVisibleWindow: false; "
                         + "realCallingUidProcState: NONEXISTENT; "
                         + "isRealCallingUidPersistentSystemProcess: false; "
                         + "originatingPendingIntent: null; "
@@ -664,9 +656,7 @@ public class BackgroundActivityStartControllerTests {
                         + "callingUid: 10001; "
                         + "callingPid: 11001; "
                         + "appSwitchState: 0; "
-                        + "callingUidHasVisibleActivity: false; "
-                        + "callingUidHasVisibleNotPinnedActivity: false; "
-                        + "callingUidHasNonAppVisibleWindow: false; "
+                        + "callingUidHasAnyVisibleWindow: false; "
                         + "callingUidProcState: NONEXISTENT; "
                         + "isCallingUidPersistentSystemProcess: false; "
                         + "forcedBalByPiSender: BSP.NONE; "
@@ -685,9 +675,7 @@ public class BackgroundActivityStartControllerTests {
                         + "realCallingPackageTargetSdk: -1; "
                         + "realCallingUid: 1; "
                         + "realCallingPid: 1; "
-                        + "realCallingUidHasVisibleActivity: false; "
-                        + "realCallingUidHasVisibleNotPinnedActivity: false; "
-                        + "realCallingUidHasNonAppVisibleWindow: false; "
+                        + "realCallingUidHasAnyVisibleWindow: false; "
                         + "realCallingUidProcState: NONEXISTENT; "
                         + "isRealCallingUidPersistentSystemProcess: false; "
                         + "originatingPendingIntent: PendingIntentRecord; "

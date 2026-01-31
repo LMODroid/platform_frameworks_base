@@ -64,6 +64,17 @@ public class ICameraDeviceUserWrapper {
         }
     }
 
+    public SubmitInfo startStreaming(int[] streamIdxArray, int[] surfaceIdxArray)
+            throws CameraAccessException {
+        try {
+            return mRemoteDevice.startStreaming(streamIdxArray, surfaceIdxArray);
+        } catch (ServiceSpecificException e) {
+            throw ExceptionUtils.throwAsPublicException(e);
+        } catch (RemoteException e) {
+            throw ExceptionUtils.throwAsPublicException(e);
+        }
+    }
+
     public SubmitInfo submitRequest(CaptureRequest request, boolean streaming)
             throws CameraAccessException  {
         try {
@@ -301,4 +312,16 @@ public class ICameraDeviceUserWrapper {
         }
     }
 
+    /**
+     * API to check if the client is primary client when camera device is opened in shared mode.
+     */
+    public boolean isPrimaryClient() throws CameraAccessException {
+        try {
+            return mRemoteDevice.isPrimaryClient();
+        } catch (ServiceSpecificException e) {
+            throw ExceptionUtils.throwAsPublicException(e);
+        } catch (RemoteException e) {
+            throw ExceptionUtils.throwAsPublicException(e);
+        }
+    }
 }

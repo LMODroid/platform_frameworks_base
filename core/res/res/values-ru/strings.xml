@@ -365,25 +365,25 @@
     <string name="capability_desc_canTakeScreenshot" msgid="7762297374317934052">"Создавать снимки экрана."</string>
     <string name="dream_preview_title" msgid="5570751491996100804">"<xliff:g id="DREAM_NAME">%1$s</xliff:g>: предпросмотр"</string>
     <string name="dream_accessibility_action_click" msgid="7392398629967797805">"закрыть"</string>
-    <string name="permlab_statusBar" msgid="8798267849526214017">"Отключение/изменение строки состояния"</string>
+    <string name="permlab_statusBar" msgid="8798267849526214017">"отключение/изменение строки состояния"</string>
     <string name="permdesc_statusBar" msgid="5809162768651019642">"Приложение сможет отключать строку состояния, а также добавлять и удалять системные значки."</string>
-    <string name="permlab_statusBarService" msgid="2523421018081437981">"Замена строки состояния"</string>
+    <string name="permlab_statusBarService" msgid="2523421018081437981">"замена строки состояния"</string>
     <string name="permdesc_statusBarService" msgid="6652917399085712557">"Приложение сможет заменять собой строку состояния."</string>
-    <string name="permlab_expandStatusBar" msgid="1184232794782141698">"Разворачивание/сворачивание строки состояния"</string>
+    <string name="permlab_expandStatusBar" msgid="1184232794782141698">"разворачивание/сворачивание строки состояния"</string>
     <string name="permdesc_expandStatusBar" msgid="7180756900448498536">"Приложение сможет разворачивать и сворачивать строку состояния."</string>
-    <string name="permlab_fullScreenIntent" msgid="4310888199502509104">"Показ уведомлений в полноэкранном режиме на заблокированном устройстве"</string>
+    <string name="permlab_fullScreenIntent" msgid="4310888199502509104">"показ уведомлений в полноэкранном режиме на заблокированном устройстве"</string>
     <string name="permdesc_fullScreenIntent" msgid="1100721419406643997">"Приложение сможет показывать уведомления в полноэкранном режиме на заблокированном устройстве"</string>
     <string name="permlab_install_shortcut" msgid="7451554307502256221">"Создание ярлыков"</string>
     <string name="permdesc_install_shortcut" msgid="4476328467240212503">"приложения смогут добавлять ярлыки на главный экран без вмешательства пользователя."</string>
     <string name="permlab_uninstall_shortcut" msgid="295263654781900390">"Удаление ярлыков"</string>
     <string name="permdesc_uninstall_shortcut" msgid="1924735350988629188">"Приложение сможет удалять ярлыки с главного экрана без вмешательства пользователя."</string>
-    <string name="permlab_processOutgoingCalls" msgid="4075056020714266558">"Перенаправление исходящих вызовов"</string>
+    <string name="permlab_processOutgoingCalls" msgid="4075056020714266558">"перенаправление исходящих вызовов"</string>
     <string name="permdesc_processOutgoingCalls" msgid="7833149750590606334">"Приложение сможет видеть набранный номер во время исходящего вызова и при необходимости перенаправлять вызов или завершать его."</string>
-    <string name="permlab_answerPhoneCalls" msgid="4131324833663725855">"Ответ на входящие вызовы"</string>
+    <string name="permlab_answerPhoneCalls" msgid="4131324833663725855">"ответ на телефонные звонки"</string>
     <string name="permdesc_answerPhoneCalls" msgid="894386681983116838">"Приложению разрешено отвечать на входящие вызовы."</string>
-    <string name="permlab_receiveSms" msgid="505961632050451881">"Прием SMS-сообщений"</string>
+    <string name="permlab_receiveSms" msgid="505961632050451881">"получение текстовых сообщений (SMS)"</string>
     <string name="permdesc_receiveSms" msgid="1797345626687832285">"Приложение сможет получать и обрабатывать SMS. Это значит, что оно сможет отслеживать и удалять отправленные на ваше устройство сообщения, не показывая их."</string>
-    <string name="permlab_receiveMms" msgid="4000650116674380275">"Прием MMS-сообщений"</string>
+    <string name="permlab_receiveMms" msgid="4000650116674380275">"получение текстовых сообщений (MMS)"</string>
     <string name="permdesc_receiveMms" msgid="958102423732219710">"Приложение сможет получать и обрабатывать MMS. Это значит, что оно сможет отслеживать и удалять отправленные на ваше устройство сообщения, не показывая их."</string>
     <string name="permlab_bindCellBroadcastService" msgid="586746677002040651">"Пересылка сообщений для оповещения населения"</string>
     <string name="permdesc_bindCellBroadcastService" msgid="6540910200973641606">"Приложение сможет выполнить привязку к модулю оповещения населения, чтобы пересылать сообщения широковещательных SMS-служб сразу после их получения. В некоторых странах эти сообщения используются для информирования об экстренных ситуациях. Вредоносное ПО может помешать работе устройства, на которое поступают такие сообщения."</string>
@@ -391,97 +391,97 @@
     <string name="permdesc_manageOngoingCalls" msgid="7003138133829915265">"Приложение сможет управлять текущими звонками на вашем устройстве, а также получит доступ к сведениям о них"</string>
     <string name="permlab_accessLastKnownCellId" msgid="7638226620825665130">"Доступ к последнему известному идентификатору вышки мобильной связи"</string>
     <string name="permdesc_accessLastKnownCellId" msgid="6664621339249308857">"Приложение сможет получать доступ к последнему известному идентификатору вышки мобильной связи, предоставленному системами телефонии."</string>
-    <string name="permlab_readCellBroadcasts" msgid="5869884450872137693">"Читать сообщения массовой рассылки"</string>
+    <string name="permlab_readCellBroadcasts" msgid="5869884450872137693">"чтение сообщений оповещения населения"</string>
     <string name="permdesc_readCellBroadcasts" msgid="672513437331980168">"Приложение получит доступ к сообщениям широковещательных SMS-служб, которые в некоторых странах используются для информирования населения об экстренных ситуациях. Вредоносные программы могут помешать работе устройства, на которое поступают такие сообщения."</string>
-    <string name="permlab_subscribedFeedsRead" msgid="217624769238425461">"Просмотр фидов пользователя"</string>
+    <string name="permlab_subscribedFeedsRead" msgid="217624769238425461">"просмотр фидов, на которые есть подписка"</string>
     <string name="permdesc_subscribedFeedsRead" msgid="6911349196661811865">"Приложение сможет получать сведения о синхронизируемых в настоящее время фидах."</string>
-    <string name="permlab_sendSms" msgid="7757368721742014252">"Отправка и просмотр SMS-сообщений"</string>
+    <string name="permlab_sendSms" msgid="7757368721742014252">"отправка и просмотр SMS-сообщений"</string>
     <string name="permdesc_sendSms" msgid="6757089798435130769">"Приложение сможет отправлять SMS. Учтите, что вредоносные программы смогут отправлять сообщения без уведомления, что может привести к непредвиденным расходам."</string>
-    <string name="permlab_readSms" msgid="5164176626258800297">"Просмотр SMS и MMS"</string>
+    <string name="permlab_readSms" msgid="5164176626258800297">"чтение текстовых сообщений (SMS и MMS)"</string>
     <string name="permdesc_readSms" product="tablet" msgid="7912990447198112829">"Приложение может считывать SMS-сообщения на планшете."</string>
     <string name="permdesc_readSms" product="tv" msgid="3054753345758011986">"Приложение сможет считывать SMS-сообщения на устройстве Android TV."</string>
     <string name="permdesc_readSms" product="default" msgid="774753371111699782">"Приложение может считывать SMS-сообщения на телефоне."</string>
-    <string name="permlab_receiveWapPush" msgid="4223747702856929056">"Прием WAP-сообщений"</string>
+    <string name="permlab_receiveWapPush" msgid="4223747702856929056">"получение текстовых сообщений (WAP)"</string>
     <string name="permdesc_receiveWapPush" msgid="1638677888301778457">"Приложение сможет получать и обрабатывать WAP-сообщения. Это значит, что оно сможет отслеживать и удалять отправленные на ваше устройство сообщения, не показывая их."</string>
-    <string name="permlab_getTasks" msgid="7460048811831750262">"Получение данных о запущенных приложениях"</string>
+    <string name="permlab_getTasks" msgid="7460048811831750262">"получение данных о запущенных приложениях"</string>
     <string name="permdesc_getTasks" msgid="7388138607018233726">"Приложение сможет получать информацию о недавно запущенных и выполняемых задачах, а следовательно, и о приложениях, используемых на устройстве."</string>
-    <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"Управление профилями и владельцами"</string>
+    <string name="permlab_manageProfileAndDeviceOwners" msgid="639849495253987493">"управление профилями и владельцами устройства"</string>
     <string name="permdesc_manageProfileAndDeviceOwners" msgid="7304240671781989283">"Приложения смогут определять владельцев профилей и владельца устройства."</string>
-    <string name="permlab_reorderTasks" msgid="7598562301992923804">"Упорядочивание запущенных приложений"</string>
+    <string name="permlab_reorderTasks" msgid="7598562301992923804">"изменение порядка запущенных приложений"</string>
     <string name="permdesc_reorderTasks" msgid="8796089937352344183">"Приложение сможет переключать активный и фоновый режимы выполнения задач без вашего ведома."</string>
-    <string name="permlab_enableCarMode" msgid="893019409519325311">"Включение режима громкой связи"</string>
+    <string name="permlab_enableCarMode" msgid="893019409519325311">"включение режима \"В автомобиле\""</string>
     <string name="permdesc_enableCarMode" msgid="56419168820473508">"Приложение сможет включать режим \"Штурман\"."</string>
-    <string name="permlab_killBackgroundProcesses" msgid="6559320515561928348">"Закрытие других приложений"</string>
+    <string name="permlab_killBackgroundProcesses" msgid="6559320515561928348">"закрытие других приложений"</string>
     <string name="permdesc_killBackgroundProcesses" msgid="2357013583055434685">"Приложение сможет завершать фоновые процессы других приложений. Из-за этого другие приложения могут прекратить работу."</string>
     <string name="permlab_systemAlertWindow" msgid="5757218350944719065">"Показ поверх всех окон"</string>
     <string name="permdesc_systemAlertWindow" msgid="1145660714855738308">"Приложение может открываться поверх других окон. Это может влиять на работу с другими приложениями."</string>
     <string name="permlab_hideOverlayWindows" msgid="6382697828482271802">"Скрывать оверлеи других приложений"</string>
     <string name="permdesc_hideOverlayWindows" msgid="5660242821651958225">"По запросу этого приложения система может не показывать поверх него оверлеи других приложений."</string>
-    <string name="permlab_runInBackground" msgid="541863968571682785">"Работа в фоновом режиме"</string>
+    <string name="permlab_runInBackground" msgid="541863968571682785">"работа в фоновом режиме"</string>
     <string name="permdesc_runInBackground" msgid="4344539472115495141">"Приложению разрешено работать в фоновом режиме. Заряд батареи может расходоваться быстрее."</string>
-    <string name="permlab_useDataInBackground" msgid="783415807623038947">"Передача данных в фоновом режиме"</string>
+    <string name="permlab_useDataInBackground" msgid="783415807623038947">"передача данных в фоновом режиме"</string>
     <string name="permdesc_useDataInBackground" msgid="1230753883865891987">"Приложению разрешено передавать данные в фоновом режиме. Возможно увеличение расхода трафика."</string>
-    <string name="permlab_schedule_exact_alarm" msgid="6683283918033029730">"Настройка выполнения действий в определенное время"</string>
+    <string name="permlab_schedule_exact_alarm" msgid="6683283918033029730">"Настройка выполнения действий в точно заданное время"</string>
     <string name="permdesc_schedule_exact_alarm" msgid="8198009212013211497">"Приложение сможет настраивать выполнение задач в нужное вам время и работать, даже когда вы не пользуетесь устройством."</string>
-    <string name="permlab_use_exact_alarm" msgid="348045139777131552">"Настройка будильников или напоминаний"</string>
+    <string name="permlab_use_exact_alarm" msgid="348045139777131552">"Установка будильников или напоминаний о мероприятиях"</string>
     <string name="permdesc_use_exact_alarm" msgid="7033761461886938912">"Приложение сможет настраивать выполнение таких действий, как включение будильника или отправка напоминаний, в нужное вам время."</string>
-    <string name="permlab_persistentActivity" msgid="464970041740567970">"Поддержание приложения в рабочем режиме"</string>
+    <string name="permlab_persistentActivity" msgid="464970041740567970">"предоставление приложению разрешения всегда работать в фоновом режиме"</string>
     <string name="permdesc_persistentActivity" product="tablet" msgid="6055271149187369916">"Приложение сможет постоянно хранить свои компоненты в памяти. Это может уменьшить объем памяти, доступный другим приложениям, и замедлить работу устройства."</string>
     <string name="permdesc_persistentActivity" product="tv" msgid="6800526387664131321">"Приложение сможет постоянно хранить свои компоненты в памяти. Это может уменьшить объем памяти, доступный другим приложениям, и замедлить работу устройства Android TV."</string>
     <string name="permdesc_persistentActivity" product="default" msgid="1914841924366562051">"Приложение сможет постоянно хранить свои компоненты в памяти. Это может уменьшить объем памяти, доступный другим приложениям, и замедлить работу устройства."</string>
-    <string name="permlab_foregroundService" msgid="1768855976818467491">"Запуск активных сервисов"</string>
+    <string name="permlab_foregroundService" msgid="1768855976818467491">"запуск служб в активном режиме"</string>
     <string name="permdesc_foregroundService" msgid="8720071450020922795">"Разрешить приложению использовать активные сервисы."</string>
-    <string name="permlab_foregroundServiceCamera" msgid="7814751737955715297">"запускать активные службы с типом camera"</string>
+    <string name="permlab_foregroundServiceCamera" msgid="7814751737955715297">"запуск в активном режиме служб с типом camera"</string>
     <string name="permdesc_foregroundServiceCamera" msgid="6973701931250595727">"Разрешить приложению использовать активные службы с типом camera"</string>
-    <string name="permlab_foregroundServiceConnectedDevice" msgid="3019650546176872501">"запускать активные службы с типом connectedDevice"</string>
+    <string name="permlab_foregroundServiceConnectedDevice" msgid="3019650546176872501">"запуск в активном режиме служб с типом connectedDevice"</string>
     <string name="permdesc_foregroundServiceConnectedDevice" msgid="1067457315741352963">"Разрешить приложению использовать активные службы с типом connectedDevice"</string>
-    <string name="permlab_foregroundServiceDataSync" msgid="5847463514326881076">"запускать активные службы с типом dataSync"</string>
+    <string name="permlab_foregroundServiceDataSync" msgid="5847463514326881076">"запуск в активном режиме служб с типом dataSync"</string>
     <string name="permdesc_foregroundServiceDataSync" msgid="2267140263423973050">"Разрешить приложению использовать активные службы с типом dataSync"</string>
-    <string name="permlab_foregroundServiceLocation" msgid="3745428302378535690">"запускать активные службы с типом location"</string>
+    <string name="permlab_foregroundServiceLocation" msgid="3745428302378535690">"запуск в активном режиме служб с типом location"</string>
     <string name="permdesc_foregroundServiceLocation" msgid="118894034365177183">"Разрешить приложению использовать активные службы с типом location"</string>
-    <string name="permlab_foregroundServiceMediaPlayback" msgid="4002687983891935514">"запускать активные службы с типом mediaPlayback"</string>
+    <string name="permlab_foregroundServiceMediaPlayback" msgid="4002687983891935514">"запуск в активном режиме служб с типом mediaPlayback"</string>
     <string name="permdesc_foregroundServiceMediaPlayback" msgid="3638032446063968043">"Разрешить приложению использовать активные службы с типом mediaPlayback"</string>
-    <string name="permlab_foregroundServiceMediaProjection" msgid="2630868915733312527">"запускать активные службы с типом mediaProjection"</string>
+    <string name="permlab_foregroundServiceMediaProjection" msgid="2630868915733312527">"запуск в активном режиме служб с типом mediaProjection"</string>
     <string name="permdesc_foregroundServiceMediaProjection" msgid="4805677128082002298">"Разрешить приложению использовать активные службы с типом mediaProjection"</string>
-    <string name="permlab_foregroundServiceMicrophone" msgid="7390033424890545399">"запускать активные службы с типом microphone"</string>
+    <string name="permlab_foregroundServiceMicrophone" msgid="7390033424890545399">"запуск в активном режиме служб с типом microphone"</string>
     <string name="permdesc_foregroundServiceMicrophone" msgid="1206041516173483201">"Разрешить приложению использовать активные службы с типом microphone"</string>
-    <string name="permlab_foregroundServicePhoneCall" msgid="627937743867697892">"запускать активные службы с типом phoneCall"</string>
+    <string name="permlab_foregroundServicePhoneCall" msgid="627937743867697892">"запуск в активном режиме служб с типом phoneCall"</string>
     <string name="permdesc_foregroundServicePhoneCall" msgid="5941660252587015147">"Разрешить приложению использовать активные службы с типом phoneCall"</string>
-    <string name="permlab_foregroundServiceHealth" msgid="3675776442080928184">"запускать активные службы с типом health"</string>
+    <string name="permlab_foregroundServiceHealth" msgid="3675776442080928184">"запуск в активном режиме служб с типом health"</string>
     <string name="permdesc_foregroundServiceHealth" msgid="2024586220562667185">"Разрешить приложению использовать активные службы с типом health"</string>
-    <string name="permlab_foregroundServiceRemoteMessaging" msgid="105670277002780950">"запускать активные службы с типом remoteMessaging"</string>
+    <string name="permlab_foregroundServiceRemoteMessaging" msgid="105670277002780950">"запуск в активном режиме служб с типом remoteMessaging"</string>
     <string name="permdesc_foregroundServiceRemoteMessaging" msgid="8767598075877576277">"Разрешить приложению использовать активные службы с типом remoteMessaging"</string>
-    <string name="permlab_foregroundServiceSystemExempted" msgid="1597663713590612685">"запускать активные службы с типом systemExempted"</string>
+    <string name="permlab_foregroundServiceSystemExempted" msgid="1597663713590612685">"запуск в активном режиме служб с типом systemExempted"</string>
     <string name="permdesc_foregroundServiceSystemExempted" msgid="947381760834649622">"Разрешить приложению использовать активные службы с типом systemExempted"</string>
-    <string name="permlab_foregroundServiceFileManagement" msgid="2585000987966045030">"Запуск активных служб с типом fileManagement"</string>
+    <string name="permlab_foregroundServiceFileManagement" msgid="2585000987966045030">"запуск в активном режиме служб с типом fileManagement"</string>
     <string name="permdesc_foregroundServiceFileManagement" msgid="417103601269698508">"Приложение сможет использовать активные службы с типом fileManagement."</string>
-    <string name="permlab_foregroundServiceMediaProcessing" msgid="3045295152245381864">"запускать активные службы с типом mediaProcessing"</string>
+    <string name="permlab_foregroundServiceMediaProcessing" msgid="3045295152245381864">"запуск в активном режиме служб с типом mediaProcessing"</string>
     <string name="permdesc_foregroundServiceMediaProcessing" msgid="8303086172106677312">"Приложение сможет использовать активные службы с типом mediaProcessing."</string>
-    <string name="permlab_foregroundServiceSpecialUse" msgid="7973536745876645082">"запускать активные службы с типом specialUse"</string>
+    <string name="permlab_foregroundServiceSpecialUse" msgid="7973536745876645082">"запуск в активном режиме служб с типом specialUse"</string>
     <string name="permdesc_foregroundServiceSpecialUse" msgid="646713654541885919">"Разрешить приложению использовать активные службы с типом specialUse"</string>
-    <string name="permlab_getPackageSize" msgid="375391550792886641">"Вычисление объема памяти приложений"</string>
+    <string name="permlab_getPackageSize" msgid="375391550792886641">"вычисление объема памяти приложений"</string>
     <string name="permdesc_getPackageSize" msgid="742743530909966782">"Приложение сможет получать сведения о размере кода, данных и кеша."</string>
-    <string name="permlab_writeSettings" msgid="8057285063719277394">"Изменение настроек системы"</string>
+    <string name="permlab_writeSettings" msgid="8057285063719277394">"изменение системных настроек"</string>
     <string name="permdesc_writeSettings" msgid="8293047411196067188">"Приложение сможет изменять настройки системы. Вредоносные программы смогут  повредить конфигурацию системы."</string>
-    <string name="permlab_receiveBootCompleted" msgid="6643339400247325379">"Запуск при включении устройства"</string>
+    <string name="permlab_receiveBootCompleted" msgid="6643339400247325379">"запуск при включении устройства"</string>
     <string name="permdesc_receiveBootCompleted" product="tablet" msgid="5565659082718177484">"Приложение сможет запускаться после начальной загрузки системы. Это может привести к увеличению времени включения планшетного ПК и уменьшить его быстродействие в связи с постоянной работой приложения."</string>
     <string name="permdesc_receiveBootCompleted" product="tv" msgid="4900842256047614307">"Приложение сможет запускаться сразу после начальной загрузки системы. Это может привести к увеличению времени включения устройства Android TV и уменьшить его быстродействие в связи с постоянной работой приложения."</string>
     <string name="permdesc_receiveBootCompleted" product="default" msgid="7912677044558690092">"Приложение сможет запускаться после начальной загрузки системы. Это может привести к увеличению времени включения телефона и уменьшить его быстродействие в связи с постоянной работой приложения."</string>
-    <string name="permlab_broadcastSticky" msgid="4552241916400572230">"Отправка сообщений с их последующим сохранением"</string>
+    <string name="permlab_broadcastSticky" msgid="4552241916400572230">"отправка закрепленных широковещательных сообщений"</string>
     <string name="permdesc_broadcastSticky" product="tablet" msgid="5058486069846384013">"Приложение сможет делать несрочные рассылки, которые не удаляются после их отправки. Злоупотребление этими рассылками может замедлить работу планшетного ПК или сделать ее нестабильной из-за чрезмерного использования памяти."</string>
     <string name="permdesc_broadcastSticky" product="tv" msgid="2338185920171000650">"Приложение сможет делать бессрочные рассылки, которые не удаляются после отправки. Злоупотребление ими может замедлить работу устройства Android TV или сделать ее нестабильной из-за чрезмерной загрузки памяти."</string>
     <string name="permdesc_broadcastSticky" product="default" msgid="134529339678913453">"Приложение сможет делать несрочные рассылки, которые не удаляются после их отправки. Злоупотребление этими рассылками может замедлить работу телефона или сделать ее нестабильной из-за чрезмерного использования памяти."</string>
-    <string name="permlab_readContacts" msgid="8776395111787429099">"Просмотр контактов"</string>
+    <string name="permlab_readContacts" msgid="8776395111787429099">"чтение контактов"</string>
     <string name="permdesc_readContacts" product="tablet" msgid="6430093481659992692">"Приложение сможет считывать данные о контактах, сохраненных на вашем планшете. Кроме того, у приложения будет доступ к аккаунтам на планшете, в которых есть контакты. В их число могут входить аккаунты, созданные приложениями, которые вы установили. Получив возможность сохранять данные контактов, вредоносные программы смогут передавать их без вашего ведома."</string>
     <string name="permdesc_readContacts" product="tv" msgid="8400138591135554789">"Приложение сможет считывать данные о контактах, сохраненных на вашем устройстве Android TV. Кроме того, у приложения будет доступ к аккаунтам на устройстве Android TV, в которых есть контакты. В их число могут входить аккаунты, созданные приложениями, которые вы установили. Получив возможность сохранять данные контактов, вредоносные программы смогут передавать их без вашего ведома."</string>
     <string name="permdesc_readContacts" product="default" msgid="4911989776203207644">"Приложение сможет считывать данные о контактах, сохраненных на вашем телефоне. Кроме того, у приложения будет доступ к аккаунтам на телефоне, в которых есть контакты. В их число могут входить аккаунты, созданные приложениями, которые вы установили. Получив возможность сохранять данные контактов, вредоносные программы смогут передавать их без вашего ведома."</string>
-    <string name="permlab_writeContacts" msgid="8919430536404830430">"Изменение контактов"</string>
+    <string name="permlab_writeContacts" msgid="8919430536404830430">"изменение контактов"</string>
     <string name="permdesc_writeContacts" product="tablet" msgid="6422419281427826181">"Приложение сможет изменять сведения о контактах, сохраненных на вашем планшете. Это разрешение позволяет приложениям удалять данные о контактах."</string>
     <string name="permdesc_writeContacts" product="tv" msgid="6488872735379978935">"Приложение сможет изменять сведения о контактах, сохраненных на вашем устройстве Android TV. Это разрешение позволяет приложениям удалять данные о контактах."</string>
     <string name="permdesc_writeContacts" product="default" msgid="8304795696237065281">"Приложение сможет изменять сведения о контактах, сохраненных на вашем телефоне. Это разрешение позволяет приложениям удалять данные о контактах."</string>
-    <string name="permlab_readCallLog" msgid="1739990210293505948">"Просмотр журнала вызовов"</string>
+    <string name="permlab_readCallLog" msgid="1739990210293505948">"чтение журнала вызовов"</string>
     <string name="permdesc_readCallLog" msgid="8964770895425873433">"Приложение может считывать данные журнала звонков."</string>
-    <string name="permlab_writeCallLog" msgid="670292975137658895">"Изменение журнала вызовов"</string>
+    <string name="permlab_writeCallLog" msgid="670292975137658895">"запись в журнал вызовов"</string>
     <string name="permdesc_writeCallLog" product="tablet" msgid="2657525794731690397">"Приложение сможет вносить изменения в список вызовов планшетного ПК и данные о входящих и исходящих звонках. Вредоносные приложения смогут воспользоваться этим для удаления или изменения информации о звонках."</string>
     <string name="permdesc_writeCallLog" product="tv" msgid="3934939195095317432">"Приложение сможет изменять список вызовов и данные о входящих и исходящих звонках на устройстве Android TV. Вредоносные программы смогут воспользоваться этим для удаления или изменения информации о звонках."</string>
     <string name="permdesc_writeCallLog" product="default" msgid="5903033505665134802">"Приложение сможет вносить изменения в список вызовов телефона и данные о входящих и исходящих звонках. Вредоносные приложения смогут воспользоваться этим для удаления или изменения информации о звонках."</string>
@@ -489,54 +489,54 @@
     <string name="permdesc_bodySensors" product="default" msgid="7652650410295512140">"Когда приложение используется, это разрешение предоставляет ему доступ к данным нательных датчиков (например, пульсу, температуре, уровню кислорода в крови)."</string>
     <string name="permlab_bodySensors_background" msgid="4912560779957760446">"Доступ к данным нательных датчиков, когда приложение работает в фоновом режиме"</string>
     <string name="permdesc_bodySensors_background" product="default" msgid="8870726027557749417">"Когда приложение работает в фоновом режиме, это разрешение предоставляет ему доступ к данным нательных датчиков (например, пульсу, температуре, уровню кислорода в крови)."</string>
-    <string name="permlab_readCalendar" msgid="6408654259475396200">"Чтение мероприятий и данных"</string>
+    <string name="permlab_readCalendar" msgid="6408654259475396200">"Чтение мероприятий и данных календаря"</string>
     <string name="permdesc_readCalendar" product="tablet" msgid="515452384059803326">"Приложение может считывать, отправлять и сохранять информацию о мероприятиях в календаре планшета."</string>
     <string name="permdesc_readCalendar" product="tv" msgid="5811726712981647628">"Приложение может считывать, отправлять и сохранять информацию о мероприятиях в календаре устройства Android TV."</string>
     <string name="permdesc_readCalendar" product="default" msgid="9118823807655829957">"Приложение может считывать, отправлять и сохранять информацию о мероприятиях в календаре телефона."</string>
-    <string name="permlab_writeCalendar" msgid="6422137308329578076">"Добавление/изменение мероприятий и отправление гостям эл. сообщений без предупреждения владельца календаря"</string>
+    <string name="permlab_writeCalendar" msgid="6422137308329578076">"добавление/изменение мероприятий и отправка гостям электронных писем без ведома владельцев"</string>
     <string name="permdesc_writeCalendar" product="tablet" msgid="8722230940717092850">"Приложение может добавлять, удалять или изменять мероприятия в календаре на планшете. Оно также может отправлять сообщения от имени владельцев календаря, а также изменять мероприятия без ведома владельца."</string>
     <string name="permdesc_writeCalendar" product="tv" msgid="951246749004952706">"Приложение сможет добавлять, удалять или изменять мероприятия в календаре на устройстве Android TV. Кроме того, оно сможет отправлять сообщения от имени владельцев календаря, а также изменять мероприятия без ведома владельца."</string>
     <string name="permdesc_writeCalendar" product="default" msgid="5416380074475634233">"Приложение может добавлять, удалять или изменять мероприятия в календаре на телефоне. Оно также может отправлять сообщения от имени владельцев календаря, а также изменять мероприятия без ведома владельца."</string>
-    <string name="permlab_accessLocationExtraCommands" msgid="5162339812057983988">"Доступ к дополнительным командам управления источниками геоданных"</string>
+    <string name="permlab_accessLocationExtraCommands" msgid="5162339812057983988">"доступ к дополнительным командам управления источниками геоданных"</string>
     <string name="permdesc_accessLocationExtraCommands" msgid="355369611979907967">"Доступ к дополнительным командам управления источниками геоданных и вмешательство в работу системы GPS или других источников геоданных."</string>
-    <string name="permlab_accessFineLocation" msgid="6426318438195622966">"Доступ к точному местоположению только в фоновом режиме"</string>
+    <string name="permlab_accessFineLocation" msgid="6426318438195622966">"доступ к точному местоположению только в активном режиме"</string>
     <string name="permdesc_accessFineLocation" msgid="6732174080240016335">"Приложение сможет получать сведения о вашем точном местоположении, только когда используется. Для этого на устройстве должна быть включена геолокация. Учтите, что при этом заряд батареи может расходоваться быстрее."</string>
-    <string name="permlab_accessCoarseLocation" msgid="1561042925407799741">"Доступ к приблизительному местоположению только в активном режиме"</string>
+    <string name="permlab_accessCoarseLocation" msgid="1561042925407799741">"доступ к приблизительному местоположению только в активном режиме"</string>
     <string name="permdesc_accessCoarseLocation" msgid="778521847873199160">"Приложение сможет получать сведения о вашем приблизительном местоположении, только когда используется. Для этого на устройстве должна быть включена геолокация."</string>
-    <string name="permlab_accessBackgroundLocation" msgid="1721164702777366138">"Доступ к геоданным в фоновом режиме"</string>
+    <string name="permlab_accessBackgroundLocation" msgid="1721164702777366138">"доступ к геоданным в фоновом режиме"</string>
     <string name="permdesc_accessBackgroundLocation" msgid="8264885066095638105">"Приложение сможет получать доступ к сведениям о местоположении, даже когда не используется."</string>
-    <string name="permlab_modifyAudioSettings" msgid="6129039778010031815">"Изменение настроек аудио"</string>
+    <string name="permlab_modifyAudioSettings" msgid="6129039778010031815">"изменение настроек аудио"</string>
     <string name="permdesc_modifyAudioSettings" msgid="8687227609663124921">"Приложение сможет изменять системные настройки звука, например уровень громкости и активный динамик."</string>
-    <string name="permlab_recordAudio" msgid="1208457423054219147">"Запись аудио"</string>
+    <string name="permlab_recordAudio" msgid="1208457423054219147">"запись аудио"</string>
     <string name="permdesc_recordAudio" msgid="5857246765327514062">"Когда приложение используется, оно может записывать аудио с помощью микрофона."</string>
-    <string name="permlab_recordBackgroundAudio" msgid="5891032812308878254">"Записывать аудио в фоновом режиме"</string>
+    <string name="permlab_recordBackgroundAudio" msgid="5891032812308878254">"запись аудио в фоновом режиме"</string>
     <string name="permdesc_recordBackgroundAudio" msgid="1992623135737407516">"Приложение может в любое время записывать аудио с помощью микрофона."</string>
-    <string name="permlab_detectScreenCapture" msgid="4447042362828799433">"Обнаруживать запись экрана, когда открыто окно приложения"</string>
+    <string name="permlab_detectScreenCapture" msgid="4447042362828799433">"обнаружение записи экрана для окон приложений"</string>
     <string name="permdesc_detectScreenCapture" msgid="3485784917960342284">"Если во время использования приложения будет сделан скриншот, оно получит уведомление."</string>
-    <string name="permlab_sim_communication" msgid="176788115994050692">"Отправка команд SIM-карте"</string>
+    <string name="permlab_sim_communication" msgid="176788115994050692">"отправка команд SIM-карте"</string>
     <string name="permdesc_sim_communication" msgid="4179799296415957960">"Приложение сможет отправлять команды SIM-карте (данное разрешение представляет большую угрозу)."</string>
-    <string name="permlab_activityRecognition" msgid="1782303296053990884">"Распознавать физическую активность"</string>
+    <string name="permlab_activityRecognition" msgid="1782303296053990884">"распознавание физической активности"</string>
     <string name="permdesc_activityRecognition" msgid="8667484762991357519">"Приложение может распознавать физическую активность."</string>
-    <string name="permlab_camera" msgid="6320282492904119413">"Фото- и видеосъемка"</string>
+    <string name="permlab_camera" msgid="6320282492904119413">"съемка фото и видео"</string>
     <string name="permdesc_camera" msgid="5240801376168647151">"Когда приложение используется, оно может делать фотографии и снимать видео с помощью камеры."</string>
-    <string name="permlab_backgroundCamera" msgid="7549917926079731681">"Делать фотографии и снимать видео в фоновом режиме"</string>
+    <string name="permlab_backgroundCamera" msgid="7549917926079731681">"съемка фото и видео в фоновом режиме"</string>
     <string name="permdesc_backgroundCamera" msgid="1615291686191138250">"Приложение может в любое время делать фотографии и снимать видео с помощью камеры."</string>
-    <string name="permlab_systemCamera" msgid="3642917457796210580">"Доступ приложения или сервиса к системным настройкам камеры, позволяющим снимать фото и видео"</string>
+    <string name="permlab_systemCamera" msgid="3642917457796210580">"Доступ приложения или сервиса к системным камерам для съемки фото и видео"</string>
     <string name="permdesc_systemCamera" msgid="5938360914419175986">"Это привилегированное или системное приложение может в любое время делать фотографии и записывать видео с помощью камеры. Для этого приложению также требуется разрешение android.permission.CAMERA."</string>
-    <string name="permlab_cameraOpenCloseListener" msgid="5548732769068109315">"Разрешить приложению или сервису получать обратные вызовы при открытии и закрытии камер"</string>
+    <string name="permlab_cameraOpenCloseListener" msgid="5548732769068109315">"Получение приложением или сервисом обратных вызовов при открытии и закрытии камер"</string>
     <string name="permdesc_cameraOpenCloseListener" msgid="2002636131008772908">"Это приложение сможет получать обратные вызовы при открытии (с указанием открывающего приложения) и закрытии любых камер."</string>
-    <string name="permlab_cameraHeadlessSystemUser" msgid="680194666834500050">"Разрешить приложению или сервису доступ к камере на правах консольного системного пользователя"</string>
+    <string name="permlab_cameraHeadlessSystemUser" msgid="680194666834500050">"Доступ к камере для приложения или сервиса на правах консольного системного пользователя"</string>
     <string name="permdesc_cameraHeadlessSystemUser" msgid="6963163319710996412">"У этого приложения есть доступ к камере на правах консольного системного пользователя."</string>
-    <string name="permlab_vibrate" msgid="8596800035791962017">"Управление функцией вибросигнала"</string>
+    <string name="permlab_vibrate" msgid="8596800035791962017">"управление вибрацией"</string>
     <string name="permdesc_vibrate" msgid="8733343234582083721">"Приложение сможет контролировать вибросигналы."</string>
     <string name="permdesc_vibrator_state" msgid="7050024956594170724">"Приложение сможет получать доступ к состоянию виброотклика."</string>
-    <string name="permlab_callPhone" msgid="1798582257194643320">"Осуществление телефонных вызовов"</string>
+    <string name="permlab_callPhone" msgid="1798582257194643320">"прямые вызовы на телефонные номера"</string>
     <string name="permdesc_callPhone" msgid="7892422187827695656">"Разрешает приложению совершать вызовы без вашего участия. Это может привести к непредвиденным расходам или незапланированным звонкам. Обратите внимание, что приложению не предоставляется разрешение на звонки в экстренные службы. Из-за вредоносных приложений, которые совершают платные звонки без вашего подтверждения или используют коды оператора, чтобы входящие вызовы автоматически переадресовывались на другой номер, у вас могут списываться средства."</string>
-    <string name="permlab_accessImsCallService" msgid="442192920714863782">"совершение звонков с помощью службы IMS"</string>
+    <string name="permlab_accessImsCallService" msgid="442192920714863782">"доступ к службе звонков IMS"</string>
     <string name="permdesc_accessImsCallService" msgid="6328551241649687162">"Позволяет приложению совершать звонки с помощью службы IMS без вашего вмешательства."</string>
-    <string name="permlab_readPhoneState" msgid="8138526903259297969">"Получение данных о статусе телефона"</string>
+    <string name="permlab_readPhoneState" msgid="8138526903259297969">"чтение статуса и идентификационных данных телефона"</string>
     <string name="permdesc_readPhoneState" msgid="7229063553502788058">"Приложение получит доступ к функциям телефона на устройстве. Кроме того, оно сможет определять номера телефонов и серийные номера моделей, состояние активности вызова, а также удаленные номера, с которыми установлено соединение."</string>
-    <string name="permlab_readBasicPhoneState" msgid="3214853233263871347">"Считывание статуса и идентификационной информации телефонии"</string>
+    <string name="permlab_readBasicPhoneState" msgid="3214853233263871347">"чтение базовой информации о статусе и идентификаторах для телефонии"</string>
     <string name="permdesc_readBasicPhoneState" msgid="828185691675460520">"Приложение получит доступ к основным функциям телефонии на устройстве."</string>
     <string name="permlab_manageOwnCalls" msgid="9033349060307561370">"перенаправлять звонки в системе"</string>
     <string name="permdesc_manageOwnCalls" msgid="4431178362202142574">"Приложение сможет перенаправлять звонки в системе с целью улучшения качества связи."</string>
@@ -548,49 +548,49 @@
     <string name="permdesc_acceptHandovers" msgid="7129026180128626870">"Разрешает приложению продолжить вызов, начатый в другом приложении."</string>
     <string name="permlab_readPhoneNumbers" msgid="5668704794723365628">"чтение номеров телефонов"</string>
     <string name="permdesc_readPhoneNumbers" msgid="7368652482818338871">"Разрешает приложению доступ к телефонным номерам устройства."</string>
-    <string name="permlab_wakeLock" product="automotive" msgid="1904736682319375676">"Не выключать экран автомобиля"</string>
-    <string name="permlab_wakeLock" product="tablet" msgid="1527660973931694000">"Отключение спящего режима"</string>
-    <string name="permlab_wakeLock" product="tv" msgid="2856941418123343518">"запрещать переход устройства Android TV в спящий режим"</string>
-    <string name="permlab_wakeLock" product="default" msgid="569409726861695115">"Отключение спящего режима"</string>
+    <string name="permlab_wakeLock" product="automotive" msgid="1904736682319375676">"предотвращение отключения дисплея автомобиля"</string>
+    <string name="permlab_wakeLock" product="tablet" msgid="1527660973931694000">"предотвращение перехода планшета в спящий режим"</string>
+    <string name="permlab_wakeLock" product="tv" msgid="2856941418123343518">"предотвращение перехода устройства Android TV в спящий режим"</string>
+    <string name="permlab_wakeLock" product="default" msgid="569409726861695115">"предотвращение перехода телефона в спящий режим"</string>
     <string name="permdesc_wakeLock" product="automotive" msgid="5995045369683254571">"Приложение сможет держать экран автомобиля включенным."</string>
     <string name="permdesc_wakeLock" product="tablet" msgid="2441742939101526277">"Приложение сможет запрещать перевод планшетного ПК в спящий режим."</string>
     <string name="permdesc_wakeLock" product="tv" msgid="2329298966735118796">"Приложение сможет препятствовать переводу устройства Android TV в спящий режим."</string>
     <string name="permdesc_wakeLock" product="default" msgid="3689523792074007163">"Приложение сможет запрещать перевод телефона в спящий режим."</string>
-    <string name="permlab_transmitIr" msgid="8077196086358004010">"использовать инфракрасный передатчик"</string>
+    <string name="permlab_transmitIr" msgid="8077196086358004010">"передача ИК-сигнала"</string>
     <string name="permdesc_transmitIr" product="tablet" msgid="5884738958581810253">"Приложение сможет использовать инфракрасный передатчик планшетного ПК."</string>
     <string name="permdesc_transmitIr" product="tv" msgid="3278506969529173281">"Приложение сможет использовать ИК-передатчик устройства Android TV."</string>
     <string name="permdesc_transmitIr" product="default" msgid="8484193849295581808">"Приложение сможет использовать инфракрасный передатчик телефона."</string>
-    <string name="permlab_setWallpaper" msgid="6959514622698794511">"Установка обоев"</string>
+    <string name="permlab_setWallpaper" msgid="6959514622698794511">"установка обоев"</string>
     <string name="permdesc_setWallpaper" msgid="2973996714129021397">"Приложение сможет устанавливать системные обои."</string>
     <string name="permlab_accessHiddenProfile" msgid="8607094418491556823">"Доступ к скрытым профилям"</string>
     <string name="permdesc_accessHiddenProfile" msgid="1543153202481009676">"Приложение сможет получать доступ к скрытым профилям."</string>
-    <string name="permlab_setWallpaperHints" msgid="1153485176642032714">"Изменение размера обоев"</string>
+    <string name="permlab_setWallpaperHints" msgid="1153485176642032714">"изменение размера обоев"</string>
     <string name="permdesc_setWallpaperHints" msgid="6257053376990044668">"Приложение сможет устанавливать подсказки по размеру системных обоев."</string>
-    <string name="permlab_setTimeZone" msgid="7922618798611542432">"Настройка часового пояса"</string>
+    <string name="permlab_setTimeZone" msgid="7922618798611542432">"настройка часового пояса"</string>
     <string name="permdesc_setTimeZone" product="tablet" msgid="1788868809638682503">"Приложение сможет изменять часовой пояс в настройках устройства."</string>
     <string name="permdesc_setTimeZone" product="tv" msgid="9069045914174455938">"Приложение сможет изменять часовой пояс на устройстве Android TV."</string>
     <string name="permdesc_setTimeZone" product="default" msgid="4611828585759488256">"Приложение сможет изменять часовой пояс в настройках устройства."</string>
-    <string name="permlab_getAccounts" msgid="5304317160463582791">"Поиск аккаунтов на устройстве"</string>
+    <string name="permlab_getAccounts" msgid="5304317160463582791">"поиск аккаунтов на устройстве"</string>
     <string name="permdesc_getAccounts" product="tablet" msgid="1784452755887604512">"Приложение сможет получить список всех используемых на устройстве аккаунтов, в том числе созданных установленными приложениями."</string>
     <string name="permdesc_getAccounts" product="tv" msgid="437604680436540822">"Приложение сможет получить список всех аккаунтов, используемых на устройстве Android TV, в том числе созданных установленными приложениями."</string>
     <string name="permdesc_getAccounts" product="default" msgid="2491273043569751867">"Приложение сможет получить список всех используемых на устройстве аккаунтов, в том числе созданных установленными приложениями."</string>
-    <string name="permlab_accessNetworkState" msgid="2349126720783633918">"Просмотр сетевых подключений"</string>
+    <string name="permlab_accessNetworkState" msgid="2349126720783633918">"просмотр сетевых подключений"</string>
     <string name="permdesc_accessNetworkState" msgid="4394564702881662849">"Приложение сможет просматривать информацию о сетевых подключениях, например о том, какие сети доступны и к каким из них вы подключены."</string>
-    <string name="permlab_createNetworkSockets" msgid="3224420491603590541">"Неограниченный доступ к интернету"</string>
+    <string name="permlab_createNetworkSockets" msgid="3224420491603590541">"полный сетевой доступ"</string>
     <string name="permdesc_createNetworkSockets" msgid="7722020828749535988">"Приложение сможет создавать сетевые сокеты и использовать различные сетевые протоколы. Так как браузер и другие приложения обеспечивают средства для отправки данных в интернет, это разрешение предоставлять не обязательно."</string>
-    <string name="permlab_changeNetworkState" msgid="8945711637530425586">"Изменение сетевых настроек"</string>
+    <string name="permlab_changeNetworkState" msgid="8945711637530425586">"изменение сетевого подключения"</string>
     <string name="permdesc_changeNetworkState" msgid="649341947816898736">"Приложение сможет изменять состояние подключения к сети."</string>
-    <string name="permlab_changeTetherState" msgid="9079611809931863861">"Изменение подключения к компьютеру"</string>
+    <string name="permlab_changeTetherState" msgid="9079611809931863861">"изменение подключения в режиме модема"</string>
     <string name="permdesc_changeTetherState" msgid="3025129606422533085">"Приложение сможет включать и выключать режим модема."</string>
-    <string name="permlab_accessWifiState" msgid="5552488500317911052">"Просмотр подключений Wi-Fi"</string>
+    <string name="permlab_accessWifiState" msgid="5552488500317911052">"просмотр подключений Wi-Fi"</string>
     <string name="permdesc_accessWifiState" msgid="6913641669259483363">"Приложение сможет просматривать информацию о сети Wi-Fi: состояние сети и имена подключенных устройств."</string>
-    <string name="permlab_changeWifiState" msgid="7947824109713181554">"Подключение/отключение от сети Wi-Fi"</string>
+    <string name="permlab_changeWifiState" msgid="7947824109713181554">"подключение/отключение от сети Wi-Fi"</string>
     <string name="permdesc_changeWifiState" msgid="7170350070554505384">"Приложение сможет подключаться к точкам доступа Wi-Fi и отключаться от них, а также изменять конфигурацию сетей Wi-Fi на устройстве."</string>
-    <string name="permlab_changeWifiMulticastState" msgid="285626875870754696">"Получение данных по многоадресной рассылке через Wi-Fi"</string>
+    <string name="permlab_changeWifiMulticastState" msgid="285626875870754696">"получение данных по многоадресной рассылке через Wi-Fi"</string>
     <string name="permdesc_changeWifiMulticastState" product="tablet" msgid="191079868596433554">"Приложение сможет получать пакеты, отправленные всем устройствам в сети Wi-Fi (не только вашему планшетному ПК) в многоадресной рассылке. При этом расходуется больше энергии, чем в одноадресном режиме."</string>
     <string name="permdesc_changeWifiMulticastState" product="tv" msgid="1336952358450652595">"Приложение сможет получать пакеты, отправленные всем устройствам в сети Wi-Fi (не только устройству Android TV) в многоадресной рассылке. При этом расходуется больше энергии, чем в одноадресном режиме."</string>
     <string name="permdesc_changeWifiMulticastState" product="default" msgid="8296627590220222740">"Приложение сможет получать пакеты, отправленные всем устройствам в сети Wi-Fi (не только вашему телефону) в многоадресной рассылке. При этом расходуется больше энергии, чем в одноадресном режиме."</string>
-    <string name="permlab_bluetoothAdmin" msgid="6490373569441946064">"Доступ к настройкам Bluetooth"</string>
+    <string name="permlab_bluetoothAdmin" msgid="6490373569441946064">"доступ к настройкам Bluetooth"</string>
     <string name="permdesc_bluetoothAdmin" product="tablet" msgid="5370837055438574863">"Приложение сможет настраивать параметры локального планшетного ПК с поддержкой Bluetooth, а также обнаруживать удаленные устройства и устанавливать соединение с ними."</string>
     <string name="permdesc_bluetoothAdmin" product="tv" msgid="1623992984547014588">"Приложение сможет настраивать параметры Bluetooth на устройстве Android TV, а также обнаруживать удаленные устройства и устанавливать соединение с ними."</string>
     <string name="permdesc_bluetoothAdmin" product="default" msgid="7381341743021234863">"Приложение сможет настраивать параметры локального телефона с поддержкой Bluetooth, а также обнаруживать удаленные устройства и устанавливать соединение с ними."</string>
@@ -600,39 +600,39 @@
     <string name="permdesc_changeWimaxState" product="tablet" msgid="4011097664859480108">"Приложение сможет подключать устройство к сетям WiMAX и отключать его от них."</string>
     <string name="permdesc_changeWimaxState" product="tv" msgid="5373274458799425276">"Приложение сможет подключать устройство Android TV к сетям WiMAX и отключать его от них."</string>
     <string name="permdesc_changeWimaxState" product="default" msgid="1551666203780202101">"Приложение сможет подключать устройство к сетям WiMAX и отключать его от них."</string>
-    <string name="permlab_bluetooth" msgid="586333280736937209">"Установление соединения с устройствами Bluetooth"</string>
+    <string name="permlab_bluetooth" msgid="586333280736937209">"подключение к устройствам Bluetooth"</string>
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"Приложение сможет просматривать конфигурацию Bluetooth на планшетном ПК, а также запрашивать и подтверждать соединение с другими устройствами."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"Приложение сможет просматривать конфигурацию Bluetooth на устройстве Android TV, а также запрашивать и подтверждать соединение с другими устройствами."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"Приложение сможет просматривать конфигурацию Bluetooth на телефоне, а также запрашивать и подтверждать соединение с другими устройствами."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"Находить устройства Bluetooth и подключаться к ним"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"обнаружение и подключение устройств Bluetooth"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Приложение сможет находить устройства Bluetooth поблизости и подключаться к ним."</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"Доступ к подключенным устройствам Bluetooth"</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"подключение к сопряженным устройствам Bluetooth"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"У приложения будет доступ к подключенным устройствам Bluetooth."</string>
-    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"Передача рекламы на устройства Bluetooth рядом"</string>
+    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"вещание для устройств Bluetooth рядом"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Приложение сможет передавать рекламу на устройства Bluetooth поблизости."</string>
-    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"Определять относительное позиционирование устройств с технологией сверхширокополосной связи поблизости"</string>
+    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"определение относительного положения устройств с технологией сверхширокополосной связи поблизости"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Приложение сможет определять относительное позиционирование устройств с технологией сверхширокополосной связи поблизости"</string>
-    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"Взаимодействие с устройствами Wi‑Fi поблизости"</string>
+    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"взаимодействие с устройствами Wi‑Fi поблизости"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"Приложение сможет передавать данные на устройства Wi‑Fi рядом, подключаться к ним и определять их примерное местоположение."</string>
     <string name="permlab_preferredPaymentInfo" msgid="5274423844767445054">"Сведения о предпочтительном платежном сервисе NFC"</string>
     <string name="permdesc_preferredPaymentInfo" msgid="8583552469807294967">"Приложение сможет получать сведения о предпочтительном платежном сервисе NFC (например, зарегистрированные идентификаторы AID и конечный пункт маршрута)."</string>
-    <string name="permlab_nfc" msgid="1904455246837674977">"Управление NFC-модулем"</string>
+    <string name="permlab_nfc" msgid="1904455246837674977">"управление NFC"</string>
     <string name="permdesc_nfc" msgid="8352737680695296741">"Приложение сможет обмениваться данными с NFC-метками, картами и устройствами считывания, используя NFC."</string>
-    <string name="permlab_nfcTransactionEvent" msgid="5868209446710407679">"Транзакции, обрабатываемые в защитном элементе"</string>
+    <string name="permlab_nfcTransactionEvent" msgid="5868209446710407679">"событие транзакции в защитном элементе"</string>
     <string name="permdesc_nfcTransactionEvent" msgid="1904286701876487397">"Позволяет приложению получать информацию о транзакциях, обрабатываемых в защитном элементе."</string>
-    <string name="permlab_disableKeyguard" msgid="3605253559020928505">"Отключение функции блокировки экрана"</string>
+    <string name="permlab_disableKeyguard" msgid="3605253559020928505">"отключение блокировки экрана"</string>
     <string name="permdesc_disableKeyguard" msgid="3223710003098573038">"Приложение сможет отключать блокировку экрана и другие функции защиты. Например, блокировка экрана будет отключаться при получении входящего вызова и включаться после завершения разговора."</string>
-    <string name="permlab_requestPasswordComplexity" msgid="1808977190557794109">"Запрос данных об уровне сложности блокировки экрана"</string>
+    <string name="permlab_requestPasswordComplexity" msgid="1808977190557794109">"запрос данных о сложности блокировки экрана"</string>
     <string name="permdesc_requestPasswordComplexity" msgid="1130556896836258567">"Приложение получит доступ к сведениям об уровне сложности блокировки экрана (высокий, средний, низкий или отсутствует), в том числе о типе блокировки и длине пароля. Кроме того, оно сможет предлагать пользователям повысить уровень сложности блокировки. Эти рекомендации необязательны. Обратите внимание, что пароль не хранится в виде открытого текста и недоступен приложению."</string>
     <string name="permlab_postNotification" msgid="4875401198597803658">"показ уведомлений"</string>
     <string name="permdesc_postNotification" msgid="5974977162462877075">"Приложение сможет показывать уведомления."</string>
-    <string name="permlab_turnScreenOn" msgid="219344053664171492">"Включение экрана"</string>
+    <string name="permlab_turnScreenOn" msgid="219344053664171492">"включение экрана"</string>
     <string name="permdesc_turnScreenOn" msgid="4394606875897601559">"Приложение сможет включать экран."</string>
-    <string name="permlab_useBiometric" msgid="6314741124749633786">"Использование биометрического оборудования"</string>
+    <string name="permlab_useBiometric" msgid="6314741124749633786">"использование биометрического оборудования"</string>
     <string name="permdesc_useBiometric" msgid="7502858732677143410">"Приложение сможет использовать биометрическое оборудование для аутентификации"</string>
     <string name="permlab_manageFingerprint" msgid="7432667156322821178">"управление сканером отпечатков пальцев"</string>
     <string name="permdesc_manageFingerprint" msgid="2025616816437339865">"Приложение сможет добавлять и удалять шаблоны отпечатков пальцев."</string>
-    <string name="permlab_useFingerprint" msgid="1001421069766751922">"Использование сканера отпечатков"</string>
+    <string name="permlab_useFingerprint" msgid="1001421069766751922">"использование сканера отпечатков"</string>
     <string name="permdesc_useFingerprint" msgid="412463055059323742">"Приложение сможет использовать сканер отпечатков пальцев для аутентификации."</string>
     <string name="permlab_audioWrite" msgid="8501705294265669405">"изменение музыкальной коллекции"</string>
     <string name="permdesc_audioWrite" msgid="8057399517013412431">"Приложение сможет вносить изменения в вашу музыкальную коллекцию."</string>
@@ -640,7 +640,7 @@
     <string name="permdesc_videoWrite" msgid="6124731210613317051">"Приложение сможет вносить изменения в вашу видеоколлекцию."</string>
     <string name="permlab_imagesWrite" msgid="1774555086984985578">"изменение фотоколлекции"</string>
     <string name="permdesc_imagesWrite" msgid="5195054463269193317">"Приложение сможет вносить изменения в вашу фотоколлекцию."</string>
-    <string name="permlab_mediaLocation" msgid="7368098373378598066">"Доступ к геоданным в медиаколлекции"</string>
+    <string name="permlab_mediaLocation" msgid="7368098373378598066">"чтение геоданных в медиаколлекции"</string>
     <string name="permdesc_mediaLocation" msgid="597912899423578138">"Приложение получит доступ к геоданным в вашей медиаколлекции."</string>
     <string name="biometric_app_setting_name" msgid="3339209978734534457">"Использовать биометрию"</string>
     <string name="biometric_or_screen_lock_app_setting_name" msgid="5348462421758257752">"Использовать биометрию или блокировку экрана"</string>
@@ -758,79 +758,79 @@
   </string-array>
     <string name="face_error_vendor_unknown" msgid="7387005932083302070">"Произошла ошибка. Повторите попытку."</string>
     <string name="face_icon_content_description" msgid="465030547475916280">"Значок лица"</string>
-    <string name="permlab_readSyncSettings" msgid="6250532864893156277">"Просмотр настроек синхронизации"</string>
+    <string name="permlab_readSyncSettings" msgid="6250532864893156277">"чтение настроек синхронизации"</string>
     <string name="permdesc_readSyncSettings" msgid="1325658466358779298">"Приложение сможет просматривать настройки синхронизации аккаунта, например определять, включена ли синхронизация для приложения \"Контакты\"."</string>
-    <string name="permlab_writeSyncSettings" msgid="6583154300780427399">"Включение/выключение синхронизации"</string>
+    <string name="permlab_writeSyncSettings" msgid="6583154300780427399">"включение/выключение синхронизации"</string>
     <string name="permdesc_writeSyncSettings" msgid="6029151549667182687">"Приложение сможет изменять настройки синхронизации аккаунта. Например, с помощью этого разрешения можно включить в аккаунте синхронизацию контактов."</string>
-    <string name="permlab_readSyncStats" msgid="3747407238320105332">"Просмотр статистики синхронизации"</string>
+    <string name="permlab_readSyncStats" msgid="3747407238320105332">"чтение статистики синхронизации"</string>
     <string name="permdesc_readSyncStats" msgid="3867809926567379434">"Приложение сможет просматривать статистику синхронизации аккаунта, в том числе историю событий и объем синхронизированных данных."</string>
-    <string name="permlab_sdcardRead" msgid="5791467020950064920">"Просмотр данных на общем накопителе"</string>
+    <string name="permlab_sdcardRead" msgid="5791467020950064920">"чтение содержимого общего хранилища"</string>
     <string name="permdesc_sdcardRead" msgid="6872973242228240382">"Приложение сможет считывать данные с общего накопителя."</string>
-    <string name="permlab_readMediaAudio" msgid="8723513075731763810">"считывание аудиофайлов из общего хранилища"</string>
+    <string name="permlab_readMediaAudio" msgid="8723513075731763810">"чтение аудиофайлов из общего хранилища"</string>
     <string name="permdesc_readMediaAudio" msgid="5299772574434619399">"Приложение сможет считывать аудиофайлы из общего хранилища."</string>
-    <string name="permlab_readMediaVideo" msgid="7768003311260655007">"считывание видеофайлов из общего хранилища"</string>
+    <string name="permlab_readMediaVideo" msgid="7768003311260655007">"чтение видеофайлов из общего хранилища"</string>
     <string name="permdesc_readMediaVideo" msgid="3846400073770403528">"Приложение сможет считывать видеофайлы из общего хранилища."</string>
-    <string name="permlab_readMediaImages" msgid="4057590631020986789">"считывание изображений из общего хранилища"</string>
+    <string name="permlab_readMediaImages" msgid="4057590631020986789">"чтение изображений из общего хранилища"</string>
     <string name="permdesc_readMediaImages" msgid="5836219373138469259">"Приложение сможет считывать изображения из общего хранилища."</string>
-    <string name="permlab_readVisualUserSelect" msgid="5516204215354667586">"считывание указанных пользователем изображений и видеофайлов из общего хранилища"</string>
+    <string name="permlab_readVisualUserSelect" msgid="5516204215354667586">"чтение указанных пользователем изображений и видеофайлов из общего хранилища"</string>
     <string name="permdesc_readVisualUserSelect" msgid="8027174717714968217">"Приложение сможет считывать указанные вами изображения и видеофайлы из общего хранилища."</string>
-    <string name="permlab_sdcardWrite" msgid="4863021819671416668">"Изменение или удаление данных на общем накопителе"</string>
+    <string name="permlab_sdcardWrite" msgid="4863021819671416668">"изменение или удаление содержимого общего хранилища"</string>
     <string name="permdesc_sdcardWrite" msgid="8376047679331387102">"Приложение сможет записывать данные на общий накопитель."</string>
-    <string name="permlab_use_sip" msgid="8250774565189337477">"Входящие и исходящие вызовы SIP"</string>
+    <string name="permlab_use_sip" msgid="8250774565189337477">"входящие и исходящие вызовы SIP"</string>
     <string name="permdesc_use_sip" msgid="3590270893253204451">"Разрешить вызовы по протоколу SIP."</string>
-    <string name="permlab_register_sim_subscription" msgid="1653054249287576161">"регистрация новых SIM-карт"</string>
+    <string name="permlab_register_sim_subscription" msgid="1653054249287576161">"регистрация новых телекоммуникационных подключений (SIM)"</string>
     <string name="permdesc_register_sim_subscription" msgid="4183858662792232464">"Регистрация новых SIM-карт."</string>
-    <string name="permlab_register_call_provider" msgid="6135073566140050702">"регистрация новых операторов связи"</string>
+    <string name="permlab_register_call_provider" msgid="6135073566140050702">"регистрация новых телекоммуникационных подключений"</string>
     <string name="permdesc_register_call_provider" msgid="4201429251459068613">"Регистрация новых операторов связи."</string>
-    <string name="permlab_connection_manager" msgid="3179365584691166915">"управление подключениями"</string>
+    <string name="permlab_connection_manager" msgid="3179365584691166915">"управление телекоммуникационными подключениями"</string>
     <string name="permdesc_connection_manager" msgid="1426093604238937733">"Управление сетевыми подключениями."</string>
-    <string name="permlab_bind_incall_service" msgid="5990625112603493016">"Управление экраном во время разговора"</string>
+    <string name="permlab_bind_incall_service" msgid="5990625112603493016">"взаимодействие с экраном во время разговора"</string>
     <string name="permdesc_bind_incall_service" msgid="4124917526967765162">"Управление экраном во время разговора."</string>
-    <string name="permlab_bind_connection_service" msgid="5409268245525024736">"доступ к службам телефонии"</string>
+    <string name="permlab_bind_connection_service" msgid="5409268245525024736">"взаимодействие со службами телефонии"</string>
     <string name="permdesc_bind_connection_service" msgid="6261796725253264518">"Доступ к службам телефонии для совершения и приема вызовов."</string>
-    <string name="permlab_control_incall_experience" msgid="6436863486094352987">"Работа с приложением во время разговора"</string>
+    <string name="permlab_control_incall_experience" msgid="6436863486094352987">"предоставление экрана во время звонка"</string>
     <string name="permdesc_control_incall_experience" msgid="5896723643771737534">"Работа с приложением во время разговора."</string>
-    <string name="permlab_readNetworkUsageHistory" msgid="8470402862501573795">"Просмотр журнала использования сети"</string>
+    <string name="permlab_readNetworkUsageHistory" msgid="8470402862501573795">"чтение журнала использования сети"</string>
     <string name="permdesc_readNetworkUsageHistory" msgid="1112962304941637102">"Приложение сможет считывать сохраненную историю использования определенных сетей и приложений."</string>
-    <string name="permlab_manageNetworkPolicy" msgid="6872549423152175378">"Управление сетевой политикой"</string>
+    <string name="permlab_manageNetworkPolicy" msgid="6872549423152175378">"управление сетевой политикой"</string>
     <string name="permdesc_manageNetworkPolicy" msgid="1865663268764673296">"Приложение сможет управлять сетевыми политиками и определять правила для отдельных приложений."</string>
-    <string name="permlab_modifyNetworkAccounting" msgid="7448790834938749041">"Изменение учета использования сети"</string>
+    <string name="permlab_modifyNetworkAccounting" msgid="7448790834938749041">"изменение учета использования сети"</string>
     <string name="permdesc_modifyNetworkAccounting" msgid="5076042642247205390">"Приложение сможет изменять порядок расчета использования сетевых ресурсов различными программами. Это разрешение не используется обычными приложениями."</string>
-    <string name="permlab_accessNotifications" msgid="7130360248191984741">"Доступ к уведомлениям"</string>
+    <string name="permlab_accessNotifications" msgid="7130360248191984741">"доступ к уведомлениям"</string>
     <string name="permdesc_accessNotifications" msgid="761730149268789668">"Приложение сможет получать, проверять и удалять уведомления, включая те, что опубликованы другими приложениями."</string>
-    <string name="permlab_bindNotificationListenerService" msgid="5848096702733262458">"Подключение к службе просмотра уведомлений"</string>
+    <string name="permlab_bindNotificationListenerService" msgid="5848096702733262458">"привязка к службе прослушивания уведомлений"</string>
     <string name="permdesc_bindNotificationListenerService" msgid="4970553694467137126">"Приложение сможет подключаться к базовому интерфейсу службы просмотра уведомлений. Это разрешение не используется обычными приложениями."</string>
-    <string name="permlab_bindConditionProviderService" msgid="5245421224814878483">"Подключение к серверам поставщиков условий"</string>
+    <string name="permlab_bindConditionProviderService" msgid="5245421224814878483">"привязка к службе поставщика условий"</string>
     <string name="permdesc_bindConditionProviderService" msgid="6106018791256120258">"Приложение сможет подключаться к базовому интерфейсу поставщиков условий. Это разрешение обычно используется только специальными приложениями."</string>
-    <string name="permlab_bindDreamService" msgid="4776175992848982706">"Подключение к службе экранных заставок"</string>
+    <string name="permlab_bindDreamService" msgid="4776175992848982706">"привязка к службе экранных заставок"</string>
     <string name="permdesc_bindDreamService" msgid="9129615743300572973">"Подключение к базовому интерфейсу службы экранных заставок. Это разрешение не используется обычными приложениями."</string>
-    <string name="permlab_invokeCarrierSetup" msgid="5098810760209818140">"Запуск приложения настроек, предоставленного оператором"</string>
+    <string name="permlab_invokeCarrierSetup" msgid="5098810760209818140">"вызов приложения настройки, предоставленного оператором"</string>
     <string name="permdesc_invokeCarrierSetup" msgid="4790845896063237887">"Владелец сможет запускать приложение настроек, предоставленное оператором. Это разрешение не используется обычными приложениями."</string>
-    <string name="permlab_accessNetworkConditions" msgid="1270732533356286514">"Использование данных о состоянии сети"</string>
+    <string name="permlab_accessNetworkConditions" msgid="1270732533356286514">"прослушивание наблюдений за состоянием"</string>
     <string name="permdesc_accessNetworkConditions" msgid="2959269186741956109">"Приложение сможет использовать данные о состоянии сети. Это разрешение обычно используется только специальными приложениями."</string>
     <string name="permlab_setInputCalibration" msgid="932069700285223434">"изменение параметров калибровки экрана"</string>
     <string name="permdesc_setInputCalibration" msgid="2937872391426631726">"Приложение сможет изменять параметры калибровки сенсорного экрана. Это разрешение обычно используется только специальными приложениями."</string>
-    <string name="permlab_accessDrmCertificates" msgid="6473765454472436597">"Доступ к сертификатам DRM"</string>
+    <string name="permlab_accessDrmCertificates" msgid="6473765454472436597">"доступ к сертификатам DRM"</string>
     <string name="permdesc_accessDrmCertificates" msgid="6983139753493781941">"Приложение сможет синхронизировать и использовать сертификаты DRM (разрешение актуально только для специальных приложений)."</string>
     <string name="permlab_handoverStatus" msgid="7620438488137057281">"Получение статуса передачи Android Beam"</string>
     <string name="permdesc_handoverStatus" msgid="3842269451732571070">"Получение информации о текущих передачах Android Beam."</string>
-    <string name="permlab_removeDrmCertificates" msgid="710576248717404416">"удаление сертификатов DRM"</string>
+    <string name="permlab_removeDrmCertificates" msgid="710576248717404416">"удаление DRM-сертификатов"</string>
     <string name="permdesc_removeDrmCertificates" msgid="4068445390318355716">"Удаление сертификатов DRM. Большинству приложений это разрешение не требуется."</string>
-    <string name="permlab_bindCarrierMessagingService" msgid="3363450860593096967">"Подключение к службе обмена сообщениями"</string>
+    <string name="permlab_bindCarrierMessagingService" msgid="3363450860593096967">"привязка к службе обмена сообщениями оператора"</string>
     <string name="permdesc_bindCarrierMessagingService" msgid="6316457028173478345">"Подключение к базовому интерфейсу службы обмена сообщениями, предоставляемой оператором связи. Это разрешение обычно используется только специальными приложениями."</string>
-    <string name="permlab_bindCarrierServices" msgid="2395596978626237474">"Подключение к сервисам оператора связи"</string>
+    <string name="permlab_bindCarrierServices" msgid="2395596978626237474">"привязка к службам оператора"</string>
     <string name="permdesc_bindCarrierServices" msgid="9185614481967262900">"Приложение сможет подключаться к сервисам оператора связи. Это разрешение не используется обычными приложениями."</string>
     <string name="permlab_access_notification_policy" msgid="5524112842876975537">"Доступ к режиму \"Не беспокоить\""</string>
     <string name="permdesc_access_notification_policy" msgid="8538374112403845013">"Открывает приложению доступ к настройкам режима \"Не беспокоить\" и позволяет изменять их."</string>
-    <string name="permlab_startViewPermissionUsage" msgid="1504564328641112341">"Просмотр данных об используемых разрешениях"</string>
+    <string name="permlab_startViewPermissionUsage" msgid="1504564328641112341">"запуск просмотра данных об использовании разрешений"</string>
     <string name="permdesc_startViewPermissionUsage" msgid="2820325605959586538">"Приложение получит доступ к данным об используемых разрешениях. Это разрешение не требуется обычным приложениям."</string>
-    <string name="permlab_startReviewPermissionDecisions" msgid="8690578688476599284">"Просмотр действий с разрешениями"</string>
+    <string name="permlab_startReviewPermissionDecisions" msgid="8690578688476599284">"запуск просмотра решений о разрешениях"</string>
     <string name="permdesc_startReviewPermissionDecisions" msgid="2775556853503004236">"Позволяет просматривать действия с разрешениями. Не используется обычными приложениями."</string>
-    <string name="permlab_startViewAppFeatures" msgid="7955084203185903001">"Просмотр функций приложения"</string>
+    <string name="permlab_startViewAppFeatures" msgid="7955084203185903001">"запуск просмотра функций приложения"</string>
     <string name="permdesc_startViewAppFeatures" msgid="7207240860165206107">"Позволяет просматривать информацию о функциях приложения."</string>
-    <string name="permlab_highSamplingRateSensors" msgid="3941068435726317070">"Доступ к данным датчиков при высокой частоте дискретизации"</string>
+    <string name="permlab_highSamplingRateSensors" msgid="3941068435726317070">"доступ к данным датчиков при высокой частоте дискретизации"</string>
     <string name="permdesc_highSamplingRateSensors" msgid="8430061978931155995">"Приложение сможет считывать данные датчиков на частоте более 200 Гц."</string>
-    <string name="permlab_updatePackagesWithoutUserAction" msgid="3363272609642618551">"Обновление приложений без действий со стороны пользователя"</string>
+    <string name="permlab_updatePackagesWithoutUserAction" msgid="3363272609642618551">"обновление приложения без действий со стороны пользователя"</string>
     <string name="permdesc_updatePackagesWithoutUserAction" msgid="4567739631260526366">"Позволяет обновлять ранее установленные приложения без действий со стороны пользователя."</string>
     <string name="permlab_writeVerificationStateE2eeContactKeys" msgid="3990742344778360457">"обновление статусов проверки защищенных сквозным шифрованием и принадлежащих другим приложениям ключей контактов"</string>
     <string name="permdesc_writeVerificationStateE2eeContactKeys" msgid="8453156829747427041">"Приложение сможет обновлять статусы проверки защищенных сквозным шифрованием и принадлежащих другим приложениям ключей контактов."</string>
@@ -1100,9 +1100,9 @@
     <string name="js_dialog_before_unload_negative_button" msgid="3873765747622415310">"Остаться"</string>
     <string name="js_dialog_before_unload" msgid="7213364985774778744">"<xliff:g id="MESSAGE">%s</xliff:g>\n\nПокинуть эту страницу?"</string>
     <string name="autofill_window_title" msgid="4379134104008111961">"Автозаполнение с помощью сервиса \"<xliff:g id="SERVICENAME">%1$s</xliff:g>\""</string>
-    <string name="permlab_setAlarm" msgid="1158001610254173567">"Установка будильника"</string>
+    <string name="permlab_setAlarm" msgid="1158001610254173567">"установка будильника"</string>
     <string name="permdesc_setAlarm" msgid="2185033720060109640">"Приложение сможет настраивать будильник. Функция поддерживается не во всех программах."</string>
-    <string name="permlab_addVoicemail" msgid="4770245808840814471">"Добавление голосовых сообщений"</string>
+    <string name="permlab_addVoicemail" msgid="4770245808840814471">"добавление сообщений голосовой почты"</string>
     <string name="permdesc_addVoicemail" msgid="5470312139820074324">"Приложение сможет добавлять голосовые сообщения в папку \"Входящие\"."</string>
     <string name="pasted_from_clipboard" msgid="7355790625710831847">"Приложение \"<xliff:g id="PASTING_APP_NAME">%1$s</xliff:g>\" вставило данные из буфера обмена."</string>
     <string name="more_item_label" msgid="7419249600215749115">"Ещё"</string>
@@ -1493,7 +1493,7 @@
     <string name="ext_media_status_unsupported" msgid="5460509911660539317">"Не поддерживается"</string>
     <string name="ext_media_status_ejecting" msgid="7532403368044013797">"Извлечение…"</string>
     <string name="ext_media_status_formatting" msgid="774148701503179906">"Форматирование…"</string>
-    <string name="ext_media_status_missing" msgid="6520746443048867314">"Отсутствует"</string>
+    <string name="ext_media_status_missing" msgid="6520746443048867314">"Не установлено"</string>
     <string name="activity_list_empty" msgid="4219430010716034252">"Подходящих действий не найдено."</string>
     <string name="permlab_route_media_output" msgid="8048124531439513118">"Перенаправление вывода мультимедиа"</string>
     <string name="permdesc_route_media_output" msgid="1759683269387729675">"Приложение сможет направлять поток мультимедиа на другие внешние устройства."</string>

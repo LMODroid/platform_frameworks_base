@@ -264,17 +264,17 @@
     <string name="global_action_power_options" msgid="1185286119330160073">"Vypnúť"</string>
     <string name="global_action_restart" msgid="4678451019561687074">"Reštartovať"</string>
     <string name="global_action_emergency" msgid="1387617624177105088">"Tieseň"</string>
-    <string name="global_action_bug_report" msgid="5127867163044170003">"Hlásenie o chybách"</string>
+    <string name="global_action_bug_report" msgid="5127867163044170003">"Hlásenie o chybách"</string>
     <string name="global_action_logout" msgid="6093581310002476511">"Ukončiť reláciu"</string>
     <string name="global_action_screenshot" msgid="2610053466156478564">"Snímka obrazovky"</string>
     <string name="bugreport_title" msgid="8549990811777373050">"Nahlásiť chybu"</string>
-    <string name="bugreport_message" msgid="5212529146119624326">"Týmto zhromaždíte informácie o aktuálnom stave zariadenia. Informácie je potom možné odoslať e-mailom, chvíľu však potrvá, kým bude hlásenie chyby pripravené na odoslanie. Prosíme vás preto o trpezlivosť."</string>
+    <string name="bugreport_message" msgid="5212529146119624326">"Týmto zhromaždíte informácie o aktuálnom stave zariadenia. Informácie je potom možné odoslať e‑mailom, chvíľu však potrvá, kým bude hlásenie chyby pripravené na odoslanie. Prosíme vás preto o trpezlivosť."</string>
     <string name="bugreport_option_interactive_title" msgid="7968287837902871289">"Interaktívne nahlásenie"</string>
     <string name="bugreport_option_interactive_summary" msgid="8493795476325339542">"Táto možnosť je vhodná pre väčšinu prípadov. Umožňuje sledovať priebeh nahlásenia, zadávať ďalšie podrobnosti o probléme a vytvárať snímky obrazovky. Môžu byť vynechané niektoré menej používané sekcie, ktorých nahlásenie trvá dlho."</string>
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Úplné nahlásenie"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"Táto možnosť slúži na minimalizáciu zásahov do systému, keď zariadenie neodpovedá, je príliš pomalé alebo potrebujete zahrnúť všetky sekcie hlásenia. Neumožňuje zadať ďalšie podrobnosti ani vytvoriť dodatočné snímky obrazovky."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{Snímka obrazovky pre hlásenie chyby sa vytvorí o # sekundu.}few{Snímka obrazovky pre hlásenie chyby sa vytvorí o # sekundy.}many{Snímka obrazovky pre hlásenie chyby sa vytvorí o # sekundy.}other{Snímka obrazovky pre hlásenie chyby sa vytvorí o # sekúnd.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Bola vytvorená snímka obrazovky s hlásením chyby"</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Hlásenie chyby so snímkou obrazovky "</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"Nepodarilo sa vytvoriť snímku obrazovky s hlásením chyby"</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"Tichý režim"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"Zvuk je VYPNUTÝ."</string>
@@ -604,15 +604,15 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"Umožňuje aplikácii zobraziť informácie o konfigurácii Bluetooth na tablete. Taktiež jej umožňuje nadväzovať a akceptovať spojenia so spárovanými zariadeniami."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"Umožňuje aplikácii zobraziť konfiguráciu rozhrania Bluetooth v zariadení Android TV, ako aj nadväzovať a prijímať pripojenia so spárovanými zariadeniami."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"Umožňuje aplikácii zobraziť informácie o konfigurácii Bluetooth na telefóne. Taktiež jej umožňuje nadväzovať a akceptovať spojenia so spárovanými zariadeniami."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"objaviť zariad. Bluetooth nablízku a spárovať sa"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"objaviť a spárovať zariadenia Bluetooth v okolí"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"Umožňuje aplikácii objaviť zariadenia s rozhraním Bluetooth nablízku a spárovať sa s nimi"</string>
     <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"pripojiť sa k spárovaným zariadeniam Bluetooth"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"Umožňuje aplikácii pripojiť sa k spárovaným zariadeniam s rozhraním Bluetooth"</string>
-    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"zobrazovanie reklamy v zariad. Bluetooth v okolí"</string>
+    <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"zobrazovať reklamu v zariadeniach Bluetooth v okolí"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"Umožňuje aplikácii zobrazovať reklamu v zariadeniach s rozhraním Bluetooth v okolí"</string>
     <string name="permlab_uwb_ranging" msgid="8141915781475770665">"určovať relatívnu polohu medzi zariadeniami so ultraširokopásmovým pripojením v okolí"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"Povoľte aplikácii určovať relatívnu polohu medzi zariadeniami s ultraširokopásmovým pripojením v okolí"</string>
-    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"interakcia so zariadeniami Wi-Fi v okolí"</string>
+    <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"interagovať so zariadeniami Wi-Fi v okolí"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"Umožňuje aplikácii oznamovať a rozpoznávať relatívnu polohu zariadení Wi‑Fi v okolí a pripájať sa k nim"</string>
     <string name="permlab_preferredPaymentInfo" msgid="5274423844767445054">"Preferované informácie platenej služby NFC"</string>
     <string name="permdesc_preferredPaymentInfo" msgid="8583552469807294967">"Umožňuje aplikácii získavať preferované informácie platenej služby NFC, napríklad o registrovanej pomoci a trasách k cieľu."</string>
@@ -1629,7 +1629,7 @@
     <string name="data_usage_mobile_limit_snoozed_title" msgid="101888478915677895">"Prekročený limit mobilných dát"</string>
     <string name="data_usage_wifi_limit_snoozed_title" msgid="1622359254521960508">"Prekročený limit dát cez Wi-Fi"</string>
     <string name="data_usage_limit_snoozed_body" msgid="545146591766765678">"Prekročili ste stanovený limit o <xliff:g id="SIZE">%s</xliff:g>"</string>
-    <string name="data_usage_restricted_title" msgid="126711424380051268">"Dátové prenosy obmedzené"</string>
+    <string name="data_usage_restricted_title" msgid="126711424380051268">"Dátové prenosy sú obmedzené"</string>
     <string name="data_usage_restricted_body" msgid="5338694433686077733">"Klepnutím odstránite obmedzenie."</string>
     <string name="data_usage_rapid_title" msgid="2950192123248740375">"Vysoké využitie mobilných dát"</string>
     <string name="data_usage_rapid_body" msgid="3886676853263693432">"Vaše aplikácie využili viac dát než zvyčajne"</string>
@@ -1676,7 +1676,7 @@
     <string name="media_route_status_scanning" msgid="8045156315309594482">"Prebieha vyhľadávanie..."</string>
     <string name="media_route_status_connecting" msgid="5845597961412010540">"Prebieha pripájanie…"</string>
     <string name="media_route_status_available" msgid="1477537663492007608">"K dispozícii"</string>
-    <string name="media_route_status_not_available" msgid="480912417977515261">"Nie je k dispozícii"</string>
+    <string name="media_route_status_not_available" msgid="480912417977515261">"Nie je k dispozícii"</string>
     <string name="media_route_status_in_use" msgid="6684112905244944724">"Používa sa"</string>
     <string name="display_manager_built_in_display_name" msgid="1015775198829722440">"Vstavaná obrazovka"</string>
     <string name="display_manager_hdmi_display_name" msgid="1022758026251534975">"Obrazovka HDMI"</string>

@@ -116,7 +116,7 @@
     <string name="roamingText5" msgid="4294671587635796641">"Roaming – preferovaný systém"</string>
     <string name="roamingText6" msgid="5536156746637992029">"Roaming – dostupný systém"</string>
     <string name="roamingText7" msgid="1783303085512907706">"Roaming – alianční partner"</string>
-    <string name="roamingText8" msgid="7774800704373721973">"Roaming – prémiový partner"</string>
+    <string name="roamingText8" msgid="7774800704373721973">"Roaming – prémiový partner"</string>
     <string name="roamingText9" msgid="1933460020190244004">"Roaming – úplná funkčnost služby"</string>
     <string name="roamingText10" msgid="7434767033595769499">"Roaming – částečná funkčnost služby"</string>
     <string name="roamingText11" msgid="5245687407203281407">"Banner roamingu je zapnutý"</string>
@@ -274,7 +274,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"Úplný přehled"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"Tato možnost slouží k rychlému nahlášení, když zařízení neodpovídá, je příliš pomalé nebo pokud potřebujete zahrnout všechny sekce. Tímto způsobem nelze zadat více podrobností ani pořídit snímek obrazovky."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{Snímek obrazovky pro zprávu o chybě bude pořízen za # sekundu.}few{Snímek obrazovky pro zprávu o chybě bude pořízen za # sekundy.}many{Snímek obrazovky pro zprávu o chybě bude pořízen za # sekundy.}other{Snímek obrazovky pro zprávu o chybě bude pořízen za # sekund.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Se zprávou o chybě byl pořízen snímek obrazovky"</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"Zpráva o chybě obsahuje screenshot"</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"Pořízení snímku obrazovky se zprávou o chybě se nezdařilo"</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"Tichý režim"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"Zvuk je VYPNUTÝ."</string>
@@ -1035,8 +1035,8 @@
     <string name="lockscreen_failed_attempts_almost_glogin" product="default" msgid="5691623136957148335">"Již <xliff:g id="NUMBER_0">%1$d</xliff:g>krát jste nesprávně nakreslili své heslo odemknutí. Po dalších neúspěšných pokusech (<xliff:g id="NUMBER_1">%2$d</xliff:g>) budete požádáni o odemčení telefonu pomocí přihlášení Google.\n\n Zkuste to znovu za <xliff:g id="NUMBER_2">%3$d</xliff:g> s."</string>
     <string name="lockscreen_failed_attempts_almost_at_wipe" product="tablet" msgid="7914445759242151426">"Tablet jste se pokusili nesprávným způsobem odemknout <xliff:g id="NUMBER_0">%1$d</xliff:g>krát. Po <xliff:g id="NUMBER_1">%2$d</xliff:g> dalších neúspěšných pokusech se v tabletu obnoví tovární nastavení a veškerá uživatelská data budou ztracena."</string>
     <string name="lockscreen_failed_attempts_almost_at_wipe" product="tv" msgid="4275591249631864248">"Již jste se <xliff:g id="NUMBER_0">%1$d</xliff:g>krát pokusili odemknout zařízení Android TV nesprávným způsobem. Po <xliff:g id="NUMBER_1">%2$d</xliff:g> dalších neúspěšných pokusech se v zařízení Android TV obnoví tovární nastavení a veškerá uživatelská data budou ztracena."</string>
-    <string name="lockscreen_failed_attempts_almost_at_wipe" product="default" msgid="1166532464798446579">"Telefon jste se pokusili nesprávným způsobem odemknout <xliff:g id="NUMBER_0">%1$d</xliff:g>krát. Po <xliff:g id="NUMBER_1">%2$d</xliff:g> dalších neúspěšných pokusech se v telefonu obnoví tovární nastavení a veškerá uživatelská data budou ztracena."</string>
-    <string name="lockscreen_failed_attempts_now_wiping" product="tablet" msgid="8682445539263683414">"Tablet jste se pokusili nesprávným způsobem odemknout <xliff:g id="NUMBER">%d</xliff:g>krát. V tabletu se teď obnoví výchozí tovární nastavení."</string>
+    <string name="lockscreen_failed_attempts_almost_at_wipe" product="default" msgid="1166532464798446579">"Telefon jste se pokusili nesprávným způsobem odemknout <xliff:g id="NUMBER_0">%1$d</xliff:g>krát. Po <xliff:g id="NUMBER_1">%2$d</xliff:g> dalších neúspěšných pokusech se v telefonu obnoví tovární nastavení a veškerá uživatelská data budou ztracena."</string>
+    <string name="lockscreen_failed_attempts_now_wiping" product="tablet" msgid="8682445539263683414">"Tablet jste se pokusili nesprávným způsobem odemknout <xliff:g id="NUMBER">%d</xliff:g>krát. V tabletu se teď obnoví výchozí tovární nastavení."</string>
     <string name="lockscreen_failed_attempts_now_wiping" product="tv" msgid="2205435033340091883">"Již jste se <xliff:g id="NUMBER">%d</xliff:g>krát pokusili odemknout zařízení Android TV nesprávným způsobem. V zařízení Android TV se teď obnoví výchozí tovární nastavení."</string>
     <string name="lockscreen_failed_attempts_now_wiping" product="default" msgid="2203704707679895487">"Telefon jste se pokusili nesprávným způsobem odemknout <xliff:g id="NUMBER">%d</xliff:g>krát. V telefonu se teď obnoví výchozí tovární nastavení."</string>
     <string name="lockscreen_too_many_failed_attempts_countdown" msgid="6807200118164539589">"Sekundy zbývající do dalšího pokusu: <xliff:g id="NUMBER">%d</xliff:g>."</string>
@@ -1237,7 +1237,7 @@
     <string name="whichSendToApplication" msgid="77101541959464018">"Odeslat pomocí aplikace"</string>
     <string name="whichSendToApplicationNamed" msgid="3385686512014670003">"Odeslat pomocí aplikace %1$s"</string>
     <string name="whichSendToApplicationLabel" msgid="3543240188816513303">"Odeslat"</string>
-    <string name="whichHomeApplication" msgid="8276350727038396616">"Výběr aplikace na plochu"</string>
+    <string name="whichHomeApplication" msgid="8276350727038396616">"Výběr vstupní aplikace"</string>
     <string name="whichHomeApplicationNamed" msgid="5855990024847433794">"Jako plochu používat aplikaci %1$s."</string>
     <string name="whichHomeApplicationLabel" msgid="8907334282202933959">"Vyfotit"</string>
     <string name="whichImageCaptureApplication" msgid="2737413019463215284">"Vyfotit pomocí aplikace"</string>
@@ -1293,7 +1293,7 @@
     <string name="android_preparing_apk" msgid="589736917792300956">"Příprava aplikace <xliff:g id="APPNAME">%1$s</xliff:g>."</string>
     <string name="android_upgrading_starting_apps" msgid="6206161195076057075">"Spouštění aplikací."</string>
     <string name="android_upgrading_complete" msgid="409800058018374746">"Dokončování inicializace."</string>
-    <string name="fp_power_button_enrollment_message" msgid="5648173517663246140">"Stiskli jste vypínač – tím se obvykle vypíná obrazovka.\n\nPři nastavování otisku prstu je třeba klepat lehce."</string>
+    <string name="fp_power_button_enrollment_message" msgid="5648173517663246140">"Stiskli jste vypínač – tím se obvykle vypíná obrazovka.\n\nPři nastavování otisku prstu je třeba klepat lehce."</string>
     <string name="fp_power_button_enrollment_title" msgid="6976841690455338563">"K dokončení nastavení je nutné vypnout obrazovku"</string>
     <string name="fp_power_button_enrollment_button_text" msgid="3199783266386029200">"Vypnout"</string>
     <string name="fp_power_button_bp_title" msgid="5585506104526820067">"Pokračovat v ověřování otisku prstu?"</string>

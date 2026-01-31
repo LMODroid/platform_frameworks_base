@@ -244,7 +244,7 @@
     <string name="accessibility_bluetooth_device_settings_see_all" msgid="9111952496905423543">"Kliko për të shikuar të gjitha pajisjet"</string>
     <string name="accessibility_bluetooth_device_settings_pair_new_device" msgid="2435184865793496966">"Kliko për të çiftuar një pajisje të re"</string>
     <string name="accessibility_battery_unknown" msgid="1807789554617976440">"Përqindja e baterisë e panjohur."</string>
-    <string name="accessibility_bluetooth_name" msgid="7300973230214067678">"Lidhur me <xliff:g id="BLUETOOTH">%s</xliff:g>"</string>
+    <string name="accessibility_bluetooth_name" msgid="7300973230214067678">"Lidhur me <xliff:g id="BLUETOOTH">%s</xliff:g>."</string>
     <string name="accessibility_cast_name" msgid="7344437925388773685">"Është lidhur me <xliff:g id="CAST">%s</xliff:g>."</string>
     <string name="accessibility_not_connected" msgid="4061305616351042142">"Nuk është i lidhur."</string>
     <string name="data_connection_roaming" msgid="375650836665414797">"Roaming"</string>

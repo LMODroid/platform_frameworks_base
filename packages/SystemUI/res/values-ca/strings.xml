@@ -620,7 +620,7 @@
     <string name="monitoring_description_personal_profile_named_vpn" msgid="5083909710727365452">"Les aplicacions personals es connecten a Internet a través de <xliff:g id="VPN_APP">%1$s</xliff:g>. El teu proveïdor de VPN pot veure l\'activitat de la teva xarxa, inclosos els correus electrònics i les dades de navegació."</string>
     <string name="monitoring_description_vpn_settings_separator" msgid="8292589617720435430">" "</string>
     <string name="monitoring_description_vpn_settings" msgid="5264167033247632071">"Obre la configuració de la VPN"</string>
-    <string name="monitoring_description_parental_controls" msgid="8184693528917051626">"El teu pare o mare gestionen aquest dispositiu, i poden veure i gestionar informació com ara les aplicacions que utilitzes, la teva ubicació i el teu temps de connexió."</string>
+    <string name="monitoring_description_parental_controls" msgid="8184693528917051626">"El teu pare o mare gestionen aquest dispositiu, i poden veure i gestionar informació com ara les aplicacions que utilitzes, la teva ubicació i el teu temps de pantalla."</string>
     <string name="legacy_vpn_name" msgid="4174223520162559145">"VPN"</string>
     <string name="keyguard_indication_trust_unlocked" msgid="7395154975733744547">"Desbloquejat per TrustAgent"</string>
     <string name="kg_prompt_after_adaptive_auth_lock" msgid="2587481497846342760">"El dispositiu s\'ha bloquejat; massa intents d\'autenticació"</string>

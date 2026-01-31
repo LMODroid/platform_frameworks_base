@@ -1752,11 +1752,11 @@
     <string name="done_accessibility_shortcut_menu_button" msgid="3668407723770815708">"Ferdig"</string>
     <string name="disable_accessibility_shortcut" msgid="5806091378745232383">"Slå av snarveien"</string>
     <string name="leave_accessibility_shortcut_on" msgid="6543362062336990814">"Bruk snarveien"</string>
-    <string name="color_inversion_feature_name" msgid="2672824491933264951">"Farge&amp;#173;invertering"</string>
-    <string name="color_correction_feature_name" msgid="7975133554160979214">"Fargekorrigering"</string>
-    <string name="one_handed_mode_feature_name" msgid="2334330034828094891">"Enhåndsmodus"</string>
+    <string name="color_inversion_feature_name" msgid="2672824491933264951">"Fargeinvertering"</string>
+    <string name="color_correction_feature_name" msgid="7975133554160979214">"Farge­korrigering"</string>
+    <string name="one_handed_mode_feature_name" msgid="2334330034828094891">"Enhånds­modus"</string>
     <string name="reduce_bright_colors_feature_name" msgid="3222994553174604132">"Ekstra dimmet"</string>
-    <string name="hearing_aids_feature_name" msgid="1125892105105852542">"Høreapparater"</string>
+    <string name="hearing_aids_feature_name" msgid="1125892105105852542">"Høre­apparater"</string>
     <string name="accessibility_shortcut_enabling_service" msgid="5473495203759847687">"Volumtastene holdes inne. <xliff:g id="SERVICE_NAME">%1$s</xliff:g> er slått på."</string>
     <string name="accessibility_shortcut_disabling_service" msgid="8675244165062700619">"Volumtastene holdes inne. <xliff:g id="SERVICE_NAME">%1$s</xliff:g> er slått av."</string>
     <string name="accessibility_shortcut_spoken_feedback" msgid="3760999147597564314">"Slipp opp volumtastene. For å slå på <xliff:g id="SERVICE_NAME">%1$s</xliff:g>, trykk og hold på begge volumtastene igjen i 3 sekunder."</string>

@@ -298,7 +298,7 @@
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"אין מכשירים מותאמים זמינים"</string>
     <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"אפשר ללחוץ כדי להתחבר למכשיר או להתנתק ממנו"</string>
     <string name="pair_new_bluetooth_devices" msgid="4601767620843349645">"התאמה של מכשיר חדש"</string>
-    <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"הצגת הכול"</string>
+    <string name="see_all_bluetooth_devices" msgid="1761596816620200433">"צפייה בכל המכשירים"</string>
     <string name="turn_on_bluetooth" msgid="5681370462180289071">"‏שימוש ב-Bluetooth"</string>
     <string name="quick_settings_bluetooth_device_connected" msgid="7884777006729260996">"מחובר"</string>
     <string name="quick_settings_bluetooth_device_audio_sharing" msgid="1496358082943301670">"שיתוף אודיו"</string>
@@ -439,7 +439,7 @@
     <string name="zen_modes_dialog_settings" msgid="2310248023728936697">"הגדרות"</string>
     <string name="zen_mode_on" msgid="9085304934016242591">"מצב פעיל"</string>
     <string name="zen_mode_on_with_details" msgid="7416143430557895497">"פועל • <xliff:g id="TRIGGER_DESCRIPTION">%1$s</xliff:g>"</string>
-    <string name="zen_mode_off" msgid="1736604456618147306">"מצב מושבת"</string>
+    <string name="zen_mode_off" msgid="1736604456618147306">"מושבת"</string>
     <string name="zen_mode_set_up" msgid="7457957033034460064">"להגדרה"</string>
     <string name="zen_mode_no_manual_invocation" msgid="1769975741344633672">"שינוי ב\'הגדרות\'"</string>
     <string name="zen_mode_active_modes" msgid="1625850411578488856">"{count,plural, =0{אין מצבים פעילים}=1{מצב פעיל אחד ({mode})}one{‫# מצבים פעילים}two{‫# מצבים פעילים}other{‫# מצבים פעילים}}"</string>
@@ -749,8 +749,8 @@
     <string name="notification_channel_summary_default" msgid="777294388712200605">"ייתכן שיופעל צלצול או רטט בהתאם להגדרות במכשיר"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"ייתכן שיופעל צלצול או רטט בהתאם להגדרות במכשיר. שיחות מהאפליקציה <xliff:g id="APP_NAME">%1$s</xliff:g> מופיעות בבועות כברירת מחדל."</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"אפשר לתת למערכת לקבוע אם ההתראה הזאת צריכה להיות מלווה בצליל או ברטט"</string>
-    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; הועלה בדרגה ל\'ברירת מחדל\'"</string>
-    <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; הורד בדרגה ל\'שקט\'"</string>
+    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; הועלה בדרגה ל\'ברירת מחדל‘"</string>
+    <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; הורד בדרגה ל\'שקט‘"</string>
     <string name="notification_channel_summary_automatic_promoted" msgid="1301710305149590426">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; דורג גבוה יותר"</string>
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"‏&lt;b&gt;הסטטוס:&lt;/b&gt; דורג נמוך יותר"</string>
     <string name="notification_channel_summary_priority_baseline" msgid="46674690072551234">"מוצגת בחלק העליון של קטע ההתראות וכתמונת פרופיל במסך הנעילה"</string>
@@ -1363,8 +1363,8 @@
     <string name="dismiss_dialog" msgid="2195508495854675882">"סגירה"</string>
     <string name="connected_display_icon_desc" msgid="6373560639989971997">"המסך מחובר"</string>
     <string name="privacy_dialog_title" msgid="7839968133469098311">"מיקרופון ומצלמה"</string>
-    <string name="privacy_dialog_summary" msgid="2458769652125995409">"האפליקציות שהיו בשימוש לאחרונה"</string>
-    <string name="privacy_dialog_more_button" msgid="7610604080293562345">"צפייה בהרשאות הגישה האחרונות"</string>
+    <string name="privacy_dialog_summary" msgid="2458769652125995409">"אילו אפליקציות הפעילו את התכונות האלה לאחרונה?"</string>
+    <string name="privacy_dialog_more_button" msgid="7610604080293562345">"צפייה בפעילות מהזמן האחרון"</string>
     <string name="privacy_dialog_done_button" msgid="4504330708531434263">"סיום"</string>
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"הרחבה והצגת האפשרויות"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"כיווץ"</string>
@@ -1374,11 +1374,11 @@
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"ניהול הרשאות הגישה"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"בשימוש על ידי שיחת טלפון"</string>
     <string name="privacy_dialog_recent_call_usage" msgid="1214810644978167344">"נעשה שימוש לאחרונה על ידי שיחת טלפון"</string>
-    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"בשימוש על ידי <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
+    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"האפליקציה המפעילה: <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
     <string name="privacy_dialog_recent_app_usage" msgid="4883417856848222450">"נעשה שימוש לאחרונה על ידי <xliff:g id="APP_NAME">%1$s</xliff:g>"</string>
-    <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"בשימוש על ידי <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
+    <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"האפליקציה המפעילה: <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
     <string name="privacy_dialog_recent_app_usage_1" msgid="2551340497722370109">"נעשה שימוש לאחרונה על ידי <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
-    <string name="privacy_dialog_active_app_usage_2" msgid="2770926061339921767">"בשימוש על ידי <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>)"</string>
+    <string name="privacy_dialog_active_app_usage_2" msgid="2770926061339921767">"האפליקציה המפעילה: <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>)"</string>
     <string name="privacy_dialog_recent_app_usage_2" msgid="2874689735085367167">"נעשה שימוש לאחרונה על ידי <xliff:g id="APP_NAME">%1$s</xliff:g> (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g> • <xliff:g id="PROXY_LABEL">%3$s</xliff:g>)"</string>
     <string name="shortcut_helper_category_system" msgid="462110876978937359">"מערכת"</string>
     <string name="shortcut_helper_category_system_controls" msgid="3153344561395751020">"שליטה במערכת"</string>
@@ -1426,7 +1426,7 @@
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"התאורה האחורית במקלדת"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"‏רמה %1$d מתוך %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"שליטה במכשירים"</string>
-    <string name="home_controls_dream_description" msgid="4644150952104035789">"גישה לשליטה במכשירים כשומר מסך"</string>
+    <string name="home_controls_dream_description" msgid="4644150952104035789">"שומר מסך עם גישה מהירה לשליטה במכשירים"</string>
     <string name="volume_undo_action" msgid="5815519725211877114">"ביטול"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"כדי לחזור אחורה, מחליקים שמאלה או ימינה עם שלוש אצבעות על לוח המגע."</string>
     <string name="home_edu_toast_content" msgid="3381071147871955415">"כדי לעבור למסך הבית, מחליקים למעלה עם שלוש אצבעות על לוח המגע"</string>

@@ -75,7 +75,7 @@
     <string name="serviceNotProvisioned" msgid="8289333510236766193">"השירות לא הוקצה."</string>
     <string name="CLIRPermanent" msgid="166443681876381118">"אינך יכול לשנות את הגדרת זיהוי המתקשר."</string>
     <string name="auto_data_switch_title" msgid="3286350716870518297">"הנתונים עברו אל <xliff:g id="CARRIERDISPLAY">%s</xliff:g>"</string>
-    <string name="auto_data_switch_content" msgid="803557715007110959">"תמיד אפשר לשנות זאת ב\'הגדרות\'"</string>
+    <string name="auto_data_switch_content" msgid="803557715007110959">"תמיד אפשר לשנות זאת ב\'הגדרות‘"</string>
     <string name="RestrictedOnDataTitle" msgid="1500576417268169774">"אין שירות של חבילת גלישה"</string>
     <string name="RestrictedOnEmergencyTitle" msgid="2852916906106191866">"שיחות חירום לא זמינות"</string>
     <string name="RestrictedOnNormalTitle" msgid="7009474589746551737">"אין אפשרות לבצע שיחות רגילות"</string>
@@ -603,13 +603,13 @@
     <string name="permdesc_bluetooth" product="tablet" msgid="3053222571491402635">"‏מאפשר לאפליקציה להציג את תצורת ה-Bluetooth בטאבלט, וכן ליצור ולקבל חיבורים עם מכשירים מותאמים."</string>
     <string name="permdesc_bluetooth" product="tv" msgid="8851534496561034998">"‏מאפשרת לאפליקציה להציג את הגדרת ה-Bluetooth במכשיר ה-Android TV, וליצור ולקבל חיבורים עם מכשירים מותאמים."</string>
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"‏מאפשרת לאפליקציה להציג את תצורת ה-Bluetooth בטלפון, וכן ליצור ולקבל חיבורים עם מכשירים מותאמים."</string>
-    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"‏גילוי מכשירי Bluetooth בקרבת מקום והתאמה ביניהם"</string>
+    <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"‏זיהוי והתאמה עם מכשירי Bluetooth קרובים"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"‏מאפשרת לאפליקציה לגלות מכשירי Bluetooth בקרבת מקום ולבצע התאמה איתם"</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"‏התחברות למכשירי Bluetooth מתאימים"</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"‏התחברות למכשירי Bluetooth מותאמים"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"‏מאפשרת לאפליקציה להתחבר למכשירי Bluetooth מותאמים"</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"‏פרסום במכשירי Bluetooth בקרבת מקום"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"‏האפליקציה תוכל לפרסם במכשירי Bluetooth בקרבת מקום"</string>
-    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"‏זיהוי מיקום יחסי בין מכשירי Ultra Wideband ‏(UWB) קרובים"</string>
+    <string name="permlab_uwb_ranging" msgid="8141915781475770665">"‏זיהוי מיקום יחסי בין מכשירים קרובים בטכנולוגיית Ultra Wideband ‏(UWB)"</string>
     <string name="permdesc_uwb_ranging" msgid="2519723069604307055">"‏האפליקציה תזהה את המיקום היחסי בין מכשירים קרובים שמשדרים בטכנולוגיית Ultra Wideband ‏(UWB)"</string>
     <string name="permlab_nearby_wifi_devices" msgid="392774237063608500">"‏אינטראקציה עם מכשירי Wi-Fi בקרבת מקום"</string>
     <string name="permdesc_nearby_wifi_devices" msgid="3054307728646332906">"‏האפליקציה תוכל לפרסם במכשירי Wi-Fi בקרבת מקום, להתחבר אליהם ולהעריך את המיקום היחסי שלהם"</string>
@@ -1370,7 +1370,7 @@
     <string name="sms_short_code_confirm_allow" msgid="920477594325526691">"שליחה"</string>
     <string name="sms_short_code_confirm_deny" msgid="1356917469323768230">"ביטול"</string>
     <string name="sms_short_code_remember_choice" msgid="1374526438647744862">"תזכרו את הבחירה שלי"</string>
-    <string name="sms_short_code_remember_undo_instruction" msgid="2620984439143080410">"‏ניתן לשנות זאת מאוחר יותר ב\'הגדרות\' &gt; \'אפליקציות\'"</string>
+    <string name="sms_short_code_remember_undo_instruction" msgid="2620984439143080410">"‏ניתן לשנות זאת מאוחר יותר ב\'הגדרות\' &gt; \'אפליקציות‘"</string>
     <string name="sms_short_code_confirm_always_allow" msgid="2223014893129755950">"אפשר תמיד"</string>
     <string name="sms_short_code_confirm_never_allow" msgid="2688828813521652079">"לא לאפשר אף פעם"</string>
     <string name="sim_removed_title" msgid="1349026474932481037">"‏כרטיס ה-SIM הוסר"</string>
@@ -1738,9 +1738,9 @@
     <string name="accessibility_enable_service_title" msgid="3931558336268541484">"להעניק לשירות \'<xliff:g id="SERVICE">%1$s</xliff:g>\' שליטה מלאה במכשיר?"</string>
     <string name="accessibility_service_warning_description" msgid="291674995220940133">"האפשרות לשליטה מלאה במכשיר לא מתאימה לרוב האפליקציות, אלא רק לאפליקציות שעוזרות עם צורכי הנגישות שלך."</string>
     <string name="accessibility_service_screen_control_title" msgid="190017412626919776">"הצגת המסך ושליטה בו"</string>
-    <string name="accessibility_service_screen_control_description" msgid="6946315917771791525">"אפשרות לקריאת כל התוכן במסך ולהצגת התוכן מעל אפליקציות אחרות."</string>
+    <string name="accessibility_service_screen_control_description" msgid="6946315917771791525">"התכונה תוכל לקרוא את כל התוכן במסך ולהציג תוכן מעל אפליקציות אחרות."</string>
     <string name="accessibility_service_action_perform_title" msgid="779670378951658160">"הצגה וביצוע של פעולות"</string>
-    <string name="accessibility_service_action_perform_description" msgid="2718852014003170558">"אפשרות למעקב אחר האינטראקציה שלך עם אפליקציות או חיישני חומרה, וביצוע אינטראקציה בשמך."</string>
+    <string name="accessibility_service_action_perform_description" msgid="2718852014003170558">"התכונה יכולה לעקוב אחרי הפעילות שלך באפליקציות או עם חיישני חומרה, ולבצע בשבילך פעולות."</string>
     <string name="accessibility_dialog_button_allow" msgid="2092558122987144530">"אישור"</string>
     <string name="accessibility_dialog_button_deny" msgid="4129575637812472671">"עדיף שלא"</string>
     <string name="accessibility_dialog_button_uninstall" msgid="2952465517671708108">"הסרה"</string>
@@ -1930,7 +1930,7 @@
     <string name="zen_mode_until" msgid="2250286190237669079">"עד <xliff:g id="FORMATTEDTIME">%1$s</xliff:g>"</string>
     <string name="zen_mode_alarm" msgid="7046911727540499275">"עד <xliff:g id="FORMATTEDTIME">%1$s</xliff:g> (ההתראה הבאה)"</string>
     <string name="zen_mode_forever" msgid="740585666364912448">"עד הכיבוי"</string>
-    <string name="zen_mode_forever_dnd" msgid="3423201955704180067">"עד להשבתת התכונה \'נא לא להפריע\'"</string>
+    <string name="zen_mode_forever_dnd" msgid="3423201955704180067">"עד להשבתת התכונה \'נא לא להפריע‘"</string>
     <string name="zen_mode_rule_name_combination" msgid="7174598364351313725">"<xliff:g id="FIRST">%1$s</xliff:g> / <xliff:g id="REST">%2$s</xliff:g>"</string>
     <string name="toolbar_collapse_description" msgid="8009920446193610996">"כיווץ"</string>
     <string name="zen_mode_feature_name" msgid="3785547207263754500">"נא לא להפריע"</string>

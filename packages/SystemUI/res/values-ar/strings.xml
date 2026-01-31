@@ -312,7 +312,7 @@
     <string name="quick_settings_bluetooth_audio_sharing_button" msgid="7545274861795853838">"مشاركة الصوت"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_sharing" msgid="3069309588231072128">"جارٍ مشاركة الصوت"</string>
     <string name="quick_settings_bluetooth_audio_sharing_button_accessibility" msgid="7604615019302091708">"أدخِل إعدادات ميزة \"مشاركة الصوت\""</string>
-    <string name="quick_settings_bluetooth_secondary_label_battery_level" msgid="4182034939479344093">"مستوى طاقة البطارية <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%s</xliff:g>"</string>
+    <string name="quick_settings_bluetooth_secondary_label_battery_level" msgid="4182034939479344093">"البطارية: <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%s</xliff:g>"</string>
     <string name="quick_settings_bluetooth_secondary_label_audio" msgid="780333390310051161">"صوت"</string>
     <string name="quick_settings_bluetooth_secondary_label_headset" msgid="2332093067553000852">"سماعة الرأس"</string>
     <string name="quick_settings_bluetooth_secondary_label_input" msgid="3887552721233148132">"الإدخال"</string>
@@ -935,7 +935,7 @@
     <string name="accessibility_quick_settings_settings" msgid="7098489591715844713">"فتح الإعدادات."</string>
     <string name="accessibility_quick_settings_expand" msgid="2609275052412521467">"فتح الإعدادات السريعة."</string>
     <string name="accessibility_quick_settings_collapse" msgid="4674876336725041982">"إغلاق الإعدادات السريعة."</string>
-    <string name="accessibility_quick_settings_user" msgid="505821942882668619">"تم تسجيل الدخول باعتبارك <xliff:g id="ID_1">%s</xliff:g>"</string>
+    <string name="accessibility_quick_settings_user" msgid="505821942882668619">"تم تسجيل الدخول باسم <xliff:g id="ID_1">%s</xliff:g>"</string>
     <string name="accessibility_quick_settings_choose_user_action" msgid="4554388498186576087">"اختيار مستخدم"</string>
     <string name="data_connection_no_internet" msgid="691058178914184544">"لا يتوفر اتصال إنترنت."</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"فتح إعدادات <xliff:g id="ID_1">%s</xliff:g>."</string>
@@ -954,7 +954,7 @@
     <string name="lockscreen_shortcut_right" msgid="4138414674531853719">"اختصار اليمين"</string>
     <string name="lockscreen_unlock_left" msgid="1417801334370269374">"اختصار اليسار يلغي أيضًا تأمين"</string>
     <string name="lockscreen_unlock_right" msgid="4658008735541075346">"اختصار اليمين يلغي أيضًا تأمين"</string>
-    <string name="lockscreen_none" msgid="4710862479308909198">"بدون"</string>
+    <string name="lockscreen_none" msgid="4710862479308909198">"بدون اختصار"</string>
     <string name="tuner_launch_app" msgid="3906265365971743305">"تشغيل <xliff:g id="APP">%1$s</xliff:g>"</string>
     <string name="tuner_other_apps" msgid="7767462881742291204">"تطبيقات أخرى"</string>
     <string name="tuner_circle" msgid="5270591778160525693">"دائرة"</string>
@@ -1426,7 +1426,7 @@
     <string name="keyboard_backlight_dialog_title" msgid="8273102932345564724">"الإضاءة الخلفية للوحة المفاتيح"</string>
     <string name="keyboard_backlight_value" msgid="7336398765584393538">"‏مستوى الإضاءة: %1$d من %2$d"</string>
     <string name="home_controls_dream_label" msgid="6567105701292324257">"إدارة المنزل آليًّا"</string>
-    <string name="home_controls_dream_description" msgid="4644150952104035789">"يمكنك إدارة المنزل آليًّا بسرعة من شاشة الاستراحة"</string>
+    <string name="home_controls_dream_description" msgid="4644150952104035789">"لإدارة المنزل آليًّا بسرعة من شاشة الاستراحة"</string>
     <string name="volume_undo_action" msgid="5815519725211877114">"تراجع"</string>
     <string name="back_edu_toast_content" msgid="4530314597378982956">"للرجوع، مرِّر سريعًا لليمين أو لليسار على لوحة اللمس باستخدام 3 أصابع"</string>
     <string name="home_edu_toast_content" msgid="3381071147871955415">"للانتقال إلى الشاشة الرئيسية، مرِّر سريعًا للأعلى على لوحة اللمس باستخدام 3 أصابع"</string>

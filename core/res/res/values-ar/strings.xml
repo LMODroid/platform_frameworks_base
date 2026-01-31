@@ -276,7 +276,7 @@
     <string name="bugreport_option_full_title" msgid="7681035745950045690">"تقرير كامل"</string>
     <string name="bugreport_option_full_summary" msgid="1975130009258435885">"يمكنك استخدام هذا الخيار للحصول على حد أدنى من تدخل النظام عند توقف استجابة الجهاز أو عند بطئها الشديد أو عند الحاجة إلى جميع أقسام التقرير. ولا يسمح لك هذا الخيار بالحصول على مزيد من التفاصيل أو تسجيل لقطات شاشة إضافية."</string>
     <string name="bugreport_countdown" msgid="6418620521782120755">"{count,plural, =1{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال ثانية واحدة.}zero{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال # ثانية.}two{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال ثانيتين.}few{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال # ثوانٍ.}many{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال # ثانية.}other{سيتم التقاط لقطة شاشة لتقرير الخطأ خلال # ثانية.}}"</string>
-    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"تم التقاط لقطة شاشة من خلال تقرير خطأ."</string>
+    <string name="bugreport_screenshot_success_toast" msgid="7986095104151473745">"تم التقاط لقطة شاشة من خلال تقرير خطأ"</string>
     <string name="bugreport_screenshot_failure_toast" msgid="6736320861311294294">"تعذّر التقاط لقطة شاشة من خلال تقرير خطأ."</string>
     <string name="global_action_toggle_silent_mode" msgid="8464352592860372188">"وضع صامت"</string>
     <string name="global_action_silent_mode_on_status" msgid="2371892537738632013">"الصوت متوقف"</string>
@@ -608,7 +608,7 @@
     <string name="permdesc_bluetooth" product="default" msgid="2779606714091276746">"للسماح للتطبيق بعرض إعداد البلوتوث على الهاتف وإجراء اتصالات وقبولها مع الأجهزة المقترنة."</string>
     <string name="permlab_bluetooth_scan" msgid="5402587142833124594">"اكتشاف أجهزة قريبة تتضمّن بلوتوث والاقتران بها"</string>
     <string name="permdesc_bluetooth_scan" product="default" msgid="6540723536925289276">"يسمح هذا الإذن للتطبيق باكتشاف الأجهزة القريبة التي تتضمّن بلوتوث والاقتران بها."</string>
-    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"تسمح بالربط الأجهزة المقترنة التي تتضمّن بلوتوث."</string>
+    <string name="permlab_bluetooth_connect" msgid="6657463246355003528">"الاتصال بالأجهزة المقترنة التي تتضمّن بلوتوث"</string>
     <string name="permdesc_bluetooth_connect" product="default" msgid="4546016548795544617">"يسمح هذا الإذن للتطبيق بالارتباط بالأجهزة المقترنة التي تتضمّن بلوتوث."</string>
     <string name="permlab_bluetooth_advertise" msgid="2781147747928853177">"عرض الإعلانات على الأجهزة القريبة التي تتضمن بلوتوث"</string>
     <string name="permdesc_bluetooth_advertise" product="default" msgid="6085174451034210183">"للسماح للتطبيق بعرض إعلانات على الأجهزة القريبة التي تتضمّن بلوتوث."</string>
@@ -688,7 +688,7 @@
     <string name="fingerprint_error_no_fingerprints" msgid="3144806556204061862">"ما مِن بصمات إصبع مسجَّلة"</string>
     <string name="fingerprint_error_hw_not_present" msgid="5898827259419366359">"لا يحتوي هذا الجهاز على جهاز استشعار بصمات الأصابع."</string>
     <string name="fingerprint_error_security_update_required" msgid="8440349108169661934">"تم مؤقتًا إيقاف أداة الاستشعار"</string>
-    <string name="fingerprint_error_bad_calibration" msgid="6770614925736183528">"يتعذّر استخدام أداة استشعار بصمة الإصبع. يُرجى التواصل مع مقدِّم خدمات إصلاح."</string>
+    <string name="fingerprint_error_bad_calibration" msgid="6770614925736183528">"لا يمكن استخدام أداة استشعار بصمة الإصبع. يُرجى التواصل مع مقدِّم خدمات إصلاح."</string>
     <string name="fingerprint_error_power_pressed" msgid="5479524500542129414">"تم الضغط على زر التشغيل"</string>
     <string name="fingerprint_name_template" msgid="8941662088160289778">"الإصبع <xliff:g id="FINGERID">%d</xliff:g>"</string>
     <string name="fingerprint_app_setting_name" msgid="4253767877095495844">"استخدام بصمة الإصبع"</string>
@@ -720,7 +720,7 @@
     <string name="face_acquired_too_right" msgid="6245286514593540859">"يُرجى تحريك الهاتف لجهة اليسار"</string>
     <string name="face_acquired_too_left" msgid="9201762240918405486">"يُرجى تحريك الهاتف لجهة اليمين"</string>
     <string name="face_acquired_poor_gaze" msgid="4427153558773628020">"يُرجى النظر إلى جهازك مباشرة أكثر."</string>
-    <string name="face_acquired_not_detected" msgid="1057966913397548150">"ارفع هاتفك إلى مستوى العينَين لأنّه تتعذّر رؤية وجهك"</string>
+    <string name="face_acquired_not_detected" msgid="1057966913397548150">"ارفع هاتفك إلى مستوى عينَيك لأنّ وجهك لا يظهر"</string>
     <string name="face_acquired_too_much_motion" msgid="8199691445085189528">"حركة أكثر من اللازم. يُرجى حمل الهاتف بثبات."</string>
     <string name="face_acquired_recalibrate" msgid="8724013080976469746">"يُرجى إعادة تسجيل وجهك."</string>
     <string name="face_acquired_too_different" msgid="4505278456634706967">"يتعذّر التعرّف على الوجه. يُرجى إعادة المحاولة."</string>
@@ -1190,7 +1190,7 @@
     <string name="redo" msgid="7231448494008532233">"إعادة"</string>
     <string name="autofill" msgid="511224882647795296">"الملء التلقائي"</string>
     <string name="textSelectionCABTitle" msgid="5151441579532476940">"تحديد النص"</string>
-    <string name="addToDictionary" msgid="8041821113480950096">"إضافة إلى القاموس"</string>
+    <string name="addToDictionary" msgid="8041821113480950096">"الإضافة إلى القاموس"</string>
     <string name="deleteText" msgid="4200807474529938112">"حذف"</string>
     <string name="inputMethod" msgid="1784759500516314751">"طريقة الإرسال"</string>
     <string name="editTextMenuTitle" msgid="857666911134482176">"إجراءات النص"</string>
@@ -1423,7 +1423,7 @@
     <string name="console_running_notification_message" msgid="7892751888125174039">"الأداء متأثر. لإيقاف وحدة التحكّم، تحقّق من برنامج الإقلاع."</string>
     <string name="mte_override_notification_title" msgid="4731115381962792944">"‏الميزة التجريبية إضافة وضع علامات الذاكرة (MTE) مفعّلة"</string>
     <string name="mte_override_notification_message" msgid="2441170442725738942">"‏قد تؤثر إضافة وضع علامات الذاكرة (MTE) على الأداء والثبات. يمكنك إعادة تشغيل النظام لإيقاف هذه الإضافة. إذا كانت مفعّلة باستخدام arm64.memtag.bootctl، يمكنك ضبطها على \"بدون\" بشكل مُسبق."</string>
-    <string name="usb_contaminant_detected_title" msgid="4359048603069159678">"‏السوائل أو الشوائب في منفذ USB"</string>
+    <string name="usb_contaminant_detected_title" msgid="4359048603069159678">"‏هناك سوائل أو شوائب في منفذ USB"</string>
     <string name="usb_contaminant_detected_message" msgid="7346100585390795743">"‏تمّ إيقاف منفذ USB تلقائيًا. انقُر لمعرفة المزيد من المعلومات."</string>
     <string name="usb_contaminant_not_detected_title" msgid="2651167729563264053">"‏مسموح باستخدام منفذ USB"</string>
     <string name="usb_contaminant_not_detected_message" msgid="892863190942660462">"لم يَعُد الهاتف يكتشف سوائل أو شوائب."</string>
@@ -1918,8 +1918,8 @@
     <string name="confirm_battery_saver" msgid="5247976246208245754">"حسنًا"</string>
     <string name="battery_saver_description_with_learn_more" msgid="5444908404021316250">"يؤدي استخدام ميزة \"توفير شحن البطارية\" إلى تفعيل وضع \"المظهر الداكن\" وتقييد أو إيقاف الأنشطة في الخلفية وبعض التأثيرات المرئية وميزات معيّنة وبعض اتصالات الشبكات."</string>
     <string name="battery_saver_description" msgid="8518809702138617167">"يؤدي استخدام ميزة \"توفير شحن البطارية\" إلى تفعيل وضع \"المظهر الداكن\" وتقييد أو إيقاف الأنشطة في الخلفية وبعض التأثيرات المرئية وميزات معيّنة وبعض اتصالات الشبكات."</string>
-    <string name="data_saver_description" msgid="4995164271550590517">"للمساعدة في خفض استخدام البيانات، تمنع ميزة \"توفير البيانات\" بعض التطبيقات من إرسال البيانات وتلقّيها في الخلفية. يمكن للتطبيقات المتاحة لديك الآن استخدام البيانات، ولكن بمعدّل أقل. وهذا يعني أن الصور مثلاً لن تظهر حتى تنقر عليها."</string>
-    <string name="data_saver_enable_title" msgid="7080620065745260137">"هل تريد تفعيل ميزة \"توفير البيانات\"؟"</string>
+    <string name="data_saver_description" msgid="4995164271550590517">"للمساعدة في خفض استخدام البيانات، تمنع ميزة \"توفير البيانات\" بعض التطبيقات من إرسال البيانات وتلقّيها في الخلفية. بإمكان أي تطبيق تستخدمه حاليًا استهلاك البيانات، ولكن بمعدّل أقل. وقد يعني ذلك مثلاً أنّ الصور لن تظهر حتى تنقر عليها."</string>
+    <string name="data_saver_enable_title" msgid="7080620065745260137">"تفعيل ميزة \"توفير البيانات\"؟"</string>
     <string name="data_saver_enable_button" msgid="4399405762586419726">"تفعيل"</string>
     <string name="zen_mode_duration_minutes_summary" msgid="4555514757230849789">"{count,plural, =1{لمدة دقيقة واحدة (حتى {formattedTime})}zero{لمدة # دقيقة (حتى {formattedTime})}two{لمدة دقيقتين (حتى {formattedTime})}few{لمدة # دقائق (حتى {formattedTime})}many{لمدة # دقيقة (حتى {formattedTime})}other{لمدة # دقيقة (حتى {formattedTime})}}"</string>
     <string name="zen_mode_duration_minutes_summary_short" msgid="1187553788355486950">"{count,plural, =1{لمدة دقيقة واحدة (حتى {formattedTime})}zero{لمدة # دقيقة (حتى {formattedTime})}two{لمدة دقيقتين (حتى {formattedTime})}few{لمدة # دقائق (حتى {formattedTime})}many{لمدة # دقيقة (حتى {formattedTime})}other{لمدة # دقيقة (حتى {formattedTime})}}"</string>
@@ -2340,7 +2340,7 @@
     <string name="PERSOSUBSTATE_SIM_NETWORK_SUBSET_PUK_SUCCESS" msgid="2861223407953766632">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_SIM_CORPORATE_PUK_SUCCESS" msgid="5345648571175243272">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_SIM_SERVICE_PROVIDER_PUK_SUCCESS" msgid="3725278343103422466">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
-    <string name="PERSOSUBSTATE_SIM_SIM_PUK_SUCCESS" msgid="6998502547560297983">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
+    <string name="PERSOSUBSTATE_SIM_SIM_PUK_SUCCESS" msgid="6998502547560297983">"‏تم فتح القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK1_PUK_SUCCESS" msgid="8555433771162560361">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_RUIM_NETWORK2_PUK_SUCCESS" msgid="3555767296933606232">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>
     <string name="PERSOSUBSTATE_RUIM_HRPD_PUK_SUCCESS" msgid="6778051818199974237">"‏تم إلغاء القفل باستخدام رمز PUK بنجاح."</string>

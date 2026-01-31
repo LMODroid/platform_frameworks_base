@@ -185,7 +185,7 @@
     <string name="data_usage_uninstalled_apps" msgid="1933665711856171491">"ဖယ်ရှားထားသော အက်ပ်များ"</string>
     <string name="data_usage_uninstalled_apps_users" msgid="5533981546921913295">"ဖယ်ရှားထားသော အပလီကေးရှင်းနှင့် သုံးစွဲသူများ"</string>
     <string name="data_usage_ota" msgid="7984667793701597001">"စနစ် အပ်ဒိတ်လုပ်ခြင်းများ"</string>
-    <string name="tether_settings_title_usb" msgid="3728686573430917722">"USB သုံး၍ချိတ်ဆက်ရန်"</string>
+    <string name="tether_settings_title_usb" msgid="3728686573430917722">"USB သုံး၍ချိတ်ဆက်ခြင်း"</string>
     <string name="tether_settings_title_wifi" msgid="4803402057533895526">"ရွေ့လျားနိုင်သောဟော့စပေါ့"</string>
     <string name="tether_settings_title_bluetooth" msgid="916519902721399656">"ဘလူးတုသ်သုံးချိတ်ဆက်ခြင်း"</string>
     <string name="tether_settings_title_usb_bluetooth" msgid="1727111807207577322">"မိုဘိုင်းသုံး၍ ချိတ်ဆက်ခြင်း"</string>
@@ -327,7 +327,7 @@
     <string name="wifi_verbose_logging_summary" msgid="4993823188807767892">"Wi‑Fi မှတ်တမ်းတင်နှုန်းမြှင့်ပြီး Wi‑Fi ရွေးစနစ်တွင် SSID RSSI အလိုက်ပြသည်"</string>
     <string name="wifi_scan_throttling_summary" msgid="2577105472017362814">"ဘက်ထရီအသုံးပြုမှု လျှော့ချပြီး ကွန်ရက်စွမ်းဆောင်ရည် ပိုမိုကောင်းမွန်သည်"</string>
     <string name="wifi_non_persistent_mac_randomization_summary" msgid="2159794543105053930">"ဤမုဒ်ကို ဖွင့်ထားသည့်အခါ MAC ကျပန်းပြုလုပ်ထားသည့် ကွန်ရက်သို့ ချိတ်ဆက်လိုက်သည့်အခါတိုင်း ဤစက်၏ MAC လိပ်စာ ပြောင်းသွားနိုင်သည်။"</string>
-    <string name="wifi_metered_label" msgid="8737187690304098638">"အခမဲ့ မဟုတ်ပါ"</string>
+    <string name="wifi_metered_label" msgid="8737187690304098638">"အခပေး"</string>
     <string name="wifi_unmetered_label" msgid="6174142840934095093">"အခမဲ့"</string>
     <string name="select_logd_size_title" msgid="1604578195914595173">"မှတ်တမ်းကြားခံနယ် အရွယ်အစားများ"</string>
     <string name="select_logd_size_dialog_title" msgid="2105401994681013578">"လော့ ဘာဖားတွက် လော့ဂါးဆိုက် ရွေး"</string>
@@ -541,7 +541,7 @@
     <string name="retail_demo_reset_next" msgid="3688129033843885362">"ရှေ့သို့"</string>
     <string name="retail_demo_reset_title" msgid="1866911701095959800">"စကားဝှက် လိုအပ်သည်"</string>
     <string name="active_input_method_subtypes" msgid="4232680535471633046">"ရနိုင်သောထည့်သွင်းရန်နည်းလမ်းများ"</string>
-    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"သတ်မှတ် ဘာသာစကားများကို သုံးပါ"</string>
+    <string name="use_system_language_to_select_input_method_subtypes" msgid="4865195835541387040">"စနစ်ဘာသာစကားများ သုံးပါ"</string>
     <string name="failed_to_open_app_settings_toast" msgid="764897252657692092">"<xliff:g id="SPELL_APPLICATION_NAME">%1$s</xliff:g>အတွက် ဆက်တင်းများဖွင့်ရန် မအောင်မြင်ပါ။"</string>
     <string name="ime_security_warning" msgid="6547562217880551450">"ဤထည့်သွင်းမှုနည်းလမ်းမှာ သင့်ကိုယ်ရေးအချက်အလက်များဖြစ်သော စကားဝှက်များနှင့် ခရက်ဒစ်ကတ်နံပါတ်စသည်တို့ကို ရယူသွားမည်ဖြစ်သည်။ ဤ <xliff:g id="IME_APPLICATION_NAME">%1$s</xliff:g> အပလီကေးရှင်းမှလာပါသည်။ ဤထည့်သွင်းမှုနည်းလမ်းကို အသုံးပြုမလား။"</string>
     <string name="direct_boot_unaware_dialog_message" msgid="7845398276735021548">"မှတ်ချက် − ပြန်လည်စတင်ပြီးနောက် သင့်ဖုန်းကိုလော့ခ်မဖွင့်မချင်း ဤအက်ပ်ကို အသုံးပြု၍မရပါ"</string>
@@ -626,7 +626,7 @@
     <string name="user_add_profile_item_summary" msgid="5418602404308968028">"သင့်အကောင့်မှ အပလီကေးရှင်းများ နှင့် ပါရှိချက်များ ရယူသုံးစွဲခွင့်ကို သင်ကန့်သတ်ထိန်းချုပ်နိုင်သည်။"</string>
     <string name="user_add_user_item_title" msgid="2394272381086965029">"အသုံးပြုသူ"</string>
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"ကန့်သတ်ထားသော ကိုယ်ရေးအချက်အလက်များ"</string>
-    <string name="user_add_user_title" msgid="5457079143694924885">"အသုံးပြုသူအသစ် ထည့်မလား။"</string>
+    <string name="user_add_user_title" msgid="5457079143694924885">"အသုံးပြုသူအသစ် ထည့်မလား"</string>
     <string name="user_add_user_message_long" msgid="1527434966294733380">"နောက်ထပ် အသုံးပြုသူများ ထည့်သွင်းခြင်းဖြင့် ဤစက်ပစ္စည်းကို အခြားသူများနှင့် မျှဝေအသုံးပြုနိုင်သည်။ အသုံးပြုသူတိုင်းသည် မိမိတို့ကိုယ်ပိုင်နေရာ ရရှိမည်ဖြစ်ပြီး အက်ပ်၊ နောက်ခံပုံနှင့် အခြားအရာတို့ဖြင့် စိတ်ကြိုက်ပြင်ဆင်နိုင်ပါမည်။ အားလုံးကို အကျိုးသက်ရောက်မှု ရှိစေနိုင်သည့် Wi-Fi ကဲ့သို့ ဆက်တင်များကိုလည်း ချိန်ညှိနိုင်ပါမည်။\n\nအသုံးပြုသူအသစ် ထည့်သည့်အခါ ထိုသူသည် မိမိ၏ကိုယ်ပိုင်နေရာကို သတ်မှတ်ရပါမည်။\n\nအသုံးပြုသူ မည်သူမဆို အခြားအသုံးပြုသူများအတွက် အက်ပ်များကို အပ်ဒိတ်လုပ်နိုင်သည်။ အများသုံးစွဲနိုင်မှုဆက်တင်များနှင့် ဝန်ဆောင်မှုများကို အသုံးပြုသူအသစ်ထံသို့ လွှဲပြောင်းပေးမည် မဟုတ်ပါ။"</string>
     <string name="user_add_user_message_short" msgid="3295959985795716166">"သင်ထည့်လိုက်သည့် အသုံးပြုသူအသစ်သည် ၎င်း၏ နေရာကို သတ်မှတ်စီစဉ်ရပါမည်။\n\n အသုံးပြုသူတိုင်းက ကျန်အသုံးပြုသူ အားလုံးအတွက် အက်ပ်များကို အပ်ဒိတ်လုပ်နိုင်သည်။"</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"ဤအသုံးပြုသူကို စီမံခန့်ခွဲသူအဖြစ် သတ်မှတ်မလား။"</string>

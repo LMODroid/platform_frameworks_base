@@ -189,11 +189,11 @@
     <string name="biometric_dialog_face_icon_description_authenticated" msgid="2242167416140740920">"臉孔驗證成功"</string>
     <string name="biometric_dialog_face_icon_description_confirmed" msgid="7918067993953940778">"確認完畢"</string>
     <string name="biometric_dialog_tap_confirm" msgid="9166350738859143358">"輕觸 [確認] 完成驗證設定"</string>
-    <string name="biometric_dialog_tap_confirm_with_face" msgid="2378151312221818694">"裝置已透過你的臉解鎖"</string>
-    <string name="biometric_dialog_tap_confirm_with_face_alt_1" msgid="439152621640507113">"裝置已透過你的臉解鎖，按下即可繼續操作。"</string>
+    <string name="biometric_dialog_tap_confirm_with_face" msgid="2378151312221818694">"裝置已透過臉孔解鎖"</string>
+    <string name="biometric_dialog_tap_confirm_with_face_alt_1" msgid="439152621640507113">"裝置已透過臉孔解鎖，點按即可繼續操作。"</string>
     <string name="biometric_dialog_tap_confirm_with_face_alt_2" msgid="8586608186457385108">"臉孔辨識完成，按下即可繼續操作。"</string>
     <string name="biometric_dialog_tap_confirm_with_face_alt_3" msgid="2192670471930606539">"臉孔辨識完成，按下「解鎖」圖示即可繼續操作。"</string>
-    <string name="biometric_dialog_tap_confirm_with_face_sfps" msgid="2499213248903257928">"裝置已透過你的臉解鎖，輕觸這裡即可繼續。"</string>
+    <string name="biometric_dialog_tap_confirm_with_face_sfps" msgid="2499213248903257928">"裝置已透過臉孔解鎖，輕觸即可繼續。"</string>
     <string name="biometric_dialog_authenticated" msgid="7337147327545272484">"已通過驗證"</string>
     <string name="biometric_dialog_cancel_authentication" msgid="981316588773442637">"取消驗證"</string>
     <string name="biometric_dialog_content_view_more_options_button" msgid="2663810393874865475">"更多選項"</string>
@@ -349,7 +349,7 @@
     <string name="quick_settings_connected" msgid="3873605509184830379">"已連線"</string>
     <string name="quick_settings_connected_battery_level" msgid="1322075669498906959">"已連線，電量為 <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="quick_settings_connecting" msgid="2381969772953268809">"連線中..."</string>
-    <string name="quick_settings_hotspot_label" msgid="1199196300038363424">"無線基地台"</string>
+    <string name="quick_settings_hotspot_label" msgid="1199196300038363424">"熱點"</string>
     <string name="quick_settings_hotspot_secondary_label_transient" msgid="7585604088079160564">"開啟中…"</string>
     <string name="quick_settings_hotspot_secondary_label_data_saver_enabled" msgid="1280433136266439372">"數據節省模式已開啟"</string>
     <string name="quick_settings_hotspot_secondary_label_num_devices" msgid="7536823087501239457">"{count,plural, =1{# 部裝置}other{# 部裝置}}"</string>
@@ -454,10 +454,10 @@
     <string name="keyguard_unlock_press" msgid="9140109453735019209">"按下「解鎖」圖示即可開啟"</string>
     <string name="keyguard_face_successful_unlock_swipe" msgid="6180997591385846073">"你已用自己的臉解鎖裝置，向上滑動即可開啟。"</string>
     <string name="keyguard_face_successful_unlock_press" msgid="25520941264602588">"裝置已透過人臉解鎖，按下「解鎖」圖示即可開啟。"</string>
-    <string name="keyguard_face_successful_unlock_press_alt_1" msgid="5715461103913071474">"裝置已透過你的臉解鎖，按下即可開啟。"</string>
+    <string name="keyguard_face_successful_unlock_press_alt_1" msgid="5715461103913071474">"裝置已透過臉孔解鎖，按下即可開啟。"</string>
     <string name="keyguard_face_successful_unlock_press_alt_2" msgid="8310787946357120406">"臉孔辨識完成，按下即可開啟。"</string>
     <string name="keyguard_face_successful_unlock_press_alt_3" msgid="7219030481255573962">"臉孔辨識完成，按下「解鎖」圖示即可開啟。"</string>
-    <string name="keyguard_face_successful_unlock" msgid="4203999851465708287">"裝置已透過你的臉解鎖"</string>
+    <string name="keyguard_face_successful_unlock" msgid="4203999851465708287">"裝置已透過臉孔解鎖"</string>
     <string name="keyguard_face_successful_unlock_alt1" msgid="5853906076353839628">"臉孔辨識完成"</string>
     <string name="keyguard_retry" msgid="886802522584053523">"向上滑動即可重試"</string>
     <string name="accesssibility_keyguard_retry" msgid="8880238862712870676">"向上滑動即可再次執行人臉解鎖功能"</string>
@@ -719,7 +719,7 @@
     <string name="zen_alarm_warning" msgid="7844303238486849503">"你不會聽到下一個<xliff:g id="WHEN">%1$s</xliff:g> 的鬧鐘"</string>
     <string name="alarm_template" msgid="2234991538018805736">"於<xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template_far" msgid="3561752195856839456">"於<xliff:g id="WHEN">%1$s</xliff:g>"</string>
-    <string name="accessibility_status_bar_hotspot" msgid="2888479317489131669">"無線基地台"</string>
+    <string name="accessibility_status_bar_hotspot" msgid="2888479317489131669">"熱點"</string>
     <string name="accessibility_status_bar_satellite_no_connection" msgid="3001571744269917762">"衛星，沒有連線"</string>
     <string name="accessibility_status_bar_satellite_poor_connection" msgid="5231478574952724160">"衛星，連線品質不佳"</string>
     <string name="accessibility_status_bar_satellite_good_connection" msgid="308079391708578704">"衛星，連線品質良好"</string>
@@ -1374,7 +1374,7 @@
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"管理存取權"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"正用於手機通話"</string>
     <string name="privacy_dialog_recent_call_usage" msgid="1214810644978167344">"最近曾用於手機通話"</string>
-    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"正由「<xliff:g id="APP_NAME">%1$s</xliff:g>」使用"</string>
+    <string name="privacy_dialog_active_app_usage" msgid="631997836335929880">"「<xliff:g id="APP_NAME">%1$s</xliff:g>」正在使用"</string>
     <string name="privacy_dialog_recent_app_usage" msgid="4883417856848222450">"「<xliff:g id="APP_NAME">%1$s</xliff:g>」最近用過這項權限"</string>
     <string name="privacy_dialog_active_app_usage_1" msgid="9047570143069220911">"正由「<xliff:g id="APP_NAME">%1$s</xliff:g>」使用 (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>
     <string name="privacy_dialog_recent_app_usage_1" msgid="2551340497722370109">"「<xliff:g id="APP_NAME">%1$s</xliff:g>」最近用過這項權限 (<xliff:g id="ATTRIBUTION_LABEL">%2$s</xliff:g>)"</string>

@@ -418,7 +418,7 @@
     <string name="verbose_vendor_logging_preference_summary_on" msgid="9017757242481762036">"Omogočeno brez časovne omejitve"</string>
     <string name="window_animation_scale_title" msgid="5236381298376812508">"Hitrost animacije okna"</string>
     <string name="transition_animation_scale_title" msgid="1278477690695439337">"Hitrost animacije prehoda"</string>
-    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Merilo trajanja animacije"</string>
+    <string name="animator_duration_scale_title" msgid="7082913931326085176">"Hitrost animatorja"</string>
     <string name="overlay_display_devices_title" msgid="5411894622334469607">"Simuliraj sekundarne zaslone"</string>
     <string name="debug_applications_category" msgid="5394089406638954196">"Aplikacije"</string>
     <string name="immediately_destroy_activities" msgid="1826287490705167403">"Ne obdrži dejavnosti"</string>

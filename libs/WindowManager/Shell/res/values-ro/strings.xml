@@ -81,7 +81,7 @@
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Atinge Gestionează pentru a dezactiva baloanele din această aplicație"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"OK"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Nu există baloane recente"</string>
-    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Baloanele recente și baloanele respinse vor apărea aici"</string>
+    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Baloanele recente și baloanele închise vor apărea aici"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Chat cu baloane"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Conversațiile noi apar ca pictograme în colțul de jos al ecranului. Atinge pentru a le extinde sau trage pentru a le închide."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Controlează baloanele oricând"</string>

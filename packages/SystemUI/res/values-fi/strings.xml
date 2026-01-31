@@ -59,7 +59,7 @@
     <string name="hdmi_cec_set_menu_language_description" msgid="8176716678074126619">"Toiselta laitteelta pyydetty järjestelmän kielen vaihtamista"</string>
     <string name="hdmi_cec_set_menu_language_accept" msgid="2513689457281009578">"Vaihda kieltä"</string>
     <string name="hdmi_cec_set_menu_language_decline" msgid="7650721096558646011">"Pidä nykyinen kieli"</string>
-    <string name="share_wifi_button_text" msgid="1285273973812029240">"Jaa Wi‑Fi"</string>
+    <string name="share_wifi_button_text" msgid="1285273973812029240">"Jaa Wi-Fi"</string>
     <string name="wifi_debugging_title" msgid="7300007687492186076">"Sallitaanko langaton virheenkorjaus tässä verkossa?"</string>
     <string name="wifi_debugging_message" msgid="5461204211731802995">"Verkon nimi (SSID)\n<xliff:g id="SSID_0">%1$s</xliff:g>\n\nWi-Fin osoite (BSSID)\n<xliff:g id="BSSID_1">%2$s</xliff:g>"</string>
     <string name="wifi_debugging_always" msgid="2968383799517975155">"Salli aina tässä verkossa"</string>
@@ -1414,7 +1414,7 @@
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"Siirry etusivulle"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"Voit siirtyä aloitusnäytölle milloin tahansa pyyhkäisemällä ylös näytön alareunasta kolmella sormella."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Hienoa!"</string>
-    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Olet oppinut aloitusnäytölle palaamiseleen."</string>
+    <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Olet oppinut siirry aloitusnäytölle -eleen."</string>
     <string name="touchpad_recent_apps_gesture_action_title" msgid="934906836867137906">"Katso viimeisimmät sovellukset"</string>
     <string name="touchpad_recent_apps_gesture_guidance" msgid="6012057247259983871">"Pyyhkäise ylös ja pidä kosketuslevyä painettuna kolmella sormella."</string>
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Hienoa!"</string>

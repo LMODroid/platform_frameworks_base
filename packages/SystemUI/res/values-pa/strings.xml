@@ -749,7 +749,7 @@
     <string name="notification_channel_summary_default" msgid="777294388712200605">"ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਦੇ ਆਧਾਰ \'ਤੇ ਘੰਟੀ ਵੱਜ ਸਕਦੀ ਹੈ ਜਾਂ ਥਰਥਰਾਹਟ ਹੋ ਸਕਦੀ ਹੈ"</string>
     <string name="notification_channel_summary_default_with_bubbles" msgid="3482483084451555344">"ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਦੇ ਆਧਾਰ \'ਤੇ ਘੰਟੀ ਵੱਜ ਸਕਦੀ ਹੈ ਜਾਂ ਥਰਥਰਾਹਟ ਹੋ ਸਕਦੀ ਹੈ। ਪੂਰਵ-ਨਿਰਧਾਰਿਤ ਤੌਰ \'ਤੇ <xliff:g id="APP_NAME">%1$s</xliff:g> ਬਬਲ ਤੋਂ ਗੱਲਾਂਬਾਤਾਂ।"</string>
     <string name="notification_channel_summary_automatic" msgid="5813109268050235275">"ਸਿਸਟਮ ਨੂੰ ਨਿਰਧਾਰਤ ਕਰਨ ਦਿਓ ਕਿ ਇਸ ਸੂਚਨਾ ਲਈ ਕੋਈ ਧੁਨੀ ਵਜਾਉਣੀ ਚਾਹੀਦੀ ਹੈ ਜਾਂ ਥਰਥਰਾਹਟ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ"</string>
-    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;ਸਥਿਤੀ:&lt;/b&gt; ਦਰਜਾ ਵਧਾ ਕੇ ਪੂਰਵ-ਨਿਰਧਾਰਤ \'ਤੇ ਸੈੱਟ ਕੀਤਾ ਗਿਆ"</string>
+    <string name="notification_channel_summary_automatic_alerted" msgid="954166812246932240">"&lt;b&gt;ਸਥਿਤੀ:&lt;/b&gt; ਦਰਜਾ ਵਧਾ ਕੇ ਪੂਰਵ-ਨਿਰਧਾਰਿਤ \'ਤੇ ਸੈੱਟ ਕੀਤਾ ਗਿਆ"</string>
     <string name="notification_channel_summary_automatic_silenced" msgid="7403004439649872047">"&lt;b&gt;ਸਥਿਤੀ:&lt;/b&gt; ਦਰਜਾ ਘਟਾ ਕੇ ਸ਼ਾਂਤ \'ਤੇ ਸੈੱਟ ਕੀਤਾ ਗਿਆ"</string>
     <string name="notification_channel_summary_automatic_promoted" msgid="1301710305149590426">"&lt;b&gt;ਸਥਿਤੀ:&lt;/b&gt; ਦਰਜਾ ਵਧਾਇਆ ਗਿਆ"</string>
     <string name="notification_channel_summary_automatic_demoted" msgid="1831303964660807700">"&lt;b&gt;ਸਥਿਤੀ:&lt;/b&gt; ਦਰਜਾ ਘਟਾਇਆ ਗਿਆ"</string>
@@ -1369,7 +1369,7 @@
     <string name="privacy_dialog_expand_action" msgid="9129262348628331377">"ਵਿਸਤਾਰ ਕਰੋ ਅਤੇ ਵਿਕਲਪ ਦਿਖਾਓ"</string>
     <string name="privacy_dialog_collapse_action" msgid="277419962019466347">"ਸਮੇਟੋ"</string>
     <string name="privacy_dialog_close_app_button" msgid="8006250171305878606">"ਇਸ ਐਪ ਨੂੰ ਬੰਦ ਕਰੋ"</string>
-    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"<xliff:g id="APP_NAME">%1$s</xliff:g> ਬੰਦ ਹੋ ਗਈ"</string>
+    <string name="privacy_dialog_close_app_message" msgid="1316408652526310985">"<xliff:g id="APP_NAME">%1$s</xliff:g> ਐਪ ਬੰਦ ਹੋ ਗਈ ਹੈ"</string>
     <string name="privacy_dialog_manage_service" msgid="8320590856621823604">"ਸੇਵਾ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ"</string>
     <string name="privacy_dialog_manage_permissions" msgid="2543451567190470413">"ਪਹੁੰਚ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ"</string>
     <string name="privacy_dialog_active_call_usage" msgid="7858746847946397562">"ਫ਼ੋਨ ਕਾਲ ਵੱਲੋਂ ਵਰਤੋਂ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"</string>

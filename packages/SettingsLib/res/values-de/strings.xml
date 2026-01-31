@@ -257,7 +257,7 @@
     <string name="adb_pair_method_qrcode_title" msgid="6982904096137468634">"Gerät über einen QR-Code koppeln"</string>
     <string name="adb_pair_method_qrcode_summary" msgid="7130694277228970888">"Neue Geräte über QR-Codescanner koppeln"</string>
     <string name="adb_pair_method_code_title" msgid="1122590300445142904">"Gerät über einen Kopplungscode koppeln"</string>
-    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Neue Geräte mit sechsstelligem Code koppeln"</string>
+    <string name="adb_pair_method_code_summary" msgid="6370414511333685185">"Neue Geräte über sechsstelligen Code koppeln"</string>
     <string name="adb_paired_devices_title" msgid="5268997341526217362">"Gekoppelte Geräte"</string>
     <string name="adb_wireless_device_connected_summary" msgid="3039660790249148713">"Derzeit verbunden"</string>
     <string name="adb_wireless_device_details_title" msgid="7129369670526565786">"Gerätedetails"</string>
@@ -627,8 +627,8 @@
     <string name="user_add_user_item_title" msgid="2394272381086965029">"Nutzer"</string>
     <string name="user_add_profile_item_title" msgid="3111051717414643029">"Eingeschränkte Profile"</string>
     <string name="user_add_user_title" msgid="5457079143694924885">"Neuen Nutzer hinzufügen?"</string>
-    <string name="user_add_user_message_long" msgid="1527434966294733380">"Du kannst dieses Gerät zusammen mit anderen nutzen, indem du weitere Nutzer erstellst. Jeder erhält einen eigenen Bereich, in dem er Apps, den Hintergrund usw. personalisieren kann. Außerdem lassen sich Geräteeinstellungen wie WLAN ändern, die sich auf alle Nutzer auswirken.\n\nWenn du einen neuen Nutzer hinzufügst, muss dieser seinen Bereich einrichten.\n\nJeder Nutzer kann Apps für alle anderen Nutzer aktualisieren. Einstel­lun­gen und Dienste für die Bedie­nungs­hil­fen werden mög­licher­weise nicht auf den neuen Nutzer übertragen."</string>
-    <string name="user_add_user_message_short" msgid="3295959985795716166">"Wenn du einen neuen Nutzer hinzufügst, muss dieser seinen Bereich einrichten.\n\nJeder Nutzer kann Apps für alle anderen Nutzer aktualisieren."</string>
+    <string name="user_add_user_message_long" msgid="1527434966294733380">"Du kannst dieses Gerät zusammen mit anderen nutzen, indem du weitere Nutzer erstellst. Jeder erhält ein eigenes Profil, in dem er Apps, den Hintergrund usw. personalisieren kann. Außerdem lassen sich Geräteeinstellungen wie WLAN ändern, die sich auf alle Nutzer auswirken.\n\nWenn du einen neuen Nutzer hinzufügst, muss dieser sein privates Profil einrichten.\n\nJeder Nutzer kann Apps für alle anderen Nutzer aktualisieren. Einstel­lun­gen und Dienste für die Bedie­nungs­hil­fen werden mög­licher­weise nicht auf den neuen Nutzer übertragen."</string>
+    <string name="user_add_user_message_short" msgid="3295959985795716166">"Wenn du einen neuen Nutzer hinzufügst, muss dieser sein privates Profil einrichten.\n\nJeder Nutzer kann Apps für alle anderen Nutzer aktualisieren."</string>
     <string name="user_grant_admin_title" msgid="5157031020083343984">"Diesen Nutzer als Administrator festlegen?"</string>
     <string name="user_grant_admin_message" msgid="1673791931033486709">"Im Gegensatz zu anderen Nutzern haben Administratoren besondere Berechtigungen. Ein Administrator kann alle Nutzer verwalten, dieses Gerät aktualisieren oder zurücksetzen, Einstellungen ändern, alle installierten Apps sehen und anderen Administrator­­­berech­ti­gungen gewähren oder diese widerrufen."</string>
     <string name="user_grant_admin_button" msgid="5441486731331725756">"Als Administrator festlegen"</string>

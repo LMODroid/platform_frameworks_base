@@ -36,7 +36,7 @@
     <string name="wifi_security_none" msgid="7392696451280611452">"ఏదీ లేదు"</string>
     <string name="wifi_security_wep" msgid="1413627788581122366">"WEP"</string>
     <string name="wifi_security_wpa" msgid="1072450904799930636">"WPA-Personal"</string>
-    <string name="wifi_security_wpa2" msgid="4038267581230425543">"WPA2-Personal"</string>
+    <string name="wifi_security_wpa2" msgid="4038267581230425543">"WPA2-వ్య‌క్తిగ‌తం"</string>
     <string name="wifi_security_wpa_wpa2" msgid="946853615482465986">"WPA/WPA2-వ్యక్తిగత"</string>
     <string name="wifi_security_eap" msgid="6179633834446852269">"WPA/WPA2/WPA3-Enterprise"</string>
     <string name="wifi_security_eap_wpa" msgid="6189023812330549957">"WPA-Enterprise"</string>
@@ -45,11 +45,11 @@
     <string name="wifi_security_eap_wpa3" msgid="7961135182909018796">"WPA3-ఎంటర్‌ప్రయిజ్"</string>
     <string name="wifi_security_passpoint" msgid="2209078477216565387">"పాస్ పాయింట్"</string>
     <string name="wifi_security_sae" msgid="3644520541721422843">"WPA3-వ్యక్తిగత"</string>
-    <string name="wifi_security_psk_sae" msgid="8135104122179904684">"WPA2/WPA3-Personal"</string>
+    <string name="wifi_security_psk_sae" msgid="8135104122179904684">"WPA2/WPA3-వ్య‌క్తిగ‌తం"</string>
     <string name="wifi_security_none_owe" msgid="5241745828327404101">"None/Enhanced Open"</string>
     <string name="wifi_security_owe" msgid="3343421403561657809">"Enhanced Open"</string>
     <string name="wifi_security_eap_suiteb" msgid="415842785991698142">"WPA3-ఎంటర్‌ప్రయిజ్ 192-బిట్"</string>
-    <string name="wifi_remembered" msgid="3266709779723179188">"సేవ్ చేయబడింది"</string>
+    <string name="wifi_remembered" msgid="3266709779723179188">"సేవ్ అయింది"</string>
     <string name="wifi_disconnected" msgid="7054450256284661757">"డిస్‌కనెక్ట్ అయ్యింది"</string>
     <string name="wifi_disabled_generic" msgid="2651916945380294607">"డిజేబుల్ చేయబడింది"</string>
     <string name="wifi_disabled_network_failure" msgid="2660396183242399585">"IP కాన్ఫిగరేషన్ వైఫల్యం"</string>
@@ -60,7 +60,7 @@
     <string name="wifi_not_in_range" msgid="1541760821805777772">"పరిధిలో లేదు"</string>
     <string name="wifi_no_internet_no_reconnect" msgid="821591791066497347">"ఆటోమేటిక్‌గా కనెక్ట్ కాదు"</string>
     <string name="wifi_no_internet" msgid="1774198889176926299">"ఇంటర్నెట్ యాక్సెస్ లేదు"</string>
-    <string name="saved_network" msgid="7143698034077223645">"<xliff:g id="NAME">%1$s</xliff:g> ద్వారా సేవ్ చేయబడింది"</string>
+    <string name="saved_network" msgid="7143698034077223645">"<xliff:g id="NAME">%1$s</xliff:g> ద్వారా సేవ్ అయింది"</string>
     <string name="connected_via_network_scorer" msgid="7665725527352893558">"%1$s ద్వారా ఆటోమేటిక్‌గా కనెక్ట్ చేయబడింది"</string>
     <string name="connected_via_network_scorer_default" msgid="7973529709744526285">"నెట్‌వర్క్ రేటింగ్ ప్రదాత ద్వారా ఆటోమేటిక్‌గా కనెక్ట్ చేయబడింది"</string>
     <string name="connected_via_app" msgid="3532267661404276584">"<xliff:g id="NAME">%1$s</xliff:g> ద్వారా కనెక్ట్ చేయబడింది"</string>
@@ -106,7 +106,7 @@
     <string name="tv_bluetooth_battery_level_untethered_left" msgid="337629670583744410">"ఎడమ వైపు <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="tv_bluetooth_battery_level_untethered_right" msgid="8610019317279155595">"కుడి వైపు <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
     <string name="bluetooth_active_no_battery_level" msgid="4155462233006205630">"యాక్టివ్‌గా ఉంది"</string>
-    <string name="bluetooth_saved_device" msgid="4895871321722311428">"సేవ్ చేయబడింది"</string>
+    <string name="bluetooth_saved_device" msgid="4895871321722311428">"సేవ్ అయింది"</string>
     <string name="bluetooth_hearing_aid_left_active" msgid="8330226430756799572">"యాక్టివ్‌గా ఉంది (ఎడమ వైపు మాత్రమే)"</string>
     <string name="bluetooth_hearing_aid_right_active" msgid="2244728507170385397">"యాక్టివ్‌గా ఉంది (కుడి వైపు మాత్రమే)"</string>
     <string name="bluetooth_hearing_aid_left_and_right_active" msgid="4294571497939983181">"యాక్టివ్‌గా ఉంది (ఎడమ వైపు, కుడి వైపు)"</string>
@@ -332,7 +332,7 @@
     <string name="select_logd_size_title" msgid="1604578195914595173">"లాగర్ బఫర్ సైజ్‌లు"</string>
     <string name="select_logd_size_dialog_title" msgid="2105401994681013578">"లాగ్ బఫర్‌కి లాగర్ పరిమా. ఎంచుకోండి"</string>
     <string name="dev_logpersist_clear_warning_title" msgid="8631859265777337991">"లాగర్ నిరంతర నిల్వలోని డేటాను తీసివేయాలా?"</string>
-    <string name="dev_logpersist_clear_warning_message" msgid="6447590867594287413">"మేము నిరంతర లాగర్‌తో ఇక పర్యవేక్షించనప్పుడు, మీ పరికరంలోని లాగర్ డేటాను మేము తొలగించాల్సి ఉంటుంది."</string>
+    <string name="dev_logpersist_clear_warning_message" msgid="6447590867594287413">"మేము నిరంతర లాగర్‌తో ఇక పర్యవేక్షించనప్పుడు, మీ డివైజ్‌లోని లాగర్ డేటాను మేము తొలగించాల్సి ఉంటుంది."</string>
     <string name="select_logpersist_title" msgid="447071974007104196">"డివైజ్‌లో లాగర్ డేటా నిరంతరం స్టోర్ చేయండి"</string>
     <string name="select_logpersist_dialog_title" msgid="7745193591195485594">"పరికరంలో నిరంతరం స్టోరేజ్‌ చేయాల్సిన లాగ్ బఫర్‌లను ఎంచుకోండి"</string>
     <string name="select_usb_configuration_title" msgid="6339801314922294586">"USB కాన్ఫిగరేషన్‌ని ఎంచుకోండి"</string>
@@ -684,7 +684,7 @@
     <string name="failed_attempts_now_wiping_dialog_dismiss" msgid="2749889771223578925">"విస్మరించండి"</string>
     <string name="cached_apps_freezer_device_default" msgid="2616594131750144342">"డివైజ్ ఆటోమేటిక్ సెట్టింగ్"</string>
     <string name="cached_apps_freezer_disabled" msgid="4816382260660472042">"డిజేబుల్ చేయబడింది"</string>
-    <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"ఎనేబుల్ చేయబడింది"</string>
+    <string name="cached_apps_freezer_enabled" msgid="8866703500183051546">"ఎనేబుల్ అయింది"</string>
     <string name="cached_apps_freezer_reboot_dialog_text" msgid="695330563489230096">"ఈ మార్పును వర్తింపజేయాలంటే మీరు మీ డివైజ్‌ను తప్పనిసరిగా రీబూట్ చేయాలి. ఇప్పుడే రీబూట్ చేయండి లేదా రద్దు చేయండి."</string>
     <string name="media_transfer_wired_headphone_name" msgid="8698668536022665254">"వైర్ ఉన్న హెడ్‌ఫోన్"</string>
     <string name="media_transfer_headphone_name" msgid="1131962659136578852">"హెడ్‌ఫోన్"</string>

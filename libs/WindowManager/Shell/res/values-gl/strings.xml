@@ -81,10 +81,10 @@
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Para desactivar as burbullas nesta aplicación, toca Xestionar"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"Entendido"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Non hai burbullas recentes"</string>
-    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"As burbullas recentes e ignoradas aparecerán aquí."</string>
+    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"As burbullas recentes e ignoradas aparecerán aquí"</string>
     <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Chatea usando burbullas"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"As conversas novas móstranse como iconas nunha das esquinas inferiores da pantalla. Tócaas para amplialas ou arrástraas para pechalas."</string>
-    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Controlar as burbullas"</string>
+    <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Controla as burbullas"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Toca para xestionar as aplicacións e conversas que poden aparecer en burbullas"</string>
     <string name="notification_bubble_title" msgid="6082910224488253378">"Burbulla"</string>
     <string name="manage_bubbles_text" msgid="7730624269650594419">"Xestionar"</string>

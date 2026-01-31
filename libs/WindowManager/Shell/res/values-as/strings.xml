@@ -75,14 +75,14 @@
     <string name="bubble_dismiss_text" msgid="8816558050659478158">"বাবল অগ্ৰাহ্য কৰক"</string>
     <string name="bubble_fullscreen_text" msgid="1006758103218086231">"পূৰ্ণ স্ক্ৰীনলৈ নিয়ক"</string>
     <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"বাৰ্তালাপ বাবল নকৰিব"</string>
-    <string name="bubbles_user_education_title" msgid="2112319053732691899">"Bubbles ব্যৱহাৰ কৰি চাট কৰক"</string>
+    <string name="bubbles_user_education_title" msgid="2112319053732691899">"বাবল ব্যৱহাৰ কৰি চাট কৰক"</string>
     <string name="bubbles_user_education_description" msgid="4215862563054175407">"নতুন বাৰ্তালাপ উপঙি থকা চিহ্নসমূহ অথবা bubbles হিচাপে প্ৰদর্শিত হয়। Bubbles খুলিবলৈ টিপক। এইটো স্থানান্তৰ কৰিবলৈ টানি নিয়ক।"</string>
-    <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"যিকোনো সময়তে bubbles নিয়ন্ত্ৰণ কৰক"</string>
-    <string name="bubbles_user_education_manage" msgid="3460756219946517198">"এই এপ্‌টোৰ পৰা bubbles অফ কৰিবলৈ পৰিচালনা কৰকত টিপক"</string>
+    <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"যিকোনো সময়তে বাবল নিয়ন্ত্ৰণ কৰক"</string>
+    <string name="bubbles_user_education_manage" msgid="3460756219946517198">"এই এপ্‌টোৰ পৰা বাবল অফ কৰিবলৈ পৰিচালনা কৰকত টিপক"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"বুজি পালোঁ"</string>
-    <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"কোনো শেহতীয়া bubbles নাই"</string>
-    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"শেহতীয়া bubbles আৰু অগ্ৰাহ্য কৰা bubbles ইয়াত প্ৰদর্শিত হ\'ব"</string>
-    <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Bubbles ব্যৱহাৰ কৰি চাট কৰক"</string>
+    <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"কোনো শেহতীয়া বাবল নাই"</string>
+    <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"শেহতীয়া বাবল আৰু অগ্ৰাহ্য কৰা বাবল ইয়াত প্ৰদর্শিত হ\'ব"</string>
+    <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"বাবল ব্যৱহাৰ কৰি চাট কৰক"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"নতুন বাৰ্তালাপসমূহ আপোনাৰ স্ক্ৰীনৰ একেবাৰে তলৰ এটা কোণত চিহ্ন হিচাপে দেখা পোৱা যায়। সেইসমূহ বিস্তাৰ কৰিবলৈ টিপক বা অগ্ৰাহ্য কৰিবলৈ টানি আনি এৰক।"</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"যিকোনো সময়তে বাবল নিয়ন্ত্ৰণ কৰক"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"কোনবোৰ এপ্‌ আৰু বাৰ্তালাপ বাবল হ’ব পাৰে সেয়া পৰিচালনা কৰিবলৈ ইয়াত টিপক"</string>

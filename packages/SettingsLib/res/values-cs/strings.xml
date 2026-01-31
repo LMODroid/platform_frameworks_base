@@ -65,10 +65,10 @@
     <string name="connected_via_network_scorer_default" msgid="7973529709744526285">"Automaticky připojeno přes poskytovatele hodnocení sítí"</string>
     <string name="connected_via_app" msgid="3532267661404276584">"Připojeno přes <xliff:g id="NAME">%1$s</xliff:g>"</string>
     <string name="tap_to_sign_up" msgid="5356397741063740395">"Klepnutím se zaregistrujete"</string>
-    <string name="wifi_connected_no_internet" msgid="5087420713443350646">"Nejste připojeni k internetu"</string>
+    <string name="wifi_connected_no_internet" msgid="5087420713443350646">"Nemáte připojení k internetu"</string>
     <string name="private_dns_broken" msgid="1984159464346556931">"Nelze získat přístup k soukromému serveru DNS"</string>
     <string name="wifi_limited_connection" msgid="1184778285475204682">"Omezené připojení"</string>
-    <string name="wifi_status_no_internet" msgid="3799933875988829048">"Nejste připojeni k internetu"</string>
+    <string name="wifi_status_no_internet" msgid="3799933875988829048">"Nemáte připojení k internetu"</string>
     <string name="wifi_status_sign_in_required" msgid="2236267500459526855">"Je vyžadováno přihlášení"</string>
     <string name="wifi_ap_unable_to_handle_new_sta" msgid="5885145407184194503">"Přístupový bod je dočasně zaplněn"</string>
     <string name="osu_opening_provider" msgid="4318105381295178285">"Spouštění aplikace <xliff:g id="PASSPOINTPROVIDER">%1$s</xliff:g>"</string>
@@ -140,7 +140,7 @@
     <string name="bluetooth_le_audio_profile_summary_connected" msgid="6916226974453480650">"Připojeno k LE Audio"</string>
     <string name="bluetooth_a2dp_profile_summary_connected" msgid="7422607970115444153">"Připojeno ke zvukovému médiu"</string>
     <string name="bluetooth_headset_profile_summary_connected" msgid="2420981566026949688">"Připojeno k náhlavní soupravě"</string>
-    <string name="bluetooth_opp_profile_summary_connected" msgid="2393521801478157362">"Připojeno k serveru pro přenos dat"</string>
+    <string name="bluetooth_opp_profile_summary_connected" msgid="2393521801478157362">"Připojeno k serveru pro přenos dat"</string>
     <string name="bluetooth_map_profile_summary_connected" msgid="4141725591784669181">"Připojeno k mapě"</string>
     <string name="bluetooth_sap_profile_summary_connected" msgid="1280297388033001037">"Připojeno k SAP"</string>
     <string name="bluetooth_opp_profile_summary_not_connected" msgid="3959741824627764954">"Nepřipojeno k serveru pro přenos souborů"</string>
@@ -159,7 +159,7 @@
     <string name="bluetooth_pairing_accept" msgid="2054232610815498004">"Spárovat"</string>
     <string name="bluetooth_pairing_accept_all_caps" msgid="2734383073450506220">"SPÁROVAT"</string>
     <string name="bluetooth_pairing_decline" msgid="6483118841204885890">"Zrušit"</string>
-    <string name="bluetooth_pairing_will_share_phonebook" msgid="3064334458659165176">"Párováním připojenému zařízení udělíte přístup ke svým kontaktům a historii volání."</string>
+    <string name="bluetooth_pairing_will_share_phonebook" msgid="3064334458659165176">"Párováním připojenému zařízení udělíte přístup ke svým kontaktům a historii volání."</string>
     <string name="bluetooth_pairing_error_message" msgid="6626399020672335565">"Nelze spárovat se zařízením <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
     <string name="bluetooth_pairing_pin_error_message" msgid="264422127613704940">"Nelze spárovat se zařízením <xliff:g id="DEVICE_NAME">%1$s</xliff:g>. Kód PIN nebo přístupový klíč je nesprávný."</string>
     <string name="bluetooth_pairing_device_down_error_message" msgid="2554424863101358857">"Se zařízením <xliff:g id="DEVICE_NAME">%1$s</xliff:g> nelze navázat komunikaci."</string>

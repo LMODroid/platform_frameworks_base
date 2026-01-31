@@ -1410,7 +1410,7 @@
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"Go back"</string>
     <string name="touchpad_back_gesture_guidance" msgid="6263750214998421587">"To go back, swipe left or right using three fingers anywhere on the touchpad.\n\nYou can also use the keyboard shortcut Action + Esc for this."</string>
     <string name="touchpad_back_gesture_success_title" msgid="7240576648330612171">"Great work!"</string>
-    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"You completed the go back gesture."</string>
+    <string name="touchpad_back_gesture_success_body" msgid="2324724953720741719">"You completed the go-back gesture."</string>
     <string name="touchpad_home_gesture_action_title" msgid="8885107349719257882">"Go home"</string>
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"To go to your home screen at any time, swipe up with three fingers from the bottom of your screen."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Nice!"</string>
