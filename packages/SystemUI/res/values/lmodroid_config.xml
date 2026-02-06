@@ -70,5 +70,5 @@
     <bool name="config_turbulenceNoise">true</bool>
 
     <!-- Doze: should pulse on pick up? -->
-    <bool name="doze_pulse_on_pick_up">false</bool>
+    <bool name="doze_pulse_on_pick_up">true</bool>
 </resources>
