@@ -330,7 +330,7 @@ public class TaskFragmentOrganizerController extends ITaskFragmentOrganizerContr
             }
 
             final IBinder activityToken;
-            if (activity.getPid() == mOrganizerPid) {
+            if (activity.getPid() == mOrganizerPid && activity.getUid() == mOrganizerUid) {
                 // We only pass the actual token if the activity belongs to the organizer process.
                 activityToken = activity.token;
             } else {
@@ -430,6 +430,11 @@ public class TaskFragmentOrganizerController extends ITaskFragmentOrganizerContr
                 throw new IllegalStateException(
                         "Replacing existing organizer currently unsupported");
             }
+
+            if (pid <= 0) {
+                throw new IllegalStateException("Cannot register from invalid pid: " + pid);
+            }
+
             mTaskFragmentOrganizerState.put(organizer.asBinder(),
                     new TaskFragmentOrganizerState(organizer, pid, uid));
             mPendingTaskFragmentEvents.put(organizer.asBinder(), new ArrayList<>());

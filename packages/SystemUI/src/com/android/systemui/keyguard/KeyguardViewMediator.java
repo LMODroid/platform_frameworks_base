@@ -16,6 +16,7 @@
 
 package com.android.systemui.keyguard;
 
+import static android.app.ActivityManager.LOCK_TASK_MODE_PINNED;
 import static android.app.KeyguardManager.LOCK_ON_USER_SWITCH_CALLBACK;
 import static android.app.StatusBarManager.SESSION_KEYGUARD;
 import static android.provider.Settings.System.SCREEN_OFF_TIMEOUT;
@@ -2439,6 +2440,7 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
                 mHandler.removeCallbacksAndMessages(mDismissToken);
                 mHandler.removeMessages(DISMISS);
                 mHandler.removeMessages(HIDE);
+                mHandler.removeMessages(START_KEYGUARD_EXIT_ANIM);
                 notifyTrustedChangedLocked(mUpdateMonitor.getUserHasTrust(newUserId));
                 resetKeyguardDonePendingLocked();
                 adjustStatusBarLocked();
@@ -3307,13 +3309,7 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
         InteractionJankMonitor.getInstance().end(CUJ_LOCKSCREEN_UNLOCK_ANIMATION);
 
         // Post layout changes to the next frame, so we don't hang at the end of the animation.
-        DejankUtils.postAfterTraversal(() -> {
-            if (mIsKeyguardExitAnimationCanceled) {
-                Log.d(TAG, "Ignoring dejank exitKeyguardAndFinishSurfaceBehindRemoteAnimation. "
-                        + "mIsKeyguardExitAnimationCanceled==true");
-                return;
-            }
-
+        postAfterTraversal(() -> {
             if (!mPM.isInteractive() && !mPendingLock) {
                 Log.e(TAG, "exitKeyguardAndFinishSurfaceBehindRemoteAnimation#postAfterTraversal:"
                         + " mPM.isInteractive()=" + mPM.isInteractive()
@@ -3325,6 +3321,13 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
                 // Ensure WM is notified that we made a decision to show
                 setShowingLocked(true /* showing */, true /* force */);
 
+                return;
+            }
+            if (mIsKeyguardExitAnimationCanceled) {
+                Log.d(TAG, "Ignoring exitKeyguardAndFinishSurfaceBehindRemoteAnimation. "
+                        + "mIsKeyguardExitAnimationCanceled==true");
+                finishSurfaceBehindRemoteAnimation(true /* showKeyguard */);
+                setShowingLocked(true /* showing */, true /* force */);
                 return;
             }
 
@@ -3559,6 +3562,17 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
             if (mBootSendUserPresent) {
                 sendUserPresentBroadcast();
             }
+
+            mHandler.post(() -> {
+                try {
+                    if (ActivityTaskManager.getService().getLockTaskModeState()
+                            == LOCK_TASK_MODE_PINNED) {
+                        ActivityTaskManager.getService().rebuildSystemLockTaskPinnedMode();
+                    }
+                } catch (RemoteException e) {
+                    Log.e(TAG, "Failed to rebuild lock task pinned mode", e);
+                }
+            });
         }
     }
 

@@ -39,6 +39,8 @@ import com.android.internal.inputmethod.IInputMethodClient;
 import com.android.internal.inputmethod.IRemoteAccessibilityInputConnection;
 import com.android.internal.inputmethod.IRemoteInputConnection;
 import com.android.internal.inputmethod.InputBindResult;
+import com.android.internal.inputmethod.InputMethodInfoSafeList;
+import com.android.internal.inputmethod.InputMethodSubtypeSafeList;
 import com.android.internal.inputmethod.SoftInputShowHideReason;
 import com.android.internal.inputmethod.StartInputFlags;
 import com.android.internal.inputmethod.StartInputReason;
@@ -240,7 +242,8 @@ final class IInputMethodManagerGlobalInvoker {
             return new ArrayList<>();
         }
         try {
-            return service.getInputMethodList(userId, directBootAwareness);
+            return InputMethodInfoSafeList.extractFrom(
+                    service.getInputMethodList(userId, directBootAwareness));
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -255,7 +258,8 @@ final class IInputMethodManagerGlobalInvoker {
             return new ArrayList<>();
         }
         try {
-            return service.getEnabledInputMethodList(userId);
+            return InputMethodInfoSafeList.extractFrom(
+                    service.getEnabledInputMethodList(userId));
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -271,8 +275,9 @@ final class IInputMethodManagerGlobalInvoker {
             return new ArrayList<>();
         }
         try {
-            return service.getEnabledInputMethodSubtypeList(imiId,
-                    allowsImplicitlyEnabledSubtypes, userId);
+            return InputMethodSubtypeSafeList.extractFrom(
+                    service.getEnabledInputMethodSubtypeList(imiId,
+                            allowsImplicitlyEnabledSubtypes, userId));
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
