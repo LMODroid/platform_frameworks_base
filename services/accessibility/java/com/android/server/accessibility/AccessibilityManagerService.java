@@ -758,15 +758,13 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
 
     private void onSomePackagesChangedLocked(
             @Nullable List<AccessibilityServiceInfo> parsedAccessibilityServiceInfos,
-            @Nullable List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos,
-            @NonNull Set<ComponentName> validA11yTileServices) {
+            @Nullable List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos) {
         final AccessibilityUserState userState = getCurrentUserStateLocked();
         // Reload the installed services since some services may have different attributes
         // or resolve info (does not support equals), etc. Remove them then to force reload.
         userState.mInstalledServices.clear();
-        if (readConfigurationForUserStateLocked(
-                userState, parsedAccessibilityServiceInfos, parsedAccessibilityShortcutInfos,
-                validA11yTileServices)) {
+        if (readConfigurationForUserStateLocked(userState,
+                    parsedAccessibilityServiceInfos, parsedAccessibilityShortcutInfos)) {
             onUserStateChangedLocked(userState);
         }
     }
@@ -1955,14 +1953,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos = null;
         parsedAccessibilityServiceInfos = parseAccessibilityServiceInfos(userId);
         parsedAccessibilityShortcutInfos = parseAccessibilityShortcutInfos(userId);
-        Set<ComponentName> validA11yTileServices = AccessibilityTileUtils.getValidA11yTileServices(
-                mContext,
-                LocalServices.getService(PackageManagerInternal.class),
-                parsedAccessibilityServiceInfos,
-                parsedAccessibilityShortcutInfos,
-                userId
-        );
-
         synchronized (mLock) {
             if (mCurrentUserId == userId && mInitialized) {
                 return;
@@ -1988,8 +1978,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             AccessibilityUserState userState = getCurrentUserStateLocked();
 
             readConfigurationForUserStateLocked(userState,
-                    parsedAccessibilityServiceInfos, parsedAccessibilityShortcutInfos,
-                    validA11yTileServices);
+                    parsedAccessibilityServiceInfos, parsedAccessibilityShortcutInfos);
             mSecurityPolicy.onSwitchUserLocked(mCurrentUserId, userState.mEnabledServices);
             // Even if reading did not yield change, we have to update
             // the state since the context in which the current user
@@ -2381,8 +2370,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     }
 
     private boolean readInstalledAccessibilityServiceLocked(AccessibilityUserState userState,
-            @Nullable List<AccessibilityServiceInfo> parsedAccessibilityServiceInfos,
-            @NonNull Set<ComponentName> validA11yTileServices) {
+            @Nullable List<AccessibilityServiceInfo> parsedAccessibilityServiceInfos) {
         for (int i = 0, count = parsedAccessibilityServiceInfos.size(); i < count; i++) {
             AccessibilityServiceInfo accessibilityServiceInfo =
                     parsedAccessibilityServiceInfos.get(i);
@@ -2391,18 +2379,14 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 accessibilityServiceInfo.crashed = true;
             }
         }
-        boolean serviceInfosChanged = false;
 
         if (!parsedAccessibilityServiceInfos.equals(userState.mInstalledServices)) {
             userState.mInstalledServices.clear();
             userState.mInstalledServices.addAll(parsedAccessibilityServiceInfos);
-            serviceInfosChanged = true;
+            userState.updateTileServiceMapForAccessibilityServiceLocked();
+            return true;
         }
-        // Sometimes when the package changes is called (especially for the initial load), the
-        // package manager may not be able to resolve the TileService at that time. Always
-        // rebuild the feature to tileService map could solve the problem.
-        userState.updateTileServiceMapForAccessibilityServiceLocked(validA11yTileServices);
-        return serviceInfosChanged;
+        return false;
     }
 
     /**
@@ -2421,19 +2405,14 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     }
 
     private boolean readInstalledAccessibilityShortcutLocked(AccessibilityUserState userState,
-            List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos,
-            @NonNull Set<ComponentName> validA11yTileServices) {
-        boolean shortcutInfosChanged = false;
+            List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos) {
         if (!parsedAccessibilityShortcutInfos.equals(userState.mInstalledShortcuts)) {
             userState.mInstalledShortcuts.clear();
             userState.mInstalledShortcuts.addAll(parsedAccessibilityShortcutInfos);
-            shortcutInfosChanged = true;
+            userState.updateTileServiceMapForAccessibilityActivityLocked();
+            return true;
         }
-        // Sometimes when the package changes is called (especially for the initial load), the
-        // package manager may not be able to resolve the TileService at that time. Always
-        // rebuild the feature to tileService map could solve the problem.
-        userState.updateTileServiceMapForAccessibilityActivityLocked(validA11yTileServices);
-        return shortcutInfosChanged;
+        return false;
     }
 
     private boolean readEnabledAccessibilityServicesLocked(AccessibilityUserState userState) {
@@ -3245,12 +3224,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     private boolean readConfigurationForUserStateLocked(
             AccessibilityUserState userState,
             List<AccessibilityServiceInfo> parsedAccessibilityServiceInfos,
-            List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos,
-            @NonNull Set<ComponentName> validA11yTileServices) {
+            List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos) {
         boolean somethingChanged = readInstalledAccessibilityServiceLocked(
-                userState, parsedAccessibilityServiceInfos, validA11yTileServices);
+                userState, parsedAccessibilityServiceInfos);
         somethingChanged |= readInstalledAccessibilityShortcutLocked(
-                userState, parsedAccessibilityShortcutInfos, validA11yTileServices);
+                userState, parsedAccessibilityShortcutInfos);
         somethingChanged |= readEnabledAccessibilityServicesLocked(userState);
         somethingChanged |= readTouchExplorationGrantedAccessibilityServicesLocked(userState);
         somethingChanged |= readTouchExplorationEnabledSettingLocked(userState);
@@ -6255,14 +6233,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                     .parseAccessibilityServiceInfos(userId);
             List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos = mManagerService
                     .parseAccessibilityShortcutInfos(userId);
-            Set<ComponentName> validA11yTileServices =
-                    AccessibilityTileUtils.getValidA11yTileServices(
-                            mManagerService.mContext,
-                            LocalServices.getService(PackageManagerInternal.class),
-                            parsedAccessibilityServiceInfos,
-                            parsedAccessibilityShortcutInfos,
-                            userId
-                    );
             synchronized (mManagerService.getLock()) {
                 // Only the profile parent can install accessibility services.
                 // Therefore we ignore packages from linked profiles.
@@ -6279,7 +6249,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                     return;
                 }
                 mManagerService.onSomePackagesChangedLocked(parsedAccessibilityServiceInfos,
-                        parsedAccessibilityShortcutInfos, validA11yTileServices);
+                        parsedAccessibilityShortcutInfos);
             }
         }
 
@@ -6301,14 +6271,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                     .parseAccessibilityServiceInfos(userId);
             List<AccessibilityShortcutInfo> parsedAccessibilityShortcutInfos =
                     mManagerService.parseAccessibilityShortcutInfos(userId);
-            Set<ComponentName> validA11yTileServices =
-                    AccessibilityTileUtils.getValidA11yTileServices(
-                            mManagerService.mContext,
-                            LocalServices.getService(PackageManagerInternal.class),
-                            parsedAccessibilityServiceInfos,
-                            parsedAccessibilityShortcutInfos,
-                            userId
-                    );
             synchronized (mManagerService.getLock()) {
                 if (userId != mManagerService.getCurrentUserIdLocked()) {
                     return;
@@ -6325,9 +6287,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 final boolean configurationChanged;
                 configurationChanged = mManagerService.readConfigurationForUserStateLocked(
                         userState, parsedAccessibilityServiceInfos,
-                        parsedAccessibilityShortcutInfos,
-                        validA11yTileServices
-                );
+                        parsedAccessibilityShortcutInfos);
                 if (reboundAService || configurationChanged) {
                     mManagerService.onUserStateChangedLocked(userState);
                 }
