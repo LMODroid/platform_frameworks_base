@@ -75,9 +75,11 @@ import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.IUserManager;
 import android.os.Looper;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.Trace;
 import android.os.UserHandle;
@@ -3147,16 +3149,18 @@ class ContextImpl extends Context {
         }
 
         int targetDisplayId = Display.DEFAULT_DISPLAY;
-        UserManager userManager = getSystemService(UserManager.class);
-
+        // Using ServiceManager#getService() because Context#getSystemService() may throw
+        // a ServiceNotFoundExecption when SystemServiceRegistry is not ready.
+        IUserManager userManager =
+                IUserManager.Stub.asInterface(ServiceManager.getService(Context.USER_SERVICE));
         if (userManager != null && UserManager.isVisibleBackgroundUsersEnabled()) {
             try {
                 int mainDisplayId = userManager.getMainDisplayIdAssignedToUser();
                 if (mainDisplayId != Display.INVALID_DISPLAY) {
                     targetDisplayId = mainDisplayId;
                 }
-            } catch (SecurityException e) {
-                Log.w(TAG, "SecurityException when getting display id, fallback to default", e);
+            } catch (Exception e) {
+                Log.w(TAG, "Exception occurred when getting display id, fallback to default", e);
             }
         }
 
