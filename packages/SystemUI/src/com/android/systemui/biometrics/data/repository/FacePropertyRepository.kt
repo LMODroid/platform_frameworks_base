@@ -42,6 +42,7 @@ import com.android.systemui.display.shared.model.DisplayRotation
 import com.android.systemui.display.shared.model.toRotation
 import com.android.systemui.keyguard.shared.model.DevicePosture
 import com.android.systemui.res.R
+import dagger.Lazy
 import java.util.concurrent.Executor
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -96,7 +97,7 @@ constructor(
     @Background private val backgroundDispatcher: CoroutineDispatcher,
     private val faceManager: FaceManager?,
     private val cameraManager: CameraManager,
-    displayStateRepository: DisplayStateRepository,
+    displayStateRepositoryLazy: Lazy<DisplayStateRepository>,
     configurationRepository: ConfigurationRepository,
 ) : FacePropertyRepository {
 
@@ -212,8 +213,8 @@ constructor(
                 } else {
                     combine(
                         defaultSensorLocation,
-                        displayStateRepository.currentRotation,
-                        displayStateRepository.currentDisplaySize,
+                        displayStateRepositoryLazy.get().currentRotation,
+                        displayStateRepositoryLazy.get().currentDisplaySize,
                         configurationRepository.scaleForResolution,
                     ) { defaultLocation, displayRotation, displaySize, scaleForResolution ->
                         computeCurrentFaceLocation(
