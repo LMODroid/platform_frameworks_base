@@ -141,10 +141,11 @@
 
     <!-- secure -->
 
-    <com.android.systemui.tuner.StatusBarSwitch
+    <com.android.systemui.tuner.ClockPreference
         android:icon="@drawable/ic_statusbar_clock"
-        android:key="clock"
-        android:title="@string/clock" />
+        android:title="@string/tuner_time"
+        android:summary="%s"
+        android:entries="@array/clock_options" />
 
     <com.android.systemui.tuner.TunerSwitch
         android:icon="@drawable/ic_statusbar_priority"

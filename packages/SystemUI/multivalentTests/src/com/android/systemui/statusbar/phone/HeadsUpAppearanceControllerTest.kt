@@ -45,7 +45,6 @@ import com.android.systemui.statusbar.notification.row.NotificationTestHelper
 import com.android.systemui.statusbar.notification.row.shared.AsyncGroupHeaderViewInflation
 import com.android.systemui.statusbar.notification.stack.NotificationRoundnessManager
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController
-import com.android.systemui.statusbar.phone.PhoneStatusBarView
 import com.android.systemui.statusbar.policy.Clock
 import com.android.systemui.statusbar.policy.keyguardStateController
 import com.android.systemui.testKosmos
@@ -115,8 +114,6 @@ class HeadsUpAppearanceControllerTest : SysuiTestCase() {
                 Clock(mContext, null),
                 kosmos.headsUpNotificationIconInteractor,
                 Optional.of(operatorNameView),
-                mock<PhoneStatusBarView>(),
-                kosmos.phoneStatusBarViewController,
             )
         underTest.setAppearFraction(0.0f, 0.0f)
     }
@@ -362,8 +359,6 @@ class HeadsUpAppearanceControllerTest : SysuiTestCase() {
                 Clock(mContext, null),
                 mock<HeadsUpNotificationIconInteractor>(),
                 Optional.empty(),
-                mock<PhoneStatusBarView>(),
-                kosmos.phoneStatusBarViewController,
             )
 
         assertThat(newController.mExpandedHeight).isEqualTo(expandedHeight)
