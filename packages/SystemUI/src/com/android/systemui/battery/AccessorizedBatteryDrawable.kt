@@ -212,11 +212,6 @@ class AccessorizedBatteryDrawable(private val context: Context, frameColor: Int)
         mainBatteryDrawable.setColors(fgColor, bgColor, singleToneColor)
     }
 
-    /** Shows the battery percentage. */
-    fun showPercent(percentage: Boolean) {
-        mainBatteryDrawable.showPercent = percentage
-    }
-
     /** Notifies this drawable that the density might have changed. */
     fun notifyDensityChanged() {
         density = context.resources.displayMetrics.density
