@@ -145,6 +145,14 @@ class BroadcastController {
     @EnabledSince(targetSdkVersion = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private static final long DYNAMIC_RECEIVER_EXPLICIT_EXPORT_REQUIRED = 161145287L;
 
+    /**
+     * It is now required for apps to be in the foreground to send remote intent broadcasts on Wear
+     * devices.
+     */
+    @ChangeId
+    @EnabledSince(targetSdkVersion = Build.VERSION_CODES.BAKLAVA)
+    private static final long WEAR_REMOTE_INTENT_BLOCKED_IN_BACKGROUND = 419106561L;
+
     // Maximum number of receivers an app can register.
     private static final int MAX_RECEIVERS_ALLOWED_PER_APP = 1000;
 
@@ -1106,12 +1114,16 @@ class BroadcastController {
                 intent.addFlags(Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND);
             }
 
-            // TODO: b/329211459 - Remove this after background remote intent is fixed.
+            // TODO: b/329211459 - Remove this when the remote intent broadcast receiver is removed
+            // from Wear.
             if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WATCH)
-                    && getWearRemoteIntentAction().equals(action)) {
-                final int callerProcState = callerApp != null
-                        ? callerApp.getCurProcState()
-                        : ActivityManager.PROCESS_STATE_NONEXISTENT;
+                    && getWearRemoteIntentAction().equals(action)
+                    && CompatChanges.isChangeEnabled(
+                            WEAR_REMOTE_INTENT_BLOCKED_IN_BACKGROUND, callingUid)) {
+                final int callerProcState =
+                        callerApp != null
+                                ? callerApp.getCurProcState()
+                                : ActivityManager.PROCESS_STATE_NONEXISTENT;
                 if (ActivityManager.RunningAppProcessInfo.procStateToImportance(callerProcState)
                         > ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
                     return ActivityManager.START_CANCELED;
