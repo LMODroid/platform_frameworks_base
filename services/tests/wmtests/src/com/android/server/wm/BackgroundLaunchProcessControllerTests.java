@@ -24,7 +24,6 @@ import static com.android.server.wm.BackgroundActivityStartController.BAL_ALLOW_
 import static com.android.server.wm.BackgroundActivityStartController.BAL_ALLOW_GRACE_PERIOD;
 import static com.android.server.wm.BackgroundActivityStartController.BAL_ALLOW_PERMISSION;
 import static com.android.server.wm.BackgroundActivityStartController.BAL_ALLOW_TOKEN;
-import static com.android.server.wm.BackgroundActivityStartController.BAL_ALLOW_VISIBLE_WINDOW;
 import static com.android.server.wm.BackgroundActivityStartController.BAL_BLOCK;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -213,28 +212,13 @@ public class BackgroundLaunchProcessControllerTests {
     }
 
     @Test
-    @DisableFlags(Flags.FLAG_BAL_IMPROVED_METRICS)
-    public void testBoundByForegroundOld() {
-        mAppSwitchState = APP_SWITCH_ALLOW;
-        mController.addBoundClientUid(999, "visible.package", Context.BIND_ALLOW_ACTIVITY_STARTS);
-        mHasActiveVisibleWindow.add(999);
-        BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
-                mPid, mUid, mPackageName,
-                mAppSwitchState, mBalCheckConfiguration, mInPinnedWindoMode,
-                mHasActivityInVisibleTask, mHasBackgroundActivityStartPrivileges,
-                mLastStopAppSwitchesTime, mLastActivityLaunchTime,
-                mLastActivityFinishTime);
-        assertThat(balVerdict.getCode()).isEqualTo(BAL_ALLOW_VISIBLE_WINDOW);
-    }
-
-    @Test
     public void testBoundByForegroundFgs() {
         mAppSwitchState = APP_SWITCH_ALLOW;
         mController.addBoundClientUid(999, "visible.package", Context.BIND_ALLOW_ACTIVITY_STARTS);
         mHasActiveVisibleWindow.add(999);
         BalVerdict balVerdict = mController.areBackgroundActivityStartsAllowed(
                 mPid, mUid, mPackageName,
-                mAppSwitchState, mBalCheckConfiguration, mInPinnedWindoMode,
+                mAppSwitchState, mFgsCheckConfiguration, mInPinnedWindoMode,
                 mHasActivityInVisibleTask, mHasBackgroundActivityStartPrivileges,
                 mLastStopAppSwitchesTime, mLastActivityLaunchTime,
                 mLastActivityFinishTime);
