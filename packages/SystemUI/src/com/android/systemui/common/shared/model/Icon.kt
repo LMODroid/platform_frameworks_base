@@ -40,6 +40,7 @@ sealed class Icon {
          * representing the same UI, but with different [drawable] instances.
          */
         @DrawableRes val res: Int? = null,
+        val isBitmapImage: Boolean = false,
     ) : Icon() {
 
         override fun equals(other: Any?): Boolean {
@@ -79,4 +80,5 @@ sealed class Icon {
 fun Drawable.asIcon(
     contentDescription: ContentDescription? = null,
     @DrawableRes res: Int? = null,
-): Loaded = Loaded(this, contentDescription, res)
+    isBitmapImage: Boolean = false,
+): Loaded = Loaded(this, contentDescription, res, isBitmapImage)
