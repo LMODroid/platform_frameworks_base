@@ -16,13 +16,16 @@
 
 package com.android.systemui.common.ui.compose
 
+import androidx.compose.foundation.Image
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
+import androidx.core.graphics.drawable.toBitmap
 import com.android.compose.ui.graphics.painter.rememberDrawablePainter
 import com.android.systemui.common.shared.model.Icon
 
@@ -43,7 +46,20 @@ public fun Icon(
     val contentDescription = icon.contentDescription?.load()
     when (icon) {
         is Icon.Loaded -> {
-            Icon(rememberDrawablePainter(icon.drawable), contentDescription, modifier, tint)
+            if (icon.isBitmapImage) {
+                Image(
+                    icon.drawable.toBitmap().asImageBitmap(),
+                    contentDescription,
+                    modifier,
+                )
+            } else {
+                Icon(
+                    rememberDrawablePainter(icon.drawable),
+                    contentDescription,
+                    modifier,
+                    tint,
+                )
+            }
         }
         is Icon.Resource -> {
             Icon(painterResource(icon.resId), contentDescription, modifier, tint)
@@ -66,12 +82,20 @@ public fun Icon(icon: Icon, tint: (() -> Color)?, modifier: Modifier = Modifier)
     val contentDescription = icon.contentDescription?.load()
     when (icon) {
         is Icon.Loaded -> {
-            Icon(
-                rememberDrawablePainter(icon.drawable),
-                tint ?: { localContentColor },
-                contentDescription,
-                modifier,
-            )
+            if (icon.isBitmapImage) {
+                Image(
+                    icon.drawable.toBitmap().asImageBitmap(),
+                    contentDescription,
+                    modifier,
+                )
+            } else {
+                Icon(
+                    rememberDrawablePainter(icon.drawable),
+                    tint ?: { localContentColor },
+                    contentDescription,
+                    modifier,
+                )
+            }
         }
         is Icon.Resource -> {
             Icon(
