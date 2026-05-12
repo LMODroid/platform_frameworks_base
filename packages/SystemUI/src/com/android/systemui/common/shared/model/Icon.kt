@@ -56,6 +56,7 @@ sealed class Icon {
          */
         @DrawableRes override val resId: Int? = null,
         val packageName: String? = null,
+        val isBitmapImage: Boolean = false,
     ) : Icon() {
         init {
             if (packageName != null) {
@@ -109,7 +110,8 @@ fun Drawable.asIcon(
     contentDescription: ContentDescription? = null,
     @DrawableRes resId: Int? = null,
     resPackage: String? = null,
-): Loaded = Loaded(this, contentDescription, resId, resPackage)
+    isBitmapImage: Boolean = false,
+): Loaded = Loaded(this, contentDescription, resId, resPackage, isBitmapImage)
 
 /**
  * Creates [ImageBitmap] for a given [Icon.Loaded]. It avoids IllegalArgumentException by providing
