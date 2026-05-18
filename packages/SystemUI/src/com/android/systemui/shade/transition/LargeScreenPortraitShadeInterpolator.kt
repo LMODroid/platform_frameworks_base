@@ -28,7 +28,8 @@ import javax.inject.Inject
 class LargeScreenPortraitShadeInterpolator @Inject constructor() : LargeScreenShadeInterpolator {
 
     override fun getBehindScrimAlpha(fraction: Float): Float {
-        return MathUtils.constrainedMap(0f, 1f, 0f, 0.3f, fraction)
+        val curvedFraction = fraction * fraction
+        return MathUtils.constrainedMap(0f, 1f, 0f, 0.3f, curvedFraction)
     }
 
     override fun getNotificationScrimAlpha(fraction: Float): Float {
