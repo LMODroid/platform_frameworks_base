@@ -146,8 +146,8 @@ class GameSpaceManager @Inject constructor(
     companion object {
         private const val ACTION_GAME_START = "io.chaldeaprjkt.gamespace.action.GAME_START"
         private const val ACTION_GAME_STOP = "io.chaldeaprjkt.gamespace.action.GAME_STOP"
-        private const val GAMESPACE_PACKAGE = "io.chaldeaprjkt.gamespace"
-        private const val RECEIVER_CLASS = "io.chaldeaprjkt.gamespace/.gamebar.GameBroadcastReceiver"
+        private const val GAMESPACE_PACKAGE = "com.libremobileos.gamespace"
+        private const val RECEIVER_CLASS = "com.libremobileos.gamespace/io.chaldeaprjkt.gamespace.gamebar.GameBroadcastReceiver"
         private const val EXTRA_CALLER_NAME = "source"
         private const val EXTRA_ACTIVE_GAME = "package_name"
         private const val MSG_UPDATE_FOREGROUND_APP = 0
