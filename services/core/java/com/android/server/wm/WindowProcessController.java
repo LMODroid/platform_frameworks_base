@@ -337,11 +337,6 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
     public static final int ACTIVITY_STATE_FLAG_VISIBLE_MULTI_WINDOW_MODE = 1 << 25;
     public static final int ACTIVITY_STATE_FLAG_MASK_MIN_TASK_LAYER = 0x0000ffff;
 
-    private static final int ACTIVITY_STATE_VISIBLE =
-            com.android.window.flags.Flags.useVisibleRequestedForProcessTracker()
-                    ? ACTIVITY_STATE_FLAG_IS_VISIBLE
-                    : ACTIVITY_STATE_FLAG_IS_VISIBLE | ACTIVITY_STATE_FLAG_IS_WINDOW_VISIBLE;
-
     /**
      * The state for oom-adjustment calculation. The higher 16 bits are the activity states, and the
      * lower 16 bits are the task layer rank (see {@link Task#mLayerRank}). This field is written by
@@ -366,7 +361,8 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
         mListener = listener;
         mAtm = atm;
         mBgLaunchController = new BackgroundLaunchProcessController(
-                atm::hasActiveVisibleWindow, atm.getBackgroundActivityStartCallback());
+                atm::hasActiveVisibleWindow, atm::hasActiveVisibleNotPinnedWindow,
+                atm.getBackgroundActivityStartCallback());
 
         boolean isSysUiPackage = info.packageName.equals(
                 mAtm.getSysUiServiceComponentLocked().getPackageName());
@@ -1281,7 +1277,7 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
         int nonOccludedRatio = 0;
         long perceptibleTaskStoppedTimeMillis = Long.MIN_VALUE;
         final boolean wasResumed = hasResumedActivity();
-        final boolean wasAnyVisible = (mActivityStateFlags & ACTIVITY_STATE_VISIBLE) != 0;
+        final boolean wasAnyVisible = (mActivityStateFlags & ACTIVITY_STATE_FLAG_IS_VISIBLE) != 0;
         for (int i = mActivities.size() - 1; i >= 0; i--) {
             final ActivityRecord r = mActivities.get(i);
             if (r.isVisible()) {
@@ -1326,8 +1322,7 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
                     bestInvisibleState = PAUSING;
                     // Treat PAUSING as visible in case the next activity in the same process has
                     // not yet been set as visible-requested.
-                    if (com.android.window.flags.Flags.useVisibleRequestedForProcessTracker()
-                            && r.isVisible()) {
+                    if (r.isVisible()) {
                         stateFlags |= ACTIVITY_STATE_FLAG_IS_VISIBLE;
                     }
                 } else if (state == PAUSED) {
@@ -1380,7 +1375,7 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
         mActivityStateFlags = stateFlags;
         mPerceptibleTaskStoppedTimeMillis = perceptibleTaskStoppedTimeMillis;
 
-        final boolean anyVisible = (stateFlags & ACTIVITY_STATE_VISIBLE) != 0;
+        final boolean anyVisible = (stateFlags & ACTIVITY_STATE_FLAG_IS_VISIBLE) != 0;
         if (!wasAnyVisible && anyVisible) {
             mAtm.mVisibleActivityProcessTracker.onAnyActivityVisible(this);
             mAtm.mWindowManager.onProcessActivityVisibilityChanged(mUid, true /*visible*/);

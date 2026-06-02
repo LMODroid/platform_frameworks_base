@@ -287,17 +287,6 @@ flag {
 }
 
 flag {
-  name: "use_visible_requested_for_process_tracker"
-  namespace: "windowing_frontend"
-  description: "Do not count closing activity as visible process"
-  bug: "396653764"
-  is_fixed_read_only: true
-  metadata {
-    purpose: PURPOSE_BUGFIX
-  }
-}
-
-flag {
   name: "ensure_wallpaper_in_transitions"
   namespace: "windowing_frontend"
   description: "Ensure that wallpaper window tokens are always present/available for collection in transitions"

@@ -8643,7 +8643,10 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 admin.globalProxySpec = null;
                 admin.globalProxyExclusionList = null;
             } else {
-
+                PolicySizeVerifier.enforceMaxStringLength(proxySpec, "proxySpec");
+                if (exclusionList != null) {
+                    PolicySizeVerifier.enforceMaxStringLength(exclusionList, "exclusionList");
+                }
                 admin.specifiesGlobalProxy = true;
                 admin.globalProxySpec = proxySpec;
                 admin.globalProxyExclusionList = exclusionList;
@@ -11562,6 +11565,8 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 R.array.config_packagesExemptFromSuspension);
         dumpResources(pw, mContext, "policy_exempt_apps", R.array.policy_exempt_apps);
         dumpResources(pw, mContext, "vendor_policy_exempt_apps", R.array.vendor_policy_exempt_apps);
+        dumpResources(pw, mContext, "application_hidden_policy_exempt_apps",
+                R.array.application_hidden_policy_exempt_apps);
         pw.decreaseIndent();
         pw.println();
     }
@@ -13435,6 +13440,17 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         return new ArrayList<>(apps);
     }
 
+    private boolean isPackageExemptFromHiding(@NonNull String packageName) {
+        var exemptPackages = mContext.getResources().getStringArray(
+                R.array.application_hidden_policy_exempt_apps);
+        for (var exemptPackage : exemptPackages) {
+            if (packageName.equals(exemptPackage)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void setUserRestriction(
             ComponentName who, String callerPackage, String key, boolean enabledFromThisOwner,
@@ -13962,7 +13978,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         enforcePermission(MANAGE_DEVICE_POLICY_PACKAGE_STATE, caller.getPackageName(), userId);
 
         List<String> exemptApps = listPolicyExemptAppsUnchecked(mContext);
-        if (exemptApps.contains(packageName)) {
+        if (exemptApps.contains(packageName) || isPackageExemptFromHiding(packageName)) {
             Slogf.d(LOG_TAG, "setApplicationHidden(): ignoring %s as it's on policy-exempt list",
                     packageName);
             return false;
@@ -14424,6 +14440,9 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         if (!mHasFeature) {
             return;
         }
+        if (policy != null) {
+            enforcePackagePolicyPackageNamesLength(policy);
+        }
         final CallerIdentity caller = getCallerIdentity();
         Preconditions.checkCallAuthorization((isProfileOwner(caller)
                 && isManagedProfile(caller.getUserId())));
@@ -14473,6 +14492,9 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     public void setManagedProfileContactsAccessPolicy(PackagePolicy policy) {
         if (!mHasFeature) {
             return;
+        }
+        if (policy != null) {
+            enforcePackagePolicyPackageNamesLength(policy);
         }
         final CallerIdentity caller = getCallerIdentity();
         Preconditions.checkCallAuthorization((isProfileOwner(caller)
@@ -16541,6 +16563,9 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         if (!mHasFeature) {
             return;
         }
+        if (policy != null) {
+            enforcePackagePolicyPackageNamesLength(policy);
+        }
         final CallerIdentity caller = getCallerIdentity();
         Preconditions.checkCallAuthorization(canWriteCredentialManagerPolicy(caller));
 
@@ -16559,6 +16584,15 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         return (isProfileOwner(caller) && isManagedProfile(caller.getUserId()))
                         || isDefaultDeviceOwner(caller)
                         || hasCallingOrSelfPermission(MANAGE_PROFILE_AND_DEVICE_OWNERS);
+    }
+
+    private void enforcePackagePolicyPackageNamesLength(@NonNull PackagePolicy policy) {
+        for (String pkg : policy.getPackageNames()) {
+            if (pkg == null) {
+                continue;
+            }
+            PolicySizeVerifier.enforceMaxPackageNameLength(pkg);
+        }
     }
 
     @Override

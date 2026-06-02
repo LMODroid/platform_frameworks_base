@@ -38,6 +38,7 @@ android_test {
         "a11ychecker",
         "aatf",
         "accessibility_protos_lite",
+        "android.credentials.flags-aconfig-java",
         "cts-input-lib",
         "frameworks-base-testutils",
         "services.accessibility",
