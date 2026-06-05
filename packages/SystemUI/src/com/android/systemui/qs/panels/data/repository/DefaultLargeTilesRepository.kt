@@ -18,6 +18,7 @@ package com.android.systemui.qs.panels.data.repository
 
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.qs.pipeline.shared.TileSpec
+import com.android.systemui.qs.tiles.base.shared.model.QSTileConfigProvider
 import javax.inject.Inject
 
 /** Repository for the default set of [TileSpec] that should be displayed as large tiles. */
@@ -26,12 +27,20 @@ interface DefaultLargeTilesRepository {
 }
 
 @SysUISingleton
-class DefaultLargeTilesRepositoryImpl @Inject constructor() : DefaultLargeTilesRepository {
-    override val defaultLargeTiles =
-        setOf(
+class DefaultLargeTilesRepositoryImpl @Inject constructor(
+    private val qsTileConfigProvider: QSTileConfigProvider,
+) : DefaultLargeTilesRepository {
+    override val defaultLargeTiles: Set<TileSpec> by lazy {
+        val defaults = setOf(
             TileSpec.create("internet"),
             TileSpec.create("bt"),
             TileSpec.create("dnd"),
             TileSpec.create("cast"),
         )
+        val fromConfigs = qsTileConfigProvider.getAllConfigs()
+            .filter { it.isLargeByDefault }
+            .map { it.tileSpec }
+            .toSet()
+        defaults + fromConfigs
+    }
 }

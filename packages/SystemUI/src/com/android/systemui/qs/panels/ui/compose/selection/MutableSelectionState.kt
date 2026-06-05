@@ -97,6 +97,7 @@ class MutableSelectionState {
         tileSpec: TileSpec,
         previousState: TileState,
         canShowRemovalBadge: Boolean,
+        canBeResized: Boolean,
     ): TileState {
         return when {
             placementEnabled && selection == tileSpec -> TileState.Placeable
@@ -111,7 +112,7 @@ class MutableSelectionState {
                     // animation play correctly.
                     delay(250)
                 }
-                TileState.Selected
+                if (canBeResized) TileState.Selected else TileState.Removable
             }
             canShowRemovalBadge -> TileState.Removable
             else -> TileState.None

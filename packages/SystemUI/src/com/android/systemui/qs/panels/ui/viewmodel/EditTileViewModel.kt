@@ -109,12 +109,16 @@ data class EditTileViewModel(
 
     val isRemovable
         get() = availableEditActions.contains(AvailableEditActions.REMOVE)
+
+    val isResizable
+        get() = availableEditActions.contains(AvailableEditActions.RESIZE)
 }
 
 enum class AvailableEditActions {
     ADD,
     REMOVE,
     MOVE,
+    RESIZE,
 }
 
 object EditTileViewModelConstants {

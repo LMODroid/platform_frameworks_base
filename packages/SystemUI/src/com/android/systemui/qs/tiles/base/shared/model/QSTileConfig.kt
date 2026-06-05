@@ -33,6 +33,8 @@ constructor(
     val metricsSpec: String = tileSpec.spec,
     val policy: QSTilePolicy = QSTilePolicy.NoRestrictions,
     val autoRemoveOnUnavailable: Boolean = true,
+    val isResizable: Boolean = true,
+    val isLargeByDefault: Boolean = false,
 )
 
 /**

@@ -953,10 +953,10 @@ private fun rememberTileState(
     selectionState: MutableSelectionState,
 ): State<TileState> {
     val tileState = remember { mutableStateOf(TileState.None) }
-
-    LaunchedEffect(selectionState.selection, selectionState.placementEnabled, tile.isRemovable) {
+    val canBeResized = tile.isResizable
+    LaunchedEffect(selectionState.selection, selectionState.placementEnabled, tile.isRemovable, canBeResized) {
         tileState.value =
-            selectionState.tileStateFor(tile.tileSpec, tileState.value, tile.isRemovable)
+            selectionState.tileStateFor(tile.tileSpec, tileState.value, tile.isRemovable, canBeResized)
     }
 
     return tileState
