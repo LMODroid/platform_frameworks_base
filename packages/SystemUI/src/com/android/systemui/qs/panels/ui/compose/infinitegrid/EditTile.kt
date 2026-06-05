@@ -760,10 +760,10 @@ private fun rememberTileState(
 ): State<TileState> {
     val tileState = remember { mutableStateOf(TileState.None) }
     val canShowRemovalBadge = tile.isRemovable
-
-    LaunchedEffect(selectionState.selection, selectionState.placementEnabled, canShowRemovalBadge) {
+    val canBeResized = tile.isResizable
+    LaunchedEffect(selectionState.selection, selectionState.placementEnabled, canShowRemovalBadge, canBeResized) {
         tileState.value =
-            selectionState.tileStateFor(tile.tileSpec, tileState.value, canShowRemovalBadge)
+            selectionState.tileStateFor(tile.tileSpec, tileState.value, canShowRemovalBadge, canBeResized)
     }
 
     return tileState
