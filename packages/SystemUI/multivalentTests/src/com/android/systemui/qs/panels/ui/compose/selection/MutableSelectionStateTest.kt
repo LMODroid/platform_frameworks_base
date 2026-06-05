@@ -119,11 +119,11 @@ class MutableSelectionStateTest : SysuiTestCase() {
     fun tileStateFor_selectedTile_returnsSingleSelection() = runTest {
         underTest.select(TEST_SPEC)
 
-        assertThat(underTest.tileStateFor(TEST_SPEC, None, canShowRemovalBadge = true))
+        assertThat(underTest.tileStateFor(TEST_SPEC, None, canShowRemovalBadge = true, canBeResized = true))
             .isEqualTo(Selected)
-        assertThat(underTest.tileStateFor(TEST_SPEC_2, None, canShowRemovalBadge = true))
+        assertThat(underTest.tileStateFor(TEST_SPEC_2, None, canShowRemovalBadge = true, canBeResized = true))
             .isEqualTo(Removable)
-        assertThat(underTest.tileStateFor(TEST_SPEC_3, None, canShowRemovalBadge = true))
+        assertThat(underTest.tileStateFor(TEST_SPEC_3, None, canShowRemovalBadge = true, canBeResized = true))
             .isEqualTo(Removable)
     }
 
@@ -131,19 +131,19 @@ class MutableSelectionStateTest : SysuiTestCase() {
     fun tileStateFor_placementMode_returnsSinglePlaceable() = runTest {
         underTest.enterPlacementMode(TEST_SPEC)
 
-        assertThat(underTest.tileStateFor(TEST_SPEC, None, canShowRemovalBadge = true))
+        assertThat(underTest.tileStateFor(TEST_SPEC, None, canShowRemovalBadge = true, canBeResized = true))
             .isEqualTo(Placeable)
-        assertThat(underTest.tileStateFor(TEST_SPEC_2, None, canShowRemovalBadge = true))
+        assertThat(underTest.tileStateFor(TEST_SPEC_2, None, canShowRemovalBadge = true, canBeResized = true))
             .isEqualTo(GreyedOut)
-        assertThat(underTest.tileStateFor(TEST_SPEC_3, None, canShowRemovalBadge = true))
+        assertThat(underTest.tileStateFor(TEST_SPEC_3, None, canShowRemovalBadge = true, canBeResized = true))
             .isEqualTo(GreyedOut)
     }
 
     @Test
     fun tileStateFor_nonRemovableTile_returnsNoneState() = runTest {
-        assertThat(underTest.tileStateFor(TEST_SPEC, None, canShowRemovalBadge = true))
+        assertThat(underTest.tileStateFor(TEST_SPEC, None, canShowRemovalBadge = true, canBeResized = true))
             .isEqualTo(Removable)
-        assertThat(underTest.tileStateFor(TEST_SPEC_2, None, canShowRemovalBadge = false))
+        assertThat(underTest.tileStateFor(TEST_SPEC_2, None, canShowRemovalBadge = false, canBeResized = true))
             .isEqualTo(None)
     }
 

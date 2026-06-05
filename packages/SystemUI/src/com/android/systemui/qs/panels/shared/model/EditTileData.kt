@@ -28,6 +28,7 @@ data class EditTileData(
     val appName: Text?,
     val appIcon: Icon?,
     val category: TileCategory,
+    val isResizable: Boolean = true,
 ) {
     init {
         check(

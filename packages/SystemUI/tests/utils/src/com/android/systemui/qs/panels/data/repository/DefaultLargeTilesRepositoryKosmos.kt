@@ -18,6 +18,7 @@ package com.android.systemui.qs.panels.data.repository
 
 import android.content.res.mainResources
 import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.qs.tiles.base.shared.model.qSTileConfigProvider
 
 var Kosmos.defaultLargeTilesRepository: DefaultLargeTilesRepository by
-    Kosmos.Fixture { DefaultLargeTilesRepositoryImpl(mainResources) }
+    Kosmos.Fixture { DefaultLargeTilesRepositoryImpl(mainResources, qSTileConfigProvider) }

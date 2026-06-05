@@ -35,6 +35,8 @@ interface QSTileConfigProvider {
     fun getConfig(tileSpec: String): QSTileConfig
 
     fun hasConfig(tileSpec: String): Boolean
+
+    fun getAllConfigs(): Collection<QSTileConfig>
 }
 
 @SysUISingleton
@@ -79,4 +81,6 @@ constructor(
             is TileSpec.Invalid ->
                 throw IllegalArgumentException("TileSpec.Invalid doesn't support configs")
         }
+
+    override fun getAllConfigs(): Collection<QSTileConfig> = configs.values
 }

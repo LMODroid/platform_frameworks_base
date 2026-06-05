@@ -56,6 +56,7 @@ constructor(
                         null,
                         null,
                         category = config.category,
+                        isResizable = config.isResizable,
                     )
                 } else {
                     EditTileData(
@@ -68,6 +69,7 @@ constructor(
                         null,
                         null,
                         category = TileCategory.UNKNOWN,
+                        isResizable = true,
                     )
                 }
             }

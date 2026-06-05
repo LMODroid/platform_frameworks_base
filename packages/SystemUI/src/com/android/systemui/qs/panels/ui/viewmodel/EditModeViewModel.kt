@@ -140,6 +140,9 @@ constructor(
                                     } else {
                                         add(AvailableEditActions.ADD)
                                     }
+                                    if (it.isResizable) {
+                                        add(AvailableEditActions.RESIZE)
+                                    }
                                 }
                                 UnloadedEditTileViewModel(
                                     it.tileSpec,

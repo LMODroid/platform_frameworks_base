@@ -23,6 +23,7 @@ import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.qs.flags.QsSplitInternetTile
 import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.res.R
+import com.android.systemui.qs.tiles.base.shared.model.QSTileConfigProvider
 import javax.inject.Inject
 
 /** Repository for the default set of [TileSpec] that should be displayed as large tiles. */
@@ -32,9 +33,13 @@ interface DefaultLargeTilesRepository {
 
 @SysUISingleton
 @SuppressLint("ShadeDisplayAwareContextChecker")
-class DefaultLargeTilesRepositoryImpl @Inject constructor(@Main resources: Resources) :
-    DefaultLargeTilesRepository {
-    override val defaultLargeTiles =
+class DefaultLargeTilesRepositoryImpl
+@Inject
+constructor(
+    @Main resources: Resources,
+    private val qsTileConfigProvider: QSTileConfigProvider,
+) : DefaultLargeTilesRepository {
+    private val aospDefaultLargeTiles =
         if (QsSplitInternetTile.isEnabled) {
             resources
                 .getStringArray(R.array.quick_settings_large_tiles_default_split)
@@ -48,4 +53,14 @@ class DefaultLargeTilesRepositoryImpl @Inject constructor(@Main resources: Resou
                 TileSpec.create("cast"),
             )
         }
+
+    // Plus the tiles whose config asks to be large by default
+    override val defaultLargeTiles: Set<TileSpec> by lazy {
+        val fromConfigs =
+            qsTileConfigProvider.getAllConfigs()
+                .filter { it.isLargeByDefault }
+                .map { it.tileSpec }
+                .toSet()
+        aospDefaultLargeTiles + fromConfigs
+    }
 }
