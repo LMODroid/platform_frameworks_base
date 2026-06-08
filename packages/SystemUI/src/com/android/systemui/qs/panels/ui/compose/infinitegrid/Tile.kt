@@ -264,14 +264,27 @@ fun ContentScope.Tile(
             ) {
                 val iconProvider: Context.() -> Icon = { getTileIcon(icon = icon) }
                 if (iconOnly) {
-                    SmallTileContent(
-                        iconProvider = iconProvider,
-                        color = colors.icon,
-                        modifier =
-                            Modifier.align(Alignment.Center).bounceScale {
-                                bounceableInfo.bounceable.iconBounceScale
-                            },
-                    )
+                    if (uiState.labelInIconMode.isNotEmpty()) {
+                        SmallTileContentWithLabel(
+                            label = uiState.labelInIconMode,
+                            iconProvider = iconProvider,
+                            color = colors.icon,
+                            modifier =
+                                Modifier.align(Alignment.Center).bounceScale {
+                                    bounceableInfo.bounceable.iconBounceScale
+                                },
+                        )
+                    } else {
+                        SmallTileContent(
+                            iconProvider = iconProvider,
+                            color = colors.icon,
+                            modifier =
+                                Modifier.align(Alignment.Center).bounceScale {
+                                    bounceableInfo.bounceable.iconBounceScale
+                                },
+                        )
+                    }
+
                 } else {
                     val iconShape by TileDefaults.animateIconShapeAsState(uiState.state)
                     val secondaryClick: (() -> Unit)? =

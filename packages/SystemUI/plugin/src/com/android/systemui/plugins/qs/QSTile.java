@@ -194,6 +194,7 @@ public interface QSTile {
         public int state = DEFAULT_STATE;
         public CharSequence label;
         @Nullable public CharSequence secondaryLabel;
+        @Nullable public CharSequence labelInIconMode;
         public CharSequence contentDescription;
         @Nullable public CharSequence stateDescription;
         public CharSequence dualLabelContentDescription;
@@ -239,6 +240,7 @@ public interface QSTile {
                     || !Objects.equals(other.iconSupplier, iconSupplier)
                     || !Objects.equals(other.label, label)
                     || !Objects.equals(other.secondaryLabel, secondaryLabel)
+                    || !Objects.equals(other.labelInIconMode, labelInIconMode)
                     || !Objects.equals(other.contentDescription, contentDescription)
                     || !Objects.equals(other.stateDescription, stateDescription)
                     || !Objects.equals(other.dualLabelContentDescription,
@@ -258,6 +260,7 @@ public interface QSTile {
             other.iconSupplier = iconSupplier;
             other.label = label;
             other.secondaryLabel = secondaryLabel;
+            other.labelInIconMode = labelInIconMode;
             other.contentDescription = contentDescription;
             other.stateDescription = stateDescription;
             other.dualLabelContentDescription = dualLabelContentDescription;
@@ -287,6 +290,7 @@ public interface QSTile {
             sb.append(",iconSupplier=").append(iconSupplier);
             sb.append(",label=").append(label);
             sb.append(",secondaryLabel=").append(secondaryLabel);
+            sb.append(",labelInIconMode=").append(labelInIconMode);
             sb.append(",contentDescription=").append(contentDescription);
             sb.append(",stateDescription=").append(stateDescription);
             sb.append(",dualLabelContentDescription=").append(dualLabelContentDescription);
