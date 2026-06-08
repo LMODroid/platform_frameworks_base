@@ -85,6 +85,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.semantics.toggleableState
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -311,7 +312,44 @@ fun SmallTileContent(
 }
 
 @Composable
-private fun TileLabel(
+fun SmallTileContentWithLabel(
+    label: String?,
+    iconProvider: Context.() -> Icon,
+    color: Color,
+    modifier: Modifier = Modifier,
+    isVisible: () -> Boolean = { true },
+) {
+    val animatedColor by animateColorAsState(color, label = "QSTileIconColor")
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(
+            space = CommonTileDefaults.SmallTileIconLabelSpacing,
+            alignment = Alignment.CenterVertically,
+        ),
+        modifier = modifier.width(CommonTileDefaults.ToggleTargetSize),
+    ) {
+        SmallTileContent(
+            iconProvider = iconProvider,
+            color = animatedColor,
+            size = { CommonTileDefaults.SmallTileIconWithLabelSize },
+        )
+
+        if (!label.isNullOrEmpty()) {
+            TileLabel(
+                text = label,
+                color = { animatedColor },
+                style = MaterialTheme.typography.labelSmall.copy(
+                    textAlign = TextAlign.Center,
+                ),
+                isVisible = isVisible,
+            )
+        }
+    }
+}
+
+@Composable
+internal fun TileLabel(
     text: String,
     color: ColorProducer,
     style: TextStyle,
@@ -484,6 +522,8 @@ object CommonTileDefaults {
         @ReadOnlyComposable
         get() = dimensionResource(id = R.dimen.common_tile_default_toggle_target_size)
 
+    val SmallTileIconWithLabelSize = 24.dp
+    val SmallTileIconLabelSpacing = 2.dp
     val SideIconWidth = 32.dp
     val SideIconHeight = 20.dp
     val ChevronSize = 14.dp

@@ -39,6 +39,7 @@ import java.util.function.Supplier
 data class TileUiState(
     val label: String,
     val secondaryLabel: String,
+    val labelInIconMode: String,
     /**
      * Indicates the visual state for the tile. One of
      * * [Tile.STATE_UNAVAILABLE]
@@ -125,6 +126,7 @@ fun QSTile.State.toUiState(resources: Resources): TileUiState {
     return TileUiState(
         label = label?.toString() ?: "",
         secondaryLabel = secondaryLabel?.toString() ?: "",
+        labelInIconMode = labelInIconMode?.toString() ?: "",
         // This is used for the colors, [disabledByPolicy] needs to look UNAVAILABLE
         visualState = if (disabledByPolicy) Tile.STATE_UNAVAILABLE else state,
         handlesSettingsClick = handlesLongClick,
