@@ -17,6 +17,7 @@
 
 package com.android.systemui.keyguard.ui.view.layout.sections
 
+import android.content.res.Resources
 import android.os.Handler
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.Barrier
@@ -51,6 +52,7 @@ constructor(
     val displayTracker: DisplayTracker,
     val keyguardInteractor: KeyguardInteractor,
     val powerInteractor: PowerInteractor,
+    @Main private val resources: Resources,
 ) : KeyguardSection() {
     private lateinit var sliceView: KeyguardSliceView
 
@@ -83,33 +85,50 @@ constructor(
     override fun applyConstraints(constraintSet: ConstraintSet) {
         if (smartspaceController.isEnabled) return
 
+        val sliceViewId = R.id.keyguard_slice_view
+        val faceIconId = R.id.face_icon_view
+        val smallClockId = customR.id.lockscreen_clock_view
+
         constraintSet.apply {
-            connect(
-                R.id.keyguard_slice_view,
-                ConstraintSet.START,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.START,
-            )
-            connect(
-                R.id.keyguard_slice_view,
-                ConstraintSet.END,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.END,
-            )
-            constrainHeight(R.id.keyguard_slice_view, ConstraintSet.WRAP_CONTENT)
+            clear(sliceViewId, ConstraintSet.TOP)
 
             connect(
-                R.id.keyguard_slice_view,
-                ConstraintSet.TOP,
-                customR.id.lockscreen_clock_view,
-                ConstraintSet.BOTTOM,
+                sliceViewId,
+                ConstraintSet.START,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.START,
             )
+            connect(
+                sliceViewId,
+                ConstraintSet.END,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.END,
+            )
+            constrainHeight(sliceViewId, ConstraintSet.WRAP_CONTENT)
+
+            val isSmallClockVisible = constraintSet.getVisibility(smallClockId) == ConstraintSet.VISIBLE
+
+            if (isSmallClockVisible) {
+                connect(
+                    sliceViewId,
+                    ConstraintSet.TOP,
+                    smallClockId,
+                    ConstraintSet.BOTTOM,
+                )
+            } else {
+                connect(
+                    sliceViewId,
+                    ConstraintSet.TOP,
+                    faceIconId,
+                    ConstraintSet.BOTTOM,
+                )
+            }
 
             createBarrier(
                 R.id.smart_space_barrier_bottom,
                 Barrier.BOTTOM,
                 0,
-                *intArrayOf(R.id.keyguard_slice_view),
+                *intArrayOf(sliceViewId),
             )
         }
     }

@@ -30,6 +30,7 @@ import com.android.systemui.keyguard.ui.view.layout.sections.DefaultIndicationAr
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultSettingsPopupMenuSection
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultShortcutsSection
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultStatusBarSection
+import com.android.systemui.keyguard.ui.view.layout.sections.FaceIconSection
 import com.android.systemui.keyguard.ui.view.layout.sections.KeyguardSectionsModule
 import com.android.systemui.keyguard.ui.view.layout.sections.KeyguardSliceViewSection
 import com.android.systemui.keyguard.ui.view.layout.sections.SmartspaceSection
@@ -67,11 +68,13 @@ constructor(
     smartspaceSection: SmartspaceSection,
     mediaSection: SplitShadeMediaSection,
     keyguardSliceViewSection: KeyguardSliceViewSection,
+    faceIconSection: FaceIconSection,
 ) : KeyguardBlueprint {
     override val id: String = ID
 
     override val sections =
         listOfNotNull(
+            faceIconSection,
             accessibilityActionsSection,
             defaultIndicationAreaSection,
             defaultShortcutsSection,

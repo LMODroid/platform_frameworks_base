@@ -43,9 +43,8 @@ import com.android.systemui.util.ViewController
 import javax.inject.Inject
 
 /** Controls the [FaceIconView] on the lockscreen.  */
-@SysUISingleton
-class FaceIconViewController @Inject constructor(
-    view: FaceIconView?,
+class FaceIconViewController (
+    view: FaceIconView,
     private val keyguardUpdateMonitor: KeyguardUpdateMonitor,
     private val statusBarStateController: StatusBarStateController,
     private val configurationController: ConfigurationController,
@@ -53,7 +52,7 @@ class FaceIconViewController @Inject constructor(
     private val keyguardStateController: KeyguardStateController,
     private val deviceEntryFaceAuthInteractor: DeviceEntryFaceAuthInteractor,
     @Main private val resources: Resources,
-) : ViewController<FaceIconView?>(view) {
+) : ViewController<FaceIconView>(view) {
 
     private var simLocked = false
     private var statusBarState: Int = StatusBarState.SHADE

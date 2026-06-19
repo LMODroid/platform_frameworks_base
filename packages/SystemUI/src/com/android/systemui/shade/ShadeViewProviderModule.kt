@@ -203,14 +203,6 @@ abstract class ShadeViewProviderModule {
             return notificationShadeWindowView.requireViewById(R.id.auth_ripple)
         }
 
-        @Provides
-        @SysUISingleton
-        fun providesFaceIconView(
-            notificationPanelView: NotificationPanelView
-        ): FaceIconView {
-            return notificationPanelView.requireViewById(R.id.face_icon_view)
-        }
-
         // TODO(b/277762009): Only allow this view's controller to inject the view. See above.
         @Provides
         @SysUISingleton

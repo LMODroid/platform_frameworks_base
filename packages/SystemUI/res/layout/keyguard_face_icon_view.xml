@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.keyguard.FaceIconView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/face_icon_view"
+    android:layout_width="@dimen/keyguard_face_icon_width"
+    android:layout_height="@dimen/keyguard_face_icon_height"
+    android:padding="@dimen/keyguard_face_icon_padding"
+    android:scaleType="center" />
+
