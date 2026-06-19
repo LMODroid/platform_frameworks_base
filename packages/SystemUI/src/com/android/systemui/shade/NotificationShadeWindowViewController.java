@@ -35,7 +35,6 @@ import android.view.ViewGroup;
 import com.android.app.displaylib.PerDisplayRepository;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.keyguard.AuthKeyguardMessageArea;
-import com.android.keyguard.FaceIconViewController;
 import com.android.keyguard.KeyguardUnfoldTransition;
 import com.android.systemui.Dumpable;
 import com.android.systemui.animation.ActivityTransitionAnimator;
@@ -191,8 +190,6 @@ public class NotificationShadeWindowViewController implements Dumpable {
     private GestureDetector mQQSGestureHandler;
     private final QQSGestureListener mQQSGestureListener;
 
-    private final FaceIconViewController mFaceIconViewController;
-
     @Inject
     public NotificationShadeWindowViewController(
             BlurUtils blurUtils,
@@ -238,8 +235,7 @@ public class NotificationShadeWindowViewController implements Dumpable {
             ShadeStatusBarComponentsInteractor shadeStatusBarComponentsInteractor,
             DozeTouchInteractor dozeTouchInteractor,
             JavaAdapter javaAdapter,
-            QQSGestureListener qqsGestureListener,
-            FaceIconViewController faceIconViewController) {
+            QQSGestureListener qqsGestureListener) {
         mLockscreenShadeTransitionController = transitionController;
         mFalsingCollector = falsingCollector;
         mStatusBarStateController = statusBarStateController;
@@ -269,8 +265,6 @@ public class NotificationShadeWindowViewController implements Dumpable {
         mMainDispatcher = mainDispatcher;
         mShadeStatusBarComponentsInteractor = shadeStatusBarComponentsInteractor;
         mQQSGestureListener = qqsGestureListener;
-        mFaceIconViewController = faceIconViewController;
-        mFaceIconViewController.init();
 
         // This view is not part of the newly inflated expanded status bar.
         mBrightnessMirror = mView.findViewById(R.id.brightness_mirror_container);

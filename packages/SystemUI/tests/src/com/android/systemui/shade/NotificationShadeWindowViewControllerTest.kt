@@ -30,7 +30,6 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.test.filters.SmallTest
 import com.android.app.displaylib.PerDisplayRepository
-import com.android.keyguard.FaceIconViewController
 import com.android.keyguard.KeyguardSecurityContainerController
 import com.android.keyguard.dagger.KeyguardBouncerComponent
 import com.android.systemui.Flags
@@ -183,7 +182,6 @@ class NotificationShadeWindowViewControllerTest(flags: FlagsParameterization) : 
     private val notificationLaunchAnimationInteractor =
         NotificationLaunchAnimationInteractor(notificationLaunchAnimationRepository)
     @Mock private lateinit var qqsGestureListener: QQSGestureListener
-    @Mock private lateinit var faceIconViewController: FaceIconViewController
 
     private val brightnessMirrorShowingRepository = BrightnessMirrorShowingRepository()
     private val brightnessMirrorShowingInteractor =
@@ -281,7 +279,6 @@ class NotificationShadeWindowViewControllerTest(flags: FlagsParameterization) : 
                 kosmos.dozeTouchInteractor,
                 kosmos.javaAdapter,
                 qqsGestureListener,
-                faceIconViewController,
             )
         underTest.setupExpandedStatusBar()
         underTest.setDragDownHelper(dragDownHelper)
