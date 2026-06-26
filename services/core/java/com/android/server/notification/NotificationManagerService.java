@@ -7753,7 +7753,7 @@ public class NotificationManagerService extends SystemService {
             ManagedServiceInfo nlsInfo = verifyPrivilegedListener(token, user, true);
             if (!nlsInfo.isSystemUi()
                     && !isNotificationAssistant(nlsInfo.service)
-                    && !mNotificationListenerStats.isAllowedToCreateChannel(nlsInfo)) {
+                    && !mNotificationListenerStats.isAllowedToCreateChannel(nlsInfo, pkg)) {
                 Slog.e(TAG, "NLS " + nlsInfo + " has created too many channels already! "
                         + "Rejecting " + pkg + "/" + user + "/" + parentId + "/" + conversationId);
                 return null;
@@ -7789,7 +7789,7 @@ public class NotificationManagerService extends SystemService {
             NotificationChannel created = mPreferencesHelper.getConversationNotificationChannel(
                     pkg, uid, parentId, conversationId, false, false);
             if (created != null) {
-                mNotificationListenerStats.logCreatedChannels(nlsInfo, /* increase= */ 1);
+                mNotificationListenerStats.logCreatedChannels(nlsInfo, pkg, /* increase= */ 1);
                 handleSavePolicyFile();
             }
 
