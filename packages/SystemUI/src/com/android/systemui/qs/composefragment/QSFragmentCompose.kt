@@ -298,8 +298,13 @@ constructor(
                                     }
                                 }
                                 .graphicsLayer { alpha = viewModel.viewAlpha }
-                                .offset {
-                                    IntOffset(x = 0, y = viewModel.viewTranslationY.fastRoundToInt())
+                                .thenIf(!Flags.notificationShadeBlur()) {
+                                    Modifier.offset {
+                                        IntOffset(
+                                            x = 0,
+                                            y = viewModel.viewTranslationY.fastRoundToInt(),
+                                        )
+                                    }
                                 }
                                 // Disable touches in the whole composable while the mirror is
                                 // showing. While the mirror is showing, an ancestor of the
