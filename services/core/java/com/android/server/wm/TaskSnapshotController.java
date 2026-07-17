@@ -450,7 +450,7 @@ class TaskSnapshotController extends AbsAppSnapshotController<Task, TaskSnapshot
                 && mService.mPolicy.isKeyguardSecure(mService.mCurrentUserId);
         mTmpTasks.clear();
         displayContent.forAllLeafTasks(task -> {
-            if (!allowSnapshotHome && task.isActivityTypeHome()) {
+            if (task.isActivityTypeHome()) {
                 return;
             }
             // Since RecentsAnimation will handle task snapshot while switching apps with the best
