@@ -112,8 +112,7 @@ public class QRCodeScannerTile extends QSTileImpl<QSTile.State> {
         ActivityTransitionAnimator.Controller animationController =
                 expandable == null ? null : expandable.activityTransitionController(
                         InteractionJankMonitor.CUJ_SHADE_APP_LAUNCH_FROM_QS_TILE);
-        mActivityStarter.startActivity(intent, true /* dismissShade */,
-                animationController, true /* showOverLockscreenWhenLocked */);
+        mActivityStarter.postStartActivityDismissingKeyguard(intent, 0, animationController);
     }
 
     @Override
