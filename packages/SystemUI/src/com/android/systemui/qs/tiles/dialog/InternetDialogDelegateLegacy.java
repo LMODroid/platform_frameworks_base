@@ -483,6 +483,19 @@ public class InternetDialogDelegateLegacy implements
         InternetContent internetContent = new InternetContent();
         internetContent.mInternetDialogTitleString = getDialogTitleText();
         internetContent.mInternetDialogSubTitle = getSubtitleText();
+        // Update the mobile layout when the dialog opens. Otherwise, a later Wi-Fi update
+        // may replace the mobile update and leave the mobile section visible.
+        internetContent.mShouldUpdateMobileNetwork = true;
+        internetContent.mActiveNetworkIsCellular =
+                mInternetDetailsContentController.activeNetworkIsCellular();
+        internetContent.mIsCarrierNetworkActive =
+                mInternetDetailsContentController.isCarrierNetworkActive();
+        internetContent.mIsAirplaneModeEnabled =
+                mInternetDetailsContentController.isAirplaneModeEnabled();
+        internetContent.mHasActiveSubIdOnDds =
+                mInternetDetailsContentController.hasActiveSubIdOnDds();
+        internetContent.mActiveAutoSwitchNonDdsSubId =
+                mInternetDetailsContentController.getActiveAutoSwitchNonDdsSubId();
         internetContent.mIsWifiEnabled = mInternetDetailsContentController.isWifiEnabled();
         internetContent.mIsDeviceLocked = mInternetDetailsContentController.isDeviceLocked();
         internetContent.mShouldUpdateHotspot = true; // should update when initializing.
