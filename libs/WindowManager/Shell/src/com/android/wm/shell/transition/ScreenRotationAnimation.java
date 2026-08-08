@@ -19,6 +19,7 @@ package com.android.wm.shell.transition;
 import static android.util.RotationUtils.deltaRotation;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_CROSSFADE;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_JUMPCUT;
+import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_ROTATE_OPAQUE;
 import static android.view.WindowManagerPolicyConstants.SCREEN_FREEZE_LAYER_BASE;
 
 import static com.android.internal.policy.TransitionAnimation.MAX_ANIMATION_DURATION;
@@ -418,6 +419,12 @@ class ScreenRotationAnimation {
     }
 
     private WindowAnimation startDisplayRotation() {
+        if (mAnimHint == ROTATION_ANIMATION_ROTATE_OPAQUE) {
+            return buildWindowAnimation(mRotateEnterAnimation, mChange,
+                    new OpaqueAnimationAdapter(mRotateEnterAnimation, getEnterSurface()),
+                    null /* finishCallback */, mTransactionPool, null /* mainExecutor*/,
+                    0 /* cornerRadius */);
+        }
         return buildWindowAnimation(mRotateEnterAnimation, mChange,
                 getEnterSurface(), null /* finishCallback */, mTransactionPool,
                 null /* mainExecutor*/, null /* position */, 0 /* cornerRadius */,
@@ -486,6 +493,25 @@ class ScreenRotationAnimation {
     private static class LumaAnimation extends Animation {
         LumaAnimation(long durationMillis) {
             setDuration(durationMillis);
+        }
+    }
+
+    /** Applies the standard rotation transform without its alpha component. */
+    private static class OpaqueAnimationAdapter extends DefaultSurfaceAnimator.AnimationAdapter {
+        private final Animation mAnimation;
+        private final float[] mMatrix = new float[9];
+
+        OpaqueAnimationAdapter(Animation animation, SurfaceControl leash) {
+            super(leash);
+            mAnimation = animation;
+        }
+
+        @Override
+        void applyTransformation(ValueAnimator animator, long currentPlayTime) {
+            mTransformation.clear();
+            mAnimation.getTransformation(currentPlayTime, mTransformation);
+            mTransaction.setMatrix(mLeash, mTransformation.getMatrix(), mMatrix);
+            mTransaction.setAlpha(mLeash, 1f);
         }
     }
 

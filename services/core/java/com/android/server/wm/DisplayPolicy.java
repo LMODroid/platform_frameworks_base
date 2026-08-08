@@ -297,6 +297,7 @@ public class DisplayPolicy {
 
     private WindowState mStatusBar = null;
     private volatile WindowState mNotificationShade;
+    private boolean mNotificationShadeExpanded;
     private WindowState mNavigationBar = null;
     private boolean mHasBottomNavigationBar = true;
 
@@ -1383,6 +1384,7 @@ public class DisplayPolicy {
             mNavigationBar = null;
         } else if (mNotificationShade == win) {
             mNotificationShade = null;
+            mNotificationShadeExpanded = false;
         }
         if (mLastFocusedWindow == win) {
             mLastFocusedWindow = null;
@@ -1410,6 +1412,14 @@ public class DisplayPolicy {
 
     WindowState getNotificationShade() {
         return mNotificationShade;
+    }
+
+    void setNotificationShadeExpanded(boolean expanded) {
+        mNotificationShadeExpanded = expanded;
+    }
+
+    boolean isNotificationShadeExpanded() {
+        return mNotificationShadeExpanded;
     }
 
     WindowState getNavigationBar() {
