@@ -48,6 +48,7 @@ message WindowLayoutParamsProto {
         ROTATION_ANIMATION_CROSSFADE = 1;
         ROTATION_ANIMATION_JUMPCUT = 2;
         ROTATION_ANIMATION_SEAMLESS = 3;
+        ROTATION_ANIMATION_ROTATE_OPAQUE = 4;
     }
     optional RotationAnimation rotation_animation = 15;
 

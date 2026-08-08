@@ -19,6 +19,7 @@ package com.android.wm.shell.transition;
 import static android.util.RotationUtils.deltaRotation;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_CROSSFADE;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_JUMPCUT;
+import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_ROTATE_OPAQUE;
 import static android.view.WindowManagerPolicyConstants.SCREEN_FREEZE_LAYER_BASE;
 
 import static com.android.wm.shell.transition.DefaultSurfaceAnimator.buildSurfaceAnimation;
@@ -40,6 +41,7 @@ import android.view.SurfaceControl.Transaction;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.Transformation;
 import android.window.ScreenCapture;
 import android.window.TransitionInfo;
 
@@ -357,6 +359,12 @@ class ScreenRotationAnimation {
 
     private void startDisplayRotation(@NonNull ArrayList<Animator> animations,
             @NonNull Runnable finishCallback, @NonNull ShellExecutor mainExecutor) {
+        if (mAnimHint == ROTATION_ANIMATION_ROTATE_OPAQUE) {
+            DefaultSurfaceAnimator.buildSurfaceAnimation(animations, mRotateEnterAnimation,
+                    finishCallback, mTransactionPool, mainExecutor,
+                    new OpaqueAnimationAdapter(mRotateEnterAnimation, getEnterSurface()));
+            return;
+        }
         buildSurfaceAnimation(animations, mRotateEnterAnimation, getEnterSurface(), finishCallback,
                 mTransactionPool, mainExecutor, null /* position */, 0 /* cornerRadius */,
                 null /* clipRect */, null);
@@ -416,6 +424,26 @@ class ScreenRotationAnimation {
     private static class LumaAnimation extends Animation {
         LumaAnimation(long durationMillis) {
             setDuration(durationMillis);
+        }
+    }
+
+    /** Applies the standard rotation transform without its alpha component. */
+    private static class OpaqueAnimationAdapter extends DefaultSurfaceAnimator.AnimationAdapter {
+        private final Animation mAnimation;
+        private final Transformation mTransformation = new Transformation();
+        private final float[] mMatrix = new float[9];
+
+        OpaqueAnimationAdapter(Animation animation, SurfaceControl leash) {
+            super(leash);
+            mAnimation = animation;
+        }
+
+        @Override
+        void applyTransformation(ValueAnimator animator, long currentPlayTime) {
+            mTransformation.clear();
+            mAnimation.getTransformation(currentPlayTime, mTransformation);
+            mTransaction.setMatrix(mLeash, mTransformation.getMatrix(), mMatrix);
+            mTransaction.setAlpha(mLeash, 1f);
         }
     }
 

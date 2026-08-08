@@ -7812,6 +7812,7 @@ public class WindowManagerService extends IWindowManager.Stub
             if (w == null || w != w.mDisplayContent.getDisplayPolicy().getNotificationShade()) {
                 return;
             }
+            w.mDisplayContent.getDisplayPolicy().setNotificationShadeExpanded(expanded);
             final WindowProcessController topApp = mAtmService.mTopApp;
             // Demotes the priority of top app if notification shade is expanded to occlude the app.
             // So the notification shade may have more capacity to draw and animate.

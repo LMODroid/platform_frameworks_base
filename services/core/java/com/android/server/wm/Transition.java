@@ -30,6 +30,7 @@ import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.Display.INVALID_DISPLAY;
 import static android.view.WindowManager.INPUT_CONSUMER_RECENTS_ANIMATION;
 import static android.view.WindowManager.KEYGUARD_VISIBILITY_TRANSIT_FLAGS;
+import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_ROTATE_OPAQUE;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_SEAMLESS;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_UNSPECIFIED;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_STARTING;
@@ -3355,6 +3356,10 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
     }
 
     private static int getTaskRotationAnimation(@NonNull Task task) {
+        if (task.mDisplayContent != null
+                && task.mDisplayContent.getDisplayPolicy().isNotificationShadeExpanded()) {
+            return ROTATION_ANIMATION_ROTATE_OPAQUE;
+        }
         final ActivityRecord top = task.getTopVisibleActivity();
         if (top == null) return ROTATION_ANIMATION_UNSPECIFIED;
         final WindowState mainWin = top.findMainWindow(false);

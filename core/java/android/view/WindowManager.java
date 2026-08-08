@@ -4078,6 +4078,9 @@ public interface WindowManager extends ViewManager {
          */
         public static final int ROTATION_ANIMATION_SEAMLESS = 3;
 
+        /** Uses the standard rotation animation while keeping the entering surface opaque. @hide */
+        public static final int ROTATION_ANIMATION_ROTATE_OPAQUE = 4;
+
         /**
          * Define the exit and entry animations used on this window when the device is rotated.
          * This only has an affect if the incoming and outgoing topmost
@@ -6169,6 +6172,8 @@ public interface WindowManager extends ViewManager {
                     return "JUMPCUT";
                 case ROTATION_ANIMATION_SEAMLESS:
                     return "SEAMLESS";
+                case ROTATION_ANIMATION_ROTATE_OPAQUE:
+                    return "ROTATE_OPAQUE";
                 default:
                     return Integer.toString(rotationAnimation);
             }
