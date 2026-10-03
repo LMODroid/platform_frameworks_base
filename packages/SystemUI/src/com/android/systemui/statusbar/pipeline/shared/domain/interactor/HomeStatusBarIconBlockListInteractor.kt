@@ -46,7 +46,7 @@ constructor(
 
     /** Tracks the user setting [Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON] */
     private val shouldShowVibrateIcon: Flow<Boolean> =
-        secureSettingsRepository.boolSetting(Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON, false)
+        secureSettingsRepository.boolSetting(Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON, true)
 
     private val tunerBlockedIcons: Flow<Set<String>> =
         secureSettingsRepository
