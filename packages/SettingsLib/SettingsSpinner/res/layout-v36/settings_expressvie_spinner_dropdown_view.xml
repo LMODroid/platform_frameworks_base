@@ -29,6 +29,7 @@
   <TextView
       android:id="@android:id/text1"
       style="@style/SettingsSpinnerDropdownText"
+      android:duplicateParentState="true"
       android:gravity="center_vertical"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

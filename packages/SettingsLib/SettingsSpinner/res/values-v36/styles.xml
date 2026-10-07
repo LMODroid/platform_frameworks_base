@@ -52,7 +52,7 @@
 
     <style name="SettingsSpinnerDropdownText">
         <item name="android:textAppearance">@style/TextAppearance.SettingsLib.LabelLarge</item>
-        <item name="android:textColor">@color/settingslib_spinner_dropdown_color</item>
+        <item name="android:textColor">@color/settings_expressive_spinner_dropdown_text_color</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">marquee</item>
     </style>
