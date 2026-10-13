@@ -300,6 +300,7 @@ constructor(
         KeyguardBecameVisible,
         PrimaryBouncerBecameVisible,
         SecureCameraLaunched,
+        CameraLaunchedWhileUnlocked,
     }
 
     /** Whether camera is launched over keyguard. */
@@ -307,7 +308,13 @@ constructor(
         merge(
                 onCameraLaunchDetected
                     .filter { it.type == CameraLaunchType.POWER_DOUBLE_TAP }
-                    .map { SecureCameraRelatedEventType.SecureCameraLaunched },
+                    .map {
+                        if (isKeyguardShowing()) {
+                            SecureCameraRelatedEventType.SecureCameraLaunched
+                        } else {
+                            SecureCameraRelatedEventType.CameraLaunchedWhileUnlocked
+                        }
+                    },
                 isKeyguardVisible
                     .filter { it }
                     .map { SecureCameraRelatedEventType.KeyguardBecameVisible },
@@ -320,6 +327,7 @@ constructor(
                     SecureCameraRelatedEventType.SecureCameraLaunched -> true
                     // When secure camera is closed, either the keyguard or the primary bouncer will
                     // have to show, so those events tell us that secure camera is no longer active.
+                    SecureCameraRelatedEventType.CameraLaunchedWhileUnlocked -> false
                     SecureCameraRelatedEventType.KeyguardBecameVisible -> false
                     SecureCameraRelatedEventType.PrimaryBouncerBecameVisible -> false
                 }
