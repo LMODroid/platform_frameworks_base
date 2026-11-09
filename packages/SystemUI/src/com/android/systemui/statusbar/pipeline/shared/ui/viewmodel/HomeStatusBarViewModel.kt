@@ -340,6 +340,13 @@ constructor(
             )
             .flowOn(bgDispatcher)
 
+    /** Whether keyguard is transitioning from an occluding app back to the lockscreen. */
+    private val isTransitioningFromOccludedToLockscreen: Flow<Boolean> =
+        keyguardTransitionInteractor
+            .isInTransition(Edge.create(from = OCCLUDED, to = LOCKSCREEN))
+            .distinctUntilChanged()
+            .flowOn(bgDispatcher)
+
     private val isHomeStatusBarAllowedByScene: Flow<Boolean> =
         combine(
                 sceneInteractor.currentScene,
@@ -443,7 +450,13 @@ constructor(
                 keyguardInteractor.isSecureCameraActive,
                 headsUpNotificationInteractor.statusBarHeadsUpStatus,
                 isTransitioningFromGoneToDream,
-            ) { isHomeStatusBarAllowed, isSecureCameraActive, headsUpState, isGoneToDream ->
+                isTransitioningFromOccludedToLockscreen,
+            ) {
+                isHomeStatusBarAllowed,
+                isSecureCameraActive,
+                headsUpState,
+                isGoneToDream,
+                isOccludedToLockscreen ->
                 val showForHeadsUp =
                     if (StatusBarNoHunBehavior.isEnabled) {
                         false
@@ -462,8 +475,9 @@ constructor(
                 // Similar to launching the camera: when dream is launched, the icons are
                 // momentarily visible because the dream animation has finished, but SysUI has not
                 // been informed that the dream is full-screen. See b/273314977.
-                showForHeadsUp ||
-                    (isHomeStatusBarAllowed && !isSecureCameraActive && !isGoneToDream)
+                !isOccludedToLockscreen &&
+                    (showForHeadsUp ||
+                        (isHomeStatusBarAllowed && !isSecureCameraActive && !isGoneToDream))
             }
             .distinctUntilChanged()
             .logDiffsForTable(
