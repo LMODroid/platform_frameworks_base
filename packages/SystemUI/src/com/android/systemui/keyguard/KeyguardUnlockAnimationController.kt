@@ -348,13 +348,23 @@ constructor(
             }
             addListener(
                 object : AnimatorListenerAdapter() {
+                    private var wasCancelled = false
+
+                    override fun onAnimationStart(animation: Animator) {
+                        wasCancelled = false
+                    }
+
+                    override fun onAnimationCancel(animation: Animator) {
+                        wasCancelled = true
+                    }
+
                     override fun onAnimationEnd(animation: Animator) {
                         // If we animated the surface alpha to 0f, it means we cancelled a swipe to
                         // dismiss. In this case, we should ask the KeyguardViewMediator to end the
                         // remote animation to hide the surface behind the keyguard, but should
                         // *not* call onKeyguardExitRemoteAnimationFinished since that will hide the
                         // keyguard and unlock the device as well as hiding the surface.
-                        if (surfaceBehindAlpha == 0f) {
+                        if (!wasCancelled && surfaceBehindAlpha == 0f) {
                             Log.d(TAG, "surfaceBehindAlphaAnimator#onAnimationEnd")
                             surfaceBehindRemoteAnimationTargets = null
                             openingWallpaperTargets = null
