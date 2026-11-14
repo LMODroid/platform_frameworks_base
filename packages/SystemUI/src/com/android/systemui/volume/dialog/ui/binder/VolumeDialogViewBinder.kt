@@ -110,6 +110,10 @@ constructor(
         )
     }
 
+    private val dialogWindowMinWidth: Int by lazy {
+        context.resources.getDimensionPixelSize(R.dimen.volume_dialog_window_width)
+    }
+
     fun CoroutineScope.bind(dialog: Dialog, isVolumeDialogVertical: Boolean = true) {
         // Root view of the Volume Dialog.
         val root: ViewGroup = dialog.requireViewById(R.id.volume_dialog)
@@ -161,6 +165,11 @@ constructor(
                         bottom = insetsValues.bottom,
                     )
                     if (isVolumeDialogVertical) {
+                        // The window wraps the content width, but minWidth includes padding.
+                        // Grow it by the horizontal insets so the content keeps its full width
+                        // and the landscape ringer drawer isn't clipped by the window bounds.
+                        (view as? ConstraintLayout)?.minWidth =
+                            dialogWindowMinWidth + insetsValues.left + insetsValues.right
                         mainSliderContainer?.updateMargin(
                             top = getSliderVerticalMargin() - view.paddingTop,
                             bottom = getSliderVerticalMargin() - view.paddingBottom,
