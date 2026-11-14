@@ -26,6 +26,7 @@ import android.view.ViewTreeObserver
 import android.view.WindowInsets
 import android.view.accessibility.AccessibilityEvent
 import androidx.compose.ui.util.lerp
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updatePadding
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.FloatValueHolder
@@ -81,6 +82,9 @@ constructor(
     private val mainSliderVerticalMargin: Int by lazy {
         context.resources.getDimensionPixelSize(R.dimen.volume_dialog_slider_vertical_margin)
     }
+    private val dialogWindowMinWidth: Int by lazy {
+        context.resources.getDimensionPixelSize(R.dimen.volume_dialog_window_width)
+    }
 
     fun CoroutineScope.bind(dialog: Dialog, isVolumeDialogVertical: Boolean = true) {
         // Root view of the Volume Dialog.
@@ -131,6 +135,11 @@ constructor(
                         bottom = insetsValues.bottom,
                     )
                     if (isVolumeDialogVertical) {
+                        // The window wraps the content width, but minWidth includes padding.
+                        // Grow it by the horizontal insets so the content keeps its full width
+                        // and the landscape ringer drawer isn't clipped by the window bounds.
+                        (view as? ConstraintLayout)?.minWidth =
+                            dialogWindowMinWidth + insetsValues.left + insetsValues.right
                         mainSliderContainer?.updateMargin(
                             top = mainSliderVerticalMargin - view.paddingTop,
                             bottom = mainSliderVerticalMargin - view.paddingBottom,
