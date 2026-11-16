@@ -223,6 +223,10 @@ constructor(
         clearCachedInsets()
     }
 
+    override fun onLayoutDirectionChanged(isLayoutRtl: Boolean) {
+        clearCachedInsets()
+    }
+
     override fun onMaxBoundsChanged() {
         notifyInsetsChanged()
     }
