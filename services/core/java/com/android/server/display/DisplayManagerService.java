@@ -1142,14 +1142,16 @@ public final class DisplayManagerService extends SystemService {
     @VisibleForTesting
     void performTraversalInternal(SurfaceControl.Transaction t,
             SparseArray<SurfaceControl.Transaction> displayTransactions) {
+        final SurfaceControl.Transaction unowned = new SurfaceControl.Transaction();
         synchronized (mSyncRoot) {
             if (!mPendingTraversal) {
                 return;
             }
             mPendingTraversal = false;
 
-            performTraversalLocked(t, displayTransactions);
+            performTraversalLocked(unowned, displayTransactions);
         }
+        unowned.apply();
 
         // List is self-synchronized copy-on-write.
         for (DisplayTransactionListener listener : mDisplayTransactionListeners) {
