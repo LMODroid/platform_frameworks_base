@@ -80,7 +80,7 @@ constructor(
     override fun start() {
         listenForDreamingToAlternateBouncer()
         listenForDreamingToOccluded()
-        listenForDreamingToGoneWhenDismissable()
+        listenForDreamingToLockscreenOrGoneLegacy()
         listenForDreamingToGoneFromBiometricUnlock()
         listenForDreamingToLockscreenOrGone()
         listenForDreamingToAodOrDozing()
@@ -249,24 +249,28 @@ constructor(
         }
     }
 
-    private fun listenForDreamingToGoneWhenDismissable() {
-        if (SceneContainerFlag.isEnabled) {
-            return
-        }
-
-        if (KeyguardWmStateRefactor.isEnabled) {
+    private fun listenForDreamingToLockscreenOrGoneLegacy() {
+        if (SceneContainerFlag.isEnabled || KeyguardWmStateRefactor.isEnabled) {
             return
         }
 
         scope.launch {
             keyguardInteractor.isAbleToDream
-                .filterRelevantKeyguardStateAnd { isDreaming -> !isDreaming }
+                .filterRelevantKeyguardStateAnd { isAbleToDream -> !isAbleToDream }
                 .collect {
-                    if (
-                        keyguardInteractor.isKeyguardDismissible.value &&
-                            !keyguardInteractor.isKeyguardShowing.value
-                    ) {
-                        startTransitionTo(KeyguardState.GONE)
+                    val keyguardShowing = keyguardInteractor.isKeyguardShowing.value
+                    val dismissible = keyguardInteractor.isKeyguardDismissible.value
+
+                    if (dismissible && !keyguardShowing) {
+                        startTransitionTo(
+                            KeyguardState.GONE,
+                            ownerReason = "Dream ended with keyguard dismissed",
+                        )
+                    } else {
+                        startTransitionTo(
+                            KeyguardState.LOCKSCREEN,
+                            ownerReason = "Dream ended with keyguard showing",
+                        )
                     }
                 }
         }
