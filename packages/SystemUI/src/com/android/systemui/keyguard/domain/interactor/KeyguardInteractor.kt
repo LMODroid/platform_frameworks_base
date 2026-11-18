@@ -382,7 +382,7 @@ constructor(
                         currentKeyguardState == LOCKSCREEN &&
                         legacyShadeExpansion != 1f
                 ) {
-                    emit(MathUtils.constrainedMap(0f, 1f, 0.82f, 1f, legacyShadeExpansion))
+                    emit(MathUtils.constrainedMap(0f, 1f, 0.85f, 1f, legacyShadeExpansion))
                 } else if (
                     !onGlanceableHub &&
                         isKeyguardDismissible &&

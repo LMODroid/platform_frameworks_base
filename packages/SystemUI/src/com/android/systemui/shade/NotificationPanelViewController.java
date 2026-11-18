@@ -3724,6 +3724,11 @@ public final class NotificationPanelViewController implements
                 }
 
                 @Override
+                public float getPanelViewExpandedFraction() {
+                    return getExpandedFraction();
+                }
+
+                @Override
                 public boolean shouldHeadsUpBeVisible() {
                     return mHeadsUpAppearanceController != null &&
                             mHeadsUpAppearanceController.shouldHeadsUpStatusBarBeVisible();
