@@ -16,6 +16,7 @@
  */
 package com.android.systemui.keyguard.data.quickaffordance
 
+import android.app.AlertDialog
 import android.net.Uri
 import android.platform.test.annotations.DisableFlags
 import android.platform.test.annotations.EnableFlags
@@ -24,7 +25,6 @@ import android.provider.Settings.Secure.ZEN_DURATION_FOREVER
 import android.provider.Settings.Secure.ZEN_DURATION_PROMPT
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.android.settingslib.notification.modes.EnableDndDialogFactory
 import com.android.settingslib.notification.modes.TestModeBuilder.MANUAL_DND
 import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
@@ -42,7 +42,6 @@ import com.android.systemui.statusbar.policy.data.repository.fakeZenModeReposito
 import com.android.systemui.statusbar.policy.domain.interactor.zenModeInteractor
 import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.mock
-import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
 import java.time.Duration
 import kotlinx.coroutines.test.runCurrent
@@ -68,7 +67,7 @@ class DoNotDisturbQuickAffordanceConfigTest : SysuiTestCase() {
 
     @Mock private lateinit var userTracker: UserTracker
     @Mock private lateinit var conditionUri: Uri
-    @Mock private lateinit var mEnableDndDialogFactory: EnableDndDialogFactory
+    @Mock private lateinit var mDialog: AlertDialog
 
     private lateinit var underTest: DoNotDisturbQuickAffordanceConfig
 
@@ -83,7 +82,7 @@ class DoNotDisturbQuickAffordanceConfigTest : SysuiTestCase() {
                 userTracker,
                 testScope.backgroundScope,
                 conditionUri,
-                mEnableDndDialogFactory,
+                { mDialog },
             )
     }
 
@@ -178,17 +177,15 @@ class DoNotDisturbQuickAffordanceConfigTest : SysuiTestCase() {
         testScope.runTest {
             val expandable: Expandable = mock()
             secureSettingsRepository.setInt(Settings.Secure.ZEN_DURATION, ZEN_DURATION_PROMPT)
-            whenever(mEnableDndDialogFactory.createDialog()).thenReturn(mock())
             collectLastValue(underTest.lockScreenState)
             runCurrent()
 
             val result = underTest.onTriggered(expandable)
 
             assertTrue(result is KeyguardQuickAffordanceConfig.OnTriggeredResult.ShowDialog)
-            assertEquals(
-                expandable,
-                (result as KeyguardQuickAffordanceConfig.OnTriggeredResult.ShowDialog).expandable,
-            )
+            result as KeyguardQuickAffordanceConfig.OnTriggeredResult.ShowDialog
+            assertEquals(expandable, result.expandable)
+            assertEquals(mDialog, result.dialog)
         }
 
     @Test

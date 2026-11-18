@@ -16,14 +16,13 @@
  */
 package com.android.systemui.keyguard.data.quickaffordance
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import android.service.notification.ZenModeConfig
 import android.util.Log
-import com.android.settingslib.notification.modes.EnableDndDialogFactory
-import com.android.settingslib.notification.modes.EnableDndDialogMetricsLogger
 import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
@@ -35,6 +34,8 @@ import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.settings.UserTracker
 import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.statusbar.policy.domain.interactor.ZenModeInteractor
+import com.android.systemui.statusbar.policy.ui.dialog.ModesDialogDelegate
+import dagger.Lazy
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -50,7 +51,8 @@ class DoNotDisturbQuickAffordanceConfig(
     private val userTracker: UserTracker,
     @Background private val backgroundScope: CoroutineScope,
     private val testConditionId: Uri?,
-    testDialogFactory: EnableDndDialogFactory?,
+    /** The "Turn on Do Not Disturb" dialog, the same one quick settings shows. */
+    private val durationDialog: () -> AlertDialog,
 ) : KeyguardQuickAffordanceConfig {
 
     @Inject
@@ -59,7 +61,15 @@ class DoNotDisturbQuickAffordanceConfig(
         interactor: ZenModeInteractor,
         userTracker: UserTracker,
         @Background backgroundScope: CoroutineScope,
-    ) : this(context, interactor, userTracker, backgroundScope, null, null)
+        modesDialogDelegate: Lazy<ModesDialogDelegate>,
+    ) : this(
+        context,
+        interactor,
+        userTracker,
+        backgroundScope,
+        null,
+        { modesDialogDelegate.get().makeDndDurationDialog() },
+    )
 
     private var settingsValue: Int = 0
 
@@ -81,16 +91,6 @@ class DoNotDisturbQuickAffordanceConfig(
                         true, /* shortVersion */
                     )
                     .id
-
-    private val dialogFactory: EnableDndDialogFactory by lazy {
-        testDialogFactory
-            ?: EnableDndDialogFactory(
-                context,
-                R.style.Theme_SystemUI_Dialog,
-                true, /* cancelIsNeutral */
-                EnableDndDialogMetricsLogger(context),
-            )
-    }
 
     override val key: String = BuiltInKeyguardQuickAffordanceKeys.DO_NOT_DISTURB
 
@@ -157,7 +157,7 @@ class DoNotDisturbQuickAffordanceConfig(
                 if (interactor.shouldAskForZenDuration(dnd)) {
                     // NOTE: The dialog handles turning on the mode itself.
                     return KeyguardQuickAffordanceConfig.OnTriggeredResult.ShowDialog(
-                        dialogFactory.createDialog(),
+                        durationDialog(),
                         expandable,
                     )
                 } else {

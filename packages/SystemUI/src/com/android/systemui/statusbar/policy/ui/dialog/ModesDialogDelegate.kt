@@ -17,7 +17,6 @@
 package com.android.systemui.statusbar.policy.ui.dialog
 
 import android.annotation.UiThread
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
@@ -223,7 +222,7 @@ constructor(
      * dialog itself.
      */
     @UiThread
-    fun makeDndDurationDialog(): Dialog {
+    fun makeDndDurationDialog(): SystemUIDialog {
         // Drawn like this dialog (tiles, Material buttons) instead of SettingsLib's
         // EnableDndDialogFactory AlertDialog; same choices and behavior.
         val state = EnableDndDialogState(context, dndDurationDialogLogger)
