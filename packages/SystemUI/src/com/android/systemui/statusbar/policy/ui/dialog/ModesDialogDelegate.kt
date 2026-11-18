@@ -37,7 +37,6 @@ import com.android.compose.PlatformOutlinedButton
 import com.android.compose.dialog.AlertDialogContent
 import com.android.internal.annotations.VisibleForTesting
 import com.android.internal.jank.InteractionJankMonitor
-import com.android.settingslib.notification.modes.EnableDndDialogFactory
 import com.android.systemui.animation.DialogCuj
 import com.android.systemui.animation.DialogTransitionAnimator
 import com.android.systemui.animation.Expandable
@@ -54,6 +53,7 @@ import com.android.systemui.statusbar.phone.ComponentSystemUIDialog
 import com.android.systemui.statusbar.phone.SystemUIDialog
 import com.android.systemui.statusbar.phone.SystemUIDialogFactory
 import com.android.systemui.statusbar.phone.create
+import com.android.systemui.statusbar.policy.ui.dialog.composable.EnableDndDialogContent
 import com.android.systemui.statusbar.policy.ui.dialog.composable.ModeTileGrid
 import com.android.systemui.statusbar.policy.ui.dialog.viewmodel.ModesDialogViewModel
 import com.android.systemui.util.Assert
@@ -224,19 +224,20 @@ constructor(
      */
     @UiThread
     fun makeDndDurationDialog(): Dialog {
-        val dialog =
-            EnableDndDialogFactory(
-                    context,
-                    R.style.Theme_SystemUI_Dialog,
-                    /* cancelIsNeutral= */ true,
-                    dndDurationDialogLogger,
-                )
-                .createDialog()
-        SystemUIDialog.applyFlags(dialog)
-        SystemUIDialog.setShowForAllUsers(dialog, true)
-        SystemUIDialog.registerDismissListener(dialog)
-        SystemUIDialog.setDialogSize(dialog)
-        return dialog
+        // Drawn like this dialog (tiles, Material buttons) instead of SettingsLib's
+        // EnableDndDialogFactory AlertDialog; same choices and behavior.
+        val state = EnableDndDialogState(context, dndDurationDialogLogger)
+        return sysuiDialogFactory.create(context = shadeDisplayContextRepository.context) { dialog
+            ->
+            EnableDndDialogContent(
+                state = state,
+                onCancel = { dialog.dismiss() },
+                onTurnOn = {
+                    state.turnOn()
+                    dialog.dismiss()
+                },
+            )
+        }
     }
 
     companion object {
