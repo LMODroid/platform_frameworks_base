@@ -176,6 +176,11 @@ interface ShadeViewStateProvider {
     /** Returns the expanded height of the panel view. */
     @Deprecated("deprecated by SceneContainerFlag.isEnabled") val panelViewExpandedHeight: Float
 
+    /** Returns the expanded fraction of the panel view. */
+    @Deprecated("deprecated by SceneContainerFlag.isEnabled")
+    val panelViewExpandedFraction: Float
+        get() = 1f
+
     /** Return the fraction of the shade that's expanded, when in lockscreen. */
     @Deprecated("deprecated by SceneContainerFlag.isEnabled") val lockscreenShadeDragProgress: Float
 }

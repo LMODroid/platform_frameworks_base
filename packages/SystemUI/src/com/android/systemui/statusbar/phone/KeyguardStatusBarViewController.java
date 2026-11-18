@@ -113,6 +113,7 @@ import javax.inject.Inject;
 /** View Controller for {@link com.android.systemui.statusbar.phone.KeyguardStatusBarView}. */
 public class KeyguardStatusBarViewController extends ViewController<KeyguardStatusBarView> {
     private static final String TAG = "KeyguardStatusBarViewController";
+    private static final float KEYGUARD_DISMISS_FADE_END = 0.15f;
     private static final AnimationProperties KEYGUARD_HUN_PROPERTIES =
             new AnimationProperties().setDuration(StackStateAnimator.ANIMATION_DURATION_STANDARD);
 
@@ -286,6 +287,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
                         mDelayShowingKeyguardStatusBar = false;
                     }
                 }
+
             };
 
     @VisibleForTesting
@@ -666,14 +668,16 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
 
         float alphaQsExpansion = 1 - Math.min(
                 1, mShadeViewStateProvider.getLockscreenShadeDragProgress() * 2);
+        float dismissAmount = mKeyguardStateController.getDismissAmount();
+        float keyguardContentsAlpha = getKeyguardContentsAlpha();
 
         float newAlpha;
         if (mExplicitAlphaByCommunal != -1) {
             newAlpha = mExplicitAlphaByCommunal;
         } else if (mExplicitAlpha != -1) {
-            newAlpha = mExplicitAlpha;
+            newAlpha = Math.min(mExplicitAlpha, keyguardContentsAlpha);
         } else {
-            newAlpha = Math.min(getKeyguardContentsAlpha(), alphaQsExpansion)
+            newAlpha = Math.min(keyguardContentsAlpha, alphaQsExpansion)
                     * mKeyguardStatusBarAnimateAlpha
                     * (1.0f - mKeyguardHeadsUpShowingAmount);
         }
@@ -746,6 +750,15 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
         }
         alpha = MathUtils.saturate(alpha);
         alpha = (float) Math.pow(alpha, 0.75);
+        if (isKeyguardShowing()) {
+            float swipeAlpha = MathUtils.constrainedMap(
+                    0f,
+                    1f,
+                    1f - KEYGUARD_DISMISS_FADE_END,
+                    1f,
+                    mShadeViewStateProvider.getPanelViewExpandedFraction());
+            alpha = Math.min(alpha, swipeAlpha);
+        }
         return alpha;
     }
 
