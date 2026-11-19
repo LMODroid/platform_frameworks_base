@@ -395,6 +395,18 @@ constructor(
             .onStart { emit(1f) }
             .distinctUntilChanged()
 
+    /** Alpha for the regular home/app status bar while the legacy keyguard panel is moving. */
+    val homeStatusBarAlpha: Flow<Float> =
+        combine(
+                shadeRepository.legacyShadeExpansion,
+                keyguardTransitionInteractor.transitionValue(GONE),
+            ) { expansion, goneTransitionValue ->
+                val expansionAlpha =
+                    1f - MathUtils.constrainedMap(0f, 1f, 0.85f, 0.875f, expansion)
+                minOf(expansionAlpha, goneTransitionValue)
+            }
+            .distinctUntilChanged()
+
     val keyguardTranslationY: Flow<Float> =
         configurationInteractor
             .dimensionPixelSize(R.dimen.keyguard_translate_distance_on_swipe_up)

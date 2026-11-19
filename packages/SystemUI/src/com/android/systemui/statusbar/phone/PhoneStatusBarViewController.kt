@@ -31,6 +31,7 @@ import com.android.systemui.battery.BatteryMeterView
 import com.android.systemui.dagger.qualifiers.DisplaySpecific
 import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.flags.Flags.ENABLE_UNFOLD_STATUS_BAR_ANIMATIONS
+import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.plugins.DarkIconDispatcher
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
@@ -55,10 +56,12 @@ import com.android.systemui.unfold.UNFOLD_STATUS_BAR
 import com.android.systemui.unfold.util.ScopedUnfoldTransitionProgressProvider
 import com.android.systemui.user.ui.viewmodel.StatusBarUserChipViewModel
 import com.android.systemui.util.ViewController
+import com.android.systemui.util.kotlin.collectFlow
 import com.android.systemui.util.kotlin.getOrNull
 import com.android.systemui.util.view.ViewUtil
 import dagger.Lazy
 import java.util.Optional
+import java.util.function.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Provider
@@ -87,6 +90,7 @@ private constructor(
     private val darkIconDispatcher: DarkIconDispatcher,
     private val statusBarContentInsetsProviderStore: StatusBarContentInsetsProviderStore,
     private val lazyStatusBarShadeDisplayPolicy: Lazy<StatusBarTouchShadeDisplayPolicy>,
+    private val keyguardInteractor: KeyguardInteractor,
 ) : ViewController<PhoneStatusBarView>(view) {
 
     private lateinit var battery: BatteryMeterView
@@ -149,6 +153,17 @@ private constructor(
 
         progressProvider?.setReadyToHandleTransition(true)
         configurationController.addCallback(configurationListener)
+
+        if (!SceneContainerFlag.isEnabled) {
+            collectFlow(
+                mView,
+                keyguardInteractor.homeStatusBarAlpha,
+                Consumer { alpha ->
+                    Log.d(TAG, "homeStatusBarAlpha=$alpha")
+                    mView.alpha = alpha
+                },
+            )
+        }
 
         if (moveFromCenterAnimationController == null) return
 
@@ -414,6 +429,7 @@ private constructor(
         @DisplaySpecific private val darkIconDispatcher: DarkIconDispatcher,
         private val statusBarContentInsetsProviderStore: StatusBarContentInsetsProviderStore,
         private val lazyStatusBarShadeDisplayPolicy: Lazy<StatusBarTouchShadeDisplayPolicy>,
+        private val keyguardInteractor: KeyguardInteractor,
     ) {
         fun create(view: PhoneStatusBarView): PhoneStatusBarViewController {
             val statusBarMoveFromCenterAnimationController =
@@ -443,6 +459,7 @@ private constructor(
                 darkIconDispatcher,
                 statusBarContentInsetsProviderStore,
                 lazyStatusBarShadeDisplayPolicy,
+                keyguardInteractor,
             )
         }
     }
