@@ -32,6 +32,7 @@ import android.view.ViewConfiguration
 import androidx.annotation.VisibleForTesting
 import com.android.systemui.Gefingerpoken
 import com.android.systemui.display.dagger.SystemUIDisplaySubcomponent.DisplayAware
+import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.plugins.DarkIconDispatcher
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
@@ -56,11 +57,13 @@ import com.android.systemui.unfold.UNFOLD_STATUS_BAR
 import com.android.systemui.unfold.util.ScopedUnfoldTransitionProgressProvider
 import com.android.systemui.user.ui.viewmodel.StatusBarUserChipViewModel
 import com.android.systemui.util.ViewController
+import com.android.systemui.util.kotlin.collectFlow
 import com.android.systemui.util.kotlin.getOrNull
 import com.android.systemui.util.view.ViewUtil
 import com.libremobileos.providers.LMOSettings
 import dagger.Lazy
 import java.util.Optional
+import java.util.function.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Provider
@@ -92,6 +95,7 @@ private constructor(
     private val shadeExpansionTargetDisplayInteractor: ShadeExpansionTargetDisplayInteractor,
     private val lazyShadeDisplaysRepository: Lazy<ShadeDisplaysRepository>,
     private val statusBarWindowControllerStore: StatusBarWindowControllerStore,
+    private val keyguardInteractor: KeyguardInteractor,
 ) : ViewController<PhoneStatusBarView>(view) {
 
     private lateinit var clock: Clock
@@ -228,6 +232,17 @@ private constructor(
         }
         progressProvider?.setReadyToHandleTransition(true)
         configurationController.addCallback(configurationListener)
+
+        if (!SceneContainerFlag.isEnabled) {
+            collectFlow(
+                mView,
+                keyguardInteractor.homeStatusBarAlpha,
+                Consumer { alpha ->
+                    Log.d(TAG, "homeStatusBarAlpha=$alpha")
+                    mView.alpha = alpha
+                },
+            )
+        }
 
         mView.context.contentResolver.registerContentObserver(
             Settings.System.getUriFor(LMOSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL),
@@ -513,6 +528,7 @@ private constructor(
         private val shadeExpansionTargetDisplayInteractor: ShadeExpansionTargetDisplayInteractor,
         private val lazyShadeDisplaysRepository: Lazy<ShadeDisplaysRepository>,
         private val statusBarWindowControllerStore: StatusBarWindowControllerStore,
+        private val keyguardInteractor: KeyguardInteractor,
     ) {
         fun create(view: PhoneStatusBarView): PhoneStatusBarViewController {
             return PhoneStatusBarViewController(
@@ -538,6 +554,7 @@ private constructor(
                 shadeExpansionTargetDisplayInteractor,
                 lazyShadeDisplaysRepository,
                 statusBarWindowControllerStore,
+                keyguardInteractor,
             )
         }
     }
