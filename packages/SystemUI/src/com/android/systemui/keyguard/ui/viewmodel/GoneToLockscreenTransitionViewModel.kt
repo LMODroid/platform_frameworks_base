@@ -16,6 +16,7 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
+import android.util.MathUtils
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.keyguard.domain.interactor.FromGoneTransitionInteractor.Companion.TO_LOCKSCREEN_DURATION
 import com.android.systemui.keyguard.shared.model.Edge
@@ -24,15 +25,18 @@ import com.android.systemui.keyguard.shared.model.KeyguardState.LOCKSCREEN
 import com.android.systemui.keyguard.ui.KeyguardTransitionAnimationFlow
 import com.android.systemui.keyguard.ui.transitions.DeviceEntryIconTransition
 import com.android.systemui.scene.shared.model.Scenes
+import com.android.systemui.shade.data.repository.ShadeRepository
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @SysUISingleton
 class GoneToLockscreenTransitionViewModel
 @Inject
 constructor(
     animationFlow: KeyguardTransitionAnimationFlow,
+    private val shadeRepository: ShadeRepository,
 ) : DeviceEntryIconTransition {
 
     private val transitionAnimation =
@@ -52,7 +56,37 @@ constructor(
             onCancel = { 1f },
         )
 
-    val lockscreenAlpha: Flow<Float> = shortcutsAlpha
+    val lockscreenAlpha: Flow<Float> = run {
+        var useExpansionAlpha = false
+        transitionAnimation
+            .sharedFlow(
+                duration = TO_LOCKSCREEN_DURATION,
+                onStart = {
+                    val expansion = shadeRepository.legacyShadeExpansion.value
+                    useExpansionAlpha =
+                        shadeRepository.legacyShadeTracking.value ||
+                            expansion > 0f && expansion < 1f
+                },
+                onStep = { transitionProgress ->
+                    if (useExpansionAlpha) {
+                        dismissAlpha()
+                    } else {
+                        MathUtils.constrainedMap(0f, 1f, 0f, 0.5f, transitionProgress)
+                    }
+                },
+                onCancel = { if (useExpansionAlpha) dismissAlpha() else 1f },
+            )
+            .distinctUntilChanged()
+    }
+
+    private fun dismissAlpha(): Float =
+        MathUtils.constrainedMap(
+            0f,
+            1f,
+            0.85f,
+            1f,
+            shadeRepository.legacyShadeExpansion.value,
+        )
 
     val deviceEntryBackgroundViewAlpha: Flow<Float> =
         transitionAnimation.immediatelyTransitionTo(1f)
