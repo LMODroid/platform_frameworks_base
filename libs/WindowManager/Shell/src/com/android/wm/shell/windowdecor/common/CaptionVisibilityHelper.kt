@@ -163,7 +163,8 @@ class CaptionVisibilityHelper(
     private fun allowedForDisplay(display: Display): Boolean {
         if (
             display.type != Display.TYPE_INTERNAL &&
-                !displayController.isDisplayInTopology(display.displayId)
+                !displayController.isDisplayInTopology(display.displayId) &&
+                !isVncDesktopDisplay(display)
         ) {
             return false
         }
@@ -175,4 +176,13 @@ class CaptionVisibilityHelper(
         return desktopState.overridesShowAppHandle &&
             display.minSizeDimensionDp >= WindowManager.LARGE_SCREEN_SMALLEST_SCREEN_WIDTH_DP
     }
+
+    /**
+     * The display of our desktop mode (VncFlinger, see DisplayContent#isVncDesktopDisplay). It is a
+     * desktop of its own, kept out of the display topology so the remote mouse stays on it.
+     */
+    private fun isVncDesktopDisplay(display: Display): Boolean =
+        display.type == Display.TYPE_VIRTUAL &&
+            display.name == "VNC" &&
+            (display.flags and Display.FLAG_TRUSTED) != 0
 }
