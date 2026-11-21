@@ -676,9 +676,9 @@ public class InputManagerService extends IInputManager.Stub
 
         synchronized (mCursorCbLock) {
             final int callingPid = Binder.getCallingPid();
-            if (mCursorCallbacks.get(callingPid) != null) {
-                throw new IllegalStateException("The calling process has already registered "
-                        + "a CursorCallback.");
+            final CursorCallbackRecord old = mCursorCallbacks.get(callingPid);
+            if (old != null && old.getListener().asBinder() == listener.asBinder()) {
+                return;
             }
             CursorCallbackRecord record =
                     new CursorCallbackRecord(callingPid, listener);
@@ -687,6 +687,11 @@ public class InputManagerService extends IInputManager.Stub
                 binder.linkToDeath(record, 0);
             } catch (RemoteException ex) {
                 throw new RuntimeException(ex);
+            }
+            // A process that registers again (VncFlinger restarting with new settings) replaces
+            // its old callback.
+            if (old != null) {
+                old.getListener().asBinder().unlinkToDeath(old, 0);
             }
             mCursorCallbacks.put(callingPid, record);
         }
@@ -711,13 +716,18 @@ public class InputManagerService extends IInputManager.Stub
                 if (record.getListener().asBinder() != listener.asBinder()) {
                     throw new IllegalArgumentException("listener is not registered");
                 }
+                record.getListener().asBinder().unlinkToDeath(record, 0);
                 mCursorCallbacks.remove(callingPid);
             }
         }
     }
 
-    private void onCursorCallbackDied(int pid) {
+    private void onCursorCallbackDied(CursorCallbackRecord record) {
+        final int pid = record.mPid;
         synchronized (mCursorCbLock) {
+            if (mCursorCallbacks.get(pid) != record) {
+                return; // already replaced or unregistered
+            }
             mCursorCallbacks.remove(pid);
             // Nobody draws the pointer any more: show ours again, or it stays hidden until a
             // reboot when the process that hid it died without undoing it.
@@ -4071,7 +4081,7 @@ public class InputManagerService extends IInputManager.Stub
             if (DEBUG) {
                 Slog.d(TAG, "Cursor listener for pid " + mPid + " died.");
             }
-            onCursorCallbackDied(mPid);
+            onCursorCallbackDied(this);
         }
 
         public ICursorCallback getListener() {
