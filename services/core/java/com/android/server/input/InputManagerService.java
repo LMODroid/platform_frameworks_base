@@ -649,8 +649,16 @@ public class InputManagerService extends IInputManager.Stub
         }
     }
 
+    // Only our desktop mode (VncFlinger, system uid) may watch or hide the pointer.
+    private static void enforceCursorCallbackCaller(String method) {
+        if (UserHandle.getAppId(Binder.getCallingUid()) != Process.SYSTEM_UID) {
+            throw new SecurityException(method + " is only allowed for the system");
+        }
+    }
+
     @Override // Binder call
     public void setForceNullCursor(boolean forceNullCursor) {
+        enforceCursorCallbackCaller("setForceNullCursor");
         if (DEBUG) {
             Slog.d(TAG, "setForceNullCursor: forceNullCursor=" + forceNullCursor + " callingPid="
                     + Binder.getCallingPid());
@@ -660,6 +668,7 @@ public class InputManagerService extends IInputManager.Stub
 
     @Override // Binder call
     public void registerCursorCallback(ICursorCallback listener) {
+        enforceCursorCallbackCaller("registerCursorCallback");
         if (listener == null) {
             throw new IllegalArgumentException("listener must not be null");
         }
@@ -684,6 +693,7 @@ public class InputManagerService extends IInputManager.Stub
 
     @Override // Binder call
     public void unregisterCursorCallback(ICursorCallback listener) {
+        enforceCursorCallbackCaller("unregisterCursorCallback");
         if (DEBUG) {
             Slog.d(TAG, "unregisterCursorCallback: listener=" + listener + " callingPid="
                     + Binder.getCallingPid());
