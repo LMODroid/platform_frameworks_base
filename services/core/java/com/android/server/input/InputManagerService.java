@@ -294,7 +294,8 @@ public class InputManagerService extends IInputManager.Stub
     private final Object mCursorCbLock = new Object();
     @GuardedBy("mCursorCbLock")
     private final SparseArray<CursorCallbackRecord> mCursorCallbacks = new SparseArray<>();
-    private boolean mForceNullCursor = false;
+    // Set while a cursor callback draws the pointer instead (VncFlinger's remote cursor).
+    private volatile boolean mForceNullCursor = false;
 
     // State for the currently installed input filter.
     final Object mInputFilterLock = new Object();
@@ -718,6 +719,12 @@ public class InputManagerService extends IInputManager.Stub
     private void onCursorCallbackDied(int pid) {
         synchronized (mCursorCbLock) {
             mCursorCallbacks.remove(pid);
+            // Nobody draws the pointer any more: show ours again, or it stays hidden until a
+            // reboot when the process that hid it died without undoing it.
+            if (mCursorCallbacks.size() == 0 && mForceNullCursor) {
+                Slog.i(TAG, "Cursor callback of pid " + pid + " died, showing the pointer again");
+                mForceNullCursor = false;
+            }
         }
     }
 
