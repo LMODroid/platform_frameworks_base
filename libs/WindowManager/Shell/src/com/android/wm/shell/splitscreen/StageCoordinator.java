@@ -2238,6 +2238,12 @@ public class StageCoordinator extends StageCoordinatorAbstract {
 
         updateSurfaceBounds(mSplitLayout, finishT, false /* applyResizingOffset */);
         finishT.show(mRootTaskLeash);
+        if (enableFlexibleSplit()) {
+            runForActiveStages(stage -> finishT.show(stage.getRootLeash()));
+        } else {
+            finishT.show(mMainStage.getRootLeash());
+            finishT.show(mSideStage.getRootLeash());
+        }
         setSplitsVisible(true);
         mIsDropEnteringSplitInvisible = false;
         mIsDropEnteringSplitVisible = false;
